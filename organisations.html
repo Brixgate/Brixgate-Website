@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Organisations — Brixgate | Build AI-Native Teams</title>
+  <meta name="description" content="Build AI-native teams at scale. Brixgate's corporate packages deploy field-specific AI transformation across your organisation — by department, by function, at enterprise scale." />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- Corporate hero ---- */
+    .corp-hero-visual {
+      background: linear-gradient(135deg, var(--bg-card) 0%, #1B3A5C 100%);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 40px 36px;
+    }
+
+    .corp-metric {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .corp-metric-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.06);
+      gap: 16px;
+    }
+
+    .corp-metric-label {
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    .corp-metric-value {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .corp-metric-value.red { color: var(--red); }
+
+    /* ---- Why organisations ---- */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    /* ---- Package comparison ---- */
+    .package-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .package-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .package-card:hover {
+      border-color: var(--red);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .package-card.featured {
+      background: linear-gradient(170deg, #0D1C34, #1B3A5C);
+      border-color: var(--red);
+      box-shadow: 0 0 0 1px var(--red), var(--shadow-hover);
+    }
+
+    .package-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: 18px;
+      right: -30px;
+      background: var(--red);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 4px 36px;
+      transform: rotate(45deg);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .package-name {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .package-seats {
+      font-size: 0.78rem;
+      color: var(--red);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .package-price-block {
+      margin-bottom: 16px;
+    }
+
+    .package-price {
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1;
+      display: block;
+    }
+
+    .package-price-usd {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .package-per-seat {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .package-divider {
+      height: 1px;
+      background: var(--border-card);
+      margin: 16px 0;
+    }
+
+    .package-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex-grow: 1;
+      margin-bottom: 20px;
+    }
+
+    .package-features li {
+      font-size: 0.84rem;
+      color: rgba(255,255,255,0.75);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .package-features li::before {
+      content: '✓';
+      color: var(--red);
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    /* ---- Use cases ---- */
+    .usecase-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .usecase-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 20px;
+      align-items: flex-start;
+      transition: var(--transition);
+    }
+
+    .usecase-card:hover {
+      border-color: var(--red);
+    }
+
+    .usecase-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(255,41,78,0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .usecase-content h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .usecase-content p {
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ---- Demo form ---- */
+    .demo-section {
+      background: linear-gradient(135deg, var(--bg-card), var(--cta-secondary));
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: flex-start;
+    }
+
+    .demo-info h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); margin-bottom: 16px; }
+    .demo-info p { font-size: 0.92rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+
+    .demo-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 12px;
+    }
+
+    .demo-contact-item strong { color: var(--white); }
+
+    .demo-contact-icon {
+      width: 32px;
+      height: 32px;
+      background: rgba(255,41,78,0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 1024px) {
+      .package-grid { grid-template-columns: repeat(2, 1fr); }
+      .why-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .package-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .usecase-grid { grid-template-columns: 1fr; }
+      .demo-section { grid-template-columns: 1fr; gap: 40px; padding: 32px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+
+<!-- Region Banner -->
+<div class="region-banner" id="region-banner">
+  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0;">Now active in</span>
+  <div class="regions">
+    <span class="region-item">🇳🇬 Nigeria</span>
+    <span class="region-item">🇬🇧 United Kingdom</span>
+    <span class="region-item">🇺🇸 United States</span>
+    <span class="region-item">🇰🇪 Kenya</span>
+    <span class="region-item">🇿🇦 South Africa</span>
+  </div>
+  <a href="apply.html" style="margin-left:auto;font-size:0.72rem;font-weight:700;color:var(--red);letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Apply Now →</a>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="programme.html">Programme</a>
+      <a href="experts.html">Experts</a>
+      <a href="organisations.html" class="active">For Organisations</a>
+    </div>
+    <div class="nav-cta">
+      <a href="apply.html" class="btn btn-outline-dark btn-sm">Apply Now</a>
+      <a href="#contact" class="btn btn-primary btn-sm">Get a Demo</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="programme.html">Programme</a>
+  <a href="experts.html">Experts</a>
+  <a href="organisations.html">For Organisations</a>
+  <a href="apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="#contact" class="btn btn-outline" style="margin-top:8px;">Get a Demo</a>
+</div>
+
+<!-- ====== PAGE HEADER ====== -->
+<header class="page-header">
+  <div class="container">
+    <div class="breadcrumb fade-in"><a href="index.html">Home</a><span>/</span><span class="current">For Organisations</span></div>
+    <span class="eyebrow">Corporate Programmes</span>
+    <h1 class="fade-up">Build an AI-Native Team.<br/>Not Just AI-Aware.</h1>
+    <p class="fade-up" style="transition-delay:0.1s;">AI awareness is table stakes. Your competitive advantage is teams who can apply AI at practitioner level — by field, by function, by role. That is what Brixgate builds.</p>
+    <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;" class="fade-up" style="transition-delay:0.2s;">
+      <a href="#contact" class="btn btn-primary">Request a Demo →</a>
+      <a href="#packages" class="btn btn-outline">View Packages</a>
+    </div>
+  </div>
+</header>
+
+<!-- ====== STATS FOR ORGS ====== -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stat-item fade-in"><span class="stat-number">12</span><span class="stat-label">Fields Available</span></div>
+    <div class="stat-item fade-in" style="transition-delay:0.1s;"><span class="stat-number">100+</span><span class="stat-label">Seats Per Enterprise Cohort</span></div>
+    <div class="stat-item fade-in" style="transition-delay:0.2s;"><span class="stat-number">4</span><span class="stat-label">Package Tiers</span></div>
+    <div class="stat-item fade-in" style="transition-delay:0.3s;"><span class="stat-number">80%</span><span class="stat-label">Corporate Renewal Rate</span></div>
+  </div>
+</div>
+
+
+<!-- ====== VISUAL FEATURE ====== -->
+<section style="padding:0;border-bottom:1px solid var(--border-card);background:var(--bg-dark);">
+  <div style="display:grid;grid-template-columns:1fr 1fr;min-height:420px;">
+    <!-- Content -->
+    <div style="padding:64px 56px;display:flex;flex-direction:column;justify-content:center;">
+      <div style="font-size:0.68rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:14px;">The Problem</div>
+      <h2 style="font-size:1.8rem;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:20px;">AI Awareness Is Already<br/>Table Stakes.</h2>
+      <p style="font-size:0.9rem;color:var(--muted);line-height:1.75;margin-bottom:32px;">Your competitors have run the same generic AI workshops. Your teams can name the tools. The organisations pulling ahead are those where people can <em style="color:rgba(255,255,255,0.8);">actually use AI at practitioner level</em> — by field, by function, by role.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:10px;padding:20px;">
+          <div style="font-size:1.8rem;font-weight:900;color:var(--red);line-height:1;margin-bottom:4px;">4 wks</div>
+          <div style="font-size:0.75rem;color:var(--muted);">From enrolled to certified — per team member</div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:10px;padding:20px;">
+          <div style="font-size:1.8rem;font-weight:900;color:var(--red);line-height:1;margin-bottom:4px;">8 fields</div>
+          <div style="font-size:0.75rem;color:var(--muted);">Field-specific tracks — not one-size-fits-all</div>
+        </div>
+      </div>
+      <div style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="#contact" class="btn btn-primary">Request a Demo →</a>
+        <a href="#packages" class="btn btn-outline">View Packages</a>
+      </div>
+    </div>
+    <!-- Image -->
+    <div style="position:relative;overflow:hidden;min-height:360px;">
+      <img
+        src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&h=600&fit=crop&crop=center&auto=format&q=80"
+        alt="Corporate team building AI capability together"
+        style="width:100%;height:100%;object-fit:cover;object-position:center;"
+      />
+      <div style="position:absolute;inset:0;background:linear-gradient(270deg,transparent 40%,rgba(2,16,36,0.5) 100%);"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== WHY ORGANISATIONS CHOOSE BRIXGATE ====== -->
+<section class="section-pad bg-dark">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="eyebrow">The Case for Field-Specific AI Training</span>
+      <h2>Generic AI Training Is Not<br/>Closing Your Skills Gap</h2>
+      <div class="divider-red"></div>
+      <p>Most organisations have already done generic AI awareness sessions. Their teams know the vocabulary. What they do not yet have is practitioners — professionals who can deploy AI in their specific roles and produce measurable results.</p>
+    </div>
+
+    <div class="why-grid stagger">
+      <div class="card fade-up">
+        <div class="card-icon">🎯</div>
+        <div class="card-title">Role-Level Precision</div>
+        <p class="card-body">Your legal team needs different AI capabilities than your finance team. We build separate programmes for each function — not one curriculum stretched across your whole organisation.</p>
+      </div>
+      <div class="card fade-up">
+        <div class="card-icon">📊</div>
+        <div class="card-title">Measurable Outcomes</div>
+        <p class="card-body">Every Brixgate cohort produces verifiable deliverables — applied AI projects completed in real workflows, with measurable productivity and quality outcomes that you can track.</p>
+      </div>
+      <div class="card fade-up">
+        <div class="card-icon">🏆</div>
+        <div class="card-title">Certified Practitioners</div>
+        <p class="card-body">Your team leaves with Brixgate Expert Practitioner Certificates — field-verified credentials that reflect real capability, not course completion checkboxes.</p>
+      </div>
+      <div class="card fade-up">
+        <div class="card-icon">⚡</div>
+        <div class="card-title">4-Week, Not 4-Month</div>
+        <p class="card-body">Time is your scarcest resource. Our 4-week intensive sprint delivers transformation that traditional upskilling programmes take months to attempt — and rarely complete.</p>
+      </div>
+      <div class="card fade-up">
+        <div class="card-icon">🌍</div>
+        <div class="card-title">Global Delivery</div>
+        <p class="card-body">Delivered online, globally. Whether your teams are in Lagos, London, or New York — all in the same cohort if needed, or in market-specific groups at your preference.</p>
+      </div>
+      <div class="card fade-up">
+        <div class="card-icon">🔄</div>
+        <div class="card-title">Built to Scale</div>
+        <p class="card-body">Start with one team. Expand to the entire organisation. Our packages scale from 5 to 100+ seats with dedicated management, reporting, and curriculum customisation at each tier.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== USE CASES ====== -->
+<section class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="eyebrow">Who It Is For</span>
+      <h2>Built for Organisations<br/>Serious About AI Transformation</h2>
+      <div class="divider-red"></div>
+    </div>
+
+    <div class="usecase-grid stagger">
+      <div class="usecase-card fade-up">
+        <div class="usecase-icon">🏢</div>
+        <div class="usecase-content">
+          <h4>Financial Institutions &amp; Banks</h4>
+          <p>Deploy AI capability across risk, compliance, investment, and operations teams with programmes built for regulated financial environments. Expert practitioners from banking and FinTech.</p>
+        </div>
+      </div>
+      <div class="usecase-card fade-up">
+        <div class="usecase-icon">⚕️</div>
+        <div class="usecase-content">
+          <h4>Healthcare Systems &amp; Clinics</h4>
+          <p>Build AI-native clinical and administrative capability. Programmes designed for healthcare professionals navigating AI diagnostics, records management, and operational transformation.</p>
+        </div>
+      </div>
+      <div class="usecase-card fade-up">
+        <div class="usecase-icon">⚖️</div>
+        <div class="usecase-content">
+          <h4>Law Firms &amp; Legal Teams</h4>
+          <p>From contract review to compliance monitoring — transform your legal function with field-specific AI capability taught by practitioners who have already done it in legal environments.</p>
+        </div>
+      </div>
+      <div class="usecase-card fade-up">
+        <div class="usecase-icon">🏗️</div>
+        <div class="usecase-content">
+          <h4>Engineering &amp; Infrastructure Companies</h4>
+          <p>Build AI-native engineers and project managers who can deploy predictive maintenance, infrastructure analysis, and AI-augmented project delivery across your projects.</p>
+        </div>
+      </div>
+      <div class="usecase-card fade-up">
+        <div class="usecase-icon">🎓</div>
+        <div class="usecase-content">
+          <h4>Universities &amp; Educational Institutions</h4>
+          <p>Build AI capacity across faculties and administrative functions. Position your institution as an AI-native learning environment and equip your educators to lead that transition.</p>
+        </div>
+      </div>
+      <div class="usecase-card fade-up">
+        <div class="usecase-icon">🌐</div>
+        <div class="usecase-content">
+          <h4>Multinationals &amp; Global Enterprises</h4>
+          <p>Deploy consistent, field-specific AI transformation across African, UK, and North American operations with cohorts tailored to local market context and global enterprise standards.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CORPORATE PACKAGES ====== -->
+<section id="packages" class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="eyebrow">Corporate Packages</span>
+      <h2>The Right Scale for<br/>Your Organisation</h2>
+      <div class="divider-red"></div>
+      <p>From a founding team to a full enterprise deployment — Brixgate scales with your ambition.</p>
+    </div>
+
+    <!-- Currency Toggle -->
+    <div class="currency-toggle fade-up">
+      <label class="label-usd active">$ USD</label>
+      <label class="label-ngn">₦ NGN</label>
+    </div>
+
+    <div class="package-grid stagger">
+      <!-- Starter -->
+      <div class="package-card fade-up">
+        <div class="package-name">Starter</div>
+        <div class="package-seats">5 Seats</div>
+        <div class="package-price-block">
+          <span class="package-price">
+            <span class="currency-usd">~$625</span>
+            <span class="currency-ngn">₦1,000,000</span>
+          </span>
+          <div class="package-price-usd">
+            <span class="currency-usd">~₦1,000,000 NGN</span>
+            <span class="currency-ngn">~$625 USD equivalent</span>
+          </div>
+          <div class="package-per-seat">
+            <span class="currency-usd">~$125 per seat</span>
+            <span class="currency-ngn">₦200,000 per seat</span>
+          </div>
+        </div>
+        <div class="package-divider"></div>
+        <ul class="package-features">
+          <li>5 individual programme seats</li>
+          <li>Field Assessment for all participants</li>
+          <li>Expert Practitioner matching</li>
+          <li>Peer cohort integration</li>
+          <li>Expert Practitioner Certificates</li>
+          <li>Manager progress summary</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline-red" style="width:100%;justify-content:center;">Get Started →</a>
+      </div>
+
+      <!-- Team Sprint -->
+      <div class="package-card featured fade-up">
+        <div class="package-name">Team Sprint</div>
+        <div class="package-seats">20 Seats</div>
+        <div class="package-price-block">
+          <span class="package-price">
+            <span class="currency-usd">~$2,188</span>
+            <span class="currency-ngn">₦3,500,000</span>
+          </span>
+          <div class="package-price-usd">
+            <span class="currency-usd">~₦3,500,000 NGN</span>
+            <span class="currency-ngn">~$2,188 USD equivalent</span>
+          </div>
+          <div class="package-per-seat">
+            <span class="currency-usd">~$109 per seat</span>
+            <span class="currency-ngn">₦175,000 per seat</span>
+          </div>
+        </div>
+        <div class="package-divider"></div>
+        <ul class="package-features">
+          <li>Everything in Starter, plus:</li>
+          <li>20 programme seats</li>
+          <li>Dedicated cohort manager</li>
+          <li>Team-specific project tracks</li>
+          <li>Shared team deliverables</li>
+          <li>Multi-field team support</li>
+          <li>Quarterly renewal option</li>
+          <li>Full cohort reporting dashboard</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary" style="width:100%;justify-content:center;">Get Started →</a>
+      </div>
+
+      <!-- Department Build -->
+      <div class="package-card fade-up">
+        <div class="package-name">Department Build</div>
+        <div class="package-seats">50 Seats</div>
+        <div class="package-price-block">
+          <span class="package-price">
+            <span class="currency-usd">~$4,688</span>
+            <span class="currency-ngn">₦7,500,000</span>
+          </span>
+          <div class="package-price-usd">
+            <span class="currency-usd">~₦7,500,000 NGN</span>
+            <span class="currency-ngn">~$4,688 USD equivalent</span>
+          </div>
+          <div class="package-per-seat">
+            <span class="currency-usd">~$94 per seat</span>
+            <span class="currency-ngn">₦150,000 per seat</span>
+          </div>
+        </div>
+        <div class="package-divider"></div>
+        <ul class="package-features">
+          <li>Everything in Team Sprint, plus:</li>
+          <li>50 programme seats</li>
+          <li>Department-level curriculum alignment</li>
+          <li>Multi-cohort scheduling</li>
+          <li>Leadership track integration</li>
+          <li>Brixgate AI Readiness Report</li>
+          <li>Post-sprint implementation support</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline-red" style="width:100%;justify-content:center;">Get Started →</a>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="package-card fade-up">
+        <div class="package-name">Enterprise</div>
+        <div class="package-seats">100+ Seats / Month</div>
+        <div class="package-price-block">
+          <span class="package-price">
+            <span class="currency-usd">~$7,500+</span>
+            <span class="currency-ngn">₦12,000,000+</span>
+          </span>
+          <div class="package-price-usd">
+            <span class="currency-usd">~₦12M+/month NGN</span>
+            <span class="currency-ngn">~$7,500+/month USD</span>
+          </div>
+          <div class="package-per-seat">Per month · Custom SLA</div>
+        </div>
+        <div class="package-divider"></div>
+        <ul class="package-features">
+          <li>Everything in Department, plus:</li>
+          <li>100+ seats monthly</li>
+          <li>Custom curriculum design</li>
+          <li>Dedicated expert team</li>
+          <li>Executive leadership track</li>
+          <li>Organisation-wide AI capability reporting</li>
+          <li>SLA with response guarantees</li>
+          <li>Custom integrations &amp; branding</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline-red" style="width:100%;justify-content:center;">Talk to Us →</a>
+      </div>
+    </div>
+
+    <div class="notice notice-info fade-up" style="margin-top:32px;">
+      <span>ℹ️</span>
+      <span>All packages include access to the full Brixgate expert network and curriculum across all 12 active fields. Multi-field deployments, custom structures, and bespoke enterprise arrangements are available — <a href="#contact" style="color:var(--red);font-weight:700;">contact us to discuss</a>. Exchange rate: ₦1,600 per $1 USD.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ====== HOW CORPORATE WORKS ====== -->
+<section class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="eyebrow">How It Works for Organisations</span>
+      <h2>From Enquiry to Certified Teams<br/>in Under 6 Weeks</h2>
+      <div class="divider-red"></div>
+    </div>
+
+    <div class="qualify-steps fade-up">
+      <div class="qualify-step">
+        <div class="qualify-step-num">1</div>
+        <div class="qualify-step-content">
+          <h4>Discovery Call &amp; Scoping</h4>
+          <p>A 45-minute conversation where we understand your organisation's AI maturity, your team structure, the fields involved, and what measurable outcomes you need from the programme. No hard sell — just honest scoping.</p>
+        </div>
+      </div>
+      <div class="qualify-step">
+        <div class="qualify-step-num">2</div>
+        <div class="qualify-step-content">
+          <h4>Proposal &amp; Package Confirmation</h4>
+          <p>Within 5 business days, we provide a customised proposal — the right package, the right fields, the right cohort structure. Straightforward pricing, no hidden items.</p>
+        </div>
+      </div>
+      <div class="qualify-step">
+        <div class="qualify-step-num">3</div>
+        <div class="qualify-step-content">
+          <h4>Participant Onboarding &amp; Field Assessments</h4>
+          <p>Your team members complete their individual Field Assessments, we perform expert matching, and cohort scheduling is confirmed. This takes 1–2 weeks depending on your team size.</p>
+        </div>
+      </div>
+      <div class="qualify-step">
+        <div class="qualify-step-num">4</div>
+        <div class="qualify-step-content">
+          <h4>4-Week Sprint Delivery</h4>
+          <p>Your team runs through the sprint — live sessions, applied projects, peer cohort work, expert guidance. You receive real-time progress reporting throughout.</p>
+        </div>
+      </div>
+      <div class="qualify-step">
+        <div class="qualify-step-num">5</div>
+        <div class="qualify-step-content">
+          <h4>Certification &amp; Impact Report</h4>
+          <p>Certificates issued. A comprehensive Brixgate AI Transformation Report delivered to your leadership — documenting capability gains, applied project outcomes, and recommendations for next-phase deployment.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CONTACT / DEMO FORM ====== -->
+<section id="contact" class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+  <div class="container">
+    <div class="demo-section fade-up">
+      <div class="demo-info">
+        <span class="eyebrow">Request a Demo</span>
+        <h2>Let's Talk About Your Organisation</h2>
+        <p>Tell us about your team, your goals, and your timeline. We will come back to you within 1 business day with a discovery call appointment and a preliminary package recommendation.</p>
+        <p>No commitment required. Just a conversation about what AI-native looks like for your specific organisation.</p>
+
+        <div style="margin-top:32px;">
+          <div class="demo-contact-item">
+            <div class="demo-contact-icon">✉️</div>
+            <div><div style="font-size:0.78rem;color:var(--muted);">Email us directly</div><strong>we@brixgate.com</strong></div>
+          </div>
+          <div class="demo-contact-item">
+            <div class="demo-contact-icon">🌐</div>
+            <div><div style="font-size:0.78rem;color:var(--muted);">Website</div><strong>www.brixgate.com</strong></div>
+          </div>
+          <div class="demo-contact-item">
+            <div class="demo-contact-icon">🏢</div>
+            <div><div style="font-size:0.78rem;color:var(--muted);">Headquarters</div><strong>Lagos, Nigeria — serving clients globally</strong></div>
+          </div>
+        </div>
+
+        <div style="margin-top:32px;padding:20px;background:rgba(255,41,78,0.06);border:1px solid rgba(255,41,78,0.15);border-radius:10px;">
+          <p style="font-size:0.88rem;color:rgba(255,255,255,0.75);margin:0;line-height:1.65;">
+            We respond to all enterprise enquiries within <strong style="color:var(--white);">1 business day</strong>. Discovery calls are booked within <strong style="color:var(--white);">3 business days</strong>. Proposals delivered within <strong style="color:var(--white);">5 business days</strong> of the discovery call.
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:0.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:24px;">Organisation Enquiry</div>
+        <form id="demo-form" onsubmit="handleDemoSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="first-name">First Name *</label>
+              <input type="text" id="first-name" class="form-control" placeholder="Adaeze" required />
+            </div>
+            <div class="form-group">
+              <label for="last-name">Last Name *</label>
+              <input type="text" id="last-name" class="form-control" placeholder="Mensah" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="work-email">Work Email *</label>
+            <input type="email" id="work-email" class="form-control" placeholder="you@organisation.com" required />
+          </div>
+          <div class="form-group">
+            <label for="org-name">Organisation Name *</label>
+            <input type="text" id="org-name" class="form-control" placeholder="Your organisation" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="team-size">Approximate Team Size *</label>
+              <select id="team-size" class="form-control" required>
+                <option value="">Select...</option>
+                <option>2–10 people</option>
+                <option>11–50 people</option>
+                <option>51–200 people</option>
+                <option>200+ people</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="package-interest">Package Interest</label>
+              <select id="package-interest" class="form-control">
+                <option value="">Not sure yet</option>
+                <option>Starter (5 seats)</option>
+                <option>Team Sprint (20 seats)</option>
+                <option>Department Build (50 seats)</option>
+                <option>Enterprise (100+ seats)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="fields-interest">Fields / Departments *</label>
+            <input type="text" id="fields-interest" class="form-control" placeholder="e.g. Finance, Legal, Engineering..." required />
+          </div>
+          <div class="form-group">
+            <label for="org-message">Tell us more (optional)</label>
+            <textarea id="org-message" class="form-control" placeholder="Your AI transformation goals, timeline, any specific requirements..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:16px;">Request a Demo →</button>
+        </form>
+        <div id="demo-success" style="display:none;" class="notice notice-success" style="margin-top:16px;">
+          <span>✓</span>
+          <span>Thank you — your enquiry has been received. Our team will respond within 1 business day to schedule your discovery call.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CTA ====== -->
+<section class="cta-section">
+  <div class="container">
+    <span class="eyebrow white">Build What Comes Next</span>
+    <h2>Your Competitors Are Already<br/>Building AI-Native Teams.</h2>
+    <p>The organisations that win the next decade are those who move from AI awareness to AI-native capability now — at the practitioner level, field by field.</p>
+    <div class="cta-buttons">
+      <a href="#contact" class="btn btn-primary btn-lg">Request a Demo →</a>
+      <a href="programme.html" class="btn btn-outline btn-lg">Explore the Programme</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo footer-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+        <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
+        <div class="footer-social">
+          <a href="#" class="social-icon">in</a>
+          <a href="#" class="social-icon">𝕏</a>
+          <a href="#" class="social-icon">◻</a>
+          <a href="mailto:we@brixgate.com" class="social-icon">@</a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Programme</h5><ul><li><a href="programme.html">AI in my Field</a></li><li><a href="programme.html#pricing">Pricing</a></li><li><a href="apply.html">Apply Now</a></li><li><a href="verify.html">Verify a Certificate</a></li></ul></div>
+      <div class="footer-col"><h5>Experts</h5><ul><li><a href="experts.html">Meet Our Experts</a></li><li><a href="experts.html#qualify">Become an Expert</a></li></ul></div>
+      <div class="footer-col"><h5>Organisation</h5><ul><li><a href="#packages">Packages</a></li><li><a href="#contact">Get a Demo</a></li><li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li></ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
+    <div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+  </div>
+</footer>
+
+<button class="back-to-top">↑</button>
+
+<script src="script.js"></script>
+<script>
+  function handleDemoSubmit(e) {
+    e.preventDefault();
+    document.getElementById('demo-form').style.display = 'none';
+    document.getElementById('demo-success').style.display = 'flex';
+  }
+</script>
+
+<!-- ====== WHATSAPP CHAT WIDGET ====== -->
+<a href="https://wa.me/2347088093620?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme."
+   target="_blank" rel="noopener"
+   class="whatsapp-float"
+   aria-label="Chat with us on WhatsApp"
+   title="Chat with us on WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+</body>
+</html>

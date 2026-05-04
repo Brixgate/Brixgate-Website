@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Readiness Check — Brixgate | Where Do You Stand?</title>
+  <meta name="description" content="Take the free 3-minute Brixgate AI Readiness Check. Find out where you stand professionally and what it means for your career." />
+  <meta property="og:title" content="Are You AI-Ready? Find Out in 3 Minutes." />
+  <meta property="og:description" content="The Brixgate AI Readiness Check — a quick, honest assessment of where you stand as AI reshapes your profession." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body { background: var(--bg-dark); }
+
+    /* ====== ASSESSMENT SHELL ====== */
+    .assess-wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ====== HERO INTRO ====== */
+    .assess-hero {
+      padding: 72px 0 56px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-card);
+    }
+
+    .assess-progress-bar {
+      height: 4px;
+      background: var(--border-card);
+      border-radius: 2px;
+      overflow: hidden;
+      max-width: 480px;
+      margin: 0 auto 32px;
+    }
+    .assess-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--red), var(--orange));
+      border-radius: 2px;
+      transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .assess-step-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+
+    /* ====== QUESTION CARD ====== */
+    .q-card {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .q-number {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 14px;
+    }
+
+    .q-text {
+      font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.35;
+      margin-bottom: 32px;
+    }
+
+    .q-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .q-option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-card);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: left;
+    }
+
+    .q-option:hover {
+      border-color: var(--red);
+      background: rgba(255,41,78,0.05);
+    }
+
+    .q-option.selected {
+      border-color: var(--red);
+      background: rgba(255,41,78,0.08);
+    }
+
+    .q-option-letter {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+
+    .q-option.selected .q-option-letter {
+      background: var(--red);
+      border-color: var(--red);
+      color: #fff;
+    }
+
+    .q-option-text {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.4;
+    }
+
+    .q-option.selected .q-option-text {
+      color: var(--white);
+    }
+
+    .q-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 680px;
+      margin: 28px auto 0;
+      padding: 0 24px;
+    }
+
+    .q-back-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 8px 0;
+      transition: var(--transition);
+    }
+
+    .q-back-btn:hover { color: var(--white); }
+
+    .q-next-btn {
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .q-next-btn.enabled {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .q-next-btn.enabled:hover {
+      background: var(--orange);
+      transform: translateY(-2px);
+    }
+
+    /* ====== INTRO SCREEN ====== */
+    #intro-screen {
+      padding: 80px 24px;
+      text-align: center;
+    }
+
+    .intro-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,41,78,0.1);
+      border: 1px solid rgba(255,41,78,0.25);
+      border-radius: 50px;
+      padding: 8px 18px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .intro-tag::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .intro-preview {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin: 40px auto;
+      max-width: 560px;
+    }
+
+    .intro-preview-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .intro-preview-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ====== RESULTS SCREEN ====== */
+    #results-screen {
+      display: none;
+      padding: 60px 24px 80px;
+    }
+
+    .result-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .result-tier-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+
+    .result-score-ring {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      border: 4px solid var(--border-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      margin: 0 auto 32px;
+      position: relative;
+    }
+
+    .result-score-val {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .result-score-lbl {
+      font-size: 0.58rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .result-headline {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .result-sub {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+
+    .result-signals {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .signal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 22px 18px;
+      text-align: left;
+    }
+
+    .signal-icon {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .signal-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .signal-desc {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .result-cta-block {
+      background: linear-gradient(135deg, rgba(255,41,78,0.12) 0%, rgba(255,41,78,0.04) 100%);
+      border: 1px solid rgba(255,41,78,0.2);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      text-align: center;
+    }
+
+    .result-share-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--border-card);
+      background: transparent;
+      color: var(--muted);
+      transition: var(--transition);
+    }
+
+    .share-btn:hover {
+      border-color: var(--white);
+      color: var(--white);
+    }
+
+    .share-btn.restart {
+      border-color: rgba(255,41,78,0.4);
+      color: var(--red);
+    }
+
+    .share-btn.restart:hover {
+      background: rgba(255,41,78,0.08);
+    }
+
+    /* Score ring border colours by tier */
+    .ring-low    { border-color: #FF5748; }
+    .ring-mid    { border-color: #F5A623; }
+    .ring-high   { border-color: #34C759; }
+    .badge-low   { background: rgba(255,87,72,0.12); color: #FF5748; border: 1px solid rgba(255,87,72,0.3); }
+    .badge-mid   { background: rgba(245,166,35,0.12); color: #F5A623; border: 1px solid rgba(245,166,35,0.3); }
+    .badge-high  { background: rgba(52,199,89,0.12); color: #34C759; border: 1px solid rgba(52,199,89,0.3); }
+
+    @media (max-width: 600px) {
+      .result-signals { grid-template-columns: 1fr; }
+      .result-cta-block { padding: 28px 20px; }
+      .intro-preview { flex-direction: column; align-items: center; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.85); }
+    }
+  </style>
+</head>
+<body class="assess-wrap">
+
+<div id="scroll-progress"></div>
+
+<!-- Minimal nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="programme.html">Programme</a>
+      <a href="experts.html">Experts</a>
+      <a href="organisations.html">For Organisations</a>
+    </div>
+    <div class="nav-cta">
+      <a href="apply.html" class="btn btn-outline-dark btn-sm">Apply Now</a>
+      <a href="organisations.html#contact" class="btn btn-primary btn-sm">Get a Demo</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="programme.html">Programme</a>
+  <a href="experts.html">Experts</a>
+  <a href="organisations.html">For Organisations</a>
+  <a href="apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="organisations.html#contact" class="btn btn-outline" style="margin-top:8px;">Get a Demo</a>
+</div>
+
+<!-- ====== INTRO SCREEN ====== -->
+<div id="intro-screen">
+  <div style="max-width:640px;margin:0 auto;text-align:center;">
+    <div class="intro-tag">Free · 3 Minutes · No Sign-Up</div>
+
+    <h1 style="font-size:clamp(2rem,5vw,3.2rem);font-weight:900;line-height:1.1;color:var(--white);margin-bottom:18px;">
+      How AI-Ready Are You<br/>
+      <span style="color:var(--red);">— Really?</span>
+    </h1>
+
+    <p style="font-size:1rem;color:var(--muted);line-height:1.75;margin-bottom:12px;max-width:520px;margin-left:auto;margin-right:auto;">
+      AI is reshaping every profession faster than most professionals realise. This quick check gives you an honest read on where you stand — and what it means for your career.
+    </p>
+
+    <div class="intro-preview">
+      <span class="intro-preview-item"><span class="intro-preview-dot"></span>10 workplace scenarios</span>
+      <span class="intro-preview-item"><span class="intro-preview-dot"></span>No technical knowledge needed</span>
+      <span class="intro-preview-item"><span class="intro-preview-dot"></span>Instant result with guidance</span>
+    </div>
+
+    <button class="btn btn-primary btn-lg" onclick="startAssessment()" style="min-width:240px;">
+      Start the Check →
+    </button>
+
+    <p style="font-size:0.75rem;color:var(--muted);margin-top:16px;">
+      Takes about 3 minutes. Your answers are not stored.
+    </p>
+
+    <!-- QR section for print/share -->
+    <div style="margin-top:48px;padding:24px;background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);display:inline-flex;align-items:center;gap:24px;">
+      <div style="background:#fff;border-radius:8px;padding:6px;width:80px;height:80px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fbrixgate.com%2Fai-readiness&margin=2" alt="QR code" style="width:68px;height:68px;" />
+      </div>
+      <div style="text-align:left;">
+        <div style="font-size:0.78rem;font-weight:700;color:var(--white);margin-bottom:4px;">Share this check</div>
+        <div style="font-size:0.72rem;color:var(--muted);line-height:1.55;">Scan the QR code or share the link<br/><span style="color:var(--red);font-weight:700;">brixgate.com/ai-readiness</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== ASSESSMENT SCREEN ====== -->
+<div id="assess-screen" style="display:none;padding:48px 0 80px;">
+  <!-- Progress -->
+  <div style="text-align:center;margin-bottom:36px;padding:0 24px;">
+    <div class="assess-step-label" id="step-label">Question 1 of 10</div>
+    <div class="assess-progress-bar">
+      <div class="assess-progress-fill" id="progress-fill" style="width:10%;"></div>
+    </div>
+  </div>
+
+  <!-- Question -->
+  <div class="q-card" id="q-card">
+    <!-- Injected by JS -->
+  </div>
+
+  <!-- Navigation -->
+  <div class="q-nav">
+    <button class="q-back-btn" id="back-btn" onclick="prevQuestion()" style="visibility:hidden;">← Back</button>
+    <button class="q-next-btn" id="next-btn" onclick="nextQuestion()">Next →</button>
+  </div>
+</div>
+
+<!-- ====== RESULTS SCREEN ====== -->
+<div id="results-screen">
+  <div class="result-wrap" style="text-align:center;">
+
+    <div id="result-badge" class="result-tier-badge"></div>
+
+    <div class="result-score-ring" id="result-ring">
+      <div class="result-score-val" id="result-score">0</div>
+      <div class="result-score-lbl">Score</div>
+    </div>
+
+    <h2 class="result-headline" id="result-headline"></h2>
+    <p class="result-sub" id="result-sub"></p>
+
+    <!-- Signal cards -->
+    <div class="result-signals" id="result-signals"></div>
+
+    <!-- CTA block -->
+    <div class="result-cta-block" id="result-cta">
+      <!-- Injected by JS based on tier -->
+    </div>
+
+    <div class="result-share-row">
+      <button class="share-btn restart" onclick="restartAssessment()">↺ Retake the Check</button>
+      <a href="programme.html" class="share-btn">Explore Programmes →</a>
+      <a id="share-link-btn" href="#" class="share-btn" onclick="copyShareLink(event)">🔗 Copy Link</a>
+    </div>
+
+  </div>
+</div>
+
+<footer class="footer" style="margin-top:auto;">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo footer-logo">
+          <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+        </a>
+        <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
+        <div class="footer-social">
+          <a href="#" class="social-icon">in</a>
+          <a href="#" class="social-icon">𝕏</a>
+          <a href="#" class="social-icon">◻</a>
+          <a href="mailto:we@brixgate.com" class="social-icon">@</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Programme</h5>
+        <ul>
+          <li><a href="programme.html">AI in my Field</a></li>
+          <li><a href="programme.html#fields">All Fields</a></li>
+          <li><a href="programme.html#pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Experts</h5>
+        <ul>
+          <li><a href="experts.html">Meet Our Experts</a></li>
+          <li><a href="join-as-expert.html">Join as Expert</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Organisation</h5>
+        <ul>
+          <li><a href="organisations.html">Corporate Programmes</a></li>
+          <li><a href="organisations.html#contact">Request a Demo</a></li>
+          <li><a href="apply.html">Apply Now</a></li>
+          <li><a href="verify.html">Verify a Certificate</a></li>
+          <li><a href="ai-readiness.html" style="color:var(--red);">AI Readiness Check</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top">↑</button>
+<script src="script.js"></script>
+<script>
+// ============================================================
+//  BRIXGATE — AI Readiness Assessment
+//  Generic, workplace-focused, field-agnostic
+// ============================================================
+
+const QUESTIONS = [
+  {
+    id: 1,
+    text: "When a colleague mentions using AI in their day-to-day work, what is your honest reaction?",
+    options: [
+      { letter: "A", text: "I already do the same — AI is part of how I work", weight: 4 },
+      { letter: "B", text: "I'm curious and have started experimenting", weight: 3 },
+      { letter: "C", text: "I'm aware but haven't really started yet", weight: 2 },
+      { letter: "D", text: "I'm sceptical about how relevant it is to my job", weight: 1 }
+    ]
+  },
+  {
+    id: 2,
+    text: "In the last 3 months, how often have you used an AI tool (ChatGPT, Copilot, Gemini, etc.) for work?",
+    options: [
+      { letter: "A", text: "Most days — it's a core part of how I work", weight: 4 },
+      { letter: "B", text: "A few times per week", weight: 3 },
+      { letter: "C", text: "A handful of times, mostly experimenting", weight: 2 },
+      { letter: "D", text: "Rarely or never", weight: 1 }
+    ]
+  },
+  {
+    id: 3,
+    text: "Your manager asks you to use AI to cut a key task's turnaround time by 30%. What happens?",
+    options: [
+      { letter: "A", text: "I have a clear approach and could start today", weight: 4 },
+      { letter: "B", text: "I have ideas but would need to test and learn", weight: 3 },
+      { letter: "C", text: "I'd struggle to know where to start", weight: 2 },
+      { letter: "D", text: "I wouldn't know how to approach this at all", weight: 1 }
+    ]
+  },
+  {
+    id: 4,
+    text: "How would you describe your understanding of where AI could add most value in your specific role?",
+    options: [
+      { letter: "A", text: "I have a clear map of high-value AI applications in my role", weight: 4 },
+      { letter: "B", text: "I have a general sense but the detail is fuzzy", weight: 3 },
+      { letter: "C", text: "I know AI matters but haven't thought it through for my role", weight: 2 },
+      { letter: "D", text: "I'm not sure AI applies that much to what I do", weight: 1 }
+    ]
+  },
+  {
+    id: 5,
+    text: "When you use AI and it gives you a wrong or misleading output, what do you typically do?",
+    options: [
+      { letter: "A", text: "I catch it, know why it happened, and know how to get a better result", weight: 4 },
+      { letter: "B", text: "I notice it's wrong but sometimes I'm not sure how to fix it", weight: 3 },
+      { letter: "C", text: "I sometimes catch errors but mostly trust the output", weight: 2 },
+      { letter: "D", text: "I wouldn't always know if the output was wrong", weight: 1 }
+    ]
+  },
+  {
+    id: 6,
+    text: "A junior colleague asks you to explain how to use AI effectively for a task you both handle. What happens?",
+    options: [
+      { letter: "A", text: "I could walk them through a tested approach right now", weight: 4 },
+      { letter: "B", text: "I could give them some starting points but not a full process", weight: 3 },
+      { letter: "C", text: "I'd struggle — I haven't developed a reliable approach myself", weight: 2 },
+      { letter: "D", text: "I'd have to refer them to someone else", weight: 1 }
+    ]
+  },
+  {
+    id: 7,
+    text: "How do you feel about AI being used to evaluate or assess performance in your industry?",
+    options: [
+      { letter: "A", text: "I understand the implications and can navigate this professionally", weight: 4 },
+      { letter: "B", text: "I have some views but I'm still forming my position", weight: 3 },
+      { letter: "C", text: "It makes me uncomfortable — I haven't really thought it through", weight: 2 },
+      { letter: "D", text: "I try not to think about it", weight: 1 }
+    ]
+  },
+  {
+    id: 8,
+    text: "Over the past 12 months, how has your organisation adapted to AI?",
+    options: [
+      { letter: "A", text: "We have active AI initiatives and I'm involved in them", weight: 4 },
+      { letter: "B", text: "There is discussion about AI but not much structured action yet", weight: 3 },
+      { letter: "C", text: "Very little — AI barely comes up", weight: 2 },
+      { letter: "D", text: "I work independently / I don't know how my org is handling it", weight: 1 }
+    ]
+  },
+  {
+    id: 9,
+    text: "If your role required 30% more AI capability in the next 12 months, how ready are you?",
+    options: [
+      { letter: "A", text: "Already there — I could absorb that increase today", weight: 4 },
+      { letter: "B", text: "I'd manage with some focused learning", weight: 3 },
+      { letter: "C", text: "I'd feel stretched — the gap is significant", weight: 2 },
+      { letter: "D", text: "I'd be seriously exposed without major upskilling", weight: 1 }
+    ]
+  },
+  {
+    id: 10,
+    text: "What best describes your plan for developing your AI capabilities this year?",
+    options: [
+      { letter: "A", text: "I have a clear plan and am executing on it", weight: 4 },
+      { letter: "B", text: "I have intentions but no structured plan yet", weight: 3 },
+      { letter: "C", text: "I know I should do something but I haven't started", weight: 2 },
+      { letter: "D", text: "I haven't seriously thought about a plan", weight: 1 }
+    ]
+  }
+];
+
+// Score tiers: max = 40, min = 10
+const TIERS = [
+  {
+    min: 32, max: 40,
+    label: "AI Practitioner",
+    badgeClass: "badge-high",
+    ringClass: "ring-high",
+    headline: "You're operating at the frontier.",
+    sub: "Your AI literacy is well ahead of most professionals. You're using AI intentionally, catching its failures, and thinking about your field's future clearly. The risk for people like you is stagnation — staying at current capability while AI evolves rapidly. The move now is to formalise and advance, not just maintain.",
+    signals: [
+      { icon: "✅", title: "Active AI User", desc: "AI is already embedded in how you work — not just occasional experimentation." },
+      { icon: "🎯", title: "Strong Judgment", desc: "You can evaluate AI outputs critically and know when to push back." },
+      { icon: "🚀", title: "Ready to Go Deeper", desc: "The opportunity is specialisation in your specific field, not general AI." }
+    ],
+    cta: {
+      eyebrow: "Your Next Move",
+      headline: "Go from AI-Capable to AI-Expert in Your Field",
+      body: "You're ready for field-specific practitioner-level mastery. The Brixgate Expert Practitioner Programme takes professionals who already use AI and turns them into the benchmark in their field.",
+      btn: "See Your Field Programme →",
+      href: "programme.html"
+    }
+  },
+  {
+    min: 22, max: 31,
+    label: "AI Aware",
+    badgeClass: "badge-mid",
+    ringClass: "ring-mid",
+    headline: "You're aware — but the gap is growing.",
+    sub: "You understand AI's importance and you're engaging with it, but you haven't yet built the structured capability that your role will require. Most professionals in this range feel the gap but don't know how to close it efficiently. The good news: you're in exactly the right position to make a decisive move.",
+    signals: [
+      { icon: "⚡", title: "Engaged but Unstructured", desc: "You're experimenting, but without a field-specific framework your progress is slower than it needs to be." },
+      { icon: "⚠️", title: "Judgment Gaps", desc: "You're not yet consistently identifying when AI is wrong or how to course-correct." },
+      { icon: "📈", title: "High Upside", desc: "A focused 4-week sprint could close this gap entirely and put you well ahead of peers." }
+    ],
+    cta: {
+      eyebrow: "The Right Next Step",
+      headline: "Close the Gap. In 4 Weeks.",
+      body: "The Brixgate Expert Practitioner Programme is built for exactly where you are — professionals who are aware but need a structured, field-specific path to real capability.",
+      btn: "Find Your Programme →",
+      href: "programme.html"
+    }
+  },
+  {
+    min: 10, max: 21,
+    label: "AI Exposed",
+    badgeClass: "badge-low",
+    ringClass: "ring-low",
+    headline: "The gap is real — and it's widening.",
+    sub: "You're not alone — the majority of professionals are in this position. But the window to act is narrowing. AI is already changing hiring decisions, promotion criteria, and how work gets evaluated. Waiting is not a neutral choice. The professionals who move now will be the ones who lead the next cycle.",
+    signals: [
+      { icon: "🔴", title: "Low Current Usage", desc: "AI is not yet part of how you work, which means you're not building the intuition that comes from practice." },
+      { icon: "🔴", title: "Limited Field Clarity", desc: "You haven't yet mapped where AI applies in your specific role — this is the first thing to fix." },
+      { icon: "🟡", title: "No Plan Yet", desc: "Knowing you need to act and having a plan to act are different. Now is the time to close that gap." }
+    ],
+    cta: {
+      eyebrow: "Start Here",
+      headline: "The Time to Move Is Now — Not Next Year.",
+      body: "The Brixgate Expert Practitioner Programme starts where you are and takes you to field-specific AI fluency in 4 weeks. No prior AI experience needed.",
+      btn: "See the Programme →",
+      href: "programme.html"
+    }
+  }
+];
+
+// State
+let currentQ = 0;
+let answers  = Array(QUESTIONS.length).fill(null);
+
+function startAssessment() {
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('assess-screen').style.display = 'block';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q   = QUESTIONS[currentQ];
+  const pct = ((currentQ + 1) / QUESTIONS.length) * 100;
+
+  document.getElementById('step-label').textContent = 'Question ' + (currentQ + 1) + ' of ' + QUESTIONS.length;
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  document.getElementById('back-btn').style.visibility = currentQ === 0 ? 'hidden' : 'visible';
+
+  const nextBtn = document.getElementById('next-btn');
+  const isLast  = currentQ === QUESTIONS.length - 1;
+  nextBtn.textContent = isLast ? 'See My Results →' : 'Next →';
+  nextBtn.classList.toggle('enabled', answers[currentQ] !== null);
+
+  document.getElementById('q-card').innerHTML = `
+    <div class="q-number">Question ${q.id}</div>
+    <div class="q-text">${q.text}</div>
+    <div class="q-options">
+      ${q.options.map((o, i) => `
+        <div class="q-option ${answers[currentQ] === i ? 'selected' : ''}" onclick="selectOption(${i})">
+          <div class="q-option-letter">${o.letter}</div>
+          <div class="q-option-text">${o.text}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function selectOption(idx) {
+  answers[currentQ] = idx;
+  document.querySelectorAll('.q-option').forEach((el, i) => {
+    el.classList.toggle('selected', i === idx);
+  });
+  document.getElementById('next-btn').classList.add('enabled');
+}
+
+function nextQuestion() {
+  if (answers[currentQ] === null) return;
+  if (currentQ < QUESTIONS.length - 1) {
+    currentQ++;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    showResults();
+  }
+}
+
+function prevQuestion() {
+  if (currentQ > 0) {
+    currentQ--;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function showResults() {
+  document.getElementById('assess-screen').style.display = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+
+  // Calculate score
+  let score = 0;
+  answers.forEach((ansIdx, qIdx) => {
+    if (ansIdx !== null) {
+      score += QUESTIONS[qIdx].options[ansIdx].weight;
+    }
+  });
+
+  // Find tier
+  const tier = TIERS.find(t => score >= t.min && score <= t.max) || TIERS[2];
+
+  // Score percentage (10–40 range → 0–100%)
+  const scorePct = Math.round(((score - 10) / 30) * 100);
+
+  // Render badge
+  document.getElementById('result-badge').className = 'result-tier-badge ' + tier.badgeClass;
+  document.getElementById('result-badge').innerHTML = `<span>●</span> ${tier.label}`;
+
+  // Render ring
+  document.getElementById('result-ring').className = 'result-score-ring ' + tier.ringClass;
+  document.getElementById('result-score').textContent = scorePct + '%';
+
+  // Text
+  document.getElementById('result-headline').textContent = tier.headline;
+  document.getElementById('result-sub').textContent      = tier.sub;
+
+  // Signal cards
+  document.getElementById('result-signals').innerHTML = tier.signals.map(s => `
+    <div class="signal-card">
+      <div class="signal-icon">${s.icon}</div>
+      <div class="signal-title">${s.title}</div>
+      <div class="signal-desc">${s.desc}</div>
+    </div>
+  `).join('');
+
+  // CTA block
+  document.getElementById('result-cta').innerHTML = `
+    <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px;">${tier.cta.eyebrow}</div>
+    <h3 style="font-size:clamp(1.2rem,2.5vw,1.7rem);font-weight:900;color:var(--white);margin-bottom:12px;line-height:1.2;">${tier.cta.headline}</h3>
+    <p style="font-size:0.9rem;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto;">${tier.cta.body}</p>
+    <a href="${tier.cta.href}" class="btn btn-primary btn-lg">${tier.cta.btn}</a>
+  `;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restartAssessment() {
+  currentQ = 0;
+  answers  = Array(QUESTIONS.length).fill(null);
+  document.getElementById('results-screen').style.display = 'none';
+  document.getElementById('intro-screen').style.display   = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyShareLink(e) {
+  e.preventDefault();
+  const url = 'https://brixgate.com/ai-readiness';
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => {
+      const btn = document.getElementById('share-link-btn');
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => { btn.textContent = '🔗 Copy Link'; }, 2000);
+    });
+  }
+}
+</script>
+
+<!-- ====== WHATSAPP CHAT WIDGET ====== -->
+<a href="https://wa.me/2347088093620?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme."
+   target="_blank" rel="noopener"
+   class="whatsapp-float"
+   aria-label="Chat with us on WhatsApp"
+   title="Chat with us on WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 506.69 493.98">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-2, .cls-3, .cls-4, .cls-5 {
+        stroke-width: 0px;
+      }
+
+      .cls-6 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-7 {
+        font-family: Paralucent-Light, Paralucent;
+        font-size: 91.78px;
+        font-weight: 300;
+      }
+
+      .cls-7, .cls-5 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        fill: #f2f2e9;
+      }
+
+      .cls-4 {
+        fill: #d8d6d2;
+      }
+
+      .cls-8 {
+        letter-spacing: -.01em;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1=".34" y1="380.34" x2="448.58" y2="144.09" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff294e"/>
+      <stop offset="1" stop-color="#ff5748"/>
+    </linearGradient>
+  </defs>
+  <rect class="cls-2" x="0" width="506.69" height="493.98"/>
+  <rect class="cls-3" x="0" y="475.01" width="253.36" height="18.97"/>
+  <rect class="cls-4" x="253.32" y="475.01" width="253.36" height="18.97"/>
+  <g>
+    <text class="cls-7" transform="translate(95.3 332.97)"><tspan x="0" y="0">Bri</tspan><tspan class="cls-1" x="98.57" y="0">x</tspan><tspan class="cls-8" x="141.25" y="0">g</tspan><tspan class="cls-6" x="188.15" y="0">a</tspan><tspan class="cls-8" x="236.61" y="0">t</tspan><tspan x="266.81" y="0">e</tspan></text>
+    <g>
+      <path class="cls-5" d="m256.49,153h-2.16c-6.81,0-12.32,5.52-12.32,12.32v13.64c0,5.76,4.67,10.42,10.42,10.42h14.86c14.39,0,26.06,11.67,26.06,26.06h0c0,14.39-11.67,26.06-26.06,26.06h0c-14.39,0-26.06-11.67-26.06-26.06v-16.71c0-5.12-4.15-9.27-9.27-9.27h-17.74c-5.18,0-9.38,4.2-9.38,9.38v5.79c0,28.53,23.13,51.65,51.65,51.65h0c28.53,0,51.65-23.13,51.65-51.65h0c0-28.53-23.13-51.65-51.65-51.65Z"/>
+      <rect class="cls-5" x="204.84" y="137.7" width="37.94" height="15.29" rx="5.84" ry="5.84"/>
+    </g>
+  </g>
+</svg>

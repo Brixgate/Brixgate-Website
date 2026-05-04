@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data & Analytics — AI in my Field | Brixgate</title>
+  <meta name="description" content="Data and analytics professionals who deploy AI across the full pipeline — from ingestion and cleaning to analysis, visualisation, and interpretation — are delivering insight at a speed and depth that changes how organisations make decisions." />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- Field Quiz ---- */
+    .qf-question { display: none; }
+    .qf-question.qf-active { display: block; }
+    .qf-options { display: flex; flex-direction: column; gap: 10px; }
+    .qf-opt {
+      padding: 14px 18px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border-card);
+      background: var(--bg-card);
+      color: var(--muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      line-height: 1.45;
+    }
+    .qf-opt:hover { border-color: var(--red); color: var(--white); transform: translateX(4px); }
+    .qf-opt.qf-selected { border-color: var(--red); background: rgba(255,41,78,0.12); color: var(--white); }
+    .qf-progress-bar {
+      height: 4px;
+      background: var(--border-card);
+      border-radius: 4px;
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+    .qf-progress-fill {
+      height: 100%;
+      background: var(--red);
+      border-radius: 4px;
+      transition: width 0.35s ease;
+    }
+    .qf-nav { display: flex; justify-content: flex-end; margin-top: 22px; }
+    .qf-next-btn {
+      padding: 12px 28px;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+      opacity: 0.4;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .qf-next-btn.qf-enabled { opacity: 1; pointer-events: auto; }
+    .qf-result { display: none; }
+    .qf-result.qf-visible { display: block; }
+    .result-badge {
+      display: inline-block;
+      padding: 5px 16px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 16px;
+    }
+    .result-score-bar {
+      height: 8px;
+      background: var(--border-card);
+      border-radius: 8px;
+      margin: 16px 0;
+      overflow: hidden;
+    }
+    .result-score-fill {
+      height: 100%;
+      border-radius: 8px;
+      transition: width 1s ease;
+    }
+    @media (max-width: 768px) {
+      .field-hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ====== NAV ====== -->
+<div id="scroll-progress"></div>
+<div class="region-banner">
+  <div class="container" style="display:flex;align-items:center;justify-content:center;gap:20px;">
+    <span>🌍 <strong>Africa-First,</strong> Globally Recognised · Cohorts open now</span>
+    <a href="apply.html?field=Data%20%26%20Analytics" style="color:var(--red);font-weight:700;font-size:0.84rem;">Apply →</a>
+  </div>
+</div>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="programme.html" class="active">Programme</a>
+      <a href="experts.html">Experts</a>
+      <a href="organisations.html">For Organisations</a>
+    </div>
+    <div class="nav-cta">
+      <a href="apply.html?field=Data%20%26%20Analytics" class="btn btn-outline-dark btn-sm">Apply Now</a>
+      <a href="organisations.html#contact" class="btn btn-primary btn-sm">Get a Demo</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="programme.html">Programme</a>
+  <a href="experts.html">Experts</a>
+  <a href="organisations.html">For Organisations</a>
+  <a href="apply.html?field=Data%20%26%20Analytics" class="btn btn-primary">Apply Now</a>
+  <a href="organisations.html#contact" class="btn btn-outline" style="margin-top:8px;">Get a Demo</a>
+</div><!-- ====== FIELD HERO ====== -->
+<section class="section-hero bg-dark" style="padding-top:calc(var(--nav-height) + 20px);padding-bottom:60px;">
+  <div class="container">
+    <div class="field-hero-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+      <div class="fade-up">
+        <a href="programme.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:0.82rem;font-weight:700;text-decoration:none;margin-bottom:24px;">
+          ← Back to all programmes
+        </a>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+          <span style="font-size:2.4rem;">📊</span>
+          <span style="background:rgba(255,41,78,0.15);color:var(--red);font-size:0.75rem;font-weight:800;padding:4px 14px;border-radius:50px;letter-spacing:.08em;text-transform:uppercase;">Expert Practitioner Programme</span>
+          
+        </div>
+        <h1 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:20px;">
+          AI in<br /><span style="color:var(--red);">Data & Analytics</span>
+        </h1>
+        <p style="font-size:1.15rem;color:var(--muted);line-height:1.7;margin-bottom:32px;max-width:480px;">Turn Data Into Decisions. Every Time.</p>
+        <!-- Price pill — visible in hero so cost is clear before scrolling -->
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:24px;">
+          <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,41,78,0.08);border:1px solid rgba(255,41,78,0.22);border-radius:50px;padding:8px 18px;">
+            <span style="font-size:0.7rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;">Self-Enrolment</span>
+            <span style="width:1px;height:14px;background:rgba(255,255,255,0.12);display:inline-block;"></span>
+            <span style="font-size:1.05rem;font-weight:900;color:var(--white);line-height:1;">
+              <span class="currency-ngn">₦250,000</span><span class="currency-usd">$156</span><span class="currency-gbp">£122</span><span class="currency-ngn" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px;">~$156</span><span class="currency-usd" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px;">~₦250,000</span><span class="currency-gbp" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px;">~₦250,000</span>
+            </span>
+          </div>
+          <a href="#pricing" style="font-size:0.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s;" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--muted)'">All pricing tiers →</a>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="#quiz-field" class="btn btn-primary btn-lg">Validate Your Skill Level →</a>
+          <a href="apply.html?field=Data%20%26%20Analytics" class="btn btn-outline btn-lg">Apply for This Programme</a>
+        </div>
+      </div>
+      <div class="fade-in" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:20px;padding:36px 32px;">
+        <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:16px;">What AI Looks Like in Data & Analytics</div>
+        <p style="font-size:1rem;color:var(--muted);line-height:1.7;">When an analyst uses AI to clean a messy dataset in minutes, generate insight narratives automatically, and predict what the data will show next quarter — that is an AI-native analytics function.</p>
+        <div style="margin-top:28px;padding-top:20px;border-top:1px solid var(--border-card);display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center;">
+          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white);">4</div><div style="font-size:0.72rem;color:var(--muted);">Week Sprint</div></div>
+          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white);">Live</div><div style="font-size:0.72rem;color:var(--muted);">Cohort Sessions</div></div>
+          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white);">Field</div><div style="font-size:0.72rem;color:var(--muted);">Verified Certificate</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== COHORT INFO BAR ====== -->
+<div style="background:#0D1C34;border-top:1px solid #1A3050;border-bottom:1px solid #1A3050;">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;">
+      <div style="padding:20px 24px;border-right:1px solid #1A3050;">
+        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;">Application Closes</div>
+        <div style="font-size:1rem;font-weight:800;color:#fff;">June 5, 2026</div>
+      </div>
+      <div style="padding:20px 24px;border-right:1px solid #1A3050;">
+        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;">Cohort Start Date</div>
+        <div style="font-size:1rem;font-weight:800;color:#fff;">June 12, 2026</div>
+      </div>
+      <div style="padding:20px 24px;border-right:1px solid #1A3050;">
+        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;">Programme Duration</div>
+        <div style="font-size:1rem;font-weight:800;color:#fff;">4 Weeks</div>
+      </div>
+      <div style="padding:20px 24px;">
+        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;">Learning Format</div>
+        <div style="font-size:1rem;font-weight:800;color:#fff;">Live, Online</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== VALIDATE YOUR SKILL LEVEL (QUIZ) ====== -->
+<section id="quiz-field" class="section-pad" style="background:var(--bg-dark);">
+  <div class="container">
+    <div style="max-width:800px;margin:0 auto;">
+      <div class="fade-up" style="text-align:center;margin-bottom:48px;">
+        <div class="eyebrow-tag">Validate Your Skill Level</div>
+        <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:900;line-height:1.2;margin-bottom:16px;">
+          Where Are You on the<br /><span style="color:var(--red);">AI Readiness Spectrum in Data & Analytics?</span>
+        </h2>
+        <p style="font-size:1rem;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.65;">
+          5 questions. 90 seconds. Get a clear read on your current level — and what the Expert Practitioner Programme will unlock for you.
+        </p>
+      </div>
+
+      <div id="qf_data_container" style="background:var(--bg-card);border:1.5px solid var(--border-card);border-radius:20px;padding:40px 36px;">
+        <!-- Progress bar -->
+        <div class="qf-progress-bar">
+          <div class="qf-progress-fill" id="qf_data_progress" style="width:20%;"></div>
+        </div>
+
+        <!-- Questions -->
+        
+          <div class="qf-question" id="qf_data_q0">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Data Pipeline Practice</span>
+              <span style="font-size:0.75rem;color:var(--muted);">Question 1 of 5</span>
+            </div>
+            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">How do you currently handle data cleaning, transformation, and preparation in your analytics work?</p>
+            <div class="qf-options">
+              <div class="qf-opt" data-q="0" data-score="1" onclick="qfSelect(this)">Manually — I clean and prepare data by hand in spreadsheets or scripts</div>
+              <div class="qf-opt" data-q="0" data-score="2" onclick="qfSelect(this)">I use standard ETL tools with custom scripts for most transformations</div>
+              <div class="qf-opt" data-q="0" data-score="3" onclick="qfSelect(this)">I use AI-assisted tools that automate some pipeline steps with my oversight</div>
+              <div class="qf-opt" data-q="0" data-score="4" onclick="qfSelect(this)">I have designed AI-powered data pipelines that run autonomously with exception alerts</div>
+            </div>
+          </div>
+          <div class="qf-question" id="qf_data_q1">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Analysis & Insight</span>
+              <span style="font-size:0.75rem;color:var(--muted);">Question 2 of 5</span>
+            </div>
+            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">How do you currently generate insights from data for business decision-making?</p>
+            <div class="qf-options">
+              <div class="qf-opt" data-q="1" data-score="1" onclick="qfSelect(this)">I produce standard charts and summaries from pre-built dashboards</div>
+              <div class="qf-opt" data-q="1" data-score="2" onclick="qfSelect(this)">I do custom analysis in SQL/Python but mostly descriptive</div>
+              <div class="qf-opt" data-q="1" data-score="3" onclick="qfSelect(this)">I use AI tools to supplement my analysis and generate initial narrative summaries</div>
+              <div class="qf-opt" data-q="1" data-score="4" onclick="qfSelect(this)">AI generates first-pass insights and narratives; I validate, contextualise, and communicate</div>
+            </div>
+          </div>
+          <div class="qf-question" id="qf_data_q2">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Model Development</span>
+              <span style="font-size:0.75rem;color:var(--muted);">Question 3 of 5</span>
+            </div>
+            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">What is your current experience with building or working with predictive or ML models?</p>
+            <div class="qf-options">
+              <div class="qf-opt" data-q="2" data-score="1" onclick="qfSelect(this)">I've not worked with predictive models — I focus on descriptive analytics</div>
+              <div class="qf-opt" data-q="2" data-score="2" onclick="qfSelect(this)">I've used pre-built models or AutoML tools without deep configuration</div>
+              <div class="qf-opt" data-q="2" data-score="3" onclick="qfSelect(this)">I build and tune predictive models as part of my regular data work</div>
+              <div class="qf-opt" data-q="2" data-score="4" onclick="qfSelect(this)">I design, deploy, and govern ML models in production environments</div>
+            </div>
+          </div>
+          <div class="qf-question" id="qf_data_q3">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Data Governance</span>
+              <span style="font-size:0.75rem;color:var(--muted);">Question 4 of 5</span>
+            </div>
+            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">How do you approach data quality and governance when using AI in analytics workflows?</p>
+            <div class="qf-options">
+              <div class="qf-opt" data-q="3" data-score="1" onclick="qfSelect(this)">I haven't thought about governance in the context of AI yet</div>
+              <div class="qf-opt" data-q="3" data-score="2" onclick="qfSelect(this)">I'm aware of the issues but haven't formalised an approach</div>
+              <div class="qf-opt" data-q="3" data-score="3" onclick="qfSelect(this)">I apply data quality checks and document AI-assisted outputs clearly</div>
+              <div class="qf-opt" data-q="3" data-score="4" onclick="qfSelect(this)">I lead data governance for AI workflows and have contributed to policy frameworks</div>
+            </div>
+          </div>
+          <div class="qf-question" id="qf_data_q4">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Stakeholder Translation</span>
+              <span style="font-size:0.75rem;color:var(--muted);">Question 5 of 5</span>
+            </div>
+            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">How effective are you at communicating AI-generated analytical insights to non-technical stakeholders?</p>
+            <div class="qf-options">
+              <div class="qf-opt" data-q="4" data-score="1" onclick="qfSelect(this)">I struggle to translate technical findings into business language</div>
+              <div class="qf-opt" data-q="4" data-score="2" onclick="qfSelect(this)">I can communicate findings but lose some nuance in the translation</div>
+              <div class="qf-opt" data-q="4" data-score="3" onclick="qfSelect(this)">I confidently translate complex AI outputs into clear, actionable business insights</div>
+              <div class="qf-opt" data-q="4" data-score="4" onclick="qfSelect(this)">I have developed communication frameworks my team now uses for AI-generated insights</div>
+            </div>
+          </div>
+
+        <!-- Nav button -->
+        <div class="qf-nav">
+          <button class="qf-next-btn" id="qf_data_next" onclick="qfNext('qf_data')">Next Question →</button>
+        </div>
+
+        <!-- Result panel -->
+        <div class="qf-result" id="qf_data_result">
+          <div style="text-align:center;margin-bottom:28px;">
+            <span class="result-badge" id="qf_data_badge">—</span>
+            <h3 id="qf_data_headline" style="font-size:1.5rem;font-weight:900;color:var(--white);line-height:1.3;margin-bottom:14px;"></h3>
+            <div class="result-score-bar">
+              <div class="result-score-fill" id="qf_data_scorefill" style="width:0%;background:var(--red);"></div>
+            </div>
+            <p id="qf_data_body" style="font-size:0.95rem;color:var(--muted);line-height:1.65;max-width:520px;margin:0 auto 28px;"></p>
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+              <a href="apply.html?field=Data%20%26%20Analytics" id="qf_data_cta_link" class="btn btn-primary btn-lg">Reserve Your Seat →</a>
+              <a href="#pricing" style="color:var(--muted);font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:4px;">View pricing first →</a>
+            </div>
+            <div style="margin-top:20px;">
+              <button onclick="qfReset('qf_data')" style="background:none;border:none;color:var(--muted);font-size:0.82rem;cursor:pointer;text-decoration:underline;">Retake the quiz</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CURRICULUM ====== -->
+<section class="section-pad bg-white" style="border-top:1px solid #E8E3DE;">
+  <div class="container">
+    <div style="max-width:800px;margin:0 auto;" class="fade-up">
+      <div class="eyebrow-tag" style="color:var(--red);">Programme Curriculum</div>
+      <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:12px;">What You Will Cover</h2>
+      <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:32px;">Every week builds on the last — from foundations through to a deployed, practitioner-assessed capstone project.</p>
+      <details open style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Week 1</span>AI & Modern Data Practice</span><span style="font-size:1.1rem;color:#7A94A8;">+</span></summary><div style="padding:0 24px 20px;background:#fff;"><ul style="list-style:none;padding:0;margin:8px 0 0;"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>The AI-native data stack vs traditional BI approaches</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>LLMs for data exploration and automated EDA</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Prompt engineering for SQL generation and data queries</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Evaluating AI-generated analysis for accuracy and bias</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Week 2</span>Intelligent Analytics Workflows</span><span style="font-size:1.1rem;color:#7A94A8;">+</span></summary><div style="padding:0 24px 20px;background:#fff;"><ul style="list-style:none;padding:0;margin:8px 0 0;"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>AI-assisted dashboard creation and insight narration</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Predictive modelling with AutoML tools</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Natural language interfaces for data exploration</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Anomaly detection using AI-powered monitoring tools</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Week 3</span>Applied AI Data Projects</span><span style="font-size:1.1rem;color:#7A94A8;">+</span></summary><div style="padding:0 24px 20px;background:#fff;"><ul style="list-style:none;padding:0;margin:8px 0 0;"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Building an AI-integrated data pipeline from raw to insight</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Automating reporting workflows with LLM-generated commentary</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Data quality monitoring using AI agents</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Deploying a live analytics model for a business use case</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Week 4</span>Capstone & Certification</span><span style="font-size:1.1rem;color:#7A94A8;">+</span></summary><div style="padding:0 24px 20px;background:#fff;"><ul style="list-style:none;padding:0;margin:8px 0 0;"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Capstone: end-to-end AI-augmented analytics project</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Peer review and expert practitioner assessment</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Portfolio documentation and presentation</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Brixgate Expert Practitioner Certificate — Data & Analytics</li></ul></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ====== TOOLS USED ====== -->
+<section class="section-pad bg-white" style="border-top:1px solid #E8E3DE;padding-top:40px;padding-bottom:48px;">
+  <div class="container">
+    <div class="fade-up">
+      <div class="eyebrow-tag" style="color:var(--red);">Tools &amp; Platforms</div>
+      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px;">Over 13+ AI Tools Used in This Sprint</h2>
+      <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px;">You will work hands-on with the tools that practitioners actually use in Data & Analytics. Real stacks, not toy environments.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;"><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Python (Pandas/NumPy)</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Power BI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Tableau</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">ChatGPT</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Julius AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">MindsDB</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Google Colab</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">DataRobot</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Hex</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Notion AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">GitHub Copilot</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Deepnote</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">KNIME</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== WHO IS THIS FOR ====== -->
+<section class="section-pad bg-white" style="border-top:1px solid #E8E3DE;padding-top:40px;">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;" class="fade-up">
+      <div>
+        <div class="eyebrow-tag" style="color:var(--red);">Who Is This For</div>
+        <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px;">Built for Data & Analytics Professionals</h2>
+        <p style="font-size:0.88rem;color:#4A5568;line-height:1.7;margin-bottom:28px;">This programme is for practitioners, not beginners. If you are already working in Data & Analytics and ready to operate at the level AI makes possible, this sprint is for you.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"><div style="padding:14px 20px;background:#EFF6FF;border-radius:10px;font-size:0.88rem;font-weight:700;color:#1D4ED8;">Data Analyst</div><div style="padding:14px 20px;background:#FFF7ED;border-radius:10px;font-size:0.88rem;font-weight:700;color:#C2410C;">BI Analyst</div><div style="padding:14px 20px;background:#F0FFF4;border-radius:10px;font-size:0.88rem;font-weight:700;color:#15803D;">Data Scientist</div><div style="padding:14px 20px;background:#FDF4FF;border-radius:10px;font-size:0.88rem;font-weight:700;color:#7E22CE;">Analytics Manager</div><div style="padding:14px 20px;background:#FFF1F2;border-radius:10px;font-size:0.88rem;font-weight:700;color:#BE123C;">Reporting Specialist</div><div style="padding:14px 20px;background:#FFFBEB;border-radius:10px;font-size:0.88rem;font-weight:700;color:#B45309;">Product Analyst</div></div>
+      </div>
+      <div>
+        <div style="font-size:0.75rem;font-weight:800;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;">Eligibility Criteria</div>
+        <ul style="list-style:none;padding:0;margin:0 0 28px;"><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Data or analytics professional with 1+ years of experience</li><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Comfortable working with data tools and dashboards</li><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Readiness to apply AI to real analytical challenges</li></ul>
+        <a href="apply.html?field=Data%20%26%20Analytics" class="btn btn-primary btn-lg" style="display:inline-flex;">Apply for This Programme &#8594;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== AI IN THIS FIELD: SKILLS ====== -->
+<section class="section-pad bg-white">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px;" class="fade-up">
+      <div class="eyebrow-tag" style="color:var(--red);">What You Will Master</div>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:var(--bg-dark);">The Three AI Skills That Will Define<br />Your Edge in Data & Analytics</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+      
+          <div class="card fade-up" style="padding:32px 28px;">
+            <div style="font-size:2.4rem;margin-bottom:16px;">🧹</div>
+            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px;">AI-Accelerated Data Preparation</h3>
+            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;">Use AI to automate data cleaning, enrichment, and validation — reducing pipeline time and increasing quality.</p>
+          </div>
+          <div class="card fade-up" style="padding:32px 28px;">
+            <div style="font-size:2.4rem;margin-bottom:16px;">💡</div>
+            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px;">Intelligent Insight Generation</h3>
+            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;">Apply AI to surface patterns, generate narrative summaries, and identify causal relationships in complex datasets.</p>
+          </div>
+          <div class="card fade-up" style="padding:32px 28px;">
+            <div style="font-size:2.4rem;margin-bottom:16px;">📉</div>
+            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px;">Predictive & Prescriptive Analytics</h3>
+            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;">Build AI-assisted forecasting models and decision-support tools that move beyond descriptive analysis.</p>
+          </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== HOW THE SPRINT WORKS ====== -->
+<section class="section-pad bg-dark">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px;" class="fade-up">
+      <div class="eyebrow-tag">The Sprint</div>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;">How the Data & Analytics<br />Sprint Works</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
+      <div class="card fade-up" style="padding:28px 24px;">
+        <div style="font-size:1.8rem;margin-bottom:12px;">🎯</div>
+        <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px;">Week 0</div>
+        <h3 style="font-size:0.95rem;font-weight:800;color:var(--white);margin-bottom:8px;">Field Assessment</h3>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55;">Map your current AI maturity and identify the highest-leverage skills for your specific role in Data & Analytics.</p>
+      </div>
+      <div class="card fade-up" style="padding:28px 24px;">
+        <div style="font-size:1.8rem;margin-bottom:12px;">👥</div>
+        <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px;">Week 1</div>
+        <h3 style="font-size:0.95rem;font-weight:800;color:var(--white);margin-bottom:8px;">Placed in Your Cohort</h3>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55;">You join a small, curated cohort of Data & Analytics professionals — led by a verified Expert Practitioner who has deployed AI in your exact domain.</p>
+      </div>
+      <div class="card fade-up" style="padding:28px 24px;">
+        <div style="font-size:1.8rem;margin-bottom:12px;">🚀</div>
+        <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px;">Weeks 2–4</div>
+        <h3 style="font-size:0.95rem;font-weight:800;color:var(--white);margin-bottom:8px;">Structured Sprint</h3>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55;">Live sessions, applied projects, and peer accountability. Every session builds directly on your Data & Analytics context — not generic AI theory.</p>
+      </div>
+      <div class="card fade-up" style="padding:28px 24px;">
+        <div style="font-size:1.8rem;margin-bottom:12px;">🏆</div>
+        <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px;">End of Sprint</div>
+        <h3 style="font-size:0.95rem;font-weight:800;color:var(--white);margin-bottom:8px;">Certification</h3>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55;">Receive your Brixgate Expert Practitioner Certificate — field-verified, practitioner-assessed, and employer-ready in Data & Analytics.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== WHAT YOU WILL BUILD ====== -->
+<section class="section-pad bg-white">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="fade-up">
+      <div>
+        <div class="eyebrow-tag" style="color:var(--red);">Real Deliverables</div>
+        <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:20px;">By the End of the Sprint, You Will Have Built Real Things.</h2>
+        <p style="font-size:0.95rem;color:#4A5568;line-height:1.7;margin-bottom:28px;">Not slide decks. Not theory. Applied tools, workflows, and frameworks that immediately improve how you work in Data & Analytics.</p>
+        <a href="apply.html?field=Data%20%26%20Analytics" class="btn btn-primary btn-lg">Apply for This Programme →</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        
+            <div style="display:flex;align-items:flex-start;gap:14px;">
+              <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0;">✓</span>
+              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5;">An AI-accelerated data pipeline for a real dataset from your current work</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:14px;">
+              <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0;">✓</span>
+              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5;">A working AI-assisted insight narrative generator for business reporting</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:14px;">
+              <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0;">✓</span>
+              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5;">A predictive model proposal with defined inputs, outputs, risks, and success metrics</span>
+            </div>
+        <div style="margin-top:8px;padding:20px;background:rgba(255,41,78,0.06);border:1.5px solid rgba(255,41,78,0.2);border-radius:12px;">
+          <div style="font-size:0.78rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Plus</div>
+          <p style="font-size:0.88rem;color:#2E3A4A;line-height:1.5;margin:0;">Brixgate Expert Practitioner Certificate — field-verified in Data & Analytics, practitioner-assessed, and recognised by employers across Africa and internationally.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PROGRAMME COHORTS ====== -->
+<section class="section-pad bg-white" style="border-top:1px solid #E8E3DE;padding-top:40px;padding-bottom:48px;">
+  <div class="container">
+    <div class="fade-up">
+      <div class="eyebrow-tag" style="color:var(--red);">Programme Cohorts</div>
+      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px;">Open Cohorts</h2>
+      <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px;">Cohort-based delivery means you learn alongside peers in your field and leave with a network, not just a certificate.</p>
+      <div style="max-width:540px;">
+        <div style="border:1.5px solid #E8E3DE;border-radius:14px;overflow:hidden;">
+          <div style="background:#021024;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-size:0.95rem;font-weight:800;color:#fff;">AI in Data & Analytics &#8212; Cohort 1</div>
+            <span style="background:#34C759;color:#fff;font-size:0.7rem;font-weight:800;padding:4px 12px;border-radius:50px;">Open</span>
+          </div>
+          <div style="padding:24px;background:#F9F8F7;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Start Date</div><div style="font-size:0.95rem;font-weight:800;color:#021024;">June 12, 2026</div></div>
+            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">End Date</div><div style="font-size:0.95rem;font-weight:800;color:#021024;">July 10, 2026</div></div>
+            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Cohort</div><div style="font-size:0.95rem;font-weight:800;color:#021024;">1</div></div>
+            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Lead Practitioner</div><div style="font-size:0.95rem;font-weight:800;color:#021024;">Kemi Adeyemi</div></div>
+          </div>
+          <div style="padding:16px 24px;background:#fff;border-top:1px solid #E8E3DE;display:flex;justify-content:space-between;align-items:center;">
+            <div style="display:flex;align-items:center;gap:6px;"><span style="color:#F59E0B;">&#9733;</span><span style="font-size:0.88rem;font-weight:700;color:#021024;">4.9</span><span style="font-size:0.78rem;color:#7A94A8;">Practitioner Rating</span></div>
+            <a href="apply.html?field=Data%20%26%20Analytics" class="btn btn-primary" style="padding:10px 20px;font-size:0.85rem;">Secure Your Seat &#8594;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== OUR PRACTITIONERS ====== -->
+<section class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+  <div class="container">
+    <div class="fade-up" style="margin-bottom:36px;">
+      <div class="eyebrow-tag" style="color:var(--red);">Your Practitioner</div>
+      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;">Taught by Someone Who Has Done It</h2>
+      <p style="font-size:0.88rem;color:var(--muted);margin-top:8px;">Not a generalist trainer. A practitioner who has deployed AI in this exact field and will show you exactly how.</p>
+    </div>
+    <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:16px;overflow:hidden;max-width:860px;" class="fade-up">
+      <div style="display:grid;grid-template-columns:220px 1fr;gap:0;">
+        <div style="background:#1A3050;padding:40px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+          <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#FF294E,#FF5748);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:14px;">K</div>
+          <div style="font-size:0.92rem;font-weight:800;color:#fff;margin-bottom:4px;">Kemi Adeyemi</div>
+          <div style="font-size:0.72rem;color:#7A94A8;line-height:1.5;margin-bottom:12px;">Senior Practitioner, Data & AI Analytics</div>
+          <div style="font-size:0.72rem;font-weight:700;color:#FF294E;">650+ live sessions</div>
+        </div>
+        <div style="padding:36px 40px;">
+          <p style="font-size:0.9rem;color:var(--muted);line-height:1.75;margin-bottom:24px;">Kemi is a data practitioner with over eight years building analytics systems for financial services, FMCG, and public sector organisations across Africa. She specialises in bridging the gap between raw data and actionable business intelligence — and now teaches analysts how to do the same with AI. Over 650 live sessions delivered.</p>
+          <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Core Expertise</div>
+          <div><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">Predictive Analytics</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">BI & Dashboarding</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">Data Pipeline Design</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">AI-Augmented Reporting</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">Stakeholder Communication through Data</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== TESTIMONIALS ====== -->
+<section class="section-pad bg-white" style="border-top:1px solid #E8E3DE;">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:36px;" class="fade-up">
+      <div class="eyebrow-tag" style="color:var(--red);">Alumni Reviews</div>
+      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);">What Practitioners Say</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;"><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px;" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px;">"I have been doing BI for six years. This sprint changed how I think about the entire process. I now generate first-draft dashboards with AI and spend my time on interpretation instead of construction."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8;">BI Analyst · BrixGate Alumni</div></div><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px;" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px;">"The SQL generation workflows alone were worth it. What used to take me two hours I now do in 20 minutes and the quality is better."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8;">Data Analyst · BrixGate Alumni</div></div><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px;" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px;">"We automated three weekly reports that used to take my team a combined 12 hours. Leadership just notices we have more time for actual analysis."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8;">Analytics Manager · BrixGate Alumni</div></div></div>
+  </div>
+</section>
+
+<!-- ====== FAQ ====== -->
+<section class="section-pad bg-white" style="border-top:1px solid #E8E3DE;padding-bottom:64px;">
+  <div class="container">
+    <div style="max-width:760px;margin:0 auto;" class="fade-up">
+      <div style="text-align:center;margin-bottom:32px;">
+        <div class="eyebrow-tag" style="color:var(--red);">FAQ</div>
+        <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);">Common Questions</h2>
+      </div>
+      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024;">Do I need to know how to code?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px;">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7;"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0;">Basic familiarity with data tools is expected, but you do not need to be a developer. The programme is designed for analysts and data professionals, not engineers.</p></div></details><details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024;">Which tools will we actually use?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px;">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7;"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0;">We work with tools relevant to your current stack — Power BI, Tableau, Python, and AI-native platforms like Julius, MindsDB, and Hex. No new software purchases are required.</p></div></details><details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024;">Will this replace my role as an analyst?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px;">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7;"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0;">No — and we address this directly in Week 1. The programme is about augmenting your output and elevating your strategic value, not replacing the analytical judgment that makes great analysts irreplaceable.</p></div></details><details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024;">How much time per week does the sprint require?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px;">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7;"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0;">Expect 6 to 8 hours per week across live sessions, applied exercises, and your capstone project. The sprint is designed to run alongside your existing role.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ====== VALUE / ROI ====== -->
+<section class="section-pad" style="background:#F6F4F2;border-top:1px solid #E8E3DE;">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px;" class="fade-up">
+      <div class="eyebrow-tag" style="color:var(--red);">Why This Investment Pays Off</div>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:#021024;line-height:1.25;">What ₦250,000 Actually Buys You</h2>
+      <p style="font-size:0.95rem;color:#4A5568;max-width:600px;margin:16px auto 0;line-height:1.7;">Data professionals who move from analysis to AI-augmented decision systems are becoming the most valued people in any data-driven organisation.</p>
+    </div>
+
+    <!-- Market data row -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1.5px solid #E8E3DE;border-radius:16px;overflow:hidden;margin-bottom:56px;" class="fade-up">
+      <div style="padding:32px 28px;text-align:center;border-right:1px solid #E8E3DE;">
+        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px;">5×</div>
+        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px;">Faster insight generation for data teams using AI-augmented pipelines</div>
+        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic;">Databricks State of Data</div>
+      </div>
+      <div style="padding:32px 28px;text-align:center;border-right:1px solid #E8E3DE;">
+        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px;">80%</div>
+        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px;">Reduction in routine data cleaning time with AI-assisted tools</div>
+        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic;">Kaggle Survey</div>
+      </div>
+      <div style="padding:32px 28px;text-align:center;">
+        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px;">$65K+</div>
+        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px;">Avg salary premium for senior data professionals with AI/ML production experience</div>
+        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic;">Burtch Works</div>
+      </div>
+    </div>
+
+    <!-- What's included + Outcomes grid -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;" class="fade-up">
+
+      <!-- What's Included -->
+      <div style="background:#fff;border:1.5px solid #E8E3DE;border-radius:16px;padding:40px 36px;">
+        <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:6px;">What You Get</div>
+        <h3 style="font-size:1.2rem;font-weight:900;color:#021024;margin-bottom:28px;">Everything Included. No Extras.</h3>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><span style="color:#fff;font-size:0.75rem;font-weight:900;">✓</span></div>
+            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px;">8 Live Practitioner Sessions</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5;">2 sessions per week across 4 weeks — interactive, applied, no pre-recorded lectures.</div></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><span style="color:#fff;font-size:0.75rem;font-weight:900;">✓</span></div>
+            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px;">Field Assessment Before You Start</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5;">Know exactly where you are and what matters most for your specific Data & Analytics role.</div></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><span style="color:#fff;font-size:0.75rem;font-weight:900;">✓</span></div>
+            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px;">All AI Tools &amp; Platform Access</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5;">Every tool used in the sprint is provided. No additional subscriptions required.</div></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><span style="color:#fff;font-size:0.75rem;font-weight:900;">✓</span></div>
+            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px;">Peer Cohort of Data & Analytics Professionals</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5;">Learn alongside practitioners solving the same problems you face — a network, not just a cohort.</div></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><span style="color:#fff;font-size:0.75rem;font-weight:900;">✓</span></div>
+            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px;">Capstone Project &amp; Portfolio Artefact</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5;">A real AI-Augmented Data System — built during the sprint, reviewed by your practitioner, and yours to deploy.</div></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><span style="color:#fff;font-size:0.75rem;font-weight:900;">✓</span></div>
+            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px;">Brixgate Expert Practitioner Certificate</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5;">Verifiable digital credential, LinkedIn badge, and field-verified assessment — employer-ready in Data & Analytics.</div></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><span style="color:#fff;font-size:0.75rem;font-weight:900;">✓</span></div>
+            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px;">Lifetime Alumni Network Access</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5;">Post-sprint access to the Brixgate Alumni community across all fields and cohorts.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Outcomes + Comparison -->
+      <div style="display:flex;flex-direction:column;gap:24px;">
+        <div style="background:#021024;border-radius:16px;padding:36px;">
+          <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:16px;">By the End of Week 4, You Will Have</div>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0;">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6;">Build an end-to-end AI-augmented analytics pipeline on real business data</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0;">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6;">Deploy AI-assisted anomaly detection and root cause analysis for your data product</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0;">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6;">Create an AI model governance and quality monitoring framework your team can run</span></div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border:1.5px solid #E8E3DE;border-radius:16px;padding:32px;">
+          <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:16px;">vs. The Alternatives</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #F0EDEA;">
+              <div><div style="font-size:0.82rem;font-weight:700;color:#021024;">YouTube / Free AI Courses</div><div style="font-size:0.75rem;color:#7A94A8;margin-top:2px;">Generic. No field context. No practitioner. No accountability.</div></div>
+              <div style="font-size:0.78rem;font-weight:800;color:#7A94A8;white-space:nowrap;margin-left:16px;">Free — but valueless for your career</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #F0EDEA;">
+              <div><div style="font-size:0.82rem;font-weight:700;color:#021024;">LinkedIn Learning / Coursera</div><div style="font-size:0.75rem;color:#7A94A8;margin-top:2px;">Self-paced. Pre-recorded. No peer cohort. No field practitioner.</div></div>
+              <div style="font-size:0.78rem;font-weight:800;color:#7A94A8;white-space:nowrap;margin-left:16px;">$400/yr · No accountability</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #F0EDEA;">
+              <div><div style="font-size:0.82rem;font-weight:700;color:#021024;">2-Day AI Workshop</div><div style="font-size:0.75rem;color:#7A94A8;margin-top:2px;">High cost. Generic content. No follow-through. No deliverable.</div></div>
+              <div style="font-size:0.78rem;font-weight:800;color:#7A94A8;white-space:nowrap;margin-left:16px;">₦500K–₦2M · No outcomes</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;">
+              <div><div style="font-size:0.82rem;font-weight:800;color:#FF294E;">Brixgate Expert Practitioner Sprint</div><div style="font-size:0.75rem;color:#4A5568;margin-top:2px;">Live. Field-specific. Practitioner-led. Real deliverable. Certified.</div></div>
+              <div style="font-size:0.78rem;font-weight:800;color:#021024;white-space:nowrap;margin-left:16px;">₦250,000 · Everything included</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:rgba(255,41,78,0.05);border:1.5px solid rgba(255,41,78,0.2);border-radius:12px;padding:24px;text-align:center;">
+          <div style="font-size:0.78rem;font-weight:800;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">First Cohort — June 12, 2026</div>
+          <div style="font-size:0.88rem;color:#2E3A4A;line-height:1.6;margin-bottom:16px;">Cohort 1 is limited to 20 participants. Once full, the next opening is September 2026.</div>
+          <a href="apply.html?field=Data%20%26%20Analytics" class="btn btn-primary" style="width:100%;justify-content:center;display:flex;">Secure Your Place →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== PRICING ====== -->
+<section id="pricing" class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:16px;" class="fade-up">
+      <div class="eyebrow-tag">Pricing</div>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;">Invest in Your AI Advantage</h2>
+      <p style="font-size:0.95rem;color:var(--muted);margin-top:12px;margin-bottom:24px;">Individual pricing for the Data & Analytics Expert Practitioner Programme</p>
+      <div class="currency-toggle" style="margin-bottom:8px;">
+        <label class="label-usd active">$ USD</label>
+        <label class="label-ngn">₦ NGN</label>
+      </div>
+      <p style="font-size:0.78rem;color:var(--muted);margin-top:6px;">Exchange rate: ₦1,600 per $1 USD</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto;" class="stagger">
+      <div class="card fade-up" style="padding:32px 28px;">
+        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px;">Self-Enrolment</div>
+        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px;">
+          <span class="currency-usd">$156</span>
+          <span class="currency-ngn">₦250,000</span>
+        </div>
+        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px;">
+          <span class="currency-usd">~₦250,000 NGN</span>
+          <span class="currency-ngn">~$156 USD</span>
+        </div>
+        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px;">
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Full 4-week sprint</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Field assessment</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Expert-led cohort sessions</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Expert Practitioner Certificate</li>
+        </ul>
+        <a href="apply.html?field=Data%20%26%20Analytics" class="btn btn-outline" style="width:100%;justify-content:center;display:flex;">Enrol Now →</a>
+      </div>
+      <div class="card fade-up" style="padding:32px 28px;border-color:var(--red);position:relative;">
+        <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;white-space:nowrap;">Most Popular</div>
+        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px;">Corporate Seat</div>
+        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px;">
+          <span class="currency-usd">$125</span>
+          <span class="currency-ngn">₦200,000</span>
+        </div>
+        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px;">
+          <span class="currency-usd">~₦200,000 NGN · per seat</span>
+          <span class="currency-ngn">~$125 USD · per seat</span>
+        </div>
+        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px;">
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Everything in Self-Enrolment</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Manager progress reports</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Invoiced to your company</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Priority cohort placement</li>
+        </ul>
+        <a href="apply.html?field=Data%20%26%20Analytics" class="btn btn-primary" style="width:100%;justify-content:center;display:flex;">Apply Now →</a>
+      </div>
+      <div class="card fade-up" style="padding:32px 28px;">
+        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px;">Team (20+ seats)</div>
+        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px;">
+          <span class="currency-usd">$106</span>
+          <span class="currency-ngn">₦170,000</span>
+        </div>
+        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px;">
+          <span class="currency-usd">~₦170,000 NGN · per seat</span>
+          <span class="currency-ngn">~$106 USD · per seat</span>
+        </div>
+        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px;">
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Everything in Corporate</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Dedicated cohort manager</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Team project tracks</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Full cohort reporting</li>
+        </ul>
+        <a href="organisations.html#packages" class="btn btn-outline" style="width:100%;justify-content:center;display:flex;">View Team Packages →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CTA ====== -->
+<section class="section-pad" style="background:var(--red);text-align:center;">
+  <div class="container">
+    <div class="fade-up">
+      <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;color:#fff;margin-bottom:16px;">Ready to Become an AI-Native<br />Data & Analytics Professional?</h2>
+      <p style="font-size:1rem;color:rgba(255,255,255,0.82);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;">Seats are limited per cohort. Apply in under 2 minutes — no essays, no references required.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="apply.html?field=Data%20%26%20Analytics" class="btn btn-lg" style="background:#fff;color:var(--red);font-weight:900;">Apply to Become a Brixer →</a>
+        <a href="#quiz-field" class="btn btn-lg" style="background:transparent;border:2px solid rgba(255,255,255,0.5);color:#fff;">Validate Your Level First</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo footer-logo">
+          <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+        </a>
+        <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://x.com/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us">@</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Programme</h5>
+        <ul>
+          <li><a href="programme.html">AI in my Field</a></li>
+          <li><a href="programme.html#journey">The Journey</a></li>
+          <li><a href="programme.html#pillars">The Framework</a></li>
+          <li><a href="programme.html#sectors">Sectors Covered</a></li>
+          <li><a href="programme.html#pricing">Pricing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Experts</h5>
+        <ul>
+          <li><a href="experts.html">Meet Our Experts</a></li>
+          <li><a href="experts.html#qualify">Become an Expert</a></li>
+          <li><a href="experts.html#criteria">Qualification Criteria</a></li>
+          <li><a href="join-as-expert.html">Join as Expert</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Organisation</h5>
+        <ul>
+          <li><a href="organisations.html">Corporate Programmes</a></li>
+          <li><a href="organisations.html#packages">Packages &amp; Pricing</a></li>
+          <li><a href="organisations.html#contact">Request a Demo</a></li>
+          <li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li>
+          <li><a href="apply.html?field=Data%20%26%20Analytics">Apply Now</a></li>
+          <li><a href="verify.html">Verify a Certificate</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Cookie Policy</a>
+    </div>
+  </div>
+</footer>
+
+<a href="#" class="back-to-top" aria-label="Back to top">↑</a>
+
+<script src="script.js"></script>
+<script>
+// ====== Field-Specific Quiz (data) ======
+(function() {
+  const ID = 'qf_data';
+  const TIERS = [
+      { min: 5, max: 9, label: 'Foundation Level', color: '#FF5748', headline: 'You\'re at the starting line. That\'s exactly where this programme begins.', body: 'Most professionals in your field are in the same position. The Expert Practitioner Programme is built for exactly this moment — structured, practitioner-led, and designed to move you from curiosity to capability in four weeks.', cta: 'Reserve your seat before this cohort fills →' },
+      { min: 10, max: 14, label: 'Emerging Practitioner', color: '#FF8C00', headline: 'You have awareness. The programme turns awareness into applied advantage.', body: 'You\'re ahead of most professionals who haven\'t started yet. But awareness without application doesn\'t move the needle. The sprint will give you the structured framework, practitioner guidance, and peer accountability to make your AI knowledge operational.', cta: 'Apply now and close the gap →' },
+      { min: 15, max: 18, label: 'Practitioner Level', color: '#22c55e', headline: 'You\'re ahead of most. The sprint sharpens your edge.', body: 'You\'re applying AI in your field, but there\'s a gap between occasional use and systematic advantage. The Expert Practitioner Programme will give you the framework, the network, and the field-verified certification to formalise what you\'ve built — and take it further.', cta: 'Join the next cohort and formalise your advantage →' },
+      { min: 19, max: 20, label: 'Expert Practitioner', color: '#3b82f6', headline: 'You\'re already operating at a high level. Consider becoming an Expert.', body: 'Your score suggests you\'re already applying AI at a level that most professionals in your field haven\'t reached. You\'d be a strong candidate for our Expert Practitioner pathway — sharing what you know while continuing to grow.', cta: 'Explore joining as an Expert Practitioner →' }
+  ];
+
+  const scores = {};
+  let currentQ = 0;
+  const totalQ = 5;
+
+  // Show first question
+  showQ(0);
+
+  function showQ(index) {
+    document.querySelectorAll('#' + ID + '_container .qf-question').forEach(el => el.classList.remove('qf-active'));
+    const qEl = document.getElementById(ID + '_q' + index);
+    if (qEl) qEl.classList.add('qf-active');
+    const pct = ((index) / totalQ * 100) + 20;
+    document.getElementById(ID + '_progress').style.width = Math.min(pct, 100) + '%';
+    updateNextBtn();
+  }
+
+  window.qfSelect = function(el) {
+    const q = parseInt(el.dataset.q);
+    const score = parseInt(el.dataset.score);
+    document.querySelectorAll('#' + ID + '_q' + q + ' .qf-opt').forEach(o => o.classList.remove('qf-selected'));
+    el.classList.add('qf-selected');
+    scores[q] = score;
+    updateNextBtn();
+  };
+
+  window.qfNext = function(id) {
+    if (id !== ID) return;
+    if (scores[currentQ] === undefined) return;
+    currentQ++;
+    if (currentQ >= totalQ) {
+      showResult();
+    } else {
+      showQ(currentQ);
+    }
+  };
+
+  window.qfReset = function(id) {
+    if (id !== ID) return;
+    Object.keys(scores).forEach(k => delete scores[k]);
+    currentQ = 0;
+    document.querySelectorAll('#' + ID + '_container .qf-opt').forEach(o => o.classList.remove('qf-selected'));
+    document.getElementById(ID + '_result').classList.remove('qf-visible');
+    document.querySelector('#' + ID + '_container .qf-nav').style.display = 'flex';
+    showQ(0);
+  };
+
+  function updateNextBtn() {
+    const btn = document.getElementById(ID + '_next');
+    if (!btn) return;
+    if (scores[currentQ] !== undefined) {
+      btn.classList.add('qf-enabled');
+      btn.textContent = currentQ === totalQ - 1 ? 'See My Results →' : 'Next Question →';
+    } else {
+      btn.classList.remove('qf-enabled');
+      btn.textContent = currentQ === totalQ - 1 ? 'See My Results →' : 'Next Question →';
+    }
+  }
+
+  function showResult() {
+    const total = Object.values(scores).reduce((a, b) => a + b, 0);
+    const tier = TIERS.find(t => total >= t.min && total <= t.max) || TIERS[0];
+    const pct = ((total - 5) / 15) * 100;
+
+    document.getElementById(ID + '_badge').textContent = tier.label;
+    document.getElementById(ID + '_badge').style.background = tier.color + '22';
+    document.getElementById(ID + '_badge').style.color = tier.color;
+    document.getElementById(ID + '_badge').style.border = '1.5px solid ' + tier.color + '44';
+    document.getElementById(ID + '_headline').textContent = tier.headline;
+    document.getElementById(ID + '_body').textContent = tier.body;
+    document.getElementById(ID + '_cta_link').textContent = tier.cta;
+    if (total >= 19) document.getElementById(ID + '_cta_link').href = 'join-as-expert.html';
+
+    document.getElementById(ID + '_result').classList.add('qf-visible');
+    document.querySelector('#' + ID + '_container .qf-nav').style.display = 'none';
+    document.querySelectorAll('#' + ID + '_container .qf-question').forEach(el => el.classList.remove('qf-active'));
+
+    setTimeout(() => {
+      document.getElementById(ID + '_scorefill').style.width = Math.max(pct, 5) + '%';
+      document.getElementById(ID + '_scorefill').style.background = tier.color;
+    }, 100);
+
+    // Scroll to result
+    document.getElementById(ID + '_result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+})();
+</script>
+
+<!-- ====== WHATSAPP CHAT WIDGET ====== -->
+<a href="https://wa.me/2347088093620?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme."
+   target="_blank" rel="noopener"
+   class="whatsapp-float"
+   aria-label="Chat with us on WhatsApp"
+   title="Chat with us on WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+</body>
+</html>

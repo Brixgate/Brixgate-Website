@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Programme — AI in my Field | Brixgate</title>
+  <meta name="description" content="The AI in my Field Expert Practitioner Programme — a 4-week intensive sprint built for your specific field. Pick your field and start in weeks." />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- Hero Stats Bar ---- */
+    .hero-stats-bar {
+      display: flex;
+      gap: 0;
+      margin-top: 40px;
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      max-width: 640px;
+    }
+    .hero-stat {
+      flex: 1;
+      padding: 16px 20px;
+      border-right: 1px solid var(--border-card);
+      text-align: center;
+    }
+    .hero-stat:last-child { border-right: none; }
+    .hero-stat-val {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    /* ---- Field Cards ---- */
+    .fields-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .field-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 28px 24px 24px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      overflow: hidden;
+    }
+    .field-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--red);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+      transform-origin: left;
+    }
+    .field-card:hover {
+      border-color: rgba(255,41,78,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+    .field-card:hover::before { transform: scaleX(1); }
+    .field-emoji {
+      font-size: 2rem;
+      line-height: 1;
+    }
+    .field-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.3;
+    }
+    .field-status {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: auto;
+    }
+    .field-arrow {
+      position: absolute;
+      top: 24px; right: 20px;
+      font-size: 1.1rem;
+      color: var(--muted);
+      transition: color 0.2s, transform 0.2s;
+    }
+    .field-card:hover .field-arrow {
+      color: var(--red);
+      transform: translate(3px, -3px);
+    }
+    .fields-coming-soon {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      padding: 18px 20px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+    }
+    .coming-field {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 8px;
+      opacity: 0.45;
+      text-align: center;
+    }
+    .coming-field-emoji { font-size: 1.4rem; }
+    .coming-field-name { font-size: 0.72rem; color: var(--muted); font-weight: 600; line-height: 1.3; }
+
+    /* ---- Differentiators strip ---- */
+    .diff-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .diff-item {
+      padding: 32px 36px;
+      border-right: 1px solid var(--border-card);
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .diff-item:last-child { border-right: none; }
+    .diff-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .diff-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .diff-body {
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ---- Week cards ---- */
+    .week-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .week-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 28px 24px;
+      transition: var(--transition);
+      position: relative;
+    }
+    .week-card:hover { border-color: var(--red); transform: translateY(-4px); }
+    .week-num {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 10px;
+    }
+    .week-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .week-body {
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ---- Pillars ---- */
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .pillar-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 36px 32px;
+      transition: var(--transition);
+    }
+    .pillar-item:hover { border-color: var(--red); }
+    .pillar-num {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: rgba(255,41,78,0.15);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .pillar-name {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .pillar-body {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ---- Quiz ---- */
+    .qe-q { display: none; }
+    .qe-q.qe-active { display: block; animation: fadeSlide 0.3s ease forwards; }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .qe-options { display: flex; flex-direction: column; gap: 12px; }
+    .qe-opt {
+      width: 100%;
+      text-align: left;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-card);
+      border-radius: 10px;
+      padding: 17px 22px;
+      color: var(--muted);
+      font-size: 0.93rem;
+      font-family: inherit;
+      line-height: 1.5;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .qe-opt:hover {
+      border-color: var(--red);
+      color: var(--white);
+      background: rgba(255,41,78,0.06);
+      transform: translateX(4px);
+    }
+    .qe-opt.qe-selected {
+      border-color: var(--red);
+      background: rgba(255,41,78,0.1);
+      color: var(--white);
+    }
+
+    /* ---- Pricing ---- */
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    /* ---- FAQ ---- */
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      background: none;
+      color: var(--white);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+    }
+    .faq-question:hover { color: var(--red); }
+    .faq-icon {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: rgba(255,41,78,0.1);
+      border: 1px solid rgba(255,41,78,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      color: var(--red);
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-answer {
+      display: none;
+      padding: 16px 24px 20px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.75;
+      border-top: 1px solid var(--border-card);
+    }
+    .faq-item.open .faq-answer { display: block; }
+
+    @media (max-width: 900px) {
+      .fields-grid { grid-template-columns: repeat(2, 1fr); }
+      .fields-coming-soon { grid-template-columns: repeat(3, 1fr); }
+      .diff-strip { grid-template-columns: 1fr; }
+      .diff-item { border-right: none; border-bottom: 1px solid var(--border-card); }
+      .diff-item:last-child { border-bottom: none; }
+      .week-cards { grid-template-columns: 1fr 1fr; }
+      .pillar-grid { grid-template-columns: 1fr; }
+      .price-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .hero-stats-bar { flex-wrap: wrap; }
+      .hero-stat { border-right: none; border-bottom: 1px solid var(--border-card); flex: 0 0 50%; }
+      .hero-stat:nth-child(2) { border-right: 1px solid var(--border-card); }
+      .hero-stat:nth-last-child(-n+2) { border-bottom: none; }
+      .fields-grid { grid-template-columns: 1fr 1fr; }
+      .fields-coming-soon { grid-template-columns: repeat(2, 1fr); }
+      .week-cards { grid-template-columns: 1fr; }
+      .price-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+
+<!-- Region Banner -->
+<div class="region-banner" id="region-banner">
+  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0;">Now active in</span>
+  <div class="regions">
+    <span class="region-item">🇳🇬 Nigeria</span>
+    <span class="region-item">🇬🇧 United Kingdom</span>
+    <span class="region-item">🇺🇸 United States</span>
+    <span class="region-item">🇰🇪 Kenya</span>
+    <span class="region-item">🇿🇦 South Africa</span>
+  </div>
+  <a href="apply.html" style="margin-left:auto;font-size:0.72rem;font-weight:700;color:var(--red);letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Apply Now →</a>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="programme.html" class="active">Programme</a>
+      <a href="experts.html">Experts</a>
+      <a href="organisations.html">For Organisations</a>
+    </div>
+    <div class="nav-cta">
+      <a href="apply.html" class="btn btn-outline-dark btn-sm">Apply Now</a>
+      <a href="organisations.html#contact" class="btn btn-primary btn-sm">Get a Demo</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="programme.html">Programme</a>
+  <a href="experts.html">Experts</a>
+  <a href="organisations.html">For Organisations</a>
+  <a href="apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="organisations.html#contact" class="btn btn-outline" style="margin-top:8px;">Get a Demo</a>
+</div>
+
+<!-- ====== HERO ====== -->
+<header class="page-header" style="padding-bottom:72px;">
+  <div class="container">
+    <span class="eyebrow fade-in">AI in my Field</span>
+    <h1 class="fade-up" style="max-width:700px;">Expert Practitioner<br/>Programme</h1>
+    <p class="fade-up" style="transition-delay:0.1s;max-width:560px;">A 4-week intensive sprint built from scratch for your specific field — taught by practitioners who have already done it. Pick your field below and start in weeks.</p>
+    <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;" class="fade-up">
+      <a href="#fields" class="btn btn-primary">Pick Your Field →</a>
+      <a href="#pricing" class="btn btn-outline">View Pricing</a>
+    </div>
+
+    <div class="hero-stats-bar fade-up" style="transition-delay:0.3s;">
+      <div class="hero-stat">
+        <div class="hero-stat-val">4</div>
+        <div class="hero-stat-label">Weeks</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">8</div>
+        <div class="hero-stat-label">Open Fields</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">100%</div>
+        <div class="hero-stat-label">Field-Specific</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">Cert.</div>
+        <div class="hero-stat-label">Included</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<!-- ====== VISUAL STRIP ====== -->
+<div style="position:relative;width:100%;height:420px;overflow:hidden;">
+  <img
+    src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=1600&h=500&fit=crop&crop=center&auto=format&q=80"
+    alt="Professionals applying AI in their field"
+    style="width:100%;height:100%;object-fit:cover;object-position:center;"
+  />
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,16,36,0.88) 0%,rgba(2,16,36,0.4) 60%,rgba(2,16,36,0.6) 100%);"></div>
+  <div style="position:absolute;inset:0;display:flex;align-items:center;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px;width:100%;">
+      <div style="max-width:560px;">
+        <div style="font-size:0.68rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:14px;">Built Different</div>
+        <div style="font-size:2rem;font-weight:900;color:#fff;line-height:1.2;margin-bottom:16px;">Not a course.<br/>A 4-week career sprint.</div>
+        <div style="font-size:0.92rem;color:rgba(255,255,255,0.65);line-height:1.7;max-width:440px;">Every programme is built from scratch by practitioners who have already applied AI in that exact field. Pick yours below.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== FIELDS — ABOVE THE FOLD ====== -->
+<section id="fields" class="bg-dark" style="padding:64px 0 72px;border-top:1px solid var(--border-card);">
+  <div class="container">
+    <div class="section-header fade-up" style="margin-bottom:40px;">
+      <span class="eyebrow">Open Now</span>
+      <h2>Pick Your Field.<br/>Start in 4 Weeks.</h2>
+      <div class="divider-red"></div>
+      <p>Each programme is built from scratch for its profession — not repurposed generic AI content. Select your field to see what's inside.</p>
+    </div>
+
+    <!-- 8 Active Fields -->
+    <div class="fields-grid stagger" style="margin-bottom:20px;">
+      <a href="programme-data.html" class="field-card fade-up">
+        <span class="field-arrow">↗</span>
+        <div class="field-emoji">📊</div>
+        <div class="field-name">Data Science</div>
+        <div class="field-status">● Open — Enrol Now</div>
+      </a>
+      <a href="programme-product.html" class="field-card fade-up">
+        <span class="field-arrow">↗</span>
+        <div class="field-emoji">🎨</div>
+        <div class="field-name">Product Design</div>
+        <div class="field-status">● Open — Enrol Now</div>
+      </a>
+      <a href="programme-cybersecurity.html" class="field-card fade-up">
+        <span class="field-arrow">↗</span>
+        <div class="field-emoji">🔐</div>
+        <div class="field-name">Cybersecurity</div>
+        <div class="field-status">● Open — Enrol Now</div>
+      </a>
+      <a href="programme-engineering.html" class="field-card fade-up">
+        <span class="field-arrow">↗</span>
+        <div class="field-emoji">⚙️</div>
+        <div class="field-name">Software Engineering</div>
+        <div class="field-status">● Open — Enrol Now</div>
+      </a>
+      <a href="programme-finance.html" class="field-card fade-up">
+        <span class="field-arrow">↗</span>
+        <div class="field-emoji">🏦</div>
+        <div class="field-name">Finance</div>
+        <div class="field-status">● Open — Enrol Now</div>
+      </a>
+      <a href="programme-marketing.html" class="field-card fade-up">
+        <span class="field-arrow">↗</span>
+        <div class="field-emoji">📣</div>
+        <div class="field-name">Marketing</div>
+        <div class="field-status">● Open — Enrol Now</div>
+      </a>
+      <a href="programme-devops.html" class="field-card fade-up">
+        <span class="field-arrow">↗</span>
+        <div class="field-emoji">☁️</div>
+        <div class="field-name">Cloud / DevOps</div>
+        <div class="field-status">● Open — Enrol Now</div>
+      </a>
+      <a href="programme-pm.html" class="field-card fade-up">
+        <span class="field-arrow">↗</span>
+        <div class="field-emoji">📋</div>
+        <div class="field-name">Project Management</div>
+        <div class="field-status">● Open — Enrol Now</div>
+      </a>
+    </div>
+
+    <!-- Coming soon strip -->
+    <div style="margin-bottom:24px;">
+      <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:12px;">🔒 Unlocking Throughout 2026</div>
+      <div class="fields-coming-soon">
+        <div class="coming-field"><div class="coming-field-emoji">👥</div><div class="coming-field-name">Human Resources</div></div>
+        <div class="coming-field"><div class="coming-field-emoji">⚖️</div><div class="coming-field-name">Legal &amp; Compliance</div></div>
+        <div class="coming-field"><div class="coming-field-emoji">🏥</div><div class="coming-field-name">Healthcare &amp; Medicine</div></div>
+        <div class="coming-field"><div class="coming-field-emoji">📚</div><div class="coming-field-name">Education &amp; Training</div></div>
+        <div class="coming-field"><div class="coming-field-emoji">🚚</div><div class="coming-field-name">Operations &amp; Supply Chain</div></div>
+        <div class="coming-field"><div class="coming-field-emoji">🏭</div><div class="coming-field-name">Manufacturing</div></div>
+      </div>
+    </div>
+
+    <p style="text-align:center;font-size:0.84rem;color:var(--muted);" class="fade-in">
+      Your field not open yet? <a href="apply.html" style="color:var(--red);font-weight:700;">Register interest and we'll notify you →</a>
+    </p>
+  </div>
+</section>
+
+<!-- ====== WHY DIFFERENT — Tight 3-column strip ====== -->
+<section class="bg-dark" style="padding:64px 0;border-top:1px solid var(--border-card);">
+  <div class="container">
+    <div class="section-header fade-up" style="margin-bottom:40px;">
+      <span class="eyebrow">Why This Works</span>
+      <h2>Not a Course. A Sprint.</h2>
+      <div class="divider-red"></div>
+    </div>
+    <div class="diff-strip fade-up">
+      <div class="diff-item">
+        <div class="diff-icon">🎯</div>
+        <div>
+          <div class="diff-title">Built for Your Field Alone</div>
+          <div class="diff-body">No repurposed content. A Data Science programme and a Marketing programme share zero curriculum — because their AI challenges are completely different.</div>
+        </div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon">👤</div>
+        <div>
+          <div class="diff-title">Taught by Practitioners, Not Trainers</div>
+          <div class="diff-body">Every Brixgate expert has already applied AI transformation in that specific field. You learn from proof. There is no theory that hasn't already been tested in practice.</div>
+        </div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon">🏆</div>
+        <div>
+          <div class="diff-title">Real Deliverables. Verified Certificate.</div>
+          <div class="diff-body">You leave with an applied project portfolio and the Brixgate Expert Practitioner Certificate — field-verified and practitioner-assessed. Not a quiz. Employers know what it represents.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== THE 4-WEEK SPRINT ====== -->
+<section id="sprint" class="section-pad bg-light">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="eyebrow" style="color:var(--red);">The Sprint</span>
+      <h2 style="color:var(--bg-dark);">4 Weeks. Full Transformation.</h2>
+      <div class="divider-red"></div>
+      <p style="color:rgba(46,58,74,0.7);">Intensive by design. Every week builds on the last. You leave week four with a deployed AI workflow, applied deliverables, and certification — not a certificate of attendance.</p>
+    </div>
+
+    <div class="week-cards stagger">
+      <div class="week-card fade-up" style="background:var(--white);border-color:rgba(46,58,74,0.1);">
+        <div class="week-num" style="color:var(--red);">Week 1</div>
+        <div class="week-title" style="color:var(--bg-dark);">Foundation &amp; Mapping</div>
+        <div class="week-body" style="color:rgba(46,58,74,0.65);">Map the AI landscape in your field. Audit your current tools. Identify the highest-leverage opportunities in your specific role. Scope your first applied project.</div>
+      </div>
+      <div class="week-card fade-up" style="background:var(--white);border-color:rgba(46,58,74,0.1);">
+        <div class="week-num" style="color:var(--red);">Week 2</div>
+        <div class="week-title" style="color:var(--bg-dark);">Applied Build</div>
+        <div class="week-body" style="color:rgba(46,58,74,0.65);">Hands-on deployment of AI tools in live work scenarios. Expert-guided sessions. First applied deliverable built, reviewed, and ready to use in your actual role.</div>
+      </div>
+      <div class="week-card fade-up" style="background:var(--white);border-color:rgba(46,58,74,0.1);">
+        <div class="week-num" style="color:var(--red);">Week 3</div>
+        <div class="week-title" style="color:var(--bg-dark);">Workflow Integration</div>
+        <div class="week-body" style="color:rgba(46,58,74,0.65);">Embed AI into your daily practice. Peer review of applied projects. Professional judgment frameworks — knowing what to trust, verify, and challenge in AI outputs.</div>
+      </div>
+      <div class="week-card fade-up" style="background:var(--white);border-color:rgba(46,58,74,0.1);">
+        <div class="week-num" style="color:var(--red);">Week 4</div>
+        <div class="week-title" style="color:var(--bg-dark);">Certification &amp; Cadence</div>
+        <div class="week-body" style="color:rgba(46,58,74,0.65);">Final project presentation. Practitioner assessment. Expert Practitioner Certificate issued. Long-term cadence plan locked in so your gains compound.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:40px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;" class="fade-up">
+      <a href="apply.html" class="btn btn-primary">Apply Now →</a>
+      <a href="#pricing" class="btn btn-outline-dark">See Pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== THREE PILLARS ====== -->
+<section id="pillars" class="section-pad bg-dark">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="eyebrow">The Framework</span>
+      <h2>Three Pillars.<br/>One Transformation.</h2>
+      <div class="divider-red"></div>
+      <p>Every Brixgate programme is built around three inseparable pillars. Develop all three and you don't just know how to use AI — you become the kind of professional who leads with it.</p>
+    </div>
+
+    <div class="pillar-grid stagger">
+      <div class="pillar-item fade-up">
+        <div class="pillar-num">01</div>
+        <div class="pillar-name">Capacity</div>
+        <div class="pillar-body">Technical and conceptual fluency to use AI effectively in your specific field. Not general AI literacy — deep, field-specific knowledge of which tools to use, when, and how to interpret their outputs in your professional context.</div>
+      </div>
+      <div class="pillar-item fade-up">
+        <div class="pillar-num">02</div>
+        <div class="pillar-name">Character</div>
+        <div class="pillar-body">Professional judgment to deploy AI ethically, accountably, and confidently. In every field, AI creates decision points where you must exercise judgment and take accountability. Character is what separates an Expert Practitioner from someone who just runs prompts.</div>
+      </div>
+      <div class="pillar-item fade-up">
+        <div class="pillar-num">03</div>
+        <div class="pillar-name">Cadence</div>
+        <div class="pillar-body">Habits and workflows that embed AI into daily practice so it compounds over time. The professionals who gain the most from AI are those who have made it habitual — not a tool they reach for occasionally, but a rhythm that delivers returns every day.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== THE CERTIFICATE ====== -->
+<section class="section-pad bg-light" style="border-top:1px solid rgba(46,58,74,0.08);">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1.05fr;gap:72px;align-items:center;">
+      <!-- Left: Text -->
+      <div class="fade-up">
+        <span class="eyebrow" style="color:var(--red);">Your Credential</span>
+        <h2 style="color:var(--bg-dark);">A Certificate That<br/>Anyone Can Verify.</h2>
+        <div class="divider-red"></div>
+        <p style="color:rgba(46,58,74,0.7);margin-bottom:16px;">Every Brixer receives a field-verified Expert Practitioner Certificate with a unique QR code — scannable by any employer, client, or collaborator worldwide in seconds.</p>
+        <p style="color:rgba(46,58,74,0.7);margin-bottom:16px;">The verification page shows the Brixer's photo, their expert's personal assessment, the competencies they mastered, and the applied project they built. We don't just certify completion. <strong style="color:var(--bg-dark);">We vouch for capability.</strong></p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:32px;">
+          <div style="display:flex;align-items:flex-start;gap:12px;">
+            <span style="color:#34C759;font-size:1rem;flex-shrink:0;">✓</span>
+            <span style="font-size:0.88rem;color:rgba(46,58,74,0.75);">Field-verified by a domain Expert Practitioner — not a multiple-choice test</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;">
+            <span style="color:#34C759;font-size:1rem;flex-shrink:0;">✓</span>
+            <span style="font-size:0.88rem;color:rgba(46,58,74,0.75);">Public profile with expert feedback and applied project — visible to anyone</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;">
+            <span style="color:#34C759;font-size:1rem;flex-shrink:0;">✓</span>
+            <span style="font-size:0.88rem;color:rgba(46,58,74,0.75);">QR code on the certificate links instantly to the verified Brixer profile</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="verify.html" class="btn btn-primary" target="_blank">See a Sample Brixer Profile →</a>
+          <a href="apply.html" class="btn btn-outline-dark">Apply Now</a>
+        </div>
+      </div>
+
+      <!-- Right: Certificate visual -->
+      <div class="fade-up" style="transition-delay:0.12s;">
+        <div style="background:#021024;border:2px solid #FF294E;border-radius:16px;padding:44px 48px;position:relative;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,0.35);">
+          <!-- Watermark -->
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-25deg);font-size:4.5rem;font-weight:900;color:rgba(255,255,255,0.025);letter-spacing:0.2em;pointer-events:none;white-space:nowrap;">BRIXGATE</div>
+          <!-- Corner accents -->
+          <div style="position:absolute;top:14px;left:14px;width:28px;height:28px;border-top:2px solid rgba(255,41,78,0.4);border-left:2px solid rgba(255,41,78,0.4);border-radius:2px 0 0 0;"></div>
+          <div style="position:absolute;top:14px;right:14px;width:28px;height:28px;border-top:2px solid rgba(255,41,78,0.4);border-right:2px solid rgba(255,41,78,0.4);border-radius:0 2px 0 0;"></div>
+          <div style="position:absolute;bottom:14px;left:14px;width:28px;height:28px;border-bottom:2px solid rgba(255,41,78,0.4);border-left:2px solid rgba(255,41,78,0.4);border-radius:0 0 0 2px;"></div>
+          <div style="position:absolute;bottom:14px;right:14px;width:28px;height:28px;border-bottom:2px solid rgba(255,41,78,0.4);border-right:2px solid rgba(255,41,78,0.4);border-radius:0 0 2px 0;"></div>
+
+          <!-- Header -->
+          <div style="text-align:center;margin-bottom:28px;">
+            <img src="assets/logo-color-nobg.svg" alt="Brixgate" style="height:28px;margin-bottom:14px;" />
+            <div style="font-size:0.55rem;font-weight:800;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.22em;">Expert Practitioner Certificate</div>
+            <div style="width:48px;height:1px;background:var(--red);margin:10px auto 0;"></div>
+          </div>
+
+          <!-- Recipient -->
+          <div style="text-align:center;margin-bottom:28px;">
+            <div style="font-size:0.68rem;color:rgba(255,255,255,0.35);font-style:italic;margin-bottom:10px;">This certifies that</div>
+            <div style="font-size:1.75rem;font-weight:900;color:#fff;line-height:1;margin-bottom:6px;">Chioma Okonkwo</div>
+            <div style="font-size:0.68rem;color:rgba(255,255,255,0.35);font-style:italic;margin-bottom:16px;">has successfully completed the</div>
+            <div style="font-size:0.88rem;font-weight:800;color:#FF294E;letter-spacing:0.04em;margin-bottom:3px;">Software Engineering</div>
+            <div style="font-size:0.62rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.1em;">Expert Practitioner Programme · AI in my Field</div>
+          </div>
+
+          <!-- Footer row -->
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;padding-top:22px;border-top:1px solid rgba(255,41,78,0.12);margin-top:4px;">
+            <div>
+              <div style="width:90px;height:1px;background:rgba(255,255,255,0.18);margin-bottom:6px;"></div>
+              <div style="font-size:0.68rem;font-weight:700;color:rgba(255,255,255,0.7);">Folasade Adeyemi</div>
+              <div style="font-size:0.55rem;color:rgba(255,255,255,0.3);">Expert Practitioner</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="width:52px;height:52px;background:#fff;border-radius:6px;padding:3px;margin:0 auto 6px;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https%3A%2F%2Fbrixgate.com%2Fverify%3Fid%3DBX-2026-SE-00142&margin=1" alt="QR Code" style="width:100%;height:100%;" />
+              </div>
+              <div style="font-size:0.5rem;color:rgba(255,255,255,0.2);font-family:monospace;">BX-2026-SE-00142</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="width:90px;height:1px;background:rgba(255,255,255,0.18);margin-bottom:6px;margin-left:auto;"></div>
+              <div style="font-size:0.68rem;font-weight:700;color:rgba(255,255,255,0.7);">Tayo Ogunlade</div>
+              <div style="font-size:0.55rem;color:rgba(255,255,255,0.3);">Director · Brixgate</div>
+            </div>
+          </div>
+        </div>
+
+        <p style="text-align:center;font-size:0.78rem;color:rgba(46,58,74,0.55);margin-top:16px;">
+          Sample certificate — <a href="verify.html" target="_blank" style="color:var(--red);font-weight:700;">view the full Brixer verification page →</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== AI READINESS QUIZ ====== -->
+<section id="skill-quiz" class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+  <div class="container">
+    <div style="max-width:800px;margin:0 auto;">
+      <div class="section-header fade-up" style="text-align:left;max-width:100%;margin-bottom:40px;">
+        <span class="eyebrow">5-Minute Assessment</span>
+        <h2>Where Are You on the<br/>AI Readiness Spectrum?</h2>
+        <div class="divider-red" style="margin:16px 0;"></div>
+        <p>Five questions. Your result tells you which cohort is the right starting point — and comes with a personalised next step. Most people are surprised by how much (or how little) they've already built.</p>
+      </div>
+
+      <div id="quiz-container-early" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-lg);overflow:hidden;" class="fade-up">
+        <!-- Progress bar -->
+        <div style="height:4px;background:var(--border-card);">
+          <div id="qe-progress" style="height:100%;background:linear-gradient(90deg,var(--red),var(--orange));width:0%;transition:width 0.4s ease;"></div>
+        </div>
+
+        <!-- Questions panel -->
+        <div id="qe-questions" style="padding:44px 52px;">
+          <div class="qe-q qe-active" data-q="1">
+            <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:24px;">Question 1 of 5 · AI Foundations</div>
+            <h4 style="font-size:1.2rem;font-weight:700;color:var(--white);line-height:1.5;margin-bottom:32px;">How would you describe your current use of AI tools in your day-to-day professional work?</h4>
+            <div class="qe-options">
+              <button class="qe-opt" data-score="1">I haven't used AI tools in my professional work yet</button>
+              <button class="qe-opt" data-score="2">I've tried a few tools occasionally but don't use them consistently</button>
+              <button class="qe-opt" data-score="3">I use AI tools regularly — they've noticeably changed how I work</button>
+              <button class="qe-opt" data-score="4">AI is fully embedded in my workflow — I couldn't perform as well without it</button>
+            </div>
+          </div>
+          <div class="qe-q" data-q="2">
+            <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:24px;">Question 2 of 5 · Field Application</div>
+            <h4 style="font-size:1.2rem;font-weight:700;color:var(--white);line-height:1.5;margin-bottom:32px;">How confidently can you identify which tasks in your specific profession can be meaningfully improved by AI right now?</h4>
+            <div class="qe-options">
+              <button class="qe-opt" data-score="1">Not confident — I'm not sure where AI would apply in my work</button>
+              <button class="qe-opt" data-score="2">Slightly — I have a general sense but haven't mapped it out</button>
+              <button class="qe-opt" data-score="3">Fairly confident — I can name 3–5 specific tasks AI could meaningfully improve</button>
+              <button class="qe-opt" data-score="4">Very confident — I know exactly where AI creates leverage in my field</button>
+            </div>
+          </div>
+          <div class="qe-q" data-q="3">
+            <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:24px;">Question 3 of 5 · Professional Judgment</div>
+            <h4 style="font-size:1.2rem;font-weight:700;color:var(--white);line-height:1.5;margin-bottom:32px;">When AI produces an output in your professional context — a draft, analysis, or recommendation — how do you respond?</h4>
+            <div class="qe-options">
+              <button class="qe-opt" data-score="1">I haven't been in this situation — I don't use AI for professional outputs</button>
+              <button class="qe-opt" data-score="2">I use the output but I'm not always sure what to check</button>
+              <button class="qe-opt" data-score="3">I review it critically against my professional knowledge before using it</button>
+              <button class="qe-opt" data-score="4">I apply expert judgment consistently — I know exactly what to trust, verify, and challenge</button>
+            </div>
+          </div>
+          <div class="qe-q" data-q="4">
+            <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:24px;">Question 4 of 5 · Leadership &amp; Initiative</div>
+            <h4 style="font-size:1.2rem;font-weight:700;color:var(--white);line-height:1.5;margin-bottom:32px;">Have you ever contributed to an AI adoption initiative — formally or informally — in your workplace?</h4>
+            <div class="qe-options">
+              <button class="qe-opt" data-score="1">No — I haven't been involved in anything like this</button>
+              <button class="qe-opt" data-score="2">Not formally, but I've shared AI tools with a colleague or made a suggestion</button>
+              <button class="qe-opt" data-score="3">Yes — I've contributed to a team AI adoption effort or introduced AI into a workflow</button>
+              <button class="qe-opt" data-score="4">Yes — I've led an AI integration project with measurable outcomes</button>
+            </div>
+          </div>
+          <div class="qe-q" data-q="5">
+            <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:24px;">Question 5 of 5 · Peer Perception</div>
+            <h4 style="font-size:1.2rem;font-weight:700;color:var(--white);line-height:1.5;margin-bottom:32px;">How would your colleagues describe your relationship with AI and new technology in your professional context?</h4>
+            <div class="qe-options">
+              <button class="qe-opt" data-score="1">I tend to hold back — I prefer to let things settle before adopting new tools</button>
+              <button class="qe-opt" data-score="2">Curious and open, but I haven't taken concrete steps yet</button>
+              <button class="qe-opt" data-score="3">Early adopter — I actively explore and test AI tools in my field</button>
+              <button class="qe-opt" data-score="4">Go-to person — I'm already shaping how my team uses AI</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result panel -->
+        <div id="qe-result" style="display:none;padding:52px;text-align:center;">
+          <div id="qe-result-icon" style="font-size:3.2rem;margin-bottom:16px;"></div>
+          <div id="qe-result-label" style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:12px;"></div>
+          <div id="qe-result-score" style="font-size:4rem;font-weight:900;color:var(--white);line-height:1;margin-bottom:4px;"></div>
+          <div style="font-size:0.78rem;color:var(--muted);margin-bottom:28px;">out of 20</div>
+          <h3 id="qe-result-title" style="font-size:1.5rem;margin-bottom:14px;max-width:520px;margin-left:auto;margin-right:auto;"></h3>
+          <p id="qe-result-desc" style="font-size:0.93rem;color:var(--muted);line-height:1.8;max-width:520px;margin:0 auto 32px;"></p>
+          <a id="qe-result-cta" href="apply.html" class="btn btn-primary btn-lg" style="margin-bottom:16px;display:inline-flex;"></a>
+          <div style="margin-bottom:16px;">
+            <a href="#pricing" style="font-size:0.82rem;color:var(--muted);text-decoration:underline;">View pricing first →</a>
+          </div>
+          <div>
+            <button id="qe-restart" style="background:none;border:none;color:rgba(255,255,255,0.25);font-size:0.78rem;cursor:pointer;text-decoration:underline;">Retake the quiz</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PRICING ====== -->
+<section id="pricing" class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="eyebrow">Pricing</span>
+      <h2>World-Class Transformation.<br/>Accessible Globally.</h2>
+      <div class="divider-red"></div>
+      <p>Professional-grade AI transformation priced for practitioners everywhere — not just enterprise budgets.</p>
+    </div>
+
+    <div style="text-align:center;margin-bottom:48px;" class="fade-up">
+      <div class="currency-toggle" style="display:inline-flex;">
+        <label class="label-usd">$ USD</label>
+        <label class="label-ngn active">₦ NGN</label>
+      </div>
+      <div style="font-size:0.75rem;color:var(--muted);margin-top:8px;">Exchange rate: ₦1,600/$1 · ₦2,050/£1</div>
+    </div>
+
+    <div class="price-grid stagger">
+      <div class="price-card fade-up">
+        <div class="price-tier">Individual</div>
+        <div class="price-amount">
+          <span class="currency-usd">$156</span>
+          <span class="currency-ngn">₦250,000</span><span class="currency-gbp">£122</span>
+        </div>
+        <div class="price-period">Per person / programme</div>
+        <p class="price-description">For self-directed professionals ready to transform their AI practice independently.</p>
+        <ul class="price-features">
+          <li>Full 4-week sprint access</li>
+          <li>Matched Expert Practitioner</li>
+          <li>Field Assessment &amp; mapping</li>
+          <li>Peer cohort membership</li>
+          <li>Applied project support</li>
+          <li>Expert Practitioner Certificate</li>
+        </ul>
+        <a href="apply.html" class="btn btn-outline-red" style="width:100%;justify-content:center;">Apply Now →</a>
+      </div>
+
+      <div class="price-card featured fade-up">
+        <div class="price-tier">Corporate Seat</div>
+        <div class="price-amount">
+          <span class="currency-usd">$125</span>
+          <span class="currency-ngn">₦200,000</span><span class="currency-gbp">£98</span>
+        </div>
+        <div class="price-period">Per seat / programme</div>
+        <p class="price-description">For organisations enrolling individuals. Corporate pricing, full programme quality.</p>
+        <ul class="price-features">
+          <li>Everything in Individual tier</li>
+          <li>Organisation-aligned cohort</li>
+          <li>Manager progress reporting</li>
+          <li>Post-sprint implementation guide</li>
+          <li>Priority expert matching</li>
+          <li>Invoice billing available</li>
+        </ul>
+        <a href="organisations.html#contact" class="btn btn-primary" style="width:100%;justify-content:center;">Get a Seat →</a>
+      </div>
+
+      <div class="price-card fade-up">
+        <div class="price-tier">Team Package</div>
+        <div class="price-amount">
+          <span class="currency-usd">$106</span>
+          <span class="currency-ngn">₦170,000</span><span class="currency-gbp">£83</span>
+        </div>
+        <div class="price-period">Per seat · 20+ seats</div>
+        <p class="price-description">For teams of 20 or more. Volume pricing with dedicated cohort management.</p>
+        <ul class="price-features">
+          <li>Everything in Corporate tier</li>
+          <li>Dedicated cohort manager</li>
+          <li>Team-specific project tracks</li>
+          <li>Shared team deliverables</li>
+          <li>Multi-field team support</li>
+          <li>Quarterly renewal option</li>
+        </ul>
+        <a href="organisations.html#contact" class="btn btn-outline-red" style="width:100%;justify-content:center;">Enquire →</a>
+      </div>
+
+      <div class="price-card fade-up">
+        <div class="price-tier">Enterprise</div>
+        <div class="price-amount">
+          <span class="currency-usd">~$94</span>
+          <span class="currency-ngn">₦150,000</span><span class="currency-gbp">£73</span>
+        </div>
+        <div class="price-period">Per seat · 100+ seats</div>
+        <p class="price-description">Full-scale enterprise AI transformation. Custom curriculum, dedicated expert team.</p>
+        <ul class="price-features">
+          <li>Everything in Team tier</li>
+          <li>Custom curriculum design</li>
+          <li>Dedicated expert team</li>
+          <li>Executive leadership track</li>
+          <li>Organisation-wide reporting</li>
+          <li>SLA &amp; enterprise support</li>
+        </ul>
+        <a href="organisations.html#contact" class="btn btn-outline-red" style="width:100%;justify-content:center;">Talk to Us →</a>
+      </div>
+    </div>
+
+    <div class="notice notice-info fade-up" style="margin-top:32px;">
+      <span>ℹ️</span>
+      <span>Corporate package pricing — Team Sprint, Department Build, and Enterprise — available on the <a href="organisations.html#packages" style="color:var(--red);font-weight:700;">For Organisations</a> page. All prices exclude applicable local taxes.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FAQ ====== -->
+<section class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="eyebrow">Common Questions</span>
+      <h2>Everything You Need to Know</h2>
+      <div class="divider-red"></div>
+    </div>
+
+    <div class="faq-list" style="max-width:760px;margin:0 auto;">
+      <div class="faq-item fade-up">
+        <button class="faq-question">Who is this programme for?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">Working professionals in one of our 8 open fields who want to move beyond AI awareness into genuine, practitioner-level capability. You don't need to be technical. You need to be motivated to transform how you work.</div>
+      </div>
+      <div class="faq-item fade-up">
+        <button class="faq-question">What does "field-specific" actually mean?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">Your curriculum is built around the AI tools, challenges, and workflows specific to your profession — not a generic programme repurposed for your field. A Software Engineer's programme and a Finance professional's programme share no curriculum. Each is built from scratch by practitioners in that domain.</div>
+      </div>
+      <div class="faq-item fade-up">
+        <button class="faq-question">How much time do I need each week?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">Expect 6–10 hours per week across the 4-week sprint: live sessions (2–3 hours/week), applied project work, and peer cohort engagement. The programme is intensive by design — that is how transformation happens.</div>
+      </div>
+      <div class="faq-item fade-up">
+        <button class="faq-question">Is the programme available outside Nigeria?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">Yes. Fully online and available globally. We have active cohorts in Nigeria, Kenya, Ghana, South Africa, the UK, and the US, with more markets coming throughout 2026.</div>
+      </div>
+      <div class="faq-item fade-up">
+        <button class="faq-question">What is the Expert Practitioner Certificate?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">A field-verified credential issued after completing the programme. Assessment is practitioner-led — your expert assesses your applied project and demonstrated capability, not a multiple-choice test. Employers in our target markets recognise what it represents.</div>
+      </div>
+      <div class="faq-item fade-up">
+        <button class="faq-question">Can my organisation send multiple team members?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">Absolutely — and we recommend it. Our Team and Enterprise packages are designed for organisations deploying AI transformation across departments. Visit our <a href="organisations.html" style="color:var(--red);">For Organisations</a> page or request a demo.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CTA ====== -->
+<section class="cta-section">
+  <div class="container">
+    <span class="eyebrow white">Apply Now</span>
+    <h2>Next Cohort Is Forming.<br/>Seats Are Limited.</h2>
+    <p>We keep cohorts small to protect the quality of practitioner matching and peer engagement. If your field is calling, don't wait.</p>
+    <div class="cta-buttons">
+      <a href="#fields" class="btn btn-primary btn-lg">Pick Your Field →</a>
+      <a href="experts.html" class="btn btn-outline btn-lg">Meet Our Experts</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo footer-logo">
+          <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+        </a>
+        <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
+        <div class="footer-social">
+          <a href="#" class="social-icon">in</a>
+          <a href="#" class="social-icon">𝕏</a>
+          <a href="#" class="social-icon">◻</a>
+          <a href="mailto:we@brixgate.com" class="social-icon">@</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Programme</h5>
+        <ul>
+          <li><a href="programme.html">AI in my Field</a></li>
+          <li><a href="#fields">All Fields</a></li>
+          <li><a href="#sprint">The Sprint</a></li>
+          <li><a href="#pillars">The Framework</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Experts</h5>
+        <ul>
+          <li><a href="experts.html">Meet Our Experts</a></li>
+          <li><a href="experts.html#qualify">Become an Expert</a></li>
+          <li><a href="join-as-expert.html">Join as Expert</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Organisation</h5>
+        <ul>
+          <li><a href="organisations.html">Corporate Programmes</a></li>
+          <li><a href="organisations.html#packages">Packages &amp; Pricing</a></li>
+          <li><a href="organisations.html#contact">Request a Demo</a></li>
+          <li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li>
+          <li><a href="apply.html">Apply Now</a></li>
+          <li><a href="verify.html">Verify a Certificate</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Cookie Policy</a>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top">↑</button>
+
+<script src="script.js"></script>
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+  // ---- AI Readiness Quiz ----
+  (function() {
+    var qeScores = {};
+    var qeCurrent = 1;
+    var qeTotal = 5;
+
+    var qeResults = [
+      null,
+      {
+        min: 5, max: 8,
+        icon: '🌱',
+        label: 'Starting Point',
+        title: 'You\'re at the right place at the right time.',
+        desc: 'Your AI capability is still early-stage — which means you have the most to gain from the sprint. The Brixgate programme is built precisely for professionals at your stage: applied fundamentals in your specific field, no jargon, no assumptions. Four weeks from now, you\'ll be operating at a level your peers haven\'t reached yet.',
+        cta: 'Apply Now — Seats Are Filling →'
+      },
+      {
+        min: 9, max: 13,
+        icon: '⚙️',
+        label: 'Building Momentum',
+        title: 'You\'ve started — now let\'s accelerate.',
+        desc: 'You have real AI engagement but no structured methodology for your field yet. That\'s the gap the sprint closes. In four weeks, you\'ll go from occasional tool use to a repeatable, practitioner-grade AI workflow built around how you actually work.',
+        cta: 'Apply Now — Join the Next Cohort →'
+      },
+      {
+        min: 14, max: 17,
+        icon: '⚡',
+        label: 'Strong Foundation',
+        title: 'You\'re already ahead. The sprint makes it permanent.',
+        desc: 'You\'re using AI meaningfully and thinking clearly about your field. The programme gives you the structured methodology, peer accountability, and practitioner validation to move from "I use AI" to "I lead with AI" — and a certificate that proves it.',
+        cta: 'Apply Now — Take It to the Next Level →'
+      },
+      {
+        min: 18, max: 20,
+        icon: '🚀',
+        label: 'Advanced Practitioner',
+        title: 'You\'re already leading — get certified for it.',
+        desc: 'Your AI capability is advanced. The sprint gives you the formal credential, structured peer cohort, and practitioner community that matches where you already are. Consider whether you\'d also be a strong candidate for our Expert Practitioner network.',
+        cta: 'Apply Now — Or Explore the Expert Path →'
+      }
+    ];
+
+    function qeGetResult(score) {
+      for (var i = 1; i < qeResults.length; i++) {
+        if (score >= qeResults[i].min && score <= qeResults[i].max) return qeResults[i];
+      }
+      return qeResults[1];
+    }
+
+    function qeUpdateProgress() {
+      document.getElementById('qe-progress').style.width = (((qeCurrent - 1) / qeTotal) * 100) + '%';
+    }
+
+    function qeShowQuestion(n) {
+      document.querySelectorAll('.qe-q').forEach(function(q) { q.classList.remove('qe-active'); });
+      var el = document.querySelector('.qe-q[data-q="' + n + '"]');
+      if (el) el.classList.add('qe-active');
+      qeUpdateProgress();
+    }
+
+    function qeShowResult() {
+      var total = 0;
+      Object.values(qeScores).forEach(function(s) { total += s; });
+      var r = qeGetResult(total);
+
+      document.getElementById('qe-result-icon').textContent  = r.icon;
+      document.getElementById('qe-result-label').textContent = r.label;
+      document.getElementById('qe-result-score').textContent = total;
+      document.getElementById('qe-result-title').textContent = r.title;
+      document.getElementById('qe-result-desc').textContent  = r.desc;
+      var ctaEl = document.getElementById('qe-result-cta');
+      ctaEl.textContent = r.cta;
+      ctaEl.href = 'apply.html';
+
+      document.getElementById('qe-questions').style.display = 'none';
+      document.getElementById('qe-result').style.display = 'block';
+      document.getElementById('qe-progress').style.width = '100%';
+      document.getElementById('quiz-container-early').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    document.querySelectorAll('.qe-opt').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var qEl  = btn.closest('.qe-q');
+        var qNum = parseInt(qEl.dataset.q);
+        var score = parseInt(btn.dataset.score);
+
+        qEl.querySelectorAll('.qe-opt').forEach(function(b) { b.classList.remove('qe-selected'); });
+        btn.classList.add('qe-selected');
+        qeScores[qNum] = score;
+
+        setTimeout(function() {
+          if (qNum < qeTotal) {
+            qeCurrent = qNum + 1;
+            qeShowQuestion(qeCurrent);
+          } else {
+            qeShowResult();
+          }
+        }, 300);
+      });
+    });
+
+    document.getElementById('qe-restart').addEventListener('click', function() {
+      qeScores = {};
+      qeCurrent = 1;
+      document.querySelectorAll('.qe-opt').forEach(function(b) { b.classList.remove('qe-selected'); });
+      document.getElementById('qe-result').style.display = 'none';
+      document.getElementById('qe-questions').style.display = 'block';
+      qeShowQuestion(1);
+    });
+
+    qeShowQuestion(1);
+  })();
+</script>
+
+<!-- ====== WHATSAPP CHAT WIDGET ====== -->
+<a href="https://wa.me/2347088093620?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme."
+   target="_blank" rel="noopener"
+   class="whatsapp-float"
+   aria-label="Chat with us on WhatsApp"
+   title="Chat with us on WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+</body>
+</html>

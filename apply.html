@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apply — Brixgate | AI in my Field</title>
+  <meta name="description" content="Apply for the Brixgate AI in my Field programme. A 4-week intensive sprint with a verified expert practitioner in your specific profession." />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Paystack Inline JS (test + live compatible) -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+
+  <style>
+    /* ---- Apply page layout ---- */
+    .apply-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    /* ---- Trust sidebar ---- */
+    .apply-sidebar {
+      position: sticky;
+      top: calc(var(--nav-height) + 32px);
+    }
+
+    .apply-sidebar h2 {
+      font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .apply-sidebar p {
+      font-size: 0.94rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+
+    .trust-points {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .trust-point {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .trust-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255,41,78,0.1);
+      border: 1px solid rgba(255,41,78,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .trust-text h5 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+
+    .trust-text p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ---- Journey mini-steps ---- */
+    .mini-steps {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 24px;
+    }
+
+    .mini-steps h5 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+
+    .mini-step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-card);
+    }
+
+    .mini-step:last-child { border-bottom: none; }
+
+    .mini-step-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: background 0.3s;
+    }
+
+    .mini-step-num.done { background: #34C759; }
+
+    .mini-step-text {
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .mini-step-text strong {
+      color: var(--white);
+      display: block;
+      font-size: 0.88rem;
+      margin-bottom: 2px;
+    }
+
+    /* ---- Form card ---- */
+    .apply-form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+    }
+
+    .apply-form-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
+
+    .apply-form-card .form-subtitle {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    /* ---- Step indicator ---- */
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 28px;
+    }
+
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .step-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      border: 2px solid var(--border-card);
+      color: var(--muted);
+      transition: all 0.25s;
+    }
+
+    .step-dot.active  { background: var(--red);    border-color: var(--red);    color: #fff; }
+    .step-dot.done    { background: #34C759;        border-color: #34C759;       color: #fff; }
+
+    .step-line {
+      flex: 1;
+      height: 2px;
+      background: var(--border-card);
+      margin: 0 6px;
+      margin-bottom: 18px;
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+
+    .step-line.done { background: #34C759; }
+
+    .step-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .step-label.active  { color: var(--white); }
+    .step-label.done    { color: #34C759; }
+
+    /* ---- Form fields ---- */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      padding: 13px 16px;
+      color: var(--white);
+      font-family: inherit;
+      font-size: 0.92rem;
+      transition: border-color 0.2s;
+      outline: none;
+      width: 100%;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+    }
+
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23ffffff66' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--red); }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+
+    .form-group select option { background: #0D1C34; color: var(--white); }
+
+    .form-submit-btn {
+      width: 100%;
+      padding: 16px;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    .form-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.3);
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+
+    .form-note a { color: var(--red); text-decoration: none; }
+
+    /* ---- Review state ---- */
+    .review-section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .review-field {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .review-field-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .review-field-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    /* ---- Price breakdown ---- */
+    .price-breakdown {
+      background: rgba(255,41,78,0.06);
+      border: 1px solid rgba(255,41,78,0.2);
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 24px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .price-row:last-child {
+      border-bottom: none;
+      padding-top: 14px;
+      margin-top: 6px;
+    }
+
+    .price-row-label { font-size: 0.82rem; color: var(--muted); }
+    .price-row-value { font-size: 0.82rem; color: var(--white); font-weight: 600; }
+
+    .price-row.total .price-row-label { font-size: 0.9rem; font-weight: 700; color: var(--white); }
+    .price-row.total .price-row-value { font-size: 1.15rem; font-weight: 800; color: var(--red); }
+
+    .pay-btn {
+      width: 100%;
+      padding: 18px;
+      font-size: 1.02rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s;
+      margin-top: 4px;
+    }
+
+    .back-link:hover { color: var(--white); }
+
+    .paystack-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 14px;
+      font-size: 0.74rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ---- Processing state ---- */
+    .apply-processing {
+      text-align: center;
+      padding: 60px 32px;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid rgba(255,41,78,0.2);
+      border-top-color: var(--red);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .apply-processing h3 { font-size: 1.2rem; margin-bottom: 8px; }
+    .apply-processing p  { font-size: 0.88rem; color: var(--muted); }
+
+    /* ---- Success state ---- */
+    .apply-success {
+      text-align: center;
+      padding: 40px 24px;
+    }
+
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      background: rgba(52,199,89,0.1);
+      border: 2px solid #34C759;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #34C759;
+      margin: 0 auto 20px;
+    }
+
+    .apply-success h3     { font-size: 1.5rem; margin-bottom: 8px; }
+    .apply-success .success-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 340px;
+      margin: 0 auto 20px;
+    }
+
+    .reference-box {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-card);
+      border-radius: 10px;
+      padding: 14px 20px;
+      margin: 0 auto 24px;
+      max-width: 340px;
+    }
+
+    .reference-box .ref-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .reference-box .ref-number {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: var(--white);
+      font-family: monospace;
+      letter-spacing: 0.04em;
+      word-break: break-all;
+    }
+
+    .next-steps-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: left;
+      margin-bottom: 24px;
+    }
+
+    .next-steps-box h5 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+    }
+
+    .next-step-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .next-step-row:last-child { margin-bottom: 0; }
+
+    .next-step-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .next-step-text { font-size: 0.84rem; color: var(--muted); line-height: 1.5; }
+    .next-step-text strong { color: var(--white); font-weight: 700; }
+
+    /* ---- Failed state ---- */
+    .apply-failed {
+      text-align: center;
+      padding: 48px 24px;
+    }
+
+    .failed-icon {
+      width: 72px;
+      height: 72px;
+      background: rgba(255,41,78,0.1);
+      border: 2px solid var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 20px;
+    }
+
+    .apply-failed h3 { font-size: 1.3rem; margin-bottom: 10px; }
+    .apply-failed p  {
+      font-size: 0.88rem;
+      color: var(--muted);
+      max-width: 320px;
+      margin: 0 auto 24px;
+      line-height: 1.7;
+    }
+
+    .failed-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    /* ---- Practitioner nudge ---- */
+    .practitioner-nudge {
+      margin-top: 28px;
+      padding: 18px 20px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .practitioner-nudge p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .practitioner-nudge a { color: var(--red); text-decoration: none; font-weight: 600; }
+
+    @media (max-width: 900px) {
+      .apply-wrapper      { grid-template-columns: 1fr; gap: 40px; }
+      .apply-sidebar      { position: static; }
+      .apply-form-card    { padding: 32px 24px; }
+      .form-row           { grid-template-columns: 1fr; }
+      .review-grid        { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+
+<!-- Region Banner -->
+<div class="region-banner" id="region-banner">
+  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0;">Now active in</span>
+  <div class="regions">
+    <span class="region-item">🇳🇬 Nigeria</span>
+    <span class="region-item">🇬🇧 United Kingdom</span>
+    <span class="region-item">🇺🇸 United States</span>
+    <span class="region-item">🇰🇪 Kenya</span>
+    <span class="region-item">🇬🇭 Ghana</span>
+    <span class="region-item">🇿🇦 South Africa</span>
+  </div>
+  <a href="apply.html" style="margin-left:auto;font-size:0.72rem;font-weight:700;color:var(--red);letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Apply Now →</a>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="programme.html">Programme</a>
+      <a href="experts.html">Experts</a>
+      <a href="organisations.html">For Organisations</a>
+    </div>
+    <div class="nav-cta">
+      <a href="apply.html" class="btn btn-outline-dark btn-sm">Apply Now</a>
+      <a href="organisations.html#contact" class="btn btn-primary btn-sm">Get a Demo</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="programme.html">Programme</a>
+  <a href="experts.html">Experts</a>
+  <a href="organisations.html">For Organisations</a>
+  <a href="apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="organisations.html#contact" class="btn btn-outline" style="margin-top:8px;">Get a Demo</a>
+</div>
+
+<!-- ====== PAGE HEADER ====== -->
+<header class="page-header" style="padding-bottom:40px;">
+  <div class="container">
+    <div class="breadcrumb fade-in"><a href="index.html">Home</a><span>/</span><span class="current">Apply</span></div>
+    <span class="eyebrow">Applications Open</span>
+    <h1 class="fade-up">Start Your AI<br/>Transformation</h1>
+    <p class="fade-up" style="transition-delay:0.1s;max-width:580px;">Tell us who you are and where you work. We'll match you with the right expert practitioner and cohort for your field.</p>
+  </div>
+</header>
+
+<!-- ====== APPLICATION FORM ====== -->
+<section class="section-pad bg-dark" style="padding-top:0;border-top:1px solid var(--border-card);">
+  <div class="container">
+    <div class="apply-wrapper">
+
+      <!-- ====== PRICING TABLE ====== -->
+      <div class="apply-sidebar fade-up" style="margin-bottom:0;padding-bottom:0;">
+        <div style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:28px 24px;margin-bottom:0;">
+          <div style="font-size:0.72rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:20px;">Programme Fees</div>
+
+          <!-- Self-Enrolment -->
+          <div style="padding:14px 0;border-bottom:1px solid var(--border-card);">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+              <div>
+                <div style="font-size:0.85rem;font-weight:700;color:var(--white);">Self-Enrolment</div>
+                <div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">Individual · per person</div>
+              </div>
+              <div style="text-align:right;flex-shrink:0;">
+                <div style="font-size:1.1rem;font-weight:900;color:var(--white);">
+                  <span class="currency-ngn">₦250,000</span>
+                  <span class="currency-usd">$156</span>
+                  <span class="currency-gbp">£122</span>
+                </div>
+                <div style="font-size:0.72rem;color:var(--muted);margin-top:1px;">
+                  <span class="currency-ngn">~$156 USD</span>
+                  <span class="currency-usd">~₦250,000</span>
+                  <span class="currency-gbp">~₦250,000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Corporate Seat -->
+          <div style="padding:14px 0;border-bottom:1px solid var(--border-card);">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+              <div>
+                <div style="font-size:0.85rem;font-weight:700;color:var(--white);">Corporate Seat</div>
+                <div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">Company-sponsored · per seat</div>
+              </div>
+              <div style="text-align:right;flex-shrink:0;">
+                <div style="font-size:1.1rem;font-weight:900;color:var(--white);">
+                  <span class="currency-ngn">₦200,000</span>
+                  <span class="currency-usd">$125</span>
+                  <span class="currency-gbp">£98</span>
+                </div>
+                <div style="font-size:0.72rem;color:var(--muted);margin-top:1px;">
+                  <span class="currency-ngn">~$125 USD</span>
+                  <span class="currency-usd">~₦200,000</span>
+                  <span class="currency-gbp">~₦200,000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team Package -->
+          <div style="padding:14px 0;border-bottom:1px solid var(--border-card);">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+              <div>
+                <div style="font-size:0.85rem;font-weight:700;color:var(--white);">Team Package</div>
+                <div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">20+ seats · per seat</div>
+              </div>
+              <div style="text-align:right;flex-shrink:0;">
+                <div style="font-size:1.1rem;font-weight:900;color:var(--white);">
+                  <span class="currency-ngn">₦170,000</span>
+                  <span class="currency-usd">$106</span>
+                  <span class="currency-gbp">£83</span>
+                </div>
+                <div style="font-size:0.72rem;color:var(--muted);margin-top:1px;">
+                  <span class="currency-ngn">~$106 USD</span>
+                  <span class="currency-usd">~₦170,000</span>
+                  <span class="currency-gbp">~₦170,000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Enterprise -->
+          <div style="padding:14px 0;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+              <div>
+                <div style="font-size:0.85rem;font-weight:700;color:var(--white);">Enterprise</div>
+                <div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">100+ seats · per seat</div>
+              </div>
+              <div style="text-align:right;flex-shrink:0;">
+                <div style="font-size:1.1rem;font-weight:900;color:var(--white);">
+                  <span class="currency-ngn">₦150,000</span>
+                  <span class="currency-usd">$94</span>
+                  <span class="currency-gbp">£73</span>
+                </div>
+                <div style="font-size:0.72rem;color:var(--muted);margin-top:1px;">
+                  <span class="currency-ngn">~$94 USD</span>
+                  <span class="currency-usd">~₦150,000</span>
+                  <span class="currency-gbp">~₦150,000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border-card);display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:0.72rem;color:var(--muted);">Rate: ₦1,600/$1 · ₦2,050/£1</span>
+            <a href="programme.html#pricing" style="font-size:0.75rem;color:var(--red);font-weight:700;text-decoration:none;">Full pricing →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar: why apply -->
+      <div class="apply-sidebar fade-up">
+        <h2>What Happens After You Apply</h2>
+        <p>Your place is secured on payment. We'll match you with a verified expert practitioner in your exact field and have you in a cohort within days.</p>
+
+        <div class="trust-points">
+          <div class="trust-point">
+            <div class="trust-icon">🔒</div>
+            <div class="trust-text">
+              <h5>Secure Payment via Paystack</h5>
+              <p>Card, bank transfer, or USSD. Protected by Paystack's PCI-DSS Level 1 certified infrastructure.</p>
+            </div>
+          </div>
+          <div class="trust-point">
+            <div class="trust-icon">⚡</div>
+            <div class="trust-text">
+              <h5>Instant Confirmation</h5>
+              <p>Your place is confirmed the moment payment clears. Expect a welcome email within minutes.</p>
+            </div>
+          </div>
+          <div class="trust-point">
+            <div class="trust-icon">🎯</div>
+            <div class="trust-text">
+              <h5>Expert Matching</h5>
+              <p>Matched to a verified practitioner in your exact field — not a generic AI trainer.</p>
+            </div>
+          </div>
+          <div class="trust-point">
+            <div class="trust-icon">🏆</div>
+            <div class="trust-text">
+              <h5>Brixer Certificate</h5>
+              <p>Complete the sprint and earn your Brixer Certificate — a credential that signals real applied capability.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mini-steps">
+          <h5>Your Journey</h5>
+          <div class="mini-step">
+            <div class="mini-step-num" id="sidebar-step-1">1</div>
+            <div class="mini-step-text"><strong>Apply &amp; Pay</strong> Secure your place today.</div>
+          </div>
+          <div class="mini-step">
+            <div class="mini-step-num">2</div>
+            <div class="mini-step-text"><strong>Field Assessment</strong> 15-min readiness call to map your goals.</div>
+          </div>
+          <div class="mini-step">
+            <div class="mini-step-num">3</div>
+            <div class="mini-step-text"><strong>Expert Match</strong> Matched to your practitioner and cohort date.</div>
+          </div>
+          <div class="mini-step">
+            <div class="mini-step-num">4</div>
+            <div class="mini-step-text"><strong>4-Week Sprint</strong> Hands-on transformation. AI in your field.</div>
+          </div>
+          <div class="mini-step">
+            <div class="mini-step-num">5</div>
+            <div class="mini-step-text"><strong>Certification</strong> Earn your Brixer Certificate.</div>
+          </div>
+        </div>
+
+        <!-- Pricing snapshot -->
+        <div style="margin-top:24px;background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:24px;">
+          <div style="font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;">Programme Fee</div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border-card);">
+            <span style="font-size:0.85rem;color:var(--muted);">Self-Enrolment</span>
+            <span style="font-size:1.1rem;font-weight:900;color:var(--white);">
+              <span class="currency-ngn">₦250,000</span>
+              <span class="currency-usd">$156</span>
+              <span class="currency-gbp">£122</span>
+            </span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border-card);">
+            <span style="font-size:0.85rem;color:var(--muted);">Corporate Seat</span>
+            <span style="font-size:1rem;font-weight:700;color:var(--muted);">
+              <span class="currency-ngn">₦200,000</span>
+              <span class="currency-usd">$125</span>
+              <span class="currency-gbp">£98</span>
+            </span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;">
+            <span style="font-size:0.85rem;color:var(--muted);">Team (20+ seats)</span>
+            <span style="font-size:1rem;font-weight:700;color:var(--muted);">
+              <span class="currency-ngn">₦170,000</span>
+              <span class="currency-usd">$106</span>
+              <span class="currency-gbp">£83</span>
+            </span>
+          </div>
+
+          <div style="margin-top:16px;display:flex;align-items:center;gap:8px;">
+            <div style="flex:1;font-size:0.75rem;color:rgba(255,255,255,0.25);line-height:1.5;">
+              <span class="currency-ngn">Rate: ₦1,600/$1 · ₦2,050/£1</span>
+              <span class="currency-usd">Rate: ₦1,600/$1</span>
+              <span class="currency-gbp">Rate: ₦2,050/£1</span>
+            </div>
+            <a href="programme.html#pricing" style="font-size:0.78rem;color:var(--red);font-weight:700;text-decoration:none;white-space:nowrap;">Full pricing →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ====== APPLICATION CARD — multi-step ====== -->
+      <div class="apply-form-card fade-up" style="transition-delay:0.15s;" id="apply-card">
+
+        <!-- ===== STEP 1: Details ===== -->
+        <div id="apply-step-form">
+
+          <div class="step-indicator">
+            <div class="step-item">
+              <div class="step-dot active">1</div>
+              <div class="step-label active">Details</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step-item">
+              <div class="step-dot">2</div>
+              <div class="step-label">Review</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step-item">
+              <div class="step-dot">3</div>
+              <div class="step-label">Payment</div>
+            </div>
+          </div>
+
+          <h3>Apply for the Programme</h3>
+          <p class="form-subtitle">Takes under 2 minutes. No CV needed.</p>
+
+          <form id="apply-form" novalidate>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" name="first_name" placeholder="Amara" autocomplete="given-name" required />
+              </div>
+              <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" name="last_name" placeholder="Okafor" autocomplete="family-name" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Professional Email</label>
+              <input type="email" id="email" name="email" placeholder="you@yourcompany.com" autocomplete="email" required />
+            </div>
+
+            <div class="form-group">
+              <label for="field">Your Field</label>
+              <select id="field" name="field" required>
+                <option value="" disabled selected>Select your field of work</option>
+                <option value="Cybersecurity">Cybersecurity</option>
+                <option value="Product &amp; Technology">Product &amp; Technology</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="role">Current Role</label>
+              <select id="role" name="role" required>
+                <option value="" disabled selected>Select your seniority level</option>
+                <option>Individual Contributor / Analyst</option>
+                <option>Senior Professional</option>
+                <option>Manager / Team Lead</option>
+                <option>Head of Department</option>
+                <option>Director / VP</option>
+                <option>C-Suite / Executive</option>
+                <option>Founder / Business Owner</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary form-submit-btn">Continue to Review →</button>
+
+            <!-- Inline error banner — shown on API errors instead of browser alert -->
+            <div id="form-error-banner" style="display:none;margin-top:16px;padding:14px 18px;background:rgba(255,41,78,0.08);border:1.5px solid rgba(255,41,78,0.35);border-radius:10px;display:none;align-items:flex-start;gap:12px;">
+              <span style="font-size:1.1rem;flex-shrink:0;line-height:1.3;">⚠️</span>
+              <div>
+                <div style="font-size:0.88rem;font-weight:700;color:#021024;margin-bottom:2px;" id="form-error-title">Something went wrong</div>
+                <div style="font-size:0.83rem;color:#4A5568;line-height:1.5;" id="form-error-body"></div>
+              </div>
+              <button onclick="document.getElementById('form-error-banner').style.display='none';" style="margin-left:auto;background:none;border:none;font-size:1rem;color:#7A94A8;cursor:pointer;flex-shrink:0;padding:0;">✕</button>
+            </div>
+
+          </form>
+
+          <p class="form-note">By applying you confirm you are 18 or older and agree to our <a href="#">Privacy Policy</a>. We'll never share your details with third parties.</p>
+
+          <div class="practitioner-nudge">
+            <p>Are you a practitioner who has already applied AI in your field? <a href="join-as-expert.html">Join our expert network instead →</a></p>
+          </div>
+        </div>
+
+        <!-- ===== STEP 2: Review & Pay ===== -->
+        <div id="apply-step-review" style="display:none;">
+
+          <div class="step-indicator">
+            <div class="step-item">
+              <div class="step-dot done">✓</div>
+              <div class="step-label done">Details</div>
+            </div>
+            <div class="step-line done"></div>
+            <div class="step-item">
+              <div class="step-dot active">2</div>
+              <div class="step-label active">Review</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step-item">
+              <div class="step-dot">3</div>
+              <div class="step-label">Payment</div>
+            </div>
+          </div>
+
+          <h3>Review Your Application</h3>
+          <p class="form-subtitle">Confirm your details before proceeding to secure payment.</p>
+
+          <div class="review-section-label">Your Details</div>
+          <div class="review-grid">
+            <div class="review-field">
+              <div class="review-field-label">Name</div>
+              <div class="review-field-value" id="review-name">—</div>
+            </div>
+            <div class="review-field">
+              <div class="review-field-label">Email</div>
+              <div class="review-field-value" id="review-email" style="word-break:break-all;font-size:0.82rem;">—</div>
+            </div>
+            <div class="review-field">
+              <div class="review-field-label">Field</div>
+              <div class="review-field-value" id="review-field-val">—</div>
+            </div>
+            <div class="review-field">
+              <div class="review-field-label">Role</div>
+              <div class="review-field-value" id="review-role">—</div>
+            </div>
+          </div>
+
+          <div class="review-section-label">Programme &amp; Fee</div>
+          <div class="price-breakdown">
+            <div class="price-row">
+              <span class="price-row-label">AI in my Field — Expert Practitioner Programme</span>
+              <span class="price-row-value" id="review-price-item">—</span>
+            </div>
+            <div class="price-row">
+              <span class="price-row-label">Sprint Duration</span>
+              <span class="price-row-value">4 Weeks</span>
+            </div>
+            <div class="price-row">
+              <span class="price-row-label">Cohort</span>
+              <span class="price-row-value">Cohort 1 · May/Jun 2026</span>
+            </div>
+            <div class="price-row total">
+              <span class="price-row-label">Total Due Today</span>
+              <span class="price-row-value" id="review-total">—</span>
+            </div>
+          </div>
+
+          <button id="pay-btn" class="btn btn-primary pay-btn">
+            🔒&nbsp;<span id="pay-btn-label">Pay Securely via Paystack</span>
+          </button>
+
+          <a class="back-link" id="back-to-form">← Edit my details</a>
+
+          <div class="paystack-badge">
+            Secured by Paystack · PCI-DSS Level 1 Certified
+          </div>
+        </div>
+
+        <!-- ===== STEP 3a: Processing ===== -->
+        <div id="apply-step-processing" style="display:none;" class="apply-processing">
+          <div class="spinner"></div>
+          <h3>Confirming Payment…</h3>
+          <p>Verifying your transaction with Paystack. This can take up to 30 seconds — please do not close this page.</p>
+        </div>
+
+        <!-- ===== STEP 3b: Success ===== -->
+        <div id="apply-step-success" style="display:none;" class="apply-success">
+
+          <div class="step-indicator" style="margin-bottom:28px;">
+            <div class="step-item">
+              <div class="step-dot done">✓</div>
+              <div class="step-label done">Details</div>
+            </div>
+            <div class="step-line done"></div>
+            <div class="step-item">
+              <div class="step-dot done">✓</div>
+              <div class="step-label done">Review</div>
+            </div>
+            <div class="step-line done"></div>
+            <div class="step-item">
+              <div class="step-dot done">✓</div>
+              <div class="step-label done">Payment</div>
+            </div>
+          </div>
+
+          <div class="success-icon">✓</div>
+          <h3>You're In. Welcome, Brixer.</h3>
+          <p class="success-sub">Payment confirmed. Your place on the Expert Practitioner Programme is secured. Check your inbox for your confirmation email.</p>
+
+          <div class="reference-box">
+            <div class="ref-label">Payment Reference</div>
+            <div class="ref-number" id="success-reference">—</div>
+          </div>
+
+          <div class="next-steps-box">
+            <h5>What Happens Next</h5>
+            <div class="next-step-row">
+              <div class="next-step-num">1</div>
+              <div class="next-step-text"><strong>Confirmation Email</strong> On its way to your inbox with your receipt and programme details.</div>
+            </div>
+            <div class="next-step-row">
+              <div class="next-step-num">2</div>
+              <div class="next-step-text"><strong>Field Assessment Call</strong> We'll reach out within 48 hours to schedule your 15-min readiness call.</div>
+            </div>
+            <div class="next-step-row">
+              <div class="next-step-num">3</div>
+              <div class="next-step-text"><strong>Expert Match</strong> You'll be matched with your field's Expert Practitioner and assigned your cohort date.</div>
+            </div>
+          </div>
+
+          <button id="go-to-portal-btn" class="btn btn-primary" style="width:100%;padding:16px;font-size:1rem;font-weight:700;margin-bottom:12px;">
+            Access Your Programme Portal →
+          </button>
+          <a href="programme.html" class="btn btn-outline" style="width:100%;justify-content:center;display:flex;">Learn More About the Programme</a>
+
+          <!-- inline error shown if portal redirect fails -->
+          <p id="portal-error" style="display:none;margin-top:12px;font-size:0.8rem;color:var(--red);text-align:center;"></p>
+        </div>
+
+        <!-- ===== STEP 3c: Failed / Cancelled ===== -->
+        <div id="apply-step-failed" style="display:none;" class="apply-failed">
+          <div class="failed-icon">✕</div>
+          <h3>Payment Not Completed</h3>
+          <p>No charge was made. You can try again below, or contact us if you need help completing your enrolment.</p>
+          <div class="failed-actions">
+            <button id="retry-payment-btn" class="btn btn-primary pay-btn">Try Again</button>
+            <a href="mailto:we@brixgate.com" class="btn btn-outline">Contact Support</a>
+          </div>
+        </div>
+
+      </div><!-- /apply-form-card -->
+    </div>
+  </div>
+</section>
+
+<!-- ====== SOCIAL PROOF ====== -->
+<section class="section-pad-sm bg-dark" style="border-top:1px solid var(--border-card);">
+  <div class="container">
+    <div class="stats-bar stagger">
+      <div class="stat-item fade-up">
+        <div class="stat-num" data-count="12" data-suffix="+">12+</div>
+        <div class="stat-label">Fields Covered</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item fade-up">
+        <div class="stat-num" data-count="6">6</div>
+        <div class="stat-label">Active Countries</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item fade-up">
+        <div class="stat-num" data-count="4" data-suffix=" Weeks">4 Weeks</div>
+        <div class="stat-label">Sprint Duration</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item fade-up">
+        <div class="stat-num" data-count="100" data-suffix="%">100%</div>
+        <div class="stat-label">Practitioner-Led</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="display:inline-flex;margin-bottom:4px;"><img src="assets/logo-color-nobg.svg" alt="Brixgate" style="height:36px;" /></a>
+        <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
+        <div class="footer-social">
+          <a href="#" class="social-icon">in</a>
+          <a href="#" class="social-icon">𝕏</a>
+          <a href="#" class="social-icon">◻</a>
+          <a href="mailto:we@brixgate.com" class="social-icon">@</a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Programme</h5><ul><li><a href="programme.html">AI in my Field</a></li><li><a href="programme.html#journey">The Journey</a></li><li><a href="programme.html#pricing">Pricing</a></li><li><a href="verify.html">Verify a Certificate</a></li></ul></div>
+      <div class="footer-col"><h5>Experts</h5><ul><li><a href="experts.html">Meet Our Experts</a></li><li><a href="join-as-expert.html">Join as an Expert</a></li></ul></div>
+      <div class="footer-col"><h5>Organisation</h5><ul><li><a href="organisations.html">Corporate Programmes</a></li><li><a href="organisations.html#contact">Get a Demo</a></li></ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
+    <div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+  </div>
+</footer>
+
+<button class="back-to-top">↑</button>
+
+<script src="script.js"></script>
+<script>
+  /* ============================================================
+     BRIXGATE — Apply page · Full API + Paystack integration
+     ============================================================
+     Config:
+       PAYSTACK_PUBLIC_KEY  — Paystack public key (test or live)
+       API_BASE             — Brixgate backend base URL
+       PORTAL_URL           — Portal base URL (token appended as ?token=...)
+  ============================================================ */
+
+
+  /* ============================================================
+     URL param pre-selection
+     If the visitor arrives via apply.html?field=Cybersecurity
+     (or ?field=Product+%26+Technology) the dropdown is
+     pre-selected and the page scrolls to the form.
+  ============================================================ */
+  document.addEventListener('DOMContentLoaded', function () {
+    var params = new URLSearchParams(window.location.search);
+    var fieldParam = params.get('field');
+    if (fieldParam) {
+      var sel = document.getElementById('field');
+      if (sel) {
+        // Try exact match first, then case-insensitive
+        for (var i = 0; i < sel.options.length; i++) {
+          if (sel.options[i].value === fieldParam ||
+              sel.options[i].value.toLowerCase() === fieldParam.toLowerCase()) {
+            sel.selectedIndex = i;
+            break;
+          }
+        }
+        // Scroll to the form card
+        var formCard = document.getElementById('apply-form-card') ||
+                       document.querySelector('.apply-form') ||
+                       sel.closest('form');
+        if (formCard) {
+          setTimeout(function () {
+            formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 400);
+        }
+      }
+    }
+  });
+
+  var PAYSTACK_PUBLIC_KEY = 'pk_test_dbe45fd5741a54a975db71d1607279649653e3a7';
+  var API_BASE   = 'https://api.brixgate.com';
+  var PORTAL_URL = 'https://portal.brixgate.com';
+
+  /* ============================================================
+     Field → API programme slug mapping
+     Add new slugs as more programmes go live on the backend.
+  ============================================================ */
+  var FIELD_TO_SLUG = {
+    'Cybersecurity':                 'ai-in-cyber-security',
+    'Product & Technology':          'ai-in-software-engineering',
+    'Finance & Banking':             null,
+    'Healthcare & Medicine':         null,
+    'Legal & Compliance':            null,
+    'Engineering & Infrastructure':  null,
+    'Human Resources':               null,
+    'Education & Training':          null,
+    'Marketing & Communications':    null,
+    'Supply Chain & Operations':     null,
+    'Architecture & Construction':   null,
+    'Data & Analytics':              null,
+    'Other':                         null
+  };
+
+  /* Display prices for the review screen (informational only —
+     the backend calculates and charges the actual amount) */
+  var PRICE_DISPLAY = {
+    ngn: '₦250,000',
+    usd: '$156',
+    gbp: '£122'
+  };
+
+  function getActiveCurrency() {
+    if (document.body.classList.contains('show-usd')) return 'usd';
+    if (document.body.classList.contains('show-gbp')) return 'gbp';
+    return 'ngn';
+  }
+
+  /* ---------- Session state ---------- */
+  var _session = {
+    accessToken:      null,
+    paymentReference: null,
+    cohortId:         null
+  };
+
+  /* ---------- Step panels ---------- */
+  var panels = {
+    form:       document.getElementById('apply-step-form'),
+    review:     document.getElementById('apply-step-review'),
+    processing: document.getElementById('apply-step-processing'),
+    success:    document.getElementById('apply-step-success'),
+    failed:     document.getElementById('apply-step-failed')
+  };
+
+  function showPanel(name) {
+    Object.keys(panels).forEach(function(k) {
+      panels[k].style.display = (k === name) ? 'block' : 'none';
+    });
+    var card = document.getElementById('apply-card');
+    if (card) setTimeout(function() {
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  }
+
+  function setSubmitState(btn, loading, label) {
+    btn.disabled = loading;
+    btn.style.opacity = loading ? '0.7' : '';
+    btn.textContent = label;
+  }
+
+  /* Show a styled inline error on the form instead of a browser alert */
+  function showFormError(title, body) {
+    var banner = document.getElementById('form-error-banner');
+    if (!banner) { alert(title + ': ' + body); return; }
+    document.getElementById('form-error-title').textContent = title;
+    document.getElementById('form-error-body').textContent  = body;
+    banner.style.display = 'flex';
+    banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  function hideFormError() {
+    var banner = document.getElementById('form-error-banner');
+    if (banner) banner.style.display = 'none';
+  }
+
+  /* ---------- API helpers ---------- */
+  function apiPost(path, body, token) {
+    var headers = { 'Content-Type': 'application/json' };
+    if (token) headers['Authorization'] = 'Bearer ' + token;
+    return fetch(API_BASE + path, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(body)
+    }).then(function(r) { return r.json(); });
+  }
+
+  function apiGet(path, token) {
+    var headers = {};
+    if (token) headers['Authorization'] = 'Bearer ' + token;
+    return fetch(API_BASE + path, { headers: headers })
+      .then(function(r) { return r.json(); });
+  }
+
+  /* Fetch the first OPEN cohort for a given programme slug.
+     Returns a Promise resolving to cohortId (int) or null. */
+  function fetchCohortId(slug) {
+    if (!slug) return Promise.resolve(null);
+    return apiGet('/api/v1/programs/' + slug + '/cohorts')
+      .then(function(data) {
+        if (!data.success) return null;
+        var cohorts = (data.data && data.data.cohorts) || [];
+        var open = cohorts.filter(function(c) { return c.status === 'OPEN'; });
+        var pick = open.length ? open[0] : cohorts[0];
+        return pick ? pick.id : null;
+      })
+      .catch(function() { return null; });
+  }
+
+  /* ---------- Init ---------- */
+  showPanel('form');
+
+  /* ---------- STEP 1 → STEP 2 : Register applicant ---------- */
+  document.getElementById('apply-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var required = this.querySelectorAll('[required]');
+    var valid = true;
+    required.forEach(function(input) {
+      if (!input.value.trim()) {
+        valid = false;
+        input.style.borderColor = 'var(--red)';
+        input.addEventListener('input', function() { input.style.borderColor = ''; }, { once: true });
+      }
+    });
+    if (!valid) return;
+
+    var emailEl = document.getElementById('email');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim())) {
+      emailEl.style.borderColor = 'var(--red)';
+      emailEl.focus();
+      return;
+    }
+
+    var firstName = document.getElementById('first-name').value.trim();
+    var lastName  = document.getElementById('last-name').value.trim();
+    var email     = emailEl.value.trim();
+    var field     = document.getElementById('field').value;
+    var role      = document.getElementById('role').value;
+    var fullName  = firstName + ' ' + lastName;
+
+    var submitBtn = this.querySelector('button[type="submit"]');
+    setSubmitState(submitBtn, true, 'Setting up your account…');
+
+    /* 1. Create applicant → receive access token
+          POST /api/v1/auth/applicants
+          Creates the applicant account with a default password and
+          returns an access token used to authenticate all subsequent
+          API calls (cohort fetch, payment initiation, requery).    */
+    apiPost('/api/v1/auth/applicants', { name: fullName, email: email })
+      .then(function(data) {
+        if (!data.success) throw new Error(data.message || 'Registration failed. Please try again.');
+
+        /* API returns snake_case: data.data.access_token */
+        var token = (data.data && (data.data.access_token || data.data.accessToken || data.data.token)) || null;
+        if (!token) throw new Error('Authentication token missing in server response. Please try again.');
+        _session.accessToken = token;
+
+        /* 2. Fetch open cohort for the selected field (authenticated) */
+        var slug = FIELD_TO_SLUG[field] || null;
+        return fetchCohortId(slug);
+      })
+      .then(function(cohortId) {
+        _session.cohortId = cohortId;
+
+        /* Populate review screen */
+        document.getElementById('review-name').textContent      = fullName;
+        document.getElementById('review-email').textContent     = email;
+        document.getElementById('review-field-val').textContent = field;
+        document.getElementById('review-role').textContent      = role;
+
+        var cur = getActiveCurrency();
+        var priceDisplay = PRICE_DISPLAY[cur];
+        document.getElementById('review-price-item').textContent = priceDisplay;
+        document.getElementById('review-total').textContent      = priceDisplay;
+        document.getElementById('pay-btn-label').textContent     =
+          _session.cohortId
+            ? ('Pay ' + priceDisplay + ' via Paystack')
+            : 'Join Waitlist for ' + field;
+
+        hideFormError();
+        setSubmitState(submitBtn, false, 'Continue to Review →');
+        showPanel('review');
+      })
+      .catch(function(err) {
+        console.error('[Brixgate] Applicant creation error:', err);
+        setSubmitState(submitBtn, false, 'Continue to Review →');
+        var msg = err.message || 'Unknown error. Please try again.';
+        /* Friendly message for duplicate email */
+        var title = 'Could not set up your account';
+        if (/already|exist|duplicate|registered/i.test(msg)) {
+          title = 'Email already registered';
+          msg   = 'It looks like you\'ve applied before with this email. Please use a different email address, or contact us at we@brixgate.com if you need help accessing your application.';
+        }
+        showFormError(title, msg);
+      });
+  });
+
+  /* ---------- STEP 2 → STEP 1 : Edit ---------- */
+  document.getElementById('back-to-form').addEventListener('click', function() {
+    showPanel('form');
+  });
+
+  /* ---------- STEP 2 → STEP 3 : Initiate payment ---------- */
+  document.getElementById('pay-btn').addEventListener('click', function() {
+    /* If no cohort (field not yet live), treat as waitlist */
+    if (!_session.cohortId) {
+      showFormError('Coming Soon', 'The programme for your selected field is not yet open. We\'ll add you to the waitlist and notify you when it opens.');
+      return;
+    }
+
+    var payBtn = document.getElementById('pay-btn');
+    var email  = document.getElementById('email').value.trim();
+    payBtn.disabled = true;
+    document.getElementById('pay-btn-label').textContent = 'Initialising payment…';
+
+    apiPost('/api/v1/payments/initiate', {
+      payment_type:   'ENROLLMENT',
+      entity_id:      _session.cohortId,
+      payment_method: 'PAYSTACK'
+    }, _session.accessToken)
+      .then(function(data) {
+        if (!data.success) throw new Error(data.message || 'Could not start payment.');
+
+        /* Store our reference for requery — do NOT pass it to Paystack,
+           it is already embedded in the access_code the backend generated.
+           Passing ref separately causes "Duplicate Transaction Reference". */
+        _session.paymentReference = data.data.payment.payment_reference;
+        var accessCode = data.data.checkout.access_code;
+        var amountKobo = data.data.payment.main_amount;
+
+        payBtn.disabled = false;
+        document.getElementById('pay-btn-label').textContent = 'Pay via Paystack';
+
+        var handler = PaystackPop.setup({
+          key:        PAYSTACK_PUBLIC_KEY,
+          email:      email,
+          amount:     amountKobo,
+          currency:   'NGN',
+          accessCode: accessCode,
+          callback: function(response) {
+            showPanel('processing');
+            /* Always use our internal BRX-... reference — the backend requery
+               endpoint works with this, not Paystack's transaction reference */
+            requeryPayment(_session.paymentReference, 1);
+          },
+          onClose: function() {
+            showPanel('failed');
+          }
+        });
+        handler.openIframe();
+      })
+      .catch(function(err) {
+        payBtn.disabled = false;
+        document.getElementById('pay-btn-label').textContent = 'Try Again';
+        showPanel('failed');
+      });
+  });
+
+  /* ---------- Requery → confirm access granted ----------
+     Retries up to 5 times with growing delays (2s, 4s, 6s, 8s, 10s)
+     to allow time for Paystack's webhook to reach the backend and
+     update the payment status before we declare it failed.          */
+  function requeryPayment(reference, attempt) {
+    attempt = attempt || 1;
+    var maxAttempts = 5;
+    var retryDelays = [0, 2000, 4000, 6000, 8000, 10000];
+    var delay = retryDelays[attempt] || 10000;
+
+    apiGet('/api/v1/payments/requery/' + encodeURIComponent(reference), _session.accessToken)
+      .then(function(data) {
+        var status      = data.data && data.data.payment && data.data.payment.payment_status;
+        var granted     = data.data && data.data.access_granted;
+
+        if (granted) {
+          /* ✓ Payment confirmed */
+          document.getElementById('success-reference').textContent = reference;
+          var s1 = document.getElementById('sidebar-step-1');
+          if (s1) { s1.classList.add('done'); s1.textContent = '✓'; }
+          showPanel('success');
+
+        } else if (status === 'FAILED') {
+          /* Backend has definitively marked this payment as failed */
+          showPanel('failed');
+
+        } else if (attempt < maxAttempts) {
+          /* Still PENDING — webhook may not have landed yet, retry after delay */
+          setTimeout(function() {
+            requeryPayment(reference, attempt + 1);
+          }, delay);
+
+        } else {
+          /* Max retries reached — give up and let user retry */
+          showPanel('failed');
+        }
+      })
+      .catch(function() {
+        if (attempt < maxAttempts) {
+          setTimeout(function() {
+            requeryPayment(reference, attempt + 1);
+          }, delay);
+        } else {
+          showPanel('failed');
+        }
+      });
+  }
+
+  /* ---------- Retry from failed screen ---------- */
+  document.getElementById('retry-payment-btn').addEventListener('click', function() {
+    showPanel('review');
+  });
+
+  /* ---------- Go to Portal ---------- */
+  document.getElementById('go-to-portal-btn').addEventListener('click', function() {
+    if (!_session.accessToken) {
+      document.getElementById('portal-error').style.display = 'block';
+      document.getElementById('portal-error').textContent   = 'Session token missing. Please contact support.';
+      return;
+    }
+    /* Redirect to portal with JWT as query param.
+       The portal reads ?token= on load to authenticate the session. */
+    window.location.href = PORTAL_URL + '?token=' + encodeURIComponent(_session.accessToken);
+  });
+
+</script>
+
+<!-- ====== WHATSAPP CHAT WIDGET ====== -->
+<a href="https://wa.me/2347088093620?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme."
+   target="_blank" rel="noopener"
+   class="whatsapp-float"
+   aria-label="Chat with us on WhatsApp"
+   title="Chat with us on WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+</body>
+</html>
