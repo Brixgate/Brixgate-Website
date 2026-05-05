@@ -111,8 +111,9 @@ h1, h2, h3, h4, h5, h6 {
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 14px 28px;
+  padding: 11px 24px;
   border-radius: 50px;
   font-size: 0.9rem;
   font-weight: 700;
@@ -186,8 +187,8 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateY(-2px);
 }
 
-.btn-lg { padding: 18px 36px; font-size: 1rem; }
-.btn-sm { padding: 10px 20px; font-size: 0.82rem; }
+.btn-lg { padding: 14px 30px; font-size: 1rem; }
+.btn-sm { padding: 9px 18px; font-size: 0.82rem; }
 
 /* ---------- Region Banner (fixed, scrolls away) ---------- */
 .region-banner {
@@ -306,7 +307,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Real logo image */
 .nav-logo-img {
-  height: 40px;
+  height: 34px;
   width: auto;
   display: block;
 }
@@ -337,7 +338,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-links a.active {
   color: var(--red);
-  background: rgba(255,41,78,0.06);
 }
 
 .nav-cta {
@@ -640,7 +640,7 @@ section { width: 100%; }
   align-items: center;
   position: relative;
   overflow: hidden;
-  padding-top: calc(var(--nav-height) + var(--banner-height) + 64px);
+  padding-top: calc(var(--nav-height) + var(--banner-height) + 40px);
   padding-bottom: 80px;
 }
 
@@ -1413,7 +1413,7 @@ textarea.form-control {
   .container { padding: 0 20px; }
 
   /* Nav */
-  .nav-logo-img { height: 36px; }
+  .nav-logo-img { height: 30px; }
   .nav-links, .nav-cta { display: none; }
   .nav-hamburger { display: flex; }
   .nav-mobile { top: calc(var(--nav-height) + var(--banner-height)); }
@@ -1485,7 +1485,7 @@ textarea.form-control {
   h1 { font-size: clamp(1.8rem, 8vw, 2.4rem); }
 
   /* Nav logo smaller on small phones */
-  .nav-logo-img { height: 30px; }
+  .nav-logo-img { height: 26px; }
 
   /* Programme field cards */
   .field-cards-grid,
