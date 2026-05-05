@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&display=swap');
+
 /* ============================================================
    BRIXGATE — Global Stylesheet
    AI in my Field | Expert Practitioner Programme
@@ -18,7 +20,8 @@
   --cta-secondary:  #1B3A5C;
   --white:          #FFFFFF;
 
-  --font-main: 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
+  --font-main:    'DM Sans', 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
+  --font-heading: 'DM Sans', 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 20px;
@@ -71,7 +74,12 @@ button { cursor: pointer; font-family: var(--font-main); border: none; }
 }
 
 /* ---------- Typography Scale ---------- */
-h1, h2, h3, h4, h5 { line-height: 1.15; font-weight: 700; }
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
 
 .eyebrow {
   font-size: 0.72rem;
@@ -1384,51 +1392,123 @@ textarea.form-control {
 }
 
 /* ---------- Responsive ---------- */
+
+/* Tablet landscape */
 @media (max-width: 1024px) {
+  .container { padding: 0 32px; }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .sector-grid { grid-template-columns: repeat(3, 1fr); }
   .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
   .split-content { gap: 48px; }
+  .section-pad { padding: 80px 0; }
 }
 
+/* Tablet portrait */
 @media (max-width: 768px) {
-  :root { --nav-height: 80px; }
-  .nav-logo-img { height: 68px; }
-
-  .nav-links,
-  .nav-cta { display: none; }
-
-  .nav-hamburger { display: flex; }
-
-  .grid-3 { grid-template-columns: 1fr; }
-  .grid-4 { grid-template-columns: 1fr; }
-  .grid-2 { grid-template-columns: 1fr; }
-  .sector-grid { grid-template-columns: repeat(2, 1fr); }
-
-  .journey-steps {
-    flex-direction: column;
-    gap: 16px;
+  :root {
+    --nav-height: 72px;
+    --banner-height: 40px;
   }
 
+  .container { padding: 0 20px; }
+
+  /* Nav */
+  .nav-logo-img { height: 36px; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-mobile { top: calc(var(--nav-height) + var(--banner-height)); }
+
+  /* Grids → single column */
+  .grid-2,
+  .grid-3,
+  .grid-4 { grid-template-columns: 1fr; }
+  .sector-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Layout */
+  .split-content { grid-template-columns: 1fr; gap: 36px; }
+  .section-pad { padding: 56px 0; }
+  .section-pad-sm { padding: 36px 0; }
+  .section-header { margin-bottom: 36px; }
+  .section-header h2 { font-size: clamp(1.5rem, 5vw, 2rem); }
+  .section-header p { font-size: 0.95rem; }
+
+  /* Journey */
+  .journey-steps { flex-direction: column; gap: 16px; }
   .journey-connector { display: none; }
 
-  .section-pad { padding: 64px 0; }
-  .section-pad-sm { padding: 40px 0; }
-
-  .split-content { grid-template-columns: 1fr; gap: 40px; }
-  .footer-inner { grid-template-columns: 1fr; }
-  .footer-bottom { flex-direction: column; text-align: center; }
-  .footer-bottom-links { justify-content: center; }
-
+  /* Buttons */
   .cta-buttons { flex-direction: column; align-items: stretch; }
-  .cta-buttons .btn { justify-content: center; }
+  .cta-buttons .btn { justify-content: center; width: 100%; }
+  .btn-lg { padding: 16px 28px; font-size: 0.95rem; }
 
-  .page-header { padding: calc(var(--nav-height) + 40px) 0 56px; }
+  /* Footer */
+  .footer-inner { grid-template-columns: 1fr; gap: 36px; }
+  .footer-bottom { flex-direction: column; text-align: center; gap: 12px; }
+  .footer-bottom-links { justify-content: center; flex-wrap: wrap; }
+
+  /* Page header */
+  .page-header { padding: calc(var(--nav-height) + 36px) 0 48px; }
+
+  /* Stats bar */
+  .stats-bar .container { flex-wrap: wrap; gap: 20px; }
+  .stats-bar .stat-item { min-width: 40%; }
+
+  /* Cards */
+  .card { padding: 22px 18px; }
+
+  /* Form rows */
+  .form-row-2,
+  .form-row { grid-template-columns: 1fr !important; }
+
+  /* Hero image: hide decorative visuals on tablet */
+  .hero-visual { display: none; }
 }
 
+/* Mobile */
 @media (max-width: 480px) {
+  :root { --nav-height: 68px; }
+
+  .container { padding: 0 16px; }
+
   .sector-grid { grid-template-columns: 1fr; }
-  .stats-bar .container { flex-direction: column; gap: 28px; }
+
+  /* Stats bar stacks */
+  .stats-bar .container { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .stats-bar .stat-item { min-width: unset; width: 100%; }
+
+  /* Section spacing */
+  .section-pad { padding: 48px 0; }
+  .section-pad-sm { padding: 28px 0; }
+
+  /* Typography */
+  .section-header h2 { font-size: 1.45rem; }
+  h1 { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+
+  /* Nav logo smaller on small phones */
+  .nav-logo-img { height: 30px; }
+
+  /* Programme field cards */
+  .field-cards-grid,
+  .programme-grid { grid-template-columns: 1fr; }
+
+  /* Packages / pricing cards */
+  .packages-grid { grid-template-columns: 1fr; }
+
+  /* Back to top + WhatsApp — avoid overlap */
+  .back-to-top { right: 16px; bottom: 88px; }
+  .whatsapp-float { right: 16px; bottom: 24px; }
+
+  /* Overflow safety */
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .region-banner .regions { gap: 12px; }
+  .region-banner { font-size: 0.7rem; padding: 0 12px; }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+  .container { padding: 0 12px; }
+  .btn { padding: 12px 20px; font-size: 0.85rem; }
+  .sector-grid { grid-template-columns: 1fr; }
 }
 
 /* ---------- Currency show/hide — NGN is DEFAULT ---------- */

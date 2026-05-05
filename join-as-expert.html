@@ -544,10 +544,10 @@
             <label for="e-years">Years in Your Field *</label>
             <select id="e-years" class="form-control" required>
               <option value="">Select...</option>
-              <option>5–7 years</option>
-              <option>8–12 years</option>
-              <option>13–20 years</option>
-              <option>20+ years</option>
+              <option value="5">5–7 years</option>
+              <option value="8">8–12 years</option>
+              <option value="13">13–20 years</option>
+              <option value="20">20+ years</option>
             </select>
           </div>
         </div>
@@ -588,7 +588,8 @@
           <span>We review every application personally and respond within 5–7 business days. Your information is never shared with third parties.</span>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">
+        <div id="expert-form-error" style="display:none;background:rgba(255,41,78,0.12);border:1px solid var(--red);border-radius:var(--radius-sm);padding:12px 16px;font-size:0.85rem;color:#ff6b85;margin-bottom:12px;"></div>
+        <button id="expert-submit-btn" type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">
           Submit Expert Application →
         </button>
       </form>
@@ -664,10 +665,50 @@
 
 <script src="script.js"></script>
 <script>
+  var API_BASE = 'https://api.brixgate.com';
+
   function handleSubmit(e) {
     e.preventDefault();
-    document.getElementById('expert-form').style.display = 'none';
-    document.getElementById('form-success').style.display = 'block';
+
+    var btn = document.getElementById('expert-submit-btn');
+    var errorEl = document.getElementById('expert-form-error');
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+    if (errorEl) errorEl.style.display = 'none';
+
+    var yearsRaw = document.getElementById('e-years').value;
+
+    var payload = {
+      firstName:              document.getElementById('e-first').value.trim(),
+      lastName:               document.getElementById('e-last').value.trim(),
+      email:                  document.getElementById('e-email').value.trim(),
+      primaryField:           document.getElementById('e-field').value || undefined,
+      recentRole:             document.getElementById('e-role').value.trim() || undefined,
+      yearsInField:           yearsRaw ? parseInt(yearsRaw, 10) : undefined,
+      aiExperienceDescription: document.getElementById('e-ai').value.trim() || undefined,
+      linkedinUrl:            document.getElementById('e-linkedin').value.trim() || undefined
+    };
+
+    fetch(API_BASE + '/api/v1/expert-applications', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!data.success) throw new Error(data.message || 'Submission failed. Please try again.');
+        document.getElementById('expert-form').style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+      })
+      .catch(function(err) {
+        btn.disabled = false;
+        btn.textContent = 'Submit Application';
+        if (errorEl) {
+          errorEl.textContent = err.message || 'Something went wrong. Please try again.';
+          errorEl.style.display = 'block';
+        }
+      });
   }
 </script>
 

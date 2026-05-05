@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="styles.css" />
 
   <!-- Paystack Inline JS (test + live compatible) -->
-  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <!-- Paystack inline SDK removed — now using hosted redirect flow -->
 
   <style>
     /* ---- Apply page layout ---- */
@@ -1134,79 +1134,30 @@
 <script src="script.js"></script>
 <script>
   /* ============================================================
-     BRIXGATE — Apply page · Full API + Paystack integration
-     ============================================================
-     Config:
-       PAYSTACK_PUBLIC_KEY  — Paystack public key (test or live)
-       API_BASE             — Brixgate backend base URL
-       PORTAL_URL           — Portal base URL (token appended as ?token=...)
+     BRIXGATE — Apply page
+     Flow: Register → Review → Redirect to Paystack hosted page
+     After payment, Paystack redirects to callback.html
   ============================================================ */
 
+  var API_BASE = 'https://api.brixgate.com';
 
-  /* ============================================================
-     URL param pre-selection
-     If the visitor arrives via apply.html?field=Cybersecurity
-     (or ?field=Product+%26+Technology) the dropdown is
-     pre-selected and the page scrolls to the form.
-  ============================================================ */
-  document.addEventListener('DOMContentLoaded', function () {
-    var params = new URLSearchParams(window.location.search);
-    var fieldParam = params.get('field');
-    if (fieldParam) {
-      var sel = document.getElementById('field');
-      if (sel) {
-        // Try exact match first, then case-insensitive
-        for (var i = 0; i < sel.options.length; i++) {
-          if (sel.options[i].value === fieldParam ||
-              sel.options[i].value.toLowerCase() === fieldParam.toLowerCase()) {
-            sel.selectedIndex = i;
-            break;
-          }
-        }
-        // Scroll to the form card
-        var formCard = document.getElementById('apply-form-card') ||
-                       document.querySelector('.apply-form') ||
-                       sel.closest('form');
-        if (formCard) {
-          setTimeout(function () {
-            formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 400);
-        }
-      }
-    }
-  });
-
-  var PAYSTACK_PUBLIC_KEY = 'pk_test_dbe45fd5741a54a975db71d1607279649653e3a7';
-  var API_BASE   = 'https://api.brixgate.com';
-  var PORTAL_URL = 'https://portal.brixgate.com';
-
-  /* ============================================================
-     Field → API programme slug mapping
-     Add new slugs as more programmes go live on the backend.
-  ============================================================ */
   var FIELD_TO_SLUG = {
-    'Cybersecurity':                 'ai-in-cyber-security',
-    'Product & Technology':          'ai-in-software-engineering',
-    'Finance & Banking':             null,
-    'Healthcare & Medicine':         null,
-    'Legal & Compliance':            null,
-    'Engineering & Infrastructure':  null,
-    'Human Resources':               null,
-    'Education & Training':          null,
-    'Marketing & Communications':    null,
-    'Supply Chain & Operations':     null,
-    'Architecture & Construction':   null,
-    'Data & Analytics':              null,
-    'Other':                         null
+    'Cybersecurity':                'ai-in-cyber-security',
+    'Product & Technology':         'ai-in-software-engineering',
+    'Finance & Banking':            null,
+    'Healthcare & Medicine':        null,
+    'Legal & Compliance':           null,
+    'Engineering & Infrastructure': null,
+    'Human Resources':              null,
+    'Education & Training':         null,
+    'Marketing & Communications':   null,
+    'Supply Chain & Operations':    null,
+    'Architecture & Construction':  null,
+    'Data & Analytics':             null,
+    'Other':                        null
   };
 
-  /* Display prices for the review screen (informational only —
-     the backend calculates and charges the actual amount) */
-  var PRICE_DISPLAY = {
-    ngn: '₦250,000',
-    usd: '$156',
-    gbp: '£122'
-  };
+  var PRICE_DISPLAY = { ngn: '₦250,000', usd: '$156', gbp: '£122' };
 
   function getActiveCurrency() {
     if (document.body.classList.contains('show-usd')) return 'usd';
@@ -1214,39 +1165,51 @@
     return 'ngn';
   }
 
-  /* ---------- Session state ---------- */
-  var _session = {
-    accessToken:      null,
-    paymentReference: null,
-    cohortId:         null
+  var _session = { cohortId: null };
+
+  /* ---------- URL param pre-fill (?field=Cybersecurity) ---------- */
+  document.addEventListener('DOMContentLoaded', function () {
+    var params    = new URLSearchParams(window.location.search);
+    var fieldParam = params.get('field');
+    if (!fieldParam) return;
+    var sel = document.getElementById('field');
+    if (!sel) return;
+    for (var i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].value.toLowerCase() === fieldParam.toLowerCase()) {
+        sel.selectedIndex = i;
+        break;
+      }
+    }
+    var formCard = document.getElementById('apply-form-card') || document.querySelector('.apply-form') || sel.closest('form');
+    if (formCard) setTimeout(function () { formCard.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 400);
+  });
+
+  /* ---------- Panels ---------- */
+  var panels = {
+    form:   document.getElementById('apply-step-form'),
+    review: document.getElementById('apply-step-review')
   };
 
-  /* ---------- Step panels ---------- */
-  var panels = {
-    form:       document.getElementById('apply-step-form'),
-    review:     document.getElementById('apply-step-review'),
-    processing: document.getElementById('apply-step-processing'),
-    success:    document.getElementById('apply-step-success'),
-    failed:     document.getElementById('apply-step-failed')
-  };
+  /* Hide legacy panels that no longer live on this page */
+  ['apply-step-processing','apply-step-success','apply-step-failed'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
 
   function showPanel(name) {
     Object.keys(panels).forEach(function(k) {
-      panels[k].style.display = (k === name) ? 'block' : 'none';
+      if (panels[k]) panels[k].style.display = (k === name) ? 'block' : 'none';
     });
     var card = document.getElementById('apply-card');
-    if (card) setTimeout(function() {
-      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 50);
+    if (card) setTimeout(function() { card.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
   }
 
   function setSubmitState(btn, loading, label) {
-    btn.disabled = loading;
+    btn.disabled      = loading;
     btn.style.opacity = loading ? '0.7' : '';
-    btn.textContent = label;
+    btn.textContent   = label;
   }
 
-  /* Show a styled inline error on the form instead of a browser alert */
   function showFormError(title, body) {
     var banner = document.getElementById('form-error-banner');
     if (!banner) { alert(title + ': ' + body); return; }
@@ -1255,6 +1218,7 @@
     banner.style.display = 'flex';
     banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
+
   function hideFormError() {
     var banner = document.getElementById('form-error-banner');
     if (banner) banner.style.display = 'none';
@@ -1264,30 +1228,39 @@
   function apiPost(path, body, token) {
     var headers = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = 'Bearer ' + token;
+    console.log('[Brixgate] POST', path, JSON.stringify(body));
     return fetch(API_BASE + path, {
       method: 'POST',
       headers: headers,
       body: JSON.stringify(body)
-    }).then(function(r) { return r.json(); });
+    }).then(function(r) {
+      return r.text().then(function(text) {
+        console.log('[Brixgate] POST', path, 'status:', r.status, 'body:', text);
+        try { return JSON.parse(text); }
+        catch(e) { throw new Error('Server error (' + r.status + '): ' + text.slice(0, 200)); }
+      });
+    });
   }
 
   function apiGet(path, token) {
     var headers = {};
     if (token) headers['Authorization'] = 'Bearer ' + token;
-    return fetch(API_BASE + path, { headers: headers })
-      .then(function(r) { return r.json(); });
+    return fetch(API_BASE + path, { headers: headers }).then(function(r) {
+      return r.text().then(function(text) {
+        try { return JSON.parse(text); }
+        catch(e) { throw new Error('Server error (' + r.status + '): ' + text.slice(0, 200)); }
+      });
+    });
   }
 
-  /* Fetch the first OPEN cohort for a given programme slug.
-     Returns a Promise resolving to cohortId (int) or null. */
-  function fetchCohortId(slug) {
+  function fetchCohortId(slug, token) {
     if (!slug) return Promise.resolve(null);
-    return apiGet('/api/v1/programs/' + slug + '/cohorts')
+    return apiGet('/api/v1/programs/' + slug + '/cohorts', token)
       .then(function(data) {
         if (!data.success) return null;
         var cohorts = (data.data && data.data.cohorts) || [];
-        var open = cohorts.filter(function(c) { return c.status === 'OPEN'; });
-        var pick = open.length ? open[0] : cohorts[0];
+        var open    = cohorts.filter(function(c) { return c.status === 'OPEN'; });
+        var pick    = open.length ? open[0] : cohorts[0];
         return pick ? pick.id : null;
       })
       .catch(function() { return null; });
@@ -1296,7 +1269,7 @@
   /* ---------- Init ---------- */
   showPanel('form');
 
-  /* ---------- STEP 1 → STEP 2 : Register applicant ---------- */
+  /* ---------- STEP 1 → STEP 2: Register applicant ---------- */
   document.getElementById('apply-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -1328,184 +1301,117 @@
     var submitBtn = this.querySelector('button[type="submit"]');
     setSubmitState(submitBtn, true, 'Setting up your account…');
 
-    /* 1. Create applicant → receive access token
-          POST /api/v1/auth/applicants
-          Creates the applicant account with a default password and
-          returns an access token used to authenticate all subsequent
-          API calls (cohort fetch, payment initiation, requery).    */
-    apiPost('/api/v1/auth/applicants', { name: fullName, email: email })
+    apiPost('/api/v1/auth/applicants', {
+      name:         fullName,
+      email:        email,
+      primaryField: field || undefined,
+      currentRole:  role  || undefined
+    })
       .then(function(data) {
-        if (!data.success) throw new Error(data.message || 'Registration failed. Please try again.');
+        console.log('[Brixgate] /auth/applicants response:', JSON.stringify(data));
+        if (!data.success) {
+          /* Extract specific field errors if available */
+          var fieldErrors = '';
+          if (data.errors && typeof data.errors === 'object') {
+            fieldErrors = Object.entries(data.errors).map(function(e) { return e[0] + ': ' + JSON.stringify(e[1]); }).join('; ');
+          }
+          throw new Error(fieldErrors || data.message || 'Registration failed. Please try again.');
+        }
 
-        /* API returns snake_case: data.data.access_token */
-        var token = (data.data && (data.data.access_token || data.data.accessToken || data.data.token)) || null;
-        if (!token) throw new Error('Authentication token missing in server response. Please try again.');
-        _session.accessToken = token;
+        var token = (data.data && (data.data.accessToken || data.data.access_token || data.data.token)) || null;
+        if (!token) throw new Error('Authentication error. Please try again.');
 
-        /* 2. Fetch open cohort for the selected field (authenticated) */
+        /* Store token in sessionStorage — survives the Paystack redirect */
+        try { sessionStorage.setItem('bxAccessToken', token); } catch(e) {}
+
         var slug = FIELD_TO_SLUG[field] || null;
-        return fetchCohortId(slug);
+        return fetchCohortId(slug, token);
       })
       .then(function(cohortId) {
         _session.cohortId = cohortId;
 
-        /* Populate review screen */
         document.getElementById('review-name').textContent      = fullName;
         document.getElementById('review-email').textContent     = email;
         document.getElementById('review-field-val').textContent = field;
         document.getElementById('review-role').textContent      = role;
 
-        var cur = getActiveCurrency();
+        var cur          = getActiveCurrency();
         var priceDisplay = PRICE_DISPLAY[cur];
         document.getElementById('review-price-item').textContent = priceDisplay;
         document.getElementById('review-total').textContent      = priceDisplay;
-        document.getElementById('pay-btn-label').textContent     =
-          _session.cohortId
-            ? ('Pay ' + priceDisplay + ' via Paystack')
-            : 'Join Waitlist for ' + field;
+        document.getElementById('pay-btn-label').textContent     = _session.cohortId
+          ? ('Pay ' + priceDisplay + ' via Paystack')
+          : ('Join Waitlist for ' + field);
 
         hideFormError();
         setSubmitState(submitBtn, false, 'Continue to Review →');
         showPanel('review');
       })
       .catch(function(err) {
-        console.error('[Brixgate] Applicant creation error:', err);
         setSubmitState(submitBtn, false, 'Continue to Review →');
-        var msg = err.message || 'Unknown error. Please try again.';
-        /* Friendly message for duplicate email */
+        var msg   = err.message || 'Unknown error. Please try again.';
         var title = 'Could not set up your account';
         if (/already|exist|duplicate|registered/i.test(msg)) {
           title = 'Email already registered';
-          msg   = 'It looks like you\'ve applied before with this email. Please use a different email address, or contact us at we@brixgate.com if you need help accessing your application.';
+          msg   = 'You\'ve applied before with this email. Use a different address or contact we@brixgate.com.';
         }
         showFormError(title, msg);
       });
   });
 
-  /* ---------- STEP 2 → STEP 1 : Edit ---------- */
+  /* ---------- STEP 2 → STEP 1: Edit ---------- */
   document.getElementById('back-to-form').addEventListener('click', function() {
     showPanel('form');
   });
 
-  /* ---------- STEP 2 → STEP 3 : Initiate payment ---------- */
+  /* ---------- STEP 2 → Paystack: Initiate payment & redirect ---------- */
   document.getElementById('pay-btn').addEventListener('click', function() {
-    /* If no cohort (field not yet live), treat as waitlist */
     if (!_session.cohortId) {
-      showFormError('Coming Soon', 'The programme for your selected field is not yet open. We\'ll add you to the waitlist and notify you when it opens.');
+      showFormError('Coming Soon', 'This programme is not yet open. We\'ll add you to the waitlist and notify you when it opens.');
       return;
     }
 
     var payBtn = document.getElementById('pay-btn');
-    var email  = document.getElementById('email').value.trim();
     payBtn.disabled = true;
-    document.getElementById('pay-btn-label').textContent = 'Initialising payment…';
+    document.getElementById('pay-btn-label').textContent = 'Redirecting to payment…';
+
+    var token = null;
+    try { token = sessionStorage.getItem('bxAccessToken'); } catch(e) {}
+
+    if (!token) {
+      payBtn.disabled = false;
+      document.getElementById('pay-btn-label').textContent = 'Pay Securely via Paystack';
+      showFormError('Session Expired', 'Your session has expired. Please go back and re-enter your details.');
+      return;
+    }
 
     apiPost('/api/v1/payments/initiate', {
-      payment_type:   'ENROLLMENT',
-      entity_id:      _session.cohortId,
-      payment_method: 'PAYSTACK'
-    }, _session.accessToken)
+      paymentType:   'ENROLLMENT',
+      entityId:      _session.cohortId,
+      paymentMethod: 'PAYSTACK'
+    }, token)
       .then(function(data) {
+        console.log('[Brixgate] /payments/initiate response:', JSON.stringify(data));
         if (!data.success) throw new Error(data.message || 'Could not start payment.');
 
-        /* Store our reference for requery — do NOT pass it to Paystack,
-           it is already embedded in the access_code the backend generated.
-           Passing ref separately causes "Duplicate Transaction Reference". */
-        _session.paymentReference = data.data.payment.payment_reference;
-        var accessCode = data.data.checkout.access_code;
-        var amountKobo = data.data.payment.main_amount;
+        var authorizationUrl = data.data.checkout.authorizationUrl;
+        var reference        = data.data.payment.brixgateReference || data.data.payment.paymentReference;
 
-        payBtn.disabled = false;
-        document.getElementById('pay-btn-label').textContent = 'Pay via Paystack';
+        /* Store reference as backup in sessionStorage */
+        if (reference) {
+          try { sessionStorage.setItem('bxPaymentRef', reference); } catch(e) {}
+        }
 
-        var handler = PaystackPop.setup({
-          key:        PAYSTACK_PUBLIC_KEY,
-          email:      email,
-          amount:     amountKobo,
-          currency:   'NGN',
-          accessCode: accessCode,
-          callback: function(response) {
-            showPanel('processing');
-            /* Always use our internal BRX-... reference — the backend requery
-               endpoint works with this, not Paystack's transaction reference */
-            requeryPayment(_session.paymentReference, 1);
-          },
-          onClose: function() {
-            showPanel('failed');
-          }
-        });
-        handler.openIframe();
+        if (!authorizationUrl) throw new Error('Payment URL missing. Please try again.');
+
+        /* Full redirect to Paystack hosted checkout */
+        window.location.href = authorizationUrl;
       })
       .catch(function(err) {
         payBtn.disabled = false;
         document.getElementById('pay-btn-label').textContent = 'Try Again';
-        showPanel('failed');
+        showFormError('Payment Error', err.message || 'Could not start payment. Please try again.');
       });
-  });
-
-  /* ---------- Requery → confirm access granted ----------
-     Retries up to 5 times with growing delays (2s, 4s, 6s, 8s, 10s)
-     to allow time for Paystack's webhook to reach the backend and
-     update the payment status before we declare it failed.          */
-  function requeryPayment(reference, attempt) {
-    attempt = attempt || 1;
-    var maxAttempts = 5;
-    var retryDelays = [0, 2000, 4000, 6000, 8000, 10000];
-    var delay = retryDelays[attempt] || 10000;
-
-    apiGet('/api/v1/payments/requery/' + encodeURIComponent(reference), _session.accessToken)
-      .then(function(data) {
-        var status      = data.data && data.data.payment && data.data.payment.payment_status;
-        var granted     = data.data && data.data.access_granted;
-
-        if (granted) {
-          /* ✓ Payment confirmed */
-          document.getElementById('success-reference').textContent = reference;
-          var s1 = document.getElementById('sidebar-step-1');
-          if (s1) { s1.classList.add('done'); s1.textContent = '✓'; }
-          showPanel('success');
-
-        } else if (status === 'FAILED') {
-          /* Backend has definitively marked this payment as failed */
-          showPanel('failed');
-
-        } else if (attempt < maxAttempts) {
-          /* Still PENDING — webhook may not have landed yet, retry after delay */
-          setTimeout(function() {
-            requeryPayment(reference, attempt + 1);
-          }, delay);
-
-        } else {
-          /* Max retries reached — give up and let user retry */
-          showPanel('failed');
-        }
-      })
-      .catch(function() {
-        if (attempt < maxAttempts) {
-          setTimeout(function() {
-            requeryPayment(reference, attempt + 1);
-          }, delay);
-        } else {
-          showPanel('failed');
-        }
-      });
-  }
-
-  /* ---------- Retry from failed screen ---------- */
-  document.getElementById('retry-payment-btn').addEventListener('click', function() {
-    showPanel('review');
-  });
-
-  /* ---------- Go to Portal ---------- */
-  document.getElementById('go-to-portal-btn').addEventListener('click', function() {
-    if (!_session.accessToken) {
-      document.getElementById('portal-error').style.display = 'block';
-      document.getElementById('portal-error').textContent   = 'Session token missing. Please contact support.';
-      return;
-    }
-    /* Redirect to portal with JWT as query param.
-       The portal reads ?token= on load to authenticate the session. */
-    window.location.href = PORTAL_URL + '?token=' + encodeURIComponent(_session.accessToken);
   });
 
 </script>

@@ -1,0 +1,16 @@
+# Security — never commit private keys
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Build output — not source code
+dist/
+brixgate-prod.zip
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
