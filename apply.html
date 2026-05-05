@@ -1394,8 +1394,10 @@
         console.log('[Brixgate] /payments/initiate response:', JSON.stringify(data));
         if (!data.success) throw new Error(data.message || 'Could not start payment.');
 
-        var authorizationUrl = data.data.checkout.authorizationUrl;
-        var reference        = data.data.payment.brixgateReference || data.data.payment.paymentReference;
+        var checkout         = data.data.checkout || {};
+        var payment          = data.data.payment  || {};
+        var authorizationUrl = checkout.authorizationUrl || checkout.authorization_url;
+        var reference        = payment.brixgateReference || payment.brxgateReference || payment.paymentReference || payment.payment_reference || payment.brixgate_reference;
 
         /* Store reference as backup in sessionStorage */
         if (reference) {
