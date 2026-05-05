@@ -1386,9 +1386,9 @@
     }
 
     apiPost('/api/v1/payments/initiate', {
-      paymentType:   'ENROLLMENT',
-      entityId:      _session.cohortId,
-      paymentMethod: 'PAYSTACK'
+      payment_type:   'ENROLLMENT',
+      entity_id:      _session.cohortId,
+      payment_method: 'PAYSTACK'
     }, token)
       .then(function(data) {
         console.log('[Brixgate] /payments/initiate response:', JSON.stringify(data));
