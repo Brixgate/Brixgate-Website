@@ -277,13 +277,15 @@
       <div class="failed-icon-wrap">
         <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="rgba(255,41,78,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </div>
-      <div class="failed-title">Payment Not Confirmed</div>
+      <div class="failed-title">Payment Failed</div>
       <div class="failed-body" id="failed-body">
-        We weren't able to confirm your payment. Your card has not been charged. Please try again — if the issue persists, contact us at <a href="mailto:we@brixgate.com" style="color:var(--red);">we@brixgate.com</a>.
+        Your payment did not go through. <strong style="color:var(--white);">You have not been charged.</strong><br><br>
+        This can happen if your card was declined, the session timed out, or the payment was cancelled. Please try again — it only takes a minute.
       </div>
 
-      <div class="ref-box" id="failed-ref-box" style="display:none;">
-        Reference: <strong id="failed-ref">—</strong>
+      <div class="ref-box" id="failed-ref-box">
+        Reference ID: <strong id="failed-ref">—</strong>
+        <span style="display:block;margin-top:4px;font-size:0.73rem;color:rgba(255,255,255,0.3);">Share this with support if you need help</span>
       </div>
 
       <div class="action-row">
@@ -323,7 +325,6 @@
         showState('success');
 
       } else if (status === 'FAILED') {
-        document.getElementById('failed-ref-box').style.display = 'block';
         document.getElementById('failed-ref').textContent = reference;
         showState('failed');
 
@@ -331,9 +332,9 @@
         setTimeout(function() { requeryPayment(reference, token, attempt + 1); }, 2000);
 
       } else {
-        document.getElementById('failed-body').textContent =
-          'We couldn\'t confirm your payment after several attempts. If you were charged, contact we@brixgate.com with your reference number below.';
-        document.getElementById('failed-ref-box').style.display = 'block';
+        document.getElementById('failed-body').innerHTML =
+          'Your payment did not go through. <strong style="color:var(--white);">You have not been charged.</strong><br><br>'
+          + 'We tried to verify it several times but got no response. If you believe you were charged, please contact us — we\'ll sort it out quickly.';
         document.getElementById('failed-ref').textContent = reference;
         showState('failed');
       }
@@ -342,6 +343,7 @@
       if (attempt < maxAttempts) {
         setTimeout(function() { requeryPayment(reference, token, attempt + 1); }, 2000);
       } else {
+        document.getElementById('failed-ref').textContent = reference || '—';
         showState('failed');
       }
     });
@@ -359,8 +361,11 @@
     }
 
     if (!reference || !token) {
-      document.getElementById('failed-body').textContent =
-        'We couldn\'t find your payment session. If you just completed a payment, contact we@brixgate.com with your email address and we\'ll confirm your enrolment manually.';
+      document.getElementById('failed-body').innerHTML =
+        'Your payment did not go through. <strong style="color:var(--white);">You have not been charged.</strong><br><br>'
+        + 'Your session may have expired. Please go back and try again. If you believe you were already charged, email us at '
+        + '<a href="mailto:we@brixgate.com" style="color:var(--red);">we@brixgate.com</a> with your email address.';
+      document.getElementById('failed-ref').textContent = reference || '—';
       showState('failed');
       return;
     }

@@ -25,10 +25,13 @@ mkdir -p "$DIST"
 echo "► Copying assets..."
 cp -r "$PROJECT_DIR/assets" "$DIST/assets"
 
-# ── 3. Minify all HTML files ──────────────────────────────────
+# ── 3. Minify all HTML files (root + subdirectories) ──────────
 echo "► Minifying HTML..."
 while IFS= read -r -d '' file; do
-  filename=$(basename "$file")
+  # Preserve relative path from project root so subdirs are kept
+  rel="${file#$PROJECT_DIR/}"
+  outfile="$DIST/$rel"
+  mkdir -p "$(dirname "$outfile")"
   "$PROJECT_DIR/node_modules/.bin/html-minifier-terser" \
     --collapse-whitespace \
     --remove-comments \
@@ -38,9 +41,9 @@ while IFS= read -r -d '' file; do
     --remove-tag-whitespace \
     --minify-css true \
     --minify-js true \
-    "$file" -o "$DIST/$filename"
-  echo "   ✓ $filename"
-done < <(find "$PROJECT_DIR" -maxdepth 1 -name "*.html" -print0)
+    "$file" -o "$outfile"
+  echo "   ✓ $rel"
+done < <(find "$PROJECT_DIR" -not -path "*/node_modules/*" -not -path "*/dist/*" -name "*.html" -print0)
 
 # ── 4. Minify CSS ─────────────────────────────────────────────
 echo "► Minifying CSS..."
