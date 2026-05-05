@@ -1001,77 +1001,7 @@
           </div>
         </div>
 
-        <!-- ===== STEP 3a: Processing ===== -->
-        <div id="apply-step-processing" style="display:none;" class="apply-processing">
-          <div class="spinner"></div>
-          <h3>Confirming Payment…</h3>
-          <p>Verifying your transaction with Paystack. This can take up to 30 seconds — please do not close this page.</p>
-        </div>
-
-        <!-- ===== STEP 3b: Success ===== -->
-        <div id="apply-step-success" style="display:none;" class="apply-success">
-
-          <div class="step-indicator" style="margin-bottom:28px;">
-            <div class="step-item">
-              <div class="step-dot done">✓</div>
-              <div class="step-label done">Details</div>
-            </div>
-            <div class="step-line done"></div>
-            <div class="step-item">
-              <div class="step-dot done">✓</div>
-              <div class="step-label done">Review</div>
-            </div>
-            <div class="step-line done"></div>
-            <div class="step-item">
-              <div class="step-dot done">✓</div>
-              <div class="step-label done">Payment</div>
-            </div>
-          </div>
-
-          <div class="success-icon">✓</div>
-          <h3>You're In. Welcome, Brixer.</h3>
-          <p class="success-sub">Payment confirmed. Your place on the Expert Practitioner Programme is secured. Check your inbox for your confirmation email.</p>
-
-          <div class="reference-box">
-            <div class="ref-label">Payment Reference</div>
-            <div class="ref-number" id="success-reference">—</div>
-          </div>
-
-          <div class="next-steps-box">
-            <h5>What Happens Next</h5>
-            <div class="next-step-row">
-              <div class="next-step-num">1</div>
-              <div class="next-step-text"><strong>Confirmation Email</strong> On its way to your inbox with your receipt and programme details.</div>
-            </div>
-            <div class="next-step-row">
-              <div class="next-step-num">2</div>
-              <div class="next-step-text"><strong>Field Assessment Call</strong> We'll reach out within 48 hours to schedule your 15-min readiness call.</div>
-            </div>
-            <div class="next-step-row">
-              <div class="next-step-num">3</div>
-              <div class="next-step-text"><strong>Expert Match</strong> You'll be matched with your field's Expert Practitioner and assigned your cohort date.</div>
-            </div>
-          </div>
-
-          <button id="go-to-portal-btn" class="btn btn-primary" style="width:100%;padding:16px;font-size:1rem;font-weight:700;margin-bottom:12px;">
-            Access Your Programme Portal →
-          </button>
-          <a href="programme.html" class="btn btn-outline" style="width:100%;justify-content:center;display:flex;">Learn More About the Programme</a>
-
-          <!-- inline error shown if portal redirect fails -->
-          <p id="portal-error" style="display:none;margin-top:12px;font-size:0.8rem;color:var(--red);text-align:center;"></p>
-        </div>
-
-        <!-- ===== STEP 3c: Failed / Cancelled ===== -->
-        <div id="apply-step-failed" style="display:none;" class="apply-failed">
-          <div class="failed-icon">✕</div>
-          <h3>Payment Not Completed</h3>
-          <p>No charge was made. You can try again below, or contact us if you need help completing your enrolment.</p>
-          <div class="failed-actions">
-            <button id="retry-payment-btn" class="btn btn-primary pay-btn">Try Again</button>
-            <a href="mailto:we@brixgate.com" class="btn btn-outline">Contact Support</a>
-          </div>
-        </div>
+        <!-- Payment states handled by callback.html after Paystack redirect -->
 
       </div><!-- /apply-form-card -->
     </div>
@@ -1170,6 +1100,14 @@
   /* ---------- URL param pre-fill (?field=Cybersecurity) ---------- */
   document.addEventListener('DOMContentLoaded', function () {
     var params    = new URLSearchParams(window.location.search);
+
+    /* If Paystack redirected here instead of callback.html, forward immediately */
+    var _ref = params.get('reference') || params.get('trxref');
+    if (_ref) {
+      window.location.replace('callback.html?reference=' + encodeURIComponent(_ref));
+      return;
+    }
+
     var fieldParam = params.get('field');
     if (!fieldParam) return;
     var sel = document.getElementById('field');
