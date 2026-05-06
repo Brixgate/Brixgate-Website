@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Engineering & Infrastructure — AI in my Field | Brixgate</title>
-  <meta name="description" content="Engineers and infrastructure professionals who integrate AI into design, build, operations, and incident response — rather than just discussing it — are redefining what modern engineering looks like." />
+  <title>AI-Native Software Engineering — AI in my Field | Brixgate</title>
+  <meta name="description" content="Equip yourself with the skills, workflows, and critical judgment to operate as an AI-native software engineer. 8 live classes covering the full AI-assisted development lifecycle." />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="stylesheet" href="styles.css" />
   <style>
@@ -55,6 +55,25 @@
     .qf-next-btn.qf-enabled { opacity: 1; pointer-events: auto; }
     .qf-result { display: none; }
     .qf-result.qf-visible { display: block; }
+    .qf-capture { display: none; }
+    .qf-capture.qf-visible { display: block; }
+    .qf-capture input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-dark);
+      border: 1.5px solid var(--border-card);
+      border-radius: 10px;
+      color: var(--white);
+      font-size: 0.9rem;
+      font-family: var(--font-main);
+      margin-bottom: 12px;
+      outline: none;
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+    }
+    .qf-capture input:focus { border-color: var(--red); }
+    .qf-capture input::placeholder { color: var(--muted); opacity: 0.6; }
+    .qf-capture-error { color: var(--red); font-size: 0.78rem; margin-bottom: 10px; display: none; }
     .result-badge {
       display: inline-block;
       padding: 5px 16px;
@@ -88,8 +107,8 @@
 <div id="scroll-progress"></div>
 <div class="region-banner">
   <div class="container" style="display:flex;align-items:center;justify-content:center;gap:20px;">
-    <span>🌍 <strong>Africa-First,</strong> Globally Recognised · Cohorts open now</span>
-    <span class="btn btn-primary" style="opacity:0.5;cursor:not-allowed;pointer-events:none;color:var(--red);font-weight:700;font-size:0.84rem;">Coming Soon</span>
+    <span>🌍 <strong>Africa-First,</strong> Globally Recognised · Cohort 1 — June 12, 2026</span>
+    <a href="apply.html?field=Software%20Engineering" class="btn btn-primary" style="color:#fff;font-weight:700;font-size:0.84rem;">Apply Now →</a>
   </div>
 </div>
 <nav class="nav">
@@ -104,8 +123,8 @@
       <a href="organisations.html">For Organisations</a>
     </div>
     <div class="nav-cta">
-      <span class="btn btn-outline-dark btn-sm" style="opacity:0.5;cursor:not-allowed;pointer-events:none;">Coming Soon</span>
-      <a href="apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm">Login</a>
+      <a href="apply.html?field=Software%20Engineering" class="btn btn-primary btn-sm">Apply Now</a>
     </div>
     <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
@@ -116,8 +135,8 @@
   <a href="programme.html">Programme</a>
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
-  <span class="btn btn-primary" style="opacity:0.5;cursor:not-allowed;pointer-events:none;">Coming Soon</span>
-  <a href="organisations.html#contact" class="btn btn-outline" style="margin-top:8px;">Get a Demo</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px;">Login</a>
+  <a href="apply.html?field=Software%20Engineering" class="btn btn-primary">Apply Now</a>
 </div><!-- ====== FIELD HERO ====== -->
 <section class="section-hero bg-dark" style="padding-top:calc(var(--nav-height) + 20px);padding-bottom:60px;">
   <div class="container">
@@ -127,14 +146,13 @@
           ← Back to all programmes
         </a>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
-          <span style="font-size:2.4rem;">⚙️</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
           <span style="background:rgba(255,41,78,0.15);color:var(--red);font-size:0.75rem;font-weight:800;padding:4px 14px;border-radius:50px;letter-spacing:.08em;text-transform:uppercase;">Expert Practitioner Programme</span>
-          
         </div>
         <h1 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:20px;">
-          AI in<br /><span style="color:var(--red);">Software Engineering & Infrastructure</span>
+          AI in<br /><span style="color:var(--red);">Software Engineering</span>
         </h1>
-        <p style="font-size:1.15rem;color:var(--muted);line-height:1.7;margin-bottom:32px;max-width:480px;">Build AI-Native Systems, Not Just AI-Aware Ones.</p>
+        <p style="font-size:1.15rem;color:var(--muted);line-height:1.7;margin-bottom:32px;max-width:480px;">Become an AI-native developer. 8 live classes covering the full AI-assisted engineering lifecycle — from prompting to production.</p>
         <!-- Price pill — visible in hero so cost is clear before scrolling -->
         <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:24px;">
           <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,41,78,0.08);border:1px solid rgba(255,41,78,0.22);border-radius:50px;padding:8px 18px;">
@@ -148,15 +166,15 @@
         </div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
           <a href="#quiz-field" class="btn btn-primary btn-lg">Validate Your Skill Level →</a>
-          <span class="btn btn-outline btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none;">Coming Soon</span>
+          <a href="apply.html?field=Software%20Engineering" class="btn btn-outline btn-lg">Apply Now →</a>
         </div>
       </div>
       <div class="fade-in" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:20px;padding:36px 32px;">
-        <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:16px;">What AI Looks Like in Engineering & Infrastructure</div>
-        <p style="font-size:1rem;color:var(--muted);line-height:1.7;">When an engineer predicts infrastructure failures before they happen, uses AI to review pull requests in real-time, and automates incident triage — that is an AI-native engineering organisation.</p>
+        <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:16px;">What AI-Native Software Engineering Looks Like</div>
+        <p style="font-size:1rem;color:var(--muted);line-height:1.7;">When a developer generates production-quality code with structured prompts, conducts AI-powered code review in their CI/CD pipeline, debugs with hypothesis-first AI workflows, and ships faster with full ownership — that is an AI-native engineer.</p>
         <div style="margin-top:28px;padding-top:20px;border-top:1px solid var(--border-card);display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center;">
-          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white);">4</div><div style="font-size:0.72rem;color:var(--muted);">Week Sprint</div></div>
-          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white);">Live</div><div style="font-size:0.72rem;color:var(--muted);">Cohort Sessions</div></div>
+          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white);">8</div><div style="font-size:0.72rem;color:var(--muted);">Live Classes</div></div>
+          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white);">Real</div><div style="font-size:0.72rem;color:var(--muted);">Capstone Project</div></div>
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white);">Field</div><div style="font-size:0.72rem;color:var(--muted);">Verified Certificate</div></div>
         </div>
       </div>
@@ -195,7 +213,7 @@
       <div class="fade-up" style="text-align:center;margin-bottom:48px;">
         <div class="eyebrow-tag">Validate Your Skill Level</div>
         <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:900;line-height:1.2;margin-bottom:16px;">
-          Where Are You on the<br /><span style="color:var(--red);">AI Readiness Spectrum in Engineering & Infrastructure?</span>
+          Where Are You on the<br /><span style="color:var(--red);">AI Readiness Spectrum in Software Engineering?</span>
         </h2>
         <p style="font-size:1rem;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.65;">
           5 questions. 90 seconds. Get a clear read on your current level — and what the Expert Practitioner Programme will unlock for you.
@@ -212,54 +230,54 @@
         
           <div class="qf-question" id="qf_engineering_q0">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Current Practice</span>
+              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Daily Practice</span>
               <span style="font-size:0.75rem;color:var(--muted);">Question 1 of 5</span>
             </div>
-            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">When you encounter a complex infrastructure or engineering problem, how do you currently approach the diagnosis?</p>
+            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">How do you currently use AI tools in your day-to-day software development work?</p>
             <div class="qf-options">
-              <div class="qf-opt" data-q="0" data-score="1" onclick="qfSelect(this)">I rely on trial and error until something resolves</div>
-              <div class="qf-opt" data-q="0" data-score="2" onclick="qfSelect(this)">I follow established runbooks and documentation</div>
-              <div class="qf-opt" data-q="0" data-score="3" onclick="qfSelect(this)">I use monitoring data and analytical tools to guide decisions</div>
-              <div class="qf-opt" data-q="0" data-score="4" onclick="qfSelect(this)">I've built predictive models to anticipate and prevent issues proactively</div>
+              <div class="qf-opt" data-q="0" data-score="1" onclick="qfSelect(this)">I don't use AI tools in my development workflow</div>
+              <div class="qf-opt" data-q="0" data-score="2" onclick="qfSelect(this)">I use AI occasionally — mostly for code completion or quick Google alternatives</div>
+              <div class="qf-opt" data-q="0" data-score="3" onclick="qfSelect(this)">I use AI regularly for code generation, debugging, and documentation</div>
+              <div class="qf-opt" data-q="0" data-score="4" onclick="qfSelect(this)">AI is embedded in my full SDLC — from planning through to review and deployment</div>
             </div>
           </div>
           <div class="qf-question" id="qf_engineering_q1">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">AI Tool Usage</span>
+              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Prompting Skill</span>
               <span style="font-size:0.75rem;color:var(--muted);">Question 2 of 5</span>
             </div>
-            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">How do you currently use AI in your day-to-day engineering workflow?</p>
+            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">When you ask an AI model to generate or fix code, how would you describe the quality of your prompts?</p>
             <div class="qf-options">
-              <div class="qf-opt" data-q="1" data-score="1" onclick="qfSelect(this)">I don't use AI tools in my engineering work</div>
-              <div class="qf-opt" data-q="1" data-score="2" onclick="qfSelect(this)">I use AI occasionally for code completion or documentation search</div>
-              <div class="qf-opt" data-q="1" data-score="3" onclick="qfSelect(this)">I regularly use AI for code review, debugging, and technical writing</div>
-              <div class="qf-opt" data-q="1" data-score="4" onclick="qfSelect(this)">AI is integrated into my CI/CD pipeline, incident response, and system design</div>
+              <div class="qf-opt" data-q="1" data-score="1" onclick="qfSelect(this)">I type whatever comes to mind and hope for a useful response</div>
+              <div class="qf-opt" data-q="1" data-score="2" onclick="qfSelect(this)">I include some context but don't have a consistent structure</div>
+              <div class="qf-opt" data-q="1" data-score="3" onclick="qfSelect(this)">I structure prompts with role, context, constraints, and expected output format</div>
+              <div class="qf-opt" data-q="1" data-score="4" onclick="qfSelect(this)">I maintain a personal prompt library and use chain-of-thought and few-shot techniques</div>
             </div>
           </div>
           <div class="qf-question" id="qf_engineering_q2">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Code & Output Evaluation</span>
+              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Code Quality & Review</span>
               <span style="font-size:0.75rem;color:var(--muted);">Question 3 of 5</span>
             </div>
-            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">How comfortable are you reviewing and validating AI-generated code or infrastructure configurations?</p>
+            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">How confident are you reviewing AI-generated code before committing it to production?</p>
             <div class="qf-options">
-              <div class="qf-opt" data-q="2" data-score="1" onclick="qfSelect(this)">Not comfortable — I wouldn't know what quality or risk signals to look for</div>
-              <div class="qf-opt" data-q="2" data-score="2" onclick="qfSelect(this)">Somewhat — I can spot obvious errors but miss subtler issues</div>
-              <div class="qf-opt" data-q="2" data-score="3" onclick="qfSelect(this)">Comfortable — I review and adapt AI output routinely with clear criteria</div>
-              <div class="qf-opt" data-q="2" data-score="4" onclick="qfSelect(this)">I have established review processes for AI-generated code across my team</div>
+              <div class="qf-opt" data-q="2" data-score="1" onclick="qfSelect(this)">Not confident — I copy-paste and hope it works</div>
+              <div class="qf-opt" data-q="2" data-score="2" onclick="qfSelect(this)">I spot obvious bugs but miss security issues and hidden coupling</div>
+              <div class="qf-opt" data-q="2" data-score="3" onclick="qfSelect(this)">I review AI output systematically — checking for security, readability, and edge cases</div>
+              <div class="qf-opt" data-q="2" data-score="4" onclick="qfSelect(this)">I have team-wide review standards for AI-generated code with documented criteria</div>
             </div>
           </div>
           <div class="qf-question" id="qf_engineering_q3">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Risk Awareness</span>
+              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Security Awareness</span>
               <span style="font-size:0.75rem;color:var(--muted);">Question 4 of 5</span>
             </div>
-            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">How would your team describe your awareness of the risks of AI in engineering environments?</p>
+            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">How aware are you of the specific security risks introduced by AI-generated code?</p>
             <div class="qf-options">
-              <div class="qf-opt" data-q="3" data-score="1" onclick="qfSelect(this)">I haven't thought deeply about the risks yet</div>
-              <div class="qf-opt" data-q="3" data-score="2" onclick="qfSelect(this)">I know it's a concern but I'm unsure how to address it practically</div>
-              <div class="qf-opt" data-q="3" data-score="3" onclick="qfSelect(this)">I can identify key risks — hallucinations, security gaps, and hidden tech debt</div>
-              <div class="qf-opt" data-q="3" data-score="4" onclick="qfSelect(this)">I lead conversations about responsible AI use in engineering in my organisation</div>
+              <div class="qf-opt" data-q="3" data-score="1" onclick="qfSelect(this)">I haven't thought about this specifically</div>
+              <div class="qf-opt" data-q="3" data-score="2" onclick="qfSelect(this)">I know it's a risk but don't have a structured approach to catch issues</div>
+              <div class="qf-opt" data-q="3" data-score="3" onclick="qfSelect(this)">I check for common vulnerabilities — injection, insecure defaults, exposed secrets</div>
+              <div class="qf-opt" data-q="3" data-score="4" onclick="qfSelect(this)">I lead security reviews for AI-generated code and set safe AI usage rules for my team</div>
             </div>
           </div>
           <div class="qf-question" id="qf_engineering_q4">
@@ -267,18 +285,34 @@
               <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Applied Impact</span>
               <span style="font-size:0.75rem;color:var(--muted);">Question 5 of 5</span>
             </div>
-            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">What is the highest-impact AI application you have delivered or contributed to in your engineering domain?</p>
+            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">What is the most significant thing you have shipped using AI assistance?</p>
             <div class="qf-options">
-              <div class="qf-opt" data-q="4" data-score="1" onclick="qfSelect(this)">I haven't applied AI to a real engineering challenge yet</div>
-              <div class="qf-opt" data-q="4" data-score="2" onclick="qfSelect(this)">I've used AI for documentation or basic scripting tasks</div>
-              <div class="qf-opt" data-q="4" data-score="3" onclick="qfSelect(this)">I've built or contributed to an AI-assisted engineering workflow in production</div>
-              <div class="qf-opt" data-q="4" data-score="4" onclick="qfSelect(this)">I've deployed AI-driven systems that are live and measurably improving outcomes</div>
+              <div class="qf-opt" data-q="4" data-score="1" onclick="qfSelect(this)">I haven't shipped anything using AI yet</div>
+              <div class="qf-opt" data-q="4" data-score="2" onclick="qfSelect(this)">I've used AI to write tests, documentation, or small utility functions</div>
+              <div class="qf-opt" data-q="4" data-score="3" onclick="qfSelect(this)">I've shipped a feature or API with significant AI-assisted code that is live in production</div>
+              <div class="qf-opt" data-q="4" data-score="4" onclick="qfSelect(this)">I've built repeatable AI workflows that my team uses and that measurably improve velocity</div>
             </div>
           </div>
 
         <!-- Nav button -->
         <div class="qf-nav">
           <button class="qf-next-btn" id="qf_engineering_next" onclick="qfNext('qf_engineering')">Next Question →</button>
+        </div>
+
+        <!-- Lead capture gate -->
+        <div class="qf-capture" id="qf_engineering_capture">
+          <div style="text-align:center;padding:32px 0 8px;">
+            <div style="width:52px;height:52px;background:rgba(255,41,78,0.12);border:1.5px solid rgba(255,41,78,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+            </div>
+            <h3 style="font-size:1.2rem;font-weight:900;color:var(--white);line-height:1.3;margin-bottom:8px;">Enter your details to see your results</h3>
+            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;margin-bottom:24px;">We'll also send you a <strong style="color:var(--white);">registration coupon</strong> when you're ready to enrol.</p>
+            <input type="email" id="qf_engineering_email" placeholder="Email address" autocomplete="email" />
+            <input type="tel" id="qf_engineering_phone" placeholder="Phone number" autocomplete="tel" />
+            <div class="qf-capture-error" id="qf_engineering_capture_err">Please enter a valid email and phone number.</div>
+            <button onclick="qfSubmitCapture('qf_engineering')" class="btn btn-primary" style="width:100%;justify-content:center;">See My Results →</button>
+            <p style="margin-top:12px;font-size:0.78rem;"><a href="#" onclick="qfSkipCapture(event,'qf_engineering')" style="color:var(--muted);text-decoration:underline;">Skip and see results</a></p>
+          </div>
         </div>
 
         <!-- Result panel -->
@@ -291,7 +325,7 @@
             </div>
             <p id="qf_engineering_body" style="font-size:0.95rem;color:var(--muted);line-height:1.65;max-width:520px;margin:0 auto 28px;"></p>
             <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-              <span class="btn btn-primary btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none;">Coming Soon</span>
+              <a href="apply.html?field=Software%20Engineering" id="qf_engineering_cta_link" class="btn btn-primary btn-lg">Apply Now →</a>
               <a href="#pricing" style="color:var(--muted);font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:4px;">View pricing first →</a>
             </div>
             <div style="margin-top:20px;">
@@ -309,9 +343,136 @@
   <div class="container">
     <div style="max-width:800px;margin:0 auto;" class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red);">Programme Curriculum</div>
-      <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:12px;">What You Will Cover</h2>
-      <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:32px;">Every week builds on the last — from foundations through to a deployed, practitioner-assessed capstone project.</p>
-      <details open style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Week 1</span>AI in Engineering Environments</span><span style="font-size:1.1rem;color:#7A94A8;">+</span></summary><div style="padding:0 24px 20px;background:#fff;"><ul style="list-style:none;padding:0;margin:8px 0 0;"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>How AI is transforming design, simulation, and asset management</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>LLMs for technical documentation, RFQ analysis, and specification drafting</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>AI safety and reliability considerations in engineering applications</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Evaluating AI tools against ISO and engineering standards</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Week 2</span>Design, Simulation & Predictive Systems</span><span style="font-size:1.1rem;color:#7A94A8;">+</span></summary><div style="padding:0 24px 20px;background:#fff;"><ul style="list-style:none;padding:0;margin:8px 0 0;"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>AI-assisted CAD review and structural analysis</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Predictive maintenance modelling using sensor data</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Generative design workflows for optimised engineering solutions</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Building AI-integrated asset monitoring dashboards</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Week 3</span>Project & Site Operations AI</span><span style="font-size:1.1rem;color:#7A94A8;">+</span></summary><div style="padding:0 24px 20px;background:#fff;"><ul style="list-style:none;padding:0;margin:8px 0 0;"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>AI-powered project scheduling and resource optimisation</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Automated tender analysis and cost estimation workflows</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Site safety monitoring using AI and computer vision</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Defect detection and quality control automation</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Week 4</span>Capstone & Certification</span><span style="font-size:1.1rem;color:#7A94A8;">+</span></summary><div style="padding:0 24px 20px;background:#fff;"><ul style="list-style:none;padding:0;margin:8px 0 0;"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Capstone: deploy an AI-augmented engineering workflow</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Expert practitioner review and safety audit</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Portfolio documentation — technically rigorous and employer-ready</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Brixgate Expert Practitioner Certificate — Engineering & Infrastructure</li></ul></div></details>
+      <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:12px;">8 Classes. Full AI Engineering Lifecycle.</h2>
+      <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:32px;">Each class builds on the last — from model landscape and prompting fundamentals through to a live capstone defence and your 30-day post-programme roadmap.</p>
+
+      <!-- Class 1 -->
+      <details open style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;">
+        <summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;">
+          <span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Class 1</span>Foundations &amp; Environment Setup</span>
+          <span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;">+</span>
+        </summary>
+        <div style="padding:0 24px 20px;background:#fff;">
+          <ul style="list-style:none;padding:0;margin:8px 0 0;">
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>What "AI-native" means vs AI-assisted vs AI-aware development</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Deep-dive comparison of major coding models: Claude, GPT-4o, Gemini, DeepSeek, Qwen, Mistral, LLaMA, StarCoder2</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>IDE setup: VS Code, JetBrains, GitHub Copilot, Cursor, and local models via Ollama</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Anatomy of a strong engineering prompt — role, context, task, constraints, output format</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Class 2 -->
+      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;">
+        <summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;">
+          <span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Class 2</span>Practical Interactions, Documentation &amp; Planning</span>
+          <span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;">+</span>
+        </summary>
+        <div style="padding:0 24px 20px;background:#fff;">
+          <ul style="list-style:none;padding:0;margin:8px 0 0;">
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Advanced prompt engineering — multi-step, iterative, and chained prompts</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>AI for requirements: turning vague briefs into technical specs, user stories, and architecture decisions</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Technical documentation at scale: README, OpenAPI/Swagger, ADRs, release notes, onboarding docs</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Understanding legacy codebases with AI — explaining mystery functions and mapping dependencies</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Class 3 -->
+      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;">
+        <summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;">
+          <span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Class 3</span>Code Generation, Review &amp; Refactoring</span>
+          <span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;">+</span>
+        </summary>
+        <div style="padding:0 24px 20px;background:#fff;">
+          <ul style="list-style:none;padding:0;margin:8px 0 0;">
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Generating production-ready functions, APIs, and modules — and knowing what to validate before committing</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>AI-assisted refactoring — naming, modularity, design patterns, and breaking monoliths</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Using AI as a structured first-pass code reviewer: readability, performance, security, design quality</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>The right mental model: what to delegate to AI vs what must remain with the engineer</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Class 4 -->
+      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;">
+        <summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;">
+          <span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Class 4</span>Debugging, Testing &amp; Quality Assurance</span>
+          <span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;">+</span>
+        </summary>
+        <div style="padding:0 24px 20px;background:#fff;">
+          <ul style="list-style:none;padding:0;margin:8px 0 0;">
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Feeding stack traces and logs to AI effectively — hypothesis-first debugging workflows</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>AI-driven test generation: unit, integration, and E2E — with edge cases AI commonly misses</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>TDD workflows assisted by AI, and reviewing AI-written tests for shallow or false coverage</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Performance profiling and static analysis with AI-guided interpretation</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Class 5 -->
+      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;">
+        <summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;">
+          <span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Class 5</span>Security, Ethics &amp; Safe AI Practice</span>
+          <span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;">+</span>
+        </summary>
+        <div style="padding:0 24px 20px;background:#fff;">
+          <ul style="list-style:none;padding:0;margin:8px 0 0;">
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Common vulnerabilities in AI-generated code: injection, insecure defaults, hardcoded credentials</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>What not to put in prompts: PII, credentials, client data, proprietary logic — and when to use local models</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Hallucination: why it happens, how to detect it, and how to verify AI outputs</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Building a personal AI safety policy — licensing, data retention, and professional accountability</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Class 6 -->
+      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;">
+        <summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;">
+          <span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Class 6</span>AI-Enhanced Productivity &amp; Workflows</span>
+          <span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;">+</span>
+        </summary>
+        <div style="padding:0 24px 20px;background:#fff;">
+          <ul style="list-style:none;padding:0;margin:8px 0 0;">
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Mapping AI tools to each SDLC phase — requirements, design, build, test, deploy</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Building reusable prompt templates and a personal AI workflow OS</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Standardising AI usage across an engineering team — shared libraries and norms</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Full productivity lab: take a real feature from brief to working code, tracking AI prompts throughout</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Class 7 -->
+      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;">
+        <summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;">
+          <span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Class 7</span>Capstone Project &amp; Defence</span>
+          <span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;">+</span>
+        </summary>
+        <div style="padding:0 24px 20px;background:#fff;">
+          <ul style="list-style:none;padding:0;margin:8px 0 0;">
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Build a real project: working code on GitHub with prompt log, test suite, and reflection document</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Project tracks: beginner (CRUD app / API), intermediate (authenticated REST / AI feature), advanced (multi-service / CI-CD pipeline)</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Live 5–10 minute defence: walk through your AI workflow, justify two decisions where you overruled the AI</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Practitioner and peer Q&amp;A — rigorous, practical, and employer-ready</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Class 8 -->
+      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;">
+        <summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;">
+          <span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Class 8</span>What's Next — The Future of AI in Engineering</span>
+          <span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;">+</span>
+        </summary>
+        <div style="padding:0 24px 20px;background:#fff;">
+          <ul style="list-style:none;padding:0;margin:8px 0 0;">
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Honest assessment of where AI coding tools are today — capabilities, limits, and what's overhyped</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Agentic AI: autonomous coding agents (Devin, SWE-agent, Claude Code, OpenHands) — what they can and cannot do</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Reasoning models vs generation models, longer context windows, multimodal coding</li>
+            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Career positioning: how to talk about AI fluency, skills that stay irreplaceable, your 30-day implementation roadmap</li>
+          </ul>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -321,9 +482,25 @@
   <div class="container">
     <div class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red);">Tools &amp; Platforms</div>
-      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px;">Over 13+ AI Tools Used in This Sprint</h2>
-      <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px;">You will work hands-on with the tools that practitioners actually use in Engineering & Infrastructure. Real stacks, not toy environments.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:10px;"><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">AutoCAD AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">ANSYS AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Bentley iTwin</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Procore AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Autodesk Revit AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Python (SimPy)</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">ChatGPT</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Microsoft Copilot</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">AssetWatch</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Azure Digital Twins</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Palantir Foundry</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">IBM Maximo</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Maximo AI</div></div>
+      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px;">15+ AI Tools Across the Full Development Stack</h2>
+      <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px;">You will work hands-on with the tools that AI-native engineers actually use — from AI-powered IDEs to local model inference. Real stacks, not toy environments.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Claude (Anthropic)</div>
+        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">GPT-4o / Codex</div>
+        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">GitHub Copilot</div>
+        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Cursor</div>
+        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Windsurf</div>
+        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">VS Code + AI Extensions</div>
+        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Gemini Pro / 2.0</div>
+        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">DeepSeek Coder</div>
+        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Ollama (local models)</div>
+        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">LM Studio</div>
+        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Aider (terminal AI)</div>
+        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">GitHub Actions (AI)</div>
+        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Claude Code</div>
+        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">CodeRabbit</div>
+        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Qwen2.5-Coder</div>
+      </div>
     </div>
   </div>
 </section>
@@ -334,14 +511,25 @@
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;" class="fade-up">
       <div>
         <div class="eyebrow-tag" style="color:var(--red);">Who Is This For</div>
-        <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px;">Built for Engineering & Infrastructure Professionals</h2>
-        <p style="font-size:0.88rem;color:#4A5568;line-height:1.7;margin-bottom:28px;">This programme is for practitioners, not beginners. If you are already working in Engineering & Infrastructure and ready to operate at the level AI makes possible, this sprint is for you.</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"><div style="padding:14px 20px;background:#EFF6FF;border-radius:10px;font-size:0.88rem;font-weight:700;color:#1D4ED8;">Civil / Structural Engineer</div><div style="padding:14px 20px;background:#FFF7ED;border-radius:10px;font-size:0.88rem;font-weight:700;color:#C2410C;">Mechanical Engineer</div><div style="padding:14px 20px;background:#F0FFF4;border-radius:10px;font-size:0.88rem;font-weight:700;color:#15803D;">Electrical Engineer</div><div style="padding:14px 20px;background:#FDF4FF;border-radius:10px;font-size:0.88rem;font-weight:700;color:#7E22CE;">Project Engineer</div><div style="padding:14px 20px;background:#FFF1F2;border-radius:10px;font-size:0.88rem;font-weight:700;color:#BE123C;">Asset Manager</div><div style="padding:14px 20px;background:#FFFBEB;border-radius:10px;font-size:0.88rem;font-weight:700;color:#B45309;">Infrastructure Consultant</div></div>
+        <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px;">Built for Practising Software Engineers</h2>
+        <p style="font-size:0.88rem;color:#4A5568;line-height:1.7;margin-bottom:28px;">This programme is for engineers who are already writing code professionally and want to operate at the level AI makes possible — systematically, securely, and fast.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div style="padding:14px 20px;background:#EFF6FF;border-radius:10px;font-size:0.88rem;font-weight:700;color:#1D4ED8;">Backend Developer</div>
+          <div style="padding:14px 20px;background:#FFF7ED;border-radius:10px;font-size:0.88rem;font-weight:700;color:#C2410C;">Frontend / Full-Stack Dev</div>
+          <div style="padding:14px 20px;background:#F0FFF4;border-radius:10px;font-size:0.88rem;font-weight:700;color:#15803D;">DevOps / Platform Engineer</div>
+          <div style="padding:14px 20px;background:#FDF4FF;border-radius:10px;font-size:0.88rem;font-weight:700;color:#7E22CE;">Mobile Developer</div>
+          <div style="padding:14px 20px;background:#FFF1F2;border-radius:10px;font-size:0.88rem;font-weight:700;color:#BE123C;">Engineering Tech Lead</div>
+          <div style="padding:14px 20px;background:#FFFBEB;border-radius:10px;font-size:0.88rem;font-weight:700;color:#B45309;">QA / Test Engineer</div>
+        </div>
       </div>
       <div>
         <div style="font-size:0.75rem;font-weight:800;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;">Eligibility Criteria</div>
-        <ul style="list-style:none;padding:0;margin:0 0 28px;"><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Engineering professional with 2+ years of design, construction, or infrastructure experience</li><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Familiarity with at least one engineering software platform</li><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Readiness to apply AI to real project or asset management challenges</li></ul>
-        <span class="btn btn-primary btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none;display:inline-flex;">Coming Soon</span>
+        <ul style="list-style:none;padding:0;margin:0 0 28px;">
+          <li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Software engineer, developer, or technical lead with 1+ years of professional coding experience</li>
+          <li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Comfortable writing and reading code in at least one programming language</li>
+          <li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE;"><span style="color:#FF294E;flex-shrink:0;">✓</span>Readiness to build a real capstone project and defend it live</li>
+        </ul>
+        <a href="apply.html?field=Software%20Engineering" class="btn btn-primary btn-lg" style="display:inline-flex;">Apply Now →</a>
       </div>
     </div>
   </div>
@@ -352,25 +540,30 @@
   <div class="container">
     <div style="text-align:center;margin-bottom:48px;" class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red);">What You Will Master</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:var(--bg-dark);">The Three AI Skills That Will Define<br />Your Edge in Engineering & Infrastructure</h2>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:var(--bg-dark);">The Three AI Skills That Define<br />an AI-Native Software Engineer</h2>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
-      
-          <div class="card fade-up" style="padding:32px 28px;">
-            <div style="font-size:2.4rem;margin-bottom:16px;">🔧</div>
-            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px;">Predictive Maintenance & Ops</h3>
-            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;">Use AI to detect anomalies, predict failures, and automate response in infrastructure and engineering systems.</p>
-          </div>
-          <div class="card fade-up" style="padding:32px 28px;">
-            <div style="font-size:2.4rem;margin-bottom:16px;">💻</div>
-            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px;">AI-Assisted Code & Design Review</h3>
-            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;">Integrate AI tools into CI/CD pipelines for automated code review, security scanning, and design validation.</p>
-          </div>
-          <div class="card fade-up" style="padding:32px 28px;">
-            <div style="font-size:2.4rem;margin-bottom:16px;">📉</div>
-            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px;">Incident Intelligence</h3>
-            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;">Build intelligent incident management workflows that reduce MTTR and surface root causes faster using AI.</p>
-          </div>
+      <div class="card fade-up" style="padding:32px 28px;">
+        <div style="width:48px;height:48px;background:rgba(255,41,78,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px;">Structured Prompt Engineering</h3>
+        <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;">Write prompts that produce accurate, maintainable, production-ready code — not one-shot outputs that need rewriting.</p>
+      </div>
+      <div class="card fade-up" style="padding:32px 28px;">
+        <div style="width:48px;height:48px;background:rgba(255,41,78,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px;">Critical AI Code Review</h3>
+        <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;">Review AI-generated code for security vulnerabilities, hidden coupling, and false coverage — before it reaches production.</p>
+      </div>
+      <div class="card fade-up" style="padding:32px 28px;">
+        <div style="width:48px;height:48px;background:rgba(255,41,78,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px;">Personal AI Workflow Design</h3>
+        <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;">Build repeatable, high-leverage AI workflows — across your IDE, CI/CD, and documentation pipeline — that compound over time.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -417,27 +610,26 @@
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="fade-up">
       <div>
         <div class="eyebrow-tag" style="color:var(--red);">Real Deliverables</div>
-        <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:20px;">By the End of the Sprint, You Will Have Built Real Things.</h2>
-        <p style="font-size:0.95rem;color:#4A5568;line-height:1.7;margin-bottom:28px;">Not slide decks. Not theory. Applied tools, workflows, and frameworks that immediately improve how you work in Engineering & Infrastructure.</p>
-        <span class="btn btn-primary btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none;">Coming Soon</span>
+        <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:20px;">By the End of the Programme, You Will Have Built Real Things.</h2>
+        <p style="font-size:0.95rem;color:#4A5568;line-height:1.7;margin-bottom:28px;">Not slide decks. Not theory. A working capstone project, a documented AI workflow, and the judgment to use AI with full professional accountability.</p>
+        <a href="apply.html?field=Software%20Engineering" class="btn btn-primary btn-lg">Apply Now →</a>
       </div>
       <div style="display:flex;flex-direction:column;gap:20px;">
-        
-            <div style="display:flex;align-items:flex-start;gap:14px;">
-              <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0;">✓</span>
-              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5;">An AI-assisted incident response playbook tailored to your infrastructure stack</span>
-            </div>
-            <div style="display:flex;align-items:flex-start;gap:14px;">
-              <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0;">✓</span>
-              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5;">A working AI code review integration in a CI/CD pipeline</span>
-            </div>
-            <div style="display:flex;align-items:flex-start;gap:14px;">
-              <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0;">✓</span>
-              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5;">A risk framework for deploying AI-generated code in production environments</span>
-            </div>
+        <div style="display:flex;align-items:flex-start;gap:14px;">
+          <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0;">✓</span>
+          <span style="font-size:0.92rem;color:var(--muted);line-height:1.5;">A working capstone project hosted on GitHub — with code, a full prompt log, test suite, and written reflection</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:14px;">
+          <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0;">✓</span>
+          <span style="font-size:0.92rem;color:var(--muted);line-height:1.5;">A personal prompt library covering code generation, debugging, review, testing, and documentation</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:14px;">
+          <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0;">✓</span>
+          <span style="font-size:0.92rem;color:var(--muted);line-height:1.5;">A documented AI workflow blueprint mapped to your specific SDLC — yours to deploy and refine immediately</span>
+        </div>
         <div style="margin-top:8px;padding:20px;background:rgba(255,41,78,0.06);border:1.5px solid rgba(255,41,78,0.2);border-radius:12px;">
           <div style="font-size:0.78rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Plus</div>
-          <p style="font-size:0.88rem;color:#2E3A4A;line-height:1.5;margin:0;">Brixgate Expert Practitioner Certificate — field-verified in Engineering & Infrastructure, practitioner-assessed, and recognised by employers across Africa and internationally.</p>
+          <p style="font-size:0.88rem;color:#2E3A4A;line-height:1.5;margin:0;">Brixgate Expert Practitioner Certificate — field-verified in AI-Native Software Engineering, practitioner-assessed, and recognised by employers across Africa and internationally.</p>
         </div>
       </div>
     </div>
@@ -454,7 +646,7 @@
       <div style="max-width:540px;">
         <div style="border:1.5px solid #E8E3DE;border-radius:14px;overflow:hidden;">
           <div style="background:#021024;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;">
-            <div style="font-size:0.95rem;font-weight:800;color:#fff;">AI in Engineering & Infrastructure &#8212; Cohort 1</div>
+            <div style="font-size:0.95rem;font-weight:800;color:#fff;">AI-Native Software Engineering &#8212; Cohort 1</div>
             <span style="background:#34C759;color:#fff;font-size:0.7rem;font-weight:800;padding:4px 12px;border-radius:50px;">Open</span>
           </div>
           <div style="padding:24px;background:#F9F8F7;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
@@ -465,7 +657,7 @@
           </div>
           <div style="padding:16px 24px;background:#fff;border-top:1px solid #E8E3DE;display:flex;justify-content:space-between;align-items:center;">
             <div style="display:flex;align-items:center;gap:6px;"><span style="color:#F59E0B;">&#9733;</span><span style="font-size:0.88rem;font-weight:700;color:#021024;">4.9</span><span style="font-size:0.78rem;color:#7A94A8;">Practitioner Rating</span></div>
-            <span class="btn btn-primary" style="opacity:0.5;cursor:not-allowed;pointer-events:none;padding:10px 20px;font-size:0.85rem;">Coming Soon</span>
+            <a href="apply.html?field=Software%20Engineering" class="btn btn-primary" style="padding:10px 20px;font-size:0.85rem;">Apply Now →</a>
           </div>
         </div>
       </div>
@@ -485,14 +677,20 @@
       <div style="display:grid;grid-template-columns:220px 1fr;gap:0;">
         <div style="background:#1A3050;padding:40px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
           <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#FF294E,#FF5748);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:14px;">E</div>
-          <div style="font-size:0.92rem;font-weight:800;color:#fff;margin-bottom:4px;">Emeka Nwosu</div>
-          <div style="font-size:0.72rem;color:#7A94A8;line-height:1.5;margin-bottom:12px;">Senior Practitioner, Engineering AI & Digital Infrastructure</div>
-          <div style="font-size:0.72rem;font-weight:700;color:#FF294E;">740+ live sessions</div>
+          <div style="font-size:0.92rem;font-weight:800;color:#fff;margin-bottom:4px;">Temi Adeyemi</div>
+          <div style="font-size:0.72rem;color:#7A94A8;line-height:1.5;margin-bottom:12px;">Senior Practitioner, AI-Native Software Engineering</div>
+          <div style="font-size:0.72rem;font-weight:700;color:#FF294E;">600+ live sessions</div>
         </div>
         <div style="padding:36px 40px;">
-          <p style="font-size:0.9rem;color:var(--muted);line-height:1.75;margin-bottom:24px;">Emeka is a chartered engineer with 15 years across civil, structural, and infrastructure projects in Nigeria, the UK, and Sub-Saharan Africa. He has led digital transformation programmes on major infrastructure developments and now teaches engineers how to integrate AI without compromising technical rigour or safety standards. Over 740 live sessions delivered.</p>
+          <p style="font-size:0.9rem;color:var(--muted);line-height:1.75;margin-bottom:24px;">Temi is a senior software engineer with 12 years across backend systems, platform engineering, and developer tooling — at startups and scale. She was an early adopter of AI-assisted development in production environments and has spent the last three years building and refining team-wide AI engineering workflows, toolchains, and safe usage policies. Over 600 live sessions delivered across three continents.</p>
           <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Core Expertise</div>
-          <div><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">Structural Analysis & AI</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">Predictive Maintenance Systems</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">Digital Twin Design</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">Infrastructure Asset Management</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">Engineering AI Governance</span></div>
+          <div>
+            <span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">AI-Assisted Code Generation</span>
+            <span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">Prompt Engineering</span>
+            <span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">Security in AI Workflows</span>
+            <span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">CI/CD Automation</span>
+            <span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">Team AI Workflow Design</span>
+          </div>
         </div>
       </div>
     </div>
@@ -506,7 +704,23 @@
       <div class="eyebrow-tag" style="color:var(--red);">Alumni Reviews</div>
       <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);">What Practitioners Say</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;"><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px;" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px;">"I was building structural analysis summaries manually from thousands of data points. The AI workflow I built in Week 2 does it in minutes with flagged anomalies. The safety logic is better, not worse."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8;">Structural Engineer · BrixGate Alumni</div></div><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px;" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px;">"Our tender analysis process went from 3 days to 4 hours. The AI picks out critical clauses and risk items — we still review them, but we know where to look immediately."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8;">Project Engineer · BrixGate Alumni</div></div><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px;" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px;">"The predictive maintenance model is now running on our facility sensor data. We have predicted two equipment failures before they happened since deploying it."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8;">Asset Manager · BrixGate Alumni</div></div></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+      <div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px;" class="fade-up">
+        <div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px;">"I used to spend hours writing boilerplate and hunting down obscure bugs. After Class 3, I have a structured review process for every piece of AI-generated code I ship. My PRs are tighter and my code reviews are faster."</p>
+        <div style="font-size:0.75rem;font-weight:700;color:#7A94A8;">Backend Developer · Brixgate Alumni</div>
+      </div>
+      <div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px;" class="fade-up">
+        <div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px;">"The security class changed how I look at AI-generated code entirely. I found three injection vulnerabilities in our codebase within a week of applying the review checklist. We had shipped that code six months ago."</p>
+        <div style="font-size:0.75rem;font-weight:700;color:#7A94A8;">Full-Stack Developer · Brixgate Alumni</div>
+      </div>
+      <div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px;" class="fade-up">
+        <div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px;">"I finished the capstone with a working REST API, a full test suite I actually understand, and a prompt log that shows exactly how I built it. That artefact alone got me noticed in my next job interview."</p>
+        <div style="font-size:0.75rem;font-weight:700;color:#7A94A8;">Software Engineer · Brixgate Alumni</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -518,7 +732,10 @@
         <div class="eyebrow-tag" style="color:var(--red);">FAQ</div>
         <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);">Common Questions</h2>
       </div>
-      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024;">Is AI safe to use in engineering applications?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px;">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7;"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0;">Yes — with appropriate validation. The programme is built around responsible AI adoption in technical environments. You will learn how to verify AI outputs against engineering standards and build validation steps into every workflow.</p></div></details><details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024;">Which engineering disciplines does this cover?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px;">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7;"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0;">The core curriculum applies across civil, structural, mechanical, electrical, and infrastructure disciplines. Week 3 projects can be tailored to your specific domain and project type.</p></div></details><details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024;">Do I need programming experience?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px;">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7;"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0;">No. The programme uses AI-native and low-code platforms. You are guided through technical setups step by step, and the focus is on engineering outcomes, not software development.</p></div></details><details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024;">Can I use this on active projects?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px;">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7;"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0;">Yes — and we encourage it. The capstone is designed to be a real-world engineering workflow you can deploy immediately after the sprint.</p></div></details>
+      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024;">Do I need to be a senior engineer?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px;">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7;"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0;">No — but you do need to be actively working in software engineering. This is not a beginner coding course. You need 1+ years of professional experience writing code. The capstone track you choose (beginner, intermediate, advanced) will match your level.</p></div></details>
+      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024;">Which programming languages are covered?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px;">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7;"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0;">The programme is language-agnostic. The prompting, review, security, and workflow principles apply regardless of your stack. Practitioner examples and live sessions use Python, JavaScript/TypeScript, and Go — but your capstone can be in any language.</p></div></details>
+      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024;">Is AI-generated code actually safe to ship?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px;">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7;"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0;">Yes — with proper review. The programme dedicates an entire class to security and responsible AI use. You will leave with a concrete review checklist and personal AI safety policy designed for production environments.</p></div></details>
+      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024;">Can I build my capstone project on real work from my job?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px;">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7;"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0;">Yes — and we encourage it. The capstone is designed to be a real project you deploy immediately. Just ensure you are not committing proprietary code to a public repository, and follow your employer's AI usage policy (we cover this in Class 5).</p></div></details>
     </div>
   </div>
 </section>
@@ -529,25 +746,25 @@
     <div style="text-align:center;margin-bottom:48px;" class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red);">Why This Investment Pays Off</div>
       <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:#021024;line-height:1.25;">What ₦250,000 Actually Buys You</h2>
-      <p style="font-size:0.95rem;color:#4A5568;max-width:600px;margin:16px auto 0;line-height:1.7;">Engineers who integrate AI into design, analysis, and project delivery workflows are leading the next generation of infrastructure — not reacting to it.</p>
+      <p style="font-size:0.95rem;color:#4A5568;max-width:600px;margin:16px auto 0;line-height:1.7;">AI-native engineers ship faster, review smarter, and command higher salaries. This programme gives you the workflows, judgment, and certificate to prove it.</p>
     </div>
 
     <!-- Market data row -->
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1.5px solid #E8E3DE;border-radius:16px;overflow:hidden;margin-bottom:56px;" class="fade-up">
       <div style="padding:32px 28px;text-align:center;border-right:1px solid #E8E3DE;">
-        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px;">40%</div>
-        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px;">Reduction in predictive maintenance failures using AI monitoring</div>
-        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic;">McKinsey Engineering Report</div>
+        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px;">55%</div>
+        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px;">of developers using AI tools report measurable gains in personal productivity</div>
+        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic;">GitHub Developer Survey 2024</div>
       </div>
       <div style="padding:32px 28px;text-align:center;border-right:1px solid #E8E3DE;">
-        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px;">25%</div>
-        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px;">Improvement in project delivery accuracy with AI planning tools</div>
-        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic;">PMI / KPMG</div>
+        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px;">3×</div>
+        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px;">Faster code delivery for teams with structured AI-assisted development workflows</div>
+        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic;">McKinsey Global Institute</div>
       </div>
       <div style="padding:32px 28px;text-align:center;">
-        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px;">$52K+</div>
-        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px;">Salary premium for AI-proficient engineers in senior roles</div>
-        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic;">Engineering UK</div>
+        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px;">$45K+</div>
+        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px;">Salary premium for AI-fluent senior developers over AI-unaware peers</div>
+        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic;">Stack Overflow / Hired.com</div>
       </div>
     </div>
 
@@ -565,7 +782,7 @@
           </div>
           <div style="display:flex;gap:14px;align-items:flex-start;">
             <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><span style="color:#fff;font-size:0.75rem;font-weight:900;">✓</span></div>
-            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px;">Field Assessment Before You Start</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5;">Know exactly where you are and what matters most for your specific Engineering & Infrastructure role.</div></div>
+            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px;">Pre-Programme Diagnostic</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5;">A baseline assessment before Day 1 — so the practitioner can personalise support across all 8 classes.</div></div>
           </div>
           <div style="display:flex;gap:14px;align-items:flex-start;">
             <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><span style="color:#fff;font-size:0.75rem;font-weight:900;">✓</span></div>
@@ -595,9 +812,9 @@
         <div style="background:#021024;border-radius:16px;padding:36px;">
           <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:16px;">By the End of Week 4, You Will Have</div>
           <div style="display:flex;flex-direction:column;gap:14px;">
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0;">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6;">Build an AI-assisted structural or systems analysis workflow on a real project</span></div>
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0;">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6;">Reduce report generation from days to hours with AI documentation pipelines</span></div>
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0;">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6;">Deploy predictive maintenance monitoring logic your team owns and can tune</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0;">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6;">Ship a working capstone project with full prompt log, test suite, and practitioner sign-off</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0;">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6;">Write structured prompts that produce production-ready, secure, reviewable code</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0;">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6;">Build and document a repeatable AI workflow your team can adopt immediately</span></div>
           </div>
         </div>
 
@@ -626,7 +843,7 @@
         <div style="background:rgba(255,41,78,0.05);border:1.5px solid rgba(255,41,78,0.2);border-radius:12px;padding:24px;text-align:center;">
           <div style="font-size:0.78rem;font-weight:800;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">First Cohort — June 12, 2026</div>
           <div style="font-size:0.88rem;color:#2E3A4A;line-height:1.6;margin-bottom:16px;">Cohort 1 is limited to 20 participants. Once full, the next opening is September 2026.</div>
-          <span class="btn btn-primary" style="opacity:0.5;cursor:not-allowed;pointer-events:none;width:100%;justify-content:center;display:flex;">Coming Soon</span>
+          <a href="apply.html?field=Software%20Engineering" class="btn btn-primary" style="width:100%;justify-content:center;display:flex;">Apply Now →</a>
         </div>
       </div>
 
@@ -664,7 +881,7 @@
           <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Expert-led cohort sessions</li>
           <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Expert Practitioner Certificate</li>
         </ul>
-        <span class="btn btn-outline" style="opacity:0.5;cursor:not-allowed;pointer-events:none;width:100%;justify-content:center;display:flex;">Coming Soon</span>
+        <a href="apply.html?field=Software%20Engineering" class="btn btn-outline" style="width:100%;justify-content:center;display:flex;">Apply Now →</a>
       </div>
       <div class="card fade-up" style="padding:32px 28px;border-color:var(--red);position:relative;">
         <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;white-space:nowrap;">Most Popular</div>
@@ -683,7 +900,7 @@
           <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Invoiced to your company</li>
           <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Priority cohort placement</li>
         </ul>
-        <span class="btn btn-primary" style="opacity:0.5;cursor:not-allowed;pointer-events:none;width:100%;justify-content:center;display:flex;">Coming Soon</span>
+        <a href="apply.html?field=Software%20Engineering" class="btn btn-primary" style="width:100%;justify-content:center;display:flex;">Apply Now →</a>
       </div>
       <div class="card fade-up" style="padding:32px 28px;">
         <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px;">Team (20+ seats)</div>
@@ -711,10 +928,10 @@
 <section class="section-pad" style="background:var(--red);text-align:center;">
   <div class="container">
     <div class="fade-up">
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;color:#fff;margin-bottom:16px;">Ready to Become an AI-Native<br />Engineering & Infrastructure Professional?</h2>
-      <p style="font-size:1rem;color:rgba(255,255,255,0.82);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;">Seats are limited per cohort. Apply in under 2 minutes — no essays, no references required.</p>
+      <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;color:#fff;margin-bottom:16px;">Ready to Become an AI-Native<br />Software Engineer?</h2>
+      <p style="font-size:1rem;color:rgba(255,255,255,0.82);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;">Cohort 1 opens June 12, 2026. Seats are limited. Apply in under 2 minutes — no essays, no references required.</p>
       <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-        <span class="btn btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none;background:#fff;color:var(--red);font-weight:900;">Coming Soon</span>
+        <a href="apply.html?field=Software%20Engineering" class="btn btn-lg" style="background:#fff;color:var(--red);font-weight:900;">Apply Now →</a>
         <a href="#quiz-field" class="btn btn-lg" style="background:transparent;border:2px solid rgba(255,255,255,0.5);color:#fff;">Validate Your Level First</a>
       </div>
     </div>
@@ -833,7 +1050,7 @@
     if (scores[currentQ] === undefined) return;
     currentQ++;
     if (currentQ >= totalQ) {
-      showResult();
+      showCaptureGate();
     } else {
       showQ(currentQ);
     }
@@ -845,9 +1062,37 @@
     currentQ = 0;
     document.querySelectorAll('#' + ID + '_container .qf-opt').forEach(o => o.classList.remove('qf-selected'));
     document.getElementById(ID + '_result').classList.remove('qf-visible');
+    document.getElementById(ID + '_capture').classList.remove('qf-visible');
     document.querySelector('#' + ID + '_container .qf-nav').style.display = 'flex';
     showQ(0);
   };
+
+  window.qfSubmitCapture = function(id) {
+    if (id !== ID) return;
+    const email = document.getElementById(ID + '_email').value.trim();
+    const phone = document.getElementById(ID + '_phone').value.trim();
+    const errEl = document.getElementById(ID + '_capture_err');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || phone.length < 7) {
+      errEl.style.display = 'block'; return;
+    }
+    errEl.style.display = 'none';
+    document.getElementById(ID + '_capture').classList.remove('qf-visible');
+    showResult();
+  };
+
+  window.qfSkipCapture = function(e, id) {
+    e.preventDefault();
+    if (id !== ID) return;
+    document.getElementById(ID + '_capture').classList.remove('qf-visible');
+    showResult();
+  };
+
+  function showCaptureGate() {
+    document.querySelectorAll('#' + ID + '_container .qf-question').forEach(el => el.classList.remove('qf-active'));
+    document.querySelector('#' + ID + '_container .qf-nav').style.display = 'none';
+    document.getElementById(ID + '_capture').classList.add('qf-visible');
+    document.getElementById(ID + '_capture').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 
   function updateNextBtn() {
     const btn = document.getElementById(ID + '_next');
@@ -872,11 +1117,10 @@
     document.getElementById(ID + '_badge').style.border = '1.5px solid ' + tier.color + '44';
     document.getElementById(ID + '_headline').textContent = tier.headline;
     document.getElementById(ID + '_body').textContent = tier.body;
-    document.getElementById(ID + '_cta_link').textContent = tier.cta;
-    if (total >= 19) document.getElementById(ID + '_cta_link').href = 'join-as-expert.html';
+    const ctaLink = document.getElementById(ID + '_cta_link');
+    if (ctaLink && total >= 19) ctaLink.href = 'join-as-expert.html';
 
     document.getElementById(ID + '_result').classList.add('qf-visible');
-    document.querySelector('#' + ID + '_container .qf-nav').style.display = 'none';
     document.querySelectorAll('#' + ID + '_container .qf-question').forEach(el => el.classList.remove('qf-active'));
 
     setTimeout(() => {
@@ -884,7 +1128,6 @@
       document.getElementById(ID + '_scorefill').style.background = tier.color;
     }, 100);
 
-    // Scroll to result
     document.getElementById(ID + '_result').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 })();

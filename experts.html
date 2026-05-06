@@ -48,18 +48,20 @@
     /* ---- Expert stat block ---- */
     .expert-stats {
       display: flex;
-      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
       margin-top: 12px;
       padding-top: 12px;
       border-top: 1px solid var(--border-card);
     }
 
     .expert-stat {
-      text-align: center;
+      text-align: left;
     }
 
     .expert-stat-num {
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 900;
       color: var(--red);
       display: block;
@@ -70,6 +72,49 @@
       color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.06em;
+    }
+
+    /* ---- Brixgate Practitioner Rating ---- */
+    .expert-rating {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    .rating-label {
+      font-size: 0.63rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      font-weight: 700;
+    }
+
+    .rating-bars {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+    }
+
+    .rating-bar {
+      width: 20px;
+      height: 5px;
+      border-radius: 3px;
+      transition: opacity 0.2s;
+    }
+
+    .rating-bar.filled {
+      background: linear-gradient(90deg, #FF294E, #FF5748);
+    }
+
+    .rating-bar.empty {
+      background: var(--border-card);
+      opacity: 0.5;
+    }
+
+    .expert-card:hover .rating-bar.filled {
+      box-shadow: 0 0 6px rgba(255, 41, 78, 0.5);
     }
 
     /* ---- Become an Expert ---- */
@@ -247,7 +292,7 @@
     <span class="region-item">🇰🇪 Kenya</span>
     <span class="region-item">🇿🇦 South Africa</span>
   </div>
-
+  <a href="apply.html" style="margin-left:auto;font-size:0.72rem;font-weight:700;color:var(--red);letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Apply Now →</a>
 </div>
 
 <nav class="nav">
@@ -262,8 +307,8 @@
       <a href="organisations.html">For Organisations</a>
     </div>
     <div class="nav-cta">
-      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm">Login</a>
-      <a href="apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+      <a href="apply.html" class="btn btn-outline-dark btn-sm">Apply Now</a>
+      <a href="organisations.html#contact" class="btn btn-primary btn-sm">Get a Demo</a>
     </div>
     <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
@@ -274,8 +319,8 @@
   <a href="programme.html">Programme</a>
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
-  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px;">Login</a>
   <a href="apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="organisations.html#contact" class="btn btn-outline" style="margin-top:8px;">Get a Demo</a>
 </div>
 
 <!-- ====== PAGE HEADER ====== -->
@@ -393,8 +438,12 @@
           </div>
           <div class="expert-stats">
             <div class="expert-stat"><span class="expert-stat-num">12</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">3</span><span class="expert-stat-label">Cohorts Run</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">2</span><span class="expert-stat-label">Countries</span></div>
+            <div class="expert-rating">
+              <span class="rating-label">Practitioner Level</span>
+              <div class="rating-bars">
+                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -415,8 +464,12 @@
           </div>
           <div class="expert-stats">
             <div class="expert-stat"><span class="expert-stat-num">9</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">4</span><span class="expert-stat-label">Cohorts Run</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">3</span><span class="expert-stat-label">Countries</span></div>
+            <div class="expert-rating">
+              <span class="rating-label">Practitioner Level</span>
+              <div class="rating-bars">
+                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar empty"></span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -437,8 +490,12 @@
           </div>
           <div class="expert-stats">
             <div class="expert-stat"><span class="expert-stat-num">14</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">2</span><span class="expert-stat-label">Cohorts Run</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">5</span><span class="expert-stat-label">Countries</span></div>
+            <div class="expert-rating">
+              <span class="rating-label">Practitioner Level</span>
+              <div class="rating-bars">
+                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -459,8 +516,12 @@
           </div>
           <div class="expert-stats">
             <div class="expert-stat"><span class="expert-stat-num">11</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">4</span><span class="expert-stat-label">Cohorts Run</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">2</span><span class="expert-stat-label">Countries</span></div>
+            <div class="expert-rating">
+              <span class="rating-label">Practitioner Level</span>
+              <div class="rating-bars">
+                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar empty"></span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -480,8 +541,12 @@
           </div>
           <div class="expert-stats">
             <div class="expert-stat"><span class="expert-stat-num">8</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">2</span><span class="expert-stat-label">Cohorts Run</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">2</span><span class="expert-stat-label">Countries</span></div>
+            <div class="expert-rating">
+              <span class="rating-label">Practitioner Level</span>
+              <div class="rating-bars">
+                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar empty"></span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -501,8 +566,12 @@
           </div>
           <div class="expert-stats">
             <div class="expert-stat"><span class="expert-stat-num">13</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">3</span><span class="expert-stat-label">Cohorts Run</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">3</span><span class="expert-stat-label">Countries</span></div>
+            <div class="expert-rating">
+              <span class="rating-label">Practitioner Level</span>
+              <div class="rating-bars">
+                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -522,8 +591,12 @@
           </div>
           <div class="expert-stats">
             <div class="expert-stat"><span class="expert-stat-num">10</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">2</span><span class="expert-stat-label">Cohorts Run</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">4</span><span class="expert-stat-label">Countries</span></div>
+            <div class="expert-rating">
+              <span class="rating-label">Practitioner Level</span>
+              <div class="rating-bars">
+                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar empty"></span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -543,8 +616,12 @@
           </div>
           <div class="expert-stats">
             <div class="expert-stat"><span class="expert-stat-num">15</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">4</span><span class="expert-stat-label">Cohorts Run</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">2</span><span class="expert-stat-label">Countries</span></div>
+            <div class="expert-rating">
+              <span class="rating-label">Practitioner Level</span>
+              <div class="rating-bars">
+                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -565,8 +642,12 @@
           </div>
           <div class="expert-stats">
             <div class="expert-stat"><span class="expert-stat-num">11</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">3</span><span class="expert-stat-label">Cohorts Run</span></div>
-            <div class="expert-stat"><span class="expert-stat-num">3</span><span class="expert-stat-label">Countries</span></div>
+            <div class="expert-rating">
+              <span class="rating-label">Practitioner Level</span>
+              <div class="rating-bars">
+                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

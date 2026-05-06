@@ -408,6 +408,72 @@
       0%, 100% { opacity: 1; transform: scale(1); }
       50%       { opacity: 0.5; transform: scale(0.85); }
     }
+
+    /* ====== LEAD CAPTURE GATE ====== */
+    #capture-screen {
+      display: none;
+      padding: 80px 24px;
+      min-height: 70vh;
+    }
+    .capture-wrap {
+      max-width: 520px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .capture-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(255,41,78,0.12);
+      border: 1.5px solid rgba(255,41,78,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .capture-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 18px;
+      padding: 36px 32px;
+      margin-top: 32px;
+      text-align: left;
+    }
+    .capture-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+    .capture-field label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .capture-field input {
+      padding: 13px 16px;
+      background: var(--bg-dark);
+      border: 1.5px solid var(--border-card);
+      border-radius: 10px;
+      color: var(--white);
+      font-size: 0.95rem;
+      font-family: var(--font-main);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .capture-field input:focus { border-color: var(--red); }
+    .capture-field input::placeholder { color: var(--muted); opacity: 0.6; }
+    .capture-error {
+      font-size: 0.78rem;
+      color: var(--red);
+      margin-top: 4px;
+      display: none;
+    }
+    @media (max-width: 600px) {
+      .capture-form { padding: 24px 20px; }
+    }
   </style>
 </head>
 <body class="assess-wrap">
@@ -503,6 +569,36 @@
   <div class="q-nav">
     <button class="q-back-btn" id="back-btn" onclick="prevQuestion()" style="visibility:hidden;">← Back</button>
     <button class="q-next-btn" id="next-btn" onclick="nextQuestion()">Next →</button>
+  </div>
+</div>
+
+<!-- ====== LEAD CAPTURE GATE ====== -->
+<div id="capture-screen">
+  <div class="capture-wrap">
+    <div class="capture-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+    </div>
+    <h2 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:900;color:var(--white);line-height:1.2;margin-bottom:12px;">Enter your details to see your results</h2>
+    <p style="font-size:0.95rem;color:var(--muted);line-height:1.6;">We'll also send you a <strong style="color:var(--white);">registration coupon</strong> when you're ready to enrol — no spam, ever.</p>
+
+    <div class="capture-form">
+      <div class="capture-field">
+        <label for="capture-email">Email Address</label>
+        <input type="email" id="capture-email" placeholder="you@example.com" autocomplete="email" />
+        <span class="capture-error" id="email-error">Please enter a valid email address.</span>
+      </div>
+      <div class="capture-field">
+        <label for="capture-phone">Phone Number</label>
+        <input type="tel" id="capture-phone" placeholder="+234 800 000 0000" autocomplete="tel" />
+        <span class="capture-error" id="phone-error">Please enter your phone number.</span>
+      </div>
+      <button onclick="submitCapture()" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px;font-size:1rem;">
+        See My Results →
+      </button>
+      <p style="text-align:center;margin-top:14px;font-size:0.78rem;color:var(--muted);">
+        <a href="#" onclick="skipCapture(event)" style="color:var(--muted);text-decoration:underline;">Skip and see results without coupon</a>
+      </p>
+    </div>
   </div>
 </div>
 
@@ -816,7 +912,7 @@ function nextQuestion() {
     renderQuestion();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } else {
-    showResults();
+    showCaptureGate();
   }
 }
 
@@ -828,8 +924,41 @@ function prevQuestion() {
   }
 }
 
+function showCaptureGate() {
+  document.getElementById('assess-screen').style.display = 'none';
+  document.getElementById('capture-screen').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function submitCapture() {
+  const email = document.getElementById('capture-email').value.trim();
+  const phone = document.getElementById('capture-phone').value.trim();
+  const emailErr = document.getElementById('email-error');
+  const phoneErr = document.getElementById('phone-error');
+  let valid = true;
+
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  emailErr.style.display = emailOk ? 'none' : 'block';
+  if (!emailOk) valid = false;
+
+  phoneErr.style.display = phone.length >= 7 ? 'none' : 'block';
+  if (phone.length < 7) valid = false;
+
+  if (!valid) return;
+
+  document.getElementById('capture-screen').style.display = 'none';
+  showResults();
+}
+
+function skipCapture(e) {
+  e.preventDefault();
+  document.getElementById('capture-screen').style.display = 'none';
+  showResults();
+}
+
 function showResults() {
   document.getElementById('assess-screen').style.display = 'none';
+  document.getElementById('capture-screen').style.display = 'none';
   document.getElementById('results-screen').style.display = 'block';
 
   // Calculate score
@@ -882,6 +1011,7 @@ function restartAssessment() {
   currentQ = 0;
   answers  = Array(QUESTIONS.length).fill(null);
   document.getElementById('results-screen').style.display = 'none';
+  document.getElementById('capture-screen').style.display = 'none';
   document.getElementById('intro-screen').style.display   = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
