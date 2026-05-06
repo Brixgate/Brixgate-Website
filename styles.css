@@ -107,6 +107,13 @@ h1, h2, h3, h4, h5, h6 {
 .text-dark   { color: var(--body-dark); }
 .text-center { text-align: center; }
 
+/* ---------- Section headers: max 2 lines ---------- */
+.section-header h2,
+.programme-intro-text h2,
+.page-header h1 {
+  max-width: 820px;
+}
+
 /* ---------- Buttons ---------- */
 .btn {
   display: inline-flex;

@@ -8,7 +8,9 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    body { background: var(--bg-dark); }
+    /* Fix nav to top on pages without region-banner */
+    .nav { top: 0 !important; }
+    body { background: var(--bg-dark); padding-top: var(--nav-height); }
 
     /* ====== VERIFIED BANNER ====== */
     .verified-banner {

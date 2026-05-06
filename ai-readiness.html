@@ -11,6 +11,11 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="stylesheet" href="styles.css" />
   <style>
+    /* Fix nav to top on pages without region-banner */
+    .nav { top: 0 !important; }
+    body.assess-wrap { padding-top: var(--nav-height); }
+  </style>
+  <style>
     body { background: var(--bg-dark); }
 
     /* ====== ASSESSMENT SHELL ====== */
