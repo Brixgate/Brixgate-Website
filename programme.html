@@ -267,8 +267,14 @@
     /* ---- Pricing ---- */
     .price-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
+    }
+    .price-original {
+      text-decoration: line-through;
+      opacity: 0.45;
+      font-size: 0.85em;
+      margin-right: 6px;
     }
 
     /* ---- FAQ ---- */
@@ -325,7 +331,7 @@
       .diff-item:last-child { border-bottom: none; }
       .week-cards { grid-template-columns: 1fr 1fr; }
       .pillar-grid { grid-template-columns: 1fr; }
-      .price-grid { grid-template-columns: 1fr 1fr; }
+      .price-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
       .hero-stats-bar { flex-wrap: wrap; }
@@ -387,23 +393,23 @@
 </div>
 
 <!-- ====== HERO ====== -->
-<header class="page-header" style="padding-bottom:72px;">
+<header class="page-header" style="padding-bottom:72px;text-align:center;">
   <div class="container">
     <span class="eyebrow fade-in">AI in my Field</span>
-    <h1 class="fade-up" style="max-width:700px;">Expert Practitioner<br/>Programme</h1>
-    <p class="fade-up" style="transition-delay:0.1s;max-width:560px;">A 4-week intensive sprint built from scratch for your specific field — taught by practitioners who have already done it. Pick your field below and start in weeks.</p>
-    <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;" class="fade-up">
+    <h1 class="fade-up" style="max-width:700px;margin-left:auto;margin-right:auto;">Master real-world AI through practitioner-led tracks.</h1>
+    <p class="fade-up" style="transition-delay:0.1s;max-width:560px;margin-left:auto;margin-right:auto;">A 4-week intensive sprint built from scratch for your specific field — taught by practitioners who have already done it. Pick your field below and start in weeks.</p>
+    <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;" class="fade-up">
       <a href="#fields" class="btn btn-primary">Pick Your Field →</a>
       <a href="#pricing" class="btn btn-outline">View Pricing</a>
     </div>
 
-    <div class="hero-stats-bar fade-up" style="transition-delay:0.3s;">
+    <div class="hero-stats-bar fade-up" style="transition-delay:0.3s;margin-left:auto;margin-right:auto;">
       <div class="hero-stat">
         <div class="hero-stat-val">4</div>
         <div class="hero-stat-label">Weeks</div>
       </div>
       <div class="hero-stat">
-        <div class="hero-stat-val">8</div>
+        <div class="hero-stat-val">4</div>
         <div class="hero-stat-label">Open Fields</div>
       </div>
       <div class="hero-stat">
@@ -418,6 +424,67 @@
   </div>
 </header>
 
+
+<!-- ====== FIELDS — ABOVE THE FOLD ====== -->
+<section id="fields" class="bg-dark" style="padding:64px 0 72px;border-top:1px solid var(--border-card);">
+  <div class="container">
+    <div class="section-header fade-up" style="margin-bottom:40px;">
+      <span class="eyebrow">Open Now</span>
+      <h2>Pick Your Field.<br/>Start in 4 Weeks.</h2>
+      <div class="divider-red"></div>
+      <p>Each programme is built from scratch for its profession — not repurposed generic AI content. Select your field to see what's inside.</p>
+    </div>
+
+    <!-- 4 Active Fields -->
+    <div class="fields-grid stagger" style="margin-bottom:20px;">
+      <a href="programme-product.html" class="field-card fade-up">
+        <span class="field-arrow">↗</span>
+        <div class="field-emoji">🖥️</div>
+        <div class="field-name">Product &amp; Technology</div>
+        <div class="field-status">● Open — Enrol Now</div>
+      </a>
+      <a href="programme-cybersecurity.html" class="field-card fade-up">
+        <span class="field-arrow">↗</span>
+        <div class="field-emoji">🔐</div>
+        <div class="field-name">Cybersecurity</div>
+        <div class="field-status">● Open — Enrol Now</div>
+      </a>
+      <a href="programme-engineering.html" class="field-card fade-up">
+        <span class="field-arrow">↗</span>
+        <div class="field-emoji">⚙️</div>
+        <div class="field-name">Software Engineering</div>
+        <div class="field-status">● Open — Enrol Now</div>
+      </a>
+      <a href="programme-devops.html" class="field-card fade-up">
+        <span class="field-arrow">↗</span>
+        <div class="field-emoji">☁️</div>
+        <div class="field-name">Cloud &amp; DevOps</div>
+        <div class="field-status">● Open — Enrol Now</div>
+      </a>
+    </div>
+
+    <!-- Coming soon strip -->
+    <div style="margin-bottom:24px;">
+      <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:12px;">🔒 Unlocking Throughout 2026</div>
+      <div class="fields-coming-soon">
+        <div class="coming-field"><div class="coming-field-emoji">📊</div><div class="coming-field-name">Data Science</div></div>
+        <div class="coming-field"><div class="coming-field-emoji">🏦</div><div class="coming-field-name">Finance</div></div>
+        <div class="coming-field"><div class="coming-field-emoji">📣</div><div class="coming-field-name">Marketing</div></div>
+        <div class="coming-field"><div class="coming-field-emoji">📋</div><div class="coming-field-name">Project Management</div></div>
+        <div class="coming-field"><div class="coming-field-emoji">👥</div><div class="coming-field-name">Human Resources</div></div>
+        <div class="coming-field"><div class="coming-field-emoji">⚖️</div><div class="coming-field-name">Legal &amp; Compliance</div></div>
+        <div class="coming-field"><div class="coming-field-emoji">🏥</div><div class="coming-field-name">Healthcare</div></div>
+        <div class="coming-field"><div class="coming-field-emoji">📚</div><div class="coming-field-name">Education</div></div>
+        <div class="coming-field"><div class="coming-field-emoji">🚚</div><div class="coming-field-name">Operations</div></div>
+        <div class="coming-field"><div class="coming-field-emoji">🏭</div><div class="coming-field-name">Manufacturing</div></div>
+      </div>
+    </div>
+
+    <p style="text-align:center;font-size:0.84rem;color:var(--muted);" class="fade-in">
+      Your field not open yet? <a href="apply.html" style="color:var(--red);font-weight:700;">Register interest and we'll notify you →</a>
+    </p>
+  </div>
+</section>
 
 <!-- ====== VISUAL STRIP ====== -->
 <div style="position:relative;width:100%;height:420px;overflow:hidden;">
@@ -437,87 +504,6 @@
     </div>
   </div>
 </div>
-
-<!-- ====== FIELDS — ABOVE THE FOLD ====== -->
-<section id="fields" class="bg-dark" style="padding:64px 0 72px;border-top:1px solid var(--border-card);">
-  <div class="container">
-    <div class="section-header fade-up" style="margin-bottom:40px;">
-      <span class="eyebrow">Open Now</span>
-      <h2>Pick Your Field.<br/>Start in 4 Weeks.</h2>
-      <div class="divider-red"></div>
-      <p>Each programme is built from scratch for its profession — not repurposed generic AI content. Select your field to see what's inside.</p>
-    </div>
-
-    <!-- 8 Active Fields -->
-    <div class="fields-grid stagger" style="margin-bottom:20px;">
-      <a href="programme-data.html" class="field-card fade-up">
-        <span class="field-arrow">↗</span>
-        <div class="field-emoji">📊</div>
-        <div class="field-name">Data Science</div>
-        <div class="field-status">● Open — Enrol Now</div>
-      </a>
-      <a href="programme-product.html" class="field-card fade-up">
-        <span class="field-arrow">↗</span>
-        <div class="field-emoji">🎨</div>
-        <div class="field-name">Product Design</div>
-        <div class="field-status">● Open — Enrol Now</div>
-      </a>
-      <a href="programme-cybersecurity.html" class="field-card fade-up">
-        <span class="field-arrow">↗</span>
-        <div class="field-emoji">🔐</div>
-        <div class="field-name">Cybersecurity</div>
-        <div class="field-status">● Open — Enrol Now</div>
-      </a>
-      <a href="programme-engineering.html" class="field-card fade-up">
-        <span class="field-arrow">↗</span>
-        <div class="field-emoji">⚙️</div>
-        <div class="field-name">Software Engineering</div>
-        <div class="field-status">● Open — Enrol Now</div>
-      </a>
-      <a href="programme-finance.html" class="field-card fade-up">
-        <span class="field-arrow">↗</span>
-        <div class="field-emoji">🏦</div>
-        <div class="field-name">Finance</div>
-        <div class="field-status">● Open — Enrol Now</div>
-      </a>
-      <a href="programme-marketing.html" class="field-card fade-up">
-        <span class="field-arrow">↗</span>
-        <div class="field-emoji">📣</div>
-        <div class="field-name">Marketing</div>
-        <div class="field-status">● Open — Enrol Now</div>
-      </a>
-      <a href="programme-devops.html" class="field-card fade-up">
-        <span class="field-arrow">↗</span>
-        <div class="field-emoji">☁️</div>
-        <div class="field-name">Cloud / DevOps</div>
-        <div class="field-status">● Open — Enrol Now</div>
-      </a>
-      <a href="programme-pm.html" class="field-card fade-up">
-        <span class="field-arrow">↗</span>
-        <div class="field-emoji">📋</div>
-        <div class="field-name">Project Management</div>
-        <div class="field-status">● Open — Enrol Now</div>
-      </a>
-    </div>
-
-    <!-- Coming soon strip -->
-    <div style="margin-bottom:24px;">
-      <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:12px;">🔒 Unlocking Throughout 2026</div>
-      <div class="fields-coming-soon">
-        <div class="coming-field"><div class="coming-field-emoji">👥</div><div class="coming-field-name">Human Resources</div></div>
-        <div class="coming-field"><div class="coming-field-emoji">⚖️</div><div class="coming-field-name">Legal &amp; Compliance</div></div>
-        <div class="coming-field"><div class="coming-field-emoji">🏥</div><div class="coming-field-name">Healthcare &amp; Medicine</div></div>
-        <div class="coming-field"><div class="coming-field-emoji">📚</div><div class="coming-field-name">Education &amp; Training</div></div>
-        <div class="coming-field"><div class="coming-field-emoji">🚚</div><div class="coming-field-name">Operations &amp; Supply Chain</div></div>
-        <div class="coming-field"><div class="coming-field-emoji">🏭</div><div class="coming-field-name">Manufacturing</div></div>
-      </div>
-    </div>
-
-    <p style="text-align:center;font-size:0.84rem;color:var(--muted);" class="fade-in">
-      Your field not open yet? <a href="apply.html" style="color:var(--red);font-weight:700;">Register interest and we'll notify you →</a>
-    </p>
-  </div>
-</section>
 
 <!-- ====== WHY DIFFERENT — Tight 3-column strip ====== -->
 <section class="bg-dark" style="padding:64px 0;border-top:1px solid var(--border-card);">
@@ -803,29 +789,31 @@
 </section>
 
 <!-- ====== PRICING ====== -->
-<section id="pricing" class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+<section id="pricing" class="section-pad bg-dark" >
   <div class="container">
     <div class="section-header fade-up">
       <span class="eyebrow">Pricing</span>
       <h2>World-Class Transformation.<br/>Accessible Globally.</h2>
       <div class="divider-red"></div>
-      <p>Professional-grade AI transformation priced for practitioners everywhere — not just enterprise budgets.</p>
+      <p>Professional-grade AI transformation priced for practitioners <br> everywhere not just enterprise budgets.</p>
     </div>
 
-    <div style="text-align:center;margin-bottom:48px;" class="fade-up">
+    <div style="text-align:center;margin-bottom:24px;" class="fade-up">
       <div class="currency-toggle" style="display:inline-flex;">
         <label class="label-usd">$ USD</label>
         <label class="label-ngn active">₦ NGN</label>
       </div>
-      <div style="font-size:0.75rem;color:var(--muted);margin-top:8px;">Exchange rate: ₦1,600/$1 · ₦2,050/£1</div>
     </div>
 
     <div class="price-grid stagger">
+
+      <!-- Individual -->
       <div class="price-card fade-up">
         <div class="price-tier">Individual</div>
         <div class="price-amount">
-          <span class="currency-usd">$156</span>
-          <span class="currency-ngn">₦250,000</span><span class="currency-gbp">£122</span>
+          <span class="currency-usd"><span class="price-original">$200</span>$156</span>
+          <span class="currency-ngn"><span class="price-original">₦320,000</span>₦250,000</span>
+          <span class="currency-gbp"><span class="price-original">£160</span>£122</span>
         </div>
         <div class="price-period">Per person / programme</div>
         <p class="price-description">For self-directed professionals ready to transform their AI practice independently.</p>
@@ -840,14 +828,16 @@
         <a href="apply.html" class="btn btn-outline-red" style="width:100%;justify-content:center;">Apply Now →</a>
       </div>
 
+      <!-- Teams — Most Popular -->
       <div class="price-card featured fade-up">
-        <div class="price-tier">Corporate Seat</div>
+        <div class="price-tier">Teams</div>
         <div class="price-amount">
-          <span class="currency-usd">$125</span>
-          <span class="currency-ngn">₦200,000</span><span class="currency-gbp">£98</span>
+          <span class="currency-usd"><span class="price-original">$160</span>$125</span>
+          <span class="currency-ngn"><span class="price-original">₦260,000</span>₦200,000</span>
+          <span class="currency-gbp"><span class="price-original">£125</span>£98</span>
         </div>
         <div class="price-period">Per seat / programme</div>
-        <p class="price-description">For organisations enrolling individuals. Corporate pricing, full programme quality.</p>
+        <p class="price-description">For organisations enrolling individuals. Team pricing, full programme quality.</p>
         <ul class="price-features">
           <li>Everything in Individual tier</li>
           <li>Organisation-aligned cohort</li>
@@ -856,52 +846,28 @@
           <li>Priority expert matching</li>
           <li>Invoice billing available</li>
         </ul>
-        <a href="organisations.html#contact" class="btn btn-primary" style="width:100%;justify-content:center;">Get a Seat →</a>
+        <a href="apply.html" class="btn btn-primary" style="width:100%;justify-content:center;">Apply Now →</a>
       </div>
 
+      <!-- Corporate — No price -->
       <div class="price-card fade-up">
-        <div class="price-tier">Team Package</div>
-        <div class="price-amount">
-          <span class="currency-usd">$106</span>
-          <span class="currency-ngn">₦170,000</span><span class="currency-gbp">£83</span>
-        </div>
-        <div class="price-period">Per seat · 20+ seats</div>
-        <p class="price-description">For teams of 20 or more. Volume pricing with dedicated cohort management.</p>
-        <ul class="price-features">
-          <li>Everything in Corporate tier</li>
-          <li>Dedicated cohort manager</li>
-          <li>Team-specific project tracks</li>
-          <li>Shared team deliverables</li>
-          <li>Multi-field team support</li>
-          <li>Quarterly renewal option</li>
-        </ul>
-        <a href="organisations.html#contact" class="btn btn-outline-red" style="width:100%;justify-content:center;">Enquire →</a>
-      </div>
-
-      <div class="price-card fade-up">
-        <div class="price-tier">Enterprise</div>
-        <div class="price-amount">
-          <span class="currency-usd">~$94</span>
-          <span class="currency-ngn">₦150,000</span><span class="currency-gbp">£73</span>
-        </div>
-        <div class="price-period">Per seat · 100+ seats</div>
+        <div class="price-tier">Corporate</div>
+        <div class="price-amount" style="font-size:1.4rem;font-weight:800;color:var(--muted);">Custom Pricing</div>
+        <div class="price-period">Tailored to your organisation</div>
         <p class="price-description">Full-scale enterprise AI transformation. Custom curriculum, dedicated expert team.</p>
         <ul class="price-features">
-          <li>Everything in Team tier</li>
+          <li>Everything in Teams tier</li>
+          <li>Dedicated cohort manager</li>
           <li>Custom curriculum design</li>
-          <li>Dedicated expert team</li>
           <li>Executive leadership track</li>
           <li>Organisation-wide reporting</li>
           <li>SLA &amp; enterprise support</li>
         </ul>
-        <a href="organisations.html#contact" class="btn btn-outline-red" style="width:100%;justify-content:center;">Talk to Us →</a>
+        <a href="organisations.html#contact" class="btn btn-outline-red" style="width:100%;justify-content:center;">Consult Team →</a>
       </div>
-    </div>
 
-    <div class="notice notice-info fade-up" style="margin-top:32px;">
-      <span>ℹ️</span>
-      <span>Corporate package pricing — Team Sprint, Department Build, and Enterprise — available on the <a href="organisations.html#packages" style="color:var(--red);font-weight:700;">For Organisations</a> page. All prices exclude applicable local taxes.</span>
     </div>
+    <div style="font-size:0.75rem;color:var(--muted);margin-top:40px;text-align:center;">Exchange rate: ₦1,600/$1 · ₦2,050/£1 · All prices exclude applicable local taxes.</div>
   </div>
 </section>
 
