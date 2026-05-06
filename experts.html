@@ -275,6 +275,8 @@
       .qualify-hero { grid-template-columns: 1fr; gap: 40px; padding: 40px 28px; }
       .expert-benefits { grid-template-columns: 1fr; }
       .criteria-grid { grid-template-columns: 1fr; }
+      .expert-visual-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
+      .expert-visual-grid > div:first-child { padding-top: 85% !important; }
     }
   </style>
 </head>
@@ -337,44 +339,6 @@
 </header>
 
 
-<!-- ====== EXPERT VISUAL FEATURE ====== -->
-<section style="padding:0;border-bottom:1px solid var(--border-card);background:var(--bg-dark);">
-  <div style="display:grid;grid-template-columns:1fr 1fr;min-height:420px;">
-    <!-- Image -->
-    <div style="position:relative;overflow:hidden;min-height:360px;">
-      <img
-        src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&h=600&fit=crop&crop=center&auto=format&q=80"
-        alt="A Brixgate Expert Practitioner"
-        style="width:100%;height:100%;object-fit:cover;object-position:center top;"
-      />
-      <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent 40%,rgba(2,16,36,0.6) 100%);"></div>
-    </div>
-    <!-- Content -->
-    <div style="padding:64px 56px;display:flex;flex-direction:column;justify-content:center;">
-      <div style="font-size:0.68rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:14px;">The Standard</div>
-      <h2 style="font-size:1.8rem;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:20px;">Every Expert Has Already Done It</h2>
-      <p style="font-size:0.9rem;color:var(--muted);line-height:1.75;margin-bottom:32px;">We do not recruit academic instructors. Every Brixgate Expert Practitioner is a verified domain professional who has already applied AI transformation in their specific field — and can show you the results.</p>
-      <div style="display:flex;flex-direction:column;gap:14px;">
-        <div style="display:flex;align-items:flex-start;gap:14px;">
-          <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:1px;">→</span>
-          <span style="font-size:0.88rem;color:rgba(255,255,255,0.7);">Identity-verified and domain-assessed before joining the network</span>
-        </div>
-        <div style="display:flex;align-items:flex-start;gap:14px;">
-          <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:1px;">→</span>
-          <span style="font-size:0.88rem;color:rgba(255,255,255,0.7);">Field-matched to cohorts — a cybersecurity expert never teaches finance</span>
-        </div>
-        <div style="display:flex;align-items:flex-start;gap:14px;">
-          <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:1px;">→</span>
-          <span style="font-size:0.88rem;color:rgba(255,255,255,0.7);">Personally vouches for every Brixer they certify — publicly, by name</span>
-        </div>
-      </div>
-      <div style="margin-top:32px;">
-        <a href="join-as-expert.html" class="btn btn-primary">Become an Expert →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ====== EXPERT VALUE STATEMENT ====== -->
 <section class="section-pad-sm bg-dark">
   <div class="container">
@@ -393,6 +357,45 @@
         <div class="card-icon">🤝</div>
         <div class="card-title">Matched to You</div>
         <p class="card-body">You are never assigned a random instructor. Your expert is matched to your specific field, your role level, and the AI transformation goals you defined in your Field Assessment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== EXPERT VISUAL FEATURE ====== -->
+<section style="padding:80px 0;background:var(--bg-dark);border-top:1px solid var(--border-card);">
+  <div class="container">
+    <div class="expert-visual-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+      <!-- Square Image -->
+      <div style="position:relative;padding-top:100%;border-radius:16px;overflow:hidden;flex-shrink:0;min-width:0;">
+        <img
+          src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=720&h=720&fit=crop&crop=face&auto=format&q=85"
+          alt="A Brixgate Expert Practitioner"
+          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;"
+        />
+      </div>
+      <!-- Content -->
+      <div>
+        <div style="font-size:0.68rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:14px;">The Standard</div>
+        <h2 style="font-size:1.8rem;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:20px;">Every Expert Has Already Done It</h2>
+        <p style="font-size:0.9rem;color:var(--muted);line-height:1.65;margin-bottom:32px;">We do not recruit academic instructors. Every Brixgate Expert Practitioner is a verified domain professional who has already applied AI transformation in their specific field — and can show you the results.</p>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:1px;">→</span>
+            <span style="font-size:0.88rem;color:rgba(255,255,255,0.7);">Identity-verified and domain-assessed before joining the network</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:1px;">→</span>
+            <span style="font-size:0.88rem;color:rgba(255,255,255,0.7);">Field-matched to cohorts — a cybersecurity expert never teaches finance</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:1px;">→</span>
+            <span style="font-size:0.88rem;color:rgba(255,255,255,0.7);">Personally vouches for every Brixer they certify — publicly, by name</span>
+          </div>
+        </div>
+        <div style="margin-top:32px;">
+          <a href="join-as-expert.html" class="btn btn-primary">Become an Expert →</a>
+        </div>
       </div>
     </div>
   </div>
@@ -423,7 +426,7 @@
 
       <!-- Expert 1 -->
       <div class="expert-card fade-up" data-field="healthcare">
-        <div class="expert-avatar-placeholder" style="background:linear-gradient(135deg,#1B3A5C,#021024);">AO</div>
+        <img class="expert-avatar" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Dr. Amara Okafor" />
         <div class="expert-info">
           <div class="expert-name">Dr. Amara Okafor</div>
           <div class="expert-role">Expert Practitioner — Healthcare &amp; Medicine</div>
@@ -449,7 +452,7 @@
 
       <!-- Expert 2 -->
       <div class="expert-card fade-up" data-field="finance">
-        <div class="expert-avatar-placeholder" style="background:linear-gradient(135deg,#0D3351,#021024);">KA</div>
+        <img class="expert-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Kwame Asante-Mensah" />
         <div class="expert-info">
           <div class="expert-name">Kwame Asante-Mensah</div>
           <div class="expert-role">Expert Practitioner — Finance &amp; Banking</div>
@@ -475,7 +478,7 @@
 
       <!-- Expert 3 -->
       <div class="expert-card fade-up" data-field="legal">
-        <div class="expert-avatar-placeholder" style="background:linear-gradient(135deg,#2A1040,#021024);">NM</div>
+        <img class="expert-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Natasha Mokoena" />
         <div class="expert-info">
           <div class="expert-name">Natasha Mokoena</div>
           <div class="expert-role">Expert Practitioner — Legal &amp; Compliance</div>
@@ -501,7 +504,7 @@
 
       <!-- Expert 4 -->
       <div class="expert-card fade-up" data-field="technology">
-        <div class="expert-avatar-placeholder" style="background:linear-gradient(135deg,#0D2A1A,#021024);">SO</div>
+        <img class="expert-avatar" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Seun Ojo-Williams" />
         <div class="expert-info">
           <div class="expert-name">Seun Ojo-Williams</div>
           <div class="expert-role">Expert Practitioner — Product &amp; Technology</div>
@@ -527,7 +530,7 @@
 
       <!-- Expert 5 -->
       <div class="expert-card fade-up" data-field="engineering">
-        <div class="expert-avatar-placeholder" style="background:linear-gradient(135deg,#103040,#021024);">CK</div>
+        <img class="expert-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Chibuike Kalu" />
         <div class="expert-info">
           <div class="expert-name">Chibuike Kalu</div>
           <div class="expert-role">Expert Practitioner — Engineering &amp; Infrastructure</div>
@@ -552,7 +555,7 @@
 
       <!-- Expert 6 -->
       <div class="expert-card fade-up" data-field="hr">
-        <div class="expert-avatar-placeholder" style="background:linear-gradient(135deg,#2A1A0D,#021024);">FA</div>
+        <img class="expert-avatar" src="https://images.unsplash.com/photo-1488508872907-592763824245?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Funmi Adeyemi" />
         <div class="expert-info">
           <div class="expert-name">Funmi Adeyemi</div>
           <div class="expert-role">Expert Practitioner — Human Resources</div>
@@ -577,7 +580,7 @@
 
       <!-- Expert 7 -->
       <div class="expert-card fade-up" data-field="education">
-        <div class="expert-avatar-placeholder" style="background:linear-gradient(135deg,#0A2A30,#021024);">DB</div>
+        <img class="expert-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Dr. Daniel Bankole" />
         <div class="expert-info">
           <div class="expert-name">Dr. Daniel Bankole</div>
           <div class="expert-role">Expert Practitioner — Education &amp; Training</div>
@@ -602,7 +605,7 @@
 
       <!-- Expert 8 -->
       <div class="expert-card fade-up" data-field="finance">
-        <div class="expert-avatar-placeholder" style="background:linear-gradient(135deg,#1A0D2A,#021024);">RI</div>
+        <img class="expert-avatar" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Remi Ibitoye" />
         <div class="expert-info">
           <div class="expert-name">Remi Ibitoye</div>
           <div class="expert-role">Expert Practitioner — Data &amp; Analytics</div>
@@ -627,7 +630,7 @@
 
       <!-- Expert 9 -->
       <div class="expert-card fade-up" data-field="technology">
-        <div class="expert-avatar-placeholder" style="background:linear-gradient(135deg,#0D3020,#021024);">ZM</div>
+        <img class="expert-avatar" src="https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Zara Mwangi" />
         <div class="expert-info">
           <div class="expert-name">Zara Mwangi</div>
           <div class="expert-role">Expert Practitioner — Cybersecurity</div>

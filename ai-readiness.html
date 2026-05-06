@@ -529,6 +529,22 @@
       <span class="intro-preview-item"><span class="intro-preview-dot"></span>Instant result with guidance</span>
     </div>
 
+    <!-- Field input with autocomplete -->
+    <div style="max-width:400px;margin:0 auto 24px;position:relative;text-align:left;" id="field-input-wrap">
+      <label for="profession-input" style="display:block;font-size:0.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;">What's your professional field?</label>
+      <input
+        type="text"
+        id="profession-input"
+        placeholder="e.g. Software Engineer, Doctor, Lawyer…"
+        autocomplete="off"
+        oninput="handleProfessionInput(this.value)"
+        onfocus="handleProfessionInput(this.value)"
+        onblur="setTimeout(closeProfessionDropdown, 150)"
+        style="width:100%;background:var(--bg-card);border:1.5px solid var(--border-card);border-radius:var(--radius-md);padding:14px 16px;color:var(--white);font-size:0.94rem;font-family:inherit;outline:none;transition:border-color 0.25s;"
+      />
+      <div id="profession-dropdown" style="position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);overflow:hidden;display:none;z-index:20;max-height:220px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);"></div>
+    </div>
+
     <button class="btn btn-primary btn-lg" onclick="startAssessment()" style="min-width:240px;">
       Start the Check →
     </button>
@@ -864,6 +880,12 @@ let currentQ = 0;
 let answers  = Array(QUESTIONS.length).fill(null);
 
 function startAssessment() {
+  // Save profession if typed
+  var inp = document.getElementById('profession-input');
+  if (inp && inp.value.trim()) {
+    selectedProfession = inp.value.trim();
+    try { localStorage.setItem('brixgate_profession', selectedProfession); } catch(e) {}
+  }
   document.getElementById('intro-screen').style.display = 'none';
   document.getElementById('assess-screen').style.display = 'block';
   renderQuestion();
@@ -1014,6 +1036,79 @@ function restartAssessment() {
   document.getElementById('capture-screen').style.display = 'none';
   document.getElementById('intro-screen').style.display   = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================================================
+//  PROFESSION FIELD AUTOCOMPLETE
+// ============================================================
+var PROFESSION_LIST = [
+  "Accountant","Actuary","Administrative Officer","Architect","Art Director",
+  "Backend Developer","Brand Manager","Business Analyst","Business Development Manager",
+  "Chief Executive Officer","Chief Financial Officer","Chief Information Officer",
+  "Chief Marketing Officer","Chief Operating Officer","Chief Technology Officer",
+  "Civil Engineer","Compliance Officer","Content Creator","Content Strategist",
+  "Copywriter","Corporate Lawyer","Credit Analyst","Cybersecurity Analyst",
+  "Data Analyst","Data Engineer","Data Scientist","Database Administrator",
+  "DevOps Engineer","Digital Marketing Manager","Electrical Engineer",
+  "Environmental Consultant","Finance Manager","Financial Advisor","FinTech Analyst",
+  "Frontend Developer","Full Stack Developer","Graphic Designer","HR Manager",
+  "Healthcare Administrator","Investment Banker","IT Manager","Legal Counsel",
+  "Logistics Manager","Machine Learning Engineer","Management Consultant",
+  "Marketing Manager","Mechanical Engineer","Medical Doctor","Mobile Developer",
+  "Network Engineer","Nurse","Operations Manager","Pharmacist","Policy Analyst",
+  "Product Designer","Product Manager","Project Manager","Public Health Officer",
+  "QA Engineer","Quantity Surveyor","Real Estate Agent","Recruiter",
+  "Risk Manager","Sales Manager","Security Engineer","SEO Specialist",
+  "Social Media Manager","Software Architect","Software Engineer","Solicitor",
+  "Strategy Consultant","Supply Chain Manager","Systems Analyst","Tax Consultant",
+  "Teacher","UX Designer","UX Researcher","UI Designer","Venture Capitalist",
+  "Web Developer","Wealth Manager"
+];
+
+var selectedProfession = '';
+
+function handleProfessionInput(val) {
+  selectedProfession = val.trim();
+  var drop = document.getElementById('profession-dropdown');
+  if (!val.trim()) {
+    var items = PROFESSION_LIST.slice(0, 6);
+    renderProfessionDropdown(items);
+    return;
+  }
+  var lower = val.toLowerCase();
+  var matches = PROFESSION_LIST.filter(function(p) {
+    return p.toLowerCase().indexOf(lower) !== -1;
+  }).slice(0, 8);
+  renderProfessionDropdown(matches, val.trim());
+}
+
+function renderProfessionDropdown(matches, rawVal) {
+  var drop = document.getElementById('profession-dropdown');
+  if (!drop) return;
+  drop.style.display = 'block';
+  var html = '';
+  matches.forEach(function(p) {
+    html += '<div onclick="selectProfession(\'' + p.replace(/'/g, "\\'") + '\')" style="padding:12px 16px;cursor:pointer;font-size:0.88rem;color:var(--white);border-bottom:1px solid var(--border-card);transition:background 0.15s;" onmouseenter="this.style.background=\'rgba(255,41,78,0.12)\'" onmouseleave="this.style.background=\'\'">' + p + '</div>';
+  });
+  // If no matches and user typed something, offer to add it
+  if (matches.length === 0 && rawVal) {
+    html = '<div onclick="selectProfession(\'' + rawVal.replace(/'/g, "\\'") + '\')" style="padding:12px 16px;cursor:pointer;font-size:0.88rem;color:var(--red);border-bottom:1px solid var(--border-card);">Use "' + rawVal + '"</div>';
+  }
+  drop.innerHTML = html;
+}
+
+function selectProfession(val) {
+  selectedProfession = val;
+  var input = document.getElementById('profession-input');
+  if (input) input.value = val;
+  closeProfessionDropdown();
+  // Save to localStorage for result context
+  try { localStorage.setItem('brixgate_profession', val); } catch(e) {}
+}
+
+function closeProfessionDropdown() {
+  var drop = document.getElementById('profession-dropdown');
+  if (drop) drop.style.display = 'none';
 }
 
 function copyShareLink(e) {

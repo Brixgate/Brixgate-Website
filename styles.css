@@ -651,6 +651,19 @@ section { width: 100%; }
   padding-bottom: 80px;
 }
 
+/* Hero & section button row */
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 36px;
+}
+
+@media (max-width: 768px) {
+  .hero-actions { justify-content: center; }
+}
+
 .hero-bg {
   position: absolute;
   inset: 0;
