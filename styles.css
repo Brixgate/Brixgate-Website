@@ -50,7 +50,7 @@ body {
   font-family: var(--font-main);
   background: var(--bg-dark);
   color: var(--white);
-  line-height: 1.6;
+  line-height: 1.5;
   overflow-x: hidden;
   /* Space for fixed banner + fixed nav on non-hero pages */
   padding-top: calc(var(--banner-height) + var(--nav-height));
@@ -421,7 +421,7 @@ section { width: 100%; }
 .section-header {
   text-align: center;
   max-width: 800px;
-  margin: 0 auto 56px;
+  margin: 0 auto 36px;
 }
 
 .section-header h2 {
@@ -432,7 +432,7 @@ section { width: 100%; }
 .section-header p {
   font-size: 1.05rem;
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.55;
 }
 
 .section-header.light p { color: var(--body-dark); opacity: 0.7; }
@@ -474,7 +474,7 @@ section { width: 100%; }
 .card-body {
   font-size: 0.9rem;
   color: var(--muted);
-  line-height: 1.65;
+  line-height: 1.5;
 }
 
 /* Cards in light sections */
@@ -715,7 +715,7 @@ section { width: 100%; }
 .price-amount .currency-ngn { display: inline; }
 .price-amount .currency-usd { display: none; }
 .price-period { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
-.price-description { font-size: 0.88rem; color: var(--muted); margin: 16px 0; line-height: 1.6; flex-grow: 1; }
+.price-description { font-size: 0.88rem; color: var(--muted); margin: 16px 0; line-height: 1.5; flex-grow: 1; }
 
 .price-features { list-style: none; margin-bottom: 24px; display: flex; flex-direction: column; gap: 10px; }
 .price-features li {
@@ -739,7 +739,7 @@ section { width: 100%; }
   align-items: center;
   gap: 0;
   justify-content: center;
-  margin-bottom: 48px;
+  margin-bottom: 36px;
   background: rgba(255,255,255,0.06);
   border: 1px solid var(--border-card);
   border-radius: 50px;
@@ -791,7 +791,7 @@ section { width: 100%; }
 .journey-step {
   flex: 1;
   text-align: center;
-  padding: 32px 20px;
+  padding: 24px 20px;
   position: relative;
   counter-increment: step;
 }
@@ -845,7 +845,7 @@ section { width: 100%; }
 .step-desc {
   font-size: 0.84rem;
   color: var(--muted);
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 /* ---------- Pillar Cards ---------- */
@@ -882,7 +882,7 @@ section { width: 100%; }
 .pillar-body {
   font-size: 0.92rem;
   color: rgba(46,58,74,0.75);
-  line-height: 1.7;
+  line-height: 1.55;
 }
 
 /* ---------- Sector Grid ---------- */
@@ -1045,7 +1045,7 @@ a.sector-item {
 .qualify-step-content p {
   font-size: 0.86rem;
   color: var(--muted);
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 /* ---------- Org Package Cards ---------- */
@@ -1075,7 +1075,7 @@ a.sector-item {
   background: linear-gradient(135deg, var(--bg-dark) 0%, var(--cta-secondary) 100%);
   border-top: 1px solid var(--border-card);
   border-bottom: 1px solid var(--border-card);
-  padding: 96px 0;
+  padding: 42px 0;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -1094,7 +1094,7 @@ a.sector-item {
 }
 
 .cta-section h2 {
-  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
   margin-bottom: 16px;
   max-width: 700px;
   margin-left: auto;
@@ -1106,7 +1106,7 @@ a.sector-item {
   color: var(--muted);
   max-width: 540px;
   margin: 0 auto 36px;
-  line-height: 1.7;
+  line-height: 1.55;
 }
 
 .cta-buttons {
@@ -1134,7 +1134,7 @@ a.sector-item {
 .footer-brand p {
   font-size: 0.88rem;
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.55;
   margin: 12px 0 20px;
   max-width: 280px;
 }
@@ -1310,7 +1310,7 @@ textarea.form-control {
   padding: 16px 20px;
   border-radius: var(--radius-sm);
   font-size: 0.88rem;
-  line-height: 1.6;
+  line-height: 1.5;
   display: flex;
   align-items: flex-start;
   gap: 12px;
@@ -1356,7 +1356,7 @@ textarea.form-control {
   font-size: 1.1rem;
   color: var(--muted);
   max-width: 600px;
-  line-height: 1.7;
+  line-height: 1.55;
 }
 
 /* ---------- Breadcrumb ---------- */
@@ -1389,7 +1389,7 @@ textarea.form-control {
 .split-content .text-col p {
   font-size: 0.95rem;
   color: var(--muted);
-  line-height: 1.75;
+  line-height: 1.55;
   margin-bottom: 12px;
 }
 
@@ -1449,7 +1449,15 @@ textarea.form-control {
   .footer-bottom-links { justify-content: center; flex-wrap: wrap; }
 
   /* Page header */
-  .page-header { padding: calc(var(--nav-height) + 36px) 0 48px; }
+  .page-header { padding: calc(var(--nav-height) + 56px) 0 64px; }
+  .page-header p { font-size: 0.72rem; }
+
+  /* Buttons — smaller on mobile */
+  .btn { padding: 9px 18px; font-size: 0.83rem; }
+  .btn-lg { padding: 11px 22px; font-size: 0.88rem; }
+
+  /* Certificate grid — full width on mobile */
+  .cert-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
 
   /* Stats bar */
   .stats-bar .container { flex-wrap: wrap; gap: 20px; }

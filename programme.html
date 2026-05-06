@@ -271,10 +271,13 @@
       gap: 20px;
     }
     .price-original {
+      display: block;
       text-decoration: line-through;
-      opacity: 0.45;
-      font-size: 0.85em;
-      margin-right: 6px;
+      color: var(--red);
+      opacity: 0.7;
+      font-size: 0.72rem;
+      font-weight: 600;
+      margin-top: 4px;
     }
 
     /* ---- FAQ ---- */
@@ -612,7 +615,7 @@
 <!-- ====== THE CERTIFICATE ====== -->
 <section class="section-pad bg-light" style="border-top:1px solid rgba(46,58,74,0.08);">
   <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1.05fr;gap:72px;align-items:center;">
+    <div class="cert-grid" style="display:grid;grid-template-columns:1fr 1.05fr;gap:72px;align-items:center;">
       <!-- Left: Text -->
       <div class="fade-up">
         <span class="eyebrow" style="color:var(--red);">Your Credential</span>
@@ -811,9 +814,9 @@
       <div class="price-card fade-up">
         <div class="price-tier">Individual</div>
         <div class="price-amount">
-          <span class="currency-usd"><span class="price-original">$200</span>$156</span>
-          <span class="currency-ngn"><span class="price-original">₦320,000</span>₦250,000</span>
-          <span class="currency-gbp"><span class="price-original">£160</span>£122</span>
+          <span class="currency-usd">$156<span class="price-original">was $200</span></span>
+          <span class="currency-ngn">₦250,000<span class="price-original">was ₦320,000</span></span>
+          <span class="currency-gbp">£122<span class="price-original">was £160</span></span>
         </div>
         <div class="price-period">Per person / programme</div>
         <p class="price-description">For self-directed professionals ready to transform their AI practice independently.</p>
@@ -832,9 +835,9 @@
       <div class="price-card featured fade-up">
         <div class="price-tier">Teams</div>
         <div class="price-amount">
-          <span class="currency-usd"><span class="price-original">$160</span>$125</span>
-          <span class="currency-ngn"><span class="price-original">₦260,000</span>₦200,000</span>
-          <span class="currency-gbp"><span class="price-original">£125</span>£98</span>
+          <span class="currency-usd">$125<span class="price-original">was $160</span></span>
+          <span class="currency-ngn">₦200,000<span class="price-original">was ₦260,000</span></span>
+          <span class="currency-gbp">£98<span class="price-original">was £125</span></span>
         </div>
         <div class="price-period">Per seat / programme</div>
         <p class="price-description">For organisations enrolling individuals. Team pricing, full programme quality.</p>
