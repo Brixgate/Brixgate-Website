@@ -796,19 +796,9 @@ section { width: 100%; }
   counter-increment: step;
 }
 
-.journey-step::before {
-  content: counter(step, decimal-leading-zero);
-  display: block;
-  font-size: 0.7rem;
-  font-weight: 900;
-  color: var(--red);
-  letter-spacing: 0.1em;
-  margin-bottom: 16px;
-}
-
 .journey-connector {
   position: absolute;
-  top: 62px;
+  top: 68px;
   left: calc(50% + 36px);
   right: calc(-50% + 36px);
   height: 2px;
@@ -845,6 +835,11 @@ section { width: 100%; }
   font-weight: 700;
   margin-bottom: 8px;
   color: var(--white);
+}
+
+.step-num {
+  color: var(--red);
+  font-weight: 900;
 }
 
 .step-desc {
