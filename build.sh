@@ -54,8 +54,8 @@ let css = fs.readFileSync('$PROJECT_DIR/styles.css', 'utf8');
 css = css.replace(/\/\*[\s\S]*?\*\//g, '');
 // Collapse whitespace
 css = css.replace(/\s+/g, ' ');
-// Remove spaces around key chars
-css = css.replace(/\s*([{}:;,>~+])\s*/g, '\$1');
+// Remove spaces around structural chars only (NOT + or - which are required inside calc())
+css = css.replace(/\s*([{}:;,>~])\s*/g, '\$1');
 // Remove trailing semicolons before }
 css = css.replace(/;}/g, '}');
 // Trim
