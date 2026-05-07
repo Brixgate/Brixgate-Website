@@ -732,17 +732,20 @@
     const total = Object.values(scores).reduce((a, b) => a + b, 0);
     const tier = TIERS.find(t => total >= t.min && total <= t.max) || TIERS[0];
     const pct = ((total - 5) / 15) * 100;
-    document.getElementById(ID + '_badge').textContent = tier.label;
-    document.getElementById(ID + '_badge').style.cssText += ';background:' + tier.color + '22;color:' + tier.color + ';border:1.5px solid ' + tier.color + '44;';
-    document.getElementById(ID + '_headline').textContent = tier.headline;
-    document.getElementById(ID + '_body').textContent = tier.body;
-    document.getElementById(ID + '_cta_link').textContent = tier.cta;
-    if (total >= 19) document.getElementById(ID + '_cta_link').href = 'join-as-expert.html';
-    document.getElementById(ID + '_result').classList.add('qf-visible');
-    document.querySelector('#' + ID + '_container .qf-nav').style.display = 'none';
-    document.querySelectorAll('#' + ID + '_container .qf-question').forEach(el => el.classList.remove('qf-active'));
-    setTimeout(() => { document.getElementById(ID + '_scorefill').style.width = Math.max(pct, 5) + '%'; document.getElementById(ID + '_scorefill').style.background = tier.color; }, 100);
-    document.getElementById(ID + '_result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    function doShow() {
+      document.getElementById(ID + '_badge').textContent = tier.label;
+      document.getElementById(ID + '_badge').style.cssText += ';background:' + tier.color + '22;color:' + tier.color + ';border:1.5px solid ' + tier.color + '44;';
+      document.getElementById(ID + '_headline').textContent = tier.headline;
+      document.getElementById(ID + '_body').textContent = tier.body;
+      document.getElementById(ID + '_cta_link').textContent = tier.cta;
+      if (total >= 19) document.getElementById(ID + '_cta_link').href = 'join-as-expert.html';
+      document.getElementById(ID + '_result').classList.add('qf-visible');
+      document.querySelector('#' + ID + '_container .qf-nav').style.display = 'none';
+      document.querySelectorAll('#' + ID + '_container .qf-question').forEach(el => el.classList.remove('qf-active'));
+      setTimeout(() => { document.getElementById(ID + '_scorefill').style.width = Math.max(pct, 5) + '%'; document.getElementById(ID + '_scorefill').style.background = tier.color; }, 100);
+      document.getElementById(ID + '_result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    if (typeof showQuizCaptureGate === 'function') { showQuizCaptureGate(doShow); } else { doShow(); }
   }
 })();
 </script>

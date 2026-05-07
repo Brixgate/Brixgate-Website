@@ -382,3 +382,70 @@
   });
 
 })();
+
+/* ============================================================
+   SHARED QUIZ CAPTURE GATE
+   Used by: programme.html, all programme-*.html course pages
+   ============================================================ */
+(function () {
+  var _captureCallback = null;
+
+  function ensureOverlay() {
+    if (document.getElementById('bx-quiz-capture')) return;
+    var el = document.createElement('div');
+    el.id = 'bx-quiz-capture';
+    el.setAttribute('style', [
+      'display:none',
+      'position:fixed',
+      'inset:0',
+      'z-index:9000',
+      'background:rgba(2,16,36,0.96)',
+      'align-items:center',
+      'justify-content:center',
+      'padding:24px'
+    ].join(';'));
+    el.innerHTML =
+      '<div style="background:#0D1C34;border:1px solid #1A3050;border-radius:20px;padding:40px 32px;max-width:440px;width:100%;text-align:center;">' +
+        '<div style="font-size:2rem;margin-bottom:12px;">🎯</div>' +
+        '<h3 style="font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:8px;">Your Results Are Ready</h3>' +
+        '<p style="font-size:0.88rem;color:#7A94A8;line-height:1.6;margin-bottom:24px;">Enter your email to receive your result and unlock a <strong style="color:#FF294E;">10% coupon</strong> for the programme.</p>' +
+        '<input id="bx-quiz-email" type="email" placeholder="your@email.com" autocomplete="email" style="width:100%;padding:13px 16px;border-radius:8px;border:1.5px solid #1A3050;background:rgba(255,255,255,0.05);color:#fff;font-size:0.92rem;margin-bottom:10px;outline:none;box-sizing:border-box;" />' +
+        '<input id="bx-quiz-phone" type="tel" placeholder="Phone number (optional)" autocomplete="tel" style="width:100%;padding:13px 16px;border-radius:8px;border:1.5px solid #1A3050;background:rgba(255,255,255,0.05);color:#fff;font-size:0.92rem;margin-bottom:16px;outline:none;box-sizing:border-box;" />' +
+        '<button onclick="submitQuizCapture()" style="width:100%;padding:14px;background:linear-gradient(135deg,#FF294E,#FF5748);border:none;border-radius:10px;color:#fff;font-weight:800;font-size:1rem;cursor:pointer;margin-bottom:12px;">Get My Results + Coupon</button>' +
+        '<br/><a href="#" onclick="skipQuizCapture(event)" style="color:#7A94A8;font-size:0.82rem;text-decoration:underline;">Skip — just show me results</a>' +
+      '</div>';
+    document.body.appendChild(el);
+  }
+
+  window.showQuizCaptureGate = function (callback) {
+    if (localStorage.getItem('bxQuizCaptured')) { callback(); return; }
+    ensureOverlay();
+    _captureCallback = callback;
+    document.getElementById('bx-quiz-capture').style.display = 'flex';
+  };
+
+  window.submitQuizCapture = function () {
+    var emailEl = document.getElementById('bx-quiz-email');
+    var phoneEl = document.getElementById('bx-quiz-phone');
+    var email   = emailEl ? emailEl.value.trim() : '';
+    var phone   = phoneEl ? phoneEl.value.trim() : '';
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      if (emailEl) { emailEl.style.borderColor = '#FF294E'; emailEl.focus(); }
+      return;
+    }
+    try {
+      localStorage.setItem('bxQuizCaptured', '1');
+      localStorage.setItem('bxQuizEmail', email);
+      if (phone) localStorage.setItem('bxQuizPhone', phone);
+    } catch (e) {}
+    document.getElementById('bx-quiz-capture').style.display = 'none';
+    if (_captureCallback) { var cb = _captureCallback; _captureCallback = null; cb(); }
+  };
+
+  window.skipQuizCapture = function (e) {
+    if (e) e.preventDefault();
+    try { localStorage.setItem('bxQuizCaptured', 'skip'); } catch (e) {}
+    document.getElementById('bx-quiz-capture').style.display = 'none';
+    if (_captureCallback) { var cb = _captureCallback; _captureCallback = null; cb(); }
+  };
+}());

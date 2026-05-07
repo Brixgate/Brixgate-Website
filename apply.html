@@ -146,6 +146,11 @@
       border: 1px solid var(--border-card);
       border-radius: var(--radius-lg);
       padding: 48px;
+      /* Prevent any JS or CSS animation from moving the card */
+      animation: none !important;
+      transition: none !important;
+      transform: none !important;
+      opacity: 1 !important;
     }
 
     .apply-form-card h3 {
@@ -824,6 +829,15 @@
               </select>
             </div>
 
+            <div class="form-group">
+              <label for="enrollment-type">Applying as</label>
+              <select id="enrollment-type" name="enrollment_type" required>
+                <option value="" disabled selected>Select enrolment type</option>
+                <option value="Individual">Individual</option>
+                <option value="Team">Team / Organisation</option>
+              </select>
+            </div>
+
             <button type="submit" class="btn btn-primary form-submit-btn">Continue to Review →</button>
 
             <!-- Inline error banner — shown on API errors instead of browser alert -->
@@ -927,9 +941,9 @@
 </section>
 
 <!-- ====== SOCIAL PROOF ====== -->
-<section class="section-pad-sm bg-dark" style="border-top:1px solid var(--border-card);">
+<section class="section-pad-sm bg-dark" style="border-top:1px solid var(--border-card);margin-top:32px;">
   <div class="container">
-    <div class="stats-bar stagger">
+    <div class="stats-bar stagger" style="display:flex;flex-wrap:wrap;justify-content:space-around;align-items:center;gap:20px;padding:24px 0;">
       <div class="stat-item fade-up">
         <div class="stat-num" data-count="12" data-suffix="+">12+</div>
         <div class="stat-label">Fields Covered</div>
@@ -1036,8 +1050,7 @@
         break;
       }
     }
-    var formCard = document.getElementById('apply-form-card') || document.querySelector('.apply-form') || sel.closest('form');
-    if (formCard) setTimeout(function () { formCard.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 400);
+    /* scrollIntoView removed — page loads at the top */
   });
 
   /* ---------- Panels ---------- */
@@ -1145,12 +1158,13 @@
       return;
     }
 
-    var firstName = document.getElementById('first-name').value.trim();
-    var lastName  = document.getElementById('last-name').value.trim();
-    var email     = emailEl.value.trim();
-    var field     = document.getElementById('field').value;
-    var role      = document.getElementById('role').value;
-    var fullName  = firstName + ' ' + lastName;
+    var firstName      = document.getElementById('first-name').value.trim();
+    var lastName       = document.getElementById('last-name').value.trim();
+    var email          = emailEl.value.trim();
+    var field          = document.getElementById('field').value;
+    var role           = document.getElementById('role').value;
+    var enrollmentType = (document.getElementById('enrollment-type') || {}).value || '';
+    var fullName       = firstName + ' ' + lastName;
 
     var submitBtn = this.querySelector('button[type="submit"]');
     setSubmitState(submitBtn, true, 'Setting up your account…');

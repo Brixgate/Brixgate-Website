@@ -97,6 +97,12 @@
       .revenue-hero { padding: 36px 24px; }
       .expert-form-wrap { padding: 28px 20px; }
       .form-row-2 { grid-template-columns: 1fr; }
+      .join-strip-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .join-split-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
+    }
+    @media (max-width: 480px) {
+      .join-strip-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .join-strip-grid > div { border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.15); }
     }
   </style>
 </head>
@@ -172,7 +178,7 @@
 <!-- ====== FOUNDING COHORT URGENCY STRIP ====== -->
 <div style="background:#FF294E;padding:0;">
   <div class="container">
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;">
+    <div class="join-strip-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;">
       <div style="padding:20px 24px;border-right:1px solid rgba(255,255,255,0.2);text-align:center;">
         <div style="font-size:0.65rem;font-weight:800;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">First Cohort Starts</div>
         <div style="font-size:1rem;font-weight:900;color:#fff;">June 12, 2026</div>
@@ -335,7 +341,7 @@
 <!-- ====== WHAT BRIXGATE HANDLES ====== -->
 <section class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
   <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;" class="fade-up">
+    <div class="join-split-grid fade-up" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
       <div>
         <span class="eyebrow">Zero Admin For You</span>
         <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;margin-top:8px;margin-bottom:16px;">You Show Up and Deliver.<br/>We Handle Everything Else.</h2>

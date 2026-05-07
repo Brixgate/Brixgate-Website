@@ -1111,24 +1111,28 @@
     const tier = TIERS.find(t => total >= t.min && total <= t.max) || TIERS[0];
     const pct = ((total - 5) / 15) * 100;
 
-    document.getElementById(ID + '_badge').textContent = tier.label;
-    document.getElementById(ID + '_badge').style.background = tier.color + '22';
-    document.getElementById(ID + '_badge').style.color = tier.color;
-    document.getElementById(ID + '_badge').style.border = '1.5px solid ' + tier.color + '44';
-    document.getElementById(ID + '_headline').textContent = tier.headline;
-    document.getElementById(ID + '_body').textContent = tier.body;
-    const ctaLink = document.getElementById(ID + '_cta_link');
-    if (ctaLink && total >= 19) ctaLink.href = 'join-as-expert.html';
+    function doShow() {
+      document.getElementById(ID + '_badge').textContent = tier.label;
+      document.getElementById(ID + '_badge').style.background = tier.color + '22';
+      document.getElementById(ID + '_badge').style.color = tier.color;
+      document.getElementById(ID + '_badge').style.border = '1.5px solid ' + tier.color + '44';
+      document.getElementById(ID + '_headline').textContent = tier.headline;
+      document.getElementById(ID + '_body').textContent = tier.body;
+      const ctaLink = document.getElementById(ID + '_cta_link');
+      if (ctaLink && total >= 19) ctaLink.href = 'join-as-expert.html';
 
-    document.getElementById(ID + '_result').classList.add('qf-visible');
-    document.querySelectorAll('#' + ID + '_container .qf-question').forEach(el => el.classList.remove('qf-active'));
+      document.getElementById(ID + '_result').classList.add('qf-visible');
+      document.querySelectorAll('#' + ID + '_container .qf-question').forEach(el => el.classList.remove('qf-active'));
 
-    setTimeout(() => {
-      document.getElementById(ID + '_scorefill').style.width = Math.max(pct, 5) + '%';
-      document.getElementById(ID + '_scorefill').style.background = tier.color;
-    }, 100);
+      setTimeout(() => {
+        document.getElementById(ID + '_scorefill').style.width = Math.max(pct, 5) + '%';
+        document.getElementById(ID + '_scorefill').style.background = tier.color;
+      }, 100);
 
-    document.getElementById(ID + '_result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      document.getElementById(ID + '_result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    if (typeof showQuizCaptureGate === 'function') { showQuizCaptureGate(doShow); } else { doShow(); }
   }
 })();
 </script>

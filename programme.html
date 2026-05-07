@@ -1052,19 +1052,27 @@
       Object.values(qeScores).forEach(function(s) { total += s; });
       var r = qeGetResult(total);
 
-      document.getElementById('qe-result-icon').textContent  = r.icon;
-      document.getElementById('qe-result-label').textContent = r.label;
-      document.getElementById('qe-result-score').textContent = total;
-      document.getElementById('qe-result-title').textContent = r.title;
-      document.getElementById('qe-result-desc').textContent  = r.desc;
-      var ctaEl = document.getElementById('qe-result-cta');
-      ctaEl.textContent = r.cta;
-      ctaEl.href = 'apply.html';
+      function doShow() {
+        document.getElementById('qe-result-icon').textContent  = r.icon;
+        document.getElementById('qe-result-label').textContent = r.label;
+        document.getElementById('qe-result-score').textContent = total;
+        document.getElementById('qe-result-title').textContent = r.title;
+        document.getElementById('qe-result-desc').textContent  = r.desc;
+        var ctaEl = document.getElementById('qe-result-cta');
+        ctaEl.textContent = r.cta;
+        ctaEl.href = 'apply.html';
 
-      document.getElementById('qe-questions').style.display = 'none';
-      document.getElementById('qe-result').style.display = 'block';
-      document.getElementById('qe-progress').style.width = '100%';
-      document.getElementById('quiz-container-early').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        document.getElementById('qe-questions').style.display = 'none';
+        document.getElementById('qe-result').style.display = 'block';
+        document.getElementById('qe-progress').style.width = '100%';
+        document.getElementById('quiz-container-early').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      if (typeof showQuizCaptureGate === 'function') {
+        showQuizCaptureGate(doShow);
+      } else {
+        doShow();
+      }
     }
 
     document.querySelectorAll('.qe-opt').forEach(function(btn) {
