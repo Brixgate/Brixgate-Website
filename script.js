@@ -17,6 +17,7 @@
     initCurrencyToggle();
     initCounters();
     setActiveNavLink();
+    initFaqAccordion();
   }
 
   /* ---------- Banner scroll-away + Sticky Nav ---------- */
@@ -410,7 +411,23 @@
         '<h3 style="font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:8px;">Your Results Are Ready</h3>' +
         '<p style="font-size:0.88rem;color:#7A94A8;line-height:1.6;margin-bottom:24px;">Enter your email to receive your result and unlock a <strong style="color:#FF294E;">10% coupon</strong> for the programme.</p>' +
         '<input id="bx-quiz-email" type="email" placeholder="your@email.com" autocomplete="email" style="width:100%;padding:13px 16px;border-radius:8px;border:1.5px solid #1A3050;background:rgba(255,255,255,0.05);color:#fff;font-size:0.92rem;margin-bottom:10px;outline:none;box-sizing:border-box;" />' +
-        '<input id="bx-quiz-phone" type="tel" placeholder="Phone number (optional)" autocomplete="tel" style="width:100%;padding:13px 16px;border-radius:8px;border:1.5px solid #1A3050;background:rgba(255,255,255,0.05);color:#fff;font-size:0.92rem;margin-bottom:16px;outline:none;box-sizing:border-box;" />' +
+        '<div style="display:flex;gap:0;margin-bottom:16px;">' +
+          '<select id="bx-quiz-phone-cc" style="width:110px;flex-shrink:0;padding:13px 8px;border-radius:8px 0 0 8px;border:1.5px solid #1A3050;border-right:none;background:#0D1C34;color:#7A94A8;font-size:0.82rem;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;text-align:center;">' +
+            '<option value="+234">🇳🇬 +234</option>' +
+            '<option value="+44">🇬🇧 +44</option>' +
+            '<option value="+1">🇺🇸 +1</option>' +
+            '<option value="+254">🇰🇪 +254</option>' +
+            '<option value="+233">🇬🇭 +233</option>' +
+            '<option value="+27">🇿🇦 +27</option>' +
+            '<option value="+251">🇪🇹 +251</option>' +
+            '<option value="+256">🇺🇬 +256</option>' +
+            '<option value="+255">🇹🇿 +255</option>' +
+            '<option value="+237">🇨🇲 +237</option>' +
+            '<option value="+225">🇨🇮 +225</option>' +
+            '<option value="+221">🇸🇳 +221</option>' +
+          '</select>' +
+          '<input id="bx-quiz-phone" type="tel" placeholder="Phone (optional)" autocomplete="tel" style="flex:1;padding:13px 16px;border-radius:0 8px 8px 0;border:1.5px solid #1A3050;background:rgba(255,255,255,0.05);color:#fff;font-size:0.92rem;outline:none;box-sizing:border-box;" />' +
+        '</div>' +
         '<button onclick="submitQuizCapture()" style="width:100%;padding:14px;background:linear-gradient(135deg,#FF294E,#FF5748);border:none;border-radius:10px;color:#fff;font-weight:800;font-size:1rem;cursor:pointer;margin-bottom:12px;">Get My Results + Coupon</button>' +
         '<br/><a href="#" onclick="skipQuizCapture(event)" style="color:#7A94A8;font-size:0.82rem;text-decoration:underline;">Skip — just show me results</a>' +
       '</div>';
@@ -425,10 +442,13 @@
   };
 
   window.submitQuizCapture = function () {
-    var emailEl = document.getElementById('bx-quiz-email');
-    var phoneEl = document.getElementById('bx-quiz-phone');
-    var email   = emailEl ? emailEl.value.trim() : '';
-    var phone   = phoneEl ? phoneEl.value.trim() : '';
+    var emailEl  = document.getElementById('bx-quiz-email');
+    var phoneEl  = document.getElementById('bx-quiz-phone');
+    var phoneCc  = document.getElementById('bx-quiz-phone-cc');
+    var email    = emailEl ? emailEl.value.trim() : '';
+    var phoneNum = phoneEl ? phoneEl.value.trim() : '';
+    var cc       = phoneCc ? phoneCc.value : '';
+    var phone    = phoneNum ? (cc + phoneNum) : '';
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       if (emailEl) { emailEl.style.borderColor = '#FF294E'; emailEl.focus(); }
       return;
@@ -448,4 +468,32 @@
     document.getElementById('bx-quiz-capture').style.display = 'none';
     if (_captureCallback) { var cb = _captureCallback; _captureCallback = null; cb(); }
   };
+  /* ── FAQ Accordion ── */
+  function initFaqAccordion() {
+    document.querySelectorAll('.faq-question').forEach(function (btn) {
+      /* Skip buttons already inside a container with id="faq-list" —
+         those have their own inline handler in programme.html */
+      if (btn.closest('#faq-list')) return;
+
+      btn.addEventListener('click', function () {
+        var item = this.closest('.faq-item');
+        var isOpen = item.classList.contains('open');
+        // Close all siblings first
+        var list = item.closest('.faq-list');
+        if (list) {
+          list.querySelectorAll('.faq-item.open').forEach(function (el) {
+            el.classList.remove('open');
+          });
+        }
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+  }
+
+}());
+
+/* ── Dynamic copyright year ── */
+(function() {
+  var el = document.getElementById('footer-year');
+  if (el) el.textContent = new Date().getFullYear();
 }());

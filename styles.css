@@ -810,6 +810,18 @@ section { width: 100%; }
   pointer-events: none;
 }
 
+/* Hero — world map overlay (temporary, replaces grid) */
+.hero-map-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url('assets/Maps.png');
+  background-size: 62% auto;
+  background-position: right 4% center;
+  background-repeat: no-repeat;
+  opacity: 0.18;
+  pointer-events: none;
+}
+
 /* ---------- Pricing Cards ---------- */
 .price-card {
   background: var(--bg-card);
@@ -927,6 +939,23 @@ section { width: 100%; }
   counter-reset: step;
 }
 
+/* Single continuous line from center of step-1 icon to center of step-4 icon */
+.journey-steps::before {
+  content: '';
+  position: absolute;
+  left: 12.5%;
+  right: 12.5%;
+  top: 60px;        /* nav padding-top (24px) + half icon height (36px) */
+  height: 2px;
+  background: linear-gradient(90deg, var(--red), var(--border-card));
+  z-index: 0;
+}
+
+.bg-white .journey-steps::before,
+.bg-light .journey-steps::before {
+  background: rgba(255,41,78,0.35);
+}
+
 .journey-step {
   flex: 1;
   text-align: center;
@@ -935,17 +964,8 @@ section { width: 100%; }
   counter-increment: step;
 }
 
-.journey-connector {
-  position: absolute;
-  top: 60px;
-  left: calc(50% + 36px);
-  right: calc(-50% + 36px);
-  height: 2px;
-  background: linear-gradient(90deg, var(--red), var(--border-card));
-  z-index: 0;
-}
-
-.journey-step:last-child .journey-connector { display: none; }
+/* Hide old per-step connectors — replaced by ::before */
+.journey-connector { display: none !important; }
 
 .step-icon {
   width: 72px;
@@ -1136,6 +1156,82 @@ a.sector-item {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+}
+
+/* ---------- Static Expert Cards (new structure) ---------- */
+.expert-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 24px 16px;
+}
+
+.expert-card .expert-name {
+  margin-bottom: 2px;
+}
+
+.expert-card .expert-role {
+  margin-bottom: 0;
+}
+
+.expert-field-tag {
+  display: inline-block;
+  margin: 0 24px 14px;
+  padding: 4px 12px;
+  background: rgba(255,41,78,0.1);
+  border: 1px solid rgba(255,41,78,0.25);
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: 0.03em;
+}
+
+.expert-bio {
+  padding: 0 24px 16px;
+  font-size: 0.84rem;
+  color: var(--muted);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.expert-credentials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 24px 16px;
+}
+
+.credential-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-card);
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.credential-badge svg { color: var(--red); }
+
+/* Light mode overrides for static expert cards */
+.bg-white .expert-card-header,
+.bg-light .expert-card-header { /* inherits bg-white/bg-light from section */ }
+
+.bg-white .expert-bio,
+.bg-light .expert-bio { color: #4A5568; }
+
+.bg-white .expert-credentials,
+.bg-light .expert-credentials { border-top-color: #E8E3DE; }
+
+.bg-white .credential-badge,
+.bg-light .credential-badge {
+  background: #fff;
+  border-color: #E8E3DE;
+  color: #4A5568;
 }
 
 /* ---------- Qualification Steps ---------- */
@@ -1558,6 +1654,10 @@ textarea.form-control {
   /* ── Navigation ── */
   .nav-logo-img { height: 32px; width: auto; }
   .nav-links, .nav-cta { display: none; }
+  .nav {
+    height: var(--nav-height);    /* ensures nav-mobile top aligns to actual nav bottom */
+    align-items: center;
+  }
   .nav-hamburger {
     display: flex;
     min-width: 44px;
@@ -1567,6 +1667,7 @@ textarea.form-control {
     padding: 10px;
   }
   .nav-mobile { top: calc(var(--nav-height) + var(--banner-height)); }
+  .nav.banner-hidden ~ .nav-mobile { top: var(--nav-height); }
   .nav-mobile a { padding: 14px 16px; min-height: 44px; display: flex; align-items: center; }
 
   /* ── Grids → single column ── */
@@ -1603,6 +1704,7 @@ textarea.form-control {
 
   /* ── Journey ── */
   .journey-steps { flex-direction: column; gap: 16px; }
+  .journey-steps::before { display: none; }
   .journey-connector { display: none; }
   .journey-cta-row { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
   .journey-cta-row .btn,
