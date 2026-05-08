@@ -13,7 +13,7 @@
   --red:            #FF294E;
   --orange:         #FF5748;
   --footer-red:     #C4173A;
-  --bg-light:       #F6F4F2;
+  --bg-light:       #F6F5F5;
   --muted:          #7A94A8;
   --body-dark:      #2E3A4A;
   --wine:           #9A2335;
@@ -33,7 +33,7 @@
   --nav-bg: #FFFFFF;
   --nav-border: #E8E3DE;
   --bg-white: #FFFFFF;
-  --bg-section: #F6F4F2;
+  --bg-section: #F6F5F5;
   --max-width: 1200px;
 }
 
@@ -345,7 +345,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-links a:hover {
   color: var(--bg-dark);
-  background: rgba(2,16,36,0.06);
 }
 
 .nav-links a.active {
@@ -513,6 +512,128 @@ section { width: 100%; }
 
 .bg-white .section-header p,
 .bg-light .section-header p { color: #4A5568; opacity: 1; }
+
+/* ---------- Light-mode overrides for custom components ---------- */
+
+/* Use-case cards (organisations.html) */
+.bg-white .usecase-card,
+.bg-light .usecase-card {
+  background: var(--bg-white);
+  border-color: #E8E3DE;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.bg-white .usecase-card:hover,
+.bg-light .usecase-card:hover { border-color: var(--red); }
+.bg-white .usecase-content h4,
+.bg-light .usecase-content h4 { color: var(--bg-dark); }
+.bg-white .usecase-content p,
+.bg-light .usecase-content p { color: #4A5568; }
+
+/* Qualify / process steps */
+.bg-white .qualify-step,
+.bg-light .qualify-step {
+  background: var(--bg-white);
+  border-color: #E8E3DE;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.bg-white .qualify-step-content h4,
+.bg-light .qualify-step-content h4 { color: var(--bg-dark); }
+.bg-white .qualify-step-content p,
+.bg-light .qualify-step-content p { color: #4A5568; }
+
+/* Journey steps (index.html) */
+.bg-white .journey-step,
+.bg-light .journey-step {
+  background: var(--bg-white);
+  border-color: #E8E3DE;
+}
+.bg-white .step-title,
+.bg-light .step-title { color: var(--bg-dark); }
+.bg-white .step-desc,
+.bg-light .step-desc { color: #4A5568; }
+.bg-white .step-icon,
+.bg-light .step-icon {
+  background: #fff;
+  border-color: #E8E3DE;
+  color: var(--bg-dark);
+}
+.bg-white .journey-connector,
+.bg-light .journey-connector {
+  background: rgba(255,41,78,0.35);
+}
+/* Outline button on light backgrounds */
+.bg-white .btn-outline,
+.bg-light .btn-outline {
+  color: var(--bg-dark);
+  border-color: rgba(2,16,36,0.3);
+}
+.bg-white .btn-outline:hover,
+.bg-light .btn-outline:hover {
+  border-color: var(--bg-dark);
+  background: rgba(2,16,36,0.05);
+  color: var(--bg-dark);
+}
+.bg-white .step-icon,
+.bg-light .step-icon {
+  background: rgba(255,41,78,0.08);
+  border-color: rgba(255,41,78,0.15);
+  color: var(--red);
+}
+
+/* Expert cards in light sections */
+.bg-white .expert-card,
+.bg-light .expert-card {
+  border-color: #E8E3DE;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+.bg-white .expert-name,
+.bg-light .expert-name { color: var(--bg-dark); }
+.bg-white .expert-field,
+.bg-light .expert-field { color: #4A5568; }
+
+/* Benefit cards (join-as-expert) */
+.bg-white .benefit-card,
+.bg-light .benefit-card {
+  background: var(--bg-white);
+  border-color: #E8E3DE;
+}
+.bg-white .benefit-card h3,
+.bg-light .benefit-card h3 { color: var(--bg-dark); }
+.bg-white .benefit-card p,
+.bg-light .benefit-card p { color: #4A5568; }
+
+/* Criteria list items (join-as-expert) */
+.bg-white .criteria-item,
+.bg-light .criteria-item {
+  background: var(--bg-white);
+  border-color: #E8E3DE;
+}
+.bg-white .criteria-item h4,
+.bg-light .criteria-item h4 { color: var(--bg-dark); }
+.bg-white .criteria-item p,
+.bg-light .criteria-item p { color: #4A5568; }
+
+/* Pricing cards in light sections */
+.bg-white .pricing-card,
+.bg-light .pricing-card {
+  background: var(--bg-white);
+  border-color: #E8E3DE;
+}
+
+/* FAQ items in light sections */
+.bg-white .faq-item,
+.bg-light .faq-item {
+  border-color: #E8E3DE;
+  background: var(--bg-white);
+}
+.bg-white .faq-question,
+.bg-light .faq-question { color: var(--bg-dark); }
+.bg-white .faq-answer,
+.bg-light .faq-answer { color: #4A5568; }
+
+/* Divider in light sections */
+.bg-white .divider-red,
+.bg-light .divider-red { background: var(--red); }
 
 /* ---------- Free Course Badge ---------- */
 .free-badge {
@@ -816,7 +937,7 @@ section { width: 100%; }
 
 .journey-connector {
   position: absolute;
-  top: 68px;
+  top: 60px;
   left: calc(50% + 36px);
   right: calc(-50% + 36px);
   height: 2px;
@@ -1423,7 +1544,9 @@ textarea.form-control {
   .section-pad { padding: 80px 0; }
 }
 
-/* Tablet portrait */
+/* ============================================================
+   TABLET — max-width: 768px
+   ============================================================ */
 @media (max-width: 768px) {
   :root {
     --nav-height: 72px;
@@ -1432,145 +1555,178 @@ textarea.form-control {
 
   .container { padding: 0 20px; }
 
-  /* Nav */
-  .nav-logo-img { height: 30px; }
+  /* ── Navigation ── */
+  .nav-logo-img { height: 32px; width: auto; }
   .nav-links, .nav-cta { display: none; }
-  .nav-hamburger { display: flex; }
+  .nav-hamburger {
+    display: flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
   .nav-mobile { top: calc(var(--nav-height) + var(--banner-height)); }
+  .nav-mobile a { padding: 14px 16px; min-height: 44px; display: flex; align-items: center; }
 
-  /* Grids → single column */
+  /* ── Grids → single column ── */
   .grid-2,
   .grid-3,
   .grid-4 { grid-template-columns: 1fr; }
   .sector-grid { grid-template-columns: repeat(2, 1fr); }
 
-  /* Layout */
+  /* ── Global inline-style grid collapses ── */
+  /* Catches repeat(3,1fr) and repeat(3, 1fr) inline grids */
+  [style*="grid-template-columns:repeat(3,1fr)"],
+  [style*="grid-template-columns:repeat(3, 1fr)"] { grid-template-columns: 1fr !important; }
+  /* Catches 1fr 1fr inline grids (e.g. join-as-expert "What Brixgate Handles") */
+  [style*="grid-template-columns:1fr 1fr"]:not(.join-strip-grid) { grid-template-columns: 1fr !important; gap: 16px !important; }
+  /* Catches 220px 1fr sidebar+content layouts */
+  [style*="grid-template-columns:220px 1fr"],
+  [style*="grid-template-columns:200px 1fr"],
+  [style*="grid-template-columns:240px 1fr"] { grid-template-columns: 1fr !important; }
+
+  /* ── Layout ── */
   .split-content { grid-template-columns: 1fr; gap: 36px; }
   .section-pad { padding: 56px 0; }
   .section-pad-sm { padding: 36px 0; }
   .section-header { margin-bottom: 36px; }
-  .section-header h2 { font-size: clamp(1.5rem, 5vw, 2rem); }
+  .section-header h2 { font-size: clamp(1.4rem, 5vw, 1.85rem); }
   .section-header p { font-size: 0.95rem; }
 
-  /* Journey */
+  /* ── Hero ── */
+  .hero { min-height: auto; padding-bottom: 56px; }
+  .hero-visual { display: none; }
+  .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; }
+  .hero-actions .btn,
+  .hero-actions .btn-lg { width: 100%; justify-content: center; text-align: center; }
+
+  /* ── Journey ── */
   .journey-steps { flex-direction: column; gap: 16px; }
   .journey-connector { display: none; }
+  .journey-cta-row { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
+  .journey-cta-row .btn,
+  .journey-cta-row .btn-lg { width: 100% !important; justify-content: center !important; margin-left: 0 !important; }
 
-  /* Expert + org visual grids → single column on tablet */
+  /* ── Expert + org visual grids ── */
   .expert-visual-grid,
   .org-visual-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
-  .expert-visual-grid > div[style*="padding-top"] { padding-top: 85% !important; }
+  .expert-visual-grid > div[style*="padding-top"] { padding-top: 75% !important; }
 
-  /* Join-as-expert page splits */
+  /* ── Join-as-expert splits ── */
   .join-split-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
   .join-strip-grid { grid-template-columns: repeat(2, 1fr) !important; }
 
-  /* Stat number smaller on tablet */
+  /* ── Stat numbers ── */
   .stat-number, .stat-num { font-size: 1.8rem; }
 
-  /* Buttons */
+  /* ── Buttons — 44px minimum touch target ── */
+  .btn { padding: 13px 20px; font-size: 0.9rem; min-height: 44px; }
+  .btn-sm { padding: 11px 18px; font-size: 0.85rem; min-height: 44px; }
+  .btn-lg { padding: 14px 26px; font-size: 0.95rem; min-height: 44px; }
   .cta-buttons { flex-direction: column; align-items: stretch; }
   .cta-buttons .btn { justify-content: center; width: 100%; }
-  .btn-lg { padding: 16px 28px; font-size: 0.95rem; }
 
-  /* Footer */
+  /* ── Footer ── */
   .footer-inner { grid-template-columns: 1fr; gap: 36px; }
   .footer-bottom { flex-direction: column; text-align: center; gap: 12px; }
   .footer-bottom-links { justify-content: center; flex-wrap: wrap; }
+  .footer-col li a { padding: 8px 0; display: inline-block; min-height: 40px; }
+  .footer-logo .nav-logo-img { height: 36px; }
 
-  /* Page header */
-  .page-header { padding: calc(var(--nav-height) + 56px) 0 64px; }
-  .page-header p { font-size: 0.72rem; }
+  /* ── Page header — FIX: text was 0.72rem (11.5px), unreadable ── */
+  .page-header { padding: calc(var(--nav-height) + 48px) 0 56px; }
+  .page-header p { font-size: 0.95rem; line-height: 1.65; }
 
-  /* Buttons — smaller on mobile */
-  .btn { padding: 9px 18px; font-size: 0.83rem; }
-  .btn-lg { padding: 11px 22px; font-size: 0.88rem; }
-
-  /* Certificate grid — full width on mobile */
+  /* ── Certificate grid ── */
   .cert-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
 
-  /* Stats bar — keep horizontal at tablet */
+  /* ── Stats bar ── */
   .stats-bar .container { flex-wrap: wrap; gap: 20px; flex-direction: row; }
   .stats-bar .stat-item { min-width: 40%; }
 
-  /* Footer logo smaller on tablet */
-  .footer-logo .nav-logo-img { height: 36px; }
-
-  /* Journey / CTA button rows — add gap on wrap */
-  .journey-cta-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-  .journey-cta-row .btn,
-  .journey-cta-row .btn-lg { margin-left: 0 !important; }
-
-  /* Cards */
+  /* ── Cards ── */
   .card { padding: 22px 18px; }
 
-  /* Form rows */
+  /* ── Form rows ── */
   .form-row-2,
   .form-row { grid-template-columns: 1fr !important; }
 
-  /* Hero image: hide decorative visuals on tablet */
-  .hero-visual { display: none; }
+  /* ── Org teaser ── */
+  .org-teaser { padding: 36px 24px !important; }
 }
 
-/* Mobile */
+/* ============================================================
+   MOBILE — max-width: 480px
+   ============================================================ */
 @media (max-width: 480px) {
   :root { --nav-height: 68px; }
 
   .container { padding: 0 16px; }
 
+  /* ── Nav logo ── */
+  .nav-logo-img { height: 28px; }
+  .footer-logo .nav-logo-img { height: 32px; }
+
+  /* ── Sectors ── */
   .sector-grid { grid-template-columns: 1fr; }
 
-  /* Stats bar — keep horizontal, wrap into 2×2 grid */
+  /* ── Stats bar — 2×2 on small phone ── */
   .stats-bar .container { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-around; gap: 16px; }
   .stats-bar .stat-item { min-width: 40%; width: auto; }
 
-  /* Section spacing */
+  /* ── Section spacing ── */
   .section-pad { padding: 48px 0; }
   .section-pad-sm { padding: 28px 0; }
 
-  /* Typography */
-  .section-header h2 { font-size: 1.45rem; }
-  h1 { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+  /* ── Typography ── */
+  .section-header h2 { font-size: 1.35rem; }
+  h1 { font-size: clamp(1.7rem, 8vw, 2.2rem); }
+  body { font-size: 15px; }
 
-  /* Nav logo smaller on small phones */
-  .nav-logo-img { height: 26px; }
-
-  /* Footer logo smaller on mobile */
-  .footer-logo .nav-logo-img { height: 32px; }
-
-  /* Programme field cards */
+  /* ── Programme field cards ── */
   .field-cards-grid,
   .programme-grid { grid-template-columns: 1fr; }
 
-  /* Packages / pricing cards */
+  /* ── Pricing / packages ── */
   .packages-grid { grid-template-columns: 1fr; }
 
-  /* Back to top + WhatsApp — avoid overlap */
+  /* ── Back to top + WhatsApp — avoid overlap ── */
   .back-to-top { right: 16px; bottom: 88px; }
   .whatsapp-float { right: 16px; bottom: 24px; }
 
-  /* Overflow safety */
+  /* ── Overflow safety ── */
   table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .region-banner .regions { gap: 12px; }
-  .region-banner { font-size: 0.7rem; padding: 0 12px; }
+  body { overflow-x: hidden; }
+  .region-banner .regions { gap: 10px; }
+  .region-banner { font-size: 0.68rem; padding: 0 12px; }
 
-  /* Expert + org image grids → single column */
+  /* ── Expert + org image grids ── */
   .expert-visual-grid,
   .org-visual-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
 
-  /* Journey section buttons → stacked with gap */
-  .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; }
-  .hero-actions .btn,
-  .hero-actions .btn-lg { width: 100%; justify-content: center; text-align: center; }
+  /* ── Expert grid (3-col) ── */
+  .expert-grid { grid-template-columns: 1fr !important; }
+
+  /* ── Benefit grid ── */
+  .benefit-grid { grid-template-columns: 1fr !important; }
+
+  /* ── All inline repeat(4,1fr) → 2 col on phone ── */
+  [style*="grid-template-columns:repeat(4,1fr)"],
+  [style*="grid-template-columns:repeat(4, 1fr)"] { grid-template-columns: 1fr 1fr !important; }
 }
 
-/* Very small phones */
+/* ============================================================
+   VERY SMALL PHONES — max-width: 360px
+   ============================================================ */
 @media (max-width: 360px) {
   .container { padding: 0 12px; }
-  .btn { padding: 8px 14px; font-size: 0.8rem; }
-  .btn-lg { padding: 10px 18px; font-size: 0.83rem; }
+  .btn { padding: 12px 16px; font-size: 0.85rem; }
+  .btn-lg { padding: 13px 20px; font-size: 0.88rem; }
   .sector-grid { grid-template-columns: 1fr; }
   .stats-bar .stat-item { min-width: 45%; }
+  [style*="grid-template-columns:repeat(4,1fr)"],
+  [style*="grid-template-columns:repeat(4, 1fr)"] { grid-template-columns: 1fr !important; }
 }
 
 /* ---------- Currency show/hide — NGN is DEFAULT ---------- */
@@ -1692,4 +1848,76 @@ body.show-gbp .currency-gbp { display: inline !important; }
   justify-content: center;
   width: 36px;
   height: 36px;
+}
+
+/* ============================================================
+   LIGHT MODE OVERRIDES — pricing (programme.html)
+   ============================================================ */
+.bg-white .price-card,
+.bg-light .price-card {
+  background: #fff;
+  border-color: #E8E3DE;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.bg-white .price-card.featured,
+.bg-light .price-card.featured {
+  border-color: var(--red);
+  box-shadow: 0 0 0 1px var(--red), 0 8px 32px rgba(255,41,78,0.14);
+}
+.bg-white .price-tier,
+.bg-light .price-tier { color: var(--body-dark); }
+.bg-white .price-amount,
+.bg-light .price-amount { color: var(--bg-dark); }
+.bg-white .price-period,
+.bg-light .price-period { color: var(--body-dark); }
+.bg-white .price-description,
+.bg-light .price-description { color: #4A5568; }
+.bg-white .price-features li,
+.bg-light .price-features li { color: var(--body-dark); }
+.bg-white .price-original,
+.bg-light .price-original { color: #9AACB8; }
+
+/* ============================================================
+   LIGHT MODE OVERRIDES — experts / join-as-expert
+   ============================================================ */
+.bg-white .filter-btn,
+.bg-light .filter-btn {
+  background: #fff;
+  border-color: #E8E3DE;
+  color: var(--body-dark);
+}
+.bg-white .filter-btn:hover,
+.bg-light .filter-btn:hover,
+.bg-white .filter-btn.active,
+.bg-light .filter-btn.active {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+.bg-white .criteria-card,
+.bg-light .criteria-card {
+  background: #fff;
+  border-color: #E8E3DE;
+}
+.bg-white .criteria-content h4,
+.bg-light .criteria-content h4 {
+  color: var(--bg-dark);
+}
+.bg-white .criteria-content p,
+.bg-light .criteria-content p {
+  color: #4A5568;
+}
+.bg-white .expert-card,
+.bg-light .expert-card {
+  background: #fff;
+  border-color: #E8E3DE;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.bg-white .expert-name,
+.bg-light .expert-name {
+  color: var(--bg-dark);
+}
+.bg-white .expert-field,
+.bg-light .expert-field {
+  color: #4A5568;
 }

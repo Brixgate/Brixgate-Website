@@ -102,8 +102,31 @@
       .hero-visual { display: none; }
       .field-grid-quick { grid-template-columns: repeat(2, 1fr) !important; }
     }
+    @media (max-width: 768px) {
+      /* Hero sub — fix minimum font-size from 0.72rem (11.5px) to readable */
+      .hero-sub { font-size: 1rem; line-height: 1.6; }
+      .hero-headline { font-size: clamp(1.7rem, 7vw, 2.4rem); }
+      .hero-tag { font-size: 0.72rem; }
+      /* Social proof — stack on tablet */
+      .hero-social-proof { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .proof-text { font-size: 0.85rem; }
+      /* Problem grid stats */
+      .problem-item .stat { font-size: 2rem; }
+      /* Programme intro */
+      .programme-intro { grid-template-columns: 1fr; gap: 40px; }
+      /* Regions → 2col on tablet */
+      .regions-grid { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 540px) {
       .field-grid-quick { grid-template-columns: 1fr !important; }
+    }
+    @media (max-width: 480px) {
+      .hero-sub { font-size: 0.95rem; }
+      .hero-headline { font-size: clamp(1.6rem, 8vw, 2rem); }
+      /* Org teaser sidebar → hide on very small screens */
+      .org-packages-preview { display: none; }
+      /* Regions → 1col on phone */
+      .regions-grid { grid-template-columns: 1fr !important; max-width: 100%; }
     }
 
     .hero-tag {
@@ -501,7 +524,7 @@
 
 <!-- Region Banner -->
 <div class="region-banner" id="region-banner">
-  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0;">Now active in</span>
+  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Now active in</span>
   <div class="regions">
     <span class="region-item">🇳🇬 Nigeria</span>
     <span class="region-item">🇬🇧 United Kingdom</span>
@@ -543,7 +566,7 @@
   <a href="programme.html">Programme</a>
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
-  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px;">Login</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px">Login</a>
   <a href="apply.html" class="btn btn-primary">Apply Now</a>
 </div>
 
@@ -560,26 +583,26 @@
         <div class="hero-tag">AI in my Field </div> 
 
         <h1 class="hero-headline fade-up">
-          The World Needs<br/><span style="white-space:nowrap;"><span class="accent">AI-Native</span> Professionals.</span><br/>We Build Them.
+          The World Needs<br/><span style="white-space:nowrap"><span class="accent">AI-Native</span> Professionals.</span><br/>We Build Them.
         </h1>
 
-        <p class="hero-sub fade-up" style="transition-delay:0.1s;">
+        <p class="hero-sub fade-up" style="transition-delay:0.1s">
           Brixgate's field-specific AI sprint transforms working professionals into
           Expert Practitioners in 4 weeks. Not a course. A career-defining
           transformation, taught by people who have already done it in your field.
         </p>
 
-        <div class="hero-actions fade-up" style="transition-delay:0.2s;">
+        <div class="hero-actions fade-up" style="transition-delay:0.2s">
           <a href="apply.html" class="btn btn-primary">Start Your Application</a>
           <a href="programme.html" class="btn btn-outline">Explore the Programme</a>
         </div>
 
-        <div class="hero-social-proof fade-up" style="transition-delay:0.3s;">
+        <div class="hero-social-proof fade-up" style="transition-delay:0.3s">
           <div class="proof-avatars">
-            <div class="proof-avatar"><img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=72&h=72&fit=crop&crop=face" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;"></div>
-            <div class="proof-avatar"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=72&h=72&fit=crop&crop=face" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;"></div>
-            <div class="proof-avatar"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;"></div>
-            <div class="proof-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=72&h=72&fit=crop&crop=face" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;"></div>
+            <div class="proof-avatar"><img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=72&h=72&fit=crop&crop=face" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block"></div>
+            <div class="proof-avatar"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=72&h=72&fit=crop&crop=face" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block"></div>
+            <div class="proof-avatar"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block"></div>
+            <div class="proof-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=72&h=72&fit=crop&crop=face" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block"></div>
           </div>
           <p class="proof-text">
             Be among the <strong>first Expert Practitioners</strong> to earn<br/>
@@ -589,8 +612,8 @@
       </div>
 
       <!-- RIGHT: Visual -->
-      <div class="hero-visual fade-in" style="transition-delay:0.25s;">
-        <div style="position:relative;padding:0 22px 20px 0;">
+      <div class="hero-visual fade-in" style="transition-delay:0.25s">
+        <div style="position:relative;padding:0 22px 20px 0">
           <!-- Main image -->
           <div class="hero-img-frame">
             <img
@@ -598,33 +621,33 @@
               alt="A diverse global team of professionals collaborating on AI transformation"
             />
             <!-- Image overlay gradient -->
-            <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(2,16,36,0.6) 100%);pointer-events:none;"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(2,16,36,0.6) 100%);pointer-events:none"></div>
             <!-- Bottom caption inside image -->
-            <div style="position:absolute;bottom:20px;left:20px;right:20px;">
-              <div style="font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:.08em;">Brixgate Practitioners — Africa, UK &amp; US</div>
-              <div style="font-size:0.72rem;color:rgba(255,255,255,0.55);margin-top:2px;">Nigeria · Kenya · United Kingdom · United States</div>
+            <div style="position:absolute;bottom:20px;left:20px;right:20px">
+              <div style="font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:.08em">Brixgate Practitioners — Africa, UK &amp; US</div>
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.55);margin-top:2px">Nigeria · Kenya · United Kingdom · United States</div>
             </div>
           </div>
 
           <!-- Floating badge: 4 Weeks -->
           <div class="hero-img-badge hero-badge-weeks">
-            <div style="font-size:1.2rem;font-weight:900;color:#fff;line-height:1;">4 Weeks</div>
-            <div style="font-size:0.68rem;color:rgba(255,255,255,0.6);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;">To Expert Practitioner</div>
+            <div style="font-size:1.2rem;font-weight:900;color:#fff;line-height:1">4 Weeks</div>
+            <div style="font-size:0.68rem;color:rgba(255,255,255,0.6);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">To Expert Practitioner</div>
           </div>
 
           <!-- Floating badge: Fields -->
           <div class="hero-img-badge hero-badge-fields">
-            <div style="font-size:0.65rem;font-weight:800;color:rgba(255,255,255,0.8);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px;">Launching with</div>
-            <div style="font-size:1.1rem;font-weight:900;color:#fff;">4 Programmes</div>
+            <div style="font-size:0.65rem;font-weight:800;color:rgba(255,255,255,0.8);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px">Launching with</div>
+            <div style="font-size:1.1rem;font-weight:900;color:#fff">4 Programmes</div>
           </div>
 
           <!-- Floating badge: Certificate -->
           <div class="hero-img-badge hero-badge-cert">
-            <div style="display:flex;align-items:center;gap:8px;">
+            <div style="display:flex;align-items:center;gap:8px">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
               <div>
-                <div style="font-size:0.72rem;font-weight:800;color:#fff;white-space:nowrap;">Field-Verified</div>
-                <div style="font-size:0.65rem;color:rgba(255,255,255,0.6);">Certificate</div>
+                <div style="font-size:0.72rem;font-weight:800;color:#fff;white-space:nowrap">Field-Verified</div>
+                <div style="font-size:0.65rem;color:rgba(255,255,255,0.6)">Certificate</div>
               </div>
             </div>
           </div>
@@ -668,75 +691,75 @@
 
 
 <!-- ====== READINESS STRIP ====== -->
-<div style="background:var(--bg-card);padding:16px 24px;">
-  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
-    <div style="display:flex;align-items:center;gap:12px;">
-      <div style="width:32px;height:32px;background:rgba(255,41,78,0.1);border:1px solid rgba(255,41,78,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--red);font-weight:900;flex-shrink:0;">?</div>
+<div style="background:var(--bg-card);padding:16px 24px">
+  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:32px;height:32px;background:rgba(255,41,78,0.1);border:1px solid rgba(255,41,78,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--red);font-weight:900;flex-shrink:0">?</div>
       <div>
-        <div style="font-size:0.82rem;font-weight:700;color:var(--white);">Not sure where you stand with AI in your profession?</div>
-        <div style="font-size:0.75rem;color:var(--muted);">Take the free 3-minute check — no sign-up, instant result</div>
+        <div style="font-size:0.82rem;font-weight:700;color:var(--white)">Not sure where you stand with AI in your profession?</div>
+        <div style="font-size:0.75rem;color:var(--muted)">Take the free 3-minute check — no sign-up, instant result</div>
       </div>
     </div>
-    <a href="ai-readiness.html" style="font-size:0.8rem;font-weight:700;color:var(--red);white-space:nowrap;border:1px solid rgba(255,41,78,0.3);padding:8px 18px;border-radius:20px;text-decoration:none;background:rgba(255,41,78,0.06);transition:background 0.2s;" onmouseover="this.style.background='rgba(255,41,78,0.12)'" onmouseout="this.style.background='rgba(255,41,78,0.06)'">Take the AI Readiness Check →</a>
+    <a href="ai-readiness.html" style="font-size:0.8rem;font-weight:700;color:var(--red);white-space:nowrap;border:1px solid rgba(255,41,78,0.3);padding:8px 18px;border-radius:20px;text-decoration:none;background:rgba(255,41,78,0.06);transition:background 0.2s" onmouseover="this.style.background='rgba(255,41,78,0.12)'" onmouseout="this.style.background='rgba(255,41,78,0.06)'">Take the AI Readiness Check →</a>
   </div>
 </div>
 
 
 <!-- ====== QUICK PROGRAMME BROWSER ====== -->
-<section style="padding:72px 0 56px;background:#F6F4F2;">
+<section style="padding:72px 0 56px;background:#F6F4F2">
   <div class="container">
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px">
       <div>
-        <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--red);margin-bottom:8px;">Be AI-Native in Your Field in Under 4 Weeks.</div>
-        <h2 style="font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:900;color:#021024;line-height:1.2;">4 Programmes Open Now.<br/>More Unlocking Throughout 2026.</h2>
+        <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--red);margin-bottom:8px">Be AI-Native in Your Field in Under 4 Weeks.</div>
+        <h2 style="font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:900;color:#021024;line-height:1.2">4 Programmes Open Now.<br/>More Unlocking Throughout 2026.</h2>
       </div>
-      <a href="programme.html" style="font-size:0.88rem;font-weight:700;color:var(--red);white-space:nowrap;display:flex;align-items:center;gap:6px;text-decoration:none;">Browse all programmes →</a>
+      <a href="programme.html" style="font-size:0.88rem;font-weight:700;color:var(--red);white-space:nowrap;display:flex;align-items:center;gap:6px;text-decoration:none">Browse all programmes →</a>
     </div>
 
-    <div class="field-grid-quick" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;">
+    <div class="field-grid-quick" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
 
       <!-- 4 ACTIVE PROGRAMMES -->
       <a href="programme-product.html" class="field-card-quick">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        <div style="flex:1;min-width:0;">
-          <div style="font-size:0.88rem;font-weight:800;color:#021024;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Product &amp; Technology</div>
-          <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-top:1px;">● Open</div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:0.88rem;font-weight:800;color:#021024;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Product &amp; Technology</div>
+          <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-top:1px">● Open</div>
         </div>
-        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0;">→</span>
+        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0">→</span>
       </a>
 
       <a href="programme-cybersecurity.html" class="field-card-quick">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <div style="flex:1;min-width:0;">
-          <div style="font-size:0.88rem;font-weight:800;color:#021024;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cybersecurity</div>
-          <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-top:1px;">● Open</div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:0.88rem;font-weight:800;color:#021024;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Cybersecurity</div>
+          <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-top:1px">● Open</div>
         </div>
-        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0;">→</span>
+        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0">→</span>
       </a>
 
       <a href="programme-engineering.html" class="field-card-quick">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        <div style="flex:1;min-width:0;">
-          <div style="font-size:0.88rem;font-weight:800;color:#021024;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Software Engineering</div>
-          <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-top:1px;">● Open</div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:0.88rem;font-weight:800;color:#021024;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Software Engineering</div>
+          <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-top:1px">● Open</div>
         </div>
-        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0;">→</span>
+        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0">→</span>
       </a>
 
       <a href="programme-devops.html" class="field-card-quick">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-        <div style="flex:1;min-width:0;">
-          <div style="font-size:0.88rem;font-weight:800;color:#021024;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cloud &amp; DevOps</div>
-          <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-top:1px;">● Open</div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:0.88rem;font-weight:800;color:#021024;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Cloud &amp; DevOps</div>
+          <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-top:1px">● Open</div>
         </div>
-        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0;">→</span>
+        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0">→</span>
       </a>
 
     </div>
 
     <!-- Coming soon / inactive programmes hidden -->
     <!--
-    <div class="field-grid-quick" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+    <div class="field-grid-quick" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
       Data Science, Finance, Marketing, Project Management, HR, Legal, Healthcare, Education
     </div>
     -->
@@ -780,7 +803,7 @@
 </section>
 
 <!-- ====== PROGRAMME OVERVIEW ====== -->
-<section class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+<section class="section-pad bg-dark">
   <div class="container">
     <div class="programme-intro">
       <div class="programme-intro-text slide-left">
@@ -807,13 +830,13 @@
           </div>
         </div>
 
-        <a href="programme.html" class="btn btn-primary">View Full Programme →</a>
+        <a href="programme.html" class="btn btn-primary">View Full Programme</a>
       </div>
 
       <div class="programme-visual slide-right">
         <div class="programme-visual-header">Flagship Product</div>
         <div class="programme-name">AI in <span>my Field</span></div>
-        <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;">Expert Practitioner Programme — building the AI-native professionals that every sector now needs.</p>
+        <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Expert Practitioner Programme — building the AI-native professionals that every sector now needs.</p>
 
         <div class="programme-meta">
           <div class="meta-row">
@@ -841,7 +864,7 @@
           </div>
         </div>
 
-        <a href="apply.html" class="btn btn-primary" style="width:100%;justify-content:center;">Apply for Next Cohort →</a>
+        <a href="apply.html" class="btn btn-primary" style="width:100%;justify-content:center">Apply for Next Cohort</a>
       </div>
     </div>
 
@@ -873,7 +896,7 @@
 </section>
 
 <!-- ====== TALENT JOURNEY ====== -->
-<section class="section-pad" style="background:var(--bg-card);border-top:1px solid var(--border-card);">
+<section class="section-pad bg-light">
   <div class="container">
     <div class="section-header fade-up">
       <span class="eyebrow">Your Journey</span>
@@ -882,6 +905,7 @@
       <p>Every participant moves through a structured journey — from where you are today to where the AI era demands you to be.</p>
     </div>
 
+    <div style="background:#fff;border-radius:20px;padding:32px 24px 28px;box-shadow:0 2px 24px rgba(0,0,0,0.06);">
     <div class="journey-steps stagger">
       <div class="journey-step fade-up">
         <div class="journey-connector"></div>
@@ -907,9 +931,10 @@
         <div class="step-desc">Live sessions, real projects, peer cohort — then your field-verified Brixgate Expert Practitioner Certificate.</div>
       </div>
     </div>
+    </div>
 
-    <div style="text-align:center;margin-top:24px;" class="fade-up">
-      <div class="journey-cta-row" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+    <div style="text-align:center;margin-top:28px" class="fade-up">
+      <div class="journey-cta-row" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center">
         <a href="apply.html" class="btn btn-primary btn-lg">Begin Your Journey</a>
         <a href="programme.html" class="btn btn-outline btn-lg">Full Programme Details</a>
       </div>
@@ -918,11 +943,11 @@
 </section>
 
 <!-- ====== EXPERT TEASER ====== -->
-<section class="section-pad bg-light" style="border-top:1px solid #E8E3DE;">
+<section class="section-pad bg-light">
   <div class="container">
     <div class="section-header fade-up">
       <span class="eyebrow">Our Expert Practitioners</span>
-      <h2 style="color:var(--bg-dark);">Taught by People Who Have<br/>Already Done It in Your Field</h2>
+      <h2 style="color:var(--bg-dark)">Taught by People Who Have<br/>Already Done It in Your Field</h2>
       <div class="divider-red"></div>
       <p>Every Brixgate expert is a verified practitioner — not an academic, not a generalist AI trainer. They are professionals who have already applied AI transformation in their specific domain.</p>
     </div>
@@ -969,67 +994,43 @@
       </div>
     </div>
 
-    <div style="text-align:center;margin-top:48px;" class="fade-up">
-      <a href="experts.html" class="btn btn-outline-dark" style="margin-right:16px;">Meet All Experts</a>
-      <a href="join-as-expert.html" class="btn btn-outline-red">Join as an Expert →</a>
+    <div style="text-align:center;margin-top:48px" class="fade-up">
+      <a href="experts.html" class="btn btn-outline-dark" style="margin-right:16px">Meet All Experts</a>
+      <a href="join-as-expert.html" class="btn btn-outline-red">Join as an Expert</a>
     </div>
   </div>
 </section>
 
 <!-- ====== FOR ORGANISATIONS TEASER ====== -->
-<section class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+<section class="section-pad bg-dark">
   <div class="container">
     <div class="org-teaser fade-up">
       <div>
         <span class="eyebrow">For Organisations</span>
         <h2>Build an AI-Native Team.<br/><span class="text-red">Not Just AI-Aware.</span></h2>
         <p>Deploy AI transformation across your teams at scale. Brixgate's corporate packages are designed for organisations that need more than awareness — they need real practitioner-level capability, by field, by department, by role.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <a href="organisations.html" class="btn btn-primary">Explore Corporate Packages →</a>
-          <a href="organisations.html#contact" class="btn btn-outline">Request a Demo</a>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="organisations.html#contact" class="btn btn-primary">Get a Quote</a>
+          <a href="organisations.html" class="btn btn-outline">Explore Corporate Packages</a>
         </div>
       </div>
       <div class="org-packages-preview">
-        <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">Corporate Packages</div>
+        <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Corporate Packages</div>
         <div class="org-package-row">
-          <div>
-            <div class="pkg-name">Starter</div>
-            <div class="pkg-seats">5 seats</div>
-          </div>
-          <div class="pkg-price">
-            <span class="currency-usd">$625</span>
-            <span class="currency-ngn">₦1,000,000</span>
-          </div>
+          <div class="pkg-name">Starter</div>
+          <div class="pkg-seats">5 seats</div>
         </div>
         <div class="org-package-row">
-          <div>
-            <div class="pkg-name">Team Sprint</div>
-            <div class="pkg-seats">20 seats</div>
-          </div>
-          <div class="pkg-price">
-            <span class="currency-usd">$2,188</span>
-            <span class="currency-ngn">₦3,500,000</span>
-          </div>
+          <div class="pkg-name">Team Sprint</div>
+          <div class="pkg-seats">20 seats</div>
         </div>
         <div class="org-package-row">
-          <div>
-            <div class="pkg-name">Department Build</div>
-            <div class="pkg-seats">50 seats</div>
-          </div>
-          <div class="pkg-price">
-            <span class="currency-usd">$4,688</span>
-            <span class="currency-ngn">₦7,500,000</span>
-          </div>
+          <div class="pkg-name">Department Build</div>
+          <div class="pkg-seats">50 seats</div>
         </div>
         <div class="org-package-row">
-          <div>
-            <div class="pkg-name">Enterprise</div>
-            <div class="pkg-seats">100+ seats</div>
-          </div>
-          <div class="pkg-price">
-            <span class="currency-usd">$7,500+</span>
-            <span class="currency-ngn">₦12,000,000+</span>
-          </div>
+          <div class="pkg-name">Enterprise</div>
+          <div class="pkg-seats">100+ seats</div>
         </div>
       </div>
     </div>
@@ -1039,7 +1040,7 @@
 <!-- ====== GLOBAL PRESENCE ====== -->
 <section class="globe-section">
   <div class="container">
-    <span class="eyebrow" style="color:var(--red);">Global Reach</span>
+    <span class="eyebrow" style="color:var(--red)">Global Reach</span>
     <h2>Building AI-Native Professionals.<br/>Everywhere.</h2>
     <p>From Lagos to London. Nairobi to New York. Brixgate is a global AI expertise marketplace — rooted in Africa, built for the world.</p>
 
@@ -1061,7 +1062,7 @@
       </div>
     </div>
 
-    <a href="organisations.html" class="btn btn-primary btn-lg">Partner with Brixgate →</a>
+    <a href="organisations.html" class="btn btn-primary btn-lg">Partner with Brixgate</a>
   </div>
 </section>
 
@@ -1072,10 +1073,10 @@
     <h2>Your Field Is Being Transformed by AI. Be the One Who Leads It.</h2>
     <p>Cohort seats are limited we keep groups small so every participant gets the practitioner attention they need. Don't wait for the next one.</p>
     <div class="cta-buttons">
-      <a href="apply.html" class="btn btn-primary btn-lg">Apply to Become a Brixer →</a>
+      <a href="apply.html" class="btn btn-primary btn-lg">Apply to Become a Brixer</a>
       <a href="programme.html#readiness" class="btn btn-outline btn-lg">Check Your AI Readiness</a>
     </div>
-    <p style="font-size:0.78rem;color:rgba(255,255,255,0.35);margin-top:20px;">No CV required. Takes under 2 minutes. We respond within 48 hours.</p>
+    <p style="font-size:0.78rem;color:rgba(255,255,255,0.35);margin-top:20px">No CV required. Takes under 2 minutes. We respond within 48 hours.</p>
   </div>
 </section>
 

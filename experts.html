@@ -276,7 +276,15 @@
       .expert-benefits { grid-template-columns: 1fr; }
       .criteria-grid { grid-template-columns: 1fr; }
       .expert-visual-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
-      .expert-visual-grid > div:first-child { padding-top: 85% !important; }
+      .expert-visual-grid > div:first-child { padding-top: 75% !important; }
+      /* Page header tall hero — reduce on mobile */
+      .page-header { padding-top: calc(var(--nav-height) + var(--banner-height) + 48px) !important; padding-bottom: 56px !important; }
+      .page-header h1 { font-size: clamp(1.7rem, 6vw, 2.4rem); }
+    }
+    @media (max-width: 480px) {
+      /* Are You a Practitioner inline 3-col grid */
+      [style*="grid-template-columns:repeat(3,1fr)"] { grid-template-columns: 1fr !important; }
+      [style*="grid-template-columns:repeat(3, 1fr)"] { grid-template-columns: 1fr !important; }
     }
   </style>
 </head>
@@ -286,7 +294,7 @@
 
 <!-- Region Banner -->
 <div class="region-banner" id="region-banner">
-  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0;">Now active in</span>
+  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Now active in</span>
   <div class="regions">
     <span class="region-item">🇳🇬 Nigeria</span>
     <span class="region-item">🇬🇧 United Kingdom</span>
@@ -322,17 +330,17 @@
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
   <a href="apply.html" class="btn btn-primary">Apply Now</a>
-  <a href="organisations.html#contact" class="btn btn-outline" style="margin-top:8px;">Get a Demo</a>
+  <a href="organisations.html#contact" class="btn btn-outline" style="margin-top:8px">Get a Demo</a>
 </div>
 
 <!-- ====== PAGE HEADER ====== -->
-<header class="page-header" style="text-align:center;">
+<header class="page-header" style="text-align:center;padding-top:100px;padding-bottom:100px;">
   <div class="container">
     <span class="eyebrow">Expert Practitioners</span>
-    <h1 class="fade-up" style="margin-left:auto;margin-right:auto;">The People Who Have<br/>Already Done It in Your Field</h1>
-    <p class="fade-up" style="transition-delay:0.1s;margin-left:auto;margin-right:auto;">Every Brixgate expert is a verified domain practitioner. They are not academic instructors or generalist AI trainers. They are professionals who have already applied AI transformation in their specific field — and now they guide others to do the same.</p>
-    <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;" class="fade-up">
-      <a href="#experts-grid" class="btn btn-primary">Meet the Experts →</a>
+    <h1 class="fade-up" style="margin-left:auto;margin-right:auto">The People Who Have<br/>Already Done It in Your Field</h1>
+    <p class="fade-up" style="transition-delay:0.1s;margin-left:auto;margin-right:auto">Every Brixgate expert is a verified domain practitioner. They are not academic instructors or generalist AI trainers. They are professionals who have already applied AI transformation in their specific field — and now they guide others to do the same.</p>
+    <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center" class="fade-up">
+      <a href="#experts-grid" class="btn btn-primary">Meet the Experts</a>
       <a href="join-as-expert.html" class="btn btn-outline">Join as an Expert</a>
     </div>
   </div>
@@ -340,21 +348,27 @@
 
 
 <!-- ====== EXPERT VALUE STATEMENT ====== -->
-<section class="section-pad-sm bg-dark">
+<section class="section-pad-sm bg-light">
   <div class="container">
     <div class="grid-3 stagger">
       <div class="card fade-up">
-        <div class="card-icon">✅</div>
+        <div class="card-icon" style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:rgba(255,41,78,0.08);border:1px solid rgba(255,41,78,0.18);border-radius:10px;color:var(--red);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
         <div class="card-title">Verified Practitioners</div>
         <p class="card-body">Every expert is vetted — we verify their professional background, their applied AI experience, and their track record in their specific domain before they join the Brixgate network.</p>
       </div>
       <div class="card fade-up">
-        <div class="card-icon">🌍</div>
+        <div class="card-icon" style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:rgba(255,41,78,0.08);border:1px solid rgba(255,41,78,0.18);border-radius:10px;color:var(--red);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
         <div class="card-title">Global Network</div>
         <p class="card-body">Our experts span Africa, the UK, and North America — bringing context from multiple markets into every programme they deliver.</p>
       </div>
       <div class="card fade-up">
-        <div class="card-icon">🤝</div>
+        <div class="card-icon" style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:rgba(255,41,78,0.08);border:1px solid rgba(255,41,78,0.18);border-radius:10px;color:var(--red);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
         <div class="card-title">Matched to You</div>
         <p class="card-body">You are never assigned a random instructor. Your expert is matched to your specific field, your role level, and the AI transformation goals you defined in your Field Assessment.</p>
       </div>
@@ -363,38 +377,38 @@
 </section>
 
 <!-- ====== EXPERT VISUAL FEATURE ====== -->
-<section style="padding:80px 0;background:var(--bg-dark);border-top:1px solid var(--border-card);">
+<section style="padding:80px 0;background:var(--bg-white)">
   <div class="container">
-    <div class="expert-visual-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+    <div class="expert-visual-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
       <!-- Square Image -->
-      <div style="position:relative;padding-top:100%;border-radius:16px;overflow:hidden;flex-shrink:0;min-width:0;">
+      <div style="position:relative;padding-top:100%;border-radius:16px;overflow:hidden;flex-shrink:0;min-width:0">
         <img
           src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=720&h=720&fit=crop&crop=face&auto=format&q=85"
           alt="A Brixgate Expert Practitioner"
-          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;"
+          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top"
         />
       </div>
       <!-- Content -->
       <div>
-        <div style="font-size:0.68rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:14px;">The Standard</div>
-        <h2 style="font-size:1.8rem;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:20px;">Every Expert Has Already Done It</h2>
-        <p style="font-size:0.9rem;color:var(--muted);line-height:1.65;margin-bottom:32px;">We do not recruit academic instructors. Every Brixgate Expert Practitioner is a verified domain professional who has already applied AI transformation in their specific field — and can show you the results.</p>
-        <div style="display:flex;flex-direction:column;gap:14px;">
-          <div style="display:flex;align-items:flex-start;gap:14px;">
-            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:1px;">→</span>
-            <span style="font-size:0.88rem;color:rgba(255,255,255,0.7);">Identity-verified and domain-assessed before joining the network</span>
+        <div style="font-size:0.68rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:14px">The Standard</div>
+        <h2 style="font-size:1.8rem;font-weight:900;color:var(--bg-dark);line-height:1.2;margin-bottom:20px">Every Expert Has Already Done It</h2>
+        <p style="font-size:0.9rem;color:#4A5568;line-height:1.65;margin-bottom:32px">We do not recruit academic instructors. Every Brixgate Expert Practitioner is a verified domain professional who has already applied AI transformation in their specific field — and can show you the results.</p>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:flex-start;gap:14px">
+            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:1px">→</span>
+            <span style="font-size:0.88rem;color:var(--body-dark)">Identity-verified and domain-assessed before joining the network</span>
           </div>
-          <div style="display:flex;align-items:flex-start;gap:14px;">
-            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:1px;">→</span>
-            <span style="font-size:0.88rem;color:rgba(255,255,255,0.7);">Field-matched to cohorts — a cybersecurity expert never teaches finance</span>
+          <div style="display:flex;align-items:flex-start;gap:14px">
+            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:1px">→</span>
+            <span style="font-size:0.88rem;color:var(--body-dark)">Field-matched to cohorts — a cybersecurity expert never teaches finance</span>
           </div>
-          <div style="display:flex;align-items:flex-start;gap:14px;">
-            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:1px;">→</span>
-            <span style="font-size:0.88rem;color:rgba(255,255,255,0.7);">Personally vouches for every Brixer they certify — publicly, by name</span>
+          <div style="display:flex;align-items:flex-start;gap:14px">
+            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:1px">→</span>
+            <span style="font-size:0.88rem;color:var(--body-dark)">Personally vouches for every Brixer they certify — publicly, by name</span>
           </div>
         </div>
-        <div style="margin-top:32px;">
-          <a href="join-as-expert.html" class="btn btn-primary">Become an Expert →</a>
+        <div style="margin-top:32px">
+          <a href="join-as-expert.html" class="btn btn-primary">Become an Expert</a>
         </div>
       </div>
     </div>
@@ -402,7 +416,7 @@
 </section>
 
 <!-- ====== EXPERT DIRECTORY ====== -->
-<section id="experts-grid" class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+<section id="experts-grid" class="section-pad bg-white">
   <div class="container">
     <div class="section-header fade-up">
       <span class="eyebrow">The Expert Network</span>
@@ -411,290 +425,54 @@
       <p>Filter by field to find experts relevant to your profession.</p>
     </div>
 
-    <div class="filter-bar fade-up">
+    <div class="filter-bar fade-up" id="experts-filter-bar">
       <button class="filter-btn active" data-filter="all">All Fields</button>
-      <button class="filter-btn" data-filter="finance">Finance</button>
-      <button class="filter-btn" data-filter="healthcare">Healthcare</button>
-      <button class="filter-btn" data-filter="legal">Legal</button>
-      <button class="filter-btn" data-filter="technology">Technology</button>
-      <button class="filter-btn" data-filter="engineering">Engineering</button>
-      <button class="filter-btn" data-filter="hr">HR</button>
-      <button class="filter-btn" data-filter="education">Education</button>
     </div>
 
     <div class="expert-grid stagger" id="experts-grid-container">
 
-      <!-- Expert 1 -->
-      <div class="expert-card fade-up" data-field="healthcare">
-        <img class="expert-avatar" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Dr. Amara Okafor" />
-        <div class="expert-info">
-          <div class="expert-name">Dr. Amara Okafor</div>
-          <div class="expert-role">Expert Practitioner — Healthcare &amp; Medicine</div>
-          <div class="expert-field">Lagos, Nigeria · London, UK</div>
-          <p style="font-size:0.84rem;color:var(--muted);margin:10px 0;line-height:1.6;">Consultant physician who led AI diagnostics integration across two major teaching hospitals. Specialises in clinical AI adoption, diagnostic AI workflows, and AI ethics in healthcare delivery.</p>
-          <div class="expert-tags">
-            <span class="tag tag-red">Clinical AI</span>
-            <span class="tag tag-dark">Diagnostics</span>
-            <span class="tag tag-dark">AI Ethics</span>
-            <span class="tag tag-dark">NHS Experience</span>
-          </div>
-          <div class="expert-stats">
-            <div class="expert-stat"><span class="expert-stat-num">12</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-rating">
-              <span class="rating-label">Practitioner Level</span>
-              <div class="rating-bars">
-                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Expert 2 -->
-      <div class="expert-card fade-up" data-field="finance">
-        <img class="expert-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Kwame Asante-Mensah" />
-        <div class="expert-info">
-          <div class="expert-name">Kwame Asante-Mensah</div>
-          <div class="expert-role">Expert Practitioner — Finance &amp; Banking</div>
-          <div class="expert-field">Accra, Ghana · New York, USA</div>
-          <p style="font-size:0.84rem;color:var(--muted);margin:10px 0;line-height:1.6;">Former VP at a leading pan-African investment bank, now building AI-native finance teams. 12 years in risk modelling, regulatory technology, and automated financial analysis across African and US markets.</p>
-          <div class="expert-tags">
-            <span class="tag tag-red">FinTech AI</span>
-            <span class="tag tag-dark">Risk Modelling</span>
-            <span class="tag tag-dark">RegTech</span>
-            <span class="tag tag-dark">Investment Banking</span>
-          </div>
-          <div class="expert-stats">
-            <div class="expert-stat"><span class="expert-stat-num">9</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-rating">
-              <span class="rating-label">Practitioner Level</span>
-              <div class="rating-bars">
-                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar empty"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Expert 3 -->
-      <div class="expert-card fade-up" data-field="legal">
-        <img class="expert-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Natasha Mokoena" />
-        <div class="expert-info">
-          <div class="expert-name">Natasha Mokoena</div>
-          <div class="expert-role">Expert Practitioner — Legal &amp; Compliance</div>
-          <div class="expert-field">Johannesburg, SA · London, UK</div>
-          <p style="font-size:0.84rem;color:var(--muted);margin:10px 0;line-height:1.6;">Senior commercial attorney turned LegalTech practitioner. Has deployed AI contract analysis, compliance monitoring, and predictive legal research tools across five African jurisdictions and UK practice.</p>
-          <div class="expert-tags">
-            <span class="tag tag-red">LegalTech</span>
-            <span class="tag tag-dark">Contract AI</span>
-            <span class="tag tag-dark">Cross-border Law</span>
-            <span class="tag tag-dark">Compliance</span>
-          </div>
-          <div class="expert-stats">
-            <div class="expert-stat"><span class="expert-stat-num">14</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-rating">
-              <span class="rating-label">Practitioner Level</span>
-              <div class="rating-bars">
-                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Expert 4 -->
-      <div class="expert-card fade-up" data-field="technology">
-        <img class="expert-avatar" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Seun Ojo-Williams" />
-        <div class="expert-info">
-          <div class="expert-name">Seun Ojo-Williams</div>
-          <div class="expert-role">Expert Practitioner — Product &amp; Technology</div>
-          <div class="expert-field">Lagos, Nigeria · San Francisco, USA</div>
-          <p style="font-size:0.84rem;color:var(--muted);margin:10px 0;line-height:1.6;">Product Director at a global SaaS company with deep experience embedding AI into product development cycles. Has led AI feature development across African and US markets with teams of 20+ engineers.</p>
-          <div class="expert-tags">
-            <span class="tag tag-red">Product AI</span>
-            <span class="tag tag-dark">AI-First Design</span>
-            <span class="tag tag-dark">ML Integration</span>
-            <span class="tag tag-dark">SaaS</span>
-          </div>
-          <div class="expert-stats">
-            <div class="expert-stat"><span class="expert-stat-num">11</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-rating">
-              <span class="rating-label">Practitioner Level</span>
-              <div class="rating-bars">
-                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar empty"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Expert 5 -->
-      <div class="expert-card fade-up" data-field="engineering">
-        <img class="expert-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Chibuike Kalu" />
-        <div class="expert-info">
-          <div class="expert-name">Chibuike Kalu</div>
-          <div class="expert-role">Expert Practitioner — Engineering &amp; Infrastructure</div>
-          <div class="expert-field">Abuja, Nigeria · Manchester, UK</div>
-          <p style="font-size:0.84rem;color:var(--muted);margin:10px 0;line-height:1.6;">Civil and structural engineer who pioneered AI-driven infrastructure assessment and predictive maintenance across major infrastructure projects in West Africa and the UK. Chartered Engineer with 15+ years in the field.</p>
-          <div class="expert-tags">
-            <span class="tag tag-red">Infrastructure AI</span>
-            <span class="tag tag-dark">Predictive Maintenance</span>
-            <span class="tag tag-dark">Structural Analysis</span>
-          </div>
-          <div class="expert-stats">
-            <div class="expert-stat"><span class="expert-stat-num">8</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-rating">
-              <span class="rating-label">Practitioner Level</span>
-              <div class="rating-bars">
-                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar empty"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Expert 6 -->
-      <div class="expert-card fade-up" data-field="hr">
-        <img class="expert-avatar" src="https://images.unsplash.com/photo-1488508872907-592763824245?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Funmi Adeyemi" />
-        <div class="expert-info">
-          <div class="expert-name">Funmi Adeyemi</div>
-          <div class="expert-role">Expert Practitioner — Human Resources</div>
-          <div class="expert-field">Lagos, Nigeria · London, UK</div>
-          <p style="font-size:0.84rem;color:var(--muted);margin:10px 0;line-height:1.6;">Chief People Officer with 20 years transforming how organisations hire, develop, and retain talent. Has built AI-powered recruitment, performance management, and people analytics functions across FTSE-listed and fast-growth African companies.</p>
-          <div class="expert-tags">
-            <span class="tag tag-red">People Analytics</span>
-            <span class="tag tag-dark">AI Recruitment</span>
-            <span class="tag tag-dark">Talent Tech</span>
-          </div>
-          <div class="expert-stats">
-            <div class="expert-stat"><span class="expert-stat-num">13</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-rating">
-              <span class="rating-label">Practitioner Level</span>
-              <div class="rating-bars">
-                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Expert 7 -->
-      <div class="expert-card fade-up" data-field="education">
-        <img class="expert-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Dr. Daniel Bankole" />
-        <div class="expert-info">
-          <div class="expert-name">Dr. Daniel Bankole</div>
-          <div class="expert-role">Expert Practitioner — Education &amp; Training</div>
-          <div class="expert-field">Nairobi, Kenya · Toronto, Canada</div>
-          <p style="font-size:0.84rem;color:var(--muted);margin:10px 0;line-height:1.6;">Education strategist and former university provost who has redesigned curriculum and pedagogical practice using AI at scale. Works with governments, institutions, and EdTech companies across East Africa and North America.</p>
-          <div class="expert-tags">
-            <span class="tag tag-red">EdTech AI</span>
-            <span class="tag tag-dark">Curriculum Design</span>
-            <span class="tag tag-dark">Learning Analytics</span>
-          </div>
-          <div class="expert-stats">
-            <div class="expert-stat"><span class="expert-stat-num">10</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-rating">
-              <span class="rating-label">Practitioner Level</span>
-              <div class="rating-bars">
-                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar empty"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Expert 8 -->
-      <div class="expert-card fade-up" data-field="finance">
-        <img class="expert-avatar" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Remi Ibitoye" />
-        <div class="expert-info">
-          <div class="expert-name">Remi Ibitoye</div>
-          <div class="expert-role">Expert Practitioner — Data &amp; Analytics</div>
-          <div class="expert-field">Lagos, Nigeria · Edinburgh, UK</div>
-          <p style="font-size:0.84rem;color:var(--muted);margin:10px 0;line-height:1.6;">Data science leader who has built and scaled analytics functions at three African unicorns. Specialises in helping non-technical leaders understand, commission, and govern AI-driven analytics in their organisations.</p>
-          <div class="expert-tags">
-            <span class="tag tag-red">Data Strategy</span>
-            <span class="tag tag-dark">Analytics Governance</span>
-            <span class="tag tag-dark">AI for Leaders</span>
-          </div>
-          <div class="expert-stats">
-            <div class="expert-stat"><span class="expert-stat-num">15</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-rating">
-              <span class="rating-label">Practitioner Level</span>
-              <div class="rating-bars">
-                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Expert 9 -->
-      <div class="expert-card fade-up" data-field="technology">
-        <img class="expert-avatar" src="https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=600&h=440&fit=crop&crop=face&auto=format&q=80" alt="Zara Mwangi" />
-        <div class="expert-info">
-          <div class="expert-name">Zara Mwangi</div>
-          <div class="expert-role">Expert Practitioner — Cybersecurity</div>
-          <div class="expert-field">Nairobi, Kenya · Washington DC, USA</div>
-          <p style="font-size:0.84rem;color:var(--muted);margin:10px 0;line-height:1.6;">CISO and cybersecurity strategist specialising in AI-powered threat detection and AI governance for security teams. Has secured critical infrastructure for financial institutions, governments, and global enterprises across Africa and North America.</p>
-          <div class="expert-tags">
-            <span class="tag tag-red">AI Security</span>
-            <span class="tag tag-dark">Threat Intelligence</span>
-            <span class="tag tag-dark">AI Governance</span>
-            <span class="tag tag-dark">Critical Infra</span>
-          </div>
-          <div class="expert-stats">
-            <div class="expert-stat"><span class="expert-stat-num">11</span><span class="expert-stat-label">Years in Field</span></div>
-            <div class="expert-rating">
-              <span class="rating-label">Practitioner Level</span>
-              <div class="rating-bars">
-                <span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span><span class="rating-bar filled"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <!-- cards injected by JS -->
     </div><!-- /expert-grid -->
 
-    <div style="text-align:center;margin-top:48px;" class="fade-up">
-      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:20px;">More expert practitioners joining each quarter as new sectors open.</p>
-      <p style="font-size:0.82rem;color:rgba(255,255,255,0.35);margin-bottom:0;">Are you a practitioner who has already applied AI in your field? <a href="join-as-expert.html" style="color:var(--red);text-decoration:none;">Find out how to join our network →</a></p>
+    <div style="text-align:center;margin-top:48px" class="fade-up">
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:20px">More expert practitioners joining each quarter as new sectors open.</p>
+      <p style="font-size:0.82rem;color:#4A5568;margin-bottom:0">Are you a practitioner who has already applied AI in your field? <a href="join-as-expert.html" style="color:var(--red);text-decoration:none">Find out how to join our network →</a></p>
     </div>
   </div>
 </section>
 
 <!-- ====== ARE YOU A PRACTITIONER? ====== -->
-<section id="qualify" class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+<section id="qualify" class="section-pad bg-dark">
   <div class="container">
-    <div style="max-width:720px;margin:0 auto;text-align:center;" class="fade-up">
+    <div style="max-width:720px;margin:0 auto;text-align:center" class="fade-up">
       <span class="eyebrow">For Practitioners</span>
       <h2>Are You the Expert<br/>We're Looking For?</h2>
       <div class="divider-red"></div>
-      <p style="font-size:1rem;color:var(--muted);line-height:1.8;margin-bottom:32px;">Brixgate Expert Practitioners are professionals who have already applied AI in their specific field — not general AI trainers, but domain specialists with real results. If that sounds like you, there is a place for you on this platform.</p>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left;margin-bottom:40px;">
-        <div style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:24px;">
-          <div style="font-size:1.6rem;margin-bottom:12px;">🌍</div>
-          <div style="font-weight:700;color:var(--white);font-size:0.9rem;margin-bottom:6px;">Global Reach</div>
-          <p style="font-size:0.82rem;color:var(--muted);line-height:1.6;margin:0;">Deliver programmes to professionals across Africa, UK, and North America through a single platform.</p>
+      <p style="font-size:1rem;color:var(--muted);line-height:1.8;margin-bottom:32px">Brixgate Expert Practitioners are professionals who have already applied AI in their specific field — not general AI trainers, but domain specialists with real results. If that sounds like you, there is a place for you on this platform.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left;margin-bottom:40px">
+        <div style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:24px">
+          <div style="font-size:1.6rem;margin-bottom:12px">🌍</div>
+          <div style="font-weight:700;color:var(--white);font-size:0.9rem;margin-bottom:6px">Global Reach</div>
+          <p style="font-size:0.82rem;color:var(--muted);line-height:1.6;margin:0">Deliver programmes to professionals across Africa, UK, and North America through a single platform.</p>
         </div>
-        <div style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:24px;">
-          <div style="font-size:1.6rem;margin-bottom:12px;">🏆</div>
-          <div style="font-weight:700;color:var(--white);font-size:0.9rem;margin-bottom:6px;">Expert Status</div>
-          <p style="font-size:0.82rem;color:var(--muted);line-height:1.6;margin:0;">Earn the Brixgate Expert Practitioner designation — verified, recognised, and backed by a growing global community.</p>
+        <div style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:24px">
+          <div style="font-size:1.6rem;margin-bottom:12px">🏆</div>
+          <div style="font-weight:700;color:var(--white);font-size:0.9rem;margin-bottom:6px">Expert Status</div>
+          <p style="font-size:0.82rem;color:var(--muted);line-height:1.6;margin:0">Earn the Brixgate Expert Practitioner designation — verified, recognised, and backed by a growing global community.</p>
         </div>
-        <div style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:24px;">
-          <div style="font-size:1.6rem;margin-bottom:12px;">🛠️</div>
-          <div style="font-weight:700;color:var(--white);font-size:0.9rem;margin-bottom:6px;">Zero Admin</div>
-          <p style="font-size:0.82rem;color:var(--muted);line-height:1.6;margin:0;">Brixgate handles all marketing, scheduling, and logistics. You show up and deliver your expertise.</p>
+        <div style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:24px">
+          <div style="font-size:1.6rem;margin-bottom:12px">🛠️</div>
+          <div style="font-weight:700;color:var(--white);font-size:0.9rem;margin-bottom:6px">Zero Admin</div>
+          <p style="font-size:0.82rem;color:var(--muted);line-height:1.6;margin:0">Brixgate handles all marketing, scheduling, and logistics. You show up and deliver your expertise.</p>
         </div>
       </div>
-      <a href="join-as-expert.html" class="btn btn-primary btn-lg">Learn About Joining as an Expert →</a>
+      <a href="join-as-expert.html" class="btn btn-primary btn-lg">Learn About Joining as an Expert</a>
     </div>
   </div>
 </section>
 
 <!-- ====== QUALIFICATION CRITERIA ====== -->
-<section id="criteria" class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+<section id="criteria" class="section-pad bg-light">
   <div class="container">
     <div class="section-header fade-up">
       <span class="eyebrow">Qualification Criteria</span>
@@ -748,9 +526,9 @@
       </div>
     </div>
 
-    <div style="text-align:center;margin-top:56px;" class="fade-up">
-      <p style="font-size:0.95rem;color:var(--muted);margin-bottom:24px;">Applications are reviewed on a rolling basis. We prioritise fields with unmet cohort demand.</p>
-      <a href="join-as-expert.html" class="btn btn-primary btn-lg">Apply to Become an Expert Practitioner →</a>
+    <div style="text-align:center;margin-top:56px" class="fade-up">
+      <p style="font-size:0.95rem;color:var(--muted);margin-bottom:24px">Applications are reviewed on a rolling basis. We prioritise fields with unmet cohort demand.</p>
+      <a href="join-as-expert.html" class="btn btn-primary btn-lg">Apply to Become an Expert Practitioner</a>
     </div>
   </div>
 </section>
@@ -762,7 +540,7 @@
     <h2>Ready to Transform<br/>Your Field from the Inside?</h2>
     <p>Whether you are a professional ready to level up or a practitioner ready to give back — Brixgate is your platform.</p>
     <div class="cta-buttons">
-      <a href="apply.html" class="btn btn-primary btn-lg">Apply for the Programme →</a>
+      <a href="apply.html" class="btn btn-primary btn-lg">Apply for the Programme</a>
       <a href="join-as-expert.html" class="btn btn-outline btn-lg">Join as an Expert</a>
     </div>
   </div>
@@ -772,7 +550,7 @@
   <div class="container">
     <div class="footer-inner">
       <div class="footer-brand">
-        <a href="index.html" class="nav-logo" style="display:inline-flex;margin-bottom:4px;"><img src="assets/logo-color-nobg.svg" alt="Brixgate" style="height:36px;" /></a>
+        <a href="index.html" class="nav-logo" style="display:inline-flex;margin-bottom:4px"><img src="assets/logo-color-nobg.svg" alt="Brixgate" style="height:36px" /></a>
         <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
         <div class="footer-social">
           <a href="#" class="social-icon">in</a>
@@ -796,26 +574,172 @@
 
 <script src="script.js"></script>
 <script>
-  // Filter experts by field
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const expertCards = document.querySelectorAll('.expert-card');
+  var API_BASE    = 'https://api.brixgate.com';
+  var grid        = document.getElementById('experts-grid-container');
+  var filterBar   = document.getElementById('experts-filter-bar');
+  var activeFilter = 'all';
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const filter = btn.dataset.filter;
+  /* ── Helpers ── */
+  function slugify(str) {
+    return (str || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  }
 
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+  function ratingBars(level) {
+    var filled = Math.min(5, Math.max(0, parseInt(level) || 5));
+    var bars = '';
+    for (var i = 0; i < 5; i++) {
+      bars += '<span class="rating-bar ' + (i < filled ? 'filled' : 'empty') + '"></span>';
+    }
+    return bars;
+  }
 
-      expertCards.forEach(card => {
-        if (filter === 'all' || card.dataset.field === filter) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
+  function buildCard(p) {
+    var name      = p.name || ((p.firstName || '') + ' ' + (p.lastName || '')).trim() || 'Expert Practitioner';
+    var field     = p.primaryField || p.field || '';
+    var fieldSlug = slugify(field);
+    var location  = p.location || p.country || '';
+    var bio       = p.bio || p.aiExperienceDescription || '';
+    var years     = p.yearsInField || p.yearsExperience || '—';
+    var rating    = p.practitionerLevel || p.rating || 5;
+    var avatar    = p.avatarUrl || p.avatar || p.profileImage || '';
+    var tags      = (p.specializations || p.tags || []);
+    var firstTag  = tags[0] || field;
+    var restTags  = tags.slice(1).map(function(t) {
+      return '<span class="tag tag-dark">' + t + '</span>';
+    }).join('');
+
+    var imgHtml = avatar
+      ? '<img class="expert-avatar" src="' + avatar + '" alt="' + name + '" loading="lazy" />'
+      : '<div class="expert-avatar" style="background:var(--bg-card);display:flex;align-items:center;justify-content:center"><svg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'rgba(255,255,255,0.2)\' stroke-width=\'1.5\'><circle cx=\'12\' cy=\'8\' r=\'5\'/><path d=\'M20 21a8 8 0 1 0-16 0\'/></svg></div>';
+
+    return '<div class="expert-card fade-up" data-field="' + fieldSlug + '">'
+      + imgHtml
+      + '<div class="expert-info">'
+      + '<div class="expert-name">' + name + '</div>'
+      + '<div class="expert-role">Expert Practitioner — ' + field + '</div>'
+      + (location ? '<div class="expert-field">' + location + '</div>' : '')
+      + (bio ? '<p style="font-size:0.84rem;color:var(--muted);margin:10px 0;line-height:1.6">' + bio + '</p>' : '')
+      + '<div class="expert-tags">'
+      + '<span class="tag tag-red">' + firstTag + '</span>'
+      + restTags
+      + '</div>'
+      + '<div class="expert-stats">'
+      + '<div class="expert-stat"><span class="expert-stat-num">' + years + '</span><span class="expert-stat-label">Years in Field</span></div>'
+      + '<div class="expert-rating"><span class="rating-label">Practitioner Level</span><div class="rating-bars">' + ratingBars(rating) + '</div></div>'
+      + '</div>'
+      + '</div></div>';
+  }
+
+  function applyFilter(filter) {
+    activeFilter = filter;
+    filterBar.querySelectorAll('.filter-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.filter === filter);
     });
-  });
+    grid.querySelectorAll('.expert-card').forEach(function(card) {
+      var show = filter === 'all' || card.dataset.field === filter;
+      card.classList.toggle('hidden', !show);
+    });
+  }
+
+  function buildFilters(practitioners) {
+    var seen   = {};
+    var fields = [];
+    practitioners.forEach(function(p) {
+      var field = p.primaryField || p.field || '';
+      var slug  = slugify(field);
+      if (field && !seen[slug]) { seen[slug] = true; fields.push({ label: field, slug: slug }); }
+    });
+
+    /* Keep "All Fields" and append one button per unique field */
+    filterBar.innerHTML = '<button class="filter-btn active" data-filter="all">All Fields</button>'
+      + fields.map(function(f) {
+          return '<button class="filter-btn" data-filter="' + f.slug + '">' + f.label + '</button>';
+        }).join('');
+
+    filterBar.querySelectorAll('.filter-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() { applyFilter(btn.dataset.filter); });
+    });
+  }
+
+  function showLoadingCards() {
+    var skeleton = '';
+    for (var i = 0; i < 6; i++) {
+      skeleton += '<div style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);overflow:hidden;opacity:' + (0.6 - i * 0.07) + '">'
+        + '<div style="height:200px;background:rgba(255,255,255,0.04)"></div>'
+        + '<div style="padding:20px;display:flex;flex-direction:column;gap:10px">'
+        + '<div style="height:14px;background:rgba(255,255,255,0.08);border-radius:4px;width:60%"></div>'
+        + '<div style="height:11px;background:rgba(255,255,255,0.05);border-radius:4px;width:80%"></div>'
+        + '<div style="height:11px;background:rgba(255,255,255,0.05);border-radius:4px;width:90%"></div>'
+        + '</div></div>';
+    }
+    grid.innerHTML = skeleton;
+  }
+
+  function showError() {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:64px 24px">'
+      + '<div style="font-size:2rem;margin-bottom:16px">⚠️</div>'
+      + '<p style="color:var(--muted);font-size:0.92rem">Could not load experts right now. Please refresh or check back shortly.</p>'
+      + '</div>';
+  }
+
+  /* ── Fallback practitioner data (shown when API is unavailable) ── */
+  var PLACEHOLDER_EXPERTS = [
+    { name: 'Dr. Amara Okafor', primaryField: 'Healthcare', location: 'Lagos, Nigeria',
+      bio: 'Consultant physician who integrated AI diagnostics across 3 hospitals, cutting misdiagnosis rates by 34%.',
+      yearsInField: 14, practitionerLevel: 5,
+      avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=440&fit=crop&crop=faces&auto=format&q=80',
+      specializations: ['Healthcare', 'Clinical AI', 'Diagnostics'] },
+    { name: 'James Adeyemi', primaryField: 'Finance', location: 'London, UK',
+      bio: 'Senior risk analyst who deployed ML-driven fraud detection at a tier-1 bank, reducing losses by $2.1M annually.',
+      yearsInField: 11, practitionerLevel: 5,
+      avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=440&fit=crop&crop=faces&auto=format&q=80',
+      specializations: ['Finance', 'Risk & Fraud', 'RegTech'] },
+    { name: 'Ngozi Eze', primaryField: 'Legal', location: 'Abuja, Nigeria',
+      bio: 'Corporate lawyer who built AI-assisted contract review workflows, reducing review time by 60% for a Big Four client.',
+      yearsInField: 9, practitionerLevel: 4,
+      avatarUrl: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=600&h=440&fit=crop&crop=faces&auto=format&q=80',
+      specializations: ['Legal', 'Contract AI', 'Compliance'] },
+    { name: 'David Mensah', primaryField: 'Marketing', location: 'Accra, Ghana',
+      bio: 'Growth director who used AI to scale a B2B SaaS from $500K to $4M ARR through precision targeting and personalisation.',
+      yearsInField: 10, practitionerLevel: 5,
+      avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=440&fit=crop&crop=faces&auto=format&q=80',
+      specializations: ['Marketing', 'Growth', 'AI Personalisation'] },
+    { name: 'Fatima Al-Hassan', primaryField: 'Operations', location: 'Nairobi, Kenya',
+      bio: 'Supply chain lead who implemented AI forecasting across 12 distribution hubs, cutting inventory waste by 28%.',
+      yearsInField: 12, practitionerLevel: 4,
+      avatarUrl: 'https://images.unsplash.com/photo-1542206395-9feb3edaa68d?w=600&h=440&fit=crop&crop=faces&auto=format&q=80',
+      specializations: ['Operations', 'Supply Chain', 'Forecasting'] },
+    { name: 'Chidi Okonkwo', primaryField: 'Data', location: 'Lagos, Nigeria',
+      bio: 'Data engineering lead who architected AI-ready data platforms for three publicly listed Nigerian corporations.',
+      yearsInField: 8, practitionerLevel: 5,
+      avatarUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&h=440&fit=crop&crop=faces&auto=format&q=80',
+      specializations: ['Data', 'AI Infrastructure', 'Analytics'] }
+  ];
+
+  /* ── Fetch instructors from API, fall back to placeholder data ── */
+  showLoadingCards();
+
+  fetch(API_BASE + '/api/v1/cohorts/1/members?role=INSTRUCTOR')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      /* Response: data.data.members[] or data.data[] or data.members[] */
+      var members = (data.data && (data.data.members || (Array.isArray(data.data) ? data.data : null)))
+                  || data.members || [];
+      if (!Array.isArray(members) || !members.length) throw new Error('empty');
+
+      /* Each member may nest user fields under member.user or be flat */
+      var practitioners = members.map(function(m) {
+        return m.user || m;
+      });
+
+      buildFilters(practitioners);
+      grid.innerHTML = practitioners.map(buildCard).join('');
+    })
+    .catch(function() {
+      /* Show placeholder experts while the network is being built */
+      buildFilters(PLACEHOLDER_EXPERTS);
+      grid.innerHTML = PLACEHOLDER_EXPERTS.map(buildCard).join('');
+    });
 </script>
 
 <!-- ====== WHATSAPP CHAT WIDGET ====== -->

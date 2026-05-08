@@ -226,7 +226,7 @@
       gap: 16px;
       flex-wrap: wrap;
       margin: 40px auto;
-      max-width: 560px;
+      max-width: 660px;
     }
 
     .intro-preview-item {
@@ -505,21 +505,20 @@
   <a href="programme.html">Programme</a>
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
-  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px;">Login</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px">Login</a>
   <a href="apply.html" class="btn btn-primary">Apply Now</a>
 </div>
 
 <!-- ====== INTRO SCREEN ====== -->
 <div id="intro-screen">
-  <div style="max-width:640px;margin:0 auto;text-align:center;">
+  <div style="max-width:840px;margin:0 auto;text-align:center">
     <div class="intro-tag">Free · 3 Minutes · No Sign-Up</div>
 
-    <h1 style="font-size:clamp(2rem,5vw,3.2rem);font-weight:900;line-height:1.1;color:var(--white);margin-bottom:18px;">
-      How AI-Ready Are You<br/>
-      <span style="color:var(--red);">— Really?</span>
+    <h1 style="font-size:clamp(2rem,5vw,3.2rem);font-weight:900;line-height:1.1;color:var(--white);margin-bottom:18px">
+      Go beyond the basics and discover your true <span style="color:var(--red)">level of AI readiness.</span>
     </h1>
 
-    <p style="font-size:1rem;color:var(--muted);line-height:1.75;margin-bottom:12px;max-width:520px;margin-left:auto;margin-right:auto;">
+    <p style="font-size:1rem;color:var(--muted);line-height:1.75;margin-bottom:12px;max-width:520px;margin-left:auto;margin-right:auto">
       AI is reshaping every profession faster than most professionals realise. This quick check gives you an honest read on where you stand — and what it means for your career.
     </p>
 
@@ -530,8 +529,8 @@
     </div>
 
     <!-- Field input with autocomplete -->
-    <div style="max-width:400px;margin:0 auto 24px;position:relative;text-align:left;" id="field-input-wrap">
-      <label for="profession-input" style="display:block;font-size:0.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;">What's your professional field?</label>
+    <div style="max-width:400px;margin:0 auto 24px;position:relative;text-align:left" id="field-input-wrap">
+      <label for="profession-input" style="display:block;font-size:0.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">What's your professional field?</label>
       <input
         type="text"
         id="profession-input"
@@ -540,39 +539,39 @@
         oninput="handleProfessionInput(this.value)"
         onfocus="handleProfessionInput(this.value)"
         onblur="setTimeout(closeProfessionDropdown, 150)"
-        style="width:100%;background:var(--bg-card);border:1.5px solid var(--border-card);border-radius:var(--radius-md);padding:14px 16px;color:var(--white);font-size:0.94rem;font-family:inherit;outline:none;transition:border-color 0.25s;"
+        style="width:100%;background:var(--bg-card);border:1.5px solid var(--border-card);border-radius:var(--radius-md);padding:14px 16px;color:var(--white);font-size:0.94rem;font-family:inherit;outline:none;transition:border-color 0.25s"
       />
-      <div id="profession-dropdown" style="position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);overflow:hidden;display:none;z-index:20;max-height:220px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4);"></div>
+      <div id="profession-dropdown" style="position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);overflow:hidden;display:none;z-index:20;max-height:220px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4)"></div>
     </div>
 
-    <button class="btn btn-primary btn-lg" onclick="startAssessment()" style="min-width:240px;">
-      Start the Check →
+    <button class="btn btn-primary btn-lg" onclick="startAssessment()" style="min-width:240px">
+      Start the Check
     </button>
 
-    <p style="font-size:0.75rem;color:var(--muted);margin-top:16px;">
+    <p style="font-size:0.75rem;color:var(--muted);margin-top:16px">
       Takes about 3 minutes. Your answers are not stored.
     </p>
 
     <!-- QR section for print/share -->
-    <div style="margin-top:48px;padding:24px;background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);display:inline-flex;align-items:center;gap:24px;">
-      <div style="background:#fff;border-radius:8px;padding:6px;width:80px;height:80px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fbrixgate.com%2Fai-readiness&margin=2" alt="QR code" style="width:68px;height:68px;" />
+    <div style="margin-top:48px;padding:24px;background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);display:inline-flex;align-items:center;gap:24px">
+      <div style="background:#fff;border-radius:8px;padding:6px;width:80px;height:80px;flex-shrink:0;display:flex;align-items:center;justify-content:center">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fbrixgate.com%2Fai-readiness&margin=2" alt="QR code" style="width:68px;height:68px" />
       </div>
-      <div style="text-align:left;">
-        <div style="font-size:0.78rem;font-weight:700;color:var(--white);margin-bottom:4px;">Share this check</div>
-        <div style="font-size:0.72rem;color:var(--muted);line-height:1.55;">Scan the QR code or share the link<br/><span style="color:var(--red);font-weight:700;">brixgate.com/ai-readiness</span></div>
+      <div style="text-align:left">
+        <div style="font-size:0.78rem;font-weight:700;color:var(--white);margin-bottom:4px">Share this check</div>
+        <div style="font-size:0.72rem;color:var(--muted);line-height:1.55">Scan the QR code or share the link<br/><span style="color:var(--red);font-weight:700">brixgate.com/ai-readiness</span></div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- ====== ASSESSMENT SCREEN ====== -->
-<div id="assess-screen" style="display:none;padding:48px 0 80px;">
+<div id="assess-screen" style="display:none;padding:48px 0 80px">
   <!-- Progress -->
-  <div style="text-align:center;margin-bottom:36px;padding:0 24px;">
+  <div style="text-align:center;margin-bottom:36px;padding:0 24px">
     <div class="assess-step-label" id="step-label">Question 1 of 10</div>
     <div class="assess-progress-bar">
-      <div class="assess-progress-fill" id="progress-fill" style="width:10%;"></div>
+      <div class="assess-progress-fill" id="progress-fill" style="width:10%"></div>
     </div>
   </div>
 
@@ -583,8 +582,8 @@
 
   <!-- Navigation -->
   <div class="q-nav">
-    <button class="q-back-btn" id="back-btn" onclick="prevQuestion()" style="visibility:hidden;">← Back</button>
-    <button class="q-next-btn" id="next-btn" onclick="nextQuestion()">Next →</button>
+    <button class="q-back-btn" id="back-btn" onclick="prevQuestion()" style="visibility:hidden">← Back</button>
+    <button class="q-next-btn" id="next-btn" onclick="nextQuestion()">Next</button>
   </div>
 </div>
 
@@ -594,8 +593,8 @@
     <div class="capture-icon">
       <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
     </div>
-    <h2 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:900;color:var(--white);line-height:1.2;margin-bottom:12px;">Enter your details to see your results</h2>
-    <p style="font-size:0.95rem;color:var(--muted);line-height:1.6;">We'll also send you a <strong style="color:var(--white);">registration coupon</strong> when you're ready to enrol — no spam, ever.</p>
+    <h2 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:900;color:var(--white);line-height:1.2;margin-bottom:12px">Enter your details to see your results</h2>
+    <p style="font-size:0.95rem;color:var(--muted);line-height:1.6">We'll also send you a <strong style="color:var(--white)">registration coupon</strong> when you're ready to enrol — no spam, ever.</p>
 
     <div class="capture-form">
       <div class="capture-field">
@@ -608,11 +607,11 @@
         <input type="tel" id="capture-phone" placeholder="+234 800 000 0000" autocomplete="tel" />
         <span class="capture-error" id="phone-error">Please enter your phone number.</span>
       </div>
-      <button onclick="submitCapture()" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px;font-size:1rem;">
-        See My Results →
+      <button onclick="submitCapture()" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px;font-size:1rem">
+        See My Results
       </button>
-      <p style="text-align:center;margin-top:14px;font-size:0.78rem;color:var(--muted);">
-        <a href="#" onclick="skipCapture(event)" style="color:var(--muted);text-decoration:underline;">Skip and see results without coupon</a>
+      <p style="text-align:center;margin-top:14px;font-size:0.78rem;color:var(--muted)">
+        <a href="#" onclick="skipCapture(event)" style="color:var(--muted);text-decoration:underline">Skip and see results without coupon</a>
       </p>
     </div>
   </div>
@@ -620,7 +619,7 @@
 
 <!-- ====== RESULTS SCREEN ====== -->
 <div id="results-screen">
-  <div class="result-wrap" style="text-align:center;">
+  <div class="result-wrap" style="text-align:center">
 
     <div id="result-badge" class="result-tier-badge"></div>
 
@@ -642,14 +641,14 @@
 
     <div class="result-share-row">
       <button class="share-btn restart" onclick="restartAssessment()">↺ Retake the Check</button>
-      <a href="programme.html" class="share-btn">Explore Programmes →</a>
+      <a href="programme.html" class="share-btn">Explore Programmes</a>
       <a id="share-link-btn" href="#" class="share-btn" onclick="copyShareLink(event)">🔗 Copy Link</a>
     </div>
 
   </div>
 </div>
 
-<footer class="footer" style="margin-top:auto;">
+<footer class="footer" style="margin-top:auto">
   <div class="container">
     <div class="footer-inner">
       <div class="footer-brand">
@@ -686,7 +685,7 @@
           <li><a href="organisations.html#contact">Request a Demo</a></li>
           <li><a href="apply.html">Apply Now</a></li>
           <li><a href="verify.html">Verify a Certificate</a></li>
-          <li><a href="ai-readiness.html" style="color:var(--red);">AI Readiness Check</a></li>
+          <li><a href="ai-readiness.html" style="color:var(--red)">AI Readiness Check</a></li>
         </ul>
       </div>
     </div>
@@ -1020,9 +1019,9 @@ function showResults() {
 
   // CTA block
   document.getElementById('result-cta').innerHTML = `
-    <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px;">${tier.cta.eyebrow}</div>
-    <h3 style="font-size:clamp(1.2rem,2.5vw,1.7rem);font-weight:900;color:var(--white);margin-bottom:12px;line-height:1.2;">${tier.cta.headline}</h3>
-    <p style="font-size:0.9rem;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto;">${tier.cta.body}</p>
+    <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px">${tier.cta.eyebrow}</div>
+    <h3 style="font-size:clamp(1.2rem,2.5vw,1.7rem);font-weight:900;color:var(--white);margin-bottom:12px;line-height:1.2">${tier.cta.headline}</h3>
+    <p style="font-size:0.9rem;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto">${tier.cta.body}</p>
     <a href="${tier.cta.href}" class="btn btn-primary btn-lg">${tier.cta.btn}</a>
   `;
 
@@ -1088,11 +1087,11 @@ function renderProfessionDropdown(matches, rawVal) {
   drop.style.display = 'block';
   var html = '';
   matches.forEach(function(p) {
-    html += '<div onclick="selectProfession(\'' + p.replace(/'/g, "\\'") + '\')" style="padding:12px 16px;cursor:pointer;font-size:0.88rem;color:var(--white);border-bottom:1px solid var(--border-card);transition:background 0.15s;" onmouseenter="this.style.background=\'rgba(255,41,78,0.12)\'" onmouseleave="this.style.background=\'\'">' + p + '</div>';
+    html += '<div onclick="selectProfession(\'' + p.replace(/'/g, "\\'") + '\')" style="padding:12px 16px;cursor:pointer;font-size:0.88rem;color:var(--white);border-bottom:1px solid var(--border-card);transition:background 0.15s" onmouseenter="this.style.background=\'rgba(255,41,78,0.12)\'" onmouseleave="this.style.background=\'\'">' + p + '</div>';
   });
   // If no matches and user typed something, offer to add it
   if (matches.length === 0 && rawVal) {
-    html = '<div onclick="selectProfession(\'' + rawVal.replace(/'/g, "\\'") + '\')" style="padding:12px 16px;cursor:pointer;font-size:0.88rem;color:var(--red);border-bottom:1px solid var(--border-card);">Use "' + rawVal + '"</div>';
+    html = '<div onclick="selectProfession(\'' + rawVal.replace(/'/g, "\\'") + '\')" style="padding:12px 16px;cursor:pointer;font-size:0.88rem;color:var(--red);border-bottom:1px solid var(--border-card)">Use "' + rawVal + '"</div>';
   }
   drop.innerHTML = html;
 }

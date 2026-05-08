@@ -80,6 +80,72 @@
     @media (max-width: 768px) {
       .field-hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
     }
+
+    /* ---- Mobile responsiveness for programme-product ---- */
+    @media (max-width: 768px) {
+      /* Cohort info bar — stack vertically */
+      .cohort-info-bar-grid { grid-template-columns: 1fr 1fr !important; }
+
+      /* Who is this for — stack */
+      .who-for-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
+
+      /* Skills / sprint / testimonials — 1 col */
+      .skills-grid { grid-template-columns: 1fr !important; }
+      .sprint-grid { grid-template-columns: 1fr 1fr !important; }
+      .testimonials-grid { grid-template-columns: 1fr !important; }
+
+      /* What you will build — stack */
+      .deliverables-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
+
+      /* ROI section grids */
+      .roi-stats-grid { grid-template-columns: 1fr !important; }
+      .roi-cards-grid { grid-template-columns: 1fr !important; }
+
+      /* Pricing grid — 1 col */
+      .pricing-grid { grid-template-columns: 1fr !important; }
+
+      /* Practitioner card — stack */
+      .practitioner-grid { grid-template-columns: 1fr !important; }
+      .practitioner-left { padding: 32px 24px !important; }
+      .practitioner-right { padding: 28px 24px !important; }
+
+      /* Hero buttons — allow wrapping */
+      .hero-cta-row { flex-wrap: wrap !important; }
+
+      /* Generic inline grids used across this page */
+      [style*="grid-template-columns:1fr 1fr"],
+      [style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+      }
+      [style*="grid-template-columns:repeat(3,1fr)"],
+      [style*="grid-template-columns: repeat(3,1fr)"] {
+        grid-template-columns: 1fr !important;
+      }
+      [style*="grid-template-columns:repeat(4,1fr)"],
+      [style*="grid-template-columns: repeat(4,1fr)"] {
+        grid-template-columns: 1fr 1fr !important;
+      }
+      [style*="grid-template-columns:220px 1fr"],
+      [style*="grid-template-columns: 220px 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      [style*="grid-template-columns:repeat(4,1fr)"],
+      [style*="grid-template-columns: repeat(4,1fr)"] {
+        grid-template-columns: 1fr !important;
+      }
+      /* Cohort info bar — single column */
+      .cohort-info-bar-grid { grid-template-columns: 1fr !important; }
+      /* Sprint steps — 1 col */
+      .sprint-grid { grid-template-columns: 1fr !important; }
+      /* Role tags grid */
+      [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+      /* Stats grid in ROI */
+      [style*="grid-template-columns:repeat(3,1fr)"] { grid-template-columns: 1fr !important; }
+    }
   </style>
 </head>
 <body>
@@ -87,9 +153,9 @@
 <!-- ====== NAV ====== -->
 <div id="scroll-progress"></div>
 <div class="region-banner">
-  <div class="container" style="display:flex;align-items:center;justify-content:center;gap:20px;">
+  <div class="container" style="display:flex;align-items:center;justify-content:center;gap:20px">
     <span>🌍 <strong>Africa-First,</strong> Globally Recognised · Cohorts open now</span>
-    <a href="apply.html?field=Product%20%26%20Technology" style="color:var(--red);font-weight:700;font-size:0.84rem;">Apply →</a>
+    <a href="apply.html?field=Product%20%26%20Technology" style="color:var(--red);font-weight:700;font-size:0.84rem">Apply →</a>
   </div>
 </div>
 <nav class="nav">
@@ -117,47 +183,47 @@
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
   <a href="apply.html?field=Product%20%26%20Technology" class="btn btn-primary">Apply Now</a>
-  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px;">Login</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px">Login</a>
 </div><!-- ====== FIELD HERO ====== -->
-<section class="section-hero bg-dark" style="padding-top:calc(var(--nav-height) + 20px);padding-bottom:60px;">
+<section class="section-hero bg-dark" style="padding-top:calc(var(--nav-height) + 20px);padding-bottom:60px">
   <div class="container">
-    <div class="field-hero-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+    <div class="field-hero-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center">
       <div class="fade-up">
-        <a href="programme.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:0.82rem;font-weight:700;text-decoration:none;margin-bottom:24px;">
+        <a href="programme.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:0.82rem;font-weight:700;text-decoration:none;margin-bottom:24px">
           ← Back to all programmes
         </a>
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
-          <span style="font-size:2.4rem;">💻</span>
-          <span style="background:rgba(255,41,78,0.15);color:var(--red);font-size:0.75rem;font-weight:800;padding:4px 14px;border-radius:50px;letter-spacing:.08em;text-transform:uppercase;">Expert Practitioner Programme</span>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+          <span style="font-size:2.4rem">💻</span>
+          <span style="background:rgba(255,41,78,0.15);color:var(--red);font-size:0.75rem;font-weight:800;padding:4px 14px;border-radius:50px;letter-spacing:.08em;text-transform:uppercase">Expert Practitioner Programme</span>
           
         </div>
-        <h1 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:20px;">
-          AI in<br /><span style="color:var(--red);">Product & Technology</span>
+        <h1 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:20px">
+          AI in<br /><span style="color:var(--red)">Product & Technology</span>
         </h1>
-        <p style="font-size:1.15rem;color:var(--muted);line-height:1.7;margin-bottom:32px;max-width:480px;">Ship Products That Think. Not Just Products That Work.</p>
+        <p style="font-size:1.15rem;color:var(--muted);line-height:1.7;margin-bottom:32px;max-width:480px">Ship Products That Think. Not Just Products That Work.</p>
         <!-- Price pill — visible in hero so cost is clear before scrolling -->
-        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:24px;">
-          <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,41,78,0.08);border:1px solid rgba(255,41,78,0.22);border-radius:50px;padding:8px 18px;">
-            <span style="font-size:0.7rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;">Self-Enrolment</span>
-            <span style="width:1px;height:14px;background:rgba(255,255,255,0.12);display:inline-block;"></span>
-            <span style="font-size:1.05rem;font-weight:900;color:var(--white);line-height:1;">
-              <span class="currency-ngn">₦250,000</span><span class="currency-usd">$156</span><span class="currency-gbp">£122</span><span class="currency-ngn" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px;">~$156</span><span class="currency-usd" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px;">~₦250,000</span><span class="currency-gbp" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px;">~₦250,000</span>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:24px">
+          <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,41,78,0.08);border:1px solid rgba(255,41,78,0.22);border-radius:50px;padding:8px 18px">
+            <span style="font-size:0.7rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.09em">Self-Enrolment</span>
+            <span style="width:1px;height:14px;background:rgba(255,255,255,0.12);display:inline-block"></span>
+            <span style="font-size:1.05rem;font-weight:900;color:var(--white);line-height:1">
+              <span class="currency-ngn">₦250,000</span><span class="currency-usd">$156</span><span class="currency-gbp">£122</span><span class="currency-ngn" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~$156</span><span class="currency-usd" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span><span class="currency-gbp" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span>
             </span>
           </div>
-          <a href="#pricing" style="font-size:0.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s;" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--muted)'">All pricing tiers →</a>
+          <a href="#pricing" style="font-size:0.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--muted)'">All pricing tiers →</a>
         </div>
-        <div style="display:flex;gap:12px;flex-wrap:nowrap;">
-          <a href="#quiz-field" class="btn btn-primary btn-lg">Validate Your Skill Level →</a>
+        <div style="display:flex;gap:12px;flex-wrap:nowrap">
+          <a href="#quiz-field" class="btn btn-primary btn-lg">Validate Your Skill Level</a>
           <a href="apply.html?field=Product%20%26%20Technology" class="btn btn-outline btn-lg">Apply for This Programme</a>
         </div>
       </div>
-      <div class="fade-in" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:20px;padding:36px 32px;">
-        <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:16px;">What AI Looks Like in Product & Technology</div>
-        <p style="font-size:1rem;color:var(--muted);line-height:1.7;">When a product manager uses AI to synthesise thousands of user interviews overnight, predict churn before it happens, and auto-generate sprint plans aligned to strategy — that is what AI-native product looks like.</p>
-        <div style="margin-top:28px;padding-top:20px;border-top:1px solid var(--border-card);display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center;">
-          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white);">4</div><div style="font-size:0.72rem;color:var(--muted);">Week Sprint</div></div>
-          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white);">Live</div><div style="font-size:0.72rem;color:var(--muted);">Cohort Sessions</div></div>
-          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white);">Field</div><div style="font-size:0.72rem;color:var(--muted);">Verified Certificate</div></div>
+      <div class="fade-in" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:20px;padding:36px 32px">
+        <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:16px">What AI Looks Like in Product & Technology</div>
+        <p style="font-size:1rem;color:var(--muted);line-height:1.7">When a product manager uses AI to synthesise thousands of user interviews overnight, predict churn before it happens, and auto-generate sprint plans aligned to strategy — that is what AI-native product looks like.</p>
+        <div style="margin-top:28px;padding-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center">
+          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">4</div><div style="font-size:0.72rem;color:var(--muted)">Week Sprint</div></div>
+          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Live</div><div style="font-size:0.72rem;color:var(--muted)">Cohort Sessions</div></div>
+          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Field</div><div style="font-size:0.72rem;color:var(--muted)">Verified Certificate</div></div>
         </div>
       </div>
     </div>
@@ -165,57 +231,57 @@
 </section>
 
 <!-- ====== COHORT INFO BAR ====== -->
-<div style="background:#0D1C34;border-top:1px solid #1A3050;border-bottom:1px solid #1A3050;">
+<div style="background:#0D1C34;border-bottom:1px solid #1A3050">
   <div class="container">
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;">
-      <div style="padding:20px 24px;border-right:1px solid #1A3050;">
-        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;">Application Closes</div>
-        <div style="font-size:1rem;font-weight:800;color:#fff;">June 5, 2026</div>
+    <div class="cohort-info-bar-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0">
+      <div style="padding:20px 24px;border-right:1px solid #1A3050">
+        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Application Closes</div>
+        <div style="font-size:1rem;font-weight:800;color:#fff">June 5, 2026</div>
       </div>
-      <div style="padding:20px 24px;border-right:1px solid #1A3050;">
-        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;">Cohort Start Date</div>
-        <div style="font-size:1rem;font-weight:800;color:#fff;">June 12, 2026</div>
+      <div style="padding:20px 24px;border-right:1px solid #1A3050">
+        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Cohort Start Date</div>
+        <div style="font-size:1rem;font-weight:800;color:#fff">June 12, 2026</div>
       </div>
-      <div style="padding:20px 24px;border-right:1px solid #1A3050;">
-        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;">Programme Duration</div>
-        <div style="font-size:1rem;font-weight:800;color:#fff;">4 Weeks</div>
+      <div style="padding:20px 24px;border-right:1px solid #1A3050">
+        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Programme Duration</div>
+        <div style="font-size:1rem;font-weight:800;color:#fff">4 Weeks</div>
       </div>
-      <div style="padding:20px 24px;">
-        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;">Learning Format</div>
-        <div style="font-size:1rem;font-weight:800;color:#fff;">Live, Online</div>
+      <div style="padding:20px 24px">
+        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Learning Format</div>
+        <div style="font-size:1rem;font-weight:800;color:#fff">Live, Online</div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- ====== VALIDATE YOUR SKILL LEVEL (QUIZ) ====== -->
-<section id="quiz-field" class="section-pad" style="background:var(--bg-dark);">
+<section id="quiz-field" class="section-pad" style="background:var(--bg-dark)">
   <div class="container">
-    <div style="max-width:800px;margin:0 auto;">
-      <div class="fade-up" style="text-align:center;margin-bottom:48px;">
+    <div style="max-width:800px;margin:0 auto">
+      <div class="fade-up" style="text-align:center;margin-bottom:48px">
         <div class="eyebrow-tag">Validate Your Skill Level</div>
-        <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:900;line-height:1.2;margin-bottom:16px;">
-          Where Are You on the<br /><span style="color:var(--red);">AI Readiness Spectrum in Product & Technology?</span>
+        <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:900;line-height:1.2;margin-bottom:16px">
+          Where Are You on the<br /><span style="color:var(--red)">AI Readiness Spectrum in Product & Technology?</span>
         </h2>
-        <p style="font-size:1rem;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.65;">
+        <p style="font-size:1rem;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.65">
           5 questions. 90 seconds. Get a clear read on your current level — and what the Expert Practitioner Programme will unlock for you.
         </p>
       </div>
 
-      <div id="qf_product_container" style="background:var(--bg-card);border:1.5px solid var(--border-card);border-radius:20px;padding:40px 36px;">
+      <div id="qf_product_container" style="background:var(--bg-card);border:1.5px solid var(--border-card);border-radius:20px;padding:40px 36px">
         <!-- Progress bar -->
         <div class="qf-progress-bar">
-          <div class="qf-progress-fill" id="qf_product_progress" style="width:20%;"></div>
+          <div class="qf-progress-fill" id="qf_product_progress" style="width:20%"></div>
         </div>
 
         <!-- Questions -->
         
           <div class="qf-question" id="qf_product_q0">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Discovery Practice</span>
-              <span style="font-size:0.75rem;color:var(--muted);">Question 1 of 5</span>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em">Discovery Practice</span>
+              <span style="font-size:0.75rem;color:var(--muted)">Question 1 of 5</span>
             </div>
-            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">How do you currently analyse user feedback and research to inform product decisions?</p>
+            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px">How do you currently analyse user feedback and research to inform product decisions?</p>
             <div class="qf-options">
               <div class="qf-opt" data-q="0" data-score="1" onclick="qfSelect(this)">Manually — I read through feedback and form a view over time</div>
               <div class="qf-opt" data-q="0" data-score="2" onclick="qfSelect(this)">I use basic tagging or spreadsheet tools to organise themes</div>
@@ -224,11 +290,11 @@
             </div>
           </div>
           <div class="qf-question" id="qf_product_q1">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">AI Feature Work</span>
-              <span style="font-size:0.75rem;color:var(--muted);">Question 2 of 5</span>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em">AI Feature Work</span>
+              <span style="font-size:0.75rem;color:var(--muted)">Question 2 of 5</span>
             </div>
-            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">When your team is building or evaluating an AI-powered feature, what is your current role?</p>
+            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px">When your team is building or evaluating an AI-powered feature, what is your current role?</p>
             <div class="qf-options">
               <div class="qf-opt" data-q="1" data-score="1" onclick="qfSelect(this)">I haven't worked on any AI-powered features yet</div>
               <div class="qf-opt" data-q="1" data-score="2" onclick="qfSelect(this)">I've been involved peripherally — mostly reviewing outputs others shaped</div>
@@ -237,11 +303,11 @@
             </div>
           </div>
           <div class="qf-question" id="qf_product_q2">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Tool Fluency</span>
-              <span style="font-size:0.75rem;color:var(--muted);">Question 3 of 5</span>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em">Tool Fluency</span>
+              <span style="font-size:0.75rem;color:var(--muted)">Question 3 of 5</span>
             </div>
-            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">How do you currently use AI tools in your product management or technology workflow?</p>
+            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px">How do you currently use AI tools in your product management or technology workflow?</p>
             <div class="qf-options">
               <div class="qf-opt" data-q="2" data-score="1" onclick="qfSelect(this)">I don't use AI tools in my product work</div>
               <div class="qf-opt" data-q="2" data-score="2" onclick="qfSelect(this)">I use AI occasionally for drafting or summarising documents</div>
@@ -250,11 +316,11 @@
             </div>
           </div>
           <div class="qf-question" id="qf_product_q3">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Stakeholder Communication</span>
-              <span style="font-size:0.75rem;color:var(--muted);">Question 4 of 5</span>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em">Stakeholder Communication</span>
+              <span style="font-size:0.75rem;color:var(--muted)">Question 4 of 5</span>
             </div>
-            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">How confident are you explaining AI product decisions to non-technical stakeholders?</p>
+            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px">How confident are you explaining AI product decisions to non-technical stakeholders?</p>
             <div class="qf-options">
               <div class="qf-opt" data-q="3" data-score="1" onclick="qfSelect(this)">Not confident — I find it hard to explain AI trade-offs clearly</div>
               <div class="qf-opt" data-q="3" data-score="2" onclick="qfSelect(this)">I can explain basic concepts but struggle with complex trade-offs</div>
@@ -263,11 +329,11 @@
             </div>
           </div>
           <div class="qf-question" id="qf_product_q4">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;">Strategic Impact</span>
-              <span style="font-size:0.75rem;color:var(--muted);">Question 5 of 5</span>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+              <span style="background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em">Strategic Impact</span>
+              <span style="font-size:0.75rem;color:var(--muted)">Question 5 of 5</span>
             </div>
-            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px;">How would your organisation describe the impact of AI on the products you own or contribute to?</p>
+            <p style="font-size:1.05rem;font-weight:600;color:var(--white);line-height:1.5;margin-bottom:16px">How would your organisation describe the impact of AI on the products you own or contribute to?</p>
             <div class="qf-options">
               <div class="qf-opt" data-q="4" data-score="1" onclick="qfSelect(this)">AI has not yet meaningfully affected the products I work on</div>
               <div class="qf-opt" data-q="4" data-score="2" onclick="qfSelect(this)">We've experimented with AI features but haven't seen significant outcomes yet</div>
@@ -278,24 +344,24 @@
 
         <!-- Nav button -->
         <div class="qf-nav">
-          <button class="qf-next-btn" id="qf_product_next" onclick="qfNext('qf_product')">Next Question →</button>
+          <button class="qf-next-btn" id="qf_product_next" onclick="qfNext('qf_product')">Next Question</button>
         </div>
 
         <!-- Result panel -->
         <div class="qf-result" id="qf_product_result">
-          <div style="text-align:center;margin-bottom:28px;">
+          <div style="text-align:center;margin-bottom:28px">
             <span class="result-badge" id="qf_product_badge">—</span>
-            <h3 id="qf_product_headline" style="font-size:1.5rem;font-weight:900;color:var(--white);line-height:1.3;margin-bottom:14px;"></h3>
+            <h3 id="qf_product_headline" style="font-size:1.5rem;font-weight:900;color:var(--white);line-height:1.3;margin-bottom:14px"></h3>
             <div class="result-score-bar">
-              <div class="result-score-fill" id="qf_product_scorefill" style="width:0%;background:var(--red);"></div>
+              <div class="result-score-fill" id="qf_product_scorefill" style="width:0%;background:var(--red)"></div>
             </div>
-            <p id="qf_product_body" style="font-size:0.95rem;color:var(--muted);line-height:1.65;max-width:520px;margin:0 auto 28px;"></p>
-            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-              <a href="apply.html?field=Product%20%26%20Technology" id="qf_product_cta_link" class="btn btn-primary btn-lg">Reserve Your Seat →</a>
-              <a href="#pricing" style="color:var(--muted);font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:4px;">View pricing first →</a>
+            <p id="qf_product_body" style="font-size:0.95rem;color:var(--muted);line-height:1.65;max-width:520px;margin:0 auto 28px"></p>
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+              <a href="apply.html?field=Product%20%26%20Technology" id="qf_product_cta_link" class="btn btn-primary btn-lg">Reserve Your Seat</a>
+              <a href="#pricing" style="color:var(--muted);font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:4px">View pricing first →</a>
             </div>
-            <div style="margin-top:20px;">
-              <button onclick="qfReset('qf_product')" style="background:none;border:none;color:var(--muted);font-size:0.82rem;cursor:pointer;text-decoration:underline;">Retake the quiz</button>
+            <div style="margin-top:20px">
+              <button onclick="qfReset('qf_product')" style="background:none;border:none;color:var(--muted);font-size:0.82rem;cursor:pointer;text-decoration:underline">Retake the quiz</button>
             </div>
           </div>
         </div>
@@ -305,43 +371,43 @@
 </section>
 
 <!-- ====== CURRICULUM ====== -->
-<section class="section-pad bg-white" style="border-top:1px solid #E8E3DE;">
+<section class="section-pad bg-white">
   <div class="container">
-    <div style="max-width:800px;margin:0 auto;" class="fade-up">
-      <div class="eyebrow-tag" style="color:var(--red);">Programme Curriculum</div>
-      <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:12px;">What You Will Cover</h2>
-      <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:32px;">Every week builds on the last — from foundations through to a deployed, practitioner-assessed capstone project.</p>
-      <details open style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Week 1</span>AI in Product Management & Engineering</span><span style="font-size:1.1rem;color:#7A94A8;">+</span></summary><div style="padding:0 24px 20px;background:#fff;"><ul style="list-style:none;padding:0;margin:8px 0 0;"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>How AI is transforming product discovery, roadmapping, and delivery</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>LLMs for PRD generation, user story writing, and sprint planning</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Evaluating AI coding assistants for quality, security, and team adoption</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>The AI-native product team — roles, workflows, and culture shift</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Week 2</span>AI-Augmented Product Discovery & Strategy</span><span style="font-size:1.1rem;color:#7A94A8;">+</span></summary><div style="padding:0 24px 20px;background:#fff;"><ul style="list-style:none;padding:0;margin:8px 0 0;"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>AI-powered user research synthesis and insight generation</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Automated competitive analysis and market intelligence gathering</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Using AI to validate hypotheses and prioritise feature backlogs</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Building AI-assisted product specifications and acceptance criteria</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Week 3</span>Engineering AI & Delivery Acceleration</span><span style="font-size:1.1rem;color:#7A94A8;">+</span></summary><div style="padding:0 24px 20px;background:#fff;"><ul style="list-style:none;padding:0;margin:8px 0 0;"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>GitHub Copilot and AI pair programming in production environments</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>AI-assisted code review, testing, and documentation generation</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Automating QA workflows and regression testing with AI tools</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Deploying AI-generated features with safety and rollback protocols</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024;"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;">Week 4</span>Capstone & Certification</span><span style="font-size:1.1rem;color:#7A94A8;">+</span></summary><div style="padding:0 24px 20px;background:#fff;"><ul style="list-style:none;padding:0;margin:8px 0 0;"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Capstone: build and deploy an AI-augmented product or engineering workflow</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Expert practitioner review and technical quality assessment</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Portfolio documentation — technically rigorous and recruiter-ready</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Brixgate Expert Practitioner Certificate — Product & Technology</li></ul></div></details>
+    <div style="max-width:800px;margin:0 auto" class="fade-up">
+      <div class="eyebrow-tag" style="color:var(--red)">Programme Curriculum</div>
+      <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:12px">What You Will Cover</h2>
+      <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:32px">Every week builds on the last — from foundations through to a deployed, practitioner-assessed capstone project.</p>
+      <details open style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 1</span>AI in Product Management & Engineering</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>How AI is transforming product discovery, roadmapping, and delivery</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>LLMs for PRD generation, user story writing, and sprint planning</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Evaluating AI coding assistants for quality, security, and team adoption</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>The AI-native product team — roles, workflows, and culture shift</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 2</span>AI-Augmented Product Discovery & Strategy</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>AI-powered user research synthesis and insight generation</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Automated competitive analysis and market intelligence gathering</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Using AI to validate hypotheses and prioritise feature backlogs</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Building AI-assisted product specifications and acceptance criteria</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 3</span>Engineering AI & Delivery Acceleration</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>GitHub Copilot and AI pair programming in production environments</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>AI-assisted code review, testing, and documentation generation</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Automating QA workflows and regression testing with AI tools</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Deploying AI-generated features with safety and rollback protocols</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 4</span>Capstone & Certification</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Capstone: build and deploy an AI-augmented product or engineering workflow</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Expert practitioner review and technical quality assessment</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Portfolio documentation — technically rigorous and recruiter-ready</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Brixgate Expert Practitioner Certificate — Product & Technology</li></ul></div></details>
     </div>
   </div>
 </section>
 
 <!-- ====== TOOLS USED ====== -->
-<section class="section-pad bg-white" style="border-top:1px solid #E8E3DE;padding-top:40px;padding-bottom:48px;">
+<section class="section-pad bg-white">
   <div class="container">
     <div class="fade-up">
-      <div class="eyebrow-tag" style="color:var(--red);">Tools &amp; Platforms</div>
-      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px;">Over 13+ AI Tools Used in This Sprint</h2>
-      <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px;">You will work hands-on with the tools that practitioners actually use in Product & Technology. Real stacks, not toy environments.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:10px;"><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">GitHub Copilot</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">ChatGPT</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Cursor AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Linear AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Notion AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Figma AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Amplitude AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Mixpanel</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Productboard AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">FullStory</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Dovetail</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">Replit AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap;">AWS CodeWhisperer</div></div>
+      <div class="eyebrow-tag" style="color:var(--red)">Tools &amp; Platforms</div>
+      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px">Over 13+ AI Tools Used in This Sprint</h2>
+      <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px">You will work hands-on with the tools that practitioners actually use in Product & Technology. Real stacks, not toy environments.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px"><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">GitHub Copilot</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">ChatGPT</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Cursor AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Linear AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Notion AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Figma AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Amplitude AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Mixpanel</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Productboard AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">FullStory</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Dovetail</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Replit AI</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">AWS CodeWhisperer</div></div>
     </div>
   </div>
 </section>
 
 <!-- ====== WHO IS THIS FOR ====== -->
-<section class="section-pad bg-white" style="border-top:1px solid #E8E3DE;padding-top:40px;">
+<section class="section-pad bg-white">
   <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;" class="fade-up">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start" class="fade-up">
       <div>
-        <div class="eyebrow-tag" style="color:var(--red);">Who Is This For</div>
-        <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px;">Built for Product & Technology Professionals</h2>
-        <p style="font-size:0.88rem;color:#4A5568;line-height:1.7;margin-bottom:28px;">This programme is for practitioners, not beginners. If you are already working in Product & Technology and ready to operate at the level AI makes possible, this sprint is for you.</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"><div style="padding:14px 20px;background:#EFF6FF;border-radius:10px;font-size:0.88rem;font-weight:700;color:#1D4ED8;">Product Manager</div><div style="padding:14px 20px;background:#FFF7ED;border-radius:10px;font-size:0.88rem;font-weight:700;color:#C2410C;">Software Engineer</div><div style="padding:14px 20px;background:#F0FFF4;border-radius:10px;font-size:0.88rem;font-weight:700;color:#15803D;">Engineering Manager</div><div style="padding:14px 20px;background:#FDF4FF;border-radius:10px;font-size:0.88rem;font-weight:700;color:#7E22CE;">Technical Lead</div><div style="padding:14px 20px;background:#FFF1F2;border-radius:10px;font-size:0.88rem;font-weight:700;color:#BE123C;">Product Designer</div><div style="padding:14px 20px;background:#FFFBEB;border-radius:10px;font-size:0.88rem;font-weight:700;color:#B45309;">CTO / VP Engineering</div></div>
+        <div class="eyebrow-tag" style="color:var(--red)">Who Is This For</div>
+        <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px">Built for Product & Technology Professionals</h2>
+        <p style="font-size:0.88rem;color:#4A5568;line-height:1.7;margin-bottom:28px">This programme is for practitioners, not beginners. If you are already working in Product & Technology and ready to operate at the level AI makes possible, this sprint is for you.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div style="padding:14px 20px;background:#EFF6FF;border-radius:10px;font-size:0.88rem;font-weight:700;color:#1D4ED8">Product Manager</div><div style="padding:14px 20px;background:#FFF7ED;border-radius:10px;font-size:0.88rem;font-weight:700;color:#C2410C">Software Engineer</div><div style="padding:14px 20px;background:#F0FFF4;border-radius:10px;font-size:0.88rem;font-weight:700;color:#15803D">Engineering Manager</div><div style="padding:14px 20px;background:#FDF4FF;border-radius:10px;font-size:0.88rem;font-weight:700;color:#7E22CE">Technical Lead</div><div style="padding:14px 20px;background:#FFF1F2;border-radius:10px;font-size:0.88rem;font-weight:700;color:#BE123C">Product Designer</div><div style="padding:14px 20px;background:#FFFBEB;border-radius:10px;font-size:0.88rem;font-weight:700;color:#B45309">CTO / VP Engineering</div></div>
       </div>
       <div>
-        <div style="font-size:0.75rem;font-weight:800;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;">Eligibility Criteria</div>
-        <ul style="list-style:none;padding:0;margin:0 0 28px;"><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Product or engineering professional with 2+ years of product development or delivery experience</li><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Responsible for at least one stage of the product lifecycle (discovery, design, delivery, or growth)</li><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE;"><span style="color:#FF294E;flex-shrink:0;">&#10003;</span>Readiness to integrate AI into live team workflows</li></ul>
-        <a href="apply.html?field=Product%20%26%20Technology" class="btn btn-primary btn-lg" style="display:inline-flex;">Apply for This Programme &#8594;</a>
+        <div style="font-size:0.75rem;font-weight:800;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px">Eligibility Criteria</div>
+        <ul style="list-style:none;padding:0;margin:0 0 28px"><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Product or engineering professional with 2+ years of product development or delivery experience</li><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Responsible for at least one stage of the product lifecycle (discovery, design, delivery, or growth)</li><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Readiness to integrate AI into live team workflows</li></ul>
+        <a href="apply.html?field=Product%20%26%20Technology" class="btn btn-primary btn-lg" style="display:inline-flex">Apply for This Programme</a>
       </div>
     </div>
   </div>
@@ -350,26 +416,26 @@
 <!-- ====== AI IN THIS FIELD: SKILLS ====== -->
 <section class="section-pad bg-white">
   <div class="container">
-    <div style="text-align:center;margin-bottom:48px;" class="fade-up">
-      <div class="eyebrow-tag" style="color:var(--red);">What You Will Master</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:var(--bg-dark);">The Three AI Skills That Will Define<br />Your Edge in Product & Technology</h2>
+    <div style="text-align:center;margin-bottom:48px" class="fade-up">
+      <div class="eyebrow-tag" style="color:var(--red)">What You Will Master</div>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:var(--bg-dark)">The Three AI Skills That Will Define<br />Your Edge in Product & Technology</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
       
-          <div class="card fade-up" style="padding:32px 28px;">
-            <div style="font-size:2.4rem;margin-bottom:16px;">🔍</div>
-            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px;">AI-Powered Discovery</h3>
-            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;">Use AI to synthesise user research, identify unmet needs, and generate hypotheses at scale.</p>
+          <div class="card fade-up" style="padding:32px 28px">
+            <div style="font-size:2.4rem;margin-bottom:16px">🔍</div>
+            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">AI-Powered Discovery</h3>
+            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Use AI to synthesise user research, identify unmet needs, and generate hypotheses at scale.</p>
           </div>
-          <div class="card fade-up" style="padding:32px 28px;">
-            <div style="font-size:2.4rem;margin-bottom:16px;">📊</div>
-            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px;">Intelligent Prioritisation</h3>
-            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;">Build AI-assisted prioritisation frameworks that weigh impact, effort, and strategic alignment dynamically.</p>
+          <div class="card fade-up" style="padding:32px 28px">
+            <div style="font-size:2.4rem;margin-bottom:16px">📊</div>
+            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">Intelligent Prioritisation</h3>
+            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Build AI-assisted prioritisation frameworks that weigh impact, effort, and strategic alignment dynamically.</p>
           </div>
-          <div class="card fade-up" style="padding:32px 28px;">
-            <div style="font-size:2.4rem;margin-bottom:16px;">🚀</div>
-            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px;">Delivery Intelligence</h3>
-            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;">Integrate AI into sprint planning, retrospectives, and release decisions to accelerate velocity and reduce risk.</p>
+          <div class="card fade-up" style="padding:32px 28px">
+            <div style="font-size:2.4rem;margin-bottom:16px">🚀</div>
+            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">Delivery Intelligence</h3>
+            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Integrate AI into sprint planning, retrospectives, and release decisions to accelerate velocity and reduce risk.</p>
           </div>
     </div>
   </div>
@@ -378,34 +444,34 @@
 <!-- ====== HOW THE SPRINT WORKS ====== -->
 <section class="section-pad bg-dark">
   <div class="container">
-    <div style="text-align:center;margin-bottom:48px;" class="fade-up">
+    <div style="text-align:center;margin-bottom:48px" class="fade-up">
       <div class="eyebrow-tag">The Sprint</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;">How the Product & Technology<br />Sprint Works</h2>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900">How the Product & Technology<br />Sprint Works</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
-      <div class="card fade-up" style="padding:28px 24px;">
-        <div style="font-size:1.8rem;margin-bottom:12px;">🎯</div>
-        <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px;">Week 0</div>
-        <h3 style="font-size:0.95rem;font-weight:800;color:var(--white);margin-bottom:8px;">Field Assessment</h3>
-        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55;">Map your current AI maturity and identify the highest-leverage skills for your specific role in Product & Technology.</p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+      <div class="card fade-up" style="padding:28px 24px">
+        <div style="font-size:1.8rem;margin-bottom:12px">🎯</div>
+        <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px">Week 0</div>
+        <h3 style="font-size:0.95rem;font-weight:800;color:var(--white);margin-bottom:8px">Field Assessment</h3>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55">Map your current AI maturity and identify the highest-leverage skills for your specific role in Product & Technology.</p>
       </div>
-      <div class="card fade-up" style="padding:28px 24px;">
-        <div style="font-size:1.8rem;margin-bottom:12px;">👥</div>
-        <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px;">Week 1</div>
-        <h3 style="font-size:0.95rem;font-weight:800;color:var(--white);margin-bottom:8px;">Placed in Your Cohort</h3>
-        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55;">You join a small, curated cohort of Product & Technology professionals — led by a verified Expert Practitioner who has deployed AI in your exact domain.</p>
+      <div class="card fade-up" style="padding:28px 24px">
+        <div style="font-size:1.8rem;margin-bottom:12px">👥</div>
+        <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px">Week 1</div>
+        <h3 style="font-size:0.95rem;font-weight:800;color:var(--white);margin-bottom:8px">Placed in Your Cohort</h3>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55">You join a small, curated cohort of Product & Technology professionals — led by a verified Expert Practitioner who has deployed AI in your exact domain.</p>
       </div>
-      <div class="card fade-up" style="padding:28px 24px;">
-        <div style="font-size:1.8rem;margin-bottom:12px;">🚀</div>
-        <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px;">Weeks 2–4</div>
-        <h3 style="font-size:0.95rem;font-weight:800;color:var(--white);margin-bottom:8px;">Structured Sprint</h3>
-        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55;">Live sessions, applied projects, and peer accountability. Every session builds directly on your Product & Technology context — not generic AI theory.</p>
+      <div class="card fade-up" style="padding:28px 24px">
+        <div style="font-size:1.8rem;margin-bottom:12px">🚀</div>
+        <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px">Weeks 2–4</div>
+        <h3 style="font-size:0.95rem;font-weight:800;color:var(--white);margin-bottom:8px">Structured Sprint</h3>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55">Live sessions, applied projects, and peer accountability. Every session builds directly on your Product & Technology context — not generic AI theory.</p>
       </div>
-      <div class="card fade-up" style="padding:28px 24px;">
-        <div style="font-size:1.8rem;margin-bottom:12px;">🏆</div>
-        <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px;">End of Sprint</div>
-        <h3 style="font-size:0.95rem;font-weight:800;color:var(--white);margin-bottom:8px;">Certification</h3>
-        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55;">Receive your Brixgate Expert Practitioner Certificate — field-verified, practitioner-assessed, and employer-ready in Product & Technology.</p>
+      <div class="card fade-up" style="padding:28px 24px">
+        <div style="font-size:1.8rem;margin-bottom:12px">🏆</div>
+        <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px">End of Sprint</div>
+        <h3 style="font-size:0.95rem;font-weight:800;color:var(--white);margin-bottom:8px">Certification</h3>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55">Receive your Brixgate Expert Practitioner Certificate — field-verified, practitioner-assessed, and employer-ready in Product & Technology.</p>
       </div>
     </div>
   </div>
@@ -414,30 +480,30 @@
 <!-- ====== WHAT YOU WILL BUILD ====== -->
 <section class="section-pad bg-white">
   <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="fade-up">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center" class="fade-up">
       <div>
-        <div class="eyebrow-tag" style="color:var(--red);">Real Deliverables</div>
-        <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:20px;">By the End of the Sprint, You Will Have Built Real Things.</h2>
-        <p style="font-size:0.95rem;color:#4A5568;line-height:1.7;margin-bottom:28px;">Not slide decks. Not theory. Applied tools, workflows, and frameworks that immediately improve how you work in Product & Technology.</p>
-        <a href="apply.html?field=Product%20%26%20Technology" class="btn btn-primary btn-lg">Apply for This Programme →</a>
+        <div class="eyebrow-tag" style="color:var(--red)">Real Deliverables</div>
+        <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:20px">By the End of the Sprint, You Will Have Built Real Things.</h2>
+        <p style="font-size:0.95rem;color:#4A5568;line-height:1.7;margin-bottom:28px">Not slide decks. Not theory. Applied tools, workflows, and frameworks that immediately improve how you work in Product & Technology.</p>
+        <a href="apply.html?field=Product%20%26%20Technology" class="btn btn-primary btn-lg">Apply for This Programme</a>
       </div>
-      <div style="display:flex;flex-direction:column;gap:20px;">
+      <div style="display:flex;flex-direction:column;gap:20px">
         
-            <div style="display:flex;align-items:flex-start;gap:14px;">
-              <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0;">✓</span>
-              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5;">An AI-powered product discovery workflow using your existing research stack</span>
+            <div style="display:flex;align-items:flex-start;gap:14px">
+              <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0">✓</span>
+              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5">An AI-powered product discovery workflow using your existing research stack</span>
             </div>
-            <div style="display:flex;align-items:flex-start;gap:14px;">
-              <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0;">✓</span>
-              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5;">A structured framework for evaluating AI feature proposals with clear ethical criteria</span>
+            <div style="display:flex;align-items:flex-start;gap:14px">
+              <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0">✓</span>
+              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5">A structured framework for evaluating AI feature proposals with clear ethical criteria</span>
             </div>
-            <div style="display:flex;align-items:flex-start;gap:14px;">
-              <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0;">✓</span>
-              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5;">A roadmap communication template generated and validated with AI assistance</span>
+            <div style="display:flex;align-items:flex-start;gap:14px">
+              <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0">✓</span>
+              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5">A roadmap communication template generated and validated with AI assistance</span>
             </div>
-        <div style="margin-top:8px;padding:20px;background:rgba(255,41,78,0.06);border:1.5px solid rgba(255,41,78,0.2);border-radius:12px;">
-          <div style="font-size:0.78rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Plus</div>
-          <p style="font-size:0.88rem;color:#2E3A4A;line-height:1.5;margin:0;">Brixgate Expert Practitioner Certificate — field-verified in Product & Technology, practitioner-assessed, and recognised by employers across Africa and internationally.</p>
+        <div style="margin-top:8px;padding:20px;background:rgba(255,41,78,0.06);border:1.5px solid rgba(255,41,78,0.2);border-radius:12px">
+          <div style="font-size:0.78rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Plus</div>
+          <p style="font-size:0.88rem;color:#2E3A4A;line-height:1.5;margin:0">Brixgate Expert Practitioner Certificate — field-verified in Product & Technology, practitioner-assessed, and recognised by employers across Africa and internationally.</p>
         </div>
       </div>
     </div>
@@ -445,27 +511,27 @@
 </section>
 
 <!-- ====== PROGRAMME COHORTS ====== -->
-<section class="section-pad bg-white" style="border-top:1px solid #E8E3DE;padding-top:40px;padding-bottom:48px;">
+<section class="section-pad bg-white">
   <div class="container">
     <div class="fade-up">
-      <div class="eyebrow-tag" style="color:var(--red);">Programme Cohorts</div>
-      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px;">Open Cohorts</h2>
-      <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px;">Cohort-based delivery means you learn alongside peers in your field and leave with a network, not just a certificate.</p>
-      <div style="max-width:540px;">
-        <div style="border:1.5px solid #E8E3DE;border-radius:14px;overflow:hidden;">
-          <div style="background:#021024;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;">
-            <div style="font-size:0.95rem;font-weight:800;color:#fff;">AI in Product & Technology &#8212; Cohort 1</div>
-            <span style="background:#34C759;color:#fff;font-size:0.7rem;font-weight:800;padding:4px 12px;border-radius:50px;">Open</span>
+      <div class="eyebrow-tag" style="color:var(--red)">Programme Cohorts</div>
+      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px">Open Cohorts</h2>
+      <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px">Cohort-based delivery means you learn alongside peers in your field and leave with a network, not just a certificate.</p>
+      <div style="max-width:540px">
+        <div style="border:1.5px solid #E8E3DE;border-radius:14px;overflow:hidden">
+          <div style="background:#021024;padding:16px 24px;display:flex;justify-content:space-between;align-items:center">
+            <div style="font-size:0.95rem;font-weight:800;color:#fff">AI in Product & Technology &#8212; Cohort 1</div>
+            <span style="background:#34C759;color:#fff;font-size:0.7rem;font-weight:800;padding:4px 12px;border-radius:50px">Open</span>
           </div>
-          <div style="padding:24px;background:#F9F8F7;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Start Date</div><div style="font-size:0.95rem;font-weight:800;color:#021024;">June 12, 2026</div></div>
-            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">End Date</div><div style="font-size:0.95rem;font-weight:800;color:#021024;">July 10, 2026</div></div>
-            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Cohort</div><div style="font-size:0.95rem;font-weight:800;color:#021024;">1</div></div>
-            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Lead Practitioner</div><div style="font-size:0.95rem;font-weight:800;color:#021024;">Tobi Akinwande</div></div>
+          <div style="padding:24px;background:#F9F8F7;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Start Date</div><div style="font-size:0.95rem;font-weight:800;color:#021024">June 12, 2026</div></div>
+            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">End Date</div><div style="font-size:0.95rem;font-weight:800;color:#021024">July 10, 2026</div></div>
+            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Cohort</div><div style="font-size:0.95rem;font-weight:800;color:#021024">1</div></div>
+            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Lead Practitioner</div><div style="font-size:0.95rem;font-weight:800;color:#021024">Tobi Akinwande</div></div>
           </div>
-          <div style="padding:16px 24px;background:#fff;border-top:1px solid #E8E3DE;display:flex;justify-content:space-between;align-items:center;">
-            <div style="display:flex;align-items:center;gap:6px;"><span style="color:#F59E0B;">&#9733;</span><span style="font-size:0.88rem;font-weight:700;color:#021024;">4.9</span><span style="font-size:0.78rem;color:#7A94A8;">Practitioner Rating</span></div>
-            <a href="apply.html?field=Product%20%26%20Technology" class="btn btn-primary" style="padding:10px 20px;font-size:0.85rem;">Secure Your Seat &#8594;</a>
+          <div style="padding:16px 24px;background:#fff;display:flex;justify-content:space-between;align-items:center">
+            <div style="display:flex;align-items:center;gap:6px"><span style="color:#F59E0B">&#9733;</span><span style="font-size:0.88rem;font-weight:700;color:#021024">4.9</span><span style="font-size:0.78rem;color:#7A94A8">Practitioner Rating</span></div>
+            <a href="apply.html?field=Product%20%26%20Technology" class="btn btn-primary" style="padding:10px 20px;font-size:0.85rem">Secure Your Seat</a>
           </div>
         </div>
       </div>
@@ -474,25 +540,25 @@
 </section>
 
 <!-- ====== OUR PRACTITIONERS ====== -->
-<section class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+<section class="section-pad bg-dark">
   <div class="container">
-    <div class="fade-up" style="margin-bottom:36px;">
-      <div class="eyebrow-tag" style="color:var(--red);">Your Practitioner</div>
-      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;">Taught by Someone Who Has Done It</h2>
-      <p style="font-size:0.88rem;color:var(--muted);margin-top:8px;">Not a generalist trainer. A practitioner who has deployed AI in this exact field and will show you exactly how.</p>
+    <div class="fade-up" style="margin-bottom:36px">
+      <div class="eyebrow-tag" style="color:var(--red)">Your Practitioner</div>
+      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900">Taught by Someone Who Has Done It</h2>
+      <p style="font-size:0.88rem;color:var(--muted);margin-top:8px">Not a generalist trainer. A practitioner who has deployed AI in this exact field and will show you exactly how.</p>
     </div>
-    <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:16px;overflow:hidden;max-width:860px;" class="fade-up">
-      <div style="display:grid;grid-template-columns:220px 1fr;gap:0;">
-        <div style="background:#1A3050;padding:40px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
-          <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#FF294E,#FF5748);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:14px;">T</div>
-          <div style="font-size:0.92rem;font-weight:800;color:#fff;margin-bottom:4px;">Tobi Akinwande</div>
-          <div style="font-size:0.72rem;color:#7A94A8;line-height:1.5;margin-bottom:12px;">Senior Practitioner, Product AI & Engineering Delivery</div>
-          <div style="font-size:0.72rem;font-weight:700;color:#FF294E;">780+ live sessions</div>
+    <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:16px;overflow:hidden;max-width:860px" class="fade-up">
+      <div style="display:grid;grid-template-columns:220px 1fr;gap:0">
+        <div style="background:#1A3050;padding:40px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+          <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#FF294E,#FF5748);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:14px">T</div>
+          <div style="font-size:0.92rem;font-weight:800;color:#fff;margin-bottom:4px">Tobi Akinwande</div>
+          <div style="font-size:0.72rem;color:#7A94A8;line-height:1.5;margin-bottom:12px">Senior Practitioner, Product AI & Engineering Delivery</div>
+          <div style="font-size:0.72rem;font-weight:700;color:#FF294E">780+ live sessions</div>
         </div>
-        <div style="padding:36px 40px;">
-          <p style="font-size:0.9rem;color:var(--muted);line-height:1.75;margin-bottom:24px;">Tobi is a product and engineering leader with 11 years building SaaS products across fintech, healthtech, and enterprise software in Nigeria, the UK, and the US. He has led AI feature development teams and now helps product professionals build systematic AI workflows that separate high-performing product teams from the rest. Over 780 live sessions delivered.</p>
-          <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Core Expertise</div>
-          <div><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">AI Product Strategy</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">Engineering AI & Code Generation</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">Product-led Growth</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">Technical Leadership</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0;">AI Feature Development & Safety</span></div>
+        <div style="padding:36px 40px">
+          <p style="font-size:0.9rem;color:var(--muted);line-height:1.75;margin-bottom:24px">Tobi is a product and engineering leader with 11 years building SaaS products across fintech, healthtech, and enterprise software in Nigeria, the UK, and the US. He has led AI feature development teams and now helps product professionals build systematic AI workflows that separate high-performing product teams from the rest. Over 780 live sessions delivered.</p>
+          <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Core Expertise</div>
+          <div><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">AI Product Strategy</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">Engineering AI & Code Generation</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">Product-led Growth</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">Technical Leadership</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">AI Feature Development & Safety</span></div>
         </div>
       </div>
     </div>
@@ -500,134 +566,129 @@
 </section>
 
 <!-- ====== TESTIMONIALS ====== -->
-<section class="section-pad bg-white" style="border-top:1px solid #E8E3DE;">
+<section class="section-pad bg-white">
   <div class="container">
-    <div style="text-align:center;margin-bottom:36px;" class="fade-up">
-      <div class="eyebrow-tag" style="color:var(--red);">Alumni Reviews</div>
-      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);">What Practitioners Say</h2>
+    <div style="text-align:center;margin-bottom:36px" class="fade-up">
+      <div class="eyebrow-tag" style="color:var(--red)">Alumni Reviews</div>
+      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark)">What Practitioners Say</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;"><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px;" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px;">"My sprint planning now takes 90 minutes instead of half a day. The AI user story generation workflow is not just faster — the acceptance criteria are tighter and we have fewer backlog clarification sessions."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8;">Product Manager · BrixGate Alumni</div></div><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px;" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px;">"I was already using Copilot but not systematically. After Week 2 I had a structured AI coding workflow with review gates. My output improved and the code quality metrics went up."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8;">Senior Engineer · BrixGate Alumni</div></div><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px;" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px;">"The competitive analysis workflow I built in Week 2 runs every week automatically. I no longer spend 4 hours per month doing what now takes 20 minutes."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8;">Product Manager · BrixGate Alumni</div></div></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px"><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px">"My sprint planning now takes 90 minutes instead of half a day. The AI user story generation workflow is not just faster — the acceptance criteria are tighter and we have fewer backlog clarification sessions."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8">Product Manager · BrixGate Alumni</div></div><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px">"I was already using Copilot but not systematically. After Week 2 I had a structured AI coding workflow with review gates. My output improved and the code quality metrics went up."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8">Senior Engineer · BrixGate Alumni</div></div><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px">"The competitive analysis workflow I built in Week 2 runs every week automatically. I no longer spend 4 hours per month doing what now takes 20 minutes."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8">Product Manager · BrixGate Alumni</div></div></div>
   </div>
 </section>
 
 <!-- ====== FAQ ====== -->
-<section class="section-pad bg-white" style="border-top:1px solid #E8E3DE;padding-bottom:64px;">
+<section class="section-pad bg-white">
   <div class="container">
-    <div style="max-width:760px;margin:0 auto;" class="fade-up">
-      <div style="text-align:center;margin-bottom:32px;">
-        <div class="eyebrow-tag" style="color:var(--red);">FAQ</div>
-        <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);">Common Questions</h2>
+    <div style="max-width:760px;margin:0 auto" class="fade-up">
+      <div style="text-align:center;margin-bottom:32px">
+        <div class="eyebrow-tag" style="color:var(--red)">FAQ</div>
+        <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark)">Common Questions</h2>
       </div>
-      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024;">Is this for product managers, engineers, or both?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px;">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7;"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0;">Both. The sprint is designed so PMs and engineers can take it together and build shared workflows — or independently, with tracks tailored to each role. Week 3 has separate applied tracks for PM and engineering disciplines.</p></div></details><details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024;">We already use AI tools. Will this still add value?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px;">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7;"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0;">Yes. The gap is rarely tool access — it is systematic workflow integration. The sprint takes teams from ad-hoc AI use to consistent, measurable capability embedded in how you actually ship.</p></div></details><details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024;">Is this relevant for non-technical product managers?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px;">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7;"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0;">Yes. No coding experience is required. Non-technical PMs focus on discovery, strategy, and AI-assisted specification workflows. The engineering track is available but not mandatory.</p></div></details><details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px;"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024;">Can we run this as a team?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px;">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7;"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0;">Yes — and we recommend it. Teams that go through the sprint together build shared workflows and shared vocabulary. Corporate seat pricing is available for 2+ participants.</p></div></details>
+      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024">Is this for product managers, engineers, or both?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0">Both. The sprint is designed so PMs and engineers can take it together and build shared workflows — or independently, with tracks tailored to each role. Week 3 has separate applied tracks for PM and engineering disciplines.</p></div></details><details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024">We already use AI tools. Will this still add value?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0">Yes. The gap is rarely tool access — it is systematic workflow integration. The sprint takes teams from ad-hoc AI use to consistent, measurable capability embedded in how you actually ship.</p></div></details><details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024">Is this relevant for non-technical product managers?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0">Yes. No coding experience is required. Non-technical PMs focus on discovery, strategy, and AI-assisted specification workflows. The engineering track is available but not mandatory.</p></div></details><details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024">Can we run this as a team?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0">Yes — and we recommend it. Teams that go through the sprint together build shared workflows and shared vocabulary. Corporate seat pricing is available for 2+ participants.</p></div></details>
     </div>
   </div>
 </section>
 
 <!-- ====== VALUE / ROI ====== -->
-<section class="section-pad" style="background:#F6F4F2;border-top:1px solid #E8E3DE;">
+<section class="section-pad" style="background:#F6F4F2">
   <div class="container">
-    <div style="text-align:center;margin-bottom:48px;" class="fade-up">
-      <div class="eyebrow-tag" style="color:var(--red);">Why This Investment Pays Off</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:#021024;line-height:1.25;">What ₦250,000 Actually Buys You</h2>
-      <p style="font-size:0.95rem;color:#4A5568;max-width:600px;margin:16px auto 0;line-height:1.7;">Product managers who drive AI adoption in their teams consistently advance faster — and organisations are paying a clear premium to hire them.</p>
+    <div style="text-align:center;margin-bottom:48px" class="fade-up">
+      <div class="eyebrow-tag" style="color:var(--red)">Why This Investment Pays Off</div>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:#021024;line-height:1.25">What ₦250,000 Actually Buys You</h2>
+      <p style="font-size:0.95rem;color:#4A5568;max-width:600px;margin:16px auto 0;line-height:1.7">Product managers who drive AI adoption in their teams consistently advance faster — and organisations are paying a clear premium to hire them.</p>
     </div>
 
     <!-- Market data row -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1.5px solid #E8E3DE;border-radius:16px;overflow:hidden;margin-bottom:56px;" class="fade-up">
-      <div style="padding:32px 28px;text-align:center;border-right:1px solid #E8E3DE;">
-        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px;">40%</div>
-        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px;">Faster product discovery cycles with AI research tools</div>
-        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic;">Product-Led Alliance</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1.5px solid #E8E3DE;border-radius:16px;overflow:hidden;margin-bottom:56px" class="fade-up">
+      <div style="padding:32px 28px;text-align:center;border-right:1px solid #E8E3DE">
+        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px">40%</div>
+        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px">Faster product discovery cycles with AI research tools</div>
+        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic">Product-Led Alliance</div>
       </div>
-      <div style="padding:32px 28px;text-align:center;border-right:1px solid #E8E3DE;">
-        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px;">3×</div>
-        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px;">More experiments shipped per quarter by AI-native PMs</div>
-        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic;">Amplitude</div>
+      <div style="padding:32px 28px;text-align:center;border-right:1px solid #E8E3DE">
+        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px">3×</div>
+        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px">More experiments shipped per quarter by AI-native PMs</div>
+        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic">Amplitude</div>
       </div>
-      <div style="padding:32px 28px;text-align:center;">
-        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px;">$45K+</div>
-        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px;">Avg salary premium for AI-fluent product professionals</div>
-        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic;">Glassdoor</div>
+      <div style="padding:32px 28px;text-align:center">
+        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px">$45K+</div>
+        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px">Avg salary premium for AI-fluent product professionals</div>
+        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic">Glassdoor</div>
       </div>
     </div>
 
     <!-- What's included + Outcomes grid -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;" class="fade-up">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start" class="fade-up">
 
       <!-- What's Included -->
-      <div style="background:#fff;border:1.5px solid #E8E3DE;border-radius:16px;padding:40px 36px;">
-        <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:6px;">What You Get</div>
-        <h3 style="font-size:1.2rem;font-weight:900;color:#021024;margin-bottom:28px;">Everything Included. No Extras.</h3>
-        <div style="display:flex;flex-direction:column;gap:16px;">
-          <div style="display:flex;gap:14px;align-items:flex-start;">
-            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><span style="color:#fff;font-size:0.75rem;font-weight:900;">✓</span></div>
-            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px;">8 Live Practitioner Sessions</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5;">2 sessions per week across 4 weeks — interactive, applied, no pre-recorded lectures.</div></div>
+      <div style="background:#fff;border:1.5px solid #E8E3DE;border-radius:16px;padding:40px 36px">
+        <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:6px">What You Get</div>
+        <h3 style="font-size:1.2rem;font-weight:900;color:#021024;margin-bottom:28px">Everything Included. No Extras.</h3>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;gap:14px;align-items:flex-start">
+            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><span style="color:#fff;font-size:0.75rem;font-weight:900">✓</span></div>
+            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px">8 Live Practitioner Sessions</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5">2 sessions per week across 4 weeks — interactive, applied, no pre-recorded lectures.</div></div>
           </div>
-          <div style="display:flex;gap:14px;align-items:flex-start;">
-            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><span style="color:#fff;font-size:0.75rem;font-weight:900;">✓</span></div>
-            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px;">Field Assessment Before You Start</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5;">Know exactly where you are and what matters most for your specific Product & Technology role.</div></div>
+          <div style="display:flex;gap:14px;align-items:flex-start">
+            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><span style="color:#fff;font-size:0.75rem;font-weight:900">✓</span></div>
+            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px">Field Assessment Before You Start</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5">Know exactly where you are and what matters most for your specific Product & Technology role.</div></div>
           </div>
-          <div style="display:flex;gap:14px;align-items:flex-start;">
-            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><span style="color:#fff;font-size:0.75rem;font-weight:900;">✓</span></div>
-            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px;">All AI Tools &amp; Platform Access</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5;">Every tool used in the sprint is provided. No additional subscriptions required.</div></div>
+          <div style="display:flex;gap:14px;align-items:flex-start">
+            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><span style="color:#fff;font-size:0.75rem;font-weight:900">✓</span></div>
+            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px">All AI Tools &amp; Platform Access</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5">Every tool used in the sprint is provided. No additional subscriptions required.</div></div>
           </div>
-          <div style="display:flex;gap:14px;align-items:flex-start;">
-            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><span style="color:#fff;font-size:0.75rem;font-weight:900;">✓</span></div>
-            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px;">Peer Cohort of Product & Technology Professionals</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5;">Learn alongside practitioners solving the same problems you face — a network, not just a cohort.</div></div>
+          <div style="display:flex;gap:14px;align-items:flex-start">
+            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><span style="color:#fff;font-size:0.75rem;font-weight:900">✓</span></div>
+            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px">Peer Cohort of Product & Technology Professionals</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5">Learn alongside practitioners solving the same problems you face — a network, not just a cohort.</div></div>
           </div>
-          <div style="display:flex;gap:14px;align-items:flex-start;">
-            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><span style="color:#fff;font-size:0.75rem;font-weight:900;">✓</span></div>
-            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px;">Capstone Project &amp; Portfolio Artefact</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5;">A real AI-Augmented Product System — built during the sprint, reviewed by your practitioner, and yours to deploy.</div></div>
+          <div style="display:flex;gap:14px;align-items:flex-start">
+            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><span style="color:#fff;font-size:0.75rem;font-weight:900">✓</span></div>
+            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px">Capstone Project &amp; Portfolio Artefact</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5">A real AI-Augmented Product System — built during the sprint, reviewed by your practitioner, and yours to deploy.</div></div>
           </div>
-          <div style="display:flex;gap:14px;align-items:flex-start;">
-            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><span style="color:#fff;font-size:0.75rem;font-weight:900;">✓</span></div>
-            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px;">Brixgate Expert Practitioner Certificate</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5;">Verifiable digital credential, LinkedIn badge, and field-verified assessment — employer-ready in Product & Technology.</div></div>
+          <div style="display:flex;gap:14px;align-items:flex-start">
+            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><span style="color:#fff;font-size:0.75rem;font-weight:900">✓</span></div>
+            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px">Brixgate Expert Practitioner Certificate</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5">Verifiable digital credential, LinkedIn badge, and field-verified assessment — employer-ready in Product & Technology.</div></div>
           </div>
-          <div style="display:flex;gap:14px;align-items:flex-start;">
-            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><span style="color:#fff;font-size:0.75rem;font-weight:900;">✓</span></div>
-            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px;">Lifetime Alumni Network Access</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5;">Post-sprint access to the Brixgate Alumni community across all fields and cohorts.</div></div>
+          <div style="display:flex;gap:14px;align-items:flex-start">
+            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><span style="color:#fff;font-size:0.75rem;font-weight:900">✓</span></div>
+            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px">Lifetime Alumni Network Access</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5">Post-sprint access to the Brixgate Alumni community across all fields and cohorts.</div></div>
           </div>
         </div>
       </div>
 
       <!-- Outcomes + Comparison -->
-      <div style="display:flex;flex-direction:column;gap:24px;">
-        <div style="background:#021024;border-radius:16px;padding:36px;">
-          <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:16px;">By the End of Week 4, You Will Have</div>
-          <div style="display:flex;flex-direction:column;gap:14px;">
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0;">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6;">Ship product specs from brief to review-ready in hours, not days</span></div>
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0;">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6;">Build AI-assisted user research that surfaces insights competitors miss</span></div>
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0;">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6;">Create a living product roadmap that updates based on live data signals</span></div>
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <div style="background:#021024;border-radius:16px;padding:36px">
+          <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:16px">By the End of Week 4, You Will Have</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Ship product specs from brief to review-ready in hours, not days</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Build AI-assisted user research that surfaces insights competitors miss</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Create a living product roadmap that updates based on live data signals</span></div>
           </div>
         </div>
 
-        <div style="background:#fff;border:1.5px solid #E8E3DE;border-radius:16px;padding:32px;">
-          <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:16px;">vs. The Alternatives</div>
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #F0EDEA;">
-              <div><div style="font-size:0.82rem;font-weight:700;color:#021024;">YouTube / Free AI Courses</div><div style="font-size:0.75rem;color:#7A94A8;margin-top:2px;">Generic. No field context. No practitioner. No accountability.</div></div>
-              <div style="font-size:0.78rem;font-weight:800;color:#7A94A8;white-space:nowrap;margin-left:16px;">Free — but valueless for your career</div>
+        <div style="background:#fff;border:1.5px solid #E8E3DE;border-radius:16px;padding:32px">
+          <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:16px">vs. The Alternatives</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #F0EDEA">
+              <div><div style="font-size:0.82rem;font-weight:700;color:#021024">YouTube / Free AI Courses</div><div style="font-size:0.75rem;color:#7A94A8;margin-top:2px">Generic. No field context. No practitioner. No accountability.</div></div>
+              <div style="font-size:0.78rem;font-weight:800;color:#7A94A8;white-space:nowrap;margin-left:16px">Free — but valueless for your career</div>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #F0EDEA;">
-              <div><div style="font-size:0.82rem;font-weight:700;color:#021024;">LinkedIn Learning / Coursera</div><div style="font-size:0.75rem;color:#7A94A8;margin-top:2px;">Self-paced. Pre-recorded. No peer cohort. No field practitioner.</div></div>
-              <div style="font-size:0.78rem;font-weight:800;color:#7A94A8;white-space:nowrap;margin-left:16px;">$400/yr · No accountability</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #F0EDEA">
+              <div><div style="font-size:0.82rem;font-weight:700;color:#021024">LinkedIn Learning / Coursera</div><div style="font-size:0.75rem;color:#7A94A8;margin-top:2px">Self-paced. Pre-recorded. No peer cohort. No field practitioner.</div></div>
+              <div style="font-size:0.78rem;font-weight:800;color:#7A94A8;white-space:nowrap;margin-left:16px">$400/yr · No accountability</div>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #F0EDEA;">
-              <div><div style="font-size:0.82rem;font-weight:700;color:#021024;">2-Day AI Workshop</div><div style="font-size:0.75rem;color:#7A94A8;margin-top:2px;">High cost. Generic content. No follow-through. No deliverable.</div></div>
-              <div style="font-size:0.78rem;font-weight:800;color:#7A94A8;white-space:nowrap;margin-left:16px;">₦500K–₦2M · No outcomes</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #F0EDEA">
+              <div><div style="font-size:0.82rem;font-weight:700;color:#021024">2-Day AI Workshop</div><div style="font-size:0.75rem;color:#7A94A8;margin-top:2px">High cost. Generic content. No follow-through. No deliverable.</div></div>
+              <div style="font-size:0.78rem;font-weight:800;color:#7A94A8;white-space:nowrap;margin-left:16px">₦500K–₦2M · No outcomes</div>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;">
-              <div><div style="font-size:0.82rem;font-weight:800;color:#FF294E;">Brixgate Expert Practitioner Sprint</div><div style="font-size:0.75rem;color:#4A5568;margin-top:2px;">Live. Field-specific. Practitioner-led. Real deliverable. Certified.</div></div>
-              <div style="font-size:0.78rem;font-weight:800;color:#021024;white-space:nowrap;margin-left:16px;">₦250,000 · Everything included</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0">
+              <div><div style="font-size:0.82rem;font-weight:800;color:#FF294E">Brixgate Expert Practitioner Sprint</div><div style="font-size:0.75rem;color:#4A5568;margin-top:2px">Live. Field-specific. Practitioner-led. Real deliverable. Certified.</div></div>
+              <div style="font-size:0.78rem;font-weight:800;color:#021024;white-space:nowrap;margin-left:16px">₦250,000 · Everything included</div>
             </div>
           </div>
         </div>
 
-        <div style="background:rgba(255,41,78,0.05);border:1.5px solid rgba(255,41,78,0.2);border-radius:12px;padding:24px;text-align:center;">
-          <div style="font-size:0.78rem;font-weight:800;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">First Cohort — June 12, 2026</div>
-          <div style="font-size:0.88rem;color:#2E3A4A;line-height:1.6;margin-bottom:16px;">Cohort 1 is limited to 20 participants. Once full, the next opening is September 2026.</div>
-          <a href="apply.html?field=Product%20%26%20Technology" class="btn btn-primary" style="width:100%;justify-content:center;display:flex;">Secure Your Place →</a>
-        </div>
       </div>
 
     </div>
@@ -635,87 +696,87 @@
 </section>
 
 <!-- ====== PRICING ====== -->
-<section id="pricing" class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+<section id="pricing" class="section-pad bg-dark">
   <div class="container">
-    <div style="text-align:center;margin-bottom:16px;" class="fade-up">
+    <div style="text-align:center;margin-bottom:16px" class="fade-up">
       <div class="eyebrow-tag">Pricing</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;">Invest in Your AI Advantage</h2>
-      <p style="font-size:0.95rem;color:var(--muted);margin-top:12px;margin-bottom:24px;">Individual pricing for the Product & Technology Expert Practitioner Programme</p>
-      <div class="currency-toggle" style="margin-bottom:8px;">
+      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900">Invest in Your AI Advantage</h2>
+      <p style="font-size:0.95rem;color:var(--muted);margin-top:12px;margin-bottom:24px">Individual pricing for the Product & Technology Expert Practitioner Programme</p>
+      <div class="currency-toggle" style="margin-bottom:8px">
         <label class="label-usd active">$ USD</label>
         <label class="label-ngn">₦ NGN</label>
       </div>
-      <p style="font-size:0.78rem;color:var(--muted);margin-top:6px;">Exchange rate: ₦1,600 per $1 USD</p>
+      <p style="font-size:0.78rem;color:var(--muted);margin-top:6px">Exchange rate: ₦1,600 per $1 USD</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto;" class="stagger">
-      <div class="card fade-up" style="padding:32px 28px;">
-        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px;">Self-Enrolment</div>
-        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px;">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto" class="stagger">
+      <div class="card fade-up" style="padding:32px 28px">
+        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Self-Enrolment</div>
+        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px">
           <span class="currency-usd">$156</span>
           <span class="currency-ngn">₦250,000</span>
         </div>
-        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px;">
+        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">
           <span class="currency-usd">~₦250,000 NGN</span>
           <span class="currency-ngn">~$156 USD</span>
         </div>
-        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px;">
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Full 4-week sprint</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Field assessment</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Expert-led cohort sessions</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Expert Practitioner Certificate</li>
+        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Full 4-week sprint</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Field assessment</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Expert-led cohort sessions</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Expert Practitioner Certificate</li>
         </ul>
-        <a href="apply.html?field=Product%20%26%20Technology" class="btn btn-outline" style="width:100%;justify-content:center;display:flex;">Enrol Now →</a>
+        <a href="apply.html?field=Product%20%26%20Technology" class="btn btn-outline" style="width:100%;justify-content:center;display:flex">Enrol Now</a>
       </div>
-      <div class="card fade-up" style="padding:32px 28px;border-color:var(--red);position:relative;">
-        <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;white-space:nowrap;">Most Popular</div>
-        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px;">Corporate Seat</div>
-        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px;">
+      <div class="card fade-up" style="padding:32px 28px;border-color:var(--red);position:relative">
+        <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;white-space:nowrap">Most Popular</div>
+        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Corporate Seat</div>
+        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px">
           <span class="currency-usd">$125</span>
           <span class="currency-ngn">₦200,000</span>
         </div>
-        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px;">
+        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">
           <span class="currency-usd">~₦200,000 NGN · per seat</span>
           <span class="currency-ngn">~$125 USD · per seat</span>
         </div>
-        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px;">
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Everything in Self-Enrolment</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Manager progress reports</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Invoiced to your company</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Priority cohort placement</li>
+        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Self-Enrolment</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Manager progress reports</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Invoiced to your company</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Priority cohort placement</li>
         </ul>
-        <a href="apply.html?field=Product%20%26%20Technology" class="btn btn-primary" style="width:100%;justify-content:center;display:flex;">Apply Now →</a>
+        <a href="apply.html?field=Product%20%26%20Technology" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Apply Now</a>
       </div>
-      <div class="card fade-up" style="padding:32px 28px;">
-        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px;">Team (20+ seats)</div>
-        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px;">
+      <div class="card fade-up" style="padding:32px 28px">
+        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Team (20+ seats)</div>
+        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px">
           <span class="currency-usd">$106</span>
           <span class="currency-ngn">₦170,000</span>
         </div>
-        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px;">
+        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">
           <span class="currency-usd">~₦170,000 NGN · per seat</span>
           <span class="currency-ngn">~$106 USD · per seat</span>
         </div>
-        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px;">
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Everything in Corporate</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Dedicated cohort manager</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Team project tracks</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--red);">✓</span>Full cohort reporting</li>
+        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Corporate</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Dedicated cohort manager</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Team project tracks</li>
+          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Full cohort reporting</li>
         </ul>
-        <a href="organisations.html#packages" class="btn btn-outline" style="width:100%;justify-content:center;display:flex;">View Team Packages →</a>
+        <a href="organisations.html#packages" class="btn btn-outline" style="width:100%;justify-content:center;display:flex">View Team Packages</a>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ====== CTA ====== -->
-<section class="section-pad" style="background:var(--red);text-align:center;">
+<section class="section-pad" style="background:var(--red);text-align:center">
   <div class="container">
     <div class="fade-up">
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;color:#fff;margin-bottom:16px;">Ready to Become an AI-Native<br />Product & Technology Professional?</h2>
-      <p style="font-size:1rem;color:rgba(255,255,255,0.82);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;">Seats are limited per cohort. Apply in under 2 minutes — no essays, no references required.</p>
-      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-        <a href="apply.html?field=Product%20%26%20Technology" class="btn btn-lg" style="background:#fff;color:var(--red);font-weight:900;">Apply to Become a Brixer →</a>
-        <a href="#quiz-field" class="btn btn-lg" style="background:transparent;border:2px solid rgba(255,255,255,0.5);color:#fff;">Validate Your Level First</a>
+      <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;color:#fff;margin-bottom:16px">Ready to Become an AI-Native<br />Product & Technology Professional?</h2>
+      <p style="font-size:1rem;color:rgba(255,255,255,0.82);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto">Seats are limited per cohort. Apply in under 2 minutes — no essays, no references required.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+        <a href="apply.html?field=Product%20%26%20Technology" class="btn btn-lg" style="background:#fff;color:var(--red);font-weight:900">Apply to Become a Brixer</a>
+        <a href="#quiz-field" class="btn btn-lg" style="background:transparent;border:2px solid rgba(255,255,255,0.5);color:#fff">Validate Your Level First</a>
       </div>
     </div>
   </div>

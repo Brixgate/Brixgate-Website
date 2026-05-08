@@ -8,6 +8,14 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="stylesheet" href="styles.css" />
   <style>
+    /* ---- Hero centering ---- */
+    .page-header { text-align: center; }
+    .page-header .breadcrumb { justify-content: center; }
+    .page-header .eyebrow { display: block; text-align: center; }
+    .page-header h1 { text-align: center; max-width: 820px; margin-left: auto; margin-right: auto; }
+    .page-header p.fade-up { max-width: 680px; margin-left: auto; margin-right: auto; text-align: center; }
+    .hero-cta-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 28px; }
+
     .benefit-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -21,9 +29,27 @@
       transition: var(--transition);
     }
     .benefit-card:hover { border-color: var(--red); transform: translateY(-4px); }
-    .benefit-icon { font-size: 1.8rem; margin-bottom: 14px; }
+    .benefit-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(255,41,78,0.1);
+      border: 1px solid rgba(255,41,78,0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--red);
+      margin-bottom: 16px;
+    }
     .benefit-title { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
     .benefit-desc { font-size: 0.86rem; color: var(--muted); line-height: 1.65; }
+
+    /* ---- Criteria 2-column grid ---- */
+    .criteria-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
 
     .revenue-hero {
       background: linear-gradient(135deg, rgba(255,41,78,0.08) 0%, rgba(27,58,92,0.4) 100%);
@@ -44,11 +70,6 @@
     .revenue-hero h2 { font-size: clamp(1.4rem, 2.5vw, 2rem); margin-bottom: 12px; }
     .revenue-hero p { font-size: 0.95rem; color: var(--muted); max-width: 520px; margin: 0 auto; line-height: 1.7; }
 
-    .criteria-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
     .criteria-row {
       display: flex;
       align-items: flex-start;
@@ -94,6 +115,7 @@
 
     @media (max-width: 768px) {
       .benefit-grid { grid-template-columns: 1fr; }
+      .criteria-list { grid-template-columns: 1fr; }
       .revenue-hero { padding: 36px 24px; }
       .expert-form-wrap { padding: 28px 20px; }
       .form-row-2 { grid-template-columns: 1fr; }
@@ -112,7 +134,7 @@
 
 <!-- Region Banner -->
 <div class="region-banner" id="region-banner">
-  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0;">Now active in</span>
+  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Now active in</span>
   <div class="regions">
     <span class="region-item">🇳🇬 Nigeria</span>
     <span class="region-item">🇬🇧 United Kingdom</span>
@@ -120,7 +142,7 @@
     <span class="region-item">🇰🇪 Kenya</span>
     <span class="region-item">🇿🇦 South Africa</span>
   </div>
-  <a href="apply.html" style="margin-left:auto;font-size:0.72rem;font-weight:700;color:var(--red);letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">For Participants →</a>
+  <a href="apply.html" style="margin-left:auto;font-size:0.72rem;font-weight:700;color:var(--red);letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0">For Participants →</a>
 </div>
 
 <nav class="nav">
@@ -136,7 +158,7 @@
     </div>
     <div class="nav-cta">
       <a href="apply.html" class="btn btn-outline-dark btn-sm">Participant Apply</a>
-      <a href="#apply-form" class="btn btn-primary btn-sm">Join as Expert →</a>
+      <a href="#apply-form" class="btn btn-primary btn-sm">Join as Expert</a>
     </div>
     <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
@@ -148,7 +170,7 @@
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
   <a href="apply.html" class="btn btn-outline">For Participants</a>
-  <a href="#apply-form" class="btn btn-primary" style="margin-top:8px;">Join as Expert →</a>
+  <a href="#apply-form" class="btn btn-primary" style="margin-top:8px">Join as Expert</a>
 </div>
 
 <!-- ====== PAGE HEADER ====== -->
@@ -159,60 +181,80 @@
       <a href="experts.html">Experts</a><span>/</span>
       <span class="current">Join as Expert</span>
     </div>
-    <!-- First cohort urgency pill -->
-    <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,41,78,0.12);border:1px solid rgba(255,41,78,0.3);border-radius:50px;padding:8px 20px;margin-bottom:20px;" class="fade-in">
-      <span style="width:8px;height:8px;background:#FF294E;border-radius:50%;display:inline-block;animation:pulse 1.5s ease-in-out infinite;"></span>
-      <span style="font-size:0.75rem;font-weight:800;color:#FF294E;text-transform:uppercase;letter-spacing:0.1em;">First Cohort — June 12, 2026 · Applications Open Now</span>
-    </div>
+
     <span class="eyebrow">For Senior Practitioners · Global Applications Welcome</span>
-    <h1 class="fade-up">You Have Already Done It.<br/>Now Get Paid to Transfer It.</h1>
-    <p class="fade-up" style="transition-delay:0.1s;">Brixgate Expert Practitioners are the most credible AI educators in their field — because they are still active practitioners. If you have built and deployed AI in your profession, we have the participants, the platform, and the structure. You bring the expertise. We handle everything else.</p>
-    <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;" class="fade-up" style="transition-delay:0.2s;">
-      <a href="#apply-form" class="btn btn-primary btn-lg">Apply to Join →</a>
+    <h1 class="fade-up">You Have Already Done It. Now Get Paid to Transfer It.</h1>
+    <p class="fade-up" style="transition-delay:0.1s">Brixgate Expert Practitioners are the most credible AI educators in their field — because they are still active practitioners. If you have built and deployed AI in your profession, we have the participants, the platform, and the structure. You bring the expertise. We handle everything else.</p>
+    <div class="hero-cta-row fade-up">
+      <a href="#apply-form" class="btn btn-primary btn-lg">Apply to Join</a>
       <a href="#what-you-get" class="btn btn-outline">What You Get</a>
       <a href="#criteria" class="btn btn-outline">See Criteria</a>
     </div>
   </div>
 </header>
 
-<!-- ====== FOUNDING COHORT URGENCY STRIP ====== -->
-<div style="background:#FF294E;padding:0;">
+
+<!-- ====== WHAT YOU GET ====== -->
+<section id="what-you-get" class="section-pad bg-light">
   <div class="container">
-    <div class="join-strip-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;">
-      <div style="padding:20px 24px;border-right:1px solid rgba(255,255,255,0.2);text-align:center;">
-        <div style="font-size:0.65rem;font-weight:800;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">First Cohort Starts</div>
-        <div style="font-size:1rem;font-weight:900;color:#fff;">June 12, 2026</div>
+    <div class="section-header fade-up">
+      <span class="eyebrow">Your Benefits</span>
+      <h2>What Brixgate Expert<br/>Practitioners Get</h2>
+      <div class="divider-red"></div>
+    </div>
+
+    <div class="benefit-grid stagger">
+      <div class="benefit-card fade-up">
+        <div class="benefit-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div class="benefit-title">Competitive Expert Earnings</div>
+        <p class="benefit-desc">Earn
+          <span class="currency-ngn">₦400K–₦1M+</span><span class="currency-gbp">£195–£488+</span><span class="currency-usd">$250–$625+</span>
+          per cohort delivered, paid automatically within 5 business days of close. No invoices, no chasing.
+        </p>
       </div>
-      <div style="padding:20px 24px;border-right:1px solid rgba(255,255,255,0.2);text-align:center;">
-        <div style="font-size:0.65rem;font-weight:800;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Applications Close</div>
-        <div style="font-size:1rem;font-weight:900;color:#fff;">May 28, 2026</div>
+      <div class="benefit-card fade-up">
+        <div class="benefit-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <div class="benefit-title">Global Reach</div>
+        <p class="benefit-desc">Access a pipeline of motivated professionals from Nigeria, Kenya, Ghana, South Africa, the UK, and the United States — all through one platform.</p>
       </div>
-      <div style="padding:20px 24px;border-right:1px solid rgba(255,255,255,0.2);text-align:center;">
-        <div style="font-size:0.65rem;font-weight:800;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Fields Open</div>
-        <div style="font-size:1rem;font-weight:900;color:#fff;">Cybersecurity · Product & Tech</div>
+      <div class="benefit-card fade-up">
+        <div class="benefit-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <div class="benefit-title">Zero Admin Overhead</div>
+        <p class="benefit-desc">Brixgate handles all scheduling, participant communications, cohort management, payments, and marketing. You arrive, deliver, and get paid.</p>
       </div>
-      <div style="padding:20px 24px;text-align:center;">
-        <div style="font-size:0.65rem;font-weight:800;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Applications From</div>
-        <div style="font-size:1rem;font-weight:900;color:#fff;">Global · Online Delivery</div>
+      <div class="benefit-card fade-up">
+        <div class="benefit-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="benefit-title">Verified Expert Status</div>
+        <p class="benefit-desc">A public-facing Brixgate Expert Practitioner profile and designation — a credential that grows in value as more professionals recognise what it represents.</p>
+      </div>
+      <div class="benefit-card fade-up">
+        <div class="benefit-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <div class="benefit-title">Cohort Track Record</div>
+        <p class="benefit-desc">Your cohort history, participant outcomes, and delivery ratings are published on your profile — building a demonstrable teaching track record over time.</p>
+      </div>
+      <div class="benefit-card fade-up">
+        <div class="benefit-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.85"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="benefit-title">Practitioner Community</div>
+        <p class="benefit-desc">Join a network of Expert Practitioners across 12 fields sharing applied AI insights, delivery practices, and curriculum developments at the frontier.</p>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- ====== WHAT YOU EARN ====== -->
-<section class="section-pad bg-dark">
+<section class="section-pad bg-white">
   <div class="container">
 
     <!-- Intro strip -->
     <div class="revenue-hero fade-up">
-      <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,41,78,0.1);border:1px solid rgba(255,41,78,0.25);border-radius:50px;padding:8px 20px;margin-bottom:20px;">
-        <span style="width:8px;height:8px;background:var(--red);border-radius:50%;display:inline-block;"></span>
-        <span style="font-size:0.75rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.1em;">Expert Compensation</span>
+      <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,41,78,0.1);border:1px solid rgba(255,41,78,0.25);border-radius:50px;padding:8px 20px;margin-bottom:20px">
+        <span style="width:8px;height:8px;background:var(--red);border-radius:50%;display:inline-block"></span>
+        <span style="font-size:0.75rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.1em">Expert Compensation</span>
       </div>
       <h2>Get Paid to Teach What You Already Do</h2>
       <p>Every Brixgate Expert Practitioner receives a competitive payment per cohort delivered — paid automatically within 5 business days of cohort close. No invoicing, no admin, no chasing. You focus on delivery; we handle everything else.</p>
-      <div style="margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-        <a href="#apply-form" class="btn btn-primary">Apply Now →</a>
+      <div style="margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="#apply-form" class="btn btn-primary">Apply Now</a>
         <a href="#criteria" class="btn btn-outline">See Criteria</a>
       </div>
     </div>
@@ -223,160 +265,113 @@
       <h2>What You Can Earn Per Cohort</h2>
       <div class="divider-red"></div>
       <p>Brixgate Expert Practitioners earn 20% of revenue per participant in their cohort — paid automatically within 5 business days of cohort close, with no invoicing required. Earnings scale directly with cohort size.</p>
-      <div style="margin-top:16px;display:inline-flex;align-items:center;gap:10px;background:rgba(255,41,78,0.1);border:1px solid rgba(255,41,78,0.2);border-radius:8px;padding:12px 20px;">
-        <span style="font-size:0.8rem;color:rgba(255,255,255,0.7);">The maths:</span>
-        <span style="font-size:0.88rem;font-weight:700;color:var(--white);">₦250,000 per seat × 20% × cohort size = your earnings per sprint</span>
+      <div style="margin-top:16px;display:inline-flex;align-items:center;gap:10px;background:rgba(255,41,78,0.1);border:1px solid rgba(255,41,78,0.2);border-radius:8px;padding:12px 20px">
+        <span style="font-size:0.8rem;color:rgba(255,255,255,0.7)">The maths:</span>
+        <span style="font-size:0.88rem;font-weight:700;color:var(--white)">₦250,000 per seat × 20% × cohort size = your earnings per sprint</span>
       </div>
     </div>
 
     <div class="grid-3 stagger">
-      <div class="card fade-up" style="text-align:center;">
-        <div style="font-size:0.72rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Starter Cohort</div>
-        <div style="font-size:0.88rem;color:var(--muted);margin-bottom:6px;">8–10 participants</div>
-        <div style="font-size:2.2rem;font-weight:900;color:var(--white);line-height:1;margin-bottom:6px;">
+      <div class="card fade-up" style="text-align:center">
+        <div style="font-size:0.72rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px">Starter Cohort</div>
+        <div style="font-size:0.88rem;color:var(--muted);margin-bottom:6px">8–10 participants</div>
+        <div style="font-size:2.2rem;font-weight:900;color:var(--white);line-height:1;margin-bottom:6px">
           <span class="currency-ngn">₦400K</span><span class="currency-gbp">~£195</span>
           <span class="currency-usd">~$250</span>
         </div>
-        <div style="font-size:0.78rem;color:var(--muted);line-height:1.5;">per 4-week sprint</div>
-        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border-card);font-size:0.78rem;color:var(--muted);">+ annual potential if you run<br/><strong style="color:rgba(255,255,255,0.6);">3–4 cohorts per year</strong></div>
+        <div style="font-size:0.78rem;color:var(--muted);line-height:1.5">per 4-week sprint</div>
+        <div style="margin-top:16px;padding-top:16px;font-size:0.78rem;color:var(--muted)">+ annual potential if you run<br/><strong style="color:rgba(255,255,255,0.6)">3–4 cohorts per year</strong></div>
       </div>
-      <div class="card fade-up" style="text-align:center;border-color:var(--red);">
-        <div style="font-size:0.72rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Standard Cohort</div>
-        <div style="font-size:0.88rem;color:var(--muted);margin-bottom:6px;">12–15 participants</div>
-        <div style="font-size:2.2rem;font-weight:900;color:var(--white);line-height:1;margin-bottom:6px;">
+      <div class="card fade-up" style="text-align:center;border-color:var(--red)">
+        <div style="font-size:0.72rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px">Standard Cohort</div>
+        <div style="font-size:0.88rem;color:var(--muted);margin-bottom:6px">12–15 participants</div>
+        <div style="font-size:2.2rem;font-weight:900;color:var(--white);line-height:1;margin-bottom:6px">
           <span class="currency-ngn">₦600K–₦750K</span><span class="currency-gbp">~£293–£366</span>
           <span class="currency-usd">~$375–$469</span>
         </div>
-        <div style="font-size:0.78rem;color:var(--muted);line-height:1.5;">per 4-week sprint</div>
-        <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,41,78,0.2);font-size:0.78rem;color:rgba(255,41,78,0.8);font-weight:700;">Most common cohort size</div>
+        <div style="font-size:0.78rem;color:var(--muted);line-height:1.5">per 4-week sprint</div>
+        <div style="margin-top:16px;padding-top:16px;font-size:0.78rem;color:rgba(255,41,78,0.8);font-weight:700">Most common cohort size</div>
       </div>
-      <div class="card fade-up" style="text-align:center;">
-        <div style="font-size:0.72rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Full / Corporate Cohort</div>
-        <div style="font-size:0.88rem;color:var(--muted);margin-bottom:6px;">20–25 participants</div>
-        <div style="font-size:2.2rem;font-weight:900;color:var(--white);line-height:1;margin-bottom:6px;">
+      <div class="card fade-up" style="text-align:center">
+        <div style="font-size:0.72rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px">Full / Corporate Cohort</div>
+        <div style="font-size:0.88rem;color:var(--muted);margin-bottom:6px">20–25 participants</div>
+        <div style="font-size:2.2rem;font-weight:900;color:var(--white);line-height:1;margin-bottom:6px">
           <span class="currency-ngn">₦1M+</span><span class="currency-gbp">~£488+</span>
           <span class="currency-usd">~$625+</span>
         </div>
-        <div style="font-size:0.78rem;color:var(--muted);line-height:1.5;">per 4-week sprint</div>
-        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border-card);font-size:0.78rem;color:var(--muted);">Corporate intakes often run<br/><strong style="color:rgba(255,255,255,0.6);">multiple cohorts per year</strong></div>
+        <div style="font-size:0.78rem;color:var(--muted);line-height:1.5">per 4-week sprint</div>
+        <div style="margin-top:16px;padding-top:16px;font-size:0.78rem;color:var(--muted)">Corporate intakes often run<br/><strong style="color:rgba(255,255,255,0.6)">multiple cohorts per year</strong></div>
       </div>
     </div>
 
     <!-- Currency toggle -->
-    <div class="currency-toggle fade-up" style="margin-top:32px;">
+    <div class="currency-toggle fade-up" style="margin-top:32px">
       <label class="label-ngn">₦ NGN</label>
       <div class="toggle-switch" role="switch" aria-label="Toggle currency"></div>
       <label class="label-usd">$ USD</label>
     </div>
-    <p style="text-align:center;font-size:0.8rem;color:var(--muted);margin-top:8px;" class="fade-in">
+    <p style="text-align:center;font-size:0.8rem;color:var(--muted);margin-top:8px" class="fade-in">
       Figures are indicative. Actual earnings depend on cohort size and intake mix. USD shown at ₦1,600/$1 · GBP at ₦2,050/£1.
     </p>
 
     <!-- Trust signals row -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border-card);border-radius:var(--radius-md);overflow:hidden;margin-top:48px;" class="fade-up">
-      <div style="padding:24px 28px;border-right:1px solid var(--border-card);text-align:center;">
-        <div style="font-size:1.4rem;font-weight:900;color:var(--white);margin-bottom:4px;">5 days</div>
-        <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;">Payment turnaround after cohort close</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border-card);border-radius:var(--radius-md);overflow:hidden;margin-top:48px" class="fade-up">
+      <div style="padding:24px 28px;border-right:1px solid var(--border-card);text-align:center">
+        <div style="font-size:1.4rem;font-weight:900;color:var(--white);margin-bottom:4px">5 days</div>
+        <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">Payment turnaround after cohort close</div>
       </div>
-      <div style="padding:24px 28px;border-right:1px solid var(--border-card);text-align:center;">
-        <div style="font-size:1.4rem;font-weight:900;color:var(--white);margin-bottom:4px;">Zero admin</div>
-        <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;">Brixgate handles all logistics</div>
+      <div style="padding:24px 28px;border-right:1px solid var(--border-card);text-align:center">
+        <div style="font-size:1.4rem;font-weight:900;color:var(--white);margin-bottom:4px">Zero admin</div>
+        <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">Brixgate handles all logistics</div>
       </div>
-      <div style="padding:24px 28px;text-align:center;">
-        <div style="font-size:1.4rem;font-weight:900;color:var(--white);margin-bottom:4px;">No cap</div>
-        <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;">Deliver as many cohorts as you want</div>
+      <div style="padding:24px 28px;text-align:center">
+        <div style="font-size:1.4rem;font-weight:900;color:var(--white);margin-bottom:4px">No cap</div>
+        <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">Deliver as many cohorts as you want</div>
       </div>
     </div>
 
-  </div>
-</section>
-
-<!-- ====== WHAT YOU GET ====== -->
-<section id="what-you-get" class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
-  <div class="container">
-    <div class="section-header fade-up">
-      <span class="eyebrow">Your Benefits</span>
-      <h2>What Brixgate Expert<br/>Practitioners Get</h2>
-      <div class="divider-red"></div>
-    </div>
-
-    <div class="benefit-grid stagger">
-      <div class="benefit-card fade-up">
-        <div class="benefit-icon">💰</div>
-        <div class="benefit-title">Competitive Expert Earnings</div>
-        <p class="benefit-desc">Earn
-          <span class="currency-ngn">₦400K–₦1M+</span><span class="currency-gbp">£195–£488+</span><span class="currency-usd">$250–$625+</span>
-          per cohort delivered, paid automatically within 5 business days of close. No invoices, no chasing.
-        </p>
-      </div>
-      <div class="benefit-card fade-up">
-        <div class="benefit-icon">🌍</div>
-        <div class="benefit-title">Global Reach</div>
-        <p class="benefit-desc">Access a pipeline of motivated professionals from Nigeria, Kenya, Ghana, South Africa, the UK, and the United States — all through one platform.</p>
-      </div>
-      <div class="benefit-card fade-up">
-        <div class="benefit-icon">🛠️</div>
-        <div class="benefit-title">Zero Admin Overhead</div>
-        <p class="benefit-desc">Brixgate handles all scheduling, participant communications, cohort management, payments, and marketing. You arrive, deliver, and get paid.</p>
-      </div>
-      <div class="benefit-card fade-up">
-        <div class="benefit-icon">🏆</div>
-        <div class="benefit-title">Verified Expert Status</div>
-        <p class="benefit-desc">A public-facing Brixgate Expert Practitioner profile and designation — a credential that grows in value as more professionals recognise what it represents.</p>
-      </div>
-      <div class="benefit-card fade-up">
-        <div class="benefit-icon">📈</div>
-        <div class="benefit-title">Cohort Track Record</div>
-        <p class="benefit-desc">Your cohort history, participant outcomes, and delivery ratings are published on your profile — building a demonstrable teaching track record over time.</p>
-      </div>
-      <div class="benefit-card fade-up">
-        <div class="benefit-icon">🤝</div>
-        <div class="benefit-title">Practitioner Community</div>
-        <p class="benefit-desc">Join a network of Expert Practitioners across 12 fields sharing applied AI insights, delivery practices, and curriculum developments at the frontier.</p>
-      </div>
-    </div>
   </div>
 </section>
 
 <!-- ====== WHAT BRIXGATE HANDLES ====== -->
-<section class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+<section class="section-pad bg-dark">
   <div class="container">
-    <div class="join-split-grid fade-up" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+    <div class="join-split-grid fade-up" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
       <div>
         <span class="eyebrow">Zero Admin For You</span>
-        <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;margin-top:8px;margin-bottom:16px;">You Show Up and Deliver.<br/>We Handle Everything Else.</h2>
-        <p style="font-size:0.92rem;color:var(--muted);line-height:1.7;margin-bottom:0;">One of the most common reasons practitioners don't teach is the admin. Scheduling. Marketing. Participant management. Payments. Disputes. Brixgate removes every one of these. Our Expert Practitioners invest their time in one thing: delivering exceptional programmes.</p>
+        <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;margin-top:8px;margin-bottom:16px">You Show Up and Deliver.<br/>We Handle Everything Else.</h2>
+        <p style="font-size:0.92rem;color:var(--muted);line-height:1.7;margin-bottom:0">One of the most common reasons practitioners don't teach is the admin. Scheduling. Marketing. Participant management. Payments. Disputes. Brixgate removes every one of these. Our Expert Practitioners invest their time in one thing: delivering exceptional programmes.</p>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-        <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:12px;padding:20px;">
-          <div style="font-size:1.4rem;margin-bottom:10px;">📣</div>
-          <div style="font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:4px;">Participant Recruitment</div>
-          <div style="font-size:0.78rem;color:var(--muted);line-height:1.5;">We market, attract, screen, and enrol participants. You receive a ready cohort.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:12px;padding:20px">
+          <div style="width:36px;height:36px;background:rgba(255,41,78,0.1);border:1px solid rgba(255,41,78,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--red);margin-bottom:12px"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg></div>
+          <div style="font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:4px">Participant Recruitment</div>
+          <div style="font-size:0.78rem;color:var(--muted);line-height:1.5">We market, attract, screen, and enrol participants. You receive a ready cohort.</div>
         </div>
-        <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:12px;padding:20px;">
-          <div style="font-size:1.4rem;margin-bottom:10px;">📅</div>
-          <div style="font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:4px;">Scheduling & Logistics</div>
-          <div style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Cohort scheduling, calendar management, and session infrastructure set up for you.</div>
+        <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:12px;padding:20px">
+          <div style="width:36px;height:36px;background:rgba(255,41,78,0.1);border:1px solid rgba(255,41,78,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--red);margin-bottom:12px"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div style="font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:4px">Scheduling &amp; Logistics</div>
+          <div style="font-size:0.78rem;color:var(--muted);line-height:1.5">Cohort scheduling, calendar management, and session infrastructure set up for you.</div>
         </div>
-        <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:12px;padding:20px;">
-          <div style="font-size:1.4rem;margin-bottom:10px;">💬</div>
-          <div style="font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:4px;">Participant Communications</div>
-          <div style="font-size:0.78rem;color:var(--muted);line-height:1.5;">All pre-cohort, during-sprint, and post-sprint communications are handled by Brixgate.</div>
+        <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:12px;padding:20px">
+          <div style="width:36px;height:36px;background:rgba(255,41,78,0.1);border:1px solid rgba(255,41,78,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--red);margin-bottom:12px"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div style="font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:4px">Participant Communications</div>
+          <div style="font-size:0.78rem;color:var(--muted);line-height:1.5">All pre-cohort, during-sprint, and post-sprint communications are handled by Brixgate.</div>
         </div>
-        <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:12px;padding:20px;">
-          <div style="font-size:1.4rem;margin-bottom:10px;">💳</div>
-          <div style="font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:4px;">Payments & Certificates</div>
-          <div style="font-size:0.78rem;color:var(--muted);line-height:1.5;">We collect fees, pay you within 5 days of cohort close, and issue all certificates.</div>
+        <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:12px;padding:20px">
+          <div style="width:36px;height:36px;background:rgba(255,41,78,0.1);border:1px solid rgba(255,41,78,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--red);margin-bottom:12px"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+          <div style="font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:4px">Payments &amp; Certificates</div>
+          <div style="font-size:0.78rem;color:var(--muted);line-height:1.5">We collect fees, pay you within 5 days of cohort close, and issue all certificates.</div>
         </div>
-        <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:12px;padding:20px;">
-          <div style="font-size:1.4rem;margin-bottom:10px;">🛠️</div>
-          <div style="font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:4px;">Platform & Tech Support</div>
-          <div style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Video platform, cohort tools, content hosting — all set up and supported by us.</div>
+        <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:12px;padding:20px">
+          <div style="width:36px;height:36px;background:rgba(255,41,78,0.1);border:1px solid rgba(255,41,78,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--red);margin-bottom:12px"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <div style="font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:4px">Platform &amp; Tech Support</div>
+          <div style="font-size:0.78rem;color:var(--muted);line-height:1.5">Video platform, cohort tools, content hosting — all set up and supported by us.</div>
         </div>
-        <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:12px;padding:20px;">
-          <div style="font-size:1.4rem;margin-bottom:10px;">🌍</div>
-          <div style="font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:4px;">Global Reach</div>
-          <div style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Access professionals from Nigeria, UK, US, Kenya, Ghana, South Africa — and beyond.</div>
+        <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:12px;padding:20px">
+          <div style="width:36px;height:36px;background:rgba(255,41,78,0.1);border:1px solid rgba(255,41,78,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--red);margin-bottom:12px"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div style="font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:4px">Global Reach</div>
+          <div style="font-size:0.78rem;color:var(--muted);line-height:1.5">Access professionals from Nigeria, UK, US, Kenya, Ghana, South Africa — and beyond.</div>
         </div>
       </div>
     </div>
@@ -384,7 +379,7 @@
 </section>
 
 <!-- ====== HOW IT WORKS FOR EXPERTS ====== -->
-<section class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+<section class="section-pad bg-dark">
   <div class="container">
     <div class="section-header fade-up">
       <span class="eyebrow">The Process</span>
@@ -426,7 +421,7 @@
 </section>
 
 <!-- ====== QUALIFICATION CRITERIA ====== -->
-<section id="criteria" class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+<section id="criteria" class="section-pad bg-light">
   <div class="container">
     <div class="section-header fade-up">
       <span class="eyebrow">Qualification Criteria</span>
@@ -435,7 +430,7 @@
       <p>We set a high bar — because the professionals we serve deserve only the most credible practitioners.</p>
     </div>
 
-    <div class="criteria-list stagger" style="max-width:800px;margin:0 auto;">
+    <div class="criteria-list stagger">
       <div class="criteria-row fade-up">
         <div class="criteria-check">✓</div>
         <div>
@@ -486,15 +481,15 @@
         </div>
       </div>
     </div>
-    <div style="margin-top:40px;text-align:center;padding:32px;background:rgba(255,41,78,0.05);border:1px solid rgba(255,41,78,0.2);border-radius:16px;max-width:800px;margin:40px auto 0;" class="fade-up">
-      <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:12px;">A Note on Who We're Looking For</div>
-      <p style="font-size:0.92rem;color:var(--muted);line-height:1.7;max-width:620px;margin:0 auto;">We set a high bar deliberately. The professionals who pay to learn from you have real jobs, real stakes, and real peers they answer to. They deserve only practitioners who have genuinely done what they're being taught. We review every application personally — and we decline more than we accept. That is what makes the Expert Practitioner designation worth having.</p>
+    <div style="margin-top:40px;text-align:center;padding:32px;background:rgba(255,41,78,0.05);border:1px solid rgba(255,41,78,0.2);border-radius:16px;max-width:800px;margin:40px auto 0" class="fade-up">
+      <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:12px">A Note on Who We're Looking For</div>
+      <p style="font-size:0.92rem;color:var(--muted);line-height:1.7;max-width:620px;margin:0 auto">We set a high bar deliberately. The professionals who pay to learn from you have real jobs, real stakes, and real peers they answer to. They deserve only practitioners who have genuinely done what they're being taught. We review every application personally — and we decline more than we accept. That is what makes the Expert Practitioner designation worth having.</p>
     </div>
   </div>
 </section>
 
 <!-- ====== APPLICATION FORM ====== -->
-<section id="apply-form" class="section-pad bg-dark" style="border-top:1px solid var(--border-card);">
+<section id="apply-form" class="section-pad bg-dark">
   <div class="container">
     <div class="section-header fade-up">
       <span class="eyebrow">Apply Now — Cohort 1 Opens June 12</span>
@@ -506,7 +501,7 @@
     <div class="expert-form-wrap fade-up">
       <form id="expert-form" onsubmit="handleSubmit(event)">
 
-        <div class="form-row-2" style="margin-bottom:16px;">
+        <div class="form-row-2" style="margin-bottom:16px">
           <div class="form-group">
             <label for="e-first">First Name *</label>
             <input type="text" id="e-first" class="form-control" placeholder="Your first name" required />
@@ -541,7 +536,7 @@
           </select>
         </div>
 
-        <div class="form-row-2" style="margin-bottom:16px;">
+        <div class="form-row-2" style="margin-bottom:16px">
           <div class="form-group">
             <label for="e-role">Current / Most Recent Role *</label>
             <input type="text" id="e-role" class="form-control" placeholder="e.g. Chief Risk Officer" required />
@@ -560,10 +555,10 @@
 
         <div class="form-group">
           <label for="e-ai">Describe your applied AI experience in your field *</label>
-          <textarea id="e-ai" class="form-control" style="min-height:100px;" placeholder="What have you built, deployed, or led using AI in your specific profession? Be specific — tools, context, outcomes." required></textarea>
+          <textarea id="e-ai" class="form-control" style="min-height:100px" placeholder="What have you built, deployed, or led using AI in your specific profession? Be specific — tools, context, outcomes." required></textarea>
         </div>
 
-        <div class="form-row-2" style="margin-bottom:16px;">
+        <div class="form-row-2" style="margin-bottom:16px">
           <div class="form-group">
             <label for="e-country">Country of Residence *</label>
             <select id="e-country" class="form-control" required>
@@ -589,14 +584,14 @@
           </div>
         </div>
 
-        <div class="notice notice-info" style="margin-bottom:20px;">
+        <div class="notice notice-info" style="margin-bottom:20px">
           <span>🔒</span>
           <span>We review every application personally and respond within 5–7 business days. Your information is never shared with third parties.</span>
         </div>
 
-        <div id="expert-form-error" style="display:none;background:rgba(255,41,78,0.12);border:1px solid var(--red);border-radius:var(--radius-sm);padding:12px 16px;font-size:0.85rem;color:#ff6b85;margin-bottom:12px;"></div>
-        <button id="expert-submit-btn" type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">
-          Submit Expert Application →
+        <div id="expert-form-error" style="display:none;background:rgba(255,41,78,0.12);border:1px solid var(--red);border-radius:var(--radius-sm);padding:12px 16px;font-size:0.85rem;color:#ff6b85;margin-bottom:12px"></div>
+        <button id="expert-submit-btn" type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">
+          Submit Expert Application
         </button>
       </form>
 
@@ -604,7 +599,7 @@
         <div class="success-icon">🏆</div>
         <h2>Application Received</h2>
         <p>Thank you. Your application is with our team and will be reviewed within 5–7 business days. Watch for an email from we@brixgate.com.</p>
-        <div style="margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <div style="margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
           <a href="experts.html" class="btn btn-outline">Meet Our Experts</a>
           <a href="index.html" class="btn btn-outline-red">Back to Home</a>
         </div>
@@ -631,7 +626,7 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <a href="index.html" class="nav-logo footer-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
-        <p style="margin-top:10px;">The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
+        <p style="margin-top:10px">The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
         <div class="footer-social">
           <a href="https://www.facebook.com/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>

@@ -19,6 +19,72 @@
     .page-header .breadcrumb { justify-content: center !important; }
     .page-header .eyebrow { display: block; text-align: center; }
 
+    /* ---- Enrollment badge — only ONE shown at a time ---- */
+    .enroll-badges {
+      margin-top: 4px;
+      margin-bottom: 20px;
+    }
+    .enroll-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1.5px solid transparent;
+      user-select: none;
+      letter-spacing: 0.01em;
+    }
+    /* Individual badge: green, shown by default */
+    #badge-individual {
+      background: rgba(34,197,94,0.13);
+      border-color: #22c55e;
+      color: #22c55e;
+    }
+    /* Team badge: purple, hidden until team is selected */
+    #badge-team {
+      display: none;
+      background: rgba(139,92,246,0.13);
+      border-color: #8b5cf6;
+      color: #8b5cf6;
+    }
+
+    /* ---- Team size dropdown — smooth slide-in ---- */
+    #team-size-group {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.3s ease, opacity 0.25s ease, margin-top 0.3s ease;
+      margin-top: 0;
+    }
+    #team-size-group.visible {
+      max-height: 110px;
+      opacity: 1;
+      margin-top: 0;
+    }
+
+    /* ---- Fees card dynamic elements ---- */
+    #fees-discount-bar {
+      display: none;
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: rgba(139,92,246,0.07);
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: 8px;
+      font-size: 0.75rem;
+      color: #a78bfa;
+      line-height: 1.5;
+      font-weight: 600;
+    }
+    #fees-team-info {
+      display: none;
+      margin-top: 6px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
     /* ---- Apply page layout ---- */
     .apply-wrapper {
       display: grid;
@@ -616,7 +682,7 @@
 
 <!-- Region Banner -->
 <div class="region-banner" id="region-banner">
-  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0;">Now active in</span>
+  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Now active in</span>
   <div class="regions">
     <span class="region-item">🇳🇬 Nigeria</span>
     <span class="region-item">🇬🇧 United Kingdom</span>
@@ -652,55 +718,57 @@
   <a href="programme.html">Programme</a>
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
-  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px;">Login</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px">Login</a>
   <a href="apply.html" class="btn btn-primary">Apply Now</a>
 </div>
 
 <!-- ====== PAGE HEADER ====== -->
-<header class="page-header" style="padding-bottom:40px;">
+<header class="page-header" style="padding-bottom:40px">
   <div class="container">
     <div class="breadcrumb fade-in"><a href="index.html">Home</a><span>/</span><span class="current">Apply</span></div>
     <span class="eyebrow">Applications Open</span>
     <h1 class="fade-up">Unlock your professional advantage by integrating AI into your daily workflow.</h1>
-    <p class="fade-up" style="transition-delay:0.1s;max-width:580px;">Tell us who you are and where you work. We'll match you with the right expert practitioner and cohort for your field.</p>
+    <p class="fade-up" style="transition-delay:0.1s;max-width:580px">Tell us who you are and where you work. We'll match you with the right expert practitioner and cohort for your field.</p>
   </div>
 </header>
 
 <!-- ====== APPLICATION FORM ====== -->
-<section class="section-pad bg-dark" style="padding-top:64px;">
+<section class="section-pad bg-dark" style="padding-top:64px">
   <div class="container">
     <div class="apply-wrapper">
 
       <!-- ====== PRICING TABLE ====== -->
-      <div class="apply-sidebar fade-up" style="margin-bottom:0;padding-bottom:0;">
-        <div style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:28px 24px;margin-bottom:0;">
-          <div style="font-size:0.72rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:20px;">Programme Fees</div>
+      <div class="apply-sidebar fade-up" style="margin-bottom:0;padding-bottom:0">
+        <div style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:28px 24px;margin-bottom:0">
+          <div style="font-size:0.72rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:20px">Programme Fees</div>
 
-          <!-- Self-Enrolment -->
-          <div style="padding:14px 0;">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+          <!-- Dynamic Enrolment Pricing -->
+          <div style="padding:14px 0">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
               <div>
-                <div style="font-size:0.85rem;font-weight:700;color:var(--white);">Self-Enrolment</div>
-                <div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">Individual · per person</div>
+                <div style="font-size:0.85rem;font-weight:700;color:var(--white)" id="fees-label">Self-Enrolment</div>
+                <div style="font-size:0.75rem;color:var(--muted);margin-top:2px" id="fees-sublabel">Individual · per person</div>
               </div>
-              <div style="text-align:right;flex-shrink:0;">
-                <div style="font-size:1.1rem;font-weight:900;color:var(--white);">
-                  <span class="currency-ngn">₦250,000</span>
-                  <span class="currency-usd">$156</span>
-                  <span class="currency-gbp">£122</span>
+              <div style="text-align:right;flex-shrink:0">
+                <div style="font-size:1.1rem;font-weight:900;color:var(--white)">
+                  <span class="currency-ngn" id="fees-price-ngn">₦250,000</span>
+                  <span class="currency-usd" id="fees-price-usd">$156</span>
+                  <span class="currency-gbp" id="fees-price-gbp">£122</span>
                 </div>
-                <div style="font-size:0.72rem;color:var(--muted);margin-top:1px;">
+                <div style="font-size:0.72rem;color:var(--muted);margin-top:1px" id="fees-conv">
                   <span class="currency-ngn">~$156 USD</span>
                   <span class="currency-usd">~₦250,000</span>
                   <span class="currency-gbp">~₦250,000</span>
                 </div>
               </div>
             </div>
+            <div id="fees-discount-bar">🏷 Save ₦50,000 per person vs individual rate</div>
+            <div id="fees-team-info">Team members can be added after payment via your dashboard.</div>
           </div>
 
-          <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border-card);display:flex;align-items:center;justify-content:space-between;">
-            <span style="font-size:0.72rem;color:var(--muted);">Rate: ₦1,600/$1 · ₦2,050/£1</span>
-            <a href="programme.html#pricing" style="font-size:0.75rem;color:var(--red);font-weight:700;text-decoration:none;">Full pricing →</a>
+          <div style="margin-top:16px;padding-top:14px;display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:0.72rem;color:var(--muted)">Rate: ₦1,600/$1 · ₦2,050/£1</span>
+            <a href="programme.html#pricing" style="font-size:0.75rem;color:var(--red);font-weight:700;text-decoration:none">Full pricing →</a>
           </div>
         </div>
       </div>
@@ -741,6 +809,7 @@
           </div>
         </div>
 
+        <!-- Your Journey card — commented out for now
         <div class="mini-steps">
           <h5>Your Journey</h5>
           <div class="mini-step">
@@ -764,33 +833,47 @@
             <div class="mini-step-text"><strong>Certification</strong> Earn your Brixer Certificate.</div>
           </div>
         </div>
+        -->
 
-        <!-- Pricing snapshot -->
-        <div style="margin-top:24px;background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:24px;">
-          <div style="font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;">Programme Fee</div>
+        <!-- Fee Summary — updates dynamically with enrollment selection -->
+        <div style="margin-top:24px;background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:24px">
+          <div style="font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px" id="fees2-header">Fee Summary</div>
 
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border-card);">
-            <span style="font-size:0.85rem;color:var(--muted);">Self-Enrolment</span>
-            <span style="font-size:1.1rem;font-weight:900;color:var(--white);">
-              <span class="currency-ngn">₦250,000</span>
-              <span class="currency-usd">$156</span>
-              <span class="currency-gbp">£122</span>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border-card)">
+            <span style="font-size:0.85rem;color:var(--muted)" id="fees2-label">Individual Enrolment</span>
+            <span style="font-size:1.1rem;font-weight:900;color:var(--white)">
+              <span class="currency-ngn" id="fees2-price-ngn">₦250,000</span>
+              <span class="currency-usd" id="fees2-price-usd">$156</span>
+              <span class="currency-gbp" id="fees2-price-gbp">£122</span>
             </span>
           </div>
-          <div style="margin-top:16px;display:flex;align-items:center;gap:8px;">
-            <div style="flex:1;font-size:0.75rem;color:rgba(255,255,255,0.25);line-height:1.5;">
+
+          <!-- Team breakdown — hidden for individual -->
+          <div id="fees2-breakdown" style="display:none;padding:8px 0 0;border-bottom:1px solid var(--border-card)">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0">
+              <span style="font-size:0.75rem;color:var(--muted)" id="fees2-breakdown-label">Per person</span>
+              <span style="font-size:0.75rem;color:var(--muted)" id="fees2-per-person">₦200,000</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0">
+              <span style="font-size:0.75rem;color:#a78bfa;font-weight:600">You save</span>
+              <span style="font-size:0.75rem;color:#a78bfa;font-weight:600" id="fees2-savings">—</span>
+            </div>
+          </div>
+
+          <div style="margin-top:16px;display:flex;align-items:center;gap:8px">
+            <div style="flex:1;font-size:0.75rem;color:rgba(255,255,255,0.25);line-height:1.5" id="fees2-conv">
               <span class="currency-ngn">Rate: ₦1,600/$1 · ₦2,050/£1</span>
               <span class="currency-usd">Rate: ₦1,600/$1</span>
               <span class="currency-gbp">Rate: ₦2,050/£1</span>
             </div>
-            <a href="programme.html#pricing" style="font-size:0.78rem;color:var(--red);font-weight:700;text-decoration:none;white-space:nowrap;">Full pricing →</a>
+            <a href="programme.html#pricing" style="font-size:0.78rem;color:var(--red);font-weight:700;text-decoration:none;white-space:nowrap">Full pricing →</a>
           </div>
         </div>
 
       </div>
 
       <!-- ====== APPLICATION CARD — multi-step ====== -->
-      <div class="apply-form-card" style="opacity:1;transform:none;" id="apply-card">
+      <div class="apply-form-card" style="opacity:1;transform:none" id="apply-card">
 
         <!-- ===== STEP 1: Details ===== -->
         <div id="apply-step-form">
@@ -814,6 +897,17 @@
 
           <h3>Apply for the Programme</h3>
           <p class="form-subtitle">Takes under 2 minutes. No CV needed.</p>
+
+          <div class="enroll-badges">
+            <span class="enroll-badge enroll-badge-individual" id="badge-individual" onclick="selectEnrollBadge('Individual')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+              Applying as Individual
+            </span>
+            <span class="enroll-badge enroll-badge-team" id="badge-team" onclick="selectEnrollBadge('Team')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.85"/></svg>
+              Applying as Team
+            </span>
+          </div>
 
           <form id="apply-form" novalidate>
 
@@ -865,16 +959,26 @@
               </select>
             </div>
 
-            <button type="submit" class="btn btn-primary form-submit-btn">Continue to Review →</button>
+            <div class="form-group" id="team-size-group">
+              <label for="team-size">Team Size</label>
+              <select id="team-size" name="team_size">
+                <option value="" disabled selected>How many people?</option>
+                <option value="3">3 people</option>
+                <option value="4">4 people</option>
+                <option value="5">5 people</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary form-submit-btn">Continue to Review</button>
 
             <!-- Inline error banner — shown on API errors instead of browser alert -->
-            <div id="form-error-banner" style="display:none;margin-top:16px;padding:14px 18px;background:rgba(255,41,78,0.08);border:1.5px solid rgba(255,41,78,0.35);border-radius:10px;display:none;align-items:flex-start;gap:12px;">
-              <span style="font-size:1.1rem;flex-shrink:0;line-height:1.3;">⚠️</span>
+            <div id="form-error-banner" style="display:none;margin-top:16px;padding:14px 18px;background:rgba(255,41,78,0.08);border:1.5px solid rgba(255,41,78,0.35);border-radius:10px;display:none;align-items:flex-start;gap:12px">
+              <span style="font-size:1.1rem;flex-shrink:0;line-height:1.3">⚠️</span>
               <div>
-                <div style="font-size:0.88rem;font-weight:700;color:#021024;margin-bottom:2px;" id="form-error-title">Something went wrong</div>
-                <div style="font-size:0.83rem;color:#4A5568;line-height:1.5;" id="form-error-body"></div>
+                <div style="font-size:0.88rem;font-weight:700;color:#021024;margin-bottom:2px" id="form-error-title">Something went wrong</div>
+                <div style="font-size:0.83rem;color:#4A5568;line-height:1.5" id="form-error-body"></div>
               </div>
-              <button onclick="document.getElementById('form-error-banner').style.display='none';" style="margin-left:auto;background:none;border:none;font-size:1rem;color:#7A94A8;cursor:pointer;flex-shrink:0;padding:0;">✕</button>
+              <button onclick="document.getElementById('form-error-banner').style.display='none'" style="margin-left:auto;background:none;border:none;font-size:1rem;color:#7A94A8;cursor:pointer;flex-shrink:0;padding:0">✕</button>
             </div>
 
           </form>
@@ -887,7 +991,7 @@
         </div>
 
         <!-- ===== STEP 2: Review & Pay ===== -->
-        <div id="apply-step-review" style="display:none;">
+        <div id="apply-step-review" style="display:none">
 
           <div class="step-indicator">
             <div class="step-item">
@@ -917,7 +1021,7 @@
             </div>
             <div class="review-field">
               <div class="review-field-label">Email</div>
-              <div class="review-field-value" id="review-email" style="word-break:break-all;font-size:0.82rem;">—</div>
+              <div class="review-field-value" id="review-email" style="word-break:break-all;font-size:0.82rem">—</div>
             </div>
             <div class="review-field">
               <div class="review-field-label">Field</div>
@@ -926,6 +1030,10 @@
             <div class="review-field">
               <div class="review-field-label">Role</div>
               <div class="review-field-value" id="review-role">—</div>
+            </div>
+            <div class="review-field" id="review-enrollment-row">
+              <div class="review-field-label">Enrolment</div>
+              <div class="review-field-value" id="review-enrollment">—</div>
             </div>
           </div>
 
@@ -950,7 +1058,7 @@
           </div>
 
           <button id="pay-btn" class="btn btn-primary pay-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span id="pay-btn-label">Pay Securely via Paystack</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span id="pay-btn-label">Pay Securely via Paystack</span>
           </button>
 
           <a class="back-link" id="back-to-form">← Edit my details</a>
@@ -968,9 +1076,9 @@
 </section>
 
 <!-- ====== SOCIAL PROOF ====== -->
-<section class="section-pad-sm bg-dark" style="border-top:1px solid var(--border-card);margin-top:32px;">
+<section class="section-pad-sm bg-dark">
   <div class="container">
-    <div class="stats-bar stagger" style="display:flex;flex-wrap:wrap;justify-content:space-around;align-items:center;gap:20px;padding:24px 0;">
+    <div class="stats-bar stagger" style="display:flex;flex-wrap:wrap;justify-content:space-around;align-items:center;gap:20px;padding:24px 0">
       <div class="stat-item fade-up">
         <div class="stat-num" data-count="12" data-suffix="+">12+</div>
         <div class="stat-label">Fields Covered</div>
@@ -998,7 +1106,7 @@
   <div class="container">
     <div class="footer-inner">
       <div class="footer-brand">
-        <a href="index.html" class="nav-logo" style="display:inline-flex;margin-bottom:4px;"><img src="assets/logo-color-nobg.svg" alt="Brixgate" style="height:36px;" /></a>
+        <a href="index.html" class="nav-logo" style="display:inline-flex;margin-bottom:4px"><img src="assets/logo-color-nobg.svg" alt="Brixgate" style="height:36px" /></a>
         <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
         <div class="footer-social">
           <a href="#" class="social-icon">in</a>
@@ -1046,7 +1154,32 @@
     'Other':                        null
   };
 
-  var PRICE_DISPLAY = { ngn: '₦250,000', usd: '$156', gbp: '£122' };
+  /* Base pricing — Individual */
+  var PRICING_INDIVIDUAL = { ngn: 250000, usd: 156, gbp: 122 };
+  /* Per-person team rate */
+  var PRICING_TEAM_PER   = { ngn: 200000, usd: 125, gbp: 98  };
+
+  /* Returns display price strings for current enrollment state */
+  function getPriceDisplay() {
+    var enrollType = (document.getElementById('enrollment-type') || {}).value || '';
+    var isTeam     = enrollType === 'Team';
+    var teamSize   = parseInt((document.getElementById('team-size') || {}).value) || 0;
+
+    if (isTeam && teamSize >= 3) {
+      var totalNGN = teamSize * PRICING_TEAM_PER.ngn;
+      var totalUSD = teamSize * PRICING_TEAM_PER.usd;
+      var totalGBP = teamSize * PRICING_TEAM_PER.gbp;
+      return {
+        ngn: '₦' + totalNGN.toLocaleString(),
+        usd: '$' + totalUSD.toLocaleString(),
+        gbp: '£' + totalGBP.toLocaleString()
+      };
+    }
+    if (isTeam) {
+      return { ngn: '₦200,000/person', usd: '$125/person', gbp: '£98/person' };
+    }
+    return { ngn: '₦250,000', usd: '$156', gbp: '£122' };
+  }
 
   function getActiveCurrency() {
     if (document.body.classList.contains('show-usd')) return 'usd';
@@ -1056,9 +1189,143 @@
 
   var _session = { cohortId: null };
 
-  /* ---------- URL param pre-fill (?field=Cybersecurity) ---------- */
+  /* ---------- Dynamic enrollment UI ---------- */
+  function updateEnrollmentUI(type, teamSize) {
+    var isTeam = (type === 'Team');
+    var size   = parseInt(teamSize) || 0;
+
+    /* ── Badges: only ONE visible at a time ── */
+    var badgeInd  = document.getElementById('badge-individual');
+    var badgeTeam = document.getElementById('badge-team');
+    if (badgeInd)  badgeInd.style.display  = isTeam ? 'none' : 'inline-flex';
+    if (badgeTeam) badgeTeam.style.display = isTeam ? 'inline-flex' : 'none';
+
+    /* ── Team size dropdown: smooth CSS transition via class ── */
+    var tsGroup = document.getElementById('team-size-group');
+    var tsSel   = document.getElementById('team-size');
+    if (tsGroup) tsGroup.classList.toggle('visible', isTeam);
+    if (tsSel)   tsSel.required = isTeam;
+
+    /* ── Card 1: Programme Fees (top-left) ── */
+    var labelEl     = document.getElementById('fees-label');
+    var sublabelEl  = document.getElementById('fees-sublabel');
+    var discountBar = document.getElementById('fees-discount-bar');
+    var teamInfoEl  = document.getElementById('fees-team-info');
+    var priceNGN    = document.getElementById('fees-price-ngn');
+    var priceUSD    = document.getElementById('fees-price-usd');
+    var priceGBP    = document.getElementById('fees-price-gbp');
+    var convEl      = document.getElementById('fees-conv');
+
+    /* ── Card 2: Fee Summary (inside trust sidebar) ── */
+    var f2Label    = document.getElementById('fees2-label');
+    var f2NGN      = document.getElementById('fees2-price-ngn');
+    var f2USD      = document.getElementById('fees2-price-usd');
+    var f2GBP      = document.getElementById('fees2-price-gbp');
+    var f2Breakdown= document.getElementById('fees2-breakdown');
+    var f2BkLabel  = document.getElementById('fees2-breakdown-label');
+    var f2PerPerson= document.getElementById('fees2-per-person');
+    var f2Savings  = document.getElementById('fees2-savings');
+    var f2Conv     = document.getElementById('fees2-conv');
+
+    if (!isTeam) {
+      /* ─ Individual ─ */
+      if (labelEl)    labelEl.textContent    = 'Self-Enrolment';
+      if (sublabelEl) sublabelEl.textContent = 'Individual · per person';
+      if (priceNGN)   priceNGN.textContent   = '₦250,000';
+      if (priceUSD)   priceUSD.textContent   = '$156';
+      if (priceGBP)   priceGBP.textContent   = '£122';
+      if (convEl)     convEl.innerHTML = '<span class="currency-ngn">~$156 USD</span>'
+                                       + '<span class="currency-usd">~₦250,000</span>'
+                                       + '<span class="currency-gbp">~₦250,000</span>';
+      if (discountBar) discountBar.style.display = 'none';
+      if (teamInfoEl)  teamInfoEl.style.display  = 'none';
+
+      /* Card 2 — individual summary */
+      if (f2Label)     f2Label.textContent    = 'Individual Enrolment';
+      if (f2NGN)       f2NGN.textContent      = '₦250,000';
+      if (f2USD)       f2USD.textContent      = '$156';
+      if (f2GBP)       f2GBP.textContent      = '£122';
+      if (f2Breakdown) f2Breakdown.style.display = 'none';
+      if (f2Conv)      f2Conv.innerHTML = '<span class="currency-ngn">Rate: ₦1,600/$1 · ₦2,050/£1</span>'
+                                        + '<span class="currency-usd">Rate: ₦1,600/$1</span>'
+                                        + '<span class="currency-gbp">Rate: ₦2,050/£1</span>';
+    } else {
+      /* ─ Team ─ */
+      if (labelEl) labelEl.textContent = 'Team Enrolment';
+      if (sublabelEl) sublabelEl.textContent = size >= 3
+        ? size + ' people · ₦200,000/person'
+        : 'Team · ₦200,000/person';
+
+      if (size >= 3) {
+        var tNGN     = size * 200000;
+        var tUSD     = size * 125;
+        var tGBP     = size * 98;
+        var saveNGN  = size * 50000;
+        var saveUSD  = size * 31;
+        var saveGBP  = size * 24;
+
+        /* Card 1 — total price */
+        if (priceNGN) priceNGN.textContent = '₦' + tNGN.toLocaleString();
+        if (priceUSD) priceUSD.textContent = '$' + tUSD.toLocaleString();
+        if (priceGBP) priceGBP.textContent = '£' + tGBP.toLocaleString();
+        if (convEl)   convEl.innerHTML = '<span class="currency-ngn">₦200,000 × ' + size + ' people</span>'
+                                       + '<span class="currency-usd">$125 × ' + size + ' people</span>'
+                                       + '<span class="currency-gbp">£98 × ' + size + ' people</span>';
+
+        /* Card 2 — total + breakdown + savings */
+        if (f2Label)     f2Label.textContent = size + '-Person Team Enrolment';
+        if (f2NGN)       f2NGN.textContent   = '₦' + tNGN.toLocaleString();
+        if (f2USD)       f2USD.textContent   = '$' + tUSD.toLocaleString();
+        if (f2GBP)       f2GBP.textContent   = '£' + tGBP.toLocaleString();
+        if (f2Breakdown) f2Breakdown.style.display = 'block';
+        if (f2BkLabel)   f2BkLabel.textContent     = '₦200,000 × ' + size + ' people';
+        if (f2PerPerson) f2PerPerson.textContent    = '₦200,000/person';
+        if (f2Savings)   f2Savings.innerHTML        =
+          '<span class="currency-ngn">₦' + saveNGN.toLocaleString() + ' total</span>'
+          + '<span class="currency-usd">$' + saveUSD.toLocaleString() + ' total</span>'
+          + '<span class="currency-gbp">£' + saveGBP.toLocaleString() + ' total</span>';
+        if (f2Conv) f2Conv.innerHTML = '<span class="currency-ngn">₦200,000/person · ₦50k savings each</span>'
+                                     + '<span class="currency-usd">$125/person · $31 savings each</span>'
+                                     + '<span class="currency-gbp">£98/person · £24 savings each</span>';
+      } else {
+        /* Team selected but no size yet */
+        if (priceNGN) priceNGN.textContent = '₦200,000/person';
+        if (priceUSD) priceUSD.textContent = '$125/person';
+        if (priceGBP) priceGBP.textContent = '£98/person';
+        if (convEl)   convEl.innerHTML = '<span class="currency-ngn">Select team size above</span>'
+                                       + '<span class="currency-usd">Select team size above</span>'
+                                       + '<span class="currency-gbp">Select team size above</span>';
+
+        if (f2Label)     f2Label.textContent           = 'Team Enrolment';
+        if (f2NGN)       f2NGN.textContent             = '₦200,000/person';
+        if (f2USD)       f2USD.textContent             = '$125/person';
+        if (f2GBP)       f2GBP.textContent             = '£98/person';
+        if (f2Breakdown) f2Breakdown.style.display     = 'none';
+        if (f2Conv)      f2Conv.innerHTML = '<span class="currency-ngn">Select team size to see total</span>'
+                                          + '<span class="currency-usd">Select team size to see total</span>'
+                                          + '<span class="currency-gbp">Select team size to see total</span>';
+      }
+
+      if (discountBar) discountBar.style.display = 'block';
+      if (teamInfoEl)  teamInfoEl.style.display  = 'block';
+    }
+  }
+
+  /* Called when user clicks an enrollment badge directly */
+  window.selectEnrollBadge = function(type) {
+    var enrollSel = document.getElementById('enrollment-type');
+    if (enrollSel) {
+      for (var i = 0; i < enrollSel.options.length; i++) {
+        if (enrollSel.options[i].value === type) { enrollSel.selectedIndex = i; break; }
+      }
+    }
+    var teamSize = (document.getElementById('team-size') || {}).value || '';
+    updateEnrollmentUI(type, teamSize);
+  };
+
+  /* ---------- URL param pre-fill (?field=Cybersecurity&type=team) ---------- */
   document.addEventListener('DOMContentLoaded', function () {
-    var params    = new URLSearchParams(window.location.search);
+    var params = new URLSearchParams(window.location.search);
 
     /* If Paystack redirected here instead of callback.html, forward immediately */
     var _ref = params.get('reference') || params.get('trxref');
@@ -1067,17 +1334,47 @@
       return;
     }
 
+    /* Field pre-fill */
     var fieldParam = params.get('field');
-    if (!fieldParam) return;
-    var sel = document.getElementById('field');
-    if (!sel) return;
-    for (var i = 0; i < sel.options.length; i++) {
-      if (sel.options[i].value.toLowerCase() === fieldParam.toLowerCase()) {
-        sel.selectedIndex = i;
-        break;
+    if (fieldParam) {
+      var fieldSel = document.getElementById('field');
+      if (fieldSel) {
+        for (var fi = 0; fi < fieldSel.options.length; fi++) {
+          if (fieldSel.options[fi].value.toLowerCase() === fieldParam.toLowerCase()) {
+            fieldSel.selectedIndex = fi; break;
+          }
+        }
       }
     }
-    /* scrollIntoView removed — page loads at the top */
+
+    /* Enrollment type pre-fill from ?type=individual or ?type=team */
+    var typeParam = params.get('type');
+    if (typeParam) {
+      var targetVal  = typeParam.toLowerCase() === 'team' ? 'Team' : 'Individual';
+      var enrollSel2 = document.getElementById('enrollment-type');
+      if (enrollSel2) {
+        for (var ei = 0; ei < enrollSel2.options.length; ei++) {
+          if (enrollSel2.options[ei].value === targetVal) { enrollSel2.selectedIndex = ei; break; }
+        }
+        updateEnrollmentUI(targetVal, '');
+      }
+    }
+
+    /* Live listeners */
+    var enrollSel3 = document.getElementById('enrollment-type');
+    if (enrollSel3) {
+      enrollSel3.addEventListener('change', function () {
+        var tsSel = document.getElementById('team-size');
+        updateEnrollmentUI(this.value, tsSel ? tsSel.value : '');
+      });
+    }
+    var tsSel2 = document.getElementById('team-size');
+    if (tsSel2) {
+      tsSel2.addEventListener('change', function () {
+        var eSel = document.getElementById('enrollment-type');
+        updateEnrollmentUI(eSel ? eSel.value : 'Team', this.value);
+      });
+    }
   });
 
   /* ---------- Panels ---------- */
@@ -1191,7 +1488,16 @@
     var field          = document.getElementById('field').value;
     var role           = document.getElementById('role').value;
     var enrollmentType = (document.getElementById('enrollment-type') || {}).value || '';
+    var teamSize       = parseInt((document.getElementById('team-size') || {}).value) || 0;
+    var isTeam         = (enrollmentType === 'Team');
     var fullName       = firstName + ' ' + lastName;
+
+    /* Validate team size if team is selected */
+    if (isTeam && teamSize < 3) {
+      var tsSel = document.getElementById('team-size');
+      if (tsSel) { tsSel.style.borderColor = 'var(--red)'; tsSel.focus(); }
+      return;
+    }
 
     var submitBtn = this.querySelector('button[type="submit"]');
     setSubmitState(submitBtn, true, 'Setting up your account…');
@@ -1230,12 +1536,21 @@
         document.getElementById('review-field-val').textContent = field;
         document.getElementById('review-role').textContent      = role;
 
+        /* Enrollment type row */
+        var enrollReviewEl = document.getElementById('review-enrollment');
+        if (enrollReviewEl) {
+          var enrollDisplay = enrollmentType || 'Individual';
+          if (isTeam && teamSize >= 3) enrollDisplay = 'Team · ' + teamSize + ' people';
+          enrollReviewEl.textContent = enrollDisplay;
+        }
+
         var cur          = getActiveCurrency();
-        var priceDisplay = PRICE_DISPLAY[cur];
-        document.getElementById('review-price-item').textContent = priceDisplay;
-        document.getElementById('review-total').textContent      = priceDisplay;
+        var priceDisplay = getPriceDisplay();
+        var priceStr     = priceDisplay[cur];
+        document.getElementById('review-price-item').textContent = priceStr;
+        document.getElementById('review-total').textContent      = priceStr;
         document.getElementById('pay-btn-label').textContent     = _session.cohortId
-          ? ('Pay ' + priceDisplay + ' via Paystack')
+          ? ('Pay ' + priceStr + ' via Paystack')
           : ('Join Waitlist for ' + field);
 
         hideFormError();
