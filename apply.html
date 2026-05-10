@@ -746,6 +746,7 @@
               <button class="cur-btn" data-cur="ngn">NGN</button>
               <button class="cur-btn" data-cur="cad">CAD</button>
               <button class="cur-btn" data-cur="usd">USD</button>
+              <button class="cur-btn" data-cur="gbp">GBP</button>
               <button class="cur-btn" data-cur="eur">EUR</button>
             </div>
           </div>
@@ -761,6 +762,7 @@
                 <div style="font-size:1.1rem;font-weight:900;color:var(--white)">
                   <span class="currency-ngn" id="fees-price-ngn">₦—</span>
                   <span class="currency-usd" id="fees-price-usd">$—</span>
+                  <span class="currency-gbp" id="fees-price-gbp">£—</span>
                   <span class="currency-eur" id="fees-price-eur">€—</span>
                   <span class="currency-cad" id="fees-price-cad">C$—</span>
                 </div>
@@ -847,6 +849,7 @@
             <span style="font-size:1.1rem;font-weight:900;color:var(--white)">
               <span class="currency-ngn" id="fees2-price-ngn">₦—</span>
               <span class="currency-usd" id="fees2-price-usd">$—</span>
+              <span class="currency-gbp" id="fees2-price-gbp">£—</span>
               <span class="currency-eur" id="fees2-price-eur">€—</span>
               <span class="currency-cad" id="fees2-price-cad">C$—</span>
             </span>
@@ -1172,7 +1175,7 @@
   /* programme ID → field name */
   var PROGRAM_ID_TO_FIELD = { 1: 'Software Engineering', 2: 'Cybersecurity', 3: 'Cloud & DevOps', 4: 'Data & Analytics' };
   var FIELD_TO_PROGRAM_ID = { 'Software Engineering': 1, 'Cybersecurity': 2, 'Cloud & DevOps': 3, 'Data & Analytics': 4 };
-  var CURRENCY_SYMS = { ngn: '₦', usd: '$', eur: '€', cad: 'C$' };
+  var CURRENCY_SYMS = { ngn: '₦', usd: '$', gbp: '£', eur: '€', cad: 'C$' };
 
   var _programId    = null;
   var _pricingPlans = {};   /* plan_type → plan object */
@@ -1181,6 +1184,7 @@
     var c = window.bxActiveCurrency || '';
     if (!c) {
       if (document.body.classList.contains('show-usd')) c = 'usd';
+      else if (document.body.classList.contains('show-gbp')) c = 'gbp';
       else if (document.body.classList.contains('show-eur')) c = 'eur';
       else if (document.body.classList.contains('show-cad')) c = 'cad';
       else c = 'ngn';
