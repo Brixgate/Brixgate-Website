@@ -108,7 +108,7 @@
 <div class="region-banner">
   <div class="container" style="display:flex;align-items:center;justify-content:center;gap:20px">
     <span>🌍 <strong>Africa-First,</strong> Globally Recognised · Cohort 1 — June 12, 2026</span>
-    <a href="apply.html?field=Software%20Engineering" class="btn btn-primary" style="color:#fff;font-weight:700;font-size:0.84rem">Apply Now</a>
+    <a href="apply.html?program_id=1" class="btn btn-primary" style="color:#fff;font-weight:700;font-size:0.84rem">Apply Now</a>
   </div>
 </div>
 <nav class="nav">
@@ -124,7 +124,7 @@
     </div>
     <div class="nav-cta">
       <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm">Login</a>
-      <a href="apply.html?field=Software%20Engineering" class="btn btn-primary btn-sm">Apply Now</a>
+      <a href="apply.html?program_id=1" class="btn btn-primary btn-sm">Apply Now</a>
     </div>
     <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
@@ -136,7 +136,7 @@
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
   <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px">Login</a>
-  <a href="apply.html?field=Software%20Engineering" class="btn btn-primary">Apply Now</a>
+  <a href="apply.html?program_id=1" class="btn btn-primary">Apply Now</a>
 </div><!-- ====== FIELD HERO ====== -->
 <section class="section-hero bg-dark" style="padding-top:calc(var(--nav-height) + 20px);padding-bottom:60px">
   <div class="container">
@@ -146,7 +146,6 @@
           ← Back to all programmes
         </a>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
           <span style="background:rgba(255,41,78,0.15);color:var(--red);font-size:0.75rem;font-weight:800;padding:4px 14px;border-radius:50px;letter-spacing:.08em;text-transform:uppercase">Expert Practitioner Programme</span>
         </div>
         <h1 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:20px">
@@ -166,7 +165,7 @@
         </div>
         <div style="display:flex;gap:12px;flex-wrap:wrap">
           <a href="#quiz-field" class="btn btn-primary btn-lg">Validate Your Skill Level</a>
-          <a href="apply.html?field=Software%20Engineering" class="btn btn-outline btn-lg">Apply Now</a>
+          <a href="apply.html?program_id=1" class="btn btn-outline btn-lg">Apply Now</a>
         </div>
       </div>
       <div class="fade-in" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:20px;padding:36px 32px">
@@ -308,24 +307,7 @@
             <h3 style="font-size:1.2rem;font-weight:900;color:var(--white);line-height:1.3;margin-bottom:8px">Enter your details to see your results</h3>
             <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;margin-bottom:24px">We'll also send you a <strong style="color:var(--white)">registration coupon</strong> when you're ready to enrol.</p>
             <input type="email" id="qf_engineering_email" placeholder="Email address" autocomplete="email" />
-            <div style="display:flex;gap:0;margin-bottom:10px">
-              <select id="qf_engineering_phone_cc" style="width:110px;flex-shrink:0;padding:12px 6px;border-radius:8px 0 0 8px;border:1.5px solid var(--border-card);border-right:none;background:var(--bg-card);color:var(--muted);font-size:0.8rem;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;text-align:center">
-                <option value="+234">🇳🇬 +234</option>
-                <option value="+44">🇬🇧 +44</option>
-                <option value="+1">🇺🇸 +1</option>
-                <option value="+254">🇰🇪 +254</option>
-                <option value="+233">🇬🇭 +233</option>
-                <option value="+27">🇿🇦 +27</option>
-                <option value="+251">🇪🇹 +251</option>
-                <option value="+256">🇺🇬 +256</option>
-                <option value="+255">🇹🇿 +255</option>
-                <option value="+237">🇨🇲 +237</option>
-                <option value="+225">🇨🇮 +225</option>
-                <option value="+221">🇸🇳 +221</option>
-              </select>
-              <input type="tel" id="qf_engineering_phone" placeholder="Phone number" autocomplete="tel" style="flex:1;border-radius:0 8px 8px 0;margin:0" />
-            </div>
-            <div class="qf-capture-error" id="qf_engineering_capture_err">Please enter a valid email and phone number.</div>
+            <div class="qf-capture-error" id="qf_engineering_capture_err">Please enter a valid email address.</div>
             <button onclick="qfSubmitCapture('qf_engineering')" class="btn btn-primary" style="width:100%;justify-content:center">See My Results</button>
             <p style="margin-top:12px;font-size:0.78rem"><a href="#" onclick="qfSkipCapture(event,'qf_engineering')" style="color:var(--muted);text-decoration:underline">Skip and see results</a></p>
           </div>
@@ -341,7 +323,7 @@
             </div>
             <p id="qf_engineering_body" style="font-size:0.95rem;color:var(--muted);line-height:1.65;max-width:520px;margin:0 auto 28px"></p>
             <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-              <a href="apply.html?field=Software%20Engineering" id="qf_engineering_cta_link" class="btn btn-primary btn-lg">Apply Now</a>
+              <a href="apply.html?program_id=1" id="qf_engineering_cta_link" class="btn btn-primary btn-lg">Apply Now</a>
               <a href="#pricing" style="color:var(--muted);font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:4px">View pricing first →</a>
             </div>
             <div style="margin-top:20px">
@@ -545,7 +527,7 @@
           <li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">✓</span>Comfortable writing and reading code in at least one programming language</li>
           <li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">✓</span>Readiness to build a real capstone project and defend it live</li>
         </ul>
-        <a href="apply.html?field=Software%20Engineering" class="btn btn-primary btn-lg" style="display:inline-flex">Apply Now</a>
+        <a href="apply.html?program_id=1" class="btn btn-primary btn-lg" style="display:inline-flex">Apply Now</a>
       </div>
     </div>
   </div>
@@ -628,7 +610,7 @@
         <div class="eyebrow-tag" style="color:var(--red)">Real Deliverables</div>
         <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:20px">By the End of the Programme, You Will Have Built Real Things.</h2>
         <p style="font-size:0.95rem;color:#4A5568;line-height:1.7;margin-bottom:28px">Not slide decks. Not theory. A working capstone project, a documented AI workflow, and the judgment to use AI with full professional accountability.</p>
-        <a href="apply.html?field=Software%20Engineering" class="btn btn-primary btn-lg">Apply Now</a>
+        <a href="apply.html?program_id=1" class="btn btn-primary btn-lg">Apply Now</a>
       </div>
       <div style="display:flex;flex-direction:column;gap:20px">
         <div style="display:flex;align-items:flex-start;gap:14px">
@@ -673,7 +655,7 @@
           </div>
           <div style="padding:16px 24px;background:#fff;display:flex;justify-content:space-between;align-items:center">
             <div style="display:flex;align-items:center;gap:6px"><span style="color:#F59E0B">&#9733;</span><span style="font-size:0.88rem;font-weight:700;color:#021024">4.9</span><span style="font-size:0.78rem;color:#7A94A8">Practitioner Rating</span></div>
-            <a href="apply.html?field=Software%20Engineering" class="btn btn-primary" style="padding:10px 20px;font-size:0.85rem">Apply Now</a>
+            <a href="apply.html?program_id=1" class="btn btn-primary" style="padding:10px 20px;font-size:0.85rem">Apply Now</a>
           </div>
         </div>
       </div>
@@ -856,7 +838,7 @@
           </div>
         </div>
 
-        <a href="apply.html?field=Software%20Engineering" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Apply Now</a>
+        <a href="apply.html?program_id=1" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Apply Now</a>
       </div>
 
     </div>
@@ -869,69 +851,17 @@
     <div style="text-align:center;margin-bottom:16px" class="fade-up">
       <div class="eyebrow-tag">Pricing</div>
       <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900">Invest in Your AI Advantage</h2>
-      <p style="font-size:0.95rem;color:var(--muted);margin-top:12px;margin-bottom:24px">Individual pricing for the Engineering & Infrastructure Expert Practitioner Programme</p>
-      <div class="currency-toggle" style="margin-bottom:8px">
-        <label class="label-usd active">$ USD</label>
-        <label class="label-ngn">₦ NGN</label>
+      <p style="font-size:0.95rem;color:var(--muted);margin-top:12px;margin-bottom:24px">Engineering &amp; Infrastructure Expert Practitioner Programme</p>
+      <div class="currency-toggle-5">
+        <button class="cur-btn" data-cur="ngn">₦ NGN</button>
+        <button class="cur-btn" data-cur="usd">$ USD</button>
+        <button class="cur-btn" data-cur="gbp">£ GBP</button>
+        <button class="cur-btn" data-cur="eur">€ EUR</button>
+        <button class="cur-btn" data-cur="cad">C$ CAD</button>
       </div>
-      <p style="font-size:0.78rem;color:var(--muted);margin-top:6px">Exchange rate: ₦1,600 per $1 USD</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto" class="stagger">
-      <div class="card fade-up" style="padding:32px 28px">
-        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Self-Enrolment</div>
-        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px">
-          <span class="currency-usd">$156</span>
-          <span class="currency-ngn">₦250,000</span>
-        </div>
-        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">
-          <span class="currency-usd">~₦250,000 NGN</span>
-          <span class="currency-ngn">~$156 USD</span>
-        </div>
-        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Full 4-week sprint</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Field assessment</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Expert-led cohort sessions</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Expert Practitioner Certificate</li>
-        </ul>
-        <a href="apply.html?field=Software%20Engineering" class="btn btn-outline" style="width:100%;justify-content:center;display:flex">Apply Now</a>
-      </div>
-      <div class="card fade-up" style="padding:32px 28px;border-color:var(--red);position:relative">
-        <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;white-space:nowrap">Most Popular</div>
-        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Corporate Seat</div>
-        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px">
-          <span class="currency-usd">$125</span>
-          <span class="currency-ngn">₦200,000</span>
-        </div>
-        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">
-          <span class="currency-usd">~₦200,000 NGN · per seat</span>
-          <span class="currency-ngn">~$125 USD · per seat</span>
-        </div>
-        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Self-Enrolment</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Manager progress reports</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Invoiced to your company</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Priority cohort placement</li>
-        </ul>
-        <a href="apply.html?field=Software%20Engineering" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Apply Now</a>
-      </div>
-      <div class="card fade-up" style="padding:32px 28px">
-        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Team (20+ seats)</div>
-        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px">
-          <span class="currency-usd">$106</span>
-          <span class="currency-ngn">₦170,000</span>
-        </div>
-        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">
-          <span class="currency-usd">~₦170,000 NGN · per seat</span>
-          <span class="currency-ngn">~$106 USD · per seat</span>
-        </div>
-        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Corporate</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Dedicated cohort manager</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Team project tracks</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Full cohort reporting</li>
-        </ul>
-        <a href="organisations.html#packages" class="btn btn-outline" style="width:100%;justify-content:center;display:flex">View Team Packages</a>
-      </div>
+    <div id="pricing-cards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto" class="stagger">
+      <div style="text-align:center;color:var(--muted);padding:40px;grid-column:1/-1">Loading pricing…</div>
     </div>
   </div>
 </section>
@@ -943,7 +873,7 @@
       <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;color:#fff;margin-bottom:16px">Ready to Become an AI-Native<br />Software Engineer?</h2>
       <p style="font-size:1rem;color:rgba(255,255,255,0.82);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto">Cohort 1 opens June 12, 2026. Seats are limited. Apply in under 2 minutes — no essays, no references required.</p>
       <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-        <a href="apply.html?field=Software%20Engineering" class="btn btn-lg" style="background:#fff;color:var(--red);font-weight:900">Apply Now</a>
+        <a href="apply.html?program_id=1" class="btn btn-lg" style="background:#fff;color:var(--red);font-weight:900">Apply Now</a>
         <a href="#quiz-field" class="btn btn-lg" style="background:transparent;border:2px solid rgba(255,255,255,0.5);color:#fff">Validate Your Level First</a>
       </div>
     </div>
@@ -1038,6 +968,23 @@
   let currentQ = 0;
   const totalQ = 5;
 
+  // Shuffle question DOM order for each session
+  (function shuffleQuestions() {
+    var container = document.getElementById(ID + '_container');
+    var questions = Array.from(container.querySelectorAll('.qf-question'));
+    for (var i = questions.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = questions[i]; questions[i] = questions[j]; questions[j] = tmp;
+    }
+    // Re-assign data-q indices to match new order, then reinsert before nav
+    var nav = container.querySelector('.qf-nav');
+    questions.forEach(function(el, idx) {
+      el.id = ID + '_q' + idx;
+      el.querySelectorAll('.qf-opt').forEach(function(opt) { opt.dataset.q = idx; });
+      container.insertBefore(el, nav);
+    });
+  })();
+
   // Show first question
   showQ(0);
 
@@ -1083,12 +1030,9 @@
 
   window.qfSubmitCapture = function(id) {
     if (id !== ID) return;
-    const email    = document.getElementById(ID + '_email').value.trim();
-    const phoneNum = document.getElementById(ID + '_phone').value.trim();
-    const ccEl     = document.getElementById(ID + '_phone_cc');
-    const phone    = phoneNum ? ((ccEl ? ccEl.value : '') + phoneNum) : phoneNum;
-    const errEl = document.getElementById(ID + '_capture_err');
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || phoneNum.length < 7) {
+    const email  = document.getElementById(ID + '_email').value.trim();
+    const errEl  = document.getElementById(ID + '_capture_err');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       errEl.style.display = 'block'; return;
     }
     errEl.style.display = 'none';
@@ -1128,6 +1072,10 @@
     const pct = ((total - 5) / 15) * 100;
 
     function doShow() {
+      var _email = localStorage.getItem('bxQuizEmail') || '';
+      if (_email && typeof postQuestionnaireSummary === 'function') {
+        postQuestionnaireSummary(2, _email, parseFloat(pct.toFixed(2)), tierLabelToRatingLevel(tier.label), 'software-engineering-ai-readiness', '');
+      }
       document.getElementById(ID + '_badge').textContent = tier.label;
       document.getElementById(ID + '_badge').style.background = tier.color + '22';
       document.getElementById(ID + '_badge').style.color = tier.color;
@@ -1150,6 +1098,83 @@
 
     if (typeof showQuizCaptureGate === 'function') { showQuizCaptureGate(doShow); } else { doShow(); }
   }
+})();
+
+// ====== Pricing — fetch from API ======
+var PROGRAM_ID = 1;
+(function() {
+  var SYMS = { NGN: '₦', USD: '$', GBP: '£', EUR: '€', CAD: 'C$' };
+  var CURRENCIES = ['ngn','usd','gbp','eur','cad'];
+
+  function priceSpans(breakdowns) {
+    return CURRENCIES.map(function(c) {
+      var cur = c.toUpperCase();
+      var b = (breakdowns || []).find(function(x) { return x.currency === cur; });
+      var val = b ? (SYMS[cur] || '') + Number(b.final_price).toLocaleString() : '—';
+      return '<span class="currency-' + c + '">' + val + '</span>';
+    }).join('');
+  }
+
+  function renderPricingCards(plans) {
+    var container = document.getElementById('pricing-cards');
+    if (!container) return;
+    if (!plans || !plans.length) {
+      container.innerHTML = '<div style="text-align:center;color:var(--muted);padding:40px;grid-column:1/-1">Contact us for pricing information.</div>';
+      return;
+    }
+    window._pricingPlans = {};
+    plans.forEach(function(p) { window._pricingPlans[p.plan_type] = p; });
+
+    var indPlan  = plans.find(function(p) { return p.plan_type === 'INDIVIDUAL'; });
+    var teamPlan = plans.find(function(p) { return p.plan_type === 'TEAM'; });
+    var html = '';
+
+    if (indPlan) {
+      html += '<div class="card fade-up" style="padding:32px 28px">' +
+        '<div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Individual</div>' +
+        '<div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px">' + priceSpans(indPlan.breakdowns) + '</div>' +
+        '<div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">Per person / programme</div>' +
+        '<ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">' +
+        '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Full 4-week sprint</li>' +
+        '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Field assessment</li>' +
+        '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Expert-led cohort sessions</li>' +
+        '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Expert Practitioner Certificate</li>' +
+        '</ul>' +
+        '<a href="apply.html?program_id=' + PROGRAM_ID + '" class="btn btn-outline" style="width:100%;justify-content:center;display:flex">Apply Now</a></div>';
+    }
+    if (teamPlan) {
+      html += '<div class="card fade-up" style="padding:32px 28px;border-color:var(--red);position:relative">' +
+        '<div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;white-space:nowrap">Most Popular</div>' +
+        '<div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Team</div>' +
+        '<div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px">' + priceSpans(teamPlan.breakdowns) + '</div>' +
+        '<div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">Per seat / programme</div>' +
+        '<ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">' +
+        '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Individual</li>' +
+        '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Organisation-aligned cohort</li>' +
+        '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Manager progress reporting</li>' +
+        '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Invoice billing available</li>' +
+        '</ul>' +
+        '<a href="apply.html?program_id=' + PROGRAM_ID + '&type=team" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Apply Now</a></div>';
+    }
+    html += '<div class="card fade-up" style="padding:32px 28px">' +
+      '<div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Corporate</div>' +
+      '<div style="font-size:1.6rem;font-weight:900;color:var(--red);margin-bottom:4px">Custom Pricing</div>' +
+      '<div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">Tailored to your organisation</div>' +
+      '<ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">' +
+      '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Teams tier</li>' +
+      '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Dedicated cohort manager</li>' +
+      '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Custom curriculum design</li>' +
+      '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Enterprise reporting</li>' +
+      '</ul>' +
+      '<a href="organisations.html#contact" class="btn btn-outline" style="width:100%;justify-content:center;display:flex">Contact Us</a></div>';
+
+    container.innerHTML = html;
+  }
+
+  fetch('https://api.brixgate.com/pricing-plans?program_id=' + PROGRAM_ID)
+    .then(function(r) { return r.json(); })
+    .then(function(data) { renderPricingCards((data && data.pricing_plans) || []); })
+    .catch(function() { renderPricingCards([]); });
 })();
 </script>
 

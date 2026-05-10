@@ -1832,20 +1832,64 @@ textarea.form-control {
 }
 
 /* ---------- Currency show/hide — NGN is DEFAULT ---------- */
-/* By default (no class): show NGN, hide USD/GBP */
+/* By default (no class): show NGN, hide all others */
 .currency-ngn { display: inline !important; }
 .currency-usd { display: none !important; }
 .currency-gbp { display: none !important; }
+.currency-eur { display: none !important; }
+.currency-cad { display: none !important; }
 
-/* When .show-usd is on body: show USD, hide NGN/GBP */
+/* show-usd */
 body.show-usd .currency-ngn { display: none !important; }
 body.show-usd .currency-usd { display: inline !important; }
 body.show-usd .currency-gbp { display: none !important; }
+body.show-usd .currency-eur { display: none !important; }
+body.show-usd .currency-cad { display: none !important; }
 
-/* When .show-gbp is on body: show GBP, hide NGN/USD */
+/* show-gbp */
 body.show-gbp .currency-ngn { display: none !important; }
 body.show-gbp .currency-usd { display: none !important; }
 body.show-gbp .currency-gbp { display: inline !important; }
+body.show-gbp .currency-eur { display: none !important; }
+body.show-gbp .currency-cad { display: none !important; }
+
+/* show-eur */
+body.show-eur .currency-ngn { display: none !important; }
+body.show-eur .currency-usd { display: none !important; }
+body.show-eur .currency-gbp { display: none !important; }
+body.show-eur .currency-eur { display: inline !important; }
+body.show-eur .currency-cad { display: none !important; }
+
+/* show-cad */
+body.show-cad .currency-ngn { display: none !important; }
+body.show-cad .currency-usd { display: none !important; }
+body.show-cad .currency-gbp { display: none !important; }
+body.show-cad .currency-eur { display: none !important; }
+body.show-cad .currency-cad { display: inline !important; }
+
+/* ---------- 5-currency pill toggle ---------- */
+.currency-toggle-5 {
+  display: inline-flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+.cur-btn {
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.45);
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s;
+  font-family: inherit;
+  line-height: 1;
+}
+.cur-btn:hover { border-color: var(--red); color: var(--red); }
+.cur-btn.active { background: var(--red); border-color: var(--red); color: #fff; }
 
 /* ---------- Scroll progress bar ---------- */
 #scroll-progress {

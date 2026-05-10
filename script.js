@@ -163,158 +163,137 @@
    * --------------------------------------------------------- */
   function initCurrencyToggle() {
     var usdLabels   = document.querySelectorAll('.label-usd');
-    var localLabels = document.querySelectorAll('.label-ngn'); // "local currency" label
+    var localLabels = document.querySelectorAll('.label-ngn');
+    var curBtns     = document.querySelectorAll('.cur-btn[data-cur]');
 
-    if (!usdLabels.length && !localLabels.length) return;
+    if (!usdLabels.length && !localLabels.length && !curBtns.length) return;
 
-    /* Country → currency map
-     * code   : body class suffix & localStorage value
-     * label  : what to display on the toggle button
-     * isLocal: true = this is a non-USD "local" currency shown on the left label
-     */
-    var CURRENCY_MAP = {
-      'NG': { code: 'ngn', label: '₦ NGN', isLocal: true  },
-      'GB': { code: 'gbp', label: '£ GBP', isLocal: true  },
-      'GH': { code: 'usd', label: '$ USD', isLocal: false },
-      'KE': { code: 'usd', label: '$ USD', isLocal: false },
-      'ZA': { code: 'usd', label: '$ USD', isLocal: false },
+    /* currency metadata */
+    var CURRENCY_META = {
+      ngn: { label: '₦ NGN' },
+      usd: { label: '$ USD' },
+      gbp: { label: '£ GBP' },
+      eur: { label: '€ EUR' },
+      cad: { label: 'C$ CAD' }
     };
-    var DEFAULT_CURRENCY = { code: 'usd', label: '$ USD', isLocal: false };
 
-    // Currently active currency object
-    var activeCurrency = { code: 'ngn', label: '₦ NGN', isLocal: true };
+    /* country → currency code */
+    var COUNTRY_MAP = {
+      'NG': 'ngn', 'GB': 'gbp', 'CA': 'cad',
+      'DE': 'eur', 'FR': 'eur', 'ES': 'eur', 'IT': 'eur',
+      'NL': 'eur', 'BE': 'eur', 'AT': 'eur', 'PT': 'eur',
+      'FI': 'eur', 'IE': 'eur', 'GR': 'eur', 'LU': 'eur',
+      'SK': 'eur', 'SI': 'eur', 'EE': 'eur', 'LV': 'eur',
+      'LT': 'eur', 'MT': 'eur', 'CY': 'eur', 'HR': 'eur'
+    };
 
-    /* Update DOM to reflect activeCurrency */
+    var activeCurrCode = 'ngn';
+
     function applyState(persist) {
-      // Remove all currency body classes first
-      document.body.classList.remove('show-usd', 'show-gbp');
-
-      var isUSD = (activeCurrency.code === 'usd');
-
-      if (!isUSD) {
-        // Show local currency (NGN or GBP): add appropriate show-* class
-        if (activeCurrency.code !== 'ngn') {
-          document.body.classList.add('show-' + activeCurrency.code);
-        }
-        // Update the local label text
-        localLabels.forEach(function(l) {
-          l.textContent = activeCurrency.label;
-          l.classList.add('active');
-        });
-        usdLabels.forEach(function(l) { l.classList.remove('active'); });
-      } else {
-        // Show USD
-        document.body.classList.add('show-usd');
-        usdLabels.forEach(function(l) { l.classList.add('active'); });
-        localLabels.forEach(function(l) { l.classList.remove('active'); });
+      document.body.classList.remove('show-usd', 'show-gbp', 'show-eur', 'show-cad');
+      if (activeCurrCode !== 'ngn') {
+        document.body.classList.add('show-' + activeCurrCode);
       }
+      window.bxActiveCurrency = activeCurrCode;
+
+      var meta = CURRENCY_META[activeCurrCode] || CURRENCY_META.ngn;
+      var isUSD = (activeCurrCode === 'usd');
+
+      usdLabels.forEach(function(l) { l.classList.toggle('active', isUSD); });
+      localLabels.forEach(function(l) {
+        l.textContent = isUSD ? (l.dataset.localLabel || '₦ NGN') : meta.label;
+        l.classList.toggle('active', !isUSD);
+      });
+
+      curBtns.forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.cur === activeCurrCode);
+      });
 
       if (persist) {
-        try { localStorage.setItem('bxCurrencyV2', activeCurrency.code); } catch(e) {}
+        try { localStorage.setItem('bxCurrencyV2', activeCurrCode); } catch(e) {}
       }
     }
 
-    /* Manual toggle: clicking USD label → switch to USD */
+    /* old-style toggle clicks */
     usdLabels.forEach(function(l) {
-      l.addEventListener('click', function() {
-        activeCurrency = { code: 'usd', label: '$ USD', isLocal: false };
-        applyState(true);
-      });
+      l.addEventListener('click', function() { activeCurrCode = 'usd'; applyState(true); });
     });
-
-    /* Manual toggle: clicking local label → switch back to local */
     localLabels.forEach(function(l) {
       l.addEventListener('click', function() {
-        // Restore whatever local currency was detected (stored in data attr)
-        var localCode  = l.dataset.localCode  || 'ngn';
-        var localLabel = l.dataset.localLabel || '₦ NGN';
-        activeCurrency = { code: localCode, label: localLabel, isLocal: true };
+        activeCurrCode = l.dataset.localCode || 'ngn';
         applyState(true);
       });
     });
-
-    /* Toggle-switch (middle pill) flips between local and USD */
     document.querySelectorAll('.toggle-switch').forEach(function(t) {
       t.addEventListener('click', function() {
-        if (activeCurrency.code === 'usd') {
-          var el = localLabels[0];
-          var localCode  = (el && el.dataset.localCode)  || 'ngn';
-          var localLabel = (el && el.dataset.localLabel) || '₦ NGN';
-          activeCurrency = { code: localCode, label: localLabel, isLocal: true };
+        if (activeCurrCode === 'usd') {
+          activeCurrCode = (localLabels[0] && localLabels[0].dataset.localCode) || 'ngn';
         } else {
-          activeCurrency = { code: 'usd', label: '$ USD', isLocal: false };
+          activeCurrCode = 'usd';
         }
         applyState(true);
       });
     });
 
-    /* Helper: store the detected local currency on the label elements so
-     * clicking the local label later can restore it */
-    function setLocalCurrencyOnLabels(cur) {
+    /* new 5-button toggle clicks */
+    curBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        activeCurrCode = btn.dataset.cur;
+        applyState(true);
+      });
+    });
+
+    function setLocalLabel(code) {
+      var meta = CURRENCY_META[code] || CURRENCY_META.ngn;
       localLabels.forEach(function(l) {
-        l.dataset.localCode  = cur.code;
-        l.dataset.localLabel = cur.label;
-        l.textContent = cur.label;
+        l.dataset.localCode  = code;
+        l.dataset.localLabel = meta.label;
+        l.textContent = meta.label;
       });
     }
 
-    /* 1 — Check for a saved user preference (V2 key only) */
+    /* restore saved preference */
     var saved;
     try { saved = localStorage.getItem('bxCurrencyV2'); } catch(e) {}
 
-    if (saved === 'usd') {
-      activeCurrency = { code: 'usd', label: '$ USD', isLocal: false };
+    if (saved && CURRENCY_META[saved]) {
+      activeCurrCode = saved;
+      setLocalLabel(saved !== 'usd' ? saved : 'ngn');
       applyState(false);
-      // Still detect country so the local label shows the right currency
-      fetch('https://api.country.is/', { cache: 'no-store' })
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          var country = (data && data.country) ? data.country.toUpperCase() : '';
-          var cur = CURRENCY_MAP[country] || DEFAULT_CURRENCY;
-          var localCur = cur.isLocal ? cur : { code: 'ngn', label: '₦ NGN', isLocal: true };
-          setLocalCurrencyOnLabels(localCur);
-        })
-        .catch(function() {});
-      return;
-    }
-    if (saved === 'ngn' || saved === 'gbp') {
-      var savedCode  = saved;
-      var savedLabel = saved === 'gbp' ? '£ GBP' : '₦ NGN';
-      activeCurrency = { code: savedCode, label: savedLabel, isLocal: true };
-      setLocalCurrencyOnLabels(activeCurrency);
-      applyState(false);
+      if (saved === 'usd') {
+        fetch('https://api.country.is/', { cache: 'no-store' })
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            var c = (data && data.country) ? data.country.toUpperCase() : '';
+            var loc = COUNTRY_MAP[c] || 'ngn';
+            if (loc === 'usd') loc = 'ngn';
+            setLocalLabel(loc);
+          }).catch(function() {});
+      }
       return;
     }
 
-    /* 2 — No saved preference: start with NGN while we detect location */
-    activeCurrency = { code: 'ngn', label: '₦ NGN', isLocal: true };
-    setLocalCurrencyOnLabels(activeCurrency);
+    /* no saved preference — start NGN then detect */
+    activeCurrCode = 'ngn';
+    setLocalLabel('ngn');
     applyState(false);
 
-    /* 3 — Detect country and apply the right local currency */
     fetch('https://api.country.is/', { cache: 'no-store' })
       .then(function(r) { return r.json(); })
       .then(function(data) {
-        var country = (data && data.country) ? data.country.toUpperCase() : '';
-        var cur = CURRENCY_MAP[country] || DEFAULT_CURRENCY;
-
-        if (cur.isLocal) {
-          // Local currency (NGN or GBP)
-          activeCurrency = cur;
-          setLocalCurrencyOnLabels(cur);
+        var c = (data && data.country) ? data.country.toUpperCase() : '';
+        var detected = COUNTRY_MAP[c] || 'usd';
+        if (detected !== 'usd') {
+          setLocalLabel(detected);
+          activeCurrCode = detected;
           applyState(false);
         } else {
-          // Outside Nigeria/UK — show USD by default, but keep NGN on local label
-          // so the user can toggle back to NGN if they prefer
-          var localFallback = { code: 'ngn', label: '₦ NGN', isLocal: true };
-          setLocalCurrencyOnLabels(localFallback);
-          activeCurrency = { code: 'usd', label: '$ USD', isLocal: false };
+          setLocalLabel('ngn');
+          activeCurrCode = 'usd';
           applyState(false);
         }
       })
-      .catch(function() {
-        // API unreachable — stay on NGN (safe default for primary market)
-      });
+      .catch(function() {});
   }
 
   /* ---------- Animated Counters ---------- */
@@ -385,6 +364,35 @@
 })();
 
 /* ============================================================
+   QUESTIONNAIRE SUMMARY API
+   POST /questionnaires/summaries after email is captured
+   ============================================================ */
+var BX_API_BASE = 'https://api.brixgate.com';
+
+window.postQuestionnaireSummary = function(questionnaireId, email, score, ratingLevel, source, occupation) {
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+  fetch(BX_API_BASE + '/questionnaires/summaries', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      questionnaire_id: questionnaireId,
+      email: email,
+      score: parseFloat(Number(score).toFixed(2)),
+      rating_level: ratingLevel,
+      source: source,
+      metadata: '',
+      occupation: occupation || ''
+    })
+  }).catch(function() {});
+};
+
+window.tierLabelToRatingLevel = function(label) {
+  if (/expert practitioner|ai practitioner/i.test(label)) return 'ADVANCED';
+  if (/practitioner level|ai aware/i.test(label)) return 'INTERMEDIATE';
+  return 'BEGINNER';
+};
+
+/* ============================================================
    SHARED QUIZ CAPTURE GATE
    Used by: programme.html, all programme-*.html course pages
    ============================================================ */
@@ -410,24 +418,7 @@
         '<div style="font-size:2rem;margin-bottom:12px;">🎯</div>' +
         '<h3 style="font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:8px;">Your Results Are Ready</h3>' +
         '<p style="font-size:0.88rem;color:#7A94A8;line-height:1.6;margin-bottom:24px;">Enter your email to receive your result and unlock a <strong style="color:#FF294E;">10% coupon</strong> for the programme.</p>' +
-        '<input id="bx-quiz-email" type="email" placeholder="your@email.com" autocomplete="email" style="width:100%;padding:13px 16px;border-radius:8px;border:1.5px solid #1A3050;background:rgba(255,255,255,0.05);color:#fff;font-size:0.92rem;margin-bottom:10px;outline:none;box-sizing:border-box;" />' +
-        '<div style="display:flex;gap:0;margin-bottom:16px;">' +
-          '<select id="bx-quiz-phone-cc" style="width:110px;flex-shrink:0;padding:13px 8px;border-radius:8px 0 0 8px;border:1.5px solid #1A3050;border-right:none;background:#0D1C34;color:#7A94A8;font-size:0.82rem;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;text-align:center;">' +
-            '<option value="+234">🇳🇬 +234</option>' +
-            '<option value="+44">🇬🇧 +44</option>' +
-            '<option value="+1">🇺🇸 +1</option>' +
-            '<option value="+254">🇰🇪 +254</option>' +
-            '<option value="+233">🇬🇭 +233</option>' +
-            '<option value="+27">🇿🇦 +27</option>' +
-            '<option value="+251">🇪🇹 +251</option>' +
-            '<option value="+256">🇺🇬 +256</option>' +
-            '<option value="+255">🇹🇿 +255</option>' +
-            '<option value="+237">🇨🇲 +237</option>' +
-            '<option value="+225">🇨🇮 +225</option>' +
-            '<option value="+221">🇸🇳 +221</option>' +
-          '</select>' +
-          '<input id="bx-quiz-phone" type="tel" placeholder="Phone (optional)" autocomplete="tel" style="flex:1;padding:13px 16px;border-radius:0 8px 8px 0;border:1.5px solid #1A3050;background:rgba(255,255,255,0.05);color:#fff;font-size:0.92rem;outline:none;box-sizing:border-box;" />' +
-        '</div>' +
+        '<input id="bx-quiz-email" type="email" placeholder="your@email.com" autocomplete="email" style="width:100%;padding:13px 16px;border-radius:8px;border:1.5px solid #1A3050;background:rgba(255,255,255,0.05);color:#fff;font-size:0.92rem;margin-bottom:16px;outline:none;box-sizing:border-box;" />' +
         '<button onclick="submitQuizCapture()" style="width:100%;padding:14px;background:linear-gradient(135deg,#FF294E,#FF5748);border:none;border-radius:10px;color:#fff;font-weight:800;font-size:1rem;cursor:pointer;margin-bottom:12px;">Get My Results + Coupon</button>' +
         '<br/><a href="#" onclick="skipQuizCapture(event)" style="color:#7A94A8;font-size:0.82rem;text-decoration:underline;">Skip — just show me results</a>' +
       '</div>';
@@ -442,13 +433,8 @@
   };
 
   window.submitQuizCapture = function () {
-    var emailEl  = document.getElementById('bx-quiz-email');
-    var phoneEl  = document.getElementById('bx-quiz-phone');
-    var phoneCc  = document.getElementById('bx-quiz-phone-cc');
-    var email    = emailEl ? emailEl.value.trim() : '';
-    var phoneNum = phoneEl ? phoneEl.value.trim() : '';
-    var cc       = phoneCc ? phoneCc.value : '';
-    var phone    = phoneNum ? (cc + phoneNum) : '';
+    var emailEl = document.getElementById('bx-quiz-email');
+    var email   = emailEl ? emailEl.value.trim() : '';
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       if (emailEl) { emailEl.style.borderColor = '#FF294E'; emailEl.focus(); }
       return;
@@ -456,7 +442,6 @@
     try {
       localStorage.setItem('bxQuizCaptured', '1');
       localStorage.setItem('bxQuizEmail', email);
-      if (phone) localStorage.setItem('bxQuizPhone', phone);
     } catch (e) {}
     document.getElementById('bx-quiz-capture').style.display = 'none';
     if (_captureCallback) { var cb = _captureCallback; _captureCallback = null; cb(); }

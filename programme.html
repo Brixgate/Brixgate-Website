@@ -794,9 +794,12 @@
     </div>
 
     <div style="text-align:center;margin-bottom:24px" class="fade-up">
-      <div class="currency-toggle" style="display:inline-flex">
-        <label class="label-usd">$ USD</label>
-        <label class="label-ngn active">₦ NGN</label>
+      <div class="currency-toggle-5">
+        <button class="cur-btn" data-cur="ngn">₦ NGN</button>
+        <button class="cur-btn" data-cur="usd">$ USD</button>
+        <button class="cur-btn" data-cur="gbp">£ GBP</button>
+        <button class="cur-btn" data-cur="eur">€ EUR</button>
+        <button class="cur-btn" data-cur="cad">C$ CAD</button>
       </div>
     </div>
 
@@ -806,9 +809,11 @@
       <div class="price-card fade-up">
         <div class="price-tier">Individual</div>
         <div class="price-amount">
-          <span class="currency-usd">$156<span class="price-original">was $200</span></span>
           <span class="currency-ngn">₦250,000<span class="price-original">was ₦320,000</span></span>
+          <span class="currency-usd">$156<span class="price-original">was $200</span></span>
           <span class="currency-gbp">£122<span class="price-original">was £160</span></span>
+          <span class="currency-eur">€145<span class="price-original">was €185</span></span>
+          <span class="currency-cad">C$212<span class="price-original">was C$270</span></span>
         </div>
         <div class="price-period">Per person / programme</div>
         <p class="price-description">For self-directed professionals ready to transform their AI practice independently.</p>
@@ -820,16 +825,18 @@
           <li>Applied project support</li>
           <li>Expert Practitioner Certificate</li>
         </ul>
-        <a href="apply.html?type=individual" class="btn btn-outline-red" style="width:100%;justify-content:center">Apply Now</a>
+        <a href="apply.html" class="btn btn-outline-red" style="width:100%;justify-content:center">Apply Now</a>
       </div>
 
       <!-- Teams — Most Popular -->
       <div class="price-card featured fade-up">
         <div class="price-tier">Teams</div>
         <div class="price-amount">
-          <span class="currency-usd">$125<span class="price-original">was $160</span></span>
           <span class="currency-ngn">₦200,000<span class="price-original">was ₦260,000</span></span>
+          <span class="currency-usd">$125<span class="price-original">was $160</span></span>
           <span class="currency-gbp">£98<span class="price-original">was £125</span></span>
+          <span class="currency-eur">€116<span class="price-original">was €148</span></span>
+          <span class="currency-cad">C$170<span class="price-original">was C$216</span></span>
         </div>
         <div class="price-period">Per seat / programme</div>
         <p class="price-description">For organisations enrolling individuals. Team pricing, full programme quality.</p>
@@ -841,7 +848,7 @@
           <li>Priority expert matching</li>
           <li>Invoice billing available</li>
         </ul>
-        <a href="apply.html?type=team" class="btn btn-primary" style="width:100%;justify-content:center">Apply Now</a>
+        <a href="apply.html" class="btn btn-primary" style="width:100%;justify-content:center">Apply Now</a>
       </div>
 
       <!-- Corporate — No price -->
@@ -862,7 +869,7 @@
       </div>
 
     </div>
-    <div style="font-size:0.75rem;color:var(--muted);margin-top:40px;text-align:center">Exchange rate: ₦1,600/$1 · ₦2,050/£1 · All prices exclude applicable local taxes.</div>
+    <div style="font-size:0.75rem;color:var(--muted);margin-top:40px;text-align:center">All prices exclude applicable local taxes.</div>
   </div>
 </section>
 

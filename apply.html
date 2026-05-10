@@ -740,7 +740,15 @@
       <!-- ====== PRICING TABLE ====== -->
       <div class="apply-sidebar fade-up" style="margin-bottom:0;padding-bottom:0">
         <div style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:28px 24px;margin-bottom:0">
-          <div style="font-size:0.72rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:20px">Programme Fees</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div style="font-size:0.72rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.1em">Programme Fees</div>
+            <div class="currency-toggle-5" style="margin-bottom:0">
+              <button class="cur-btn" data-cur="ngn">NGN</button>
+              <button class="cur-btn" data-cur="cad">CAD</button>
+              <button class="cur-btn" data-cur="usd">USD</button>
+              <button class="cur-btn" data-cur="eur">EUR</button>
+            </div>
+          </div>
 
           <!-- Dynamic Enrolment Pricing -->
           <div style="padding:14px 0">
@@ -751,23 +759,18 @@
               </div>
               <div style="text-align:right;flex-shrink:0">
                 <div style="font-size:1.1rem;font-weight:900;color:var(--white)">
-                  <span class="currency-ngn" id="fees-price-ngn">₦250,000</span>
-                  <span class="currency-usd" id="fees-price-usd">$156</span>
-                  <span class="currency-gbp" id="fees-price-gbp">£122</span>
-                </div>
-                <div style="font-size:0.72rem;color:var(--muted);margin-top:1px" id="fees-conv">
-                  <span class="currency-ngn">~$156 USD</span>
-                  <span class="currency-usd">~₦250,000</span>
-                  <span class="currency-gbp">~₦250,000</span>
+                  <span class="currency-ngn" id="fees-price-ngn">₦—</span>
+                  <span class="currency-usd" id="fees-price-usd">$—</span>
+                  <span class="currency-eur" id="fees-price-eur">€—</span>
+                  <span class="currency-cad" id="fees-price-cad">C$—</span>
                 </div>
               </div>
             </div>
-            <div id="fees-discount-bar">🏷 Save ₦50,000 per person vs individual rate</div>
+            <div id="fees-discount-bar">🏷 Save per person vs individual rate</div>
             <div id="fees-team-info">Team members can be added after payment via your dashboard.</div>
           </div>
 
-          <div style="margin-top:16px;padding-top:14px;display:flex;align-items:center;justify-content:space-between">
-            <span style="font-size:0.72rem;color:var(--muted)">Rate: ₦1,600/$1 · ₦2,050/£1</span>
+          <div style="margin-top:16px;padding-top:14px;display:flex;align-items:center;justify-content:flex-end">
             <a href="programme.html#pricing" style="font-size:0.75rem;color:var(--red);font-weight:700;text-decoration:none">Full pricing →</a>
           </div>
         </div>
@@ -842,9 +845,10 @@
           <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border-card)">
             <span style="font-size:0.85rem;color:var(--muted)" id="fees2-label">Individual Enrolment</span>
             <span style="font-size:1.1rem;font-weight:900;color:var(--white)">
-              <span class="currency-ngn" id="fees2-price-ngn">₦250,000</span>
-              <span class="currency-usd" id="fees2-price-usd">$156</span>
-              <span class="currency-gbp" id="fees2-price-gbp">£122</span>
+              <span class="currency-ngn" id="fees2-price-ngn">₦—</span>
+              <span class="currency-usd" id="fees2-price-usd">$—</span>
+              <span class="currency-eur" id="fees2-price-eur">€—</span>
+              <span class="currency-cad" id="fees2-price-cad">C$—</span>
             </span>
           </div>
 
@@ -852,7 +856,7 @@
           <div id="fees2-breakdown" style="display:none;padding:8px 0 0;border-bottom:1px solid var(--border-card)">
             <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0">
               <span style="font-size:0.75rem;color:var(--muted)" id="fees2-breakdown-label">Per person</span>
-              <span style="font-size:0.75rem;color:var(--muted)" id="fees2-per-person">₦200,000</span>
+              <span style="font-size:0.75rem;color:var(--muted)" id="fees2-per-person">—</span>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0">
               <span style="font-size:0.75rem;color:#a78bfa;font-weight:600">You save</span>
@@ -861,12 +865,7 @@
           </div>
 
           <div style="margin-top:16px;display:flex;align-items:center;gap:8px">
-            <div style="flex:1;font-size:0.75rem;color:rgba(255,255,255,0.25);line-height:1.5" id="fees2-conv">
-              <span class="currency-ngn">Rate: ₦1,600/$1 · ₦2,050/£1</span>
-              <span class="currency-usd">Rate: ₦1,600/$1</span>
-              <span class="currency-gbp">Rate: ₦2,050/£1</span>
-            </div>
-            <a href="programme.html#pricing" style="font-size:0.78rem;color:var(--red);font-weight:700;text-decoration:none;white-space:nowrap">Full pricing →</a>
+            <a href="programme.html#pricing" style="font-size:0.78rem;color:var(--red);font-weight:700;text-decoration:none;white-space:nowrap;margin-left:auto">Full pricing →</a>
           </div>
         </div>
 
@@ -935,11 +934,13 @@
             </div>
 
             <div class="form-group">
-              <label for="field">Your Field</label>
+              <label for="field">Programme</label>
               <select id="field" name="field" required>
-                <option value="" disabled selected>Select your field of work</option>
-                <option value="Cybersecurity">Cybersecurity</option>
-                <option value="Product Marketing">Product Marketing</option>
+                <option value="" disabled selected>Select your programme</option>
+                <option value="Software Engineering" data-program-id="1">Software Engineering</option>
+                <option value="Cybersecurity" data-program-id="2">Cybersecurity</option>
+                <option value="Cloud &amp; DevOps" data-program-id="3">Cloud &amp; DevOps</option>
+                <option value="Data &amp; Analytics" data-program-id="4">Data &amp; Analytics</option>
               </select>
             </div>
 
@@ -1168,196 +1169,171 @@
 
   var API_BASE = 'https://api.brixgate.com';
 
-  var FIELD_TO_SLUG = {
-    'Cybersecurity':                'ai-in-cyber-security',
-    'Product Marketing':         'ai-in-software-engineering',
-    'Finance & Banking':            null,
-    'Healthcare & Medicine':        null,
-    'Legal & Compliance':           null,
-    'Engineering & Infrastructure': null,
-    'Human Resources':              null,
-    'Education & Training':         null,
-    'Marketing & Communications':   null,
-    'Supply Chain & Operations':    null,
-    'Architecture & Construction':  null,
-    'Data & Analytics':             null,
-    'Other':                        null
-  };
+  /* programme ID → field name */
+  var PROGRAM_ID_TO_FIELD = { 1: 'Software Engineering', 2: 'Cybersecurity', 3: 'Cloud & DevOps', 4: 'Data & Analytics' };
+  var FIELD_TO_PROGRAM_ID = { 'Software Engineering': 1, 'Cybersecurity': 2, 'Cloud & DevOps': 3, 'Data & Analytics': 4 };
+  var CURRENCY_SYMS = { ngn: '₦', usd: '$', eur: '€', cad: 'C$' };
 
-  /* Base pricing — Individual */
-  var PRICING_INDIVIDUAL = { ngn: 250000, usd: 156, gbp: 122 };
-  /* Per-person team rate */
-  var PRICING_TEAM_PER   = { ngn: 200000, usd: 125, gbp: 98  };
+  var _programId    = null;
+  var _pricingPlans = {};   /* plan_type → plan object */
+
+  function getActiveCurrency() {
+    var c = window.bxActiveCurrency || '';
+    if (!c) {
+      if (document.body.classList.contains('show-usd')) c = 'usd';
+      else if (document.body.classList.contains('show-eur')) c = 'eur';
+      else if (document.body.classList.contains('show-cad')) c = 'cad';
+      else c = 'ngn';
+    }
+    return c;
+  }
+
+  function getPlanBreakdown(planType, curCode) {
+    var plan = _pricingPlans[planType];
+    if (!plan) return null;
+    var cur = curCode.toUpperCase();
+    return (plan.breakdowns || []).find(function(b) { return b.currency === cur; }) || null;
+  }
+
+  function formatPrice(planType, curCode) {
+    var b = getPlanBreakdown(planType, curCode);
+    if (!b) return '—';
+    var sym = CURRENCY_SYMS[curCode] || '';
+    return sym + Number(b.final_price).toLocaleString();
+  }
 
   /* Returns display price strings for current enrollment state */
   function getPriceDisplay() {
     var enrollType = (document.getElementById('enrollment-type') || {}).value || '';
     var isTeam     = enrollType === 'Team';
     var teamSize   = parseInt((document.getElementById('team-size') || {}).value) || 0;
-
-    if (isTeam && teamSize >= 3) {
-      var totalNGN = teamSize * PRICING_TEAM_PER.ngn;
-      var totalUSD = teamSize * PRICING_TEAM_PER.usd;
-      var totalGBP = teamSize * PRICING_TEAM_PER.gbp;
-      return {
-        ngn: '₦' + totalNGN.toLocaleString(),
-        usd: '$' + totalUSD.toLocaleString(),
-        gbp: '£' + totalGBP.toLocaleString()
-      };
-    }
-    if (isTeam) {
-      return { ngn: '₦200,000/person', usd: '$125/person', gbp: '£98/person' };
-    }
-    return { ngn: '₦250,000', usd: '$156', gbp: '£122' };
+    var result = {};
+    ['ngn','usd','gbp','eur','cad'].forEach(function(c) {
+      var sym = CURRENCY_SYMS[c];
+      if (isTeam && teamSize >= 3) {
+        var b = getPlanBreakdown('TEAM', c);
+        result[c] = b ? sym + Number(b.final_price * teamSize).toLocaleString() : '—';
+      } else if (isTeam) {
+        var bp = getPlanBreakdown('TEAM', c);
+        result[c] = bp ? sym + Number(bp.final_price).toLocaleString() + '/person' : '—';
+      } else {
+        result[c] = formatPrice('INDIVIDUAL', c);
+      }
+    });
+    return result;
   }
 
-  function getActiveCurrency() {
-    if (document.body.classList.contains('show-usd')) return 'usd';
-    if (document.body.classList.contains('show-gbp')) return 'gbp';
-    return 'ngn';
+  function fetchPricingPlans(pid) {
+    if (!pid) return;
+    fetch(API_BASE + '/pricing-plans?program_id=' + pid)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        _pricingPlans = {};
+        var plans = (data && data.pricing_plans) || [];
+        plans.forEach(function(p) { _pricingPlans[p.plan_type] = p; });
+        updateFeesDisplay();
+      })
+      .catch(function() {});
   }
 
-  var _session = { cohortId: null };
+  function updateFeesDisplay() {
+    var enrollType = (document.getElementById('enrollment-type') || {}).value || '';
+    updateEnrollmentUI(enrollType, (document.getElementById('team-size') || {}).value);
+  }
+
+  var _session = { programId: null };
 
   /* ---------- Dynamic enrollment UI ---------- */
   function updateEnrollmentUI(type, teamSize) {
     var isTeam = (type === 'Team');
     var size   = parseInt(teamSize) || 0;
+    var CURRENCIES = ['ngn','usd','gbp','eur','cad'];
 
-    /* ── Toggle buttons: highlight selected one ── */
+    /* toggle button styling */
     var btnInd  = document.getElementById('enroll-btn-individual');
     var btnTeam = document.getElementById('enroll-btn-team');
     if (btnInd) {
-      if (isTeam) {
-        btnInd.style.borderColor = 'var(--border-card)';
-        btnInd.style.background  = 'rgba(255,255,255,0.04)';
-        btnInd.style.color       = 'var(--muted)';
-      } else {
-        btnInd.style.borderColor = '#22c55e';
-        btnInd.style.background  = 'rgba(34,197,94,0.13)';
-        btnInd.style.color       = '#22c55e';
-      }
+      btnInd.style.borderColor = isTeam ? 'var(--border-card)' : '#22c55e';
+      btnInd.style.background  = isTeam ? 'rgba(255,255,255,0.04)' : 'rgba(34,197,94,0.13)';
+      btnInd.style.color       = isTeam ? 'var(--muted)' : '#22c55e';
     }
     if (btnTeam) {
-      if (isTeam) {
-        btnTeam.style.borderColor = '#8b5cf6';
-        btnTeam.style.background  = 'rgba(139,92,246,0.13)';
-        btnTeam.style.color       = '#8b5cf6';
-      } else {
-        btnTeam.style.borderColor = 'var(--border-card)';
-        btnTeam.style.background  = 'rgba(255,255,255,0.04)';
-        btnTeam.style.color       = 'var(--muted)';
-      }
+      btnTeam.style.borderColor = isTeam ? '#8b5cf6' : 'var(--border-card)';
+      btnTeam.style.background  = isTeam ? 'rgba(139,92,246,0.13)' : 'rgba(255,255,255,0.04)';
+      btnTeam.style.color       = isTeam ? '#8b5cf6' : 'var(--muted)';
     }
 
-    /* ── Team size dropdown: smooth CSS transition via class ── */
+    /* team size dropdown */
     var tsGroup = document.getElementById('team-size-group');
     var tsSel   = document.getElementById('team-size');
     if (tsGroup) tsGroup.classList.toggle('visible', isTeam);
     if (tsSel)   tsSel.required = isTeam;
 
-    /* ── Card 1: Programme Fees (top-left) ── */
+    /* badges */
+    var badgeInd  = document.getElementById('badge-individual');
+    var badgeTeam = document.getElementById('badge-team');
+    if (badgeInd)  badgeInd.style.display  = isTeam ? 'none' : '';
+    if (badgeTeam) badgeTeam.style.display = isTeam ? '' : 'none';
+
     var labelEl     = document.getElementById('fees-label');
     var sublabelEl  = document.getElementById('fees-sublabel');
     var discountBar = document.getElementById('fees-discount-bar');
     var teamInfoEl  = document.getElementById('fees-team-info');
-    var priceNGN    = document.getElementById('fees-price-ngn');
-    var priceUSD    = document.getElementById('fees-price-usd');
-    var priceGBP    = document.getElementById('fees-price-gbp');
-    var convEl      = document.getElementById('fees-conv');
-
-    /* ── Card 2: Fee Summary (inside trust sidebar) ── */
-    var f2Label    = document.getElementById('fees2-label');
-    var f2NGN      = document.getElementById('fees2-price-ngn');
-    var f2USD      = document.getElementById('fees2-price-usd');
-    var f2GBP      = document.getElementById('fees2-price-gbp');
-    var f2Breakdown= document.getElementById('fees2-breakdown');
-    var f2BkLabel  = document.getElementById('fees2-breakdown-label');
-    var f2PerPerson= document.getElementById('fees2-per-person');
-    var f2Savings  = document.getElementById('fees2-savings');
-    var f2Conv     = document.getElementById('fees2-conv');
+    var f2Label     = document.getElementById('fees2-label');
+    var f2Breakdown = document.getElementById('fees2-breakdown');
+    var f2PerPerson = document.getElementById('fees2-per-person');
+    var f2Savings   = document.getElementById('fees2-savings');
 
     if (!isTeam) {
-      /* ─ Individual ─ */
-      if (labelEl)    labelEl.textContent    = 'Self-Enrolment';
-      if (sublabelEl) sublabelEl.textContent = 'Individual · per person';
-      if (priceNGN)   priceNGN.textContent   = '₦250,000';
-      if (priceUSD)   priceUSD.textContent   = '$156';
-      if (priceGBP)   priceGBP.textContent   = '£122';
-      if (convEl)     convEl.innerHTML = '<span class="currency-ngn">~$156 USD</span>'
-                                       + '<span class="currency-usd">~₦250,000</span>'
-                                       + '<span class="currency-gbp">~₦250,000</span>';
+      if (labelEl)    labelEl.textContent    = 'Individual Enrolment';
+      if (sublabelEl) sublabelEl.textContent = 'Per person';
       if (discountBar) discountBar.style.display = 'none';
       if (teamInfoEl)  teamInfoEl.style.display  = 'none';
-
-      /* Card 2 — individual summary */
       if (f2Label)     f2Label.textContent    = 'Individual Enrolment';
-      if (f2NGN)       f2NGN.textContent      = '₦250,000';
-      if (f2USD)       f2USD.textContent      = '$156';
-      if (f2GBP)       f2GBP.textContent      = '£122';
       if (f2Breakdown) f2Breakdown.style.display = 'none';
-      if (f2Conv)      f2Conv.innerHTML = '<span class="currency-ngn">Rate: ₦1,600/$1 · ₦2,050/£1</span>'
-                                        + '<span class="currency-usd">Rate: ₦1,600/$1</span>'
-                                        + '<span class="currency-gbp">Rate: ₦2,050/£1</span>';
+
+      CURRENCIES.forEach(function(c) {
+        var price = formatPrice('INDIVIDUAL', c);
+        var el1 = document.getElementById('fees-price-' + c);
+        var el2 = document.getElementById('fees2-price-' + c);
+        if (el1) el1.textContent = price;
+        if (el2) el2.textContent = price;
+      });
     } else {
-      /* ─ Team ─ */
       if (labelEl) labelEl.textContent = 'Team Enrolment';
-      if (sublabelEl) sublabelEl.textContent = size >= 3
-        ? size + ' people · ₦200,000/person'
-        : 'Team · ₦200,000/person';
-
-      if (size >= 3) {
-        var tNGN     = size * 200000;
-        var tUSD     = size * 125;
-        var tGBP     = size * 98;
-        var saveNGN  = size * 50000;
-        var saveUSD  = size * 31;
-        var saveGBP  = size * 24;
-
-        /* Card 1 — total price */
-        if (priceNGN) priceNGN.textContent = '₦' + tNGN.toLocaleString();
-        if (priceUSD) priceUSD.textContent = '$' + tUSD.toLocaleString();
-        if (priceGBP) priceGBP.textContent = '£' + tGBP.toLocaleString();
-        if (convEl)   convEl.innerHTML = '<span class="currency-ngn">₦200,000 × ' + size + ' people</span>'
-                                       + '<span class="currency-usd">$125 × ' + size + ' people</span>'
-                                       + '<span class="currency-gbp">£98 × ' + size + ' people</span>';
-
-        /* Card 2 — total + breakdown + savings */
-        if (f2Label)     f2Label.textContent = size + '-Person Team Enrolment';
-        if (f2NGN)       f2NGN.textContent   = '₦' + tNGN.toLocaleString();
-        if (f2USD)       f2USD.textContent   = '$' + tUSD.toLocaleString();
-        if (f2GBP)       f2GBP.textContent   = '£' + tGBP.toLocaleString();
-        if (f2Breakdown) f2Breakdown.style.display = 'block';
-        if (f2BkLabel)   f2BkLabel.textContent     = '₦200,000 × ' + size + ' people';
-        if (f2PerPerson) f2PerPerson.textContent    = '₦200,000/person';
-        if (f2Savings)   f2Savings.innerHTML        =
-          '<span class="currency-ngn">₦' + saveNGN.toLocaleString() + ' total</span>'
-          + '<span class="currency-usd">$' + saveUSD.toLocaleString() + ' total</span>'
-          + '<span class="currency-gbp">£' + saveGBP.toLocaleString() + ' total</span>';
-        if (f2Conv) f2Conv.innerHTML = '<span class="currency-ngn">₦200,000/person · ₦50k savings each</span>'
-                                     + '<span class="currency-usd">$125/person · $31 savings each</span>'
-                                     + '<span class="currency-gbp">£98/person · £24 savings each</span>';
-      } else {
-        /* Team selected but no size yet */
-        if (priceNGN) priceNGN.textContent = '₦200,000/person';
-        if (priceUSD) priceUSD.textContent = '$125/person';
-        if (priceGBP) priceGBP.textContent = '£98/person';
-        if (convEl)   convEl.innerHTML = '<span class="currency-ngn">Select team size above</span>'
-                                       + '<span class="currency-usd">Select team size above</span>'
-                                       + '<span class="currency-gbp">Select team size above</span>';
-
-        if (f2Label)     f2Label.textContent           = 'Team Enrolment';
-        if (f2NGN)       f2NGN.textContent             = '₦200,000/person';
-        if (f2USD)       f2USD.textContent             = '$125/person';
-        if (f2GBP)       f2GBP.textContent             = '£98/person';
-        if (f2Breakdown) f2Breakdown.style.display     = 'none';
-        if (f2Conv)      f2Conv.innerHTML = '<span class="currency-ngn">Select team size to see total</span>'
-                                          + '<span class="currency-usd">Select team size to see total</span>'
-                                          + '<span class="currency-gbp">Select team size to see total</span>';
-      }
-
       if (discountBar) discountBar.style.display = 'block';
       if (teamInfoEl)  teamInfoEl.style.display  = 'block';
+
+      if (size >= 3) {
+        if (sublabelEl) sublabelEl.textContent = size + ' people · team rate';
+        if (f2Label)    f2Label.textContent    = size + '-Person Team Enrolment';
+        if (f2Breakdown) f2Breakdown.style.display = 'block';
+        if (f2PerPerson) f2PerPerson.textContent = 'Per person';
+        if (f2Savings)   f2Savings.textContent   = '—';
+
+        CURRENCIES.forEach(function(c) {
+          var b   = getPlanBreakdown('TEAM', c);
+          var sym = CURRENCY_SYMS[c] || '';
+          var total = b ? sym + Number(b.final_price * size).toLocaleString() : '—';
+          var el1 = document.getElementById('fees-price-' + c);
+          var el2 = document.getElementById('fees2-price-' + c);
+          if (el1) el1.textContent = total;
+          if (el2) el2.textContent = total;
+        });
+      } else {
+        if (sublabelEl) sublabelEl.textContent = 'Team · per person';
+        if (f2Label)    f2Label.textContent    = 'Team Enrolment';
+        if (f2Breakdown) f2Breakdown.style.display = 'none';
+
+        CURRENCIES.forEach(function(c) {
+          var price = formatPrice('TEAM', c);
+          var per   = price !== '—' ? price + '/person' : '—';
+          var el1 = document.getElementById('fees-price-' + c);
+          var el2 = document.getElementById('fees2-price-' + c);
+          if (el1) el1.textContent = per;
+          if (el2) el2.textContent = per;
+        });
+      }
     }
   }
 
@@ -1375,32 +1351,60 @@
 
   /* ---------- URL param pre-fill (?field=Cybersecurity&type=team) ---------- */
   document.addEventListener('DOMContentLoaded', function () {
-    /* Pre-select Individual by default */
     selectEnrollBadge('Individual');
 
     var params = new URLSearchParams(window.location.search);
 
-    /* If Paystack redirected here instead of callback.html, forward immediately */
+    /* Paystack callback redirect */
     var _ref = params.get('reference') || params.get('trxref');
     if (_ref) {
       window.location.replace('callback.html?reference=' + encodeURIComponent(_ref));
       return;
     }
 
-    /* Field pre-fill */
-    var fieldParam = params.get('field');
-    if (fieldParam) {
-      var fieldSel = document.getElementById('field');
-      if (fieldSel) {
+    /* Read ?program_id to auto-select field and fetch pricing */
+    var pidParam = params.get('program_id');
+    var fieldSel = document.getElementById('field');
+
+    function applyProgramId(pid) {
+      _programId = parseInt(pid) || null;
+      if (!_programId || !fieldSel) return;
+      var fieldName = PROGRAM_ID_TO_FIELD[_programId];
+      if (fieldName) {
         for (var fi = 0; fi < fieldSel.options.length; fi++) {
-          if (fieldSel.options[fi].value.toLowerCase() === fieldParam.toLowerCase()) {
-            fieldSel.selectedIndex = fi; break;
-          }
+          if (fieldSel.options[fi].value === fieldName) { fieldSel.selectedIndex = fi; break; }
+        }
+      }
+      fetchPricingPlans(_programId);
+    }
+
+    if (pidParam) {
+      applyProgramId(pidParam);
+    }
+
+    /* Also support legacy ?field= param */
+    var fieldParam = params.get('field');
+    if (fieldParam && !pidParam && fieldSel) {
+      for (var fi = 0; fi < fieldSel.options.length; fi++) {
+        if (fieldSel.options[fi].value.toLowerCase() === fieldParam.toLowerCase()) {
+          fieldSel.selectedIndex = fi;
+          var pid2 = FIELD_TO_PROGRAM_ID[fieldSel.options[fi].value];
+          if (pid2) applyProgramId(pid2);
+          break;
         }
       }
     }
 
-    /* Enrollment type pre-fill from ?type=individual or ?type=team */
+    /* When user changes field dropdown, update program ID and fetch pricing */
+    if (fieldSel) {
+      fieldSel.addEventListener('change', function() {
+        var selected = this.options[this.selectedIndex];
+        var pid3 = FIELD_TO_PROGRAM_ID[selected.value] || null;
+        if (pid3) applyProgramId(pid3);
+      });
+    }
+
+    /* Enrollment type pre-fill from ?type=team */
     var typeParam = params.get('type');
     if (typeParam) {
       var targetVal  = typeParam.toLowerCase() === 'team' ? 'Team' : 'Individual';
@@ -1486,30 +1490,6 @@
     });
   }
 
-  function apiGet(path, token) {
-    var headers = {};
-    if (token) headers['Authorization'] = 'Bearer ' + token;
-    return fetch(API_BASE + path, { headers: headers }).then(function(r) {
-      return r.text().then(function(text) {
-        try { return JSON.parse(text); }
-        catch(e) { throw new Error('Server error (' + r.status + '): ' + text.slice(0, 200)); }
-      });
-    });
-  }
-
-  function fetchCohortId(slug, token) {
-    if (!slug) return Promise.resolve(null);
-    return apiGet('/api/v1/programs/' + slug + '/cohorts', token)
-      .then(function(data) {
-        if (!data.success) return null;
-        var cohorts = (data.data && data.data.cohorts) || [];
-        var open    = cohorts.filter(function(c) { return c.status === 'OPEN'; });
-        var pick    = open.length ? open[0] : cohorts[0];
-        return pick ? pick.id : null;
-      })
-      .catch(function() { return null; });
-  }
-
   /* ---------- Coupon code ---------- */
   var _appliedCoupon = null;
 
@@ -1585,7 +1565,7 @@
     var submitBtn = this.querySelector('button[type="submit"]');
     setSubmitState(submitBtn, true, 'Setting up your account…');
 
-    apiPost('/api/v1/auth/applicants', {
+    apiPost('/auth/applicants', {
       name:         fullName,
       email:        email,
       primaryField: field || undefined,
@@ -1594,7 +1574,6 @@
       .then(function(data) {
         console.log('[Brixgate] /auth/applicants response:', JSON.stringify(data));
         if (!data.success) {
-          /* Extract specific field errors if available */
           var fieldErrors = '';
           if (data.errors && typeof data.errors === 'object') {
             fieldErrors = Object.entries(data.errors).map(function(e) { return e[0] + ': ' + JSON.stringify(e[1]); }).join('; ');
@@ -1605,21 +1584,17 @@
         var token = (data.data && (data.data.accessToken || data.data.access_token || data.data.token)) || null;
         if (!token) throw new Error('Authentication error. Please try again.');
 
-        /* Store token in sessionStorage — survives the Paystack redirect */
         try { sessionStorage.setItem('bxAccessToken', token); } catch(e) {}
 
-        var slug = FIELD_TO_SLUG[field] || null;
-        return fetchCohortId(slug, token);
-      })
-      .then(function(cohortId) {
-        _session.cohortId = cohortId;
+        /* resolve program ID from field if not set by URL param */
+        if (!_programId) _programId = FIELD_TO_PROGRAM_ID[field] || null;
+        _session.programId = _programId;
 
         document.getElementById('review-name').textContent      = fullName;
         document.getElementById('review-email').textContent     = email;
         document.getElementById('review-field-val').textContent = field;
         document.getElementById('review-role').textContent      = role;
 
-        /* Enrollment type row */
         var enrollReviewEl = document.getElementById('review-enrollment');
         if (enrollReviewEl) {
           var enrollDisplay = enrollmentType || 'Individual';
@@ -1629,12 +1604,10 @@
 
         var cur          = getActiveCurrency();
         var priceDisplay = getPriceDisplay();
-        var priceStr     = priceDisplay[cur];
+        var priceStr     = priceDisplay[cur] || '—';
         document.getElementById('review-price-item').textContent = priceStr;
         document.getElementById('review-total').textContent      = priceStr;
-        document.getElementById('pay-btn-label').textContent     = _session.cohortId
-          ? ('Pay ' + priceStr + ' via Paystack')
-          : ('Join Waitlist for ' + field);
+        document.getElementById('pay-btn-label').textContent     = 'Pay ' + priceStr + ' via Paystack';
 
         hideFormError();
         setSubmitState(submitBtn, false, 'Continue to Review →');
@@ -1659,8 +1632,8 @@
 
   /* ---------- STEP 2 → Paystack: Initiate payment & redirect ---------- */
   document.getElementById('pay-btn').addEventListener('click', function() {
-    if (!_session.cohortId) {
-      showFormError('Coming Soon', 'This programme is not yet open. We\'ll add you to the waitlist and notify you when it opens.');
+    if (!_session.programId) {
+      showFormError('Programme Required', 'Please select a programme before proceeding to payment.');
       return;
     }
 
@@ -1678,10 +1651,26 @@
       return;
     }
 
-    apiPost('/api/v1/payments/initiate', {
-      payment_type:   'ENROLLMENT',
-      entity_id:      _session.cohortId,
-      payment_method: 'PAYSTACK'
+    var cur          = getActiveCurrency();
+    var enrollType2  = (document.getElementById('enrollment-type') || {}).value || 'Individual';
+    var isTeamPay    = enrollType2 === 'Team';
+    var teamSizePay  = parseInt((document.getElementById('team-size') || {}).value) || 1;
+    var plan         = _pricingPlans[isTeamPay ? 'TEAM' : 'INDIVIDUAL'] || {};
+    var firstName2   = (document.getElementById('first-name') || {}).value || '';
+    var lastName2    = (document.getElementById('last-name') || {}).value || '';
+    var email2       = (document.getElementById('email') || {}).value || '';
+
+    apiPost('/payments/initiate', {
+      payment_type:          'ENROLLMENT',
+      entity_id:             _session.programId,
+      pricing_plan_id:       plan.id || undefined,
+      currency:              cur.toUpperCase(),
+      coupon_code:           _appliedCoupon || '',
+      enrollment_type:       isTeamPay ? 'TEAM' : 'INDIVIDUAL',
+      user_size:             isTeamPay ? teamSizePay : 1,
+      contact_person_name:   (firstName2 + ' ' + lastName2).trim(),
+      contact_person_email:  email2,
+      payment_method:        'PAYSTACK'
     }, token)
       .then(function(data) {
         console.log('[Brixgate] /payments/initiate response:', JSON.stringify(data));
