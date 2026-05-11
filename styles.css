@@ -1638,6 +1638,10 @@ textarea.form-control {
   .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
   .split-content { gap: 48px; }
   .section-pad { padding: 80px 0; }
+
+  /* Journey steps — stack vertically on tablet, hide horizontal line */
+  .journey-steps { flex-direction: column; gap: 16px; }
+  .journey-steps::before { display: none; }
 }
 
 /* ============================================================
