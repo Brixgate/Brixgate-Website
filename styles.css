@@ -939,22 +939,7 @@ section { width: 100%; }
   counter-reset: step;
 }
 
-/* Single continuous line from center of step-1 icon to center of step-4 icon */
-.journey-steps::before {
-  content: '';
-  position: absolute;
-  left: 12.5%;
-  right: 12.5%;
-  top: 60px;        /* nav padding-top (24px) + half icon height (36px) */
-  height: 2px;
-  background: linear-gradient(90deg, var(--red), var(--border-card));
-  z-index: 0;
-}
-
-.bg-white .journey-steps::before,
-.bg-light .journey-steps::before {
-  background: rgba(255,41,78,0.35);
-}
+.journey-steps::before { display: none; }
 
 .journey-step {
   flex: 1;
