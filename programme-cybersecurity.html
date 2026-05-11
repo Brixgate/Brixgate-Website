@@ -872,9 +872,9 @@ var PROGRAM_ID = 2;
     html += '<div class="card fade-up" style="padding:32px 28px"><div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Corporate</div><div style="font-size:1.6rem;font-weight:900;color:var(--red);margin-bottom:4px">Custom Pricing</div><div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">Tailored to your organisation</div><ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px"><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Teams tier</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Dedicated cohort manager</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Custom curriculum design</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Enterprise reporting</li></ul><a href="organisations.html#contact" class="btn btn-outline" style="width:100%;justify-content:center;display:flex">Contact Us</a></div>';
     el.innerHTML = html;
   }
-  fetch('https://api.brixgate.com/pricing-plans?program_id=' + PROGRAM_ID)
+  fetch('https://api.brixgate.com/api/v1/pricing-plans?program_id=' + PROGRAM_ID)
     .then(function(r) { return r.json(); })
-    .then(function(d) { render((d && d.pricing_plans) || []); })
+    .then(function(d) { render((d && d.data && d.data.pricing_plans) || []); })
     .catch(function() { render([]); });
 })();
 </script>

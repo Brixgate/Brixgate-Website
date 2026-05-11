@@ -1170,7 +1170,7 @@
      After payment, Paystack redirects to callback.html
   ============================================================ */
 
-  var API_BASE = 'https://api.brixgate.com';
+  var API_BASE = 'https://api.brixgate.com/api/v1';
 
   /* programme ID → field name */
   var PROGRAM_ID_TO_FIELD = { 1: 'Software Engineering', 2: 'Cybersecurity', 3: 'Cloud & DevOps', 4: 'Data & Analytics' };
@@ -1243,9 +1243,9 @@
         return r.json();
       })
       .then(function(data) {
-        if (!data.success && !(data.pricing_plans)) throw new Error(data.message || 'No plans');
+        if (!data.success && !(data.data && data.data.pricing_plans)) throw new Error(data.message || 'No plans');
         _pricingPlans = {};
-        var plans = (data && data.pricing_plans) || [];
+        var plans = (data && data.data && data.data.pricing_plans) || [];
         plans.forEach(function(p) { _pricingPlans[p.plan_type] = p; });
         updateFeesDisplay();
       })
