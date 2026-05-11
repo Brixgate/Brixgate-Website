@@ -193,12 +193,11 @@
           ← Back to all programmes
         </a>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-          <span style="font-size:2.4rem">💻</span>
           <span style="background:rgba(255,41,78,0.15);color:var(--red);font-size:0.75rem;font-weight:800;padding:4px 14px;border-radius:50px;letter-spacing:.08em;text-transform:uppercase">Expert Practitioner Programme</span>
           
         </div>
         <h1 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:20px">
-          AI in<br /><span style="color:var(--red)">Product Marketing</span>
+          AI in <span style="color:var(--red)">Product Marketing</span>
         </h1>
         <p style="font-size:1.15rem;color:var(--muted);line-height:1.7;margin-bottom:32px;max-width:480px">Lead GTM in the Agentic Era. Build the capacity, judgment, and systems that compound.</p>
         <!-- Price pill — visible in hero so cost is clear before scrolling -->
@@ -1003,6 +1002,10 @@
     const pct = ((total - 5) / 15) * 100;
 
     function doShow() {
+      var _email = localStorage.getItem('bxQuizEmail') || '';
+      if (_email && typeof postQuestionnaireSummary === 'function') {
+        postQuestionnaireSummary(5, _email, parseFloat(pct.toFixed(2)), tierLabelToRatingLevel(tier.label), 'product-technology-ai-readiness', '');
+      }
       document.getElementById(ID + '_badge').textContent = tier.label;
       document.getElementById(ID + '_badge').style.background = tier.color + '22';
       document.getElementById(ID + '_badge').style.color = tier.color;

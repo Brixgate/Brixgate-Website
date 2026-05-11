@@ -245,15 +245,26 @@
       flex-shrink: 0;
     }
 
-    /* ====== RESULTS SCREEN ====== */
+    /* ====== RESULTS SCREEN — LIGHT MODE ====== */
     #results-screen {
       display: none;
+      background: #F6F5F5;
+      min-height: 100vh;
       padding: 60px 24px 80px;
+      position: relative;
+    }
+
+    /* Blur the result content while modal is active */
+    #results-screen.results-blurred .result-wrap {
+      filter: blur(7px);
+      pointer-events: none;
+      user-select: none;
     }
 
     .result-wrap {
       max-width: 720px;
       margin: 0 auto;
+      transition: filter 0.3s ease;
     }
 
     .result-tier-badge {
@@ -270,28 +281,29 @@
     }
 
     .result-score-ring {
-      width: 110px;
-      height: 110px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      border: 4px solid var(--border-card);
+      border: 5px solid #D1D9E0;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       margin: 0 auto 32px;
-      position: relative;
+      background: #fff;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     }
 
     .result-score-val {
-      font-size: 2rem;
+      font-size: 2.1rem;
       font-weight: 900;
-      color: var(--white);
+      color: #021024;
       line-height: 1;
     }
 
     .result-score-lbl {
       font-size: 0.58rem;
-      color: var(--muted);
+      color: #7A94A8;
       text-transform: uppercase;
       letter-spacing: 0.1em;
     }
@@ -299,17 +311,21 @@
     .result-headline {
       font-size: clamp(1.6rem, 3.5vw, 2.4rem);
       font-weight: 900;
-      color: var(--white);
+      color: #021024;
       line-height: 1.15;
       margin-bottom: 16px;
     }
 
     .result-sub {
       font-size: 0.95rem;
-      color: var(--muted);
+      color: #4A5568;
       line-height: 1.8;
       margin-bottom: 40px;
     }
+
+    /* Apply CTA text on light bg */
+    #results-screen .btn-primary { }
+    #results-screen p[style*="var(--muted)"] { color: #7A94A8 !important; }
 
     .result-signals {
       display: grid;
@@ -319,11 +335,12 @@
     }
 
     .signal-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
+      background: #fff;
+      border: 1px solid #E8E3DE;
       border-radius: var(--radius-md);
       padding: 22px 18px;
       text-align: left;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
 
     .signal-icon {
@@ -334,23 +351,28 @@
     .signal-title {
       font-size: 0.82rem;
       font-weight: 700;
-      color: var(--white);
+      color: #021024;
       margin-bottom: 4px;
     }
 
     .signal-desc {
       font-size: 0.75rem;
-      color: var(--muted);
+      color: #4A5568;
       line-height: 1.55;
     }
 
     .result-cta-block {
-      background: linear-gradient(135deg, rgba(255,41,78,0.12) 0%, rgba(255,41,78,0.04) 100%);
-      border: 1px solid rgba(255,41,78,0.2);
+      background: linear-gradient(135deg, #fff 0%, #FFF5F6 100%);
+      border: 1.5px solid rgba(255,41,78,0.2);
       border-radius: var(--radius-lg);
       padding: 40px;
       text-align: center;
+      box-shadow: 0 4px 20px rgba(255,41,78,0.06);
     }
+
+    /* Override CTA block text for light mode */
+    .result-cta-block h3 { color: #021024 !important; }
+    .result-cta-block p  { color: #4A5568 !important; }
 
     .result-share-row {
       display: flex;
@@ -370,38 +392,134 @@
       font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
-      border: 1px solid var(--border-card);
+      border: 1px solid #D1D9E0;
       background: transparent;
-      color: var(--muted);
+      color: #4A5568;
+      text-decoration: none;
       transition: var(--transition);
     }
 
     .share-btn:hover {
-      border-color: var(--white);
-      color: var(--white);
+      border-color: #021024;
+      color: #021024;
     }
 
     .share-btn.restart {
-      border-color: rgba(255,41,78,0.4);
+      border-color: rgba(255,41,78,0.35);
       color: var(--red);
     }
 
     .share-btn.restart:hover {
-      background: rgba(255,41,78,0.08);
+      background: rgba(255,41,78,0.06);
     }
 
     /* Score ring border colours by tier */
-    .ring-low    { border-color: #FF5748; }
-    .ring-mid    { border-color: #F5A623; }
-    .ring-high   { border-color: #34C759; }
-    .badge-low   { background: rgba(255,87,72,0.12); color: #FF5748; border: 1px solid rgba(255,87,72,0.3); }
-    .badge-mid   { background: rgba(245,166,35,0.12); color: #F5A623; border: 1px solid rgba(245,166,35,0.3); }
-    .badge-high  { background: rgba(52,199,89,0.12); color: #34C759; border: 1px solid rgba(52,199,89,0.3); }
+    .ring-low  { border-color: #FF5748; }
+    .ring-mid  { border-color: #F5A623; }
+    .ring-high { border-color: #34C759; }
+    .badge-low  { background: rgba(255,87,72,0.1);  color: #FF5748; border: 1.5px solid rgba(255,87,72,0.3); }
+    .badge-mid  { background: rgba(245,166,35,0.1); color: #D4880A; border: 1.5px solid rgba(245,166,35,0.4); }
+    .badge-high { background: rgba(52,199,89,0.1);  color: #1A8F3C; border: 1.5px solid rgba(52,199,89,0.3); }
+
+    /* ====== CAPTURE MODAL OVERLAY ====== */
+    #capture-screen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(2,16,36,0.45);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    #capture-screen.active {
+      display: flex;
+    }
+
+    .capture-modal-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 36px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+    }
+
+    .capture-modal-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(255,41,78,0.08);
+      border: 1.5px solid rgba(255,41,78,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .capture-modal-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #021024;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    .capture-modal-sub {
+      font-size: 0.88rem;
+      color: #4A5568;
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+
+    .capture-modal-sub strong { color: #021024; }
+
+    .capture-modal-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid #D1D9E0;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: var(--font-main);
+      color: #021024;
+      background: #F6F5F5;
+      outline: none;
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+      margin-bottom: 6px;
+    }
+
+    .capture-modal-input:focus { border-color: var(--red); background: #fff; }
+    .capture-modal-input::placeholder { color: #7A94A8; }
+
+    .capture-error {
+      font-size: 0.78rem;
+      color: var(--red);
+      margin-bottom: 14px;
+      display: none;
+      text-align: left;
+    }
+
+    .capture-modal-skip {
+      margin-top: 14px;
+      font-size: 0.78rem;
+      color: #7A94A8;
+    }
+
+    .capture-modal-skip a {
+      color: #7A94A8;
+      text-decoration: underline;
+    }
 
     @media (max-width: 600px) {
       .result-signals { grid-template-columns: 1fr; }
       .result-cta-block { padding: 28px 20px; }
       .intro-preview { flex-direction: column; align-items: center; }
+      .capture-modal-card { padding: 32px 24px; }
     }
 
     @keyframes pulse {
@@ -519,7 +637,7 @@
     </h1>
 
     <p style="font-size:1rem;color:var(--muted);line-height:1.75;margin-bottom:12px;max-width:520px;margin-left:auto;margin-right:auto">
-      AI is reshaping every profession faster than most professionals realise. This quick check gives you an honest read on where you stand — and what it means for your career.
+      AI is reshaping every profession faster than most professionals realise. This quick check gives you an honest read on where you stand and what it means for your career.
     </p>
 
     <div class="intro-preview">
@@ -587,49 +705,22 @@
   </div>
 </div>
 
-<!-- ====== LEAD CAPTURE GATE ====== -->
+<!-- ====== CAPTURE MODAL OVERLAY ====== -->
 <div id="capture-screen">
-  <div class="capture-wrap">
-    <div class="capture-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+  <div class="capture-modal-card">
+    <div class="capture-modal-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
     </div>
-    <h2 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:900;color:var(--white);line-height:1.2;margin-bottom:12px">Enter your details to see your results</h2>
-    <p style="font-size:0.95rem;color:var(--muted);line-height:1.6">We'll also send you a <strong style="color:var(--white)">registration coupon</strong> when you're ready to enrol — no spam, ever.</p>
-
-    <div class="capture-form">
-      <div class="capture-field">
-        <label for="capture-email">Email Address</label>
-        <input type="email" id="capture-email" placeholder="you@example.com" autocomplete="email" />
-        <span class="capture-error" id="email-error">Please enter a valid email address.</span>
-      </div>
-      <div class="capture-field">
-        <label for="capture-phone">Phone Number</label>
-        <div style="display:flex;gap:0">
-          <select id="capture-phone-cc" style="width:115px;flex-shrink:0;padding:13px 8px;border-radius:var(--radius-md) 0 0 var(--radius-md);border:1.5px solid var(--border-card);border-right:none;background:var(--bg-card);color:var(--muted);font-size:0.82rem;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;text-align:center">
-            <option value="+234">🇳🇬 +234</option>
-            <option value="+44">🇬🇧 +44</option>
-            <option value="+1">🇺🇸 +1</option>
-            <option value="+254">🇰🇪 +254</option>
-            <option value="+233">🇬🇭 +233</option>
-            <option value="+27">🇿🇦 +27</option>
-            <option value="+251">🇪🇹 +251</option>
-            <option value="+256">🇺🇬 +256</option>
-            <option value="+255">🇹🇿 +255</option>
-            <option value="+237">🇨🇲 +237</option>
-            <option value="+225">🇨🇮 +225</option>
-            <option value="+221">🇸🇳 +221</option>
-          </select>
-          <input type="tel" id="capture-phone" placeholder="800 000 0000" autocomplete="tel" style="flex:1;border-radius:0 var(--radius-md) var(--radius-md) 0" />
-        </div>
-        <span class="capture-error" id="phone-error">Please enter your phone number.</span>
-      </div>
-      <button onclick="submitCapture()" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px;font-size:1rem">
-        See My Results
-      </button>
-      <p style="text-align:center;margin-top:14px;font-size:0.78rem;color:var(--muted)">
-        <a href="#" onclick="skipCapture(event)" style="color:var(--muted);text-decoration:underline">Skip and see results without coupon</a>
-      </p>
-    </div>
+    <div class="capture-modal-title">Your results are ready</div>
+    <p class="capture-modal-sub">Enter your email to unlock your full result. We'll also send you a <strong>registration coupon</strong> when you're ready to enrol — no spam, ever.</p>
+    <input type="email" id="capture-email" class="capture-modal-input" placeholder="you@example.com" autocomplete="email" />
+    <span class="capture-error" id="email-error">Please enter a valid email address.</span>
+    <button onclick="submitCapture()" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem">
+      See My Results
+    </button>
+    <p class="capture-modal-skip">
+      <a href="#" onclick="skipCapture(event)">Skip — show me results without coupon</a>
+    </p>
   </div>
 </div>
 
@@ -652,7 +743,7 @@
       <a href="apply.html" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;font-size:1rem">
         Apply to Take a Course Now →
       </a>
-      <p style="font-size:0.76rem;color:var(--muted);margin-top:10px;text-align:center">4-week sprint · Expert-led · Field-specific</p>
+      <p style="font-size:0.76rem;color:#7A94A8;margin-top:10px;text-align:center">4-week sprint · Expert-led · Field-specific</p>
     </div>
 
     <!-- Signal cards -->
@@ -842,10 +933,10 @@ const QUESTIONS = [
   }
 ];
 
-// Score tiers: max = 40, min = 10
+// Score tiers: 6 questions, min = 6, max = 24
 const TIERS = [
   {
-    min: 32, max: 40,
+    min: 19, max: 24,
     label: "AI Practitioner",
     badgeClass: "badge-high",
     ringClass: "ring-high",
@@ -865,7 +956,7 @@ const TIERS = [
     }
   },
   {
-    min: 22, max: 31,
+    min: 13, max: 18,
     label: "AI Aware",
     badgeClass: "badge-mid",
     ringClass: "ring-mid",
@@ -885,7 +976,7 @@ const TIERS = [
     }
   },
   {
-    min: 10, max: 21,
+    min: 6, max: 12,
     label: "AI Exposed",
     badgeClass: "badge-low",
     ringClass: "ring-low",
@@ -906,9 +997,24 @@ const TIERS = [
   }
 ];
 
-// State
+// Shuffle helper — Fisher-Yates
+function shuffleArray(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+
+// State — activeQuestions is set on startAssessment
+const QUIZ_COUNT = 6;
+let activeQuestions = [];
 let currentQ = 0;
-let answers  = Array(QUESTIONS.length).fill(null);
+let answers  = [];
+let _quizCapturedEmail = '';
+let _lastScorePct = 0;
+let _lastTierLabel = '';
 
 function startAssessment() {
   // Save profession if typed
@@ -917,22 +1023,27 @@ function startAssessment() {
     selectedProfession = inp.value.trim();
     try { localStorage.setItem('brixgate_profession', selectedProfession); } catch(e) {}
   }
+  // Pick 6 random questions for this session
+  activeQuestions = shuffleArray(QUESTIONS).slice(0, QUIZ_COUNT);
+  answers = Array(QUIZ_COUNT).fill(null);
+  currentQ = 0;
+
   document.getElementById('intro-screen').style.display = 'none';
   document.getElementById('assess-screen').style.display = 'block';
   renderQuestion();
 }
 
 function renderQuestion() {
-  const q   = QUESTIONS[currentQ];
-  const pct = ((currentQ + 1) / QUESTIONS.length) * 100;
+  const q   = activeQuestions[currentQ];
+  const pct = ((currentQ + 1) / QUIZ_COUNT) * 100;
 
-  document.getElementById('step-label').textContent = 'Question ' + (currentQ + 1) + ' of ' + QUESTIONS.length;
+  document.getElementById('step-label').textContent = 'Question ' + (currentQ + 1) + ' of ' + QUIZ_COUNT;
   document.getElementById('progress-fill').style.width = pct + '%';
 
   document.getElementById('back-btn').style.visibility = currentQ === 0 ? 'hidden' : 'visible';
 
   const nextBtn = document.getElementById('next-btn');
-  const isLast  = currentQ === QUESTIONS.length - 1;
+  const isLast  = currentQ === QUIZ_COUNT - 1;
   nextBtn.textContent = isLast ? 'See My Results →' : 'Next →';
   nextBtn.classList.toggle('enabled', answers[currentQ] !== null);
 
@@ -960,12 +1071,12 @@ function selectOption(idx) {
 
 function nextQuestion() {
   if (answers[currentQ] === null) return;
-  if (currentQ < QUESTIONS.length - 1) {
+  if (currentQ < QUIZ_COUNT - 1) {
     currentQ++;
     renderQuestion();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } else {
-    showCaptureGate();
+    showResultsWithModal();
   }
 }
 
@@ -977,58 +1088,61 @@ function prevQuestion() {
   }
 }
 
-function showCaptureGate() {
+function showResultsWithModal() {
   document.getElementById('assess-screen').style.display = 'none';
-  document.getElementById('capture-screen').style.display = 'block';
+  var resultsEl = document.getElementById('results-screen');
+  resultsEl.style.display = 'block';
+  resultsEl.classList.add('results-blurred');
+  showResults();
+  document.getElementById('capture-screen').classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function dismissCaptureModal() {
+  document.getElementById('capture-screen').classList.remove('active');
+  document.getElementById('results-screen').classList.remove('results-blurred');
 }
 
 function submitCapture() {
   const email    = document.getElementById('capture-email').value.trim();
-  const phoneNum = document.getElementById('capture-phone').value.trim();
-  const phoneCc  = document.getElementById('capture-phone-cc');
-  const phone    = phoneNum ? ((phoneCc ? phoneCc.value : '') + phoneNum) : phoneNum;
   const emailErr = document.getElementById('email-error');
-  const phoneErr = document.getElementById('phone-error');
-  let valid = true;
 
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   emailErr.style.display = emailOk ? 'none' : 'block';
-  if (!emailOk) valid = false;
+  if (!emailOk) return;
 
-  phoneErr.style.display = phone.length >= 7 ? 'none' : 'block';
-  if (phone.length < 7) valid = false;
+  _quizCapturedEmail = email;
+  dismissCaptureModal();
 
-  if (!valid) return;
-
-  document.getElementById('capture-screen').style.display = 'none';
-  showResults();
+  if (typeof postQuestionnaireSummary === 'function') {
+    var occ = typeof selectedProfession !== 'undefined' ? selectedProfession : '';
+    postQuestionnaireSummary(1, email, _lastScorePct, tierLabelToRatingLevel(_lastTierLabel), 'general-ai-readiness', occ);
+  }
 }
 
 function skipCapture(e) {
-  e.preventDefault();
-  document.getElementById('capture-screen').style.display = 'none';
-  showResults();
+  if (e) e.preventDefault();
+  dismissCaptureModal();
 }
 
 function showResults() {
-  document.getElementById('assess-screen').style.display = 'none';
-  document.getElementById('capture-screen').style.display = 'none';
-  document.getElementById('results-screen').style.display = 'block';
-
   // Calculate score
   let score = 0;
   answers.forEach((ansIdx, qIdx) => {
     if (ansIdx !== null) {
-      score += QUESTIONS[qIdx].options[ansIdx].weight;
+      score += activeQuestions[qIdx].options[ansIdx].weight;
     }
   });
 
   // Find tier
   const tier = TIERS.find(t => score >= t.min && score <= t.max) || TIERS[2];
 
-  // Score percentage (10–40 range → 0–100%)
-  const scorePct = Math.round(((score - 10) / 30) * 100);
+  // Score percentage (6–24 range → 0–100%)
+  const scorePct = Math.round(((score - 6) / 18) * 100);
+
+  // Store for API call after modal is submitted
+  _lastScorePct = scorePct;
+  _lastTierLabel = tier.label;
 
   // Render badge
   document.getElementById('result-badge').className = 'result-tier-badge ' + tier.badgeClass;
@@ -1051,23 +1165,26 @@ function showResults() {
     </div>
   `).join('');
 
-  // CTA block
+  // CTA block — light mode colours
   document.getElementById('result-cta').innerHTML = `
     <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px">${tier.cta.eyebrow}</div>
-    <h3 style="font-size:clamp(1.2rem,2.5vw,1.7rem);font-weight:900;color:var(--white);margin-bottom:12px;line-height:1.2">${tier.cta.headline}</h3>
-    <p style="font-size:0.9rem;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto">${tier.cta.body}</p>
+    <h3 style="font-size:clamp(1.2rem,2.5vw,1.7rem);font-weight:900;color:#021024;margin-bottom:12px;line-height:1.2">${tier.cta.headline}</h3>
+    <p style="font-size:0.9rem;color:#4A5568;line-height:1.7;margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto">${tier.cta.body}</p>
     <a href="${tier.cta.href}" class="btn btn-primary btn-lg">${tier.cta.btn}</a>
   `;
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function restartAssessment() {
   currentQ = 0;
-  answers  = Array(QUESTIONS.length).fill(null);
+  activeQuestions = [];
+  answers = [];
+  _quizCapturedEmail = '';
+  _lastScorePct = 0;
+  _lastTierLabel = '';
   document.getElementById('results-screen').style.display = 'none';
-  document.getElementById('capture-screen').style.display = 'none';
-  document.getElementById('intro-screen').style.display   = 'block';
+  document.getElementById('results-screen').classList.remove('results-blurred');
+  document.getElementById('capture-screen').classList.remove('active');
+  document.getElementById('intro-screen').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
