@@ -666,11 +666,11 @@
     .practitioner-nudge a { color: var(--red); text-decoration: none; font-weight: 600; }
 
     @media (max-width: 900px) {
-      .apply-wrapper           { grid-template-columns: 1fr; column-gap: 0; row-gap: 28px; }
-      /* Reset explicit placement — let them stack naturally */
-      .apply-sidebar:first-child  { grid-column: auto; grid-row: auto; }
-      .apply-sidebar:nth-child(2) { grid-column: auto; grid-row: auto; }
-      .apply-form-card            { grid-column: auto; grid-row: auto; padding: 32px 24px; }
+      .apply-wrapper              { display: flex; flex-direction: column; row-gap: 28px; }
+      /* Form first on mobile */
+      .apply-form-card            { order: 1; padding: 32px 24px; }
+      .apply-sidebar:first-child  { order: 2; }
+      .apply-sidebar:nth-child(2) { order: 3; }
       .form-row                   { grid-template-columns: 1fr; }
       .review-grid                { grid-template-columns: 1fr; }
     }
@@ -858,12 +858,18 @@
           <!-- Team breakdown — hidden for individual -->
           <div id="fees2-breakdown" style="display:none;padding:8px 0 0;border-bottom:1px solid var(--border-card)">
             <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0">
-              <span style="font-size:0.75rem;color:var(--muted)" id="fees2-breakdown-label">Per person</span>
-              <span style="font-size:0.75rem;color:var(--muted)" id="fees2-per-person">—</span>
+              <span style="font-size:0.75rem;color:var(--muted)">Per person</span>
+              <span style="font-size:0.75rem;color:var(--muted);font-weight:600" id="fees2-per-person">
+                <span class="currency-ngn" id="fees2-pp-ngn">₦—</span>
+                <span class="currency-usd" id="fees2-pp-usd">$—</span>
+                <span class="currency-gbp" id="fees2-pp-gbp">£—</span>
+                <span class="currency-eur" id="fees2-pp-eur">€—</span>
+                <span class="currency-cad" id="fees2-pp-cad">C$—</span>
+              </span>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0">
-              <span style="font-size:0.75rem;color:#a78bfa;font-weight:600">You save</span>
-              <span style="font-size:0.75rem;color:#a78bfa;font-weight:600" id="fees2-savings">—</span>
+              <span style="font-size:0.75rem;color:var(--muted)">Team size</span>
+              <span style="font-size:0.75rem;color:var(--muted);font-weight:600" id="fees2-team-size-label">— people</span>
             </div>
           </div>
 
@@ -906,7 +912,7 @@
             <div class="form-group" style="margin-bottom:28px">
               <label style="margin-bottom:10px;display:block">I am applying as</label>
               <div style="display:flex;gap:10px;flex-wrap:wrap">
-                <span class="enroll-toggle-btn" id="enroll-btn-individual" onclick="selectEnrollBadge('Individual')" style="cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:22px;font-size:0.82rem;font-weight:700;border:2px solid #22c55e;background:rgba(34,197,94,0.13);color:#22c55e;user-select:none;transition:all .2s">
+                <span class="enroll-toggle-btn" id="enroll-btn-individual" onclick="selectEnrollBadge('Individual')" style="cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:22px;font-size:0.82rem;font-weight:700;border:2px solid #FF294E;background:rgba(255,41,78,0.13);color:#FF294E;user-select:none;transition:all .2s">
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
                   Individual
                 </span>
@@ -1272,14 +1278,14 @@
     var btnInd  = document.getElementById('enroll-btn-individual');
     var btnTeam = document.getElementById('enroll-btn-team');
     if (btnInd) {
-      btnInd.style.borderColor = isTeam ? 'var(--border-card)' : '#22c55e';
-      btnInd.style.background  = isTeam ? 'rgba(255,255,255,0.04)' : 'rgba(34,197,94,0.13)';
-      btnInd.style.color       = isTeam ? 'var(--muted)' : '#22c55e';
+      btnInd.style.borderColor = isTeam ? 'var(--border-card)' : '#FF294E';
+      btnInd.style.background  = isTeam ? 'rgba(255,255,255,0.04)' : 'rgba(255,41,78,0.13)';
+      btnInd.style.color       = isTeam ? 'var(--muted)' : '#FF294E';
     }
     if (btnTeam) {
-      btnTeam.style.borderColor = isTeam ? '#8b5cf6' : 'var(--border-card)';
-      btnTeam.style.background  = isTeam ? 'rgba(139,92,246,0.13)' : 'rgba(255,255,255,0.04)';
-      btnTeam.style.color       = isTeam ? '#8b5cf6' : 'var(--muted)';
+      btnTeam.style.borderColor = isTeam ? '#22c55e' : 'var(--border-card)';
+      btnTeam.style.background  = isTeam ? 'rgba(34,197,94,0.13)' : 'rgba(255,255,255,0.04)';
+      btnTeam.style.color       = isTeam ? '#22c55e' : 'var(--muted)';
     }
 
     /* team size dropdown */
@@ -1294,14 +1300,13 @@
     if (badgeInd)  badgeInd.style.display  = isTeam ? 'none' : '';
     if (badgeTeam) badgeTeam.style.display = isTeam ? '' : 'none';
 
-    var labelEl     = document.getElementById('fees-label');
-    var sublabelEl  = document.getElementById('fees-sublabel');
-    var discountBar = document.getElementById('fees-discount-bar');
-    var teamInfoEl  = document.getElementById('fees-team-info');
-    var f2Label     = document.getElementById('fees2-label');
-    var f2Breakdown = document.getElementById('fees2-breakdown');
-    var f2PerPerson = document.getElementById('fees2-per-person');
-    var f2Savings   = document.getElementById('fees2-savings');
+    var labelEl       = document.getElementById('fees-label');
+    var sublabelEl    = document.getElementById('fees-sublabel');
+    var discountBar   = document.getElementById('fees-discount-bar');
+    var teamInfoEl    = document.getElementById('fees-team-info');
+    var f2Label       = document.getElementById('fees2-label');
+    var f2Breakdown   = document.getElementById('fees2-breakdown');
+    var f2TeamSizeEl  = document.getElementById('fees2-team-size-label');
 
     if (!isTeam) {
       if (labelEl)    labelEl.textContent    = 'Individual Enrolment';
@@ -1327,17 +1332,19 @@
         if (sublabelEl) sublabelEl.textContent = size + ' people · team rate';
         if (f2Label)    f2Label.textContent    = size + '-Person Team Enrolment';
         if (f2Breakdown) f2Breakdown.style.display = 'block';
-        if (f2PerPerson) f2PerPerson.textContent = 'Per person';
-        if (f2Savings)   f2Savings.textContent   = '—';
+        if (f2TeamSizeEl) f2TeamSizeEl.textContent = size + ' people';
 
         CURRENCIES.forEach(function(c) {
           var b   = getPlanBreakdown('TEAM', c);
           var sym = CURRENCY_SYMS[c] || '';
-          var total = b ? sym + Number(b.final_price * size).toLocaleString() : '—';
-          var el1 = document.getElementById('fees-price-' + c);
-          var el2 = document.getElementById('fees2-price-' + c);
-          if (el1) el1.textContent = total;
-          if (el2) el2.textContent = total;
+          var total     = b ? sym + Number(b.final_price * size).toLocaleString() : '—';
+          var perPerson = b ? sym + Number(b.final_price).toLocaleString() : '—';
+          var el1  = document.getElementById('fees-price-' + c);
+          var el2  = document.getElementById('fees2-price-' + c);
+          var ppEl = document.getElementById('fees2-pp-' + c);
+          if (el1)  el1.textContent = total;
+          if (el2)  el2.textContent = total;
+          if (ppEl) ppEl.textContent = perPerson;
         });
       } else {
         if (sublabelEl) sublabelEl.textContent = 'Team · per person';

@@ -349,20 +349,27 @@
 
   /* ---- Main ---- */
   (function() {
-    var params    = new URLSearchParams(window.location.search);
-    var reference = params.get('reference') || params.get('trxref');
+    var params        = new URLSearchParams(window.location.search);
+    var urlReference  = params.get('reference') || params.get('trxref');
+    var storedRef     = null;
 
     var token = null;
     try { token = sessionStorage.getItem('bxAccessToken'); } catch(e) {}
+    try { storedRef = sessionStorage.getItem('bxPaymentRef'); } catch(e) {}
 
-    /* Fallback: reference stored before redirect */
-    if (!reference) {
-      try { reference = sessionStorage.getItem('bxPaymentRef'); } catch(e) {}
+    /* Use URL reference first (Paystack's reference), fall back to stored Brixgate reference */
+    var reference = urlReference || storedRef;
+
+    if (!token) {
+      document.getElementById('failed-body').innerHTML =
+        'We couldn\'t find your payment session. If you just completed a payment, please contact <a href="mailto:we@brixgate.com" style="color:var(--red)">we@brixgate.com</a> with your email address and we\'ll confirm your enrolment manually.';
+      showState('failed');
+      return;
     }
 
-    if (!reference || !token) {
-      document.getElementById('failed-body').textContent =
-        'We couldn\'t find your payment session. If you just completed a payment, please contact we@brixgate.com with your email address and we\'ll confirm your enrolment manually.';
+    if (!reference) {
+      document.getElementById('failed-body').innerHTML =
+        'No payment reference was found. If you just completed a payment, please contact <a href="mailto:we@brixgate.com" style="color:var(--red)">we@brixgate.com</a> and we\'ll confirm your enrolment.';
       showState('failed');
       return;
     }
@@ -370,8 +377,33 @@
     /* Clear stored token after reading — one-time use */
     try { sessionStorage.removeItem('bxAccessToken'); } catch(e) {}
 
-    requeryPayment(reference, token, 1);
+    /* Try URL reference first; if it fails (no match), retry with stored Brixgate reference */
+    if (urlReference && storedRef && urlReference !== storedRef) {
+      requeryPaymentWithFallback(urlReference, storedRef, token);
+    } else {
+      requeryPayment(reference, token, 1);
+    }
   })();
+
+  function requeryPaymentWithFallback(primaryRef, fallbackRef, token) {
+    apiGet('/api/v1/payments/requery/' + encodeURIComponent(primaryRef), token)
+      .then(function(data) {
+        var payment = data.data && data.data.payment;
+        var status  = payment && (payment.paymentStatus || payment.payment_status);
+        var granted = data.data && (data.data.accessGranted || data.data.access_granted);
+
+        if (granted || status === 'SUCCESS' || status === 'SUCCESSFUL') {
+          document.getElementById('success-ref').textContent = primaryRef;
+          showState('success');
+        } else {
+          /* Primary reference didn't confirm — try the stored Brixgate reference */
+          requeryPayment(fallbackRef, token, 1);
+        }
+      })
+      .catch(function() {
+        requeryPayment(fallbackRef, token, 1);
+      });
+  }
 </script>
 
 </body>
