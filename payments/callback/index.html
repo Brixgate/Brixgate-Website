@@ -349,31 +349,72 @@
     });
   }
 
-  (function() {
-    var params    = new URLSearchParams(window.location.search);
-    var reference = params.get('reference') || params.get('trxref');
+  function readCookie(name) {
+    var m = document.cookie.match('(?:^|; )' + name + '=([^;]*)');
+    return m ? decodeURIComponent(m[1]) : null;
+  }
 
+  (function() {
+    var params       = new URLSearchParams(window.location.search);
+    var urlReference = params.get('reference') || params.get('trxref');
+    var storedRef    = null;
+
+    /* Read token — sessionStorage first, cookie as fallback (survives www↔non-www redirects) */
     var token = null;
     try { token = sessionStorage.getItem('bxAccessToken'); } catch(e) {}
+    if (!token) token = readCookie('bxToken');
 
-    if (!reference) {
-      try { reference = sessionStorage.getItem('bxPaymentRef'); } catch(e) {}
-    }
+    try { storedRef = sessionStorage.getItem('bxPaymentRef'); } catch(e) {}
 
-    if (!reference || !token) {
+    var reference = urlReference || storedRef;
+
+    if (!token) {
       document.getElementById('failed-body').innerHTML =
-        'Your payment did not go through. <strong style="color:var(--white);">You have not been charged.</strong><br><br>'
-        + 'Your session may have expired. Please go back and try again. If you believe you were already charged, email us at '
-        + '<a href="mailto:we@brixgate.com" style="color:var(--red);">we@brixgate.com</a> with your email address.';
+        'Your payment session could not be found. If you just completed a payment, please contact '
+        + '<a href="mailto:we@brixgate.com" style="color:var(--red);">we@brixgate.com</a> with your email and we\'ll confirm your enrolment.';
       document.getElementById('failed-ref').textContent = reference || '—';
       showState('failed');
       return;
     }
 
-    try { sessionStorage.removeItem('bxAccessToken'); } catch(e) {}
+    if (!reference) {
+      document.getElementById('failed-body').innerHTML =
+        'No payment reference was found. Please contact '
+        + '<a href="mailto:we@brixgate.com" style="color:var(--red);">we@brixgate.com</a> and we\'ll confirm your enrolment.';
+      showState('failed');
+      return;
+    }
 
-    requeryPayment(reference, token, 1);
+    /* Clear stored credentials after reading */
+    try { sessionStorage.removeItem('bxAccessToken'); } catch(e) {}
+    try { document.cookie = 'bxToken=; path=/; domain=.brixgate.com; expires=Thu, 01 Jan 1970 00:00:00 GMT'; } catch(e) {}
+
+    /* Try URL reference first; if different from stored, attempt both */
+    if (urlReference && storedRef && urlReference !== storedRef) {
+      requeryWithFallback(urlReference, storedRef, token);
+    } else {
+      requeryPayment(reference, token, 1);
+    }
   })();
+
+  function requeryWithFallback(primaryRef, fallbackRef, token) {
+    fetch(API_BASE + '/api/v1/payments/requery/' + encodeURIComponent(primaryRef), {
+      headers: { 'Authorization': 'Bearer ' + token }
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var payment = data.data && data.data.payment;
+      var status  = payment && (payment.paymentStatus || payment.payment_status);
+      var granted = data.data && (data.data.accessGranted || data.data.access_granted);
+      if (granted || status === 'SUCCESS' || status === 'SUCCESSFUL') {
+        document.getElementById('success-ref').textContent = primaryRef;
+        showState('success');
+      } else {
+        requeryPayment(fallbackRef, token, 1);
+      }
+    })
+    .catch(function() { requeryPayment(fallbackRef, token, 1); });
+  }
 </script>
 
 </body>

@@ -668,8 +668,8 @@
     @media (max-width: 900px) {
       .apply-wrapper              { display: flex; flex-direction: column; row-gap: 28px; }
       /* Form first on mobile */
-      .apply-form-card            { order: 1; padding: 32px 24px; }
-      .apply-sidebar:first-child  { order: 2; }
+      .apply-form-card            { order: 2; padding: 32px 24px; }
+      .apply-sidebar:first-child  { order: 1; }
       .apply-sidebar:nth-child(2) { order: 3; }
       .form-row                   { grid-template-columns: 1fr; }
       .review-grid                { grid-template-columns: 1fr; }
@@ -770,6 +770,10 @@
             </div>
             <div id="fees-discount-bar">🏷 Save per person vs individual rate</div>
             <div id="fees-team-info">Team members can be added after payment via your dashboard.</div>
+            <!-- Coupon discount — hidden until applied -->
+            <div id="fees-coupon-row" style="display:none;margin-top:6px;padding:5px 0;border-top:1px solid var(--border-card)">
+              <span style="font-size:0.72rem;color:#22c55e;font-weight:600">🏷 <span id="fees-coupon-code-lbl"></span> applied</span>
+            </div>
           </div>
 
           <div style="margin-top:16px;padding-top:14px;display:flex;align-items:center;justify-content:flex-end">
@@ -853,6 +857,14 @@
               <span class="currency-eur" id="fees2-price-eur">€—</span>
               <span class="currency-cad" id="fees2-price-cad">C$—</span>
             </span>
+          </div>
+
+          <!-- Coupon discount row — hidden until coupon is applied -->
+          <div id="fees2-coupon-row" style="display:none;padding:6px 0;border-bottom:1px solid var(--border-card)">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:0.78rem;color:#22c55e;font-weight:600">🏷 Coupon (<span id="fees2-coupon-code-lbl"></span>)</span>
+              <span style="font-size:0.78rem;color:#22c55e;font-weight:700" id="fees2-coupon-discount">—</span>
+            </div>
           </div>
 
           <!-- Team breakdown — hidden for individual -->
@@ -980,9 +992,15 @@
               <label for="team-size">Team Size</label>
               <select id="team-size" name="team_size">
                 <option value="" disabled selected>How many people?</option>
+                <option value="2">2 people</option>
                 <option value="3">3 people</option>
                 <option value="4">4 people</option>
                 <option value="5">5 people</option>
+                <option value="6">6 people</option>
+                <option value="7">7 people</option>
+                <option value="8">8 people</option>
+                <option value="9">9 people</option>
+                <option value="10">10 people</option>
               </select>
             </div>
 
@@ -1212,22 +1230,24 @@
     return sym + Number(b.final_price).toLocaleString();
   }
 
-  /* Returns display price strings for current enrollment state */
+  /* Returns display price strings for current enrollment state (coupon-aware) */
   function getPriceDisplay() {
     var enrollType = (document.getElementById('enrollment-type') || {}).value || '';
     var isTeam     = enrollType === 'Team';
     var teamSize   = parseInt((document.getElementById('team-size') || {}).value) || 0;
+    var mult       = 1 - (_couponPct / 100);
     var result = {};
     ['ngn','usd','gbp','eur','cad'].forEach(function(c) {
       var sym = CURRENCY_SYMS[c];
-      if (isTeam && teamSize >= 3) {
+      if (isTeam && teamSize >= 2) {
         var b = getPlanBreakdown('TEAM', c);
-        result[c] = b ? sym + Number(b.final_price * teamSize).toLocaleString() : '—';
+        result[c] = b ? sym + Number(b.final_price * mult * teamSize).toLocaleString() : '—';
       } else if (isTeam) {
         var bp = getPlanBreakdown('TEAM', c);
-        result[c] = bp ? sym + Number(bp.final_price).toLocaleString() + '/person' : '—';
+        result[c] = bp ? sym + Number(bp.final_price * mult).toLocaleString() + '/person' : '—';
       } else {
-        result[c] = formatPrice('INDIVIDUAL', c);
+        var bi = getPlanBreakdown('INDIVIDUAL', c);
+        result[c] = bi ? sym + Number(bi.final_price * mult).toLocaleString() : '—';
       }
     });
     return result;
@@ -1308,6 +1328,26 @@
     var f2Breakdown   = document.getElementById('fees2-breakdown');
     var f2TeamSizeEl  = document.getElementById('fees2-team-size-label');
 
+    /* Coupon helpers */
+    var hasCoupon   = _couponPct > 0;
+    var feeCouponRow  = document.getElementById('fees-coupon-row');
+    var fee2CouponRow = document.getElementById('fees2-coupon-row');
+    var feeCouponLbl  = document.getElementById('fees-coupon-code-lbl');
+    var fee2CouponLbl = document.getElementById('fees2-coupon-code-lbl');
+    var fee2CouponDsc = document.getElementById('fees2-coupon-discount');
+
+    function applyDiscount(rawNum) {
+      return hasCoupon ? rawNum * (1 - _couponPct / 100) : rawNum;
+    }
+    function savingsAmt(rawNum) {
+      return hasCoupon ? rawNum * (_couponPct / 100) : 0;
+    }
+
+    if (feeCouponLbl)  feeCouponLbl.textContent  = _appliedCoupon || '';
+    if (fee2CouponLbl) fee2CouponLbl.textContent = _appliedCoupon || '';
+    if (feeCouponRow)  feeCouponRow.style.display  = hasCoupon ? 'block' : 'none';
+    if (fee2CouponRow) fee2CouponRow.style.display = hasCoupon ? 'block' : 'none';
+
     if (!isTeam) {
       if (labelEl)    labelEl.textContent    = 'Individual Enrolment';
       if (sublabelEl) sublabelEl.textContent = 'Per person';
@@ -1317,18 +1357,30 @@
       if (f2Breakdown) f2Breakdown.style.display = 'none';
 
       CURRENCIES.forEach(function(c) {
-        var price = formatPrice('INDIVIDUAL', c);
+        var b   = getPlanBreakdown('INDIVIDUAL', c);
+        var sym = CURRENCY_SYMS[c] || '';
+        var raw = b ? b.final_price : null;
+        var display = raw !== null ? sym + Number(applyDiscount(raw)).toLocaleString() : '—';
         var el1 = document.getElementById('fees-price-' + c);
         var el2 = document.getElementById('fees2-price-' + c);
-        if (el1) el1.textContent = price;
-        if (el2) el2.textContent = price;
+        if (el1) el1.textContent = display;
+        if (el2) el2.textContent = display;
       });
+
+      /* Show savings in active currency only in fee2-coupon-row */
+      if (hasCoupon) {
+        var ac = getActiveCurrency();
+        var bc = getPlanBreakdown('INDIVIDUAL', ac);
+        var sym = CURRENCY_SYMS[ac] || '';
+        if (bc && fee2CouponDsc) fee2CouponDsc.textContent = '−' + sym + Number(savingsAmt(bc.final_price)).toLocaleString();
+      }
+
     } else {
       if (labelEl) labelEl.textContent = 'Team Enrolment';
       if (discountBar) discountBar.style.display = 'block';
       if (teamInfoEl)  teamInfoEl.style.display  = 'block';
 
-      if (size >= 3) {
+      if (size >= 2) {
         if (sublabelEl) sublabelEl.textContent = size + ' people · team rate';
         if (f2Label)    f2Label.textContent    = size + '-Person Team Enrolment';
         if (f2Breakdown) f2Breakdown.style.display = 'block';
@@ -1337,8 +1389,9 @@
         CURRENCIES.forEach(function(c) {
           var b   = getPlanBreakdown('TEAM', c);
           var sym = CURRENCY_SYMS[c] || '';
-          var total     = b ? sym + Number(b.final_price * size).toLocaleString() : '—';
-          var perPerson = b ? sym + Number(b.final_price).toLocaleString() : '—';
+          var raw = b ? b.final_price : null;
+          var total     = raw !== null ? sym + Number(applyDiscount(raw) * size).toLocaleString() : '—';
+          var perPerson = raw !== null ? sym + Number(applyDiscount(raw)).toLocaleString() : '—';
           var el1  = document.getElementById('fees-price-' + c);
           var el2  = document.getElementById('fees2-price-' + c);
           var ppEl = document.getElementById('fees2-pp-' + c);
@@ -1346,14 +1399,24 @@
           if (el2)  el2.textContent = total;
           if (ppEl) ppEl.textContent = perPerson;
         });
+
+        if (hasCoupon) {
+          var ac = getActiveCurrency();
+          var bt = getPlanBreakdown('TEAM', ac);
+          var sym = CURRENCY_SYMS[ac] || '';
+          if (bt && fee2CouponDsc) fee2CouponDsc.textContent = '−' + sym + Number(savingsAmt(bt.final_price) * size).toLocaleString();
+        }
+
       } else {
         if (sublabelEl) sublabelEl.textContent = 'Team · per person';
         if (f2Label)    f2Label.textContent    = 'Team Enrolment';
         if (f2Breakdown) f2Breakdown.style.display = 'none';
 
         CURRENCIES.forEach(function(c) {
-          var price = formatPrice('TEAM', c);
-          var per   = price !== '—' ? price + '/person' : '—';
+          var b   = getPlanBreakdown('TEAM', c);
+          var sym = CURRENCY_SYMS[c] || '';
+          var raw = b ? b.final_price : null;
+          var per = raw !== null ? sym + Number(applyDiscount(raw)).toLocaleString() + '/person' : '—';
           var el1 = document.getElementById('fees-price-' + c);
           var el2 = document.getElementById('fees2-price-' + c);
           if (el1) el1.textContent = per;
@@ -1517,7 +1580,11 @@
   }
 
   /* ---------- Coupon code ---------- */
-  var _appliedCoupon = null;
+  var _appliedCoupon = null;  /* code string */
+  var _couponPct     = 0;     /* discount percentage 0–100 */
+
+  /* Known coupon codes — replace with API validation when endpoint is ready */
+  var COUPON_MAP = { 'BRIX@40': 40 };
 
   window.applyCoupon = function () {
     var input    = document.getElementById('coupon-code');
@@ -1530,20 +1597,33 @@
       feedback.style.display = 'block';
       return;
     }
-    /* Placeholder: real validation would call the API */
-    feedback.textContent  = 'Checking code…';
+
+    feedback.textContent  = 'Checking…';
     feedback.style.color  = 'var(--muted)';
     feedback.style.display = 'block';
 
-    /* Simulate async — replace with real API call when endpoint is ready */
     setTimeout(function () {
-      /* For now, accept any non-empty code as "pending" until API validates at checkout */
+      var pct = COUPON_MAP[code];
+      if (!pct) {
+        feedback.textContent = 'Invalid coupon code. Please try again.';
+        feedback.style.color = 'var(--red)';
+        input.style.borderColor = 'rgba(255,41,78,0.5)';
+        return;
+      }
+
       _appliedCoupon = code;
-      feedback.innerHTML   = '✓ Code <strong style="color:var(--white)">' + code + '</strong> saved — discount will be applied at checkout.';
-      feedback.style.color = '#22c55e';
-      input.style.borderColor = '#22c55e';
-      input.readOnly = true;
-    }, 600);
+      _couponPct     = pct;
+
+      feedback.innerHTML       = '✓ <strong style="color:var(--white)">' + pct + '% discount</strong> applied!';
+      feedback.style.color     = '#22c55e';
+      input.style.borderColor  = '#22c55e';
+      input.readOnly           = true;
+
+      /* Immediately refresh the price display */
+      var enrollType = (document.getElementById('enrollment-type') || {}).value || 'Individual';
+      var teamSize   = (document.getElementById('team-size') || {}).value || '';
+      updateEnrollmentUI(enrollType, teamSize);
+    }, 400);
   };
 
   /* ---------- Init ---------- */
@@ -1611,6 +1691,8 @@
         if (!token) throw new Error('Authentication error. Please try again.');
 
         try { sessionStorage.setItem('bxAccessToken', token); } catch(e) {}
+        /* Cookie fallback — survives www↔non-www 301 redirects (different origins share .brixgate.com) */
+        try { document.cookie = 'bxToken=' + encodeURIComponent(token) + '; path=/; domain=.brixgate.com; secure; samesite=lax; max-age=3600'; } catch(e) {}
 
         /* resolve program ID from field if not set by URL param */
         if (!_programId) _programId = FIELD_TO_PROGRAM_ID[field] || null;
@@ -1624,7 +1706,7 @@
         var enrollReviewEl = document.getElementById('review-enrollment');
         if (enrollReviewEl) {
           var enrollDisplay = enrollmentType || 'Individual';
-          if (isTeam && teamSize >= 3) enrollDisplay = 'Team · ' + teamSize + ' people';
+          if (isTeam && teamSize >= 2) enrollDisplay = 'Team · ' + teamSize + ' people';
           enrollReviewEl.textContent = enrollDisplay;
         }
 
