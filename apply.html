@@ -996,11 +996,6 @@
                 <option value="3">3 people</option>
                 <option value="4">4 people</option>
                 <option value="5">5 people</option>
-                <option value="6">6 people</option>
-                <option value="7">7 people</option>
-                <option value="8">8 people</option>
-                <option value="9">9 people</option>
-                <option value="10">10 people</option>
               </select>
             </div>
 
@@ -1434,6 +1429,19 @@
         if (enrollSel.options[i].value === type) { enrollSel.selectedIndex = i; break; }
       }
     }
+
+    /* Clear coupon when switching plan type so stale discount doesn't carry over */
+    _appliedCoupon = null;
+    _couponPct     = 0;
+    var couponInput    = document.getElementById('coupon-code');
+    var couponFeedback = document.getElementById('coupon-feedback');
+    var couponInputRow = document.getElementById('coupon-input-row');
+    var couponToggle   = document.getElementById('coupon-toggle-link');
+    if (couponInput)    { couponInput.value = ''; couponInput.readOnly = false; couponInput.style.borderColor = ''; }
+    if (couponFeedback) { couponFeedback.style.display = 'none'; couponFeedback.textContent = ''; }
+    if (couponInputRow) couponInputRow.style.display = 'none';
+    if (couponToggle)   couponToggle.style.display = 'inline-block';
+
     var teamSize = (document.getElementById('team-size') || {}).value || '';
     updateEnrollmentUI(type, teamSize);
   };
@@ -1580,11 +1588,9 @@
   }
 
   /* ---------- Coupon code ---------- */
-  var _appliedCoupon = null;  /* code string */
-  var _couponPct     = 0;     /* discount percentage 0–100 */
-
-  /* Known coupon codes — replace with API validation when endpoint is ready */
-  var COUPON_MAP = { 'BRIX@40': 40 };
+  var _appliedCoupon     = null;  /* code string */
+  var _couponPct         = 0;     /* discount percentage 0–100 */
+  var _couponBackendValid = false; /* confirmed by backend */
 
   window.applyCoupon = function () {
     var input    = document.getElementById('coupon-code');
@@ -1598,32 +1604,40 @@
       return;
     }
 
-    feedback.textContent  = 'Checking…';
-    feedback.style.color  = 'var(--muted)';
+    feedback.textContent   = 'Checking code…';
+    feedback.style.color   = 'var(--muted)';
     feedback.style.display = 'block';
 
-    setTimeout(function () {
-      var pct = COUPON_MAP[code];
-      if (!pct) {
-        feedback.textContent = 'Invalid coupon code. Please try again.';
-        feedback.style.color = 'var(--red)';
-        input.style.borderColor = 'rgba(255,41,78,0.5)';
-        return;
-      }
-
-      _appliedCoupon = code;
-      _couponPct     = pct;
-
-      feedback.innerHTML       = '✓ <strong style="color:var(--white)">' + pct + '% discount</strong> applied!';
-      feedback.style.color     = '#22c55e';
-      input.style.borderColor  = '#22c55e';
-      input.readOnly           = true;
-
-      /* Immediately refresh the price display */
-      var enrollType = (document.getElementById('enrollment-type') || {}).value || 'Individual';
-      var teamSize   = (document.getElementById('team-size') || {}).value || '';
-      updateEnrollmentUI(enrollType, teamSize);
-    }, 400);
+    /* Try backend validation first */
+    fetch(API_BASE + '/coupons/validate?code=' + encodeURIComponent(code))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.success && data.data) {
+          /* Backend confirmed: extract discount percentage */
+          var pct = data.data.discount_percentage || data.data.discountPercentage || data.data.value || 0;
+          _appliedCoupon      = code;
+          _couponPct          = pct;
+          _couponBackendValid = true;
+          feedback.innerHTML       = '✓ <strong style="color:var(--white)">' + pct + '% discount</strong> applied!';
+          feedback.style.color     = '#22c55e';
+          input.style.borderColor  = '#22c55e';
+          input.readOnly           = true;
+          var enrollType = (document.getElementById('enrollment-type') || {}).value || 'Individual';
+          var teamSize   = (document.getElementById('team-size') || {}).value || '';
+          updateEnrollmentUI(enrollType, teamSize);
+        } else {
+          feedback.textContent = data.message || 'Invalid or expired coupon code.';
+          feedback.style.color = 'var(--red)';
+          input.style.borderColor = 'rgba(255,41,78,0.5)';
+        }
+      })
+      .catch(function() {
+        /* Backend coupon endpoint not yet available — flag for dev lead */
+        _couponBackendValid = false;
+        feedback.innerHTML  = '⚠ Coupon endpoint not available yet. <span style="color:var(--muted)">Contact we@brixgate.com if you have a code.</span>';
+        feedback.style.color = '#f59e0b';
+        feedback.style.display = 'block';
+      });
   };
 
   /* ---------- Init ---------- */
@@ -1661,8 +1675,8 @@
     var isTeam         = (enrollmentType === 'Team');
     var fullName       = firstName + ' ' + lastName;
 
-    /* Validate team size if team is selected */
-    if (isTeam && teamSize < 3) {
+    /* Validate team size if team is selected (min 2) */
+    if (isTeam && teamSize < 2) {
       var tsSel = document.getElementById('team-size');
       if (tsSel) { tsSel.style.borderColor = 'var(--red)'; tsSel.focus(); }
       return;
@@ -1771,12 +1785,15 @@
     var lastName2    = (document.getElementById('last-name') || {}).value || '';
     var email2       = (document.getElementById('email') || {}).value || '';
 
+    /* Only send coupon_code when backend has confirmed it's valid */
+    var payloadCoupon = (_appliedCoupon && _couponBackendValid) ? _appliedCoupon : undefined;
+
     apiPost('/payments/initiate', {
       payment_type:          'ENROLLMENT',
       entity_id:             _session.programId,
       pricing_plan_id:       plan.id || undefined,
       currency:              cur.toUpperCase(),
-      coupon_code:           _appliedCoupon || '',
+      coupon_code:           payloadCoupon,
       enrollment_type:       isTeamPay ? 'TEAM' : 'INDIVIDUAL',
       user_size:             isTeamPay ? teamSizePay : 1,
       contact_person_name:   (firstName2 + ' ' + lastName2).trim(),
@@ -1785,7 +1802,14 @@
     }, token)
       .then(function(data) {
         console.log('[Brixgate] /payments/initiate response:', JSON.stringify(data));
-        if (!data.success) throw new Error(data.message || 'Could not start payment.');
+        if (!data.success) {
+          var errMsg = data.message || 'Could not start payment.';
+          /* Detect coupon-related rejections and give a helpful message */
+          if (_appliedCoupon && /coupon|discount|code/i.test(errMsg)) {
+            throw new Error('The coupon code was not accepted. Please try again without the coupon or contact we@brixgate.com.');
+          }
+          throw new Error(errMsg);
+        }
 
         var checkout         = data.data.checkout || {};
         var payment          = data.data.payment  || {};
