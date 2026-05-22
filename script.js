@@ -168,29 +168,30 @@
 
     if (!usdLabels.length && !localLabels.length && !curBtns.length) return;
 
-    /* currency metadata */
+    /* currency metadata — only NGN and USD active; others commented for future re-enable */
     var CURRENCY_META = {
       ngn: { label: '₦ NGN' },
-      usd: { label: '$ USD' },
-      gbp: { label: '£ GBP' },
-      eur: { label: '€ EUR' },
-      cad: { label: 'C$ CAD' }
+      usd: { label: '$ USD' }
+      // gbp: { label: '£ GBP' },
+      // eur: { label: '€ EUR' },
+      // cad: { label: 'C$ CAD' }
     };
 
-    /* country → currency code */
+    /* country → currency code — all non-NGN countries map to USD */
     var COUNTRY_MAP = {
-      'NG': 'ngn', 'GB': 'gbp', 'CA': 'cad',
-      'DE': 'eur', 'FR': 'eur', 'ES': 'eur', 'IT': 'eur',
-      'NL': 'eur', 'BE': 'eur', 'AT': 'eur', 'PT': 'eur',
-      'FI': 'eur', 'IE': 'eur', 'GR': 'eur', 'LU': 'eur',
-      'SK': 'eur', 'SI': 'eur', 'EE': 'eur', 'LV': 'eur',
-      'LT': 'eur', 'MT': 'eur', 'CY': 'eur', 'HR': 'eur'
+      'NG': 'ngn'
+      // 'GB': 'gbp', 'CA': 'cad',
+      // 'DE': 'eur', 'FR': 'eur', 'ES': 'eur', 'IT': 'eur',
+      // 'NL': 'eur', 'BE': 'eur', 'AT': 'eur', 'PT': 'eur',
+      // 'FI': 'eur', 'IE': 'eur', 'GR': 'eur', 'LU': 'eur',
+      // 'SK': 'eur', 'SI': 'eur', 'EE': 'eur', 'LV': 'eur',
+      // 'LT': 'eur', 'MT': 'eur', 'CY': 'eur', 'HR': 'eur'
     };
 
     var activeCurrCode = 'ngn';
 
     function applyState(persist) {
-      document.body.classList.remove('show-usd', 'show-gbp', 'show-eur', 'show-cad');
+      document.body.classList.remove('show-usd'/*, 'show-gbp', 'show-eur', 'show-cad'*/);
       if (activeCurrCode !== 'ngn') {
         document.body.classList.add('show-' + activeCurrCode);
       }
@@ -369,21 +370,29 @@
    ============================================================ */
 var BX_API_BASE = 'https://api.brixgate.com';
 
-window.postQuestionnaireSummary = function(questionnaireId, email, score, ratingLevel, source, occupation) {
+window.postQuestionnaireSummary = function(questionnaireId, email, score, ratingLevel, source, occupation, phoneNumber, fullName) {
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
-  fetch(BX_API_BASE + '/questionnaires/summaries', {
-    method: 'POST',
+  var payload = {
+    questionnaire_id: questionnaireId,
+    email:            email,
+    score:            parseFloat(Number(score).toFixed(2)),
+    rating_level:     ratingLevel,
+    source:           source,
+    metadata:         JSON.stringify({ source: source })
+  };
+  /* occupation only sent for AI Readiness quiz (id 1) */
+  if (questionnaireId === 1 && occupation) payload.occupation = occupation;
+  if (phoneNumber) payload.phone_number = phoneNumber;
+  if (fullName)    payload.name         = fullName;
+  console.log('[Brixgate] postQuestionnaireSummary →', JSON.stringify(payload));
+  fetch(BX_API_BASE + '/api/v1/questionnaires/summaries', {
+    method:  'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      questionnaire_id: questionnaireId,
-      email: email,
-      score: parseFloat(Number(score).toFixed(2)),
-      rating_level: ratingLevel,
-      source: source,
-      metadata: '',
-      occupation: occupation || ''
-    })
-  }).catch(function() {});
+    body:    JSON.stringify(payload)
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(d) { console.log('[Brixgate] questionnaire summary response:', JSON.stringify(d)); })
+  .catch(function(e) { console.warn('[Brixgate] questionnaire summary error:', e); });
 };
 
 window.tierLabelToRatingLevel = function(label) {
@@ -413,35 +422,186 @@ window.tierLabelToRatingLevel = function(label) {
       'justify-content:center',
       'padding:24px'
     ].join(';'));
+    var inputStyle = 'width:100%;padding:13px 16px;border-radius:8px;border:1.5px solid #1A3050;background:rgba(255,255,255,0.05);color:#fff;font-size:0.92rem;margin-bottom:10px;outline:none;box-sizing:border-box;';
+    var selectStyle = 'padding:0 10px;border-radius:8px 0 0 8px;border:1.5px solid #1A3050;border-right:none;background:rgba(255,255,255,0.08);color:#fff;font-size:0.82rem;cursor:pointer;outline:none;height:48px;flex-shrink:0;max-width:220px;';
+    var phoneRowStyle = 'display:flex;align-items:stretch;margin-bottom:10px;';
+    var phoneInputStyle = 'flex:1;padding:13px 16px;border-radius:0 8px 8px 0;border:1.5px solid #1A3050;border-left:none;background:rgba(255,255,255,0.05);color:#fff;font-size:0.92rem;outline:none;box-sizing:border-box;min-width:0;';
     el.innerHTML =
       '<div style="background:#0D1C34;border:1px solid #1A3050;border-radius:20px;padding:40px 32px;max-width:440px;width:100%;text-align:center;">' +
         '<div style="font-size:2rem;margin-bottom:12px;">🎯</div>' +
         '<h3 style="font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:8px;">Your Results Are Ready</h3>' +
-        '<p style="font-size:0.88rem;color:#7A94A8;line-height:1.6;margin-bottom:24px;">Enter your email to receive your result and unlock a <strong style="color:#FF294E;">10% coupon</strong> for the programme.</p>' +
-        '<input id="bx-quiz-email" type="email" placeholder="your@email.com" autocomplete="email" style="width:100%;padding:13px 16px;border-radius:8px;border:1.5px solid #1A3050;background:rgba(255,255,255,0.05);color:#fff;font-size:0.92rem;margin-bottom:16px;outline:none;box-sizing:border-box;" />' +
+        '<p style="font-size:0.88rem;color:#7A94A8;line-height:1.6;margin-bottom:20px;">Enter your details to receive your result and unlock a <strong style="color:#FF294E;">10% coupon</strong> for the programme.</p>' +
+        '<input id="bx-quiz-name" type="text" placeholder="Full name" autocomplete="name" style="' + inputStyle + '" />' +
+        '<div style="' + phoneRowStyle + '">' +
+          '<select id="bx-quiz-dialcode" style="' + selectStyle + '">' +
+            '<option value="+234">🇳🇬 +234 Nigeria</option>' +
+            '<option value="+1">🇺🇸 +1 United States</option>' +
+            '<option value="+44">🇬🇧 +44 United Kingdom</option>' +
+            '<option value="+233">🇬🇭 +233 Ghana</option>' +
+            '<option value="+254">🇰🇪 +254 Kenya</option>' +
+            '<option value="+27">🇿🇦 +27 South Africa</option>' +
+            '<option value="+251">🇪🇹 +251 Ethiopia</option>' +
+            '<option value="+225">🇨🇮 +225 Côte d\'Ivoire</option>' +
+            '<option value="+212">🇲🇦 +212 Morocco</option>' +
+            '<option value="+1">🇨🇦 +1 Canada</option>' +
+            '<option value="+213">🇩🇿 +213 Algeria</option>' +
+            '<option value="+20">🇪🇬 +20 Egypt</option>' +
+            '<option value="+256">🇺🇬 +256 Uganda</option>' +
+            '<option value="+255">🇹🇿 +255 Tanzania</option>' +
+            '<option value="+237">🇨🇲 +237 Cameroon</option>' +
+            '<option value="+221">🇸🇳 +221 Senegal</option>' +
+            '<option value="+228">🇹🇬 +228 Togo</option>' +
+            '<option value="+229">🇧🇯 +229 Benin</option>' +
+            '<option value="+227">🇳🇪 +227 Niger</option>' +
+            '<option value="+226">🇧🇫 +226 Burkina Faso</option>' +
+            '<option value="+223">🇲🇱 +223 Mali</option>' +
+            '<option value="+224">🇬🇳 +224 Guinea</option>' +
+            '<option value="+245">🇬🇼 +245 Guinea-Bissau</option>' +
+            '<option value="+220">🇬🇲 +220 Gambia</option>' +
+            '<option value="+232">🇸🇱 +232 Sierra Leone</option>' +
+            '<option value="+231">🇱🇷 +231 Liberia</option>' +
+            '<option value="+236">🇨🇫 +236 Central African Rep.</option>' +
+            '<option value="+235">🇹🇩 +235 Chad</option>' +
+            '<option value="+243">🇨🇩 +243 DR Congo</option>' +
+            '<option value="+242">🇨🇬 +242 Republic of Congo</option>' +
+            '<option value="+241">🇬🇦 +241 Gabon</option>' +
+            '<option value="+240">🇬🇶 +240 Equatorial Guinea</option>' +
+            '<option value="+239">🇸🇹 +239 São Tomé & Príncipe</option>' +
+            '<option value="+238">🇨🇻 +238 Cape Verde</option>' +
+            '<option value="+222">🇲🇷 +222 Mauritania</option>' +
+            '<option value="+249">🇸🇩 +249 Sudan</option>' +
+            '<option value="+211">🇸🇸 +211 South Sudan</option>' +
+            '<option value="+291">🇪🇷 +291 Eritrea</option>' +
+            '<option value="+253">🇩🇯 +253 Djibouti</option>' +
+            '<option value="+252">🇸🇴 +252 Somalia</option>' +
+            '<option value="+250">🇷🇼 +250 Rwanda</option>' +
+            '<option value="+257">🇧🇮 +257 Burundi</option>' +
+            '<option value="+258">🇲🇿 +258 Mozambique</option>' +
+            '<option value="+260">🇿🇲 +260 Zambia</option>' +
+            '<option value="+263">🇿🇼 +263 Zimbabwe</option>' +
+            '<option value="+265">🇲🇼 +265 Malawi</option>' +
+            '<option value="+267">🇧🇼 +267 Botswana</option>' +
+            '<option value="+268">🇸🇿 +268 Eswatini</option>' +
+            '<option value="+266">🇱🇸 +266 Lesotho</option>' +
+            '<option value="+261">🇲🇬 +261 Madagascar</option>' +
+            '<option value="+230">🇲🇺 +230 Mauritius</option>' +
+            '<option value="+248">🇸🇨 +248 Seychelles</option>' +
+            '<option value="+269">🇰🇲 +269 Comoros</option>' +
+            '<option value="+216">🇹🇳 +216 Tunisia</option>' +
+            '<option value="+218">🇱🇾 +218 Libya</option>' +
+            '<option value="+34">🇪🇸 +34 Spain</option>' +
+            '<option value="+351">🇵🇹 +351 Portugal</option>' +
+            '<option value="+33">🇫🇷 +33 France</option>' +
+            '<option value="+49">🇩🇪 +49 Germany</option>' +
+            '<option value="+39">🇮🇹 +39 Italy</option>' +
+            '<option value="+31">🇳🇱 +31 Netherlands</option>' +
+            '<option value="+32">🇧🇪 +32 Belgium</option>' +
+            '<option value="+41">🇨🇭 +41 Switzerland</option>' +
+            '<option value="+43">🇦🇹 +43 Austria</option>' +
+            '<option value="+48">🇵🇱 +48 Poland</option>' +
+            '<option value="+46">🇸🇪 +46 Sweden</option>' +
+            '<option value="+47">🇳🇴 +47 Norway</option>' +
+            '<option value="+45">🇩🇰 +45 Denmark</option>' +
+            '<option value="+358">🇫🇮 +358 Finland</option>' +
+            '<option value="+353">🇮🇪 +353 Ireland</option>' +
+            '<option value="+30">🇬🇷 +30 Greece</option>' +
+            '<option value="+36">🇭🇺 +36 Hungary</option>' +
+            '<option value="+420">🇨🇿 +420 Czech Republic</option>' +
+            '<option value="+421">🇸🇰 +421 Slovakia</option>' +
+            '<option value="+40">🇷🇴 +40 Romania</option>' +
+            '<option value="+359">🇧🇬 +359 Bulgaria</option>' +
+            '<option value="+385">🇭🇷 +385 Croatia</option>' +
+            '<option value="+381">🇷🇸 +381 Serbia</option>' +
+            '<option value="+380">🇺🇦 +380 Ukraine</option>' +
+            '<option value="+7">🇷🇺 +7 Russia</option>' +
+            '<option value="+90">🇹🇷 +90 Turkey</option>' +
+            '<option value="+972">🇮🇱 +972 Israel</option>' +
+            '<option value="+961">🇱🇧 +961 Lebanon</option>' +
+            '<option value="+966">🇸🇦 +966 Saudi Arabia</option>' +
+            '<option value="+971">🇦🇪 +971 UAE</option>' +
+            '<option value="+974">🇶🇦 +974 Qatar</option>' +
+            '<option value="+965">🇰🇼 +965 Kuwait</option>' +
+            '<option value="+973">🇧🇭 +973 Bahrain</option>' +
+            '<option value="+968">🇴🇲 +968 Oman</option>' +
+            '<option value="+962">🇯🇴 +962 Jordan</option>' +
+            '<option value="+964">🇮🇶 +964 Iraq</option>' +
+            '<option value="+98">🇮🇷 +98 Iran</option>' +
+            '<option value="+92">🇵🇰 +92 Pakistan</option>' +
+            '<option value="+91">🇮🇳 +91 India</option>' +
+            '<option value="+880">🇧🇩 +880 Bangladesh</option>' +
+            '<option value="+94">🇱🇰 +94 Sri Lanka</option>' +
+            '<option value="+95">🇲🇲 +95 Myanmar</option>' +
+            '<option value="+60">🇲🇾 +60 Malaysia</option>' +
+            '<option value="+65">🇸🇬 +65 Singapore</option>' +
+            '<option value="+63">🇵🇭 +63 Philippines</option>' +
+            '<option value="+62">🇮🇩 +62 Indonesia</option>' +
+            '<option value="+66">🇹🇭 +66 Thailand</option>' +
+            '<option value="+84">🇻🇳 +84 Vietnam</option>' +
+            '<option value="+855">🇰🇭 +855 Cambodia</option>' +
+            '<option value="+86">🇨🇳 +86 China</option>' +
+            '<option value="+81">🇯🇵 +81 Japan</option>' +
+            '<option value="+82">🇰🇷 +82 South Korea</option>' +
+            '<option value="+61">🇦🇺 +61 Australia</option>' +
+            '<option value="+64">🇳🇿 +64 New Zealand</option>' +
+            '<option value="+55">🇧🇷 +55 Brazil</option>' +
+            '<option value="+52">🇲🇽 +52 Mexico</option>' +
+            '<option value="+57">🇨🇴 +57 Colombia</option>' +
+            '<option value="+54">🇦🇷 +54 Argentina</option>' +
+            '<option value="+56">🇨🇱 +56 Chile</option>' +
+            '<option value="+51">🇵🇪 +51 Peru</option>' +
+            '<option value="+58">🇻🇪 +58 Venezuela</option>' +
+            '<option value="+593">🇪🇨 +593 Ecuador</option>' +
+            '<option value="+591">🇧🇴 +591 Bolivia</option>' +
+            '<option value="+595">🇵🇾 +595 Paraguay</option>' +
+            '<option value="+598">🇺🇾 +598 Uruguay</option>' +
+          '</select>' +
+          '<input id="bx-quiz-phone" type="tel" placeholder="Phone number (optional)" autocomplete="tel" style="' + phoneInputStyle + '" />' +
+        '</div>' +
+        '<input id="bx-quiz-email" type="email" placeholder="your@email.com" autocomplete="email" style="' + inputStyle + 'margin-bottom:6px;" />' +
+        '<div id="bx-quiz-err" style="color:#FF294E;font-size:0.78rem;min-height:18px;margin-bottom:10px;text-align:left;"></div>' +
         '<button onclick="submitQuizCapture()" style="width:100%;padding:14px;background:linear-gradient(135deg,#FF294E,#FF5748);border:none;border-radius:10px;color:#fff;font-weight:800;font-size:1rem;cursor:pointer;margin-bottom:12px;">Get My Results + Coupon</button>' +
         '<br/><a href="#" onclick="skipQuizCapture(event)" style="color:#7A94A8;font-size:0.82rem;text-decoration:underline;">Skip — just show me results</a>' +
       '</div>';
     document.body.appendChild(el);
   }
 
-  window.showQuizCaptureGate = function (callback) {
-    if (localStorage.getItem('bxQuizCaptured')) { callback(); return; }
+  var _captureKey = 'bxQuizCaptured';
+
+  window.showQuizCaptureGate = function (callback, pageId) {
+    _captureKey = pageId ? ('bxQuizCaptured_' + pageId) : 'bxQuizCaptured';
+    if (localStorage.getItem(_captureKey)) { callback(); return; }
     ensureOverlay();
     _captureCallback = callback;
     document.getElementById('bx-quiz-capture').style.display = 'flex';
   };
 
   window.submitQuizCapture = function () {
-    var emailEl = document.getElementById('bx-quiz-email');
-    var email   = emailEl ? emailEl.value.trim() : '';
+    var nameEl    = document.getElementById('bx-quiz-name');
+    var phoneEl   = document.getElementById('bx-quiz-phone');
+    var dialEl    = document.getElementById('bx-quiz-dialcode');
+    var emailEl   = document.getElementById('bx-quiz-email');
+    var errEl     = document.getElementById('bx-quiz-err');
+    var name      = nameEl  ? nameEl.value.trim()  : '';
+    var phoneRaw  = phoneEl ? phoneEl.value.trim() : '';
+    var dialCode  = dialEl  ? dialEl.value : '+234';
+    var phone     = phoneRaw ? (dialCode + phoneRaw) : '';
+    var email     = emailEl ? emailEl.value.trim() : '';
+    if (errEl) errEl.textContent = '';
+    if (!name) {
+      if (nameEl)  { nameEl.style.borderColor = '#FF294E'; nameEl.focus(); }
+      if (errEl)   errEl.textContent = 'Please enter your name.';
+      return;
+    }
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       if (emailEl) { emailEl.style.borderColor = '#FF294E'; emailEl.focus(); }
+      if (errEl)   errEl.textContent = 'Please enter a valid email address.';
       return;
     }
     try {
-      localStorage.setItem('bxQuizCaptured', '1');
+      localStorage.setItem(_captureKey, '1');
       localStorage.setItem('bxQuizEmail', email);
+      localStorage.setItem('bxQuizName',  name);
+      localStorage.setItem('bxQuizPhone', phone);
     } catch (e) {}
     document.getElementById('bx-quiz-capture').style.display = 'none';
     if (_captureCallback) { var cb = _captureCallback; _captureCallback = null; cb(); }
@@ -449,7 +609,7 @@ window.tierLabelToRatingLevel = function(label) {
 
   window.skipQuizCapture = function (e) {
     if (e) e.preventDefault();
-    try { localStorage.setItem('bxQuizCaptured', 'skip'); } catch (e) {}
+    try { localStorage.setItem(_captureKey, 'skip'); } catch (e) {}
     document.getElementById('bx-quiz-capture').style.display = 'none';
     if (_captureCallback) { var cb = _captureCallback; _captureCallback = null; cb(); }
   };

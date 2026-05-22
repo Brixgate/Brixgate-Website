@@ -815,10 +815,10 @@ section { width: 100%; }
   position: absolute;
   inset: 0;
   background-image: url('assets/Maps.png');
-  background-size: 62% auto;
+  background-size: 72% auto;
   background-position: right 4% center;
   background-repeat: no-repeat;
-  opacity: 0.18;
+  opacity: 0.7;
   pointer-events: none;
 }
 
@@ -1866,8 +1866,8 @@ body.show-cad .currency-cad { display: inline !important; }
 }
 .cur-btn {
   background: transparent;
-  border: 1.5px solid rgba(255,255,255,0.14);
-  color: rgba(255,255,255,0.45);
+  border: 1.5px solid var(--red);
+  color: var(--red);
   padding: 6px 14px;
   border-radius: 50px;
   font-size: 0.8rem;

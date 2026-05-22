@@ -81,15 +81,21 @@
       .field-hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
     }
   </style>
+<script src="tracking.js"></script>
 </head>
 <body>
 
 <!-- ====== NAV ====== -->
-<div id="scroll-progress"></div>
-<div class="region-banner">
-  <div class="container" style="display:flex;align-items:center;justify-content:center;gap:20px">
-    <span>🌍 <strong>Africa-First,</strong> Globally Recognised · Cohorts open now</span>
-    <a href="apply.html?program_id=2" style="color:var(--red);font-weight:700;font-size:0.84rem">Apply →</a>
+<!-- Region Banner -->
+<div class="region-banner" id="region-banner">
+  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Now active in</span>
+  <div class="regions">
+    <span class="region-item">🇳🇬 Nigeria</span>
+    <span class="region-item">🇬🇧 United Kingdom</span>
+    <span class="region-item">🇺🇸 United States</span>
+    <span class="region-item">🇰🇪 Kenya</span>
+    <span class="region-item">🇬🇭 Ghana</span>
+    <span class="region-item">🇿🇦 South Africa</span>
   </div>
 </div>
 <nav class="nav">
@@ -118,14 +124,14 @@
   <a href="organisations.html">For Organisations</a>
   <a href="apply.html?program_id=2" class="btn btn-primary">Apply Now</a>
   <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px">Login</a>
-</div><!-- ====== FIELD HERO ====== -->
-<section class="section-hero bg-dark" style="padding-top:calc(var(--nav-height) + 20px);padding-bottom:60px">
+</div>
+
+<!-- ====== FIELD HERO ====== -->
+<section class="section-hero bg-dark" style="padding-top:calc(var(--nav-height) - 20px);padding-bottom:80px">
   <div class="container">
     <div class="field-hero-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center">
       <div class="fade-up">
-        <a href="programme.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:0.82rem;font-weight:700;text-decoration:none;margin-bottom:24px">
-          ← Back to all programmes
-        </a>
+        
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
           <span style="background:rgba(255,41,78,0.15);color:var(--red);font-size:0.75rem;font-weight:800;padding:4px 14px;border-radius:50px;letter-spacing:.08em;text-transform:uppercase">Expert Practitioner Programme</span>
           
@@ -133,9 +139,9 @@
         <h1 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:20px">
           AI in <span style="color:var(--red)">Cybersecurity</span>
         </h1>
-        <p style="font-size:1.15rem;color:var(--muted);line-height:1.7;margin-bottom:32px;max-width:480px">Outthink Threats. Don't Just Respond to Them.</p>
+        <p style="font-size:1.2rem;color:var(--muted);line-height:1.4;margin-bottom:32px;max-width:530px">Threats move faster than any analyst can track alone. 4 live classes on using AI to detect, investigate, and neutralise threats before they escalate.</p>
         <!-- Price pill — visible in hero so cost is clear before scrolling -->
-        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:24px">
+        <!-- <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:24px">
           <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,41,78,0.08);border:1px solid rgba(255,41,78,0.22);border-radius:50px;padding:8px 18px">
             <span style="font-size:0.7rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.09em">Self-Enrolment</span>
             <span style="width:1px;height:14px;background:rgba(255,255,255,0.12);display:inline-block"></span>
@@ -144,7 +150,7 @@
             </span>
           </div>
           <a href="#pricing" style="font-size:0.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--muted)'">All pricing tiers →</a>
-        </div>
+        </div> -->
         <div style="display:flex;gap:12px;flex-wrap:nowrap">
           <a href="#quiz-field" class="btn btn-primary btn-lg">Validate Your Skill Level</a>
           <a href="apply.html?program_id=2" class="btn btn-outline btn-lg">Apply for This Programme</a>
@@ -450,7 +456,7 @@
       <div class="eyebrow-tag" style="color:var(--red)">Programme Cohorts</div>
       <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px">Open Cohorts</h2>
       <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px">Cohort-based delivery means you learn alongside peers in your field and leave with a network, not just a certificate.</p>
-      <div style="max-width:540px">
+      <div style="max-width:450px">
         <div style="border:1.5px solid #E8E3DE;border-radius:14px;overflow:hidden">
           <div style="background:#021024;padding:16px 24px;display:flex;justify-content:space-between;align-items:center">
             <div style="font-size:0.95rem;font-weight:800;color:#fff">AI in Cybersecurity &#8212; Cohort 1</div>
@@ -639,9 +645,9 @@
       <div class="currency-toggle-5">
         <button class="cur-btn" data-cur="ngn">₦ NGN</button>
         <button class="cur-btn" data-cur="usd">$ USD</button>
-        <button class="cur-btn" data-cur="gbp">£ GBP</button>
-        <button class="cur-btn" data-cur="eur">€ EUR</button>
-        <button class="cur-btn" data-cur="cad">C$ CAD</button>
+        <!--<button class="cur-btn" data-cur="gbp">£ GBP</button>-->
+        <!--<button class="cur-btn" data-cur="eur">€ EUR</button>-->
+        <!--<button class="cur-btn" data-cur="cad">C$ CAD</button>-->
       </div>
     </div>
     <div id="pricing-cards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto" class="stagger">
@@ -752,6 +758,36 @@
   let currentQ = 0;
   const totalQ = 5;
 
+  // Shuffle questions + re-number counters + shuffle answers
+  (function() {
+    var container = document.getElementById(ID + '_container');
+    var questions = Array.from(container.querySelectorAll('.qf-question'));
+    var nav = container.querySelector('.qf-nav');
+    for (var i = questions.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = questions[i]; questions[i] = questions[j]; questions[j] = tmp;
+    }
+    questions.forEach(function(el, idx) {
+      el.id = ID + '_q' + idx;
+      el.querySelectorAll('.qf-opt').forEach(function(opt) { opt.dataset.q = idx; });
+      el.querySelectorAll('span').forEach(function(s) {
+        if (/^Question \d+ of \d+$/.test(s.textContent.trim())) {
+          s.textContent = 'Question ' + (idx + 1) + ' of ' + questions.length;
+        }
+      });
+      var optContainer = el.querySelector('.qf-options');
+      if (optContainer) {
+        var opts = Array.from(optContainer.querySelectorAll('.qf-opt'));
+        for (var a = opts.length - 1; a > 0; a--) {
+          var b = Math.floor(Math.random() * (a + 1));
+          var t = opts[a]; opts[a] = opts[b]; opts[b] = t;
+        }
+        opts.forEach(function(opt) { optContainer.appendChild(opt); });
+      }
+      container.insertBefore(el, nav);
+    });
+  })();
+
   // Show first question
   showQ(0);
 
@@ -814,7 +850,9 @@
     function doShow() {
       var _email = localStorage.getItem('bxQuizEmail') || '';
       if (_email && typeof postQuestionnaireSummary === 'function') {
-        postQuestionnaireSummary(3, _email, parseFloat(pct.toFixed(2)), tierLabelToRatingLevel(tier.label), 'cybersecurity-ai-readiness', '');
+        var _name  = localStorage.getItem('bxQuizName')  || '';
+        var _phone = localStorage.getItem('bxQuizPhone') || '';
+        postQuestionnaireSummary(3, _email, parseFloat(pct.toFixed(2)), tierLabelToRatingLevel(tier.label), 'cybersecurity-ai-readiness', '', _phone, _name);
       }
       document.getElementById(ID + '_badge').textContent = tier.label;
       document.getElementById(ID + '_badge').style.background = tier.color + '22';
@@ -839,7 +877,7 @@
     }
 
     if (typeof showQuizCaptureGate === 'function') {
-      showQuizCaptureGate(doShow);
+      showQuizCaptureGate(doShow, 'cybersecurity');
     } else {
       doShow();
     }
@@ -871,6 +909,7 @@ var PROGRAM_ID = 2;
     if (team) html += '<div class="card fade-up" style="padding:32px 28px;border-color:var(--red);position:relative"><div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;white-space:nowrap">Most Popular</div><div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Team</div><div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px">' + priceSpans(team.breakdowns) + '</div><div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">Per seat / programme</div><ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px"><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Individual</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Organisation-aligned cohort</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Manager progress reporting</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Invoice billing available</li></ul><a href="apply.html?program_id=' + PROGRAM_ID + '&type=team" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Apply Now</a></div>';
     html += '<div class="card fade-up" style="padding:32px 28px"><div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Corporate</div><div style="font-size:1.6rem;font-weight:900;color:var(--red);margin-bottom:4px">Custom Pricing</div><div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">Tailored to your organisation</div><ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px"><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Teams tier</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Dedicated cohort manager</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Custom curriculum design</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Enterprise reporting</li></ul><a href="organisations.html#contact" class="btn btn-outline" style="width:100%;justify-content:center;display:flex">Contact Us</a></div>';
     el.innerHTML = html;
+    el.querySelectorAll('.fade-up').forEach(function(el) { el.classList.add('visible'); });
   }
   fetch('https://api.brixgate.com/api/v1/pricing-plans?program_id=' + PROGRAM_ID)
     .then(function(r) { return r.json(); })

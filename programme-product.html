@@ -147,17 +147,28 @@
       [style*="grid-template-columns:repeat(3,1fr)"] { grid-template-columns: 1fr !important; }
     }
   </style>
+<script src="tracking.js"></script>
 </head>
 <body>
 
+
+ 
+
 <!-- ====== NAV ====== -->
 <div id="scroll-progress"></div>
-<div class="region-banner">
-  <div class="container" style="display:flex;align-items:center;justify-content:center;gap:20px">
-    <span>🌍 <strong>Africa-First,</strong> Globally Recognised · Cohorts open now</span>
-    <a href="apply.html?field=Product%20Marketing" style="color:var(--red);font-weight:700;font-size:0.84rem">Apply →</a>
+
+ <!-- Region Banner -->
+ <div class="region-banner" id="region-banner">
+  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Now active in</span>
+  <div class="regions">
+    <span class="region-item">🇳🇬 Nigeria</span>
+    <span class="region-item">🇬🇧 United Kingdom</span>
+    <span class="region-item">🇺🇸 United States</span>
+    <span class="region-item">🇰🇪 Kenya</span>
+    <span class="region-item">🇿🇦 South Africa</span>
   </div>
 </div>
+
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
@@ -184,14 +195,13 @@
   <a href="organisations.html">For Organisations</a>
   <a href="apply.html?field=Product%20Marketing" class="btn btn-primary">Apply Now</a>
   <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px">Login</a>
-</div><!-- ====== FIELD HERO ====== -->
-<section class="section-hero bg-dark" style="padding-top:calc(var(--nav-height) + 20px);padding-bottom:60px">
+</div>
+
+<!-- ====== FIELD HERO ====== -->
+<section class="section-hero bg-dark" style="padding-top:calc(var(--nav-height) - 50px);padding-bottom:120px">
   <div class="container">
     <div class="field-hero-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center">
       <div class="fade-up">
-        <a href="programme.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:0.82rem;font-weight:700;text-decoration:none;margin-bottom:24px">
-          ← Back to all programmes
-        </a>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
           <span style="background:rgba(255,41,78,0.15);color:var(--red);font-size:0.75rem;font-weight:800;padding:4px 14px;border-radius:50px;letter-spacing:.08em;text-transform:uppercase">Expert Practitioner Programme</span>
           
@@ -199,18 +209,18 @@
         <h1 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:20px">
           AI in <span style="color:var(--red)">Product Marketing</span>
         </h1>
-        <p style="font-size:1.15rem;color:var(--muted);line-height:1.7;margin-bottom:32px;max-width:480px">Lead GTM in the Agentic Era. Build the capacity, judgment, and systems that compound.</p>
+        <p style="font-size:1.2rem;color:var(--muted);line-height:1.4;margin-bottom:32px;max-width:530px">The best GTM teams don't just move faster — they compound. 4 live classes to build the AI workflows, judgment, and systems that turn your function into a force multiplier.</p>
         <!-- Price pill — visible in hero so cost is clear before scrolling -->
-        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:24px">
+        <!-- <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:24px">
           <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,41,78,0.08);border:1px solid rgba(255,41,78,0.22);border-radius:50px;padding:8px 18px">
             <span style="font-size:0.7rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.09em">Self-Enrolment</span>
             <span style="width:1px;height:14px;background:rgba(255,255,255,0.12);display:inline-block"></span>
             <span style="font-size:1.05rem;font-weight:900;color:var(--white);line-height:1">
-              <span class="currency-ngn">₦250,000</span><span class="currency-usd">$156</span><span class="currency-gbp">£122</span><span class="currency-ngn" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~$156</span><span class="currency-usd" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span><span class="currency-gbp" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span>
+              <span class="currency-ngn">₦250,000</span><span class="currency-usd">$156</span><!--<span class="currency-gbp">£122</span><span class="currency-ngn" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~$156</span><span class="currency-usd" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span><!--<span class="currency-gbp" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span>
             </span>
           </div>
-          <a href="#pricing" style="font-size:0.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--muted)'">All pricing tiers →</a>
-        </div>
+          <a href="#pricing" style="font-size:0.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--muted)'">All pricing tiers  </a>
+        </div> -->
         <div style="display:flex;gap:12px;flex-wrap:nowrap">
           <a href="#quiz-field" class="btn btn-primary btn-lg">Validate Your Skill Level</a>
           <a href="apply.html?field=Product%20Marketing" class="btn btn-outline btn-lg">Apply for This Programme</a>
@@ -357,7 +367,7 @@
             <p id="qf_product_body" style="font-size:0.95rem;color:var(--muted);line-height:1.65;max-width:520px;margin:0 auto 28px"></p>
             <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
               <a href="apply.html?field=Product%20Marketing" id="qf_product_cta_link" class="btn btn-primary btn-lg">Reserve Your Seat</a>
-              <a href="#pricing" style="color:var(--muted);font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:4px">View pricing first →</a>
+              <a href="#pricing" style="color:var(--muted);font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:4px">View pricing first   </a>
             </div>
             <div style="margin-top:20px">
               <button onclick="qfReset('qf_product')" style="background:none;border:none;color:var(--muted);font-size:0.82rem;cursor:pointer;text-decoration:underline">Retake the quiz</button>
@@ -375,7 +385,7 @@
     <div style="max-width:800px;margin:0 auto" class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">Programme Curriculum</div>
       <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:12px">The Agentic GTM Playbook</h2>
-      <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:32px">Three sessions built on the Brixgate Capacity → Character → Cadence framework. Each session builds on the last — from AI-native tools through to an executable 90-day agentic GTM operating model.</p>
+      <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:32px">Three sessions built on the Brixgate Capacity    Character  Cadence framework. Each session builds on the last — from AI-native tools through to an executable 90-day agentic GTM operating model.</p>
 
       <!-- Week 1: Capacity -->
       <details open style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px">
@@ -489,17 +499,17 @@
       
           <div class="card fade-up" style="padding:32px 28px">
             <div style="font-size:2.4rem;margin-bottom:16px">🔍</div>
-            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">AI-Powered Discovery</h3>
+            <h3 style="font-size:1.05rem;font-weight:800;color:var(--bg-dark);margin-bottom:10px">AI-Powered Discovery</h3>
             <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Use AI to synthesise user research, identify unmet needs, and generate hypotheses at scale.</p>
           </div>
           <div class="card fade-up" style="padding:32px 28px">
             <div style="font-size:2.4rem;margin-bottom:16px">📊</div>
-            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">Intelligent Prioritisation</h3>
+            <h3 style="font-size:1.05rem;font-weight:800;color:var(--bg-dark);margin-bottom:10px">Intelligent Prioritisation</h3>
             <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Build AI-assisted prioritisation frameworks that weigh impact, effort, and strategic alignment dynamically.</p>
           </div>
           <div class="card fade-up" style="padding:32px 28px">
             <div style="font-size:2.4rem;margin-bottom:16px">🚀</div>
-            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">Delivery Intelligence</h3>
+            <h3 style="font-size:1.05rem;font-weight:800;color:var(--bg-dark);margin-bottom:10px">Delivery Intelligence</h3>
             <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Integrate AI into sprint planning, retrospectives, and release decisions to accelerate velocity and reduce risk.</p>
           </div>
     </div>
@@ -589,16 +599,15 @@
       <div class="eyebrow-tag" style="color:var(--red)">Programme Cohorts</div>
       <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px">Open Cohorts</h2>
       <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px">Cohort-based delivery means you learn alongside peers in your field and leave with a network, not just a certificate.</p>
-      <div style="max-width:540px">
+      <div style="max-width:400px">
         <div style="border:1.5px solid #E8E3DE;border-radius:14px;overflow:hidden">
           <div style="background:#021024;padding:16px 24px;display:flex;justify-content:space-between;align-items:center">
-            <div style="font-size:0.95rem;font-weight:800;color:#fff">AI in Product Marketing &#8212; Cohort 1</div>
+            <div style="font-size:0.95rem;font-weight:800;color:#fff">AI in Product Marketing</div>
             <span style="background:#34C759;color:#fff;font-size:0.7rem;font-weight:800;padding:4px 12px;border-radius:50px">Open</span>
           </div>
           <div style="padding:24px;background:#F9F8F7;display:grid;grid-template-columns:1fr 1fr;gap:16px">
             <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Start Date</div><div style="font-size:0.95rem;font-weight:800;color:#021024">June 12, 2026</div></div>
             <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">End Date</div><div style="font-size:0.95rem;font-weight:800;color:#021024">July 10, 2026</div></div>
-            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Cohort</div><div style="font-size:0.95rem;font-weight:800;color:#021024">1</div></div>
             <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Lead Practitioner</div><div style="font-size:0.95rem;font-weight:800;color:#021024">Ikenna Okeke</div></div>
           </div>
           <div style="padding:16px 24px;background:#fff;display:flex;justify-content:space-between;align-items:center">
@@ -733,9 +742,9 @@
         <div style="background:#021024;border-radius:16px;padding:36px">
           <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:16px">By the End of Week 4, You Will Have</div>
           <div style="display:flex;flex-direction:column;gap:14px">
-            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Ship product specs from brief to review-ready in hours, not days</span></div>
-            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Build AI-assisted user research that surfaces insights competitors miss</span></div>
-            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Create a living product roadmap that updates based on live data signals</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0"></span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Ship product specs from brief to review-ready in hours, not days</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0"> </span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Build AI-assisted user research that surfaces insights competitors miss</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0"> </span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Create a living product roadmap that updates based on live data signals</span></div>
           </div>
         </div>
 
@@ -932,15 +941,45 @@
 (function() {
   const ID = 'qf_product';
   const TIERS = [
-      { min: 5, max: 9, label: 'Foundation Level', color: '#FF5748', headline: 'You\'re at the starting line. That\'s exactly where this programme begins.', body: 'Most professionals in your field are in the same position. The Expert Practitioner Programme is built for exactly this moment — structured, practitioner-led, and designed to move you from curiosity to capability in four weeks.', cta: 'Reserve your seat before this cohort fills →' },
-      { min: 10, max: 14, label: 'Emerging Practitioner', color: '#FF8C00', headline: 'You have awareness. The programme turns awareness into applied advantage.', body: 'You\'re ahead of most professionals who haven\'t started yet. But awareness without application doesn\'t move the needle. The sprint will give you the structured framework, practitioner guidance, and peer accountability to make your AI knowledge operational.', cta: 'Apply now and close the gap →' },
-      { min: 15, max: 18, label: 'Practitioner Level', color: '#22c55e', headline: 'You\'re ahead of most. The sprint sharpens your edge.', body: 'You\'re applying AI in your field, but there\'s a gap between occasional use and systematic advantage. The Expert Practitioner Programme will give you the framework, the network, and the field-verified certification to formalise what you\'ve built — and take it further.', cta: 'Join the next cohort and formalise your advantage →' },
-      { min: 19, max: 20, label: 'Expert Practitioner', color: '#3b82f6', headline: 'You\'re already operating at a high level. Consider becoming an Expert.', body: 'Your score suggests you\'re already applying AI at a level that most professionals in your field haven\'t reached. You\'d be a strong candidate for our Expert Practitioner pathway — sharing what you know while continuing to grow.', cta: 'Explore joining as an Expert Practitioner →' }
+      { min: 5, max: 9, label: 'Foundation Level', color: '#FF5748', headline: 'You\'re at the starting line. That\'s exactly where this programme begins.', body: 'Most professionals in your field are in the same position. The Expert Practitioner Programme is built for exactly this moment — structured, practitioner-led, and designed to move you from curiosity to capability in four weeks.', cta: 'Reserve your seat before this cohort fills  ' },
+      { min: 10, max: 14, label: 'Emerging Practitioner', color: '#FF8C00', headline: 'You have awareness. The programme turns awareness into applied advantage.', body: 'You\'re ahead of most professionals who haven\'t started yet. But awareness without application doesn\'t move the needle. The sprint will give you the structured framework, practitioner guidance, and peer accountability to make your AI knowledge operational.', cta: 'Apply now and close the gap  ' },
+      { min: 15, max: 18, label: 'Practitioner Level', color: '#22c55e', headline: 'You\'re ahead of most. The sprint sharpens your edge.', body: 'You\'re applying AI in your field, but there\'s a gap between occasional use and systematic advantage. The Expert Practitioner Programme will give you the framework, the network, and the field-verified certification to formalise what you\'ve built — and take it further.', cta: 'Join the next cohort and formalise your advantage  ' },
+      { min: 19, max: 20, label: 'Expert Practitioner', color: '#3b82f6', headline: 'You\'re already operating at a high level. Consider becoming an Expert.', body: 'Your score suggests you\'re already applying AI at a level that most professionals in your field haven\'t reached. You\'d be a strong candidate for our Expert Practitioner pathway — sharing what you know while continuing to grow.', cta: 'Explore joining as an Expert Practitioner  ' }
   ];
 
   const scores = {};
   let currentQ = 0;
   const totalQ = 5;
+
+  // Shuffle questions + re-number counters + shuffle answers
+  (function() {
+    var container = document.getElementById(ID + '_container');
+    var questions = Array.from(container.querySelectorAll('.qf-question'));
+    var nav = container.querySelector('.qf-nav');
+    for (var i = questions.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = questions[i]; questions[i] = questions[j]; questions[j] = tmp;
+    }
+    questions.forEach(function(el, idx) {
+      el.id = ID + '_q' + idx;
+      el.querySelectorAll('.qf-opt').forEach(function(opt) { opt.dataset.q = idx; });
+      el.querySelectorAll('span').forEach(function(s) {
+        if (/^Question \d+ of \d+$/.test(s.textContent.trim())) {
+          s.textContent = 'Question ' + (idx + 1) + ' of ' + questions.length;
+        }
+      });
+      var optContainer = el.querySelector('.qf-options');
+      if (optContainer) {
+        var opts = Array.from(optContainer.querySelectorAll('.qf-opt'));
+        for (var a = opts.length - 1; a > 0; a--) {
+          var b = Math.floor(Math.random() * (a + 1));
+          var t = opts[a]; opts[a] = opts[b]; opts[b] = t;
+        }
+        opts.forEach(function(opt) { optContainer.appendChild(opt); });
+      }
+      container.insertBefore(el, nav);
+    });
+  })();
 
   // Show first question
   showQ(0);
@@ -989,10 +1028,10 @@
     if (!btn) return;
     if (scores[currentQ] !== undefined) {
       btn.classList.add('qf-enabled');
-      btn.textContent = currentQ === totalQ - 1 ? 'See My Results →' : 'Next Question →';
+      btn.textContent = currentQ === totalQ - 1 ? 'See My Results  ' : 'Next Question  ';
     } else {
       btn.classList.remove('qf-enabled');
-      btn.textContent = currentQ === totalQ - 1 ? 'See My Results →' : 'Next Question →';
+      btn.textContent = currentQ === totalQ - 1 ? 'See My Results  ' : 'Next Question  ';
     }
   }
 
@@ -1004,7 +1043,9 @@
     function doShow() {
       var _email = localStorage.getItem('bxQuizEmail') || '';
       if (_email && typeof postQuestionnaireSummary === 'function') {
-        postQuestionnaireSummary(5, _email, parseFloat(pct.toFixed(2)), tierLabelToRatingLevel(tier.label), 'product-technology-ai-readiness', '');
+        var _name  = localStorage.getItem('bxQuizName')  || '';
+        var _phone = localStorage.getItem('bxQuizPhone') || '';
+        postQuestionnaireSummary(5, _email, parseFloat(pct.toFixed(2)), tierLabelToRatingLevel(tier.label), 'product-technology-ai-readiness', '', _phone, _name);
       }
       document.getElementById(ID + '_badge').textContent = tier.label;
       document.getElementById(ID + '_badge').style.background = tier.color + '22';
@@ -1029,7 +1070,7 @@
     }
 
     if (typeof showQuizCaptureGate === 'function') {
-      showQuizCaptureGate(doShow);
+      showQuizCaptureGate(doShow, 'product');
     } else {
       doShow();
     }

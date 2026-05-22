@@ -96,10 +96,109 @@
       border-radius: 8px;
       transition: width 1s ease;
     }
+    /* ── Global mobile safety ── */
+    html, body { max-width: 100%; overflow-x: hidden; }
+
     @media (max-width: 768px) {
-      .field-hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+      .field-hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+    }
+
+    /* ── Below 425px: full mobile overrides ── */
+    @media (max-width: 425px) {
+      /* Hero */
+      .field-hero-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+      /* Hide the right-side "What AI-Native Software Engineering Looks Like" card */
+      .field-hero-grid > *:last-child { display: none !important; }
+
+      /* Cohort info bar: 2×2 */
+      .cohort-info-bar { grid-template-columns: 1fr 1fr !important; }
+      .cohort-info-bar > div { border-right: none !important; border-bottom: 1px solid #1A3050; }
+      .cohort-info-bar > div:nth-child(odd) { border-right: 1px solid #1A3050 !important; }
+      .cohort-info-bar > div:last-child { border-bottom: none !important; }
+
+      /* All inline 3-col and 4-col grids → 1 col */
+      [style*="grid-template-columns:repeat(3,1fr)"],
+      [style*="grid-template-columns: repeat(3, 1fr)"],
+      [style*="grid-template-columns:repeat(4,1fr)"],
+      [style*="grid-template-columns: repeat(4, 1fr)"] {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+
+      /* 2-col grids → 1 col */
+      [style*="grid-template-columns:1fr 1fr"],
+      [style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+
+      /* Sprint section specifically */
+      [style*="grid-template-columns:repeat(auto-fit"] {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Pricing grid → stack */
+      #pricing-cards { grid-template-columns: 1fr !important; max-width: 100% !important; gap: 16px !important; }
+
+      /* Kill large gaps that cause overflow */
+      [style*="gap:80px"] { gap: 24px !important; }
+      [style*="gap:64px"] { gap: 24px !important; }
+      [style*="gap:48px"] { gap: 20px !important; }
+
+      /* Font size reductions */
+      h1, h2, h3 { word-break: break-word; }
+      [style*="font-size:clamp(2rem"] { font-size: clamp(1.5rem, 6vw, 2rem) !important; }
+      [style*="font-size:1.15rem"] { font-size: 0.95rem !important; }
+      [style*="font-size:1.05rem"] { font-size: 0.92rem !important; }
+
+      /* Prevent any element from exceeding viewport */
+      .container { padding-left: 16px !important; padding-right: 16px !important; }
+      .card { min-width: 0 !important; }
+
+      /* Stat mini-grid inside hero card → 1 col */
+      [style*="grid-template-columns:repeat(3,1fr);gap:16px"] {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+
+      /* CTA buttons: stack on tiny screens */
+      [style*="display:flex;gap:12px;flex-wrap:wrap"] { flex-direction: column; }
+
+      /* FAQ/Curriculum section — ensure text doesn't overflow */
+      details summary, details div { word-break: break-word; }
+
+      /* Comparison table / 3-col border table → stack */
+      [style*="grid-template-columns:repeat(3,1fr);gap:0;border"] {
+        grid-template-columns: 1fr !important;
+        border-radius: 12px !important;
+      }
+      [style*="grid-template-columns:repeat(3,1fr);gap:0;border"] > div {
+        border-right: none !important;
+        border-bottom: 1px solid #E8E3DE;
+      }
+
+      /* Cohort panel with 220px sidebar → stack */
+      [style*="grid-template-columns:220px 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Instructor grid 1fr 1fr */
+      [style*="grid-template-columns:1fr 1fr;gap:10px"] {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+      }
+    }
+
+    /* ── Below 375px extra safety ── */
+    @media (max-width: 375px) {
+      .container { padding-left: 12px !important; padding-right: 12px !important; }
+      [style*="padding:32px 28px"] { padding: 20px 16px !important; }
+      [style*="padding:28px 24px"] { padding: 18px 14px !important; }
+      [style*="padding:36px 32px"] { padding: 20px 16px !important; }
+      [style*="padding:40px 36px"] { padding: 24px 16px !important; }
+      h1 { font-size: clamp(1.4rem, 7vw, 1.8rem) !important; }
     }
   </style>
+<script src="tracking.js"></script>
 </head>
 <body>
 
@@ -143,46 +242,39 @@
   <a href="organisations.html">For Organisations</a>
   <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px">Login</a>
   <a href="apply.html?program_id=1" class="btn btn-primary">Apply Now</a>
-</div><!-- ====== FIELD HERO ====== -->
-<section class="section-hero bg-dark" style="padding-top:calc(var(--nav-height) + 20px);padding-bottom:60px">
+</div>
+
+<!-- ====== FIELD HERO ====== -->
+<section class="section-hero bg-dark" style="padding-top:calc(var(--nav-height) - 20px);padding-bottom:80px">
   <div class="container">
     <div class="field-hero-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center">
       <div class="fade-up">
-        <a href="programme.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:0.82rem;font-weight:700;text-decoration:none;margin-bottom:24px">
-          ← Back to all programmes
-        </a>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
           <span style="background:rgba(255,41,78,0.15);color:var(--red);font-size:0.75rem;font-weight:800;padding:4px 14px;border-radius:50px;letter-spacing:.08em;text-transform:uppercase">Expert Practitioner Programme</span>
         </div>
         <h1 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:20px">
-          AI in<br /><span style="color:var(--red)">Software Engineering</span>
+          AI in <br><span style="color:var(--red)">Software Engineering</span>
         </h1>
-        <p style="font-size:1.15rem;color:var(--muted);line-height:1.7;margin-bottom:32px;max-width:480px">Become an AI-native developer. 8 live classes covering the full AI-assisted engineering lifecycle — from prompting to production.</p>
-        <!-- Price pill — visible in hero so cost is clear before scrolling -->
-        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:24px">
-          <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,41,78,0.08);border:1px solid rgba(255,41,78,0.22);border-radius:50px;padding:8px 18px">
-            <span style="font-size:0.7rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.09em">Self-Enrolment</span>
-            <span style="width:1px;height:14px;background:rgba(255,255,255,0.12);display:inline-block"></span>
-            <span style="font-size:1.05rem;font-weight:900;color:var(--white);line-height:1">
-              <span class="currency-ngn">₦250,000</span><span class="currency-usd">$156</span><span class="currency-gbp">£122</span><span class="currency-ngn" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~$156</span><span class="currency-usd" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span><span class="currency-gbp" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span>
-            </span>
-          </div>
-          <a href="#pricing" style="font-size:0.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--muted)'">All pricing tiers →</a>
-        </div>
+        <p style="font-size:1.2rem;color:var(--muted);line-height:1.4;margin-bottom:32px;max-width:530px">Become an AI-native engineer. 8 live classes covering the full development lifecycle — prompting, code review, security, testing, and shipping production-ready work with confidence.</p>
+        
         <div style="display:flex;gap:12px;flex-wrap:wrap">
           <a href="#quiz-field" class="btn btn-primary btn-lg">Validate Your Skill Level</a>
           <a href="apply.html?program_id=1" class="btn btn-outline btn-lg">Apply Now</a>
         </div>
       </div>
+       <!-- HERO CARD COMMENTED OUT — replaced with image -->
       <div class="fade-in" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:20px;padding:36px 32px">
         <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:16px">What AI-Native Software Engineering Looks Like</div>
-        <p style="font-size:1rem;color:var(--muted);line-height:1.7">When a developer generates production-quality code with structured prompts, conducts AI-powered code review in their CI/CD pipeline, debugs with hypothesis-first AI workflows, and ships faster with full ownership — that is an AI-native engineer.</p>
+        <p style="font-size:1rem;color:var(--muted);line-height:1.7">When a developer generates production-quality code with structured prompts, conducts AI-powered code review in their CI/CD pipeline, debugs with hypothesis-first AI workflows, and ships faster with full ownership, that is an AI-native engineer.</p>
         <div style="margin-top:28px;padding-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center">
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">8</div><div style="font-size:0.72rem;color:var(--muted)">Live Classes</div></div>
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Real</div><div style="font-size:0.72rem;color:var(--muted)">Capstone Project</div></div>
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Field</div><div style="font-size:0.72rem;color:var(--muted)">Verified Certificate</div></div>
         </div>
       </div>
+      <!-- <div class="fade-in" style="display:flex;align-items:flex-end;justify-content:center;">
+        <img src="assets/Engineering Hero image.png" alt="AI-Native Software Engineering" style="width:100%;height:auto;border-radius:12px 12px 0 0;display:block;object-fit:contain;object-position:bottom center;" />
+      </div> -->
     </div>
   </div>
 </section>
@@ -190,7 +282,7 @@
 <!-- ====== COHORT INFO BAR ====== -->
 <div style="background:#0D1C34;border-bottom:1px solid #1A3050">
   <div class="container">
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0">
+    <div class="cohort-info-bar" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0">
       <div style="padding:20px 24px;border-right:1px solid #1A3050">
         <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Application Closes</div>
         <div style="font-size:1rem;font-weight:800;color:#fff">June 5, 2026</div>
@@ -304,20 +396,23 @@
           <button class="qf-next-btn" id="qf_engineering_next" onclick="qfNext('qf_engineering')">Next Question</button>
         </div>
 
-        <!-- Lead capture gate -->
+        <!-- INLINE CAPTURE GATE COMMENTED OUT — now using shared overlay modal (showQuizCaptureGate)
         <div class="qf-capture" id="qf_engineering_capture">
-          <div style="text-align:center;padding:32px 0 8px">
+          <div style="text-align:center;padding:32px 0 8px;max-width:420px;margin:0 auto;">
             <div style="width:52px;height:52px;background:rgba(255,41,78,0.12);border:1.5px solid rgba(255,41,78,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
             </div>
             <h3 style="font-size:1.2rem;font-weight:900;color:var(--white);line-height:1.3;margin-bottom:8px">Enter your details to see your results</h3>
             <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;margin-bottom:24px">We'll also send you a <strong style="color:var(--white)">registration coupon</strong> when you're ready to enrol.</p>
+            <input type="text" id="qf_engineering_name" placeholder="Full name" autocomplete="name" style="margin-bottom:10px" />
+            <input type="tel" id="qf_engineering_phone" placeholder="Phone number (optional)" autocomplete="tel" style="margin-bottom:10px" />
             <input type="email" id="qf_engineering_email" placeholder="Email address" autocomplete="email" />
             <div class="qf-capture-error" id="qf_engineering_capture_err">Please enter a valid email address.</div>
             <button onclick="qfSubmitCapture('qf_engineering')" class="btn btn-primary" style="width:100%;justify-content:center">See My Results</button>
             <p style="margin-top:12px;font-size:0.78rem"><a href="#" onclick="qfSkipCapture(event,'qf_engineering')" style="color:var(--muted);text-decoration:underline">Skip and see results</a></p>
           </div>
         </div>
+        END INLINE CAPTURE GATE -->
 
         <!-- Result panel -->
         <div class="qf-result" id="qf_engineering_result">
@@ -551,21 +646,21 @@
         <div style="width:48px;height:48px;background:rgba(255,41,78,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
         </div>
-        <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">Structured Prompt Engineering</h3>
+        <h3 style="font-size:1.05rem;font-weight:800;color:var(--bg-dark);margin-bottom:10px">Structured Prompt Engineering</h3>
         <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Write prompts that produce accurate, maintainable, production-ready code — not one-shot outputs that need rewriting.</p>
       </div>
       <div class="card fade-up" style="padding:32px 28px">
         <div style="width:48px;height:48px;background:rgba(255,41,78,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
-        <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">Critical AI Code Review</h3>
+        <h3 style="font-size:1.05rem;font-weight:800;color:var(--bg-dark);margin-bottom:10px">Critical AI Code Review</h3>
         <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Review AI-generated code for security vulnerabilities, hidden coupling, and false coverage — before it reaches production.</p>
       </div>
       <div class="card fade-up" style="padding:32px 28px">
         <div style="width:48px;height:48px;background:rgba(255,41,78,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         </div>
-        <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">Personal AI Workflow Design</h3>
+        <h3 style="font-size:1.05rem;font-weight:800;color:var(--bg-dark);margin-bottom:10px">Personal AI Workflow Design</h3>
         <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Build repeatable, high-leverage AI workflows — across your IDE, CI/CD, and documentation pipeline — that compound over time.</p>
       </div>
     </div>
@@ -647,17 +742,16 @@
       <div class="eyebrow-tag" style="color:var(--red)">Programme Cohorts</div>
       <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px">Open Cohorts</h2>
       <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px">Cohort-based delivery means you learn alongside peers in your field and leave with a network, not just a certificate.</p>
-      <div style="max-width:540px">
+      <div style="max-width:450px">
         <div style="border:1.5px solid #E8E3DE;border-radius:14px;overflow:hidden">
           <div style="background:#021024;padding:16px 24px;display:flex;justify-content:space-between;align-items:center">
-            <div style="font-size:0.95rem;font-weight:800;color:#fff">AI-Native Software Engineering &#8212; Cohort 1</div>
+            <div style="font-size:0.95rem;font-weight:800;color:#fff">AI-Native Software Engineering</div>
             <span style="background:#34C759;color:#fff;font-size:0.7rem;font-weight:800;padding:4px 12px;border-radius:50px">Open</span>
           </div>
           <div style="padding:24px;background:#F9F8F7;display:grid;grid-template-columns:1fr 1fr;gap:16px">
             <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Start Date</div><div style="font-size:0.95rem;font-weight:800;color:#021024">June 12, 2026</div></div>
             <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">End Date</div><div style="font-size:0.95rem;font-weight:800;color:#021024">July 10, 2026</div></div>
-            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Cohort</div><div style="font-size:0.95rem;font-weight:800;color:#021024">1</div></div>
-            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Lead Practitioner</div><div style="font-size:0.95rem;font-weight:800;color:#021024">Emeka Nwosu</div></div>
+            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Lead Practitioner</div><div style="font-size:0.95rem;font-weight:800;color:#021024">Francis Adedeji</div></div>
           </div>
           <div style="padding:16px 24px;background:#fff;display:flex;justify-content:space-between;align-items:center">
             <div style="display:flex;align-items:center;gap:6px"><span style="color:#F59E0B">&#9733;</span><span style="font-size:0.88rem;font-weight:700;color:#021024">4.9</span><span style="font-size:0.78rem;color:#7A94A8">Practitioner Rating</span></div>
@@ -679,21 +773,21 @@
     </div>
     <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:16px;overflow:hidden;max-width:860px" class="fade-up">
       <div style="display:grid;grid-template-columns:220px 1fr;gap:0">
-        <div style="background:#1A3050;padding:40px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
-          <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#FF294E,#FF5748);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:14px">E</div>
-          <div style="font-size:0.92rem;font-weight:800;color:#fff;margin-bottom:4px">Temi Adeyemi</div>
-          <div style="font-size:0.72rem;color:#7A94A8;line-height:1.5;margin-bottom:12px">Senior Practitioner, AI-Native Software Engineering</div>
-          <div style="font-size:0.72rem;font-weight:700;color:#FF294E">600+ live sessions</div>
+        <div style="position:relative;min-height:320px;overflow:hidden">
+          <img src="assets/Francis Adedeji.jpeg" alt="Francis Ayomide Adedeji" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
         </div>
         <div style="padding:36px 40px">
-          <p style="font-size:0.9rem;color:var(--muted);line-height:1.75;margin-bottom:24px">Temi is a senior software engineer with 12 years across backend systems, platform engineering, and developer tooling — at startups and scale. She was an early adopter of AI-assisted development in production environments and has spent the last three years building and refining team-wide AI engineering workflows, toolchains, and safe usage policies. Over 600 live sessions delivered across three continents.</p>
+          <div style="font-size:0.92rem;font-weight:800;color:#fff;margin-bottom:4px">Francis Ayomide Adedeji</div>
+          <div style="font-size:0.72rem;color:#ebebeb;line-height:1.5;margin-bottom:4px">AI Engineer & Educator, AI-Native Software Engineer</div>
+          <div style="font-size:0.72rem;font-weight:700;color:#FF294E; margin-bottom:8px" >20+ live sessions</div>
+          <p style="font-size:0.9rem;color:var(--muted);line-height:1.75;margin-bottom:24px">Francis Ayomide Adedeji is an AI Engineer with years of experience designing, deploying, and teaching AI systems across education, fintech, and enterprise environments. He specializes in agentic AI workflows, RAG architectures, and developer enablement, building tools that bridge the gap between AI research and production engineering.</p>
           <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Core Expertise</div>
           <div>
-            <span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">AI-Assisted Code Generation</span>
-            <span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">Prompt Engineering</span>
-            <span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">Security in AI Workflows</span>
-            <span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">CI/CD Automation</span>
-            <span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">Team AI Workflow Design</span>
+            <span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">Agentic AI</span>
+            <span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">RAG Systems</span>
+            <span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">Python</span>
+            <span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">n8n</span>
+            <span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">LangChain</span>
           </div>
         </div>
       </div>
@@ -861,9 +955,9 @@
       <div class="currency-toggle-5">
         <button class="cur-btn" data-cur="ngn">₦ NGN</button>
         <button class="cur-btn" data-cur="usd">$ USD</button>
-        <button class="cur-btn" data-cur="gbp">£ GBP</button>
-        <button class="cur-btn" data-cur="eur">€ EUR</button>
-        <button class="cur-btn" data-cur="cad">C$ CAD</button>
+        <!--<button class="cur-btn" data-cur="gbp">£ GBP</button>-->
+        <!--<button class="cur-btn" data-cur="eur">€ EUR</button>-->
+        <!--<button class="cur-btn" data-cur="cad">C$ CAD</button>-->
       </div>
     </div>
     <div id="pricing-cards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto" class="stagger">
@@ -939,7 +1033,6 @@
           <li><a href="organisations.html#packages">Packages &amp; Pricing</a></li>
           <li><a href="organisations.html#contact">Request a Demo</a></li>
           <li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li>
-          <li><span class="btn btn-primary" style="opacity:0.5;cursor:not-allowed;pointer-events:none">Coming Soon</span></li>
           <li><a href="verify.html">Verify a Certificate</a></li>
         </ul>
       </div>
@@ -975,18 +1068,35 @@
   const totalQ = 5;
 
   // Shuffle question DOM order for each session
-  (function shuffleQuestions() {
+  // Shuffle questions + re-number counters + shuffle answers
+  (function() {
     var container = document.getElementById(ID + '_container');
     var questions = Array.from(container.querySelectorAll('.qf-question'));
+    var nav = container.querySelector('.qf-nav');
+    // 1. Shuffle question order
     for (var i = questions.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
       var tmp = questions[i]; questions[i] = questions[j]; questions[j] = tmp;
     }
-    // Re-assign data-q indices to match new order, then reinsert before nav
-    var nav = container.querySelector('.qf-nav');
     questions.forEach(function(el, idx) {
       el.id = ID + '_q' + idx;
       el.querySelectorAll('.qf-opt').forEach(function(opt) { opt.dataset.q = idx; });
+      // 2. Fix "Question X of 5" label to reflect display position (always 1, 2, 3…)
+      el.querySelectorAll('span').forEach(function(s) {
+        if (/^Question \d+ of \d+$/.test(s.textContent.trim())) {
+          s.textContent = 'Question ' + (idx + 1) + ' of ' + questions.length;
+        }
+      });
+      // 3. Shuffle answer options within this question
+      var optContainer = el.querySelector('.qf-options');
+      if (optContainer) {
+        var opts = Array.from(optContainer.querySelectorAll('.qf-opt'));
+        for (var a = opts.length - 1; a > 0; a--) {
+          var b = Math.floor(Math.random() * (a + 1));
+          var t = opts[a]; opts[a] = opts[b]; opts[b] = t;
+        }
+        opts.forEach(function(opt) { optContainer.appendChild(opt); });
+      }
       container.insertBefore(el, nav);
     });
   })();
@@ -1037,11 +1147,16 @@
   window.qfSubmitCapture = function(id) {
     if (id !== ID) return;
     const email  = document.getElementById(ID + '_email').value.trim();
+    const name   = (document.getElementById(ID + '_name')  || {}).value || '';
+    const phone  = (document.getElementById(ID + '_phone') || {}).value || '';
     const errEl  = document.getElementById(ID + '_capture_err');
+    if (!name.trim()) { errEl.textContent = 'Please enter your name.'; errEl.style.display = 'block'; return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errEl.textContent = 'Please enter a valid email address.';
       errEl.style.display = 'block'; return;
     }
     errEl.style.display = 'none';
+    try { localStorage.setItem('bxQuizCaptured','1'); localStorage.setItem('bxQuizEmail', email); localStorage.setItem('bxQuizName', name); localStorage.setItem('bxQuizPhone', phone); } catch(e){}
     document.getElementById(ID + '_capture').classList.remove('qf-visible');
     showResult();
   };
@@ -1056,9 +1171,10 @@
   function showCaptureGate() {
     document.querySelectorAll('#' + ID + '_container .qf-question').forEach(el => el.classList.remove('qf-active'));
     document.querySelector('#' + ID + '_container .qf-nav').style.display = 'none';
-    document.getElementById(ID + '_capture').classList.add('qf-visible');
-    document.getElementById(ID + '_capture').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // showResult() computes scores, assigns doShowResult, then calls the capture gate
+    showResult();
   }
+  var doShowResult;
 
   function updateNextBtn() {
     const btn = document.getElementById(ID + '_next');
@@ -1077,10 +1193,12 @@
     const tier = TIERS.find(t => total >= t.min && total <= t.max) || TIERS[0];
     const pct = ((total - 5) / 15) * 100;
 
-    function doShow() {
+    doShowResult = function() {
       var _email = localStorage.getItem('bxQuizEmail') || '';
+      var _name  = localStorage.getItem('bxQuizName')  || '';
+      var _phone = localStorage.getItem('bxQuizPhone') || '';
       if (_email && typeof postQuestionnaireSummary === 'function') {
-        postQuestionnaireSummary(2, _email, parseFloat(pct.toFixed(2)), tierLabelToRatingLevel(tier.label), 'software-engineering-ai-readiness', '');
+        postQuestionnaireSummary(2, _email, parseFloat(pct.toFixed(2)), tierLabelToRatingLevel(tier.label), 'software-engineering-ai-readiness', '', _phone, _name);
       }
       document.getElementById(ID + '_badge').textContent = tier.label;
       document.getElementById(ID + '_badge').style.background = tier.color + '22';
@@ -1090,19 +1208,20 @@
       document.getElementById(ID + '_body').textContent = tier.body;
       const ctaLink = document.getElementById(ID + '_cta_link');
       if (ctaLink && total >= 19) ctaLink.href = 'join-as-expert.html';
-
       document.getElementById(ID + '_result').classList.add('qf-visible');
       document.querySelectorAll('#' + ID + '_container .qf-question').forEach(el => el.classList.remove('qf-active'));
-
       setTimeout(() => {
         document.getElementById(ID + '_scorefill').style.width = Math.max(pct, 5) + '%';
         document.getElementById(ID + '_scorefill').style.background = tier.color;
       }, 100);
-
       document.getElementById(ID + '_result').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+    };
 
-    if (typeof showQuizCaptureGate === 'function') { showQuizCaptureGate(doShow); } else { doShow(); }
+    if (typeof showQuizCaptureGate === 'function') {
+      showQuizCaptureGate(doShowResult, 'engineering');
+    } else {
+      doShowResult();
+    }
   }
 })();
 
@@ -1175,6 +1294,8 @@ var PROGRAM_ID = 1;
       '<a href="organisations.html#contact" class="btn btn-outline" style="width:100%;justify-content:center;display:flex">Contact Us</a></div>';
 
     container.innerHTML = html;
+    /* fade-up cards injected via innerHTML won't be seen by the intersection observer — make them visible immediately */
+    container.querySelectorAll('.fade-up').forEach(function(el) { el.classList.add('visible'); });
   }
 
   fetch('https://api.brixgate.com/api/v1/pricing-plans?program_id=' + PROGRAM_ID)

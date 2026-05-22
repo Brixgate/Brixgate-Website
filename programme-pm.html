@@ -26,6 +26,7 @@
     .result-score-fill { height: 100%; border-radius: 8px; transition: width 1s ease; }
     @media (max-width: 768px) { .field-hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; } }
   </style>
+<script src="tracking.js"></script>
 </head>
 <body>
 <div id="scroll-progress"></div>
@@ -79,7 +80,7 @@
             <span style="font-size:0.7rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.09em">Self-Enrolment</span>
             <span style="width:1px;height:14px;background:rgba(255,255,255,0.12);display:inline-block"></span>
             <span style="font-size:1.05rem;font-weight:900;color:var(--white);line-height:1">
-              <span class="currency-ngn">₦250,000</span><span class="currency-usd">$156</span><span class="currency-gbp">£122</span><span class="currency-ngn" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~$156</span><span class="currency-usd" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span><span class="currency-gbp" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span>
+              <span class="currency-ngn">₦250,000</span><span class="currency-usd">$156</span><!--<span class="currency-gbp">£122</span>--><span class="currency-ngn" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~$156</span><span class="currency-usd" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span><!--<span class="currency-gbp" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span>-->
             </span>
           </div>
           <a href="#pricing" style="font-size:0.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--muted)'">All pricing tiers →</a>
@@ -657,7 +658,6 @@
           <li><a href="organisations.html#packages">Packages &amp; Pricing</a></li>
           <li><a href="organisations.html#contact">Request a Demo</a></li>
           <li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li>
-          <li><span class="btn btn-primary" style="opacity:0.5;cursor:not-allowed;pointer-events:none">Coming Soon</span></li>
           <li><a href="verify.html">Verify a Certificate</a></li>
         </ul>
       </div>
@@ -741,7 +741,7 @@
       setTimeout(() => { document.getElementById(ID + '_scorefill').style.width = Math.max(pct, 5) + '%'; document.getElementById(ID + '_scorefill').style.background = tier.color; }, 100);
       document.getElementById(ID + '_result').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-    if (typeof showQuizCaptureGate === 'function') { showQuizCaptureGate(doShow); } else { doShow(); }
+    doShow();
   }
 })();
 </script>

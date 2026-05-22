@@ -675,6 +675,7 @@
       .review-grid                { grid-template-columns: 1fr; }
     }
   </style>
+<script src="tracking.js"></script>
 </head>
 <body>
 
@@ -744,10 +745,10 @@
             <div style="font-size:0.72rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.1em">Programme Fees</div>
             <div class="currency-toggle-5" style="margin-bottom:0">
               <button class="cur-btn" data-cur="ngn">NGN</button>
-              <button class="cur-btn" data-cur="cad">CAD</button>
+              <!--<button class="cur-btn" data-cur="cad">CAD</button>-->
               <button class="cur-btn" data-cur="usd">USD</button>
-              <button class="cur-btn" data-cur="gbp">GBP</button>
-              <button class="cur-btn" data-cur="eur">EUR</button>
+              <!--<button class="cur-btn" data-cur="gbp">GBP</button>-->
+              <!--<button class="cur-btn" data-cur="eur">EUR</button>-->
             </div>
           </div>
 
@@ -762,9 +763,9 @@
                 <div style="font-size:1.1rem;font-weight:900;color:var(--white)">
                   <span class="currency-ngn" id="fees-price-ngn">₦—</span>
                   <span class="currency-usd" id="fees-price-usd">$—</span>
-                  <span class="currency-gbp" id="fees-price-gbp">£—</span>
-                  <span class="currency-eur" id="fees-price-eur">€—</span>
-                  <span class="currency-cad" id="fees-price-cad">C$—</span>
+                  <!--<span class="currency-gbp" id="fees-price-gbp">£—</span>-->
+                  <!--<span class="currency-eur" id="fees-price-eur">€—</span>-->
+                  <!--<span class="currency-cad" id="fees-price-cad">C$—</span>-->
                 </div>
               </div>
             </div>
@@ -848,22 +849,37 @@
         <div style="margin-top:24px;background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:24px">
           <div style="font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px" id="fees2-header">Fee Summary</div>
 
+          <!-- Original price row — always visible -->
           <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border-card)">
             <span style="font-size:0.85rem;color:var(--muted)" id="fees2-label">Individual Enrolment</span>
             <span style="font-size:1.1rem;font-weight:900;color:var(--white)">
-              <span class="currency-ngn" id="fees2-price-ngn">₦—</span>
-              <span class="currency-usd" id="fees2-price-usd">$—</span>
-              <span class="currency-gbp" id="fees2-price-gbp">£—</span>
-              <span class="currency-eur" id="fees2-price-eur">€—</span>
-              <span class="currency-cad" id="fees2-price-cad">C$—</span>
+              <span class="currency-ngn" id="fees2-orig-ngn">₦—</span>
+              <span class="currency-usd" id="fees2-orig-usd">$—</span>
+              <!--<span class="currency-gbp" id="fees2-orig-gbp">£—</span>-->
+              <!--<span class="currency-eur" id="fees2-orig-eur">€—</span>-->
+              <!--<span class="currency-cad" id="fees2-orig-cad">C$—</span>-->
             </span>
           </div>
 
           <!-- Coupon discount row — hidden until coupon is applied -->
-          <div id="fees2-coupon-row" style="display:none;padding:6px 0;border-bottom:1px solid var(--border-card)">
+          <div id="fees2-coupon-row" style="display:none;padding:8px 0;border-bottom:1px solid var(--border-card)">
             <div style="display:flex;justify-content:space-between;align-items:center">
-              <span style="font-size:0.78rem;color:#22c55e;font-weight:600">🏷 Coupon (<span id="fees2-coupon-code-lbl"></span>)</span>
-              <span style="font-size:0.78rem;color:#22c55e;font-weight:700" id="fees2-coupon-discount">—</span>
+              <span style="font-size:0.82rem;color:#22c55e;font-weight:600">🏷 Coupon Discount (<span id="fees2-coupon-code-lbl"></span>)</span>
+              <span style="font-size:0.82rem;color:#22c55e;font-weight:700" id="fees2-coupon-discount">—</span>
+            </div>
+          </div>
+
+          <!-- Total Due row — hidden until coupon applied -->
+          <div id="fees2-total-row" style="display:none;padding:10px 0;border-bottom:1px solid var(--border-card)">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:0.88rem;font-weight:700;color:var(--white)">Total Due</span>
+              <span style="font-size:1.1rem;font-weight:900;color:var(--white)">
+                <span class="currency-ngn" id="fees2-total-ngn">₦—</span>
+                <span class="currency-usd" id="fees2-total-usd">$—</span>
+                <!--<span class="currency-gbp" id="fees2-total-gbp">£—</span>-->
+                <!--<span class="currency-eur" id="fees2-total-eur">€—</span>-->
+                <!--<span class="currency-cad" id="fees2-total-cad">C$—</span>-->
+              </span>
             </div>
           </div>
 
@@ -874,9 +890,9 @@
               <span style="font-size:0.75rem;color:var(--muted);font-weight:600" id="fees2-per-person">
                 <span class="currency-ngn" id="fees2-pp-ngn">₦—</span>
                 <span class="currency-usd" id="fees2-pp-usd">$—</span>
-                <span class="currency-gbp" id="fees2-pp-gbp">£—</span>
-                <span class="currency-eur" id="fees2-pp-eur">€—</span>
-                <span class="currency-cad" id="fees2-pp-cad">C$—</span>
+                <!--<span class="currency-gbp" id="fees2-pp-gbp">£—</span>-->
+                <!--<span class="currency-eur" id="fees2-pp-eur">€—</span>-->
+                <!--<span class="currency-cad" id="fees2-pp-cad">C$—</span>-->
               </span>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0">
@@ -1020,8 +1036,8 @@
             <div id="form-error-banner" style="display:none;margin-top:16px;padding:14px 18px;background:rgba(255,41,78,0.08);border:1.5px solid rgba(255,41,78,0.35);border-radius:10px;display:none;align-items:flex-start;gap:12px">
               <span style="font-size:1.1rem;flex-shrink:0;line-height:1.3">⚠️</span>
               <div>
-                <div style="font-size:0.88rem;font-weight:700;color:#021024;margin-bottom:2px" id="form-error-title">Something went wrong</div>
-                <div style="font-size:0.83rem;color:#4A5568;line-height:1.5" id="form-error-body"></div>
+                <div style="font-size:0.88rem;font-weight:700;color:#fff;margin-bottom:2px" id="form-error-title">Something went wrong</div>
+                <div style="font-size:0.83rem;color:rgba(255,255,255,0.8);line-height:1.5" id="form-error-body"></div>
               </div>
               <button onclick="document.getElementById('form-error-banner').style.display='none'" style="margin-left:auto;background:none;border:none;font-size:1rem;color:#7A94A8;cursor:pointer;flex-shrink:0;padding:0">✕</button>
             </div>
@@ -1085,8 +1101,13 @@
           <div class="review-section-label">Programme &amp; Fee</div>
           <div class="price-breakdown">
             <div class="price-row">
-              <span class="price-row-label">AI in my Field — Expert Practitioner Programme</span>
+              <span class="price-row-label" id="review-enroll-label">Individual Enrolment</span>
               <span class="price-row-value" id="review-price-item">—</span>
+            </div>
+            <!-- Coupon discount row — hidden until coupon applied -->
+            <div class="price-row" id="review-coupon-row" style="display:none">
+              <span class="price-row-label" style="color:#22c55e">🏷 Coupon Discount (<span id="review-coupon-code-lbl"></span>)</span>
+              <span class="price-row-value" style="color:#22c55e" id="review-coupon-discount">—</span>
             </div>
             <div class="price-row">
               <span class="price-row-label">Sprint Duration</span>
@@ -1094,7 +1115,7 @@
             </div>
             <div class="price-row">
               <span class="price-row-label">Cohort</span>
-              <span class="price-row-value">Cohort 1 · May/Jun 2026</span>
+              <span class="price-row-value">May/Jun 2026</span>
             </div>
             <div class="price-row total">
               <span class="price-row-label">Total Due Today</span>
@@ -1230,19 +1251,35 @@
     var enrollType = (document.getElementById('enrollment-type') || {}).value || '';
     var isTeam     = enrollType === 'Team';
     var teamSize   = parseInt((document.getElementById('team-size') || {}).value) || 0;
-    var mult       = 1 - (_couponPct / 100);
+    var hasCpn     = !!_appliedCoupon;
     var result = {};
     ['ngn','usd','gbp','eur','cad'].forEach(function(c) {
       var sym = CURRENCY_SYMS[c];
       if (isTeam && teamSize >= 2) {
         var b = getPlanBreakdown('TEAM', c);
-        result[c] = b ? sym + Number(b.final_price * mult * teamSize).toLocaleString() : '—';
+        if (!b) { result[c] = '—'; return; }
+        var raw = b.final_price * teamSize;
+        if (!hasCpn) { result[c] = sym + Number(raw).toLocaleString(); return; }
+        if (_couponPct > 0)                     { result[c] = sym + Number(raw * (1 - _couponPct / 100)).toLocaleString(); return; }
+        if (_couponSavings[c]    > 0)           { result[c] = sym + Number(raw - _couponSavings[c]).toLocaleString(); return; }
+        if (_couponDiscounted[c] !== undefined) { result[c] = sym + Number(_couponDiscounted[c]).toLocaleString(); return; }
+        result[c] = sym + Number(raw).toLocaleString();
       } else if (isTeam) {
         var bp = getPlanBreakdown('TEAM', c);
-        result[c] = bp ? sym + Number(bp.final_price * mult).toLocaleString() + '/person' : '—';
+        if (!bp) { result[c] = '—'; return; }
+        var rawp = bp.final_price;
+        if (!hasCpn) { result[c] = sym + Number(rawp).toLocaleString() + '/person'; return; }
+        if (_couponPct > 0) { result[c] = sym + Number(rawp * (1 - _couponPct / 100)).toLocaleString() + '/person'; return; }
+        result[c] = sym + Number(rawp).toLocaleString() + '/person';
       } else {
         var bi = getPlanBreakdown('INDIVIDUAL', c);
-        result[c] = bi ? sym + Number(bi.final_price * mult).toLocaleString() : '—';
+        if (!bi) { result[c] = '—'; return; }
+        var rawi = bi.final_price;
+        if (!hasCpn) { result[c] = sym + Number(rawi).toLocaleString(); return; }
+        if (_couponPct > 0)                     { result[c] = sym + Number(rawi * (1 - _couponPct / 100)).toLocaleString(); return; }
+        if (_couponSavings[c]    > 0)           { result[c] = sym + Number(rawi - _couponSavings[c]).toLocaleString(); return; }
+        if (_couponDiscounted[c] !== undefined) { result[c] = sym + Number(_couponDiscounted[c]).toLocaleString(); return; }
+        result[c] = sym + Number(rawi).toLocaleString();
       }
     });
     return result;
@@ -1250,7 +1287,8 @@
 
   function setPricingUnavailable() {
     var ids = ['fees-price-ngn','fees-price-usd','fees-price-gbp','fees-price-eur','fees-price-cad',
-               'fees2-price-ngn','fees2-price-usd','fees2-price-gbp','fees2-price-eur','fees2-price-cad'];
+               'fees2-orig-ngn','fees2-orig-usd','fees2-orig-gbp','fees2-orig-eur','fees2-orig-cad',
+               'fees2-total-ngn','fees2-total-usd','fees2-total-gbp','fees2-total-eur','fees2-total-cad'];
     ids.forEach(function(id) { var el = document.getElementById(id); if (el) el.textContent = 'Contact us'; });
     var sublabel = document.getElementById('fees-sublabel');
     if (sublabel) sublabel.textContent = 'Pricing loading — please contact we@brixgate.com';
@@ -1324,24 +1362,37 @@
     var f2TeamSizeEl  = document.getElementById('fees2-team-size-label');
 
     /* Coupon helpers */
-    var hasCoupon   = _couponPct > 0;
+    var hasCoupon   = !!_appliedCoupon; /* true whenever any coupon is applied */
     var feeCouponRow  = document.getElementById('fees-coupon-row');
     var fee2CouponRow = document.getElementById('fees2-coupon-row');
     var feeCouponLbl  = document.getElementById('fees-coupon-code-lbl');
     var fee2CouponLbl = document.getElementById('fees2-coupon-code-lbl');
     var fee2CouponDsc = document.getElementById('fees2-coupon-discount');
 
-    function applyDiscount(rawNum) {
-      return hasCoupon ? rawNum * (1 - _couponPct / 100) : rawNum;
+    function applyDiscount(rawNum, curCode) {
+      if (!hasCoupon) return rawNum;
+      var c = curCode || getActiveCurrency();
+      if (_couponPct > 0)                      return rawNum * (1 - _couponPct / 100);
+      if (_couponSavings[c]    > 0)            return rawNum - _couponSavings[c];
+      if (_couponDiscounted[c] !== undefined)  return _couponDiscounted[c];
+      return rawNum;
     }
-    function savingsAmt(rawNum) {
-      return hasCoupon ? rawNum * (_couponPct / 100) : 0;
+    function savingsAmt(rawNum, curCode) {
+      if (!hasCoupon) return 0;
+      var c = curCode || getActiveCurrency();
+      if (_couponPct > 0)                      return rawNum * (_couponPct / 100);
+      if (_couponSavings[c]    > 0)            return _couponSavings[c];
+      if (_couponDiscounted[c] !== undefined)  return rawNum - _couponDiscounted[c];
+      return 0;
     }
+
+    var fee2TotalRow = document.getElementById('fees2-total-row');
 
     if (feeCouponLbl)  feeCouponLbl.textContent  = _appliedCoupon || '';
     if (fee2CouponLbl) fee2CouponLbl.textContent = _appliedCoupon || '';
     if (feeCouponRow)  feeCouponRow.style.display  = hasCoupon ? 'block' : 'none';
     if (fee2CouponRow) fee2CouponRow.style.display = hasCoupon ? 'block' : 'none';
+    if (fee2TotalRow)  fee2TotalRow.style.display  = hasCoupon ? 'block' : 'none';
 
     if (!isTeam) {
       if (labelEl)    labelEl.textContent    = 'Individual Enrolment';
@@ -1355,11 +1406,16 @@
         var b   = getPlanBreakdown('INDIVIDUAL', c);
         var sym = CURRENCY_SYMS[c] || '';
         var raw = b ? b.final_price : null;
-        var display = raw !== null ? sym + Number(applyDiscount(raw)).toLocaleString() : '—';
+        /* Left fee bar: show discounted price */
+        var discDisplay = raw !== null ? sym + Number(applyDiscount(raw)).toLocaleString() : '—';
         var el1 = document.getElementById('fees-price-' + c);
-        var el2 = document.getElementById('fees2-price-' + c);
-        if (el1) el1.textContent = display;
-        if (el2) el2.textContent = display;
+        if (el1) el1.textContent = discDisplay;
+        /* Fee summary: orig row always shows original; total row shows discounted */
+        var origDisplay  = raw !== null ? sym + Number(raw).toLocaleString() : '—';
+        var el2orig = document.getElementById('fees2-orig-' + c);
+        var el2tot  = document.getElementById('fees2-total-' + c);
+        if (el2orig) el2orig.textContent = origDisplay;
+        if (el2tot)  el2tot.textContent  = discDisplay;
       });
 
       /* Show savings in active currency only in fee2-coupon-row */
@@ -1385,14 +1441,17 @@
           var b   = getPlanBreakdown('TEAM', c);
           var sym = CURRENCY_SYMS[c] || '';
           var raw = b ? b.final_price : null;
-          var total     = raw !== null ? sym + Number(applyDiscount(raw) * size).toLocaleString() : '—';
+          var origTotal = raw !== null ? sym + Number(raw * size).toLocaleString() : '—';
+          var discTotal = raw !== null ? sym + Number(applyDiscount(raw) * size).toLocaleString() : '—';
           var perPerson = raw !== null ? sym + Number(applyDiscount(raw)).toLocaleString() : '—';
           var el1  = document.getElementById('fees-price-' + c);
-          var el2  = document.getElementById('fees2-price-' + c);
+          var el2orig = document.getElementById('fees2-orig-' + c);
+          var el2tot  = document.getElementById('fees2-total-' + c);
           var ppEl = document.getElementById('fees2-pp-' + c);
-          if (el1)  el1.textContent = total;
-          if (el2)  el2.textContent = total;
-          if (ppEl) ppEl.textContent = perPerson;
+          if (el1)     el1.textContent     = discTotal;
+          if (el2orig) el2orig.textContent = origTotal;
+          if (el2tot)  el2tot.textContent  = discTotal;
+          if (ppEl)    ppEl.textContent    = perPerson;
         });
 
         if (hasCoupon) {
@@ -1430,9 +1489,11 @@
       }
     }
 
-    /* Clear coupon when switching plan type so stale discount doesn't carry over */
-    _appliedCoupon = null;
-    _couponPct     = 0;
+    /* Clear coupon when switching plan type so stale code doesn't carry over */
+    _appliedCoupon    = null;
+    _couponPct        = 0;
+    _couponDiscounted = {};
+    _couponSavings    = {};
     var couponInput    = document.getElementById('coupon-code');
     var couponFeedback = document.getElementById('coupon-feedback');
     var couponInputRow = document.getElementById('coupon-input-row');
@@ -1588,14 +1649,17 @@
   }
 
   /* ---------- Coupon code ---------- */
-  var _appliedCoupon     = null;  /* code string */
-  var _couponPct         = 0;     /* discount percentage 0–100 */
-  var _couponBackendValid = false; /* confirmed by backend */
+  var _appliedCoupon    = null; /* code string — validated by backend */
+  var _couponPct        = 0;   /* discount % derived from backend */
+  var _couponDiscounted = {};  /* {currency: finalPrice} — price after discount */
+  var _couponSavings    = {};  /* {currency: savingsAmt} — amount taken off */
 
   window.applyCoupon = function () {
     var input    = document.getElementById('coupon-code');
     var feedback = document.getElementById('coupon-feedback');
+    var applyBtn = document.querySelector('[onclick="applyCoupon()"]');
     if (!input || !feedback) return;
+
     var code = input.value.trim().toUpperCase();
     if (!code) {
       feedback.textContent = 'Please enter a coupon code.';
@@ -1604,40 +1668,166 @@
       return;
     }
 
-    feedback.textContent   = 'Checking code…';
-    feedback.style.color   = 'var(--muted)';
-    feedback.style.display = 'block';
+    /* Build validate payload from current form state */
+    var enrollType   = (document.getElementById('enrollment-type') || {}).value || 'INDIVIDUAL';
+    var teamSize     = parseInt((document.getElementById('team-size') || {}).value) || 1;
+    var isTeam       = enrollType === 'Team' || enrollType === 'TEAM';
+    var plan         = (_pricingPlans && _pricingPlans[isTeam ? 'TEAM' : 'INDIVIDUAL']) || {};
+    var currency     = getActiveCurrency().toUpperCase();
 
-    /* Try backend validation first */
-    fetch(API_BASE + '/coupons/validate?code=' + encodeURIComponent(code))
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        if (data.success && data.data) {
-          /* Backend confirmed: extract discount percentage */
-          var pct = data.data.discount_percentage || data.data.discountPercentage || data.data.value || 0;
-          _appliedCoupon      = code;
-          _couponPct          = pct;
-          _couponBackendValid = true;
-          feedback.innerHTML       = '✓ <strong style="color:var(--white)">' + pct + '% discount</strong> applied!';
-          feedback.style.color     = '#22c55e';
-          input.style.borderColor  = '#22c55e';
-          input.readOnly           = true;
-          var enrollType = (document.getElementById('enrollment-type') || {}).value || 'Individual';
-          var teamSize   = (document.getElementById('team-size') || {}).value || '';
-          updateEnrollmentUI(enrollType, teamSize);
-        } else {
-          feedback.textContent = data.message || 'Invalid or expired coupon code.';
-          feedback.style.color = 'var(--red)';
-          input.style.borderColor = 'rgba(255,41,78,0.5)';
+    /* Show loading state */
+    feedback.textContent  = 'Checking code…';
+    feedback.style.color  = 'var(--muted)';
+    feedback.style.display = 'block';
+    input.readOnly = true;
+    if (applyBtn) { applyBtn.disabled = true; applyBtn.textContent = '…'; }
+
+    /* apiPost() already returns parsed JSON — do NOT add .then(r => r.json()) */
+    /* Coupon endpoint is public — no Bearer token needed */
+    apiPost('/payments/coupons/validate', {
+      payment_type:    'ENROLLMENT',
+      entity_id:       _programId || undefined,
+      pricing_plan_id: plan.id    || undefined,
+      currency:        currency,
+      enrollment_type: isTeam ? 'TEAM' : 'INDIVIDUAL',
+      user_size:       isTeam ? teamSize : 1,
+      coupon_code:     code
+    })
+    .then(function(data) {
+      if (applyBtn) { applyBtn.disabled = false; applyBtn.textContent = 'Apply'; }
+
+      if (data && data.success) {
+        /* --- Pull from every possible nesting level --- */
+        var d  = data.data || {};
+        var c2 = d.coupon || d.coupon_data || d.data || {};  /* nested coupon object */
+        console.log('[Brixgate] RAW coupon response =', JSON.stringify(data));
+
+        /* ── discount_type tells us whether a "value" field is % or flat ── */
+        var dtype = ((d.discount_type || d.coupon_discount_type || c2.discount_type || c2.type || '') + '').toUpperCase();
+        var isPct = /PERCENT/.test(dtype);
+        var isFlat = /FIXED|FLAT|AMOUNT/.test(dtype);
+
+        /* ── 1. Percentage ── */
+        var pct = d.discount_percentage || d.discountPercentage || d.discount_percent
+                || d.coupon_discount_percentage || d.coupon_percentage || d.coupon_percent
+                || c2.discount_percentage || c2.discount_percent || c2.percentage
+                || (isPct ? (d.discount_value || d.discount || d.value || c2.discount_value || c2.value || 0) : 0)
+                || 0;
+
+        /* ── 2. Absolute savings (money taken off) ── */
+        var savingsFlat = d.discount_amount || d.savings || d.amount_saved || d.amount_off
+                        || d.coupon_amount   || d.savings_amount || d.discount_in_amount
+                        || c2.discount_amount || c2.savings || c2.amount_off
+                        || (isFlat ? (d.discount_value || d.discount || d.value || c2.discount_value || c2.value || 0) : 0)
+                        || 0;
+
+        /* ── 3. Absolute original and final prices ── */
+        var origAmt = d.original_amount || d.originalAmount || d.amount_before
+                    || d.base_amount   || d.original_price || d.price || 0;
+        var discAmt = d.discounted_amount  || d.discountedAmount  || d.amount_after
+                    || d.final_amount      || d.payable_amount     || d.discounted_price
+                    || d.final_price       || d.new_amount
+                    || (origAmt > 0 && savingsFlat > 0 ? origAmt - savingsFlat : 0)
+                    || 0;
+
+        /* ── 4. Cross-derive anything still missing ── */
+        if (origAmt > 0 && discAmt > 0 && discAmt < origAmt) {
+          if (!pct)        pct        = Math.round((1 - discAmt / origAmt) * 100);
+          if (!savingsFlat) savingsFlat = origAmt - discAmt;
         }
-      })
-      .catch(function() {
-        /* Backend coupon endpoint not yet available — flag for dev lead */
-        _couponBackendValid = false;
-        feedback.innerHTML  = '⚠ Coupon endpoint not available yet. <span style="color:var(--muted)">Contact we@brixgate.com if you have a code.</span>';
-        feedback.style.color = '#f59e0b';
-        feedback.style.display = 'block';
-      });
+        if (origAmt > 0 && savingsFlat > 0 && !pct) {
+          pct = Math.round(savingsFlat / origAmt * 100);
+        }
+
+        /* ── 5. Store everything we know ── */
+        var activeCur    = getActiveCurrency();
+        _couponDiscounted = {};
+        _couponSavings    = {};
+        if (discAmt    > 0) _couponDiscounted[activeCur] = discAmt;
+        if (savingsFlat > 0) _couponSavings[activeCur]    = savingsFlat;
+
+        console.log('[Brixgate] Resolved → pct:', pct, '| savings:', savingsFlat, '| finalPrice:', discAmt, '| currency:', activeCur);
+
+        _appliedCoupon          = code;
+        _couponPct              = pct;
+        input.style.borderColor = '#22c55e';
+        input.readOnly          = true;
+        if (pct) {
+          feedback.innerHTML = '✓ <strong style="color:var(--white)">' + pct + '% discount</strong> applied!';
+        } else if (savingsFlat > 0) {
+          var sym = CURRENCY_SYMS[activeCur] || '';
+          feedback.innerHTML = '✓ <strong style="color:var(--white)">' + sym + Number(savingsFlat).toLocaleString() + ' off</strong> applied!';
+        } else {
+          feedback.innerHTML = '✓ Coupon <strong style="color:var(--white)">' + code + '</strong> applied!';
+        }
+        feedback.style.color = '#22c55e';
+
+        /* Refresh the fee summary with the discount applied */
+        var enrollType2 = (document.getElementById('enrollment-type') || {}).value || 'Individual';
+        var teamSize2   = (document.getElementById('team-size') || {}).value || '';
+        updateEnrollmentUI(enrollType2, teamSize2);
+
+        /* Also update review panel if it is already visible */
+        var cur        = getActiveCurrency();
+        var prices     = getPriceDisplay();          /* discounted total */
+        var priceStr   = prices[cur] || '—';         /* total due after coupon */
+        var isTeamCp   = (document.getElementById('enrollment-type') || {}).value === 'Team';
+        var teamSzCp   = parseInt((document.getElementById('team-size') || {}).value) || 1;
+        var brkCp      = getPlanBreakdown(isTeamCp ? 'TEAM' : 'INDIVIDUAL', cur);
+        var symCp      = CURRENCY_SYMS[cur] || '';
+        var rawCp      = brkCp ? brkCp.final_price * (isTeamCp ? teamSzCp : 1) : 0;
+        var origStrCp  = brkCp ? symCp + Number(rawCp).toLocaleString() : priceStr;
+        var savingsCp  = null;
+        if (brkCp) {
+          if (_couponPct > 0)                     savingsCp = symCp + Number(rawCp * (_couponPct / 100)).toLocaleString();
+          else if (_couponSavings[cur]    > 0)    savingsCp = symCp + Number(_couponSavings[cur]).toLocaleString();
+          else if (_couponDiscounted[cur] !== undefined) savingsCp = symCp + Number(rawCp - _couponDiscounted[cur]).toLocaleString();
+        }
+        var rvItem       = document.getElementById('review-price-item');
+        var rvTotal      = document.getElementById('review-total');
+        var rvBtn        = document.getElementById('pay-btn-label');
+        var rvCouponRow  = document.getElementById('review-coupon-row');
+        var rvCouponCode = document.getElementById('review-coupon-code-lbl');
+        var rvCouponAmt  = document.getElementById('review-coupon-discount');
+        if (rvItem)  rvItem.textContent  = origStrCp;
+        if (rvTotal) rvTotal.textContent = priceStr;
+        if (rvBtn)   rvBtn.textContent   = 'Pay ' + priceStr + ' via Paystack';
+        if (_appliedCoupon) {
+          if (rvCouponCode) rvCouponCode.textContent = _appliedCoupon;
+          if (rvCouponAmt)  rvCouponAmt.textContent  = savingsCp ? '−' + savingsCp : 'Applied';
+          if (rvCouponRow)  rvCouponRow.style.display = '';
+        } else {
+          if (rvCouponRow)  rvCouponRow.style.display = 'none';
+        }
+
+      } else {
+        _appliedCoupon          = null;
+        _couponPct              = 0;
+        _couponDiscounted       = {};
+        _couponSavings          = {};
+        input.readOnly          = false;
+        input.style.borderColor = 'rgba(255,41,78,0.5)';
+        var errMsg = (data && data.message) || 'Invalid coupon code.';
+        /* Translate backend auth/used errors into plain language */
+        if (/unauthorized|not authorized|already used|already redeemed/i.test(errMsg)) {
+          errMsg = 'This coupon has already been used on your account.';
+        }
+        feedback.textContent = errMsg;
+        feedback.style.color = 'var(--red)';
+      }
+    })
+    .catch(function(err) {
+      if (applyBtn) { applyBtn.disabled = false; applyBtn.textContent = 'Apply'; }
+      _appliedCoupon          = null;
+      _couponPct              = 0;
+      _couponDiscounted       = {};
+      _couponSavings          = {};
+      input.readOnly          = false;
+      input.style.borderColor = 'rgba(255,41,78,0.5)';
+      feedback.textContent    = 'Could not validate coupon. Please try again.';
+      feedback.style.color    = 'var(--red)';
+      console.warn('[Brixgate] Coupon validate error:', err);
+    });
   };
 
   /* ---------- Init ---------- */
@@ -1694,6 +1884,14 @@
       .then(function(data) {
         console.log('[Brixgate] /auth/applicants response:', JSON.stringify(data));
         if (!data.success) {
+          /* Check for email-specific field errors first (e.g. {errors: {email: ["already taken"]}}) */
+          var emailErr = data.errors && (
+            (Array.isArray(data.errors.email) && data.errors.email[0]) ||
+            (typeof data.errors.email === 'string' && data.errors.email)
+          );
+          if (emailErr || /already|exist|duplicate|registered|taken|in use|conflict|has an account/i.test(data.message || '')) {
+            throw new Error('EMAIL_EXISTS: ' + (emailErr || data.message));
+          }
           var fieldErrors = '';
           if (data.errors && typeof data.errors === 'object') {
             fieldErrors = Object.entries(data.errors).map(function(e) { return e[0] + ': ' + JSON.stringify(e[1]); }).join('; ');
@@ -1725,23 +1923,51 @@
         }
 
         var cur          = getActiveCurrency();
-        var priceDisplay = getPriceDisplay();
-        var priceStr     = priceDisplay[cur] || '—';
-        document.getElementById('review-price-item').textContent = priceStr;
+        var priceDisplay = getPriceDisplay();          /* discounted total */
+        var priceStr     = priceDisplay[cur] || '—';  /* total due (after coupon) */
+        /* Compute original (pre-coupon) price for display */
+        var isTeamRv = enrollmentType === 'Team';
+        var teamSzRv = parseInt((document.getElementById('team-size') || {}).value) || 1;
+        var brkRv    = getPlanBreakdown(isTeamRv ? 'TEAM' : 'INDIVIDUAL', cur);
+        var symRv    = CURRENCY_SYMS[cur] || '';
+        var origStr  = brkRv ? symRv + Number(brkRv.final_price * (isTeamRv ? teamSzRv : 1)).toLocaleString() : priceStr;
+        var rawRv    = brkRv ? brkRv.final_price * (isTeamRv ? teamSzRv : 1) : 0;
+        var savingsRv = null;
+        if (_appliedCoupon && brkRv) {
+          if (_couponPct > 0)                     savingsRv = symRv + Number(rawRv * (_couponPct / 100)).toLocaleString();
+          else if (_couponSavings[cur]    > 0)    savingsRv = symRv + Number(_couponSavings[cur]).toLocaleString();
+          else if (_couponDiscounted[cur] !== undefined) savingsRv = symRv + Number(rawRv - _couponDiscounted[cur]).toLocaleString();
+        }
+        document.getElementById('review-price-item').textContent = origStr;
+        /* Update enroll label */
+        var rvEnrollLbl = document.getElementById('review-enroll-label');
+        if (rvEnrollLbl) rvEnrollLbl.textContent = isTeamRv && teamSzRv >= 2 ? 'Team Enrolment (' + teamSzRv + ' people)' : 'Individual Enrolment';
+        /* Show coupon row if applicable */
+        var rvCouponRow  = document.getElementById('review-coupon-row');
+        var rvCouponCode = document.getElementById('review-coupon-code-lbl');
+        var rvCouponAmt  = document.getElementById('review-coupon-discount');
+        if (_appliedCoupon) {
+          if (rvCouponCode) rvCouponCode.textContent = _appliedCoupon;
+          if (rvCouponAmt)  rvCouponAmt.textContent  = savingsRv ? '−' + savingsRv : 'Applied';
+          if (rvCouponRow)  rvCouponRow.style.display = '';
+        } else {
+          if (rvCouponRow)  rvCouponRow.style.display = 'none';
+        }
         document.getElementById('review-total').textContent      = priceStr;
         document.getElementById('pay-btn-label').textContent     = 'Pay ' + priceStr + ' via Paystack';
 
         hideFormError();
-        setSubmitState(submitBtn, false, 'Continue to Review →');
+        setSubmitState(submitBtn, false, 'Continue to Review');
         showPanel('review');
       })
       .catch(function(err) {
-        setSubmitState(submitBtn, false, 'Continue to Review →');
+        setSubmitState(submitBtn, false, 'Continue to Review');
         var msg   = err.message || 'Unknown error. Please try again.';
         var title = 'Could not set up your account';
-        if (/already|exist|duplicate|registered/i.test(msg)) {
-          title = 'Email already registered';
-          msg   = 'You\'ve applied before with this email. Use a different address or contact we@brixgate.com.';
+        /* Sentinel set above when email duplicate is detected */
+        if (/^EMAIL_EXISTS:/i.test(msg) || /already|exist|duplicate|registered|taken|in use|conflict|email.*used|used.*email|has an account/i.test(msg) || /409/.test(msg)) {
+          title = 'Email already in use';
+          msg   = 'An account with this email already exists. Please try a different email address, or contact we@brixgate.com if you need help.';
         } else if (/unauthorized|401/i.test(msg)) {
           title = 'Service temporarily unavailable';
           msg   = 'Our registration service is currently down. Please try again shortly or email we@brixgate.com to apply directly.';
@@ -1785,8 +2011,8 @@
     var lastName2    = (document.getElementById('last-name') || {}).value || '';
     var email2       = (document.getElementById('email') || {}).value || '';
 
-    /* Only send coupon_code when backend has confirmed it's valid */
-    var payloadCoupon = (_appliedCoupon && _couponBackendValid) ? _appliedCoupon : undefined;
+    /* Only send coupon_code when it has been confirmed valid via the validate endpoint */
+    var payloadCoupon = _appliedCoupon || undefined;
 
     apiPost('/payments/initiate', {
       payment_type:          'ENROLLMENT',
@@ -1804,9 +2030,14 @@
         console.log('[Brixgate] /payments/initiate response:', JSON.stringify(data));
         if (!data.success) {
           var errMsg = data.message || 'Could not start payment.';
-          /* Detect coupon-related rejections and give a helpful message */
+          /* Check errors object for entity_id / already-paid signal */
+          var entityErr = (data.errors && data.errors.entity_id && data.errors.entity_id[0]) || '';
+          if (/existing.*payment|payment.*found|already paid|already enrolled/i.test(entityErr)) {
+            throw new Error('You have already paid for this cohort');
+          }
+          /* Detect coupon-related rejections */
           if (_appliedCoupon && /coupon|discount|code/i.test(errMsg)) {
-            throw new Error('The coupon code was not accepted. Please try again without the coupon or contact we@brixgate.com.');
+            throw new Error('The coupon code was not accepted. Please remove the coupon or contact we@brixgate.com.');
           }
           throw new Error(errMsg);
         }
@@ -1828,8 +2059,27 @@
       })
       .catch(function(err) {
         payBtn.disabled = false;
-        document.getElementById('pay-btn-label').textContent = 'Try Again';
-        showFormError('Payment Error', err.message || 'Could not start payment. Please try again.');
+        var errMsg  = err.message || 'Could not start payment.';
+        var errTitle = 'Payment could not be started';
+
+        if (/already paid|already enrolled|already registered|cohort|existing.*payment|payment.*found/i.test(errMsg)) {
+          /* Already enrolled — change button to "Edit My Details" and show clear message */
+          document.getElementById('pay-btn-label').textContent = 'Edit My Details';
+          payBtn.onclick = function() { showPanel('form'); };
+          errTitle = 'You\'re already enrolled in this course';
+          errMsg   = 'Our records show you\'ve already completed payment for this cohort. If you\'d like to enrol in a different programme, click "Edit My Details" to update your selection.';
+        } else if (/coupon|discount|code/i.test(errMsg)) {
+          document.getElementById('pay-btn-label').textContent = 'Pay ' + (getPriceDisplay()[getActiveCurrency()] || '') + ' via Paystack';
+          errTitle = 'Coupon not accepted';
+        } else if (/unauthorized|401/i.test(errMsg)) {
+          document.getElementById('pay-btn-label').textContent = 'Edit My Details';
+          payBtn.onclick = function() { showPanel('form'); };
+          errTitle = 'Session expired';
+          errMsg   = 'Your session has expired. Please go back and re-enter your details.';
+        } else {
+          document.getElementById('pay-btn-label').textContent = 'Pay ' + (getPriceDisplay()[getActiveCurrency()] || '') + ' via Paystack';
+        }
+        showFormError(errTitle, errMsg);
       });
   });
 

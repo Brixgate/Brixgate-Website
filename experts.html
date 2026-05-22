@@ -284,7 +284,9 @@
       [style*="grid-template-columns:repeat(3,1fr)"] { grid-template-columns: 1fr !important; }
       [style*="grid-template-columns:repeat(3, 1fr)"] { grid-template-columns: 1fr !important; }
     }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
+<script src="tracking.js"></script>
 </head>
 <body>
 
@@ -332,6 +334,7 @@
 </div>
 
 <!-- ====== PAGE HEADER ====== -->
+ 
 <header class="page-header" style="text-align:center;padding-top:calc(var(--nav-height) + var(--banner-height) + 72px);padding-bottom:72px;">
   <div class="container">
     <span class="eyebrow">Expert Practitioners</span>
@@ -423,96 +426,19 @@
       <p>Professionals who have already applied AI in their field and now guide the next generation.</p>
     </div>
 
-    <!-- Loading state -->
-    <div id="experts-loading" style="text-align:center;padding:48px 0;display:none">
+    <!-- Loading state — visible by default, hidden after fetch -->
+    <div id="experts-loading" style="text-align:center;padding:64px 0;display:block">
       <div style="width:40px;height:40px;border:3px solid rgba(255,41,78,0.2);border-top-color:var(--red);border-radius:50%;animation:spin 0.9s linear infinite;margin:0 auto 16px"></div>
       <p style="color:var(--muted);font-size:0.88rem">Loading expert practitioners…</p>
     </div>
 
-    <div class="expert-grid stagger" id="experts-grid-container">
-      <!-- Cards injected by JS from API — static fallbacks below kept as hidden template -->
+    <!-- Error state — hidden by default -->
+    <div id="experts-error" style="text-align:center;padding:48px 0;display:none">
+      <p style="color:var(--muted);font-size:0.92rem">Unable to load expert practitioners right now. Please try again later.</p>
+    </div>
 
-      <!-- Expert Card 1 — static fallback -->
-      <div class="expert-card fade-up static-expert-card" data-field="Finance">
-        <div class="expert-card-header">
-          <img src="https://images.unsplash.com/photo-1573497019236-17f8177b81e8?w=200&h=200&fit=crop&crop=face&auto=format&q=80" alt="Dr. Amara Osei" class="expert-avatar" style="border-radius:50%;width:64px;height:64px;object-fit:cover;flex-shrink:0;" />
-          <div>
-            <div class="expert-name">Dr. Amara Osei</div>
-            <div class="expert-role">AI Strategy &amp; Finance</div>
-          </div>
-        </div>
-        <p class="expert-bio">Former investment analyst turned AI transformation lead. Deployed predictive models across 3 pan-African banks, reducing credit risk assessment time by 60%.</p>
-        <div class="expert-field-tag">Finance &amp; Investment</div>
-        <div class="expert-credentials">
-          <span class="credential-badge">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Verified Practitioner
-          </span>
-          <span class="credential-badge">7+ Years</span>
-        </div>
-      </div>
-
-      <!-- Expert Card 2 — static fallback -->
-      <div class="expert-card fade-up static-expert-card" data-field="Healthcare">
-        <div class="expert-card-header">
-          <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&h=200&fit=crop&crop=face&auto=format&q=80" alt="Chidinma Eze" class="expert-avatar" style="border-radius:50%;width:64px;height:64px;object-fit:cover;flex-shrink:0;" />
-          <div>
-            <div class="expert-name">Chidinma Eze</div>
-            <div class="expert-role">Healthcare AI Specialist</div>
-          </div>
-        </div>
-        <p class="expert-bio">Clinical pharmacist who led AI-driven diagnostic tooling at two tier-1 hospitals. Built the first NLP-based patient triage system deployed at scale in West Africa.</p>
-        <div class="expert-field-tag">Healthcare &amp; Medtech</div>
-        <div class="expert-credentials">
-          <span class="credential-badge">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Verified Practitioner
-          </span>
-          <span class="credential-badge">5+ Years</span>
-        </div>
-      </div>
-
-      <!-- Expert Card 3 — static fallback -->
-      <div class="expert-card fade-up static-expert-card" data-field="Legal">
-        <div class="expert-card-header">
-          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop&crop=face&auto=format&q=80" alt="Tunde Adeyemi" class="expert-avatar" style="border-radius:50%;width:64px;height:64px;object-fit:cover;flex-shrink:0;" />
-          <div>
-            <div class="expert-name">Tunde Adeyemi</div>
-            <div class="expert-role">Legal Tech &amp; Compliance</div>
-          </div>
-        </div>
-        <p class="expert-bio">Barrister and AI compliance strategist. Helped mid-size law firms integrate contract analysis tools, cutting document review cycles from 3 days to under 4 hours.</p>
-        <div class="expert-field-tag">Law &amp; Compliance</div>
-        <div class="expert-credentials">
-          <span class="credential-badge">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Verified Practitioner
-          </span>
-          <span class="credential-badge">6+ Years</span>
-        </div>
-      </div>
-
-      <!-- Expert Card 4 — static fallback -->
-      <div class="expert-card fade-up static-expert-card" data-field="Marketing">
-        <div class="expert-card-header">
-          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop&crop=face&auto=format&q=80" alt="Ngozi Okonkwo" class="expert-avatar" style="border-radius:50%;width:64px;height:64px;object-fit:cover;flex-shrink:0;" />
-          <div>
-            <div class="expert-name">Ngozi Okonkwo</div>
-            <div class="expert-role">Marketing &amp; Growth AI</div>
-          </div>
-        </div>
-        <p class="expert-bio">Growth strategist and CMO who embedded AI across content, campaign optimisation, and customer journey mapping for FMCG brands across 12 African markets.</p>
-        <div class="expert-field-tag">Marketing &amp; Brand</div>
-        <div class="expert-credentials">
-          <span class="credential-badge">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Verified Practitioner
-          </span>
-          <span class="credential-badge">8+ Years</span>
-        </div>
-      </div>
-
-    </div><!-- /expert-grid -->
+    <!-- Cards injected by JS — starts empty, no dummy cards -->
+    <div class="expert-grid stagger" id="experts-grid-container" style="display:none"></div>
 
     <div style="text-align:center;margin-top:48px" class="fade-up">
       <p style="color:var(--muted);font-size:0.9rem;margin-bottom:20px">More expert practitioners joining each quarter as new sectors open.</p>
@@ -661,80 +587,155 @@
 <button class="back-to-top">↑</button>
 
 <script src="script.js"></script>
-<script>
-  /* Expert grid is static HTML — no dynamic loading */
-</script>
 
 <!-- ====== EXPERTS API FETCH ====== -->
 <script>
 (function() {
-  var API_BASE = 'https://api.brixgate.com/api/v1';
-  var container = document.getElementById('experts-grid-container');
-  var loadingEl = document.getElementById('experts-loading');
+  var API_BASE   = 'https://api.brixgate.com/api/v1';
+  var container  = document.getElementById('experts-grid-container');
+  var loadingEl  = document.getElementById('experts-loading');
+  var errorEl    = document.getElementById('experts-error');
 
-  function buildAvatarSvg() {
-    return '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" style="border-radius:50%;width:64px;height:64px;flex-shrink:0;background:rgba(255,41,78,0.1)">'
-      + '<circle cx="32" cy="24" r="12" fill="rgba(255,41,78,0.4)"/>'
-      + '<ellipse cx="32" cy="52" rx="20" ry="14" fill="rgba(255,41,78,0.25)"/>'
-      + '</svg>';
+  function showLoading()  { loadingEl.style.display = 'block';  container.style.display = 'none'; errorEl.style.display = 'none'; }
+  function showGrid()     { loadingEl.style.display = 'none';   container.style.display = '';     errorEl.style.display = 'none'; }
+  function showError()    { loadingEl.style.display = 'none';   container.style.display = 'none'; errorEl.style.display = 'block'; }
+
+  /* ── Avatar: initials circle ── */
+  function makeAvatar(name) {
+    var av = document.createElement('div');
+    av.style.cssText = 'width:64px;height:64px;border-radius:50%;background:rgba(255,41,78,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.5rem;font-weight:800;color:rgba(255,41,78,0.8);';
+    av.textContent = (name || '?').charAt(0).toUpperCase();
+    return av;
   }
 
-  function buildCard(expert) {
-    var avatarHtml = expert.profile_image_url
-      ? '<img src="' + expert.profile_image_url + '" alt="' + expert.name + '" class="expert-avatar" style="border-radius:50%;width:64px;height:64px;object-fit:cover;flex-shrink:0;" onerror="this.outerHTML=\'' + buildAvatarSvg().replace(/'/g,"\\'").replace(/\n/g,'') + '\'">'
-      : buildAvatarSvg();
+  /* ── Build one card from API data ── */
+  function makeCard(e) {
+    var card = document.createElement('div');
+    card.className = 'expert-card fade-up visible'; /* visible immediately — intersection observer won't fire for injected elements */
 
-    var yoe  = expert.years_of_experience ? expert.years_of_experience + '+ Years' : 'Experienced';
-    var field = expert.primary_field || expert.occupation || '';
-    var location = expert.location ? '<span class="credential-badge" style="display:inline-flex;align-items:center;gap:4px"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' + expert.location + '</span>' : '';
+    /* Header */
+    var header = document.createElement('div');
+    header.className = 'expert-card-header';
 
-    var socials = '';
-    if (expert.linkedin_url) socials += '<a href="' + expert.linkedin_url + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;font-size:0.72rem;color:var(--muted);text-decoration:none;margin-top:12px" title="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</a> ';
+    if (e.profile_image_url) {
+      var img = document.createElement('img');
+      img.src = e.profile_image_url;
+      img.alt = e.name || 'Expert';
+      img.className = 'expert-avatar';
+      img.style.cssText = 'border-radius:50%;width:64px;height:64px;object-fit:cover;flex-shrink:0;';
+      img.onerror = function() {
+        var av = makeAvatar(e.name);
+        img.parentNode.replaceChild(av, img);
+      };
+      header.appendChild(img);
+    } else {
+      header.appendChild(makeAvatar(e.name));
+    }
 
-    var expertiseHtml = expert.expertise ? '<div class="expert-field-tag">' + (expert.expertise.split(',')[0] || expert.expertise).trim() + '</div>' : (field ? '<div class="expert-field-tag">' + field + '</div>' : '');
+    var nameGroup = document.createElement('div');
+    var nameEl = document.createElement('div');
+    nameEl.className = 'expert-name';
+    nameEl.textContent = e.name || '';
+    var roleEl = document.createElement('div');
+    roleEl.className = 'expert-role';
+    roleEl.textContent = e.title || e.current_role || e.occupation || '';
+    nameGroup.appendChild(nameEl);
+    nameGroup.appendChild(roleEl);
+    header.appendChild(nameGroup);
+    card.appendChild(header);
 
-    return '<div class="expert-card fade-up api-expert-card">'
-      + '<div class="expert-card-header">'
-      + avatarHtml
-      + '<div>'
-      + '<div class="expert-name">' + expert.name + '</div>'
-      + '<div class="expert-role">' + (expert.title || expert.current_role || '') + '</div>'
-      + '</div>'
-      + '</div>'
-      + '<p class="expert-bio">' + (expert.biography ? expert.biography.substring(0, 180) + (expert.biography.length > 180 ? '…' : '') : '') + '</p>'
-      + expertiseHtml
-      + '<div class="expert-credentials">'
-      + '<span class="credential-badge"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Verified Practitioner</span>'
-      + '<span class="credential-badge">' + yoe + '</span>'
-      + location
-      + '</div>'
-      + socials
-      + '</div>';
+    /* Bio */
+    if (e.biography) {
+      var bio = document.createElement('p');
+      bio.className = 'expert-bio';
+      bio.textContent = e.biography.length > 200 ? e.biography.substring(0, 200) + '…' : e.biography;
+      card.appendChild(bio);
+    }
+
+    /* Field tag */
+    var fieldText = e.expertise ? e.expertise.split(',')[0].trim() : (e.primary_field || '');
+    if (fieldText) {
+      var tag = document.createElement('div');
+      tag.className = 'expert-field-tag';
+      tag.textContent = fieldText;
+      card.appendChild(tag);
+    }
+
+    /* Credentials */
+    var creds = document.createElement('div');
+    creds.className = 'expert-credentials';
+
+    var vBadge = document.createElement('span');
+    vBadge.className = 'credential-badge';
+    vBadge.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Verified Practitioner';
+    creds.appendChild(vBadge);
+
+    if (e.years_of_experience) {
+      var yoe = document.createElement('span');
+      yoe.className = 'credential-badge';
+      yoe.textContent = e.years_of_experience + '+ Years';
+      creds.appendChild(yoe);
+    }
+    if (e.location) {
+      var loc = document.createElement('span');
+      loc.className = 'credential-badge';
+      loc.textContent = e.location;
+      creds.appendChild(loc);
+    }
+    card.appendChild(creds);
+
+    /* LinkedIn */
+    if (e.linkedin_url) {
+      var liWrap = document.createElement('div');
+      liWrap.style.cssText = 'padding:14px 24px 20px;margin-top:14px;';
+      var liLink = document.createElement('a');
+      liLink.href = e.linkedin_url;
+      liLink.target = '_blank';
+      liLink.rel = 'noopener noreferrer';
+      liLink.style.cssText = 'display:inline-flex;align-items:center;gap:7px;font-size:0.8rem;color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s;';
+      liLink.onmouseover = function() { this.style.opacity = '0.75'; };
+      liLink.onmouseout  = function() { this.style.opacity = '1'; };
+      var liSvg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      liSvg.setAttribute('width','14');liSvg.setAttribute('height','14');
+      liSvg.setAttribute('viewBox','0 0 24 24');liSvg.setAttribute('fill','currentColor');
+      var liPath = document.createElementNS('http://www.w3.org/2000/svg','path');
+      liPath.setAttribute('d','M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z');
+      liSvg.appendChild(liPath);
+      liLink.appendChild(liSvg);
+      liLink.appendChild(document.createTextNode('View LinkedIn'));
+      liWrap.appendChild(liLink);
+      card.appendChild(liWrap);
+    }
+
+    return card;
   }
 
-  if (loadingEl) loadingEl.style.display = 'block';
+  /* ── Fetch ── */
+  showLoading();
 
   fetch(API_BASE + '/experts')
-    .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-    .then(function(json) {
-      if (loadingEl) loadingEl.style.display = 'none';
-      var experts = json.data && json.data.experts;
-      if (!experts || !experts.length) return; /* keep static fallback */
-
-      /* Remove static fallback cards */
-      var statics = container.querySelectorAll('.static-expert-card');
-      statics.forEach(function(el) { el.parentNode.removeChild(el); });
-
-      /* Inject API cards */
-      experts.forEach(function(e) {
-        var wrapper = document.createElement('div');
-        wrapper.innerHTML = buildCard(e);
-        container.appendChild(wrapper.firstChild);
-      });
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
     })
-    .catch(function() {
-      if (loadingEl) loadingEl.style.display = 'none';
-      /* On error, static fallback cards remain visible */
+    .then(function(json) {
+      var experts = json && json.data && json.data.experts;
+
+      if (!experts || experts.length === 0) {
+        showError();
+        return;
+      }
+
+      /* Clear container and render API cards */
+      container.innerHTML = '';
+      experts.forEach(function(expert) {
+        container.appendChild(makeCard(expert));
+      });
+      showGrid();
+    })
+    .catch(function(err) {
+      console.warn('[Brixgate] Experts fetch failed:', err);
+      showError();
     });
 })();
 </script>
