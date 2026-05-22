@@ -612,7 +612,7 @@
       <a href="organisations.html">For Organisations</a>
     </div>
     <div class="nav-cta">
-      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm">Login</a>
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
       <a href="apply.html" class="btn btn-primary btn-sm">Apply Now</a>
     </div>
     <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -624,7 +624,7 @@
   <a href="programme.html">Programme</a>
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
-  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px">Login</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
   <a href="apply.html" class="btn btn-primary">Apply Now</a>
 </div>
 
@@ -713,10 +713,11 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
     </div>
     <div class="capture-modal-title">Your results are ready</div>
-    <p class="capture-modal-sub">Enter your email to unlock your full result. We'll also send you a <strong>registration coupon</strong> when you're ready to enrol — no spam, ever.</p>
+    <p class="capture-modal-sub">Enter your details to unlock your full result. We'll also send you a <strong>registration coupon</strong> when you're ready to enrol — no spam, ever.</p>
+    <input type="text" id="capture-name" class="capture-modal-input" placeholder="Your full name" autocomplete="name" style="margin-bottom:10px" />
     <input type="email" id="capture-email" class="capture-modal-input" placeholder="you@example.com" autocomplete="email" />
-    <span class="capture-error" id="email-error">Please enter a valid email address.</span>
-    <button onclick="submitCapture()" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem">
+    <span class="capture-error" id="email-error"></span>
+    <button onclick="submitCapture()" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;margin-top:4px">
       See My Results
     </button>
     <p class="capture-modal-skip">
@@ -742,7 +743,7 @@
     <!-- Apply CTA — shown immediately after the review description -->
     <div style="margin:28px auto 0;max-width:420px">
       <a href="apply.html" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;font-size:1rem">
-        Apply to Take a Course Now →
+        Apply Now →
       </a>
       <p style="font-size:0.76rem;color:#7A94A8;margin-top:10px;text-align:center">4-week sprint · Expert-led · Field-specific</p>
     </div>
@@ -952,7 +953,7 @@ const TIERS = [
       eyebrow: "Your Next Move",
       headline: "Go from AI-Capable to AI-Expert in Your Field",
       body: "You're ready for field-specific practitioner-level mastery. The Brixgate Expert Practitioner Programme takes professionals who already use AI and turns them into the benchmark in their field.",
-      btn: "See Your Field Programme →",
+      btn: "View Programmes →",
       href: "programme.html"
     }
   },
@@ -972,7 +973,7 @@ const TIERS = [
       eyebrow: "The Right Next Step",
       headline: "Close the Gap. In 4 Weeks.",
       body: "The Brixgate Expert Practitioner Programme is built for exactly where you are — professionals who are aware but need a structured, field-specific path to real capability.",
-      btn: "Find Your Programme →",
+      btn: "Find My Programme →",
       href: "programme.html"
     }
   },
@@ -992,7 +993,7 @@ const TIERS = [
       eyebrow: "Start Here",
       headline: "The Time to Move Is Now — Not Next Year.",
       body: "The Brixgate Expert Practitioner Programme starts where you are and takes you to field-specific AI fluency in 4 weeks. No prior AI experience needed.",
-      btn: "See the Programme →",
+      btn: "Start Here →",
       href: "programme.html"
     }
   }
@@ -1049,7 +1050,7 @@ function renderQuestion() {
   nextBtn.classList.toggle('enabled', answers[currentQ] !== null);
 
   document.getElementById('q-card').innerHTML = `
-    <div class="q-number">Question ${q.id}</div>
+    <div class="q-number">Question ${currentQ + 1} of ${QUIZ_COUNT}</div>
     <div class="q-text">${q.text}</div>
     <div class="q-options">
       ${q.options.map((o, i) => `
@@ -1105,19 +1106,26 @@ function dismissCaptureModal() {
 }
 
 function submitCapture() {
+  const name     = document.getElementById('capture-name').value.trim();
   const email    = document.getElementById('capture-email').value.trim();
-  const emailErr = document.getElementById('email-error');
+  const errEl    = document.getElementById('email-error');
 
+  errEl.style.display = 'block';
+  if (!name) { errEl.textContent = 'Please enter your name.'; return; }
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  emailErr.style.display = emailOk ? 'none' : 'block';
-  if (!emailOk) return;
+  if (!emailOk) { errEl.textContent = 'Please enter a valid email address.'; return; }
+  errEl.style.display = 'none';
 
   _quizCapturedEmail = email;
+  try {
+    localStorage.setItem('bxQuizEmail', email);
+    localStorage.setItem('bxQuizName',  name);
+  } catch(e) {}
   dismissCaptureModal();
 
   if (typeof postQuestionnaireSummary === 'function') {
     var occ = typeof selectedProfession !== 'undefined' ? selectedProfession : '';
-    postQuestionnaireSummary(1, email, _lastScorePct, tierLabelToRatingLevel(_lastTierLabel), 'general-ai-readiness', occ);
+    postQuestionnaireSummary(1, email, _lastScorePct, tierLabelToRatingLevel(_lastTierLabel), 'general-ai-readiness', occ, '', name);
   }
 }
 
@@ -1185,6 +1193,11 @@ function restartAssessment() {
   document.getElementById('results-screen').style.display = 'none';
   document.getElementById('results-screen').classList.remove('results-blurred');
   document.getElementById('capture-screen').classList.remove('active');
+  var nameEl = document.getElementById('capture-name');
+  var emailEl = document.getElementById('capture-email');
+  if (nameEl) nameEl.value = '';
+  if (emailEl) emailEl.value = '';
+  document.getElementById('email-error').style.display = 'none';
   document.getElementById('intro-screen').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }

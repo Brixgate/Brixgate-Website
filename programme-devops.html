@@ -53,7 +53,7 @@
       <a href="organisations.html">For Organisations</a>
     </div>
     <div class="nav-cta">
-      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm">Login</a>
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
       <a href="apply.html?program_id=3" class="btn btn-primary btn-sm">Apply Now</a>
     </div>
     <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -217,7 +217,7 @@
             <p id="qf_devops_body" style="font-size:0.95rem;color:var(--muted);line-height:1.65;max-width:520px;margin:0 auto 28px"></p>
             <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
               <a href="apply.html?program_id=3" id="qf_devops_cta_link" class="btn btn-primary btn-lg">Apply Now</a>
-              <a href="#pricing" style="color:var(--muted);font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:4px">View pricing first </a>
+              <a href="#pricing" id="qf_devops_pricing_link" style="color:var(--muted);font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:4px">View pricing first →</a>
             </div>
             <div style="margin-top:20px"><button onclick="qfReset('qf_devops')" style="background:none;border:none;color:var(--muted);font-size:0.82rem;cursor:pointer;text-decoration:underline">Retake the quiz</button></div>
           </div>
@@ -653,10 +653,10 @@
 (function() {
   const ID = 'qf_devops';
   const TIERS = [
-      { min: 5, max: 9, label: 'Foundation Level', color: '#FF5748', headline: 'You\'re at the starting line. That\'s exactly where this programme begins.', body: 'Most professionals in your field are in the same position. The Expert Practitioner Programme is built for exactly this moment — structured, practitioner-led, and designed to move you from curiosity to capability in four weeks.', cta: 'Reserve your seat before this cohort fills ' },
-      { min: 10, max: 14, label: 'Emerging Practitioner', color: '#FF8C00', headline: 'You have awareness. The programme turns awareness into applied advantage.', body: 'You\'re ahead of most professionals who haven\'t started yet. But awareness without application doesn\'t move the needle. The sprint will give you the structured framework, practitioner guidance, and peer accountability to make your AI knowledge operational.', cta: 'Apply now and close the gap' },
-      { min: 15, max: 18, label: 'Practitioner Level', color: '#22c55e', headline: 'You\'re ahead of most. The sprint sharpens your edge.', body: 'You\'re applying AI in your field, but there\'s a gap between occasional use and systematic advantage. The Expert Practitioner Programme will give you the framework, the network, and the field-verified certification to formalise what you\'ve built.', cta: 'Join the next cohort' },
-      { min: 19, max: 20, label: 'Expert Practitioner', color: '#3b82f6', headline: 'You\'re already operating at a high level. Consider becoming an Expert.', body: 'Your score suggests you\'re already applying AI at a level that most professionals in your field haven\'t reached. You\'d be a strong candidate for our Expert Practitioner pathway.', cta: 'Explore joining as an Expert Practitioner' }
+      { min: 5, max: 9, label: 'Foundation Level', color: '#FF5748', headline: 'You\'re at the starting line. That\'s exactly where this programme begins.', body: 'Most professionals in your field are in the same position. The Expert Practitioner Programme is built for exactly this moment — structured, practitioner-led, and designed to move you from curiosity to capability in four weeks.', cta: 'Reserve Your Seat →' },
+      { min: 10, max: 14, label: 'Emerging Practitioner', color: '#FF8C00', headline: 'You have awareness. The programme turns awareness into applied advantage.', body: 'You\'re ahead of most professionals who haven\'t started yet. But awareness without application doesn\'t move the needle. The sprint will give you the structured framework, practitioner guidance, and peer accountability to make your AI knowledge operational.', cta: 'Apply Now →' },
+      { min: 15, max: 18, label: 'Practitioner Level', color: '#22c55e', headline: 'You\'re ahead of most. The sprint sharpens your edge.', body: 'You\'re applying AI in your field, but there\'s a gap between occasional use and systematic advantage. The Expert Practitioner Programme will give you the framework, the network, and the field-verified certification to formalise what you\'ve built.', cta: 'Join Next Cohort →' },
+      { min: 19, max: 20, label: 'Expert Practitioner', color: '#3b82f6', headline: 'You\'re already operating at a high level. Consider becoming an Expert.', body: 'Your score suggests you\'re already applying AI at a level that most professionals in your field haven\'t reached. You\'d be a strong candidate for our Expert Practitioner pathway.', cta: 'Join as Expert →' }
   ];
   const scores = {};
   let currentQ = 0;
@@ -742,7 +742,14 @@
       document.getElementById(ID + '_headline').textContent = tier.headline;
       document.getElementById(ID + '_body').textContent = tier.body;
       document.getElementById(ID + '_cta_link').textContent = tier.cta;
-      if (total >= 19) document.getElementById(ID + '_cta_link').href = 'join-as-expert.html';
+      var pricingLinkDv = document.getElementById(ID + '_pricing_link');
+      if (total >= 19) {
+        document.getElementById(ID + '_cta_link').href = 'join-as-expert.html';
+        if (pricingLinkDv) { pricingLinkDv.href = 'join-as-expert.html#earnings'; pricingLinkDv.textContent = 'What you can earn →'; }
+      } else {
+        document.getElementById(ID + '_cta_link').href = 'apply.html?program_id=3';
+        if (pricingLinkDv) { pricingLinkDv.href = '#pricing'; pricingLinkDv.textContent = 'View pricing first →'; }
+      }
       document.getElementById(ID + '_result').classList.add('qf-visible');
       document.querySelector('#' + ID + '_container .qf-nav').style.display = 'none';
       document.querySelectorAll('#' + ID + '_container .qf-question').forEach(el => el.classList.remove('qf-active'));
