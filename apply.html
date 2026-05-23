@@ -1675,6 +1675,20 @@
     var plan         = (_pricingPlans && _pricingPlans[isTeam ? 'TEAM' : 'INDIVIDUAL']) || {};
     var currency     = getActiveCurrency().toUpperCase();
 
+    /* Guard: programme must be selected and pricing must be loaded */
+    if (!_programId) {
+      feedback.textContent = 'Please select a programme before applying a coupon.';
+      feedback.style.color = 'var(--red)';
+      feedback.style.display = 'block';
+      return;
+    }
+    if (!plan.id) {
+      feedback.textContent = 'Pricing is still loading — please wait a moment and try again.';
+      feedback.style.color = 'var(--red)';
+      feedback.style.display = 'block';
+      return;
+    }
+
     /* Show loading state */
     feedback.textContent  = 'Checking code…';
     feedback.style.color  = 'var(--muted)';
@@ -1686,8 +1700,8 @@
     /* Coupon endpoint is public — no Bearer token needed */
     apiPost('/payments/coupons/validate', {
       payment_type:    'ENROLLMENT',
-      entity_id:       _programId || undefined,
-      pricing_plan_id: plan.id    || undefined,
+      entity_id:       _programId,
+      pricing_plan_id: plan.id,
       currency:        currency,
       enrollment_type: isTeam ? 'TEAM' : 'INDIVIDUAL',
       user_size:       isTeam ? teamSize : 1,
