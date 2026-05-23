@@ -707,7 +707,7 @@
       <a href="organisations.html">For Organisations</a>
     </div>
     <div class="nav-cta">
-      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm">Login</a>
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
       <a href="apply.html" class="btn btn-primary btn-sm">Apply Now</a>
     </div>
     <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -719,7 +719,7 @@
   <a href="programme.html">Programme</a>
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
-  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px">Login</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
   <a href="apply.html" class="btn btn-primary">Apply Now</a>
 </div>
 
@@ -976,7 +976,7 @@
                 <option value="" disabled selected>Select your programme</option>
                 <option value="Software Engineering" data-program-id="1">Software Engineering</option>
                 <option value="Cybersecurity" data-program-id="2">Cybersecurity</option>
-                <option value="Cloud &amp; DevOps" data-program-id="3">Cloud &amp; DevOps</option>
+                <option value="Product Marketing" data-program-id="5">Product Marketing</option>
                 <option value="Data &amp; Analytics" data-program-id="4">Data &amp; Analytics</option>
               </select>
             </div>
@@ -1008,10 +1008,10 @@
               <label for="team-size">Team Size</label>
               <select id="team-size" name="team_size">
                 <option value="" disabled selected>How many people?</option>
-                <option value="2">2 people</option>
-                <option value="3">3 people</option>
-                <option value="4">4 people</option>
-                <option value="5">5 people</option>
+                <option value="2">Team of 2 </option>
+                <option value="3">Team of 3 </option>
+                <option value="4">Team of 4 </option>
+                <option value="5">Team of 5 </option>
               </select>
             </div>
 
@@ -1213,8 +1213,8 @@
   var API_BASE = 'https://api.brixgate.com/api/v1';
 
   /* programme ID → field name */
-  var PROGRAM_ID_TO_FIELD = { 1: 'Software Engineering', 2: 'Cybersecurity', 3: 'Cloud & DevOps', 4: 'Data & Analytics' };
-  var FIELD_TO_PROGRAM_ID = { 'Software Engineering': 1, 'Cybersecurity': 2, 'Cloud & DevOps': 3, 'Data & Analytics': 4 };
+  var PROGRAM_ID_TO_FIELD = { 1: 'Software Engineering', 2: 'Cybersecurity', 3: 'Cloud & DevOps', 4: 'Data & Analytics', 5: 'Product Marketing' };
+  var FIELD_TO_PROGRAM_ID = { 'Software Engineering': 1, 'Cybersecurity': 2, 'Cloud & DevOps': 3, 'Data & Analytics': 4, 'Product Marketing': 5 };
   var CURRENCY_SYMS = { ngn: '₦', usd: '$', gbp: '£', eur: '€', cad: 'C$' };
 
   var _programId    = null;
