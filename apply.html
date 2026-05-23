@@ -2038,6 +2038,7 @@
       user_size:             isTeamPay ? teamSizePay : 1,
       contact_person_name:   (firstName2 + ' ' + lastName2).trim(),
       contact_person_email:  email2,
+      billing_email:         email2,
       payment_method:        'PAYSTACK'
     }, token)
       .then(function(data) {
