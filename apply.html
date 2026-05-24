@@ -1020,7 +1020,7 @@
                 <label for="coupon-code" style="font-size:0.8rem;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:7px">Coupon Code</label>
                 <div style="display:flex;gap:8px;align-items:stretch">
                   <input type="text" id="coupon-code" name="coupon_code" placeholder="e.g. BRIX20" autocomplete="off" style="background:rgba(255,255,255,0.05);border:1px solid var(--border-card);border-radius:8px;padding:13px 16px;color:var(--white);font-family:inherit;font-size:0.92rem;outline:none;flex:1;box-sizing:border-box;transition:border-color .2s;text-transform:uppercase;letter-spacing:.05em" oninput="this.value=this.value.toUpperCase()" />
-                  <button type="button" onclick="applyCoupon()" style="padding:0 18px;background:var(--red);border:none;border-radius:8px;color:#fff;font-size:0.82rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s;height:100%" onmouseover="this.style.background='var(--orange)'" onmouseout="this.style.background='var(--red)'">Apply</button>
+                  <button type="button" onclick="applyCoupon()" style="padding:13px 22px;background:var(--red);border:none;border-radius:8px;color:#fff;font-size:0.85rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s;line-height:1" onmouseover="this.style.background='var(--orange)'" onmouseout="this.style.background='var(--red)'">Apply</button>
                 </div>
                 <div id="coupon-feedback" style="margin-top:6px;font-size:0.78rem;display:none"></div>
               </div>
@@ -1095,7 +1095,7 @@
           </div>
 
           <!-- Coupon status banner — shown after auto-apply on Continue -->
-          <div id="review-coupon-banner" style="display:none;margin-bottom:16px;border-radius:10px;padding:12px 16px;font-size:0.84rem;font-weight:600;display:none;align-items:center;gap:10px"></div>
+          <div id="review-coupon-banner" style="display:none;margin-bottom:16px;border-radius:10px;padding:12px 16px;font-size:0.84rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
 
           <div class="review-section-label">Programme &amp; Fee</div>
           <div class="price-breakdown">
@@ -1746,6 +1746,7 @@
 
     /* apiPost() already returns parsed JSON — do NOT add .then(r => r.json()) */
     /* Coupon endpoint is public — no Bearer token needed */
+    var billingEmail = (document.getElementById('email') || {}).value || '';
     apiPost('/payments/coupons/validate', {
       payment_type:    'ENROLLMENT',
       entity_id:       _programId,
@@ -1753,7 +1754,8 @@
       currency:        currency,
       enrollment_type: isTeam ? 'TEAM' : 'INDIVIDUAL',
       user_size:       isTeam ? teamSize : 1,
-      coupon_code:     code
+      coupon_code:     code,
+      billing_email:   billingEmail || undefined
     })
     .then(function(data) {
       if (applyBtn) { applyBtn.disabled = false; applyBtn.textContent = 'Apply'; }
@@ -2030,17 +2032,17 @@
           var banner = document.getElementById('review-coupon-banner');
           if (banner) {
             if (couponResult === 'success' && _appliedCoupon) {
-              banner.style.display      = 'flex';
-              banner.style.background   = 'rgba(34,197,94,0.1)';
-              banner.style.border       = '1px solid rgba(34,197,94,0.35)';
-              banner.style.color        = '#15803D';
-              banner.innerHTML          = '<span style="font-size:1.1rem">✓</span> Coupon <strong>' + _appliedCoupon + '</strong> applied — discount reflected in your total below.';
+              banner.style.display    = 'block';
+              banner.style.background = 'rgba(34,197,94,0.1)';
+              banner.style.border     = '1px solid rgba(34,197,94,0.35)';
+              banner.style.color      = '#15803D';
+              banner.textContent      = '✓ Coupon "' + _appliedCoupon + '" applied successfully.';
             } else if (couponResult === 'failed') {
-              banner.style.display      = 'flex';
-              banner.style.background   = 'rgba(255,41,78,0.08)';
-              banner.style.border       = '1px solid rgba(255,41,78,0.3)';
-              banner.style.color        = 'var(--red)';
-              banner.innerHTML          = '<span style="font-size:1.1rem">✗</span> Coupon code <strong>' + pendingCode + '</strong> is invalid or expired — full price applies.';
+              banner.style.display    = 'block';
+              banner.style.background = 'rgba(255,41,78,0.08)';
+              banner.style.border     = '1px solid rgba(255,41,78,0.3)';
+              banner.style.color      = 'var(--red)';
+              banner.textContent      = '✗ Coupon code "' + pendingCode + '" invalid or expired.';
             } else {
               banner.style.display = 'none';
             }
