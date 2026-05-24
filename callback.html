@@ -236,38 +236,42 @@
     <!-- STATE: Success -->
     <div id="state-success" class="state">
       <div class="success-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="rgba(34,197,94,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div class="success-title">Payment Verified!</div>
+      <div class="success-title">You're In. Check Your Email.</div>
       <div class="success-body">
-        Your enrolment is confirmed. We've sent a <strong>password setup email</strong> to your registered address — open it to create your password and access the portal.
+        Your enrolment is confirmed. <strong style="color:var(--white)">Your next step is in your inbox</strong> — we've sent a password setup link to your email address.
       </div>
 
-      <div class="email-highlight" style="display:inline-flex;align-items:center;gap:8px"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Check your inbox now — email sent from we@brixgate.com</div>
-
-      <div class="success-steps">
-        <div class="success-step">
-          <div class="step-num">1</div>
-          <div>Open the email from <strong style="color:var(--white)">we@brixgate.com</strong> and click <em>"Set your password"</em>.</div>
+      <!-- Critical action box — catches the eye immediately -->
+      <div style="background:rgba(255,41,78,0.07);border:1.5px solid rgba(255,41,78,0.4);border-radius:14px;padding:20px 22px;margin-bottom:24px;text-align:left">
+        <div style="font-size:0.72rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">⚡ Action Required — Do This Now</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <div style="min-width:22px;height:22px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;color:#fff;margin-top:1px">1</div>
+            <div style="font-size:0.87rem;color:var(--white);line-height:1.5">Open the email from <strong>we@brixgate.com</strong> and click <em>"Set your password"</em> to activate your account.</div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <div style="min-width:22px;height:22px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;color:#fff;margin-top:1px">2</div>
+            <div style="font-size:0.87rem;color:var(--white);line-height:1.5">Create your password — this unlocks the Brixgate learning portal, your cohort, and your practitioner.</div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <div style="min-width:22px;height:22px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;color:#fff;margin-top:1px">3</div>
+            <div style="font-size:0.87rem;color:var(--white);line-height:1.5">Log in to see your programme schedule and start preparing.</div>
+          </div>
         </div>
-        <div class="success-step">
-          <div class="step-num">2</div>
-          <div>Create your password — this gives you access to the Brixgate learning portal.</div>
-        </div>
-        <div class="success-step">
-          <div class="step-num">3</div>
-          <div>Log in with your email and new password to see your cohort, schedule, and practitioner.</div>
+        <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,41,78,0.25);font-size:0.78rem;color:var(--muted)">
+          Can't find the email? Check your spam folder — it came from <span style="color:var(--white);font-weight:600">we@brixgate.com</span>
         </div>
       </div>
 
       <div class="ref-box">Payment reference: <strong id="success-ref">—</strong></div>
 
       <div class="action-row">
-        <a href="https://portal.brixgate.com/login" class="btn btn-primary">Go to Login</a>
-        <a href="index.html" class="btn btn-outline">Back to Home</a>
+        <a id="open-email-btn" href="mailto:" class="btn btn-primary" onclick="openEmailApp(event)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Open Email
+        </a>
+        <a href="https://portal.brixgate.com/login" class="btn btn-outline" target="_blank" rel="noopener">Go to Login</a>
       </div>
-
-      <p style="font-size:0.78rem;color:var(--muted);margin-top:20px;line-height:1.6">
-        Didn't get the email? Check your spam folder or contact <a href="mailto:we@brixgate.com" style="color:var(--red)">we@brixgate.com</a>
-      </p>
     </div>
 
     <!-- STATE: Failed / not confirmed -->
@@ -404,6 +408,42 @@
       .catch(function() {
         requeryPayment(fallbackRef, token, 1);
       });
+  }
+
+  /* ── Open Email App ──
+     Tries to detect a webmail provider from the registered email (stored in
+     sessionStorage by apply.html). Falls back to mailto: which opens the
+     system default mail client on mobile / desktop.                        */
+  function openEmailApp(e) {
+    e.preventDefault();
+    var email = '';
+    try { email = sessionStorage.getItem('bxApplicantEmail') || ''; } catch(_) {}
+
+    var domain = email.split('@')[1] || '';
+    var webmailMap = {
+      'gmail.com':       'https://mail.google.com/',
+      'googlemail.com':  'https://mail.google.com/',
+      'yahoo.com':       'https://mail.yahoo.com/',
+      'yahoo.co.uk':     'https://mail.yahoo.com/',
+      'outlook.com':     'https://outlook.live.com/mail/',
+      'hotmail.com':     'https://outlook.live.com/mail/',
+      'live.com':        'https://outlook.live.com/mail/',
+      'msn.com':         'https://outlook.live.com/mail/',
+      'icloud.com':      'https://www.icloud.com/mail/',
+      'me.com':          'https://www.icloud.com/mail/',
+      'mac.com':         'https://www.icloud.com/mail/',
+      'protonmail.com':  'https://mail.proton.me/',
+      'proton.me':       'https://mail.proton.me/',
+      'zoho.com':        'https://mail.zoho.com/'
+    };
+
+    var webmailUrl = webmailMap[domain.toLowerCase()];
+    if (webmailUrl) {
+      window.open(webmailUrl, '_blank', 'noopener');
+    } else {
+      /* Unknown domain — fall back to mailto: (opens system email client) */
+      window.location.href = 'mailto:';
+    }
   }
 </script>
 

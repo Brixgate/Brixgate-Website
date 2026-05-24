@@ -1020,7 +1020,7 @@
                 <label for="coupon-code" style="font-size:0.8rem;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:7px">Coupon Code</label>
                 <div style="display:flex;gap:8px;align-items:stretch">
                   <input type="text" id="coupon-code" name="coupon_code" placeholder="e.g. BRIX20" autocomplete="off" style="background:rgba(255,255,255,0.05);border:1px solid var(--border-card);border-radius:8px;padding:13px 16px;color:var(--white);font-family:inherit;font-size:0.92rem;outline:none;flex:1;box-sizing:border-box;transition:border-color .2s;text-transform:uppercase;letter-spacing:.05em" oninput="this.value=this.value.toUpperCase()" />
-                  <button type="button" onclick="applyCoupon()" style="padding:0 18px;background:rgba(255,41,78,0.12);border:1px solid rgba(255,41,78,0.35);border-radius:8px;color:var(--red);font-size:0.82rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s" onmouseover="this.style.background='rgba(255,41,78,0.22)'" onmouseout="this.style.background='rgba(255,41,78,0.12)'">Apply</button>
+                  <button type="button" onclick="applyCoupon()" style="padding:0 18px;background:var(--red);border:none;border-radius:8px;color:#fff;font-size:0.82rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s;height:100%" onmouseover="this.style.background='var(--orange)'" onmouseout="this.style.background='var(--red)'">Apply</button>
                 </div>
                 <div id="coupon-feedback" style="margin-top:6px;font-size:0.78rem;display:none"></div>
               </div>
@@ -1093,6 +1093,9 @@
               <div class="review-field-value" id="review-enrollment">—</div>
             </div>
           </div>
+
+          <!-- Coupon status banner — shown after auto-apply on Continue -->
+          <div id="review-coupon-banner" style="display:none;margin-bottom:16px;border-radius:10px;padding:12px 16px;font-size:0.84rem;font-weight:600;display:none;align-items:center;gap:10px"></div>
 
           <div class="review-section-label">Programme &amp; Fee</div>
           <div class="price-breakdown">
@@ -1962,6 +1965,7 @@
         if (!token) throw new Error('Authentication error. Please try again.');
 
         try { sessionStorage.setItem('bxAccessToken', token); } catch(e) {}
+        try { sessionStorage.setItem('bxApplicantEmail', email); } catch(e) {}
         /* Cookie fallback — survives www↔non-www 301 redirects (different origins share .brixgate.com) */
         try { document.cookie = 'bxToken=' + encodeURIComponent(token) + '; path=/; domain=.brixgate.com; secure; samesite=lax; max-age=3600'; } catch(e) {}
 
@@ -2016,8 +2020,95 @@
         document.getElementById('pay-btn-label').textContent     = 'Pay ' + priceStr + ' via Paystack';
 
         hideFormError();
-        setSubmitState(submitBtn, false, 'Continue to Review');
-        showPanel('review');
+
+        /* ── Auto-apply coupon if user typed a code but didn't click Apply ── */
+        var couponInputEl = document.getElementById('coupon-code');
+        var pendingCode   = couponInputEl ? couponInputEl.value.trim().toUpperCase() : '';
+
+        function finishAndShow(couponResult) {
+          /* couponResult: 'success' | 'failed' | 'skipped' */
+          var banner = document.getElementById('review-coupon-banner');
+          if (banner) {
+            if (couponResult === 'success' && _appliedCoupon) {
+              banner.style.display      = 'flex';
+              banner.style.background   = 'rgba(34,197,94,0.1)';
+              banner.style.border       = '1px solid rgba(34,197,94,0.35)';
+              banner.style.color        = '#15803D';
+              banner.innerHTML          = '<span style="font-size:1.1rem">✓</span> Coupon <strong>' + _appliedCoupon + '</strong> applied — discount reflected in your total below.';
+            } else if (couponResult === 'failed') {
+              banner.style.display      = 'flex';
+              banner.style.background   = 'rgba(255,41,78,0.08)';
+              banner.style.border       = '1px solid rgba(255,41,78,0.3)';
+              banner.style.color        = 'var(--red)';
+              banner.innerHTML          = '<span style="font-size:1.1rem">✗</span> Coupon code <strong>' + pendingCode + '</strong> is invalid or expired — full price applies.';
+            } else {
+              banner.style.display = 'none';
+            }
+          }
+          setSubmitState(submitBtn, false, 'Continue to Review');
+          showPanel('review');
+        }
+
+        /* If coupon already applied, or no code typed — go straight through */
+        if (_appliedCoupon || !pendingCode) {
+          finishAndShow('skipped');
+        } else {
+          /* Auto-validate the pending code before switching panels */
+          setSubmitState(submitBtn, true, 'Checking coupon…');
+          var isTeamAC   = enrollmentType === 'Team';
+          var planAC     = (_pricingPlans && _pricingPlans[isTeamAC ? 'TEAM' : 'INDIVIDUAL']) || {};
+          var currencyAC = getActiveCurrency().toUpperCase();
+          if (!_programId || !planAC.id) {
+            /* Can't validate without IDs — skip silently */
+            finishAndShow('skipped');
+          } else {
+            apiPost('/payments/coupons/validate', {
+              payment_type:    'ENROLLMENT',
+              entity_id:       _programId,
+              pricing_plan_id: planAC.id,
+              currency:        currencyAC,
+              enrollment_type: isTeamAC ? 'TEAM' : 'INDIVIDUAL',
+              user_size:       isTeamAC ? teamSize : 1,
+              coupon_code:     pendingCode
+            })
+            .then(function(cd) {
+              if (cd && cd.success) {
+                /* Mirror the same extraction logic from applyCoupon */
+                var d2  = cd.data || {};
+                var c2  = d2.coupon || d2.coupon_data || d2.data || {};
+                var dtype2 = ((d2.discount_type || c2.discount_type || c2.type || '') + '').toUpperCase();
+                var isPct2 = /PERCENT/.test(dtype2);
+                var isFlat2 = /FIXED|FLAT|AMOUNT/.test(dtype2);
+                var pct2 = d2.discount_percentage || d2.discount_percent || c2.discount_percentage
+                         || (isPct2 ? (d2.discount_value || d2.value || c2.value || 0) : 0) || 0;
+                var savingsFlat2 = d2.discount_amount || d2.savings || d2.amount_off
+                                 || c2.discount_amount || c2.savings
+                                 || (isFlat2 ? (d2.discount_value || d2.value || c2.value || 0) : 0) || 0;
+                var origAmt2 = d2.original_amount || d2.base_amount || 0;
+                var discAmt2 = d2.discounted_amount || d2.final_amount || d2.payable_amount || 0;
+                if (origAmt2 > 0 && discAmt2 > 0 && discAmt2 < origAmt2) {
+                  if (!pct2)         pct2 = Math.round((1 - discAmt2 / origAmt2) * 100);
+                  if (!savingsFlat2) savingsFlat2 = origAmt2 - discAmt2;
+                }
+                var acCur2 = getActiveCurrency();
+                _couponDiscounted = {};
+                _couponSavings    = {};
+                if (discAmt2    > 0) _couponDiscounted[acCur2] = discAmt2;
+                if (savingsFlat2 > 0) _couponSavings[acCur2]   = savingsFlat2;
+                _appliedCoupon = pendingCode;
+                _couponPct     = pct2;
+                if (couponInputEl) { couponInputEl.readOnly = true; couponInputEl.style.borderColor = '#22c55e'; }
+                var fb2 = document.getElementById('coupon-feedback');
+                if (fb2) { fb2.style.display = 'none'; }
+                updateEnrollmentUI(enrollmentType, teamSize + '');
+                finishAndShow('success');
+              } else {
+                finishAndShow('failed');
+              }
+            })
+            .catch(function() { finishAndShow('failed'); });
+          }
+        }
       })
       .catch(function(err) {
         setSubmitState(submitBtn, false, 'Continue to Review');
