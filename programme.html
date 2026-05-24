@@ -509,6 +509,16 @@
       @media (max-width: 480px) {
         .prog-card-pg { min-width: 80vw; max-width: 80vw; }
       }
+      /* Upcoming cards grid */
+      .prog-cards-upcoming {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      @media (max-width: 900px) {
+        .prog-cards-upcoming { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 540px) {
+        .prog-cards-upcoming { grid-template-columns: 1fr; }
+      }
     </style>
 
     <div class="prog-card-grid-pg">
@@ -552,40 +562,80 @@
         </div>
       </a>
 
-      <!-- Cloud & DevOps -->
-      <a href="programme-devops.html" class="prog-card-pg" style="background:#E8E0F5">
+      <!-- Financial Modelling -->
+      <a href="programme-financial-modelling.html" class="prog-card-pg" style="background:#E8E0F5">
         <div style="padding:22px 20px 14px">
           <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#021024;border:1.5px solid rgba(2,16,36,0.28);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Open</span>
-          <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Cloud &amp; DevOps</div>
-          <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Embed AI across CI/CD, observability and incident response so your team ships faster.</div>
+          <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Financial Modelling</div>
+          <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Build, stress-test and present AI-powered financial models for smarter investment decisions.</div>
         </div>
         <div class="prog-card-pg-img">
-          <img src="assets/Cloud & devops.png" alt="Cloud & DevOps" loading="lazy" />
+          <img src="assets/Financial Modelling.png" alt="Financial Modelling" loading="lazy" />
           <span class="prog-card-pg-btn">View Programme →</span>
         </div>
       </a>
 
     </div>
 
-    <!-- Coming soon strip -->
-    <div style="margin-bottom:24px">
-      <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:12px">🔒 Unlocking Throughout 2026</div>
-      <div class="fields-coming-soon" style="background:#F9F8F7;border:1px solid #E8E3DE;justify-content:center">
-        <div class="coming-field" style="opacity:0.75"><div class="coming-field-emoji">📊</div><div class="coming-field-name" style="color:#2E3A4A">Data Science</div></div>
-        <div class="coming-field" style="opacity:0.75"><div class="coming-field-emoji">🏦</div><div class="coming-field-name" style="color:#2E3A4A">Finance</div></div>
-        <div class="coming-field" style="opacity:0.75"><div class="coming-field-emoji">📣</div><div class="coming-field-name" style="color:#2E3A4A">Marketing</div></div>
-        <div class="coming-field" style="opacity:0.75"><div class="coming-field-emoji">📋</div><div class="coming-field-name" style="color:#2E3A4A">Project Management</div></div>
-        <div class="coming-field" style="opacity:0.75"><div class="coming-field-emoji">👥</div><div class="coming-field-name" style="color:#2E3A4A">Human Resources</div></div>
-        <div class="coming-field" style="opacity:0.75"><div class="coming-field-emoji">⚖️</div><div class="coming-field-name" style="color:#2E3A4A">Legal &amp; Compliance</div></div>
-        <div class="coming-field" style="opacity:0.75"><div class="coming-field-emoji">🏥</div><div class="coming-field-name" style="color:#2E3A4A">Healthcare</div></div>
-        <div class="coming-field" style="opacity:0.75"><div class="coming-field-emoji">📚</div><div class="coming-field-name" style="color:#2E3A4A">Education</div></div>
-        <div class="coming-field" style="opacity:0.75"><div class="coming-field-emoji">🚚</div><div class="coming-field-name" style="color:#2E3A4A">Operations</div></div>
-        <div class="coming-field" style="opacity:0.75"><div class="coming-field-emoji">🏭</div><div class="coming-field-name" style="color:#2E3A4A">Manufacturing</div></div>
+    <!-- Coming soon section -->
+    <div style="margin-top:16px;margin-bottom:24px">
+      <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:16px;text-align:center">🔒 Unlocking Throughout 2026</div>
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px" class="prog-cards-upcoming">
+
+        <!-- Cloud & DevOps -->
+        <div class="prog-card-pg" style="background:#F2D9EC;cursor:default;text-decoration:none">
+          <div style="padding:22px 20px 14px">
+            <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#7A4A6A;background:rgba(116,74,106,0.1);border:1.5px solid rgba(116,74,106,0.25);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Upcoming</span>
+            <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Cloud &amp; DevOps</div>
+            <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Embed AI across CI/CD, observability and incident response so your team ships faster.</div>
+          </div>
+          <div style="padding:0 20px 20px;margin-top:auto">
+            <a href="apply.html" style="display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#7A4A6A;text-decoration:none;border:1.5px solid rgba(116,74,106,0.35);border-radius:30px;padding:7px 16px;transition:background .2s" onmouseover="this.style.background='rgba(116,74,106,0.08)'" onmouseout="this.style.background='transparent'">Join the Waitlist →</a>
+          </div>
+        </div>
+
+        <!-- Data Management -->
+        <div class="prog-card-pg" style="background:#D4F0E4;cursor:default;text-decoration:none">
+          <div style="padding:22px 20px 14px">
+            <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#1A6B45;background:rgba(26,107,69,0.1);border:1.5px solid rgba(26,107,69,0.25);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Upcoming</span>
+            <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Data Management</div>
+            <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Use AI to structure, clean and extract insight from complex data sets at professional scale.</div>
+          </div>
+          <div style="padding:0 20px 20px;margin-top:auto">
+            <a href="apply.html" style="display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#1A6B45;text-decoration:none;border:1.5px solid rgba(26,107,69,0.35);border-radius:30px;padding:7px 16px;transition:background .2s" onmouseover="this.style.background='rgba(26,107,69,0.08)'" onmouseout="this.style.background='transparent'">Join the Waitlist →</a>
+          </div>
+        </div>
+
+        <!-- Product Management -->
+        <div class="prog-card-pg" style="background:#FDF0D5;cursor:default;text-decoration:none">
+          <div style="padding:22px 20px 14px">
+            <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#92600A;background:rgba(146,96,10,0.1);border:1.5px solid rgba(146,96,10,0.25);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Upcoming</span>
+            <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Product Management</div>
+            <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Integrate AI into product discovery, roadmapping and delivery to ship smarter, faster.</div>
+          </div>
+          <div style="padding:0 20px 20px;margin-top:auto">
+            <a href="apply.html" style="display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#92600A;text-decoration:none;border:1.5px solid rgba(146,96,10,0.35);border-radius:30px;padding:7px 16px;transition:background .2s" onmouseover="this.style.background='rgba(146,96,10,0.08)'" onmouseout="this.style.background='transparent'">Join the Waitlist →</a>
+          </div>
+        </div>
+
+        <!-- Sales Management -->
+        <div class="prog-card-pg" style="background:#FFE4D6;cursor:default;text-decoration:none">
+          <div style="padding:22px 20px 14px">
+            <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#8C3A1A;background:rgba(140,58,26,0.1);border:1.5px solid rgba(140,58,26,0.25);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Upcoming</span>
+            <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Sales Management</div>
+            <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Deploy AI across prospecting, pipeline management and closing to hit revenue targets consistently.</div>
+          </div>
+          <div style="padding:0 20px 20px;margin-top:auto">
+            <a href="apply.html" style="display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#8C3A1A;text-decoration:none;border:1.5px solid rgba(140,58,26,0.35);border-radius:30px;padding:7px 16px;transition:background .2s" onmouseover="this.style.background='rgba(140,58,26,0.08)'" onmouseout="this.style.background='transparent'">Join the Waitlist →</a>
+          </div>
+        </div>
+
       </div>
     </div>
 
     <p style="text-align:center;font-size:0.84rem;color:#7A94A8" class="fade-in">
-      Your field not open yet? <a href="apply.html" style="color:var(--red);font-weight:700">Register interest and we'll notify you →</a>
+      Your field not listed? <a href="apply.html" style="color:var(--red);font-weight:700">Register interest and we'll notify you →</a>
     </p>
   </div>
 </section>
