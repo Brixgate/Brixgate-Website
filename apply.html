@@ -973,11 +973,7 @@
             <div class="form-group">
               <label for="field">Programme</label>
               <select id="field" name="field" required>
-                <option value="" disabled selected>Select your programme</option>
-                <option value="Software Engineering" data-program-id="1">Software Engineering</option>
-                <option value="Cybersecurity" data-program-id="2">Cybersecurity</option>
-                <option value="Product Marketing" data-program-id="5">Product Marketing</option>
-                <option value="Data &amp; Analytics" data-program-id="4">Data &amp; Analytics</option>
+                <option value="" disabled selected>Loading programmes…</option>
               </select>
             </div>
 
@@ -1213,8 +1209,17 @@
   var API_BASE = 'https://api.brixgate.com/api/v1';
 
   /* programme ID → field name */
-  var PROGRAM_ID_TO_FIELD = { 1: 'Software Engineering', 2: 'Cybersecurity', 3: 'Cloud & DevOps', 4: 'Data & Analytics', 5: 'Product Marketing' };
-  var FIELD_TO_PROGRAM_ID = { 'Software Engineering': 1, 'Cybersecurity': 2, 'Cloud & DevOps': 3, 'Data & Analytics': 4, 'Product Marketing': 5 };
+  /* Populated dynamically from GET /programs — do not hardcode here */
+  var PROGRAM_ID_TO_FIELD = {};
+  var FIELD_TO_PROGRAM_ID = {};
+
+  /* Static fallback used only if the /programs fetch fails */
+  var PROGRAMS_FALLBACK = [
+    { id: 1, name: 'Software Engineering' },
+    { id: 2, name: 'Cyber Security' },
+    { id: 3, name: 'Financial Modelling' },
+    { id: 4, name: 'Product Marketing' }
+  ];
   var CURRENCY_SYMS = { ngn: '₦', usd: '$', gbp: '£', eur: '€', cad: 'C$' };
 
   var _programId    = null;
@@ -1507,21 +1512,58 @@
     updateEnrollmentUI(type, teamSize);
   };
 
-  /* ---------- URL param pre-fill (?field=Cybersecurity&type=team) ---------- */
+  /* ---------- Populate programme dropdown from backend ---------- */
+  function populateProgrammes(list) {
+    var fieldSel = document.getElementById('field');
+    if (!fieldSel) return;
+
+    /* Clear all options then add placeholder */
+    fieldSel.innerHTML = '<option value="" disabled selected>Select your programme</option>';
+    PROGRAM_ID_TO_FIELD = {};
+    FIELD_TO_PROGRAM_ID = {};
+
+    list.forEach(function(p) {
+      /* Strip leading "AI in " prefix for a clean display label */
+      var displayName = p.name || (p.title || '').replace(/^AI in\s*/i, '').trim();
+      var id = p.id;
+      PROGRAM_ID_TO_FIELD[id] = displayName;
+      FIELD_TO_PROGRAM_ID[displayName] = id;
+      var opt = document.createElement('option');
+      opt.value = displayName;
+      opt.setAttribute('data-program-id', id);
+      opt.textContent = displayName;
+      fieldSel.appendChild(opt);
+    });
+  }
+
+  function fetchProgrammes() {
+    return fetch(API_BASE + '/programs')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var programs = (data && data.data && data.data.programs) || [];
+        if (!programs.length) throw new Error('empty');
+        populateProgrammes(programs);
+      })
+      .catch(function() {
+        /* Fallback to static list so form never breaks */
+        console.warn('[Brixgate] /programs fetch failed — using static fallback');
+        populateProgrammes(PROGRAMS_FALLBACK);
+      });
+  }
+
+  /* ---------- URL param pre-fill (?program_id=X or ?field=Name) ---------- */
   document.addEventListener('DOMContentLoaded', function () {
     selectEnrollBadge('Individual');
 
     var params = new URLSearchParams(window.location.search);
 
-    /* Paystack callback redirect */
+    /* Paystack callback redirect — handle before anything else */
     var _ref = params.get('reference') || params.get('trxref');
     if (_ref) {
       window.location.replace('callback.html?reference=' + encodeURIComponent(_ref));
       return;
     }
 
-    /* Read ?program_id to auto-select field and fetch pricing */
-    var pidParam = params.get('program_id');
     var fieldSel = document.getElementById('field');
 
     function applyProgramId(pid) {
@@ -1536,31 +1578,34 @@
       fetchPricingPlans(_programId);
     }
 
-    if (pidParam) {
-      applyProgramId(pidParam);
-    }
-
-    /* Also support legacy ?field= param */
-    var fieldParam = params.get('field');
-    if (fieldParam && !pidParam && fieldSel) {
-      for (var fi = 0; fi < fieldSel.options.length; fi++) {
-        if (fieldSel.options[fi].value.toLowerCase() === fieldParam.toLowerCase()) {
-          fieldSel.selectedIndex = fi;
-          var pid2 = FIELD_TO_PROGRAM_ID[fieldSel.options[fi].value];
-          if (pid2) applyProgramId(pid2);
-          break;
-        }
-      }
-    }
-
     /* When user changes field dropdown, update program ID and fetch pricing */
     if (fieldSel) {
       fieldSel.addEventListener('change', function() {
         var selected = this.options[this.selectedIndex];
-        var pid3 = FIELD_TO_PROGRAM_ID[selected.value] || null;
+        var pid3 = parseInt(selected.getAttribute('data-program-id')) || FIELD_TO_PROGRAM_ID[selected.value] || null;
         if (pid3) applyProgramId(pid3);
       });
     }
+
+    /* Fetch programmes first, then run URL-param prefill once dropdown is ready */
+    fetchProgrammes().then(function() {
+      var pidParam   = params.get('program_id');
+      var fieldParam = params.get('field');
+
+      if (pidParam) {
+        applyProgramId(pidParam);
+      } else if (fieldParam && fieldSel) {
+        /* Support legacy ?field= links */
+        for (var fi = 0; fi < fieldSel.options.length; fi++) {
+          if (fieldSel.options[fi].value.toLowerCase() === fieldParam.toLowerCase()) {
+            fieldSel.selectedIndex = fi;
+            var pid2 = parseInt(fieldSel.options[fi].getAttribute('data-program-id')) || FIELD_TO_PROGRAM_ID[fieldSel.options[fi].value];
+            if (pid2) applyProgramId(pid2);
+            break;
+          }
+        }
+      }
+    });
 
     /* Enrollment type pre-fill from ?type=team */
     var typeParam = params.get('type');
