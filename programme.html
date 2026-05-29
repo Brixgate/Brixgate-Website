@@ -1444,7 +1444,7 @@
       btn.textContent = 'Submitting…';
       btn.disabled = true;
 
-      fetch('https://api.brixgate.com/api/v1/waitlist', {
+      fetch('https://dev.api.brixgate.com/api/v1/waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({ name: name, email: email, phone: phone, primary_field: programme })
@@ -1526,7 +1526,7 @@
         btn.textContent = 'Joining…';
         btn.disabled = true;
 
-        fetch('https://api.brixgate.com/api/v1/waitlist', {
+        fetch('https://dev.api.brixgate.com/api/v1/waitlist', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify({ name: name, email: email, phone: phone, primary_field: course })

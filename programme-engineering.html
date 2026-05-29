@@ -1306,7 +1306,7 @@ var PROGRAM_ID = 1;
     container.querySelectorAll('.fade-up').forEach(function(el) { el.classList.add('visible'); });
   }
 
-  fetch('https://api.brixgate.com/api/v1/pricing-plans?program_id=' + PROGRAM_ID)
+  fetch('https://dev.api.brixgate.com/api/v1/pricing-plans?program_id=' + PROGRAM_ID)
     .then(function(r) { return r.json(); })
     .then(function(data) { renderPricingCards((data && data.data && data.data.pricing_plans) || []); })
     .catch(function() { renderPricingCards([]); });

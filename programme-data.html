@@ -868,7 +868,7 @@ var PROGRAM_ID = 4;
     el.innerHTML = html;
     el.querySelectorAll('.fade-up').forEach(function(el) { el.classList.add('visible'); });
   }
-  fetch('https://api.brixgate.com/api/v1/pricing-plans?program_id=' + PROGRAM_ID)
+  fetch('https://dev.api.brixgate.com/api/v1/pricing-plans?program_id=' + PROGRAM_ID)
     .then(function(r) { return r.json(); })
     .then(function(d) { render((d && d.data && d.data.pricing_plans) || []); })
     .catch(function() { render([]); });

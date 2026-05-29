@@ -368,7 +368,7 @@
    QUESTIONNAIRE SUMMARY API
    POST /questionnaires/summaries after email is captured
    ============================================================ */
-var BX_API_BASE = 'https://api.brixgate.com';
+var BX_API_BASE = 'https://dev.api.brixgate.com';
 
 window.postQuestionnaireSummary = function(questionnaireId, email, score, ratingLevel, source, occupation, phoneNumber, fullName) {
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
