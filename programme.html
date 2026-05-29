@@ -519,40 +519,24 @@
       @media (max-width: 540px) {
         .prog-cards-upcoming { grid-template-columns: 1fr; }
       }
+    @keyframes livePulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50%       { transform: scale(2.2); opacity: 0; }
+    }
     </style>
 
     <div class="prog-card-grid-pg">
 
-      <!-- Product Marketing -->
-      <a href="programme-product.html" class="prog-card-pg" style="background:#3DD9C3">
-        <div style="padding:22px 20px 14px">
-          <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#021024;border:1.5px solid rgba(2,16,36,0.28);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Open</span>
-          <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Product Marketing</div>
-          <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">AI-native workflows, GTM systems and force-multiplier skills for modern product teams.</div>
-        </div>
-        <div class="prog-card-pg-img">
-          <img src="assets/Product Marketing.png" alt="Product Marketing" loading="lazy" />
-          <span class="prog-card-pg-btn">View Programme →</span>
-        </div>
-      </a>
-
-      <!-- Cybersecurity -->
-      <a href="programme-cybersecurity.html" class="prog-card-pg" style="background:#F0EAD8">
-        <div style="padding:22px 20px 14px">
-          <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#021024;border:1.5px solid rgba(2,16,36,0.28);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Open</span>
-          <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Cybersecurity</div>
-          <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Detect, investigate and neutralise threats faster using AI-powered security workflows.</div>
-        </div>
-        <div class="prog-card-pg-img">
-          <img src="assets/Cybersecurity.png" alt="Cybersecurity" loading="lazy" />
-          <span class="prog-card-pg-btn">View Programme →</span>
-        </div>
-      </a>
-
-      <!-- Software Engineering -->
+      <!-- Software Engineering — OPEN (shown first) -->
       <a href="programme-engineering.html" class="prog-card-pg" style="background:#D4E9F7">
         <div style="padding:22px 20px 14px">
-          <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#021024;border:1.5px solid rgba(2,16,36,0.28);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Open</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:0.68rem;font-weight:700;color:#021024;border:1.5px solid rgba(2,16,36,0.28);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">
+            <span style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:8px;height:8px;flex-shrink:0">
+              <span style="position:absolute;width:8px;height:8px;border-radius:50%;background:#22c55e;animation:livePulse 1.8s ease-in-out infinite;opacity:0.5"></span>
+              <span style="position:relative;width:6px;height:6px;border-radius:50%;background:#22c55e;display:block"></span>
+            </span>
+            Open
+          </span>
           <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Software Engineering</div>
           <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Build, review and ship production-ready code as an AI-native engineer across the full dev lifecycle.</div>
         </div>
@@ -562,87 +546,199 @@
         </div>
       </a>
 
-      <!-- Financial Modelling -->
-      <a href="programme-financial-modelling.html" class="prog-card-pg" style="background:#E8E0F5">
+      <!-- Product Marketing — Coming Soon -->
+      <div class="prog-card-pg" style="background:#3DD9C3;cursor:default;opacity:0.9">
         <div style="padding:22px 20px 14px">
-          <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#021024;border:1.5px solid rgba(2,16,36,0.28);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Open</span>
+          <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#0A6B5A;background:rgba(10,107,90,0.12);border:1.5px solid rgba(10,107,90,0.3);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">🔒 Coming Soon</span>
+          <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Product Marketing</div>
+          <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">AI-native workflows, GTM systems and force-multiplier skills for modern product teams.</div>
+        </div>
+        <div class="prog-card-pg-img">
+          <img src="assets/Product Marketing.png" alt="Product Marketing" loading="lazy" />
+          <a href="#waitlist" onclick="setWaitlistCourse('Product Marketing')" style="position:absolute;bottom:12px;right:12px;display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#021024;text-decoration:none;background:rgba(200,240,230,0.9);backdrop-filter:blur(6px);border-radius:30px;padding:7px 14px;white-space:nowrap">Join Waitlist →</a>
+        </div>
+      </div>
+
+      <!-- Cybersecurity — Coming Soon -->
+      <div class="prog-card-pg" style="background:#F0EAD8;cursor:default;opacity:0.9">
+        <div style="padding:22px 20px 14px">
+          <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#6B5A2A;background:rgba(107,90,42,0.12);border:1.5px solid rgba(107,90,42,0.3);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">🔒 Coming Soon</span>
+          <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Cybersecurity</div>
+          <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Detect, investigate and neutralise threats faster using AI-powered security workflows.</div>
+        </div>
+        <div class="prog-card-pg-img">
+          <img src="assets/Cybersecurity.png" alt="Cybersecurity" loading="lazy" />
+          <a href="#waitlist" onclick="setWaitlistCourse('Cybersecurity')" style="position:absolute;bottom:12px;right:12px;display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#021024;text-decoration:none;background:rgba(235,225,200,0.9);backdrop-filter:blur(6px);border-radius:30px;padding:7px 14px;white-space:nowrap">Join Waitlist →</a>
+        </div>
+      </div>
+
+      <!-- Financial Modelling — Coming Soon -->
+      <div class="prog-card-pg" style="background:#E8E0F5;cursor:default;opacity:0.9">
+        <div style="padding:22px 20px 14px">
+          <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#5A3E8A;background:rgba(90,62,138,0.12);border:1.5px solid rgba(90,62,138,0.3);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">🔒 Coming Soon</span>
           <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Financial Modelling</div>
           <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Build, stress-test and present AI-powered financial models for smarter investment decisions.</div>
         </div>
         <div class="prog-card-pg-img">
           <img src="assets/Financial Modelling.png" alt="Financial Modelling" loading="lazy" />
-          <span class="prog-card-pg-btn">View Programme →</span>
+          <a href="#waitlist" onclick="setWaitlistCourse('Financial Modelling')" style="position:absolute;bottom:12px;right:12px;display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#021024;text-decoration:none;background:rgba(232,224,245,0.9);backdrop-filter:blur(6px);border-radius:30px;padding:7px 14px;white-space:nowrap">Join Waitlist →</a>
         </div>
-      </a>
+      </div>
 
     </div>
 
     <!-- Coming soon section -->
     <div style="margin-top:16px;margin-bottom:24px">
-      <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:16px;text-align:center">🔒 Unlocking Throughout 2026</div>
+      <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:24px; margin-top: 24px; text-align:center">🔒 Unlocking Throughout 2026</div>
 
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px" class="prog-cards-upcoming">
 
         <!-- Cloud & DevOps -->
         <div class="prog-card-pg" style="background:#F2D9EC;cursor:default">
           <div style="padding:22px 20px 14px">
-            <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#7A4A6A;background:rgba(116,74,106,0.1);border:1.5px solid rgba(116,74,106,0.25);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Upcoming</span>
+            <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#7A4A6A;background:rgba(116,74,106,0.1);border:1.5px solid rgba(116,74,106,0.25);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Coming Soon</span>
             <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Cloud &amp; DevOps</div>
             <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Embed AI across CI/CD, observability and incident response so your team ships faster.</div>
           </div>
           <div class="prog-card-pg-img">
             <img src="assets/Cloud & devops.png" alt="Cloud & DevOps" loading="lazy" />
-            <a href="apply.html" style="position:absolute;bottom:12px;right:12px;display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#021024;text-decoration:none;background:rgba(242,217,236,0.85);backdrop-filter:blur(6px);border-radius:30px;padding:7px 14px;white-space:nowrap">Join the Waitlist →</a>
+            <a href="#waitlist" onclick="setWaitlistCourse('Cloud & DevOps')" style="position:absolute;bottom:12px;right:12px;display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#021024;text-decoration:none;background:rgba(242,217,236,0.85);backdrop-filter:blur(6px);border-radius:30px;padding:7px 14px;white-space:nowrap">Join the Waitlist →</a>
           </div>
         </div>
 
-        <!-- Data Management -->
+        <!-- Data Science -->
         <div class="prog-card-pg" style="background:#D4F0E4;cursor:default">
           <div style="padding:22px 20px 14px">
-            <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#1A6B45;background:rgba(26,107,69,0.1);border:1.5px solid rgba(26,107,69,0.25);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Upcoming</span>
-            <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Data Management</div>
+            <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#1A6B45;background:rgba(26,107,69,0.1);border:1.5px solid rgba(26,107,69,0.25);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Coming Soon</span>
+            <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Data Science</div>
             <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Use AI to structure, clean and extract insight from complex data sets at professional scale.</div>
           </div>
           <div class="prog-card-pg-img">
-            <img src="assets/Data Management.png" alt="Data Management" loading="lazy" />
-            <a href="apply.html" style="position:absolute;bottom:12px;right:12px;display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#021024;text-decoration:none;background:rgba(212,240,228,0.85);backdrop-filter:blur(6px);border-radius:30px;padding:7px 14px;white-space:nowrap">Join the Waitlist →</a>
+            <img src="assets/Data Science.png" alt="Data Science" loading="lazy" />
+            <a href="#waitlist" onclick="setWaitlistCourse('Data Science')" style="position:absolute;bottom:12px;right:12px;display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#021024;text-decoration:none;background:rgba(212,240,228,0.85);backdrop-filter:blur(6px);border-radius:30px;padding:7px 14px;white-space:nowrap">Join the Waitlist →</a>
           </div>
         </div>
 
         <!-- Product Management -->
         <div class="prog-card-pg" style="background:#FDF0D5;cursor:default">
           <div style="padding:22px 20px 14px">
-            <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#92600A;background:rgba(146,96,10,0.1);border:1.5px solid rgba(146,96,10,0.25);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Upcoming</span>
+            <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#92600A;background:rgba(146,96,10,0.1);border:1.5px solid rgba(146,96,10,0.25);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Coming Soon</span>
             <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Product Management</div>
             <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Integrate AI into product discovery, roadmapping and delivery to ship smarter, faster.</div>
           </div>
           <div class="prog-card-pg-img">
             <img src="assets/Product Management.png" alt="Product Management" loading="lazy" />
-            <a href="apply.html" style="position:absolute;bottom:12px;right:12px;display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#021024;text-decoration:none;background:rgba(253,240,213,0.85);backdrop-filter:blur(6px);border-radius:30px;padding:7px 14px;white-space:nowrap">Join the Waitlist →</a>
+            <a href="#waitlist" onclick="setWaitlistCourse('Product Management')" style="position:absolute;bottom:12px;right:12px;display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#021024;text-decoration:none;background:rgba(253,240,213,0.85);backdrop-filter:blur(6px);border-radius:30px;padding:7px 14px;white-space:nowrap">Join the Waitlist →</a>
           </div>
         </div>
 
         <!-- Sales Management -->
         <div class="prog-card-pg" style="background:#FFE4D6;cursor:default">
           <div style="padding:22px 20px 14px">
-            <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#8C3A1A;background:rgba(140,58,26,0.1);border:1.5px solid rgba(140,58,26,0.25);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Upcoming</span>
+            <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#8C3A1A;background:rgba(140,58,26,0.1);border:1.5px solid rgba(140,58,26,0.25);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">Coming Soon</span>
             <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Sales Management</div>
             <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Deploy AI across prospecting, pipeline management and closing to hit revenue targets consistently.</div>
           </div>
           <div class="prog-card-pg-img">
             <img src="assets/Sales Management.png" alt="Sales Management" loading="lazy" />
-            <a href="apply.html" style="position:absolute;bottom:12px;right:12px;display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#021024;text-decoration:none;background:rgba(255,228,214,0.85);backdrop-filter:blur(6px);border-radius:30px;padding:7px 14px;white-space:nowrap">Join the Waitlist →</a>
+            <a href="#waitlist" onclick="setWaitlistCourse('Sales Management')" style="position:absolute;bottom:12px;right:12px;display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#021024;text-decoration:none;background:rgba(255,228,214,0.85);backdrop-filter:blur(6px);border-radius:30px;padding:7px 14px;white-space:nowrap">Join the Waitlist →</a>
           </div>
         </div>
 
       </div>
     </div>
 
-    <p style="text-align:center;font-size:0.84rem;color:#7A94A8" class="fade-in">
-      Your field not listed? <a href="apply.html" style="color:var(--red);font-weight:700">Register interest and we'll notify you →</a>
-    </p>
+    <!-- Can't find your course banner -->
+    <div style="margin-top:32px;background:linear-gradient(135deg,#021024 0%,#0D2340 100%);border-radius:16px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap" class="fade-up">
+      <div>
+        <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px">Don't see what you need?</div>
+        <div style="font-size:1.1rem;font-weight:800;color:#fff;line-height:1.3">Can't find your course here? <span style="color:rgba(255,255,255,0.6);font-weight:500;font-size:0.95rem;display:block;margin-top:4px">Tell us what you're looking for and we'll prioritise it.</span></div>
+      </div>
+      <button onclick="openCustomWaitlist()" style="flex-shrink:0;padding:13px 28px;background:var(--red);border:none;border-radius:10px;color:#fff;font-size:0.93rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity 0.2s" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
+        Join Our Waitlist →
+      </button>
+    </div>
   </div>
 </section>
+
+<!-- ====== CUSTOM WAITLIST MODAL ====== -->
+<div id="custom-waitlist-modal" style="display:none;position:fixed;inset:0;z-index:9000;align-items:center;justify-content:center;padding:20px">
+  <!-- Backdrop -->
+  <div onclick="closeCustomWaitlist()" style="position:absolute;inset:0;background:rgba(2,16,36,0.75);backdrop-filter:blur(4px)"></div>
+  <!-- Modal box -->
+  <div style="position:relative;background:#fff;border-radius:20px;padding:40px 36px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,0.3)">
+    <button onclick="closeCustomWaitlist()" style="position:absolute;top:16px;right:18px;background:none;border:none;font-size:1.4rem;color:#7A94A8;cursor:pointer;line-height:1" aria-label="Close">✕</button>
+
+    <div id="cwl-success" style="display:none;text-align:center;padding:16px 0">
+      <div style="font-size:2.2rem;margin-bottom:14px">🎉</div>
+      <div style="font-size:1.2rem;font-weight:800;color:#021024;margin-bottom:8px">Got it — we'll be in touch!</div>
+      <div style="font-size:0.9rem;color:#7A94A8;line-height:1.6">We've noted your interest. When we open that programme, you'll be the first to know.</div>
+      <button onclick="closeCustomWaitlist()" style="margin-top:24px;padding:12px 28px;background:var(--red);border:none;border-radius:10px;color:#fff;font-size:0.92rem;font-weight:700;cursor:pointer">Close</button>
+    </div>
+
+    <form id="cwl-form">
+      <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Waitlist</div>
+      <h3 style="font-size:1.4rem;font-weight:900;color:#021024;margin-bottom:6px;line-height:1.2">Join Our Waitlist</h3>
+      <p style="font-size:0.85rem;color:#7A94A8;margin-bottom:24px;line-height:1.6">Tell us what programme you're interested in and we'll notify you when it launches.</p>
+
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-size:0.75rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Full Name</label>
+        <input id="cwl-name" type="text" placeholder="Your full name" required
+          style="width:100%;padding:13px 16px;background:#F8F9FB;border:1.5px solid #E2E8F0;border-radius:10px;color:#021024;font-size:0.93rem;outline:none;box-sizing:border-box;transition:border 0.2s;font-family:inherit"
+          onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='#E2E8F0'">
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-size:0.75rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Email Address</label>
+        <input id="cwl-email" type="email" placeholder="you@example.com" required
+          style="width:100%;padding:13px 16px;background:#F8F9FB;border:1.5px solid #E2E8F0;border-radius:10px;color:#021024;font-size:0.93rem;outline:none;box-sizing:border-box;transition:border 0.2s;font-family:inherit"
+          onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='#E2E8F0'">
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-size:0.75rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Phone Number</label>
+        <div id="cwl-phone-wrap" style="display:flex;background:#F8F9FB;border:1.5px solid #E2E8F0;border-radius:10px;overflow:hidden;transition:border-color 0.2s">
+          <select id="cwl-dialcode"
+            style="flex-shrink:0;padding:0 10px;background:transparent;border:none;border-right:1.5px solid #E2E8F0;color:#021024;font-size:0.88rem;font-family:inherit;outline:none;cursor:pointer;max-width:130px;appearance:none;-webkit-appearance:none">
+            <option value="+234">🇳🇬 +234</option>
+            <option value="+1">🇺🇸 +1</option>
+            <option value="+44">🇬🇧 +44</option>
+            <option value="+233">🇬🇭 +233</option>
+            <option value="+254">🇰🇪 +254</option>
+            <option value="+27">🇿🇦 +27</option>
+            <option value="+251">🇪🇹 +251</option>
+            <option value="+255">🇹🇿 +255</option>
+            <option value="+256">🇺🇬 +256</option>
+            <option value="+237">🇨🇲 +237</option>
+            <option value="+225">🇨🇮 +225</option>
+            <option value="+221">🇸🇳 +221</option>
+            <option value="+212">🇲🇦 +212</option>
+            <option value="+20">🇪🇬 +20</option>
+            <option value="+49">🇩🇪 +49</option>
+            <option value="+33">🇫🇷 +33</option>
+            <option value="+31">🇳🇱 +31</option>
+            <option value="+1-CA">🇨🇦 +1</option>
+            <option value="+61">🇦🇺 +61</option>
+            <option value="+971">🇦🇪 +971</option>
+            <option value="+91">🇮🇳 +91</option>
+          </select>
+          <input id="cwl-phone" type="tel" placeholder="800 000 0000"
+            style="flex:1;padding:13px 14px;background:transparent;border:none;color:#021024;font-size:0.93rem;outline:none;font-family:inherit;min-width:0"
+            onfocus="document.getElementById('cwl-phone-wrap').style.borderColor='var(--red)'"
+            onblur="document.getElementById('cwl-phone-wrap').style.borderColor='#E2E8F0'">
+        </div>
+      </div>
+      <div style="margin-bottom:24px">
+        <label style="display:block;font-size:0.75rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Programme You Want</label>
+        <input id="cwl-programme" type="text" placeholder="e.g. AI in Healthcare, Legal AI, etc." required
+          style="width:100%;padding:13px 16px;background:#F8F9FB;border:1.5px solid #E2E8F0;border-radius:10px;color:#021024;font-size:0.93rem;outline:none;box-sizing:border-box;transition:border 0.2s;font-family:inherit"
+          onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='#E2E8F0'">
+      </div>
+      <div id="cwl-error" style="display:none;font-size:0.83rem;color:var(--red);margin-bottom:14px;text-align:center"></div>
+      <button type="submit" id="cwl-btn" style="width:100%;padding:15px;background:var(--red);border:none;border-radius:10px;color:#fff;font-size:0.95rem;font-weight:700;cursor:pointer;letter-spacing:0.01em;font-family:inherit">
+        Submit Interest
+      </button>
+    </form>
+  </div>
+</div>
 
 <!-- ====== NOT A COURSE SECTION ====== -->
 <section class="bg-white" style="padding:80px 0">
@@ -732,6 +828,7 @@
   </div>
 </section>
 
+<!-- ====== WAITLIST ====== -->
 <!-- ====== THREE PILLARS ====== -->
 <section id="pillars" class="section-pad bg-dark">
   <div class="container">
@@ -947,6 +1044,91 @@
   </div>
 </section>
 
+<!-- ====== WAITLIST ====== -->
+<section id="waitlist" style="background:var(--bg-dark);padding:90px 0">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center" class="waitlist-grid">
+
+      <!-- Left: Text -->
+      <div class="fade-up">
+        <span class="eyebrow" style="color:var(--red)">Be First In Line</span>
+        <h2 style="color:var(--white);margin-bottom:16px;line-height:1.2">Can't Wait?<br/>Join the Waitlist.</h2>
+        <div class="divider-red"></div>
+        <p style="color:rgba(255,255,255,0.65);font-size:0.97rem;line-height:1.7;margin-bottom:20px">Several of our programmes are in final preparation and opening soon. Drop your details below and we'll notify you the moment enrolment opens — plus you'll get early access before we announce publicly.</p>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:2px">✓</span>
+            <span style="font-size:0.87rem;color:rgba(255,255,255,0.6)">First access before public launch</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:2px">✓</span>
+            <span style="font-size:0.87rem;color:rgba(255,255,255,0.6)">Exclusive early-bird pricing</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:2px">✓</span>
+            <span style="font-size:0.87rem;color:rgba(255,255,255,0.6)">No commitment — just your spot in the queue</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="fade-up" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:36px 32px">
+        <div id="waitlist-success" style="display:none;text-align:center;padding:24px 0">
+          <div style="font-size:2rem;margin-bottom:12px">🎉</div>
+          <div style="font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:8px">You're on the list!</div>
+          <div style="font-size:0.88rem;color:rgba(255,255,255,0.6)">We'll reach out the moment your programme opens. Keep an eye on your inbox.</div>
+        </div>
+        <form id="waitlist-form">
+          <div style="margin-bottom:18px">
+            <label style="display:block;font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Full Name</label>
+            <input id="wl-name" type="text" placeholder="Your full name" required
+              style="width:100%;padding:13px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:var(--white);font-size:0.93rem;outline:none;box-sizing:border-box;transition:border 0.2s"
+              onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+          </div>
+          <div style="margin-bottom:18px">
+            <label style="display:block;font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Email Address</label>
+            <input id="wl-email" type="email" placeholder="you@example.com" required
+              style="width:100%;padding:13px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:var(--white);font-size:0.93rem;outline:none;box-sizing:border-box;transition:border 0.2s"
+              onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+          </div>
+          <div style="margin-bottom:18px">
+            <label style="display:block;font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Phone Number</label>
+            <input id="wl-phone" type="tel" placeholder="+234 800 000 0000"
+              style="width:100%;padding:13px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:var(--white);font-size:0.93rem;outline:none;box-sizing:border-box;transition:border 0.2s"
+              onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+          </div>
+          <div style="margin-bottom:24px">
+            <label style="display:block;font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Interested Programme</label>
+            <select id="wl-course" required
+              style="width:100%;padding:13px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:var(--white);font-size:0.93rem;outline:none;box-sizing:border-box;appearance:none;-webkit-appearance:none;cursor:pointer;transition:border 0.2s"
+              onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+              <option value="" disabled selected style="background:#021024">Select a programme</option>
+              <option value="Cybersecurity" style="background:#021024">Cybersecurity</option>
+              <option value="Financial Modelling" style="background:#021024">Financial Modelling</option>
+              <option value="Product Marketing" style="background:#021024">Product Marketing</option>
+              <option value="Product Management" style="background:#021024">Product Management</option>
+              <option value="Sales Management" style="background:#021024">Sales Management</option>
+              <option value="Data Science" style="background:#021024">Data Science</option>
+              <option value="Cloud & DevOps" style="background:#021024">Cloud &amp; DevOps</option>
+            </select>
+          </div>
+          <div id="wl-error" style="display:none;font-size:0.83rem;color:var(--red);margin-bottom:14px;text-align:center"></div>
+          <button type="submit" id="wl-btn" style="width:100%;padding:15px;background:var(--red);border:none;border-radius:10px;color:var(--white);font-size:0.95rem;font-weight:700;cursor:pointer;transition:opacity 0.2s;letter-spacing:0.01em">
+            Join the Waitlist
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+@media (max-width: 768px) {
+  .waitlist-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+}
+</style>
+
 <!-- ====== FAQ ====== -->
 <section class="section-pad bg-white">
   <div class="container">
@@ -1066,73 +1248,15 @@
 
 <script src="script.js"></script>
 <script>
-  /* ── FAQ: fetch from programs list, extract & merge faqs.faqs[], fall back to hardcoded ── */
-  var FAQ_API   = 'https://api.brixgate.com/api/v1/programs?size=50';
-  var FAQ_LIST  = document.getElementById('faq-list');
-
-  var FAQ_FALLBACK = [
-    { question: 'Who is this programme for?',
-      answer: 'Working professionals in one of our 8 open fields who want to move beyond AI awareness into genuine, practitioner-level capability. You don\'t need to be technical. You need to be motivated to transform how you work.' },
-    { question: 'What does "field-specific" actually mean?',
-      answer: 'Your curriculum is built around the AI tools, challenges, and workflows specific to your profession — not a generic programme repurposed for your field. A Software Engineer\'s programme and a Finance professional\'s programme share no curriculum. Each is built from scratch by practitioners in that domain.' },
-    { question: 'How much time do I need each week?',
-      answer: 'Expect 6–10 hours per week across the 4-week sprint: live sessions (2–3 hours/week), applied project work, and peer cohort engagement. The programme is intensive by design — that is how transformation happens.' },
-    { question: 'Is the programme available outside Nigeria?',
-      answer: 'Yes. Fully online and available globally. We have active cohorts in Nigeria, Kenya, Ghana, South Africa, the UK, and the US, with more markets coming throughout 2026.' },
-    { question: 'What is the Expert Practitioner Certificate?',
-      answer: 'A field-verified credential issued after completing the programme. Assessment is practitioner-led — your expert assesses your applied project and demonstrated capability, not a multiple-choice test. Employers in our target markets recognise what it represents.' },
-    { question: 'Can my organisation send multiple team members?',
-      answer: 'Absolutely — and we recommend it. Our Team and Enterprise packages are designed for organisations deploying AI transformation across departments. Visit our <a href="organisations.html" style="color:var(--red)">For Organisations</a> page or request a demo.' }
-  ];
-
-  function renderFAQs(items) {
-    if (!FAQ_LIST) return;
-    FAQ_LIST.innerHTML = items.map(function(faq) {
-      return '<div class="faq-item fade-up">'
-        + '<button class="faq-question">' + faq.question + '<span class="faq-icon">+</span></button>'
-        + '<div class="faq-answer">' + faq.answer + '</div>'
-        + '</div>';
-    }).join('');
-  }
-
-  /* Event delegation — works for both static and dynamically rendered items */
-  if (FAQ_LIST) {
-    FAQ_LIST.addEventListener('click', function(e) {
-      var btn = e.target.closest('.faq-question');
-      if (!btn) return;
+  /* ── FAQ Accordion — hardcoded (no dedicated FAQ API endpoint exists) ── */
+  document.querySelectorAll('#faq-list .faq-question').forEach(function(btn) {
+    btn.addEventListener('click', function() {
       var item    = btn.closest('.faq-item');
       var wasOpen = item.classList.contains('open');
-      FAQ_LIST.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+      document.querySelectorAll('#faq-list .faq-item').forEach(function(i) { i.classList.remove('open'); });
       if (!wasOpen) item.classList.add('open');
     });
-  }
-
-  fetch(FAQ_API)
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      var programs = (data.data && (data.data.programs || (Array.isArray(data.data) ? data.data : null)))
-                   || data.programs || [];
-      if (!Array.isArray(programs)) throw new Error('unexpected shape');
-
-      /* Extract data.program.faqs.faqs[] from each program, deduplicate by question */
-      var seen = {};
-      var all  = [];
-      programs.forEach(function(prog) {
-        var faqs = (prog.faqs && prog.faqs.faqs) || [];
-        faqs.forEach(function(faq) {
-          if (faq.question && !seen[faq.question]) {
-            seen[faq.question] = true;
-            all.push(faq);
-          }
-        });
-      });
-
-      if (!all.length) throw new Error('empty');
-      renderFAQs(all);
-    })
-    .catch(function() {
-      renderFAQs(FAQ_FALLBACK);
-    });
+  });
 
   // ---- AI Readiness Quiz ----
   (function() {
@@ -1268,6 +1392,169 @@
   })();
 </script>
 
+<!-- ====== CUSTOM WAITLIST MODAL LOGIC ====== -->
+<script>
+  function openCustomWaitlist() {
+    var modal = document.getElementById('custom-waitlist-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCustomWaitlist() {
+    var modal = document.getElementById('custom-waitlist-modal');
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+    // Reset form state for next open
+    var form = document.getElementById('cwl-form');
+    var success = document.getElementById('cwl-success');
+    var btn = document.getElementById('cwl-btn');
+    var errEl = document.getElementById('cwl-error');
+    if (form) { form.style.display = 'block'; form.reset(); }
+    if (success) success.style.display = 'none';
+    if (btn) { btn.textContent = 'Submit Interest'; btn.disabled = false; }
+    if (errEl) errEl.style.display = 'none';
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeCustomWaitlist();
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var cwlForm = document.getElementById('cwl-form');
+    if (!cwlForm) return;
+    cwlForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var name      = (document.getElementById('cwl-name').value || '').trim();
+      var email     = (document.getElementById('cwl-email').value || '').trim();
+      var dialCode  = (document.getElementById('cwl-dialcode').value || '').replace('-CA', '');
+      var phoneNum  = (document.getElementById('cwl-phone').value || '').trim();
+      var phone     = phoneNum ? dialCode + ' ' + phoneNum : '';
+      var programme = (document.getElementById('cwl-programme').value || '').trim();
+      var errEl     = document.getElementById('cwl-error');
+      var btn       = document.getElementById('cwl-btn');
+
+      errEl.style.display = 'none';
+      if (!name || !email || !programme) {
+        errEl.textContent = 'Please fill in your name, email, and programme interest.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      btn.textContent = 'Submitting…';
+      btn.disabled = true;
+
+      fetch('https://api.brixgate.com/api/v1/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ name: name, email: email, phone: phone, primary_field: programme })
+      })
+      .then(function(r) { return r.json().catch(function() { return {}; }); })
+      .then(function(data) {
+        if (data.success) {
+          document.getElementById('cwl-form').style.display = 'none';
+          document.getElementById('cwl-success').style.display = 'block';
+        } else {
+          var msg = (data.errors && Object.values(data.errors)[0]) || data.message || 'Something went wrong. Please try again.';
+          errEl.textContent = Array.isArray(msg) ? msg[0] : msg;
+          errEl.style.display = 'block';
+          btn.textContent = 'Join Waitlist';
+          btn.disabled = false;
+        }
+      })
+      .catch(function() {
+        errEl.textContent = 'Network error. Please check your connection and try again.';
+        errEl.style.display = 'block';
+        btn.textContent = 'Join Waitlist';
+        btn.disabled = false;
+      });
+    });
+  });
+</script>
+
+<!-- ====== WAITLIST LOGIC ====== -->
+<script>
+  // Set the waitlist course dropdown and scroll to section
+  function setWaitlistCourse(course) {
+    var sel = document.getElementById('wl-course');
+    if (sel) {
+      for (var i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].value === course) {
+          sel.selectedIndex = i;
+          break;
+        }
+      }
+    }
+    var section = document.getElementById('waitlist');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    return false;
+  }
+
+  // On page load: check sessionStorage for pre-selected course (from index.html)
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      var stored = sessionStorage.getItem('bxWaitlistCourse');
+      if (stored) {
+        sessionStorage.removeItem('bxWaitlistCourse');
+        // Small delay so the page can finish rendering before scrolling
+        setTimeout(function() { setWaitlistCourse(stored); }, 150);
+      }
+    } catch(e) {}
+
+    // Waitlist form submission
+    var wlForm = document.getElementById('waitlist-form');
+    if (wlForm) {
+      wlForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var name   = (document.getElementById('wl-name').value || '').trim();
+        var email  = (document.getElementById('wl-email').value || '').trim();
+        var phone  = (document.getElementById('wl-phone').value || '').trim();
+        var course = (document.getElementById('wl-course').value || '').trim();
+        var errEl  = document.getElementById('wl-error');
+        var btn    = document.getElementById('wl-btn');
+
+        errEl.style.display = 'none';
+
+        if (!name || !email || !course) {
+          errEl.textContent = 'Please fill in your name, email, and programme.';
+          errEl.style.display = 'block';
+          return;
+        }
+
+        btn.textContent = 'Joining…';
+        btn.disabled = true;
+
+        fetch('https://api.brixgate.com/api/v1/waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ name: name, email: email, phone: phone, primary_field: course })
+        })
+        .then(function(r) { return r.json().catch(function() { return {}; }); })
+        .then(function(data) {
+          if (data.success) {
+            document.getElementById('waitlist-form').style.display = 'none';
+            document.getElementById('waitlist-success').style.display = 'block';
+          } else {
+            var msg = (data.errors && Object.values(data.errors)[0]) || data.message || 'Something went wrong. Please try again.';
+            errEl.textContent = Array.isArray(msg) ? msg[0] : msg;
+            errEl.style.display = 'block';
+            btn.textContent = 'Join Waitlist';
+            btn.disabled = false;
+          }
+        })
+        .catch(function() {
+          errEl.textContent = 'Network error. Please check your connection and try again.';
+          errEl.style.display = 'block';
+          btn.textContent = 'Join Waitlist';
+          btn.disabled = false;
+        });
+      });
+    }
+  });
+</script>
+
 <!-- ====== WHATSAPP CHAT WIDGET ====== -->
 <a href="https://wa.me/2347088093620?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme."
    target="_blank" rel="noopener"
@@ -1276,6 +1563,26 @@
    title="Chat with us on WhatsApp">
   <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
+
+
+<!-- LinkedIn Insight Tag -->
+<script type="text/javascript">
+_linkedin_partner_id = "9372724";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script><script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9372724&fmt=gif" />
+</noscript>
 
 </body>
 </html>
