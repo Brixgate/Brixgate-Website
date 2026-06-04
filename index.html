@@ -570,15 +570,17 @@
     .event-banner-logo {
       position: absolute;
       right: -2%;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 52%;
+      top: 0;
+      bottom: 0;
+      width: 62%;
       pointer-events: none;
       z-index: 0; /* behind robot (z-index:1) */
     }
     .event-banner-logo img {
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: contain;
+      object-position: right center;
       display: block;
       opacity: 0.18;
     }
@@ -1634,7 +1636,7 @@
 <script>
 /* Email popup — show once, remember dismiss/submit in localStorage */
 (function() {
-  if (localStorage.getItem('bxPopupDone')) return;
+  if (sessionStorage.getItem('bxPopupDone')) return;
   setTimeout(function() {
     var el = document.getElementById('emailPopup');
     if (el) el.style.display = 'block';
@@ -1644,7 +1646,7 @@
 function dismissEmailPopup() {
   var el = document.getElementById('emailPopup');
   if (el) { el.style.opacity = '0'; el.style.transition = 'opacity 0.25s'; setTimeout(function(){ el.style.display='none'; }, 260); }
-  localStorage.setItem('bxPopupDone', '1');
+  sessionStorage.setItem('bxPopupDone', '1');
 }
 
 function submitEmailPopup() {
@@ -1673,7 +1675,7 @@ function submitEmailPopup() {
   .then(function(data) {
     document.getElementById('emailPopupForm').style.display = 'none';
     document.getElementById('emailPopupSuccess').style.display = 'block';
-    localStorage.setItem('bxPopupDone', '1');
+    sessionStorage.setItem('bxPopupDone', '1');
     setTimeout(function() { dismissEmailPopup(); }, 4000);
   })
   .catch(function() {
