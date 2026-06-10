@@ -1,27 +1,73 @@
 /* ============================================================
    Brixgate — Spot Capture Popup
-   Injected on every page. Shows once per session.
+   Injected on every page. Shows on every load/reload/new tab.
    ============================================================ */
 (function () {
   'use strict';
 
-  /* Already injected (e.g. double-include guard) */
   if (document.getElementById('bxSpotPopup')) return;
 
   /* ── Styles ─────────────────────────────────────────────── */
   var css = document.createElement('style');
   css.textContent = [
-    '@keyframes bxSlideIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}',
-    '@keyframes bxPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}',
+    '@keyframes bxSlideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}',
+    '@keyframes bxPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.6)}}',
+
     '#bxSpotPopup{',
-      'display:none;position:fixed;bottom:100px;right:28px;width:320px;',
-      'background:#fff;border-radius:18px;',
-      'box-shadow:0 12px 48px rgba(0,0,0,.18),0 2px 10px rgba(0,0,0,.07);',
-      'padding:24px 24px 20px;z-index:10001;',
-      'animation:bxSlideIn .4s ease;',
+      'display:none;position:fixed;bottom:100px;right:28px;width:340px;',
+      'background:#0D1C34;border-radius:16px;',
+      'box-shadow:0 20px 60px rgba(0,0,0,.5),0 4px 16px rgba(0,0,0,.3);',
+      'padding:28px 24px 22px;z-index:10001;',
+      'animation:bxSlideIn .4s cubic-bezier(.22,.68,0,1.2);',
       "font-family:'DM Sans','Trebuchet MS',Arial,sans-serif;",
+      'border:1px solid rgba(255,255,255,.08);',
     '}',
     '#bxSpotPopup *{box-sizing:border-box}',
+
+    /* Close button — square */
+    '#bxPopupClose{',
+      'position:absolute;top:16px;right:16px;',
+      'width:32px;height:32px;',
+      'background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);',
+      'border-radius:7px;cursor:pointer;',
+      'color:rgba(255,255,255,.6);font-size:1.1rem;line-height:1;',
+      'display:flex;align-items:center;justify-content:center;',
+      'transition:background .15s,color .15s;font-family:inherit;',
+    '}',
+    '#bxPopupClose:hover{background:rgba(255,255,255,.14);color:#fff}',
+
+    /* City pills */
+    '.bx-city-pill{',
+      'display:inline-block;',
+      'padding:5px 12px;border-radius:20px;',
+      'background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13);',
+      'font-size:.72rem;font-weight:600;color:rgba(255,255,255,.75);',
+      'white-space:nowrap;',
+    '}',
+
+    /* Email input */
+    '#bxPopupEmail{',
+      'width:100%;border:1px solid rgba(255,255,255,.15);border-radius:9px;',
+      'padding:11px 14px;font-size:.875rem;',
+      'color:#fff;background:rgba(255,255,255,.07);',
+      'font-family:inherit;outline:none;margin-bottom:10px;',
+      'transition:border-color .2s;',
+    '}',
+    '#bxPopupEmail::placeholder{color:rgba(255,255,255,.35)}',
+    '#bxPopupEmail:focus{border-color:#FF294E;background:rgba(255,255,255,.1)}',
+
+    /* Submit button */
+    '#bxPopupBtn{',
+      'width:100%;background:#fff;color:#021024;border:none;border-radius:9px;',
+      'padding:12px;font-size:.9rem;font-weight:800;cursor:pointer;',
+      'font-family:inherit;transition:opacity .2s,transform .15s;letter-spacing:-.01em;',
+    '}',
+    '#bxPopupBtn:hover{opacity:.92;transform:translateY(-1px)}',
+    '#bxPopupBtn:disabled{opacity:.6;cursor:not-allowed;transform:none}',
+
+    '@media(max-width:420px){',
+      '#bxSpotPopup{width:calc(100vw - 32px);right:16px;bottom:90px}',
+    '}',
   ].join('');
   document.head.appendChild(css);
 
@@ -31,84 +77,90 @@
   el.setAttribute('role', 'dialog');
   el.setAttribute('aria-label', 'Secure your spot');
   el.innerHTML = [
-    /* Close button */
-    '<button id="bxPopupClose" aria-label="Close"',
-      'style="position:absolute;top:14px;right:16px;background:none;border:none;',
-      'cursor:pointer;color:#9CA3AF;font-size:1.35rem;line-height:1;padding:2px 6px;',
-      'transition:color .15s;font-family:inherit"',
-      'onmouseover="this.style.color=\'#374151\'" onmouseout="this.style.color=\'#9CA3AF\'">',
-      '&times;',
-    '</button>',
 
-    /* Badge */
-    '<div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">',
+    /* Close */
+    '<button id="bxPopupClose" aria-label="Close">&#215;</button>',
+
+    /* Top label — dot + text, no pill */
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">',
       '<span style="width:7px;height:7px;background:#FF294E;border-radius:50%;',
-        'display:inline-block;flex-shrink:0;animation:bxPulse 2s infinite"></span>',
-      '<span style="font-size:.67rem;font-weight:800;text-transform:uppercase;',
-        'letter-spacing:.1em;color:#FF294E">Limited Spots</span>',
+        'flex-shrink:0;display:inline-block;animation:bxPulse 2s infinite"></span>',
+      '<span style="font-size:.7rem;font-weight:800;text-transform:uppercase;',
+        'letter-spacing:.1em;color:#FF294E">AI in Software Engineering</span>',
     '</div>',
 
-    /* Heading */
-    '<h3 style="font-size:1rem;font-weight:900;color:#021024;margin:0 0 8px;',
-      'line-height:1.3;padding-right:20px">',
+    /* Heading — keep original */
+    '<h3 style="font-size:1.15rem;font-weight:900;color:#fff;margin:0 0 10px;',
+      'line-height:1.25;padding-right:24px">',
       'Limited Spots in AI in Software Engineering',
     '</h3>',
 
-    /* Sub-text */
-    '<p style="font-size:.8rem;color:#6B7280;margin:0 0 18px;line-height:1.6">',
+    /* Subtext — keep original */
+    '<p style="font-size:.8rem;color:rgba(255,255,255,.6);margin:0 0 18px;line-height:1.65">',
       'Secure your spot before it fills now! Drop your email and we\'ll send',
       ' cohort details, early-bird discounts and application updates straight to you.',
     '</p>',
 
+    /* Social proof block — flat single bg */
+    '<div style="background:rgba(255,255,255,.05);border-radius:10px;',
+      'padding:12px 14px;margin-bottom:18px">',
+      '<p style="font-size:.78rem;font-weight:700;color:rgba(255,255,255,.75);',
+        'margin:0 0 10px;line-height:1.4">',
+        'Engineers across 6 cities are already on this list.',
+      '</p>',
+      '<div style="display:flex;flex-wrap:wrap;gap:6px">',
+        '<span class="bx-city-pill">Lagos</span>',
+        '<span class="bx-city-pill">Nairobi</span>',
+        '<span class="bx-city-pill">Johannesburg</span>',
+        '<span class="bx-city-pill">Accra</span>',
+        '<span class="bx-city-pill">London</span>',
+        '<span class="bx-city-pill">New York</span>',
+      '</div>',
+    '</div>',
+
     /* Form */
     '<div id="bxPopupForm">',
-      '<input type="email" id="bxPopupEmail" placeholder="Enter your email address"',
-        'style="width:100%;border:1.5px solid #E5E7EB;border-radius:9px;',
-        'padding:10px 14px;font-size:.875rem;color:#021024;font-family:inherit;',
-        'outline:none;margin-bottom:9px;transition:border-color .2s;background:#fff"',
-        'onfocus="this.style.borderColor=\'#FF294E\'"',
-        'onblur="this.style.borderColor=\'#E5E7EB\'"',
-      '/>',
-      '<p id="bxPopupErr" style="display:none;font-size:.75rem;color:#EF4444;margin:0 0 8px"></p>',
-      '<button id="bxPopupBtn"',
-        'style="width:100%;background:#FF294E;color:#fff;border:none;border-radius:9px;',
-        'padding:11px;font-size:.875rem;font-weight:700;cursor:pointer;font-family:inherit;',
-        'transition:background .2s"',
-        'onmouseover="this.style.background=\'#e0183a\'"',
-        'onmouseout="this.style.background=\'#FF294E\'">',
-        'Secure My Spot &rarr;',
-      '</button>',
+      '<input type="email" id="bxPopupEmail" placeholder="Your email address" autocomplete="email" />',
+      '<p id="bxPopupErr" style="display:none;font-size:.74rem;color:#FF6B6B;margin:0 0 8px"></p>',
+      '<button id="bxPopupBtn">Add me to the list &rarr;</button>',
     '</div>',
 
     /* Success */
-    '<div id="bxPopupSuccess" style="display:none;text-align:center;padding:8px 0 4px">',
-      '<div style="font-size:1.6rem;margin-bottom:8px">🎉</div>',
-      '<div style="font-size:.92rem;font-weight:800;color:#021024;margin-bottom:5px">',
+    '<div id="bxPopupSuccess" style="display:none;text-align:center;padding:12px 0 6px">',
+      '<div style="font-size:1.8rem;margin-bottom:10px">🎉</div>',
+      '<div style="font-size:.95rem;font-weight:800;color:#fff;margin-bottom:6px">',
         'You\'re on the list!',
       '</div>',
-      '<div style="font-size:.78rem;color:#6B7280;line-height:1.5">',
+      '<div style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.5">',
         'We\'ll be in touch with updates and early-bird details.',
       '</div>',
     '</div>',
+
+    /* Footer */
+    '<p style="text-align:center;font-size:.7rem;color:rgba(255,255,255,.3);',
+      'margin:14px 0 0;line-height:1">',
+      '&#128274; No spam. Unsubscribe anytime.',
+    '</p>',
+
   ].join('');
 
   document.body.appendChild(el);
 
-  /* ── Show / hide logic ───────────────────────────────────── */
-  /* No sessionStorage — popup shows on every page load / reload / new tab.
-     The dismissed flag is in-memory only, so it resets on every navigation. */
+  /* ── Show / hide ─────────────────────────────────────────── */
   var _dismissed = false;
 
   function dismiss() {
     if (_dismissed) return;
     _dismissed = true;
-    el.style.transition = 'opacity .25s';
+    el.style.transition = 'opacity .25s,transform .25s';
     el.style.opacity = '0';
-    setTimeout(function () { el.style.display = 'none'; }, 260);
+    el.style.transform = 'translateY(10px)';
+    setTimeout(function () { el.style.display = 'none'; }, 270);
   }
 
   document.getElementById('bxPopupClose').addEventListener('click', dismiss);
 
+  /* Show on every page load after 3 s */
   setTimeout(function () { el.style.display = 'block'; }, 3000);
 
   /* ── Submit ──────────────────────────────────────────────── */
@@ -147,7 +199,7 @@
       .catch(function () {
         errEl.textContent = 'Network error — please try again.';
         errEl.style.display = 'block';
-        btn.textContent = 'Secure My Spot →';
+        btn.textContent = 'Add me to the list →';
         btn.disabled = false;
       });
   });
