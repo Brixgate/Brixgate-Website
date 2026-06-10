@@ -15,54 +15,51 @@
 
     '#bxSpotPopup{',
       'display:none;position:fixed;bottom:100px;right:28px;width:340px;',
-      'background:#0D1C34;border-radius:16px;',
-      'box-shadow:0 20px 60px rgba(0,0,0,.5),0 4px 16px rgba(0,0,0,.3);',
+      'background:#fff;border-radius:16px;',
+      'box-shadow:0 20px 60px rgba(0,0,0,.15),0 4px 16px rgba(0,0,0,.08);',
       'padding:28px 24px 22px;z-index:10001;',
       'animation:bxSlideIn .4s cubic-bezier(.22,.68,0,1.2);',
       "font-family:'DM Sans','Trebuchet MS',Arial,sans-serif;",
-      'border:1px solid rgba(255,255,255,.08);',
     '}',
     '#bxSpotPopup *{box-sizing:border-box}',
 
-    /* Close button — square */
+    /* Close button — no border, no background */
     '#bxPopupClose{',
-      'position:absolute;top:16px;right:16px;',
-      'width:32px;height:32px;',
-      'background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);',
-      'border-radius:7px;cursor:pointer;',
-      'color:rgba(255,255,255,.6);font-size:1.1rem;line-height:1;',
+      'position:absolute;top:14px;right:14px;',
+      'background:none;border:none;cursor:pointer;',
+      'color:#9CA3AF;font-size:1.3rem;line-height:1;',
       'display:flex;align-items:center;justify-content:center;',
-      'transition:background .15s,color .15s;font-family:inherit;',
+      'transition:color .15s;font-family:inherit;padding:4px;',
     '}',
-    '#bxPopupClose:hover{background:rgba(255,255,255,.14);color:#fff}',
+    '#bxPopupClose:hover{color:#374151}',
 
     /* City pills */
     '.bx-city-pill{',
       'display:inline-block;',
       'padding:5px 12px;border-radius:20px;',
-      'background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13);',
-      'font-size:.72rem;font-weight:600;color:rgba(255,255,255,.75);',
+      'background:#F6F4F2;border:1px solid #E5E7EB;',
+      'font-size:.72rem;font-weight:600;color:#4B5563;',
       'white-space:nowrap;',
     '}',
 
     /* Email input */
     '#bxPopupEmail{',
-      'width:100%;border:1px solid rgba(255,255,255,.15);border-radius:9px;',
+      'width:100%;border:1.5px solid #E5E7EB;border-radius:9px;',
       'padding:11px 14px;font-size:.875rem;',
-      'color:#fff;background:rgba(255,255,255,.07);',
+      'color:#021024;background:#fff;',
       'font-family:inherit;outline:none;margin-bottom:10px;',
       'transition:border-color .2s;',
     '}',
-    '#bxPopupEmail::placeholder{color:rgba(255,255,255,.35)}',
-    '#bxPopupEmail:focus{border-color:#FF294E;background:rgba(255,255,255,.1)}',
+    '#bxPopupEmail::placeholder{color:#9CA3AF}',
+    '#bxPopupEmail:focus{border-color:#FF294E}',
 
     /* Submit button */
     '#bxPopupBtn{',
-      'width:100%;background:#fff;color:#021024;border:none;border-radius:9px;',
+      'width:100%;background:#FF294E;color:#fff;border:none;border-radius:9px;',
       'padding:12px;font-size:.9rem;font-weight:800;cursor:pointer;',
       'font-family:inherit;transition:opacity .2s,transform .15s;letter-spacing:-.01em;',
     '}',
-    '#bxPopupBtn:hover{opacity:.92;transform:translateY(-1px)}',
+    '#bxPopupBtn:hover{opacity:.9;transform:translateY(-1px)}',
     '#bxPopupBtn:disabled{opacity:.6;cursor:not-allowed;transform:none}',
 
     '@media(max-width:420px){',
@@ -90,21 +87,21 @@
     '</div>',
 
     /* Heading — keep original */
-    '<h3 style="font-size:1.15rem;font-weight:900;color:#fff;margin:0 0 10px;',
+    '<h3 style="font-size:1.15rem;font-weight:900;color:#021024;margin:0 0 10px;',
       'line-height:1.25;padding-right:24px">',
       'Limited Spots in AI in Software Engineering',
     '</h3>',
 
     /* Subtext — keep original */
-    '<p style="font-size:.8rem;color:rgba(255,255,255,.6);margin:0 0 18px;line-height:1.65">',
+    '<p style="font-size:.8rem;color:#6B7280;margin:0 0 18px;line-height:1.65">',
       'Secure your spot before it fills now! Drop your email and we\'ll send',
       ' cohort details, early-bird discounts and application updates straight to you.',
     '</p>',
 
     /* Social proof block — flat single bg */
-    '<div style="background:rgba(255,255,255,.05);border-radius:10px;',
+    '<div style="background:#F6F4F2;border-radius:10px;',
       'padding:12px 14px;margin-bottom:18px">',
-      '<p style="font-size:.78rem;font-weight:700;color:rgba(255,255,255,.75);',
+      '<p style="font-size:.78rem;font-weight:700;color:#374151;',
         'margin:0 0 10px;line-height:1.4">',
         'Engineers across 6 cities are already on this list.',
       '</p>',
@@ -121,23 +118,23 @@
     /* Form */
     '<div id="bxPopupForm">',
       '<input type="email" id="bxPopupEmail" placeholder="Your email address" autocomplete="email" />',
-      '<p id="bxPopupErr" style="display:none;font-size:.74rem;color:#FF6B6B;margin:0 0 8px"></p>',
-      '<button id="bxPopupBtn">Add me to the list &rarr;</button>',
+      '<p id="bxPopupErr" style="display:none;font-size:.74rem;color:#EF4444;margin:0 0 8px"></p>',
+      '<button id="bxPopupBtn">Add me to the list</button>',
     '</div>',
 
     /* Success */
     '<div id="bxPopupSuccess" style="display:none;text-align:center;padding:12px 0 6px">',
       '<div style="font-size:1.8rem;margin-bottom:10px">🎉</div>',
-      '<div style="font-size:.95rem;font-weight:800;color:#fff;margin-bottom:6px">',
+      '<div style="font-size:.95rem;font-weight:800;color:#021024;margin-bottom:6px">',
         'You\'re on the list!',
       '</div>',
-      '<div style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.5">',
+      '<div style="font-size:.78rem;color:#6B7280;line-height:1.5">',
         'We\'ll be in touch with updates and early-bird details.',
       '</div>',
     '</div>',
 
     /* Footer */
-    '<p style="text-align:center;font-size:.7rem;color:rgba(255,255,255,.3);',
+    '<p style="text-align:center;font-size:.7rem;color:#9CA3AF;',
       'margin:14px 0 0;line-height:1">',
       '&#128274; No spam. Unsubscribe anytime.',
     '</p>',
@@ -199,7 +196,7 @@
       .catch(function () {
         errEl.textContent = 'Network error — please try again.';
         errEl.style.display = 'block';
-        btn.textContent = 'Add me to the list →';
+        btn.textContent = 'Add me to the list';
         btn.disabled = false;
       });
   });
