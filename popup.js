@@ -95,18 +95,21 @@
   document.body.appendChild(el);
 
   /* ── Show / hide logic ───────────────────────────────────── */
+  /* No sessionStorage — popup shows on every page load / reload / new tab.
+     The dismissed flag is in-memory only, so it resets on every navigation. */
+  var _dismissed = false;
+
   function dismiss() {
+    if (_dismissed) return;
+    _dismissed = true;
     el.style.transition = 'opacity .25s';
     el.style.opacity = '0';
     setTimeout(function () { el.style.display = 'none'; }, 260);
-    sessionStorage.setItem('bxPopupDone', '1');
   }
 
   document.getElementById('bxPopupClose').addEventListener('click', dismiss);
 
-  if (!sessionStorage.getItem('bxPopupDone')) {
-    setTimeout(function () { el.style.display = 'block'; }, 3000);
-  }
+  setTimeout(function () { el.style.display = 'block'; }, 3000);
 
   /* ── Submit ──────────────────────────────────────────────── */
   document.getElementById('bxPopupBtn').addEventListener('click', function () {
@@ -139,7 +142,6 @@
       .then(function () {
         document.getElementById('bxPopupForm').style.display    = 'none';
         document.getElementById('bxPopupSuccess').style.display = 'block';
-        sessionStorage.setItem('bxPopupDone', '1');
         setTimeout(dismiss, 4000);
       })
       .catch(function () {
