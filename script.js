@@ -396,8 +396,8 @@ window.postQuestionnaireSummary = function(questionnaireId, email, score, rating
 };
 
 window.tierLabelToRatingLevel = function(label) {
-  if (/expert practitioner|ai practitioner/i.test(label)) return 'ADVANCED';
-  if (/practitioner level|ai aware/i.test(label)) return 'INTERMEDIATE';
+  if (/undisputed|proof/i.test(label)) return 'ADVANCED';
+  if (/enthusiast|ready/i.test(label)) return 'INTERMEDIATE';
   return 'BEGINNER';
 };
 
