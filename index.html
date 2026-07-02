@@ -742,10 +742,9 @@
 
       <!-- RIGHT: Visual — panel carousel (whole panel crossfades) -->
       <div class="hero-visual fade-in" style="transition-delay:0.25s">
-        <div class="hero-panel-wrap" id="heroPanelWrap">
+        <div id="heroPanelWrap">
 
-          <!-- Slide 1: Original frame + floating badges -->
-          <div class="hero-panel-slide hero-panel-active">
+          <div>
             <div style="position:relative;padding:0 22px 20px 0">
               <div class="hero-img-frame">
                 <img
@@ -786,13 +785,6 @@
             </div>
           </div>
 
-          <!-- Slide 2: Hero 2 banner (full image, no frame or border) -->
-          <div class="hero-panel-slide">
-            <img
-              src="assets/Hero 2 banner.png"
-              alt="Brixgate — AI in your Field"
-              style="width:100%;height:500px;object-fit:contain;object-position:center;display:block;"
-            />
           </div>
 
         </div>
@@ -1066,50 +1058,7 @@
 </section>
 
 
-<!-- ====== EVENT BANNER ====== -->
-<section class="event-banner">
-  <!-- Faded logo watermark (left) -->
-  <div class="event-banner-logo">
-    <img src="assets/Faded logo.png" alt="" />
-  </div>
-
-  <!-- AI Robot (right) -->
-  <div class="event-banner-robot">
-    <img src="assets/AI Robot 2.png" alt="" />
-  </div>
-
-  <!-- Content -->
-  <div class="container event-banner-content">
-    <div style="max-width:580px">
-      <h2 class="event-banner-heading">
-        AI &amp; Software<br/>Engineering in 2026
-      </h2>
-      <p class="event-banner-sub">
-        A Masterclass on How AI is Reshaping Engineering Practices That Separates the Best from Everyone Else.
-      </p>
-      <div class="event-banner-meta">
-        <!-- Date -->
-        <div class="event-banner-meta-item">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          Friday 13th June
-        </div>
-        <!-- Time -->
-        <div class="event-banner-meta-item">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          7pm – 8pm WAT
-        </div>
-        <!-- Google Meet -->
-        <div class="event-banner-meta-item">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Google Meet
-        </div>
-      </div>
-      <a href="https://luma.com/8ybn7t8m" target="_blank" rel="noopener noreferrer" class="event-banner-cta" id="eventBannerCta">
-        Register for this event
-      </a>
-    </div>
-  </div>
-</section>
+<!-- Event banner removed -->
 
 
 <!-- ====== THE PROBLEM ====== -->
@@ -1584,7 +1533,7 @@
 
 <script src="script.js"></script>
 
-<script src="popup.js"></script>
+<!-- <script src="popup.js"></script> -->
 
 <!-- ====== WHATSAPP CHAT WIDGET ====== -->
 <a href="https://wa.me/2347088093620?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme."
@@ -1596,20 +1545,7 @@
 </a>
 
 
-<!-- Hero Panel Carousel -->
-<script>
-(function() {
-  var wrap = document.getElementById('heroPanelWrap');
-  if (!wrap) return;
-  var slides = wrap.querySelectorAll('.hero-panel-slide');
-  if (slides.length < 2) return;
-  var current = 0;
-  setInterval(function() {
-    slides[current].classList.remove('hero-panel-active');
-    current = (current + 1) % slides.length;
-    slides[current].classList.add('hero-panel-active');
-  }, 4500);
-})();
+<!-- Hero Panel Carousel removed -->
 </script>
 
 <!-- LinkedIn Insight Tag -->
