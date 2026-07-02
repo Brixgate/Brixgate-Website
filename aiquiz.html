@@ -773,11 +773,7 @@
     </div>
 
     <div id="result-badge" class="result-tier-badge" style="display:none"></div>
-
-    <div class="result-score-ring" id="result-ring">
-      <div class="result-score-val" id="result-score">0</div>
-      <div class="result-score-lbl">Score</div>
-    </div>
+    <div id="result-ring" style="display:none"><div id="result-score"></div></div>
 
     <h2 class="result-headline" id="result-headline"></h2>
     <p class="result-sub" id="result-sub"></p>
@@ -785,7 +781,7 @@
     <!-- Quick CTA — shown immediately after the review description -->
     <div style="margin:28px auto 0;max-width:480px">
       <div id="quiz-quick-cta" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
-        <a href="programme.html" class="btn btn-primary btn-lg" style="flex:1;min-width:180px;justify-content:center;font-size:1rem">
+        <a href="programme.html" class="btn btn-primary btn-lg" style="min-width:180px;justify-content:center;font-size:1rem;flex:none">
           View Programmes →
         </a>
         <!-- "Apply as Practitioner" shown only when score = 100% -->
@@ -1217,8 +1213,8 @@ function renderBadgeCanvas(tier, userName) {
     ctx.drawImage(img, 0, 0);
 
     if (userName) {
-      var maxSize = Math.round(img.naturalWidth * 0.09);
-      var minSize = Math.round(img.naturalWidth * 0.04);
+      var maxSize = Math.round(img.naturalWidth * 0.07);
+      var minSize = Math.round(img.naturalWidth * 0.035);
       var fSize   = maxSize;
       ctx.textAlign    = 'center';
       ctx.textBaseline = 'middle';
@@ -1229,8 +1225,8 @@ function renderBadgeCanvas(tier, userName) {
         fSize -= 3;
       } while (fSize > minSize);
       ctx.fillStyle = '#FFFFFF';
-      // Name sits at ~22% from top — in the blank zone above the badge icon
-      ctx.fillText(userName, img.naturalWidth / 2, img.naturalHeight * 0.22);
+      // Name at ~19% from top — clear gap above badge icon
+      ctx.fillText(userName, img.naturalWidth / 2, img.naturalHeight * 0.19);
     }
   };
   img.src = 'assets/' + tier.badgeImg;
