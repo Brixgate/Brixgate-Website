@@ -436,7 +436,7 @@
       <div style="background:#FF294E;color:#fff;font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;padding:5px 12px;border-radius:5px;white-space:nowrap;flex-shrink:0">⚡ Early Bird</div>
       <!-- Copy -->
       <div style="min-width:0">
-        <div style="font-size:1rem;font-weight:900;color:#fff;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Register Before 15th June &amp; Save Up to 20%</div>
+        <div style="font-size:1rem;font-weight:900;color:#fff;line-height:1.25">Register Before 15th June &amp; Save Up to 20%</div>
         <div style="font-size:0.78rem;color:rgba(255,255,255,0.6);margin-top:3px">Enrol in any programme before the early-bird deadline and lock in your discount. Cohort spots are limited.</div>
       </div>
     </div>
@@ -520,10 +520,10 @@
           -ms-overflow-style: none;
         }
         .prog-card-grid-pg::-webkit-scrollbar { display: none; }
-        .prog-card-pg { min-width: 72vw; max-width: 72vw; scroll-snap-align: start; flex-shrink: 0; }
+        .prog-card-pg { min-width: 62vw; max-width: 62vw; min-height: 300px; scroll-snap-align: start; flex-shrink: 0; }
       }
       @media (max-width: 480px) {
-        .prog-card-pg { min-width: 80vw; max-width: 80vw; }
+        .prog-card-pg { min-width: 72vw; max-width: 72vw; min-height: 280px; }
       }
       /* Upcoming cards grid */
       .prog-cards-upcoming {
@@ -533,7 +533,18 @@
         .prog-cards-upcoming { grid-template-columns: repeat(2, 1fr); }
       }
       @media (max-width: 540px) {
-        .prog-cards-upcoming { grid-template-columns: 1fr; }
+        .prog-cards-upcoming {
+          display: flex !important;
+          flex-direction: row;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scroll-snap-type: x mandatory;
+          padding-bottom: 8px;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        .prog-cards-upcoming::-webkit-scrollbar { display: none; }
+        .prog-cards-upcoming > * { min-width: 60vw; max-width: 60vw; scroll-snap-align: start; flex-shrink: 0; }
       }
     @keyframes livePulse {
       0%, 100% { transform: scale(1); opacity: 0.5; }
@@ -562,44 +573,62 @@
         </div>
       </a>
 
-      <!-- Product Marketing — Coming Soon -->
-      <div class="prog-card-pg" style="background:#3DD9C3;cursor:default;opacity:0.9">
+      <!-- Product Marketing — Open -->
+      <a href="programme-marketing.html" class="prog-card-pg" style="background:#3DD9C3">
         <div style="padding:22px 20px 14px">
-          <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#0A6B5A;background:rgba(10,107,90,0.12);border:1.5px solid rgba(10,107,90,0.3);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">🔒 Coming Soon</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:0.68rem;font-weight:700;color:#021024;border:1.5px solid rgba(2,16,36,0.28);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">
+            <span style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:8px;height:8px;flex-shrink:0">
+              <span style="position:absolute;width:8px;height:8px;border-radius:50%;background:#22c55e;animation:livePulse 1.8s ease-in-out infinite;opacity:0.5"></span>
+              <span style="position:relative;width:6px;height:6px;border-radius:50%;background:#22c55e;display:block"></span>
+            </span>
+            Open
+          </span>
           <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Product Marketing</div>
           <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">AI-native workflows, GTM systems and force-multiplier skills for modern product teams.</div>
         </div>
         <div class="prog-card-pg-img">
           <img src="assets/Product Marketing.png" alt="Product Marketing" loading="lazy" />
-          <a href="#waitlist" onclick="setWaitlistCourse('Product Marketing')" style="position:absolute;bottom:12px;right:12px;display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#021024;text-decoration:none;background:rgba(200,240,230,0.9);backdrop-filter:blur(6px);border-radius:30px;padding:7px 14px;white-space:nowrap">Join Waitlist →</a>
+          <span class="prog-card-pg-btn">View Programme →</span>
         </div>
-      </div>
+      </a>
 
-      <!-- Cybersecurity — Coming Soon -->
-      <div class="prog-card-pg" style="background:#F0EAD8;cursor:default;opacity:0.9">
+      <!-- Cybersecurity — Open -->
+      <a href="programme-cybersecurity.html" class="prog-card-pg" style="background:#F0EAD8">
         <div style="padding:22px 20px 14px">
-          <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#6B5A2A;background:rgba(107,90,42,0.12);border:1.5px solid rgba(107,90,42,0.3);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">🔒 Coming Soon</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:0.68rem;font-weight:700;color:#021024;border:1.5px solid rgba(2,16,36,0.28);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">
+            <span style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:8px;height:8px;flex-shrink:0">
+              <span style="position:absolute;width:8px;height:8px;border-radius:50%;background:#22c55e;animation:livePulse 1.8s ease-in-out infinite;opacity:0.5"></span>
+              <span style="position:relative;width:6px;height:6px;border-radius:50%;background:#22c55e;display:block"></span>
+            </span>
+            Open
+          </span>
           <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Cybersecurity</div>
           <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Detect, investigate and neutralise threats faster using AI-powered security workflows.</div>
         </div>
         <div class="prog-card-pg-img">
           <img src="assets/Cybersecurity.png" alt="Cybersecurity" loading="lazy" />
-          <a href="#waitlist" onclick="setWaitlistCourse('Cybersecurity')" style="position:absolute;bottom:12px;right:12px;display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#021024;text-decoration:none;background:rgba(235,225,200,0.9);backdrop-filter:blur(6px);border-radius:30px;padding:7px 14px;white-space:nowrap">Join Waitlist →</a>
+          <span class="prog-card-pg-btn">View Programme →</span>
         </div>
-      </div>
+      </a>
 
-      <!-- Financial Modelling — Coming Soon -->
-      <div class="prog-card-pg" style="background:#E8E0F5;cursor:default;opacity:0.9">
+      <!-- Financial Modelling — Open -->
+      <a href="programme-finance.html" class="prog-card-pg" style="background:#E8E0F5">
         <div style="padding:22px 20px 14px">
-          <span style="display:inline-block;font-size:0.68rem;font-weight:700;color:#5A3E8A;background:rgba(90,62,138,0.12);border:1.5px solid rgba(90,62,138,0.3);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">🔒 Coming Soon</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:0.68rem;font-weight:700;color:#021024;border:1.5px solid rgba(2,16,36,0.28);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">
+            <span style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:8px;height:8px;flex-shrink:0">
+              <span style="position:absolute;width:8px;height:8px;border-radius:50%;background:#22c55e;animation:livePulse 1.8s ease-in-out infinite;opacity:0.5"></span>
+              <span style="position:relative;width:6px;height:6px;border-radius:50%;background:#22c55e;display:block"></span>
+            </span>
+            Open
+          </span>
           <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Financial Modelling</div>
           <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Build, stress-test and present AI-powered financial models for smarter investment decisions.</div>
         </div>
         <div class="prog-card-pg-img">
           <img src="assets/Financial Modelling.png" alt="Financial Modelling" loading="lazy" />
-          <a href="#waitlist" onclick="setWaitlistCourse('Financial Modelling')" style="position:absolute;bottom:12px;right:12px;display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;color:#021024;text-decoration:none;background:rgba(232,224,245,0.9);backdrop-filter:blur(6px);border-radius:30px;padding:7px 14px;white-space:nowrap">Join Waitlist →</a>
+          <span class="prog-card-pg-btn">View Programme →</span>
         </div>
-      </div>
+      </a>
 
     </div>
 
