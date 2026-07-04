@@ -79,6 +79,7 @@
     }
     @media (max-width: 768px) {
       .field-hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+      .hero-metrics { display: none; }
     }
   </style>
 <script src="tracking.js"></script>
@@ -145,7 +146,7 @@
       <div class="fade-in" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:20px;padding:36px 32px">
         <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:16px">What AI Looks Like in Marketing & Sales</div>
         <p style="font-size:1rem;color:var(--muted);line-height:1.7">When a marketing team uses AI to generate 50 campaign variants overnight, optimise spend in real time, and predict which leads will convert before the sales team calls — that is AI-native revenue growth.</p>
-        <div style="margin-top:28px;padding-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center">
+        <div class="hero-metrics" style="margin-top:28px;padding-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center">
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">4</div><div style="font-size:0.72rem;color:var(--muted)">Week Sprint</div></div>
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Live</div><div style="font-size:0.72rem;color:var(--muted)">Cohort Sessions</div></div>
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Field</div><div style="font-size:0.72rem;color:var(--muted)">Verified Certificate</div></div>
@@ -465,7 +466,7 @@
 </section>
 
 <!-- ====== OUR PRACTITIONERS ====== -->
-<section class="section-pad bg-dark">
+<section class="section-pad bg-dark" style="display:none">
   <div class="container">
     <div class="fade-up" style="margin-bottom:36px">
       <div class="eyebrow-tag" style="color:var(--red)">Your Practitioner</div>

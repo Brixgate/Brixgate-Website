@@ -79,6 +79,7 @@
     }
     @media (max-width: 768px) {
       .field-hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+      .hero-metrics { display: none; }
     }
   </style>
 <script src="tracking.js"></script>
@@ -155,7 +156,7 @@
       <div class="fade-in" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:20px;padding:36px 32px">
         <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:16px">What AI Looks Like in Finance & Banking</div>
         <p style="font-size:1rem;color:var(--muted);line-height:1.7">When a CFO's team runs 200 scenario models overnight, flags audit risks in real time, and delivers client reports with AI-assisted commentary — that is an AI-native finance function.</p>
-        <div style="margin-top:28px;padding-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center">
+        <div class="hero-metrics" style="margin-top:28px;padding-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center">
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">4</div><div style="font-size:0.72rem;color:var(--muted)">Week Sprint</div></div>
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Live</div><div style="font-size:0.72rem;color:var(--muted)">Cohort Sessions</div></div>
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Field</div><div style="font-size:0.72rem;color:var(--muted)">Verified Certificate</div></div>
@@ -475,7 +476,7 @@
 </section>
 
 <!-- ====== OUR PRACTITIONERS ====== -->
-<section class="section-pad bg-dark">
+<section class="section-pad bg-dark" style="display:none">
   <div class="container">
     <div class="fade-up" style="margin-bottom:36px">
       <div class="eyebrow-tag" style="color:var(--red)">Your Practitioner</div>
