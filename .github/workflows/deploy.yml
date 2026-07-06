@@ -1,0 +1,46 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Swap API URL for production
+        run: sed -i "s|https://dev.api.brixgate.com|https://api.brixgate.com|g" script.js
+
+      - name: Create deploy archive
+        run: |
+          zip -r brixgate-prod.zip . \
+            -x "*.git*" -x ".DS_Store" -x "*/.DS_Store" \
+            -x ".vercel/*" -x "dist/*" -x "node_modules/*" \
+            -x "assets/Paralucent*.zip" -x ".claude/*" -q
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "StrictHostKeyChecking no" >> ~/.ssh/config
+
+      - name: Copy archive to EC2
+        run: |
+          scp -i ~/.ssh/deploy_key \
+            brixgate-prod.zip \
+            ec2-user@ec2-13-60-15-83.eu-north-1.compute.amazonaws.com:~
+
+      - name: Deploy on EC2
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+            ec2-user@ec2-13-60-15-83.eu-north-1.compute.amazonaws.com \
+            "sudo unzip -o ~/brixgate-prod.zip -d /var/www/html/brixgate-prod-tmp && \
+             sudo cp -r /var/www/html/brixgate-prod-tmp/. /var/www/html/ && \
+             sudo rm -rf /var/www/html/brixgate-prod-tmp && \
+             rm ~/brixgate-prod.zip"

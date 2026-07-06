@@ -79,6 +79,7 @@
     }
     @media (max-width: 768px) {
       .field-hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+      .hero-metrics { display: none; }
     }
   </style>
 <script src="tracking.js"></script>
@@ -86,11 +87,15 @@
 <body>
 
 <!-- ====== NAV ====== -->
-<div id="scroll-progress"></div>
-<div class="region-banner">
-  <div class="container" style="display:flex;align-items:center;justify-content:center;gap:20px">
-    <span>🌍 <strong>Africa-First,</strong> Globally Recognised · Cohorts open now</span>
-    <span class="btn btn-primary" style="opacity:0.5;cursor:not-allowed;pointer-events:none;color:var(--red);font-weight:700;font-size:0.84rem">Coming Soon</span>
+<div class="region-banner" id="region-banner">
+  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Now active in</span>
+  <div class="regions">
+    <span class="region-item">🇳🇬 Nigeria</span>
+    <span class="region-item">🇬🇧 United Kingdom</span>
+    <span class="region-item">🇺🇸 United States</span>
+    <span class="region-item">🇰🇪 Kenya</span>
+    <span class="region-item">🇬🇭 Ghana</span>
+    <span class="region-item">🇿🇦 South Africa</span>
   </div>
 </div>
 <nav class="nav">
@@ -105,8 +110,8 @@
       <a href="organisations.html">For Organisations</a>
     </div>
     <div class="nav-cta">
-      <span class="btn btn-outline-dark btn-sm" style="opacity:0.5;cursor:not-allowed;pointer-events:none">Coming Soon</span>
-      <a href="apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
+      <a href="#waitlist-form" class="btn btn-primary btn-sm">Join the Waitlist</a>
     </div>
     <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
@@ -117,45 +122,31 @@
   <a href="programme.html">Programme</a>
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
-  <span class="btn btn-primary" style="opacity:0.5;cursor:not-allowed;pointer-events:none">Coming Soon</span>
+  <a href="#waitlist-form" class="btn btn-primary">Join the Waitlist</a>
   <a href="organisations.html#contact" class="btn btn-outline" style="margin-top:8px">Get a Demo</a>
 </div><!-- ====== FIELD HERO ====== -->
 <section class="section-hero bg-dark" style="padding-top:calc(var(--nav-height) + 20px);padding-bottom:60px">
   <div class="container">
     <div class="field-hero-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center">
       <div class="fade-up">
-        <a href="programme.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:0.82rem;font-weight:700;text-decoration:none;margin-bottom:24px">
-          ← Back to all programmes
-        </a>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-          <span style="font-size:2.4rem">📣</span>
           <span style="background:rgba(255,41,78,0.15);color:var(--red);font-size:0.75rem;font-weight:800;padding:4px 14px;border-radius:50px;letter-spacing:.08em;text-transform:uppercase">Expert Practitioner Programme</span>
           
         </div>
         <h1 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:20px">
-          AI in<br /><span style="color:var(--red)">Marketing & Sales</span>
+          AI in <span style="color:var(--red)">Product Marketing</span>
         </h1>
         <p style="font-size:1.15rem;color:var(--muted);line-height:1.7;margin-bottom:32px;max-width:480px">Grow Revenue. Faster Than Your Competitors Can Imitate.</p>
         <!-- Price pill — visible in hero so cost is clear before scrolling -->
-        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:24px">
-          <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,41,78,0.08);border:1px solid rgba(255,41,78,0.22);border-radius:50px;padding:8px 18px">
-            <span style="font-size:0.7rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.09em">Self-Enrolment</span>
-            <span style="width:1px;height:14px;background:rgba(255,255,255,0.12);display:inline-block"></span>
-            <span style="font-size:1.05rem;font-weight:900;color:var(--white);line-height:1">
-              <span class="currency-ngn">₦250,000</span><span class="currency-usd">$156</span><!--<span class="currency-gbp">£122</span>--><span class="currency-ngn" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~$156</span><span class="currency-usd" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span><!--<span class="currency-gbp" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span>-->
-            </span>
-          </div>
-          <a href="#pricing" style="font-size:0.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--muted)'">All pricing tiers →</a>
-        </div>
         <div style="display:flex;gap:12px;flex-wrap:wrap">
           <a href="#quiz-field" class="btn btn-primary btn-lg">Validate Your Skill Level</a>
-          <span class="btn btn-outline btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none">Coming Soon</span>
+          <a href="#waitlist-form" class="btn btn-outline btn-lg">Join the Waitlist</a>
         </div>
       </div>
       <div class="fade-in" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:20px;padding:36px 32px">
         <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:16px">What AI Looks Like in Marketing & Sales</div>
         <p style="font-size:1rem;color:var(--muted);line-height:1.7">When a marketing team uses AI to generate 50 campaign variants overnight, optimise spend in real time, and predict which leads will convert before the sales team calls — that is AI-native revenue growth.</p>
-        <div style="margin-top:28px;padding-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center">
+        <div class="hero-metrics" style="margin-top:28px;padding-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center">
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">4</div><div style="font-size:0.72rem;color:var(--muted)">Week Sprint</div></div>
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Live</div><div style="font-size:0.72rem;color:var(--muted)">Cohort Sessions</div></div>
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Field</div><div style="font-size:0.72rem;color:var(--muted)">Verified Certificate</div></div>
@@ -166,7 +157,7 @@
 </section>
 
 <!-- ====== COHORT INFO BAR ====== -->
-<div style="background:#0D1C34;border-bottom:1px solid #1A3050">
+<div style="background:#0D1C34;border-bottom:1px solid #1A3050;display:none">
   <div class="container">
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0">
       <div style="padding:20px 24px;border-right:1px solid #1A3050">
@@ -193,7 +184,7 @@
 <section id="quiz-field" class="section-pad" style="background:var(--bg-dark)">
   <div class="container">
     <div style="max-width:800px;margin:0 auto">
-      <div class="fade-up" style="text-align:center;margin-bottom:48px">
+      <div class="fade-up" style="text-align:center;margin-bottom:48px;max-width:750px;margin-left:auto;margin-right:auto">
         <div class="eyebrow-tag">Validate Your Skill Level</div>
         <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:900;line-height:1.2;margin-bottom:16px">
           Where Are You on the<br /><span style="color:var(--red)">AI Readiness Spectrum in Marketing & Sales?</span>
@@ -203,7 +194,7 @@
         </p>
       </div>
 
-      <div id="qf_marketing_container" style="background:var(--bg-card);border:1.5px solid var(--border-card);border-radius:20px;padding:40px 36px">
+      <div id="qf_marketing_container" style="background:var(--bg-card);border:1.5px solid var(--border-card);border-radius:20px;padding:40px 36px;max-width:600px;margin:0 auto">
         <!-- Progress bar -->
         <div class="qf-progress-bar">
           <div class="qf-progress-fill" id="qf_marketing_progress" style="width:20%"></div>
@@ -292,7 +283,7 @@
             </div>
             <p id="qf_marketing_body" style="font-size:0.95rem;color:var(--muted);line-height:1.65;max-width:520px;margin:0 auto 28px"></p>
             <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-              <span class="btn btn-primary btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none">Coming Soon</span>
+              <a href="#waitlist-form" class="btn btn-primary btn-lg">Join the Waitlist</a>
               <a href="#pricing" style="color:var(--muted);font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:4px">View pricing first →</a>
             </div>
             <div style="margin-top:20px">
@@ -342,7 +333,7 @@
       <div>
         <div style="font-size:0.75rem;font-weight:800;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px">Eligibility Criteria</div>
         <ul style="list-style:none;padding:0;margin:0 0 28px"><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Marketing or sales professional with 2+ years of campaign, content, or commercial experience</li><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Responsibility for at least one revenue-facing or brand function</li><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Openness to integrating AI into existing workflows rather than replacing them</li></ul>
-        <span class="btn btn-primary btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none;display:inline-flex">Coming Soon</span>
+        <a href="#waitlist-form" class="btn btn-primary btn-lg" style="display:inline-flex">Join the Waitlist</a>
       </div>
     </div>
   </div>
@@ -359,17 +350,17 @@
       
           <div class="card fade-up" style="padding:32px 28px">
             <div style="font-size:2.4rem;margin-bottom:16px">🎯</div>
-            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">AI-Powered Audience Intelligence</h3>
+            <h3 style="font-size:1.05rem;font-weight:800;color:var(--bg-dark);margin-bottom:10px">AI-Powered Audience Intelligence</h3>
             <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Use AI to build precise audience segments, predict behaviour, and personalise messaging at scale.</p>
           </div>
           <div class="card fade-up" style="padding:32px 28px">
             <div style="font-size:2.4rem;margin-bottom:16px">✍️</div>
-            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">Intelligent Content at Scale</h3>
+            <h3 style="font-size:1.05rem;font-weight:800;color:var(--bg-dark);margin-bottom:10px">Intelligent Content at Scale</h3>
             <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Generate, test, and optimise content across channels with AI — maintaining brand voice with human oversight.</p>
           </div>
           <div class="card fade-up" style="padding:32px 28px">
             <div style="font-size:2.4rem;margin-bottom:16px">💰</div>
-            <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">Revenue Forecasting & Pipeline Intelligence</h3>
+            <h3 style="font-size:1.05rem;font-weight:800;color:var(--bg-dark);margin-bottom:10px">Revenue Forecasting & Pipeline Intelligence</h3>
             <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Apply AI to sales pipeline analysis, lead scoring, and revenue forecasting with accuracy that drives better decisions.</p>
           </div>
     </div>
@@ -420,7 +411,7 @@
         <div class="eyebrow-tag" style="color:var(--red)">Real Deliverables</div>
         <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:20px">By the End of the Sprint, You Will Have Built Real Things.</h2>
         <p style="font-size:0.95rem;color:#4A5568;line-height:1.7;margin-bottom:28px">Not slide decks. Not theory. Applied tools, workflows, and frameworks that immediately improve how you work in Marketing & Sales.</p>
-        <span class="btn btn-primary btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none">Coming Soon</span>
+        <a href="#waitlist-form" class="btn btn-primary btn-lg">Join the Waitlist</a>
       </div>
       <div style="display:flex;flex-direction:column;gap:20px">
         
@@ -446,7 +437,7 @@
 </section>
 
 <!-- ====== PROGRAMME COHORTS ====== -->
-<section class="section-pad bg-white">
+<section class="section-pad bg-white" style="display:none">
   <div class="container">
     <div class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">Programme Cohorts</div>
@@ -466,7 +457,7 @@
           </div>
           <div style="padding:16px 24px;background:#fff;display:flex;justify-content:space-between;align-items:center">
             <div style="display:flex;align-items:center;gap:6px"><span style="color:#F59E0B">&#9733;</span><span style="font-size:0.88rem;font-weight:700;color:#021024">4.9</span><span style="font-size:0.78rem;color:#7A94A8">Practitioner Rating</span></div>
-            <span class="btn btn-primary" style="opacity:0.5;cursor:not-allowed;pointer-events:none;padding:10px 20px;font-size:0.85rem">Coming Soon</span>
+            <a href="#waitlist-form" class="btn btn-primary" style="padding:10px 20px;font-size:0.85rem">Join the Waitlist</a>
           </div>
         </div>
       </div>
@@ -475,7 +466,7 @@
 </section>
 
 <!-- ====== OUR PRACTITIONERS ====== -->
-<section class="section-pad bg-dark">
+<section class="section-pad bg-dark" style="display:none">
   <div class="container">
     <div class="fade-up" style="margin-bottom:36px">
       <div class="eyebrow-tag" style="color:var(--red)">Your Practitioner</div>
@@ -525,7 +516,7 @@
 </section>
 
 <!-- ====== VALUE / ROI ====== -->
-<section class="section-pad" style="background:#F6F4F2">
+<section class="section-pad" style="background:#F6F4F2;display:none">
   <div class="container">
     <div style="text-align:center;margin-bottom:48px" class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">Why This Investment Pays Off</div>
@@ -630,7 +621,7 @@
 </section>
 
 <!-- ====== PRICING ====== -->
-<section id="pricing" class="section-pad bg-dark">
+<section id="pricing" class="section-pad bg-dark" style="display:none">
   <div class="container">
     <div style="text-align:center;margin-bottom:16px" class="fade-up">
       <div class="eyebrow-tag">Pricing</div>
@@ -659,7 +650,7 @@
           <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Expert-led cohort sessions</li>
           <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Expert Practitioner Certificate</li>
         </ul>
-        <span class="btn btn-outline" style="opacity:0.5;cursor:not-allowed;pointer-events:none;width:100%;justify-content:center;display:flex">Coming Soon</span>
+        <a href="#waitlist-form" class="btn btn-outline" style="width:100%;justify-content:center;display:flex">Join the Waitlist</a>
       </div>
       <div class="card fade-up" style="padding:32px 28px;border-color:var(--red);position:relative">
         <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;white-space:nowrap">Most Popular</div>
@@ -678,7 +669,7 @@
           <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Invoiced to your company</li>
           <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Priority cohort placement</li>
         </ul>
-        <span class="btn btn-primary" style="opacity:0.5;cursor:not-allowed;pointer-events:none;width:100%;justify-content:center;display:flex">Coming Soon</span>
+        <a href="#waitlist-form" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Join the Waitlist</a>
       </div>
       <div class="card fade-up" style="padding:32px 28px">
         <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Team (20+ seats)</div>
@@ -709,12 +700,128 @@
       <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;color:#fff;margin-bottom:16px">Ready to Become an AI-Native<br />Marketing & Sales Professional?</h2>
       <p style="font-size:1rem;color:rgba(255,255,255,0.82);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto">Seats are limited per cohort. Apply in under 2 minutes — no essays, no references required.</p>
       <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-        <span class="btn btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none;background:#fff;color:var(--red);font-weight:900">Coming Soon</span>
+        <a href="#waitlist-form" class="btn btn-lg" style="background:#fff;font-weight:900; color:var(--red) ">Join the Waitlist</a>
         <a href="#quiz-field" class="btn btn-lg" style="background:transparent;border:2px solid rgba(255,255,255,0.5);color:#fff">Validate Your Level First</a>
       </div>
     </div>
   </div>
 </section>
+
+<!-- ====== WAITLIST ====== -->
+<section id="waitlist" style="background:var(--bg-dark);padding:90px 0">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center" class="waitlist-grid">
+      <div class="fade-up">
+        <span class="eyebrow" style="color:var(--red)">Be First In Line</span>
+        <h2 style="color:var(--white);margin-bottom:16px;line-height:1.2">Ready to Start?<br/>Join the Waitlist.</h2>
+        <div class="divider-red"></div>
+        <p style="color:rgba(255,255,255,0.65);font-size:0.97rem;line-height:1.7;margin-bottom:20px">Drop your details below and we'll notify you the moment enrolment opens — plus you'll get early access before we announce publicly.</p>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:2px">✓</span>
+            <span style="font-size:0.87rem;color:rgba(255,255,255,0.6)">First access before public launch</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:2px">✓</span>
+            <span style="font-size:0.87rem;color:rgba(255,255,255,0.6)">Exclusive early-bird pricing</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:2px">✓</span>
+            <span style="font-size:0.87rem;color:rgba(255,255,255,0.6)">No commitment — just your spot in the queue</span>
+          </div>
+        </div>
+      </div>
+      <div class="fade-up" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:36px 32px">
+        <div id="waitlist-success" style="display:none;text-align:center;padding:24px 0">
+          <div style="font-size:2rem;margin-bottom:12px">🎉</div>
+          <div style="font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:8px">You're on the list!</div>
+          <div style="font-size:0.88rem;color:rgba(255,255,255,0.6)">We'll reach out the moment enrolment opens. Keep an eye on your inbox.</div>
+        </div>
+        <form id="waitlist-form">
+          <div style="margin-bottom:18px">
+            <label style="display:block;font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Full Name</label>
+            <input id="wl-name" type="text" placeholder="Your full name" required style="width:100%;padding:13px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:var(--white);font-size:0.93rem;outline:none;box-sizing:border-box;transition:border 0.2s" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+          </div>
+          <div style="margin-bottom:18px">
+            <label style="display:block;font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Email Address</label>
+            <input id="wl-email" type="email" placeholder="you@example.com" required style="width:100%;padding:13px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:var(--white);font-size:0.93rem;outline:none;box-sizing:border-box;transition:border 0.2s" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+          </div>
+          <div style="margin-bottom:18px">
+            <label style="display:block;font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Phone Number</label>
+            <input id="wl-phone" type="tel" placeholder="+234 800 000 0000" style="width:100%;padding:13px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:var(--white);font-size:0.93rem;outline:none;box-sizing:border-box;transition:border 0.2s" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+          </div>
+          <div style="margin-bottom:24px">
+            <label style="display:block;font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Interested Programme</label>
+            <select id="wl-course" required style="width:100%;padding:13px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:var(--white);font-size:0.93rem;outline:none;box-sizing:border-box;appearance:none;-webkit-appearance:none;cursor:pointer;transition:border 0.2s" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+              <option value="" disabled style="background:#021024">Select a programme</option>
+              <option value="Cybersecurity" style="background:#021024">Cybersecurity</option>
+              <option value="Financial Modelling" style="background:#021024">Financial Modelling</option>
+              <option value="Product Marketing" selected style="background:#021024">Product Marketing</option>
+              <option value="Product Management" style="background:#021024">Product Management</option>
+              <option value="Sales Management" style="background:#021024">Sales Management</option>
+              <option value="Data Science" style="background:#021024">Data Science</option>
+              <option value="Cloud &amp; DevOps" style="background:#021024">Cloud &amp; DevOps</option>
+            </select>
+          </div>
+          <div id="wl-error" style="display:none;font-size:0.83rem;color:var(--red);margin-bottom:14px;text-align:center"></div>
+          <button type="submit" id="wl-btn" style="width:100%;padding:15px;background:var(--red);border:none;border-radius:10px;color:var(--white);font-size:0.95rem;font-weight:700;cursor:pointer;transition:opacity 0.2s;letter-spacing:0.01em">Join the Waitlist</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+@media (max-width: 768px) {
+  .waitlist-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var wlForm = document.getElementById('waitlist-form');
+  if (!wlForm) return;
+  wlForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var name   = (document.getElementById('wl-name').value || '').trim();
+    var email  = (document.getElementById('wl-email').value || '').trim();
+    var phone  = (document.getElementById('wl-phone').value || '').trim();
+    var course = (document.getElementById('wl-course').value || '').trim();
+    var errEl  = document.getElementById('wl-error');
+    var btn    = document.getElementById('wl-btn');
+    errEl.style.display = 'none';
+    if (!name || !email || !course) {
+      errEl.textContent = 'Please fill in your name, email, and programme.';
+      errEl.style.display = 'block';
+      return;
+    }
+    btn.textContent = 'Joining…';
+    btn.disabled = true;
+    fetch((window.BX_API_BASE || 'https://api.brixgate.com') + '/api/v1/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ name: name, email: email, phone: phone, primary_field: course })
+    })
+    .then(function(r) { return r.json().catch(function() { return {}; }); })
+    .then(function(data) {
+      if (data.success) {
+        document.getElementById('waitlist-form').style.display = 'none';
+        document.getElementById('waitlist-success').style.display = 'block';
+      } else {
+        var msg = (data.errors && Object.values(data.errors)[0]) || data.message || 'Something went wrong. Please try again.';
+        errEl.textContent = Array.isArray(msg) ? msg[0] : msg;
+        errEl.style.display = 'block';
+        btn.textContent = 'Join the Waitlist';
+        btn.disabled = false;
+      }
+    })
+    .catch(function() {
+      errEl.textContent = 'Network error. Please check your connection and try again.';
+      errEl.style.display = 'block';
+      btn.textContent = 'Join the Waitlist';
+      btn.disabled = false;
+    });
+  });
+});
+</script>
 
 <!-- ====== FOOTER ====== -->
 <footer class="footer">
@@ -903,5 +1010,26 @@
   <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
+
+<!-- LinkedIn Insight Tag -->
+<script type="text/javascript">
+_linkedin_partner_id = "9372724";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script><script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9372724&fmt=gif" />
+</noscript>
+
+<!-- <script src="popup.js"></script> -->
 </body>
 </html>

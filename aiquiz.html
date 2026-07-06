@@ -421,6 +421,39 @@
     .badge-mid  { background: rgba(245,166,35,0.1); color: #D4880A; border: 1.5px solid rgba(245,166,35,0.4); }
     .badge-high { background: rgba(52,199,89,0.1);  color: #1A8F3C; border: 1.5px solid rgba(52,199,89,0.3); }
 
+    /* Badge canvas card */
+    #badge-canvas-wrap {
+      margin: 0 auto 32px;
+      max-width: 320px;
+      width: 100%;
+      text-align: center;
+    }
+    #badgeCanvas {
+      width: 100%;
+      height: auto;
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.1);
+      display: block;
+    }
+    #downloadBadgeBtn {
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #021024;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 11px 24px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity .2s, transform .15s;
+      letter-spacing: -.01em;
+    }
+    #downloadBadgeBtn:hover { opacity: .85; transform: translateY(-1px); }
+
     /* ====== CAPTURE MODAL OVERLAY ====== */
     #capture-screen {
       display: none;
@@ -612,7 +645,7 @@
       <a href="organisations.html">For Organisations</a>
     </div>
     <div class="nav-cta">
-      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm">Login</a>
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
       <a href="apply.html" class="btn btn-primary btn-sm">Apply Now</a>
     </div>
     <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -624,7 +657,7 @@
   <a href="programme.html">Programme</a>
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
-  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px">Login</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
   <a href="apply.html" class="btn btn-primary">Apply Now</a>
 </div>
 
@@ -713,10 +746,11 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
     </div>
     <div class="capture-modal-title">Your results are ready</div>
-    <p class="capture-modal-sub">Enter your email to unlock your full result. We'll also send you a <strong>registration coupon</strong> when you're ready to enrol — no spam, ever.</p>
+    <p class="capture-modal-sub">Enter your details to unlock your full result. We'll also send you a <strong>registration coupon</strong> when you're ready to enrol — no spam, ever.</p>
+    <input type="text" id="capture-name" class="capture-modal-input" placeholder="Your full name" autocomplete="name" style="margin-bottom:10px" />
     <input type="email" id="capture-email" class="capture-modal-input" placeholder="you@example.com" autocomplete="email" />
-    <span class="capture-error" id="email-error">Please enter a valid email address.</span>
-    <button onclick="submitCapture()" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem">
+    <span class="capture-error" id="email-error"></span>
+    <button onclick="submitCapture()" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;margin-top:4px">
       See My Results
     </button>
     <p class="capture-modal-skip">
@@ -729,21 +763,32 @@
 <div id="results-screen">
   <div class="result-wrap" style="text-align:center">
 
-    <div id="result-badge" class="result-tier-badge"></div>
-
-    <div class="result-score-ring" id="result-ring">
-      <div class="result-score-val" id="result-score">0</div>
-      <div class="result-score-lbl">Score</div>
+    <!-- Badge certificate canvas -->
+    <div id="badge-canvas-wrap">
+      <canvas id="badgeCanvas"></canvas>
+      <button id="downloadBadgeBtn" onclick="downloadBadge()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download My Badge
+      </button>
     </div>
+
+    <div id="result-badge" class="result-tier-badge" style="display:none"></div>
+    <div id="result-ring" style="display:none"><div id="result-score"></div></div>
 
     <h2 class="result-headline" id="result-headline"></h2>
     <p class="result-sub" id="result-sub"></p>
 
-    <!-- Apply CTA — shown immediately after the review description -->
-    <div style="margin:28px auto 0;max-width:420px">
-      <a href="apply.html" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;font-size:1rem">
-        Apply to Take a Course Now →
-      </a>
+    <!-- Quick CTA — shown immediately after the review description -->
+    <div style="margin:28px auto 0;max-width:480px">
+      <div id="quiz-quick-cta" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+        <a href="programme.html" class="btn btn-primary btn-lg" style="min-width:180px;justify-content:center;font-size:1rem;flex:none">
+          View Programmes →
+        </a>
+        <!-- "Apply as Practitioner" shown only when score = 100% -->
+        <a id="quiz-expert-btn" href="join-as-expert.html" class="btn btn-outline-dark btn-lg" style="display:none;flex:1;min-width:180px;justify-content:center;font-size:1rem">
+          Apply as Practitioner
+        </a>
+      </div>
       <p style="font-size:0.76rem;color:#7A94A8;margin-top:10px;text-align:center">4-week sprint · Expert-led · Field-specific</p>
     </div>
 
@@ -934,65 +979,110 @@ const QUESTIONS = [
   }
 ];
 
-// Score tiers: 6 questions, min = 6, max = 24
+// Score tiers: 6 questions, min = 6, max = 24 → 5 bands
 const TIERS = [
   {
-    min: 19, max: 24,
-    label: "AI Practitioner",
+    min: 22, max: 24,
+    label: "AI Undisputed",
+    badgeImg: "AI READINESS TEMPLATE UNDISPUTED (1).png",
     badgeClass: "badge-high",
     ringClass: "ring-high",
-    headline: "You're operating at the frontier.",
-    sub: "Your AI literacy is well ahead of most professionals. You're using AI intentionally, catching its failures, and thinking about your field's future clearly. The risk for people like you is stagnation — staying at current capability while AI evolves rapidly. The move now is to formalise and advance, not just maintain.",
+    headline: "You were building for this while everyone else was waiting.",
+    sub: "This is the destination the entire journey was pointing toward. You didn't arrive here by accident — you made deliberate moves when the path wasn't clear yet. That kind of foresight is exactly what the next phase of AI demands. The question now is who you bring with you.",
     signals: [
-      { icon: "✅", title: "Active AI User", desc: "AI is already embedded in how you work — not just occasional experimentation." },
-      { icon: "🎯", title: "Strong Judgment", desc: "You can evaluate AI outputs critically and know when to push back." },
-      { icon: "🚀", title: "Ready to Go Deeper", desc: "The opportunity is specialisation in your specific field, not general AI." }
+      { icon: "🏆", title: "Frontier Operator", desc: "You're not following AI trends — you're ahead of them. Your decisions already factor in what most haven't considered yet." },
+      { icon: "🎯", title: "Precision Judgment", desc: "You evaluate AI outputs with real critical depth and know how to push boundaries in your field." },
+      { icon: "🚀", title: "Benchmark Setter", desc: "The professionals in your field will be measured against what you do next. This is the moment to formalise that lead." }
     ],
     cta: {
       eyebrow: "Your Next Move",
-      headline: "Go from AI-Capable to AI-Expert in Your Field",
-      body: "You're ready for field-specific practitioner-level mastery. The Brixgate Expert Practitioner Programme takes professionals who already use AI and turns them into the benchmark in their field.",
-      btn: "See Your Field Programme →",
+      headline: "You've Earned the Expert Practitioner Track",
+      body: "You're operating at a level where field-specific practitioner mastery is the natural next step. The Brixgate Expert Practitioner Programme turns your existing capability into the benchmark in your field.",
+      btn: "View Programmes →",
       href: "programme.html"
     }
   },
   {
-    min: 13, max: 18,
-    label: "AI Aware",
+    min: 18, max: 21,
+    label: "AI Proof",
+    badgeImg: "AI READINESS TEMPLATE PROOF (1).png",
+    badgeClass: "badge-high",
+    ringClass: "ring-high",
+    headline: "You perform under pressure. AI won't change that.",
+    sub: "Resilience is the word here. You have the capacity to absorb disruption, adapt under pressure, and emerge stronger — that's not common. Senior professionals at this level don't just survive AI transformation, they lead it. The next move is formalising that edge into something others can see and measure.",
+    signals: [
+      { icon: "💪", title: "Disruption-Resilient", desc: "You've built the kind of AI capability that holds up when conditions change — not just in ideal scenarios." },
+      { icon: "⚡", title: "Active & Structured", desc: "AI is embedded in how you work, with enough judgment to know when to push back and when to trust it." },
+      { icon: "📈", title: "Leadership Ready", desc: "You're not just performing with AI — you're positioned to lead others through the transition in your field." }
+    ],
+    cta: {
+      eyebrow: "Your Next Move",
+      headline: "Turn Your Resilience Into a Recognised Credential",
+      body: "The Brixgate Expert Practitioner Programme is built for professionals at exactly this level — practitioners ready to formalise their edge and become the benchmark in their field.",
+      btn: "View Programmes →",
+      href: "programme.html"
+    }
+  },
+  {
+    min: 14, max: 17,
+    label: "AI Enthusiast",
+    badgeImg: "AI READINESS TEMPLATE ENTHUSIAST (1).png",
     badgeClass: "badge-mid",
     ringClass: "ring-mid",
-    headline: "You're aware — but the gap is growing.",
-    sub: "You understand AI's importance and you're engaging with it, but you haven't yet built the structured capability that your role will require. Most professionals in this range feel the gap but don't know how to close it efficiently. The good news: you're in exactly the right position to make a decisive move.",
+    headline: "The foundation is there. The gap is closing.",
+    sub: "The building blocks are in place — you've invested in your AI foundation and the results are showing. You haven't been fully tested in a real-world AI environment yet, but you're close. The move now is to close that gap with field-specific depth before it becomes the standard everyone else is catching up to.",
     signals: [
-      { icon: "⚡", title: "Engaged but Unstructured", desc: "You're experimenting, but without a field-specific framework your progress is slower than it needs to be." },
-      { icon: "⚠️", title: "Judgment Gaps", desc: "You're not yet consistently identifying when AI is wrong or how to course-correct." },
-      { icon: "📈", title: "High Upside", desc: "A focused 4-week sprint could close this gap entirely and put you well ahead of peers." }
+      { icon: "🔧", title: "Foundation Built", desc: "You have the core concepts in place — what's needed now is structured application in your specific field." },
+      { icon: "⚠️", title: "Real-World Gap", desc: "Theory and practice diverge fast. Closing this gap requires field-specific pressure, not more general learning." },
+      { icon: "📈", title: "High Trajectory", desc: "The distance between where you are and where you need to be is smaller than it feels. A focused sprint closes it." }
     ],
     cta: {
       eyebrow: "The Right Next Step",
       headline: "Close the Gap. In 4 Weeks.",
-      body: "The Brixgate Expert Practitioner Programme is built for exactly where you are — professionals who are aware but need a structured, field-specific path to real capability.",
-      btn: "Find Your Programme →",
+      body: "The Brixgate Expert Practitioner Programme is built for professionals who have the foundation but need structured, field-specific depth to perform at the level the moment demands.",
+      btn: "Find My Programme →",
       href: "programme.html"
     }
   },
   {
-    min: 6, max: 12,
-    label: "AI Exposed",
+    min: 10, max: 13,
+    label: "AI Ready",
+    badgeImg: "AI READINESS TEMPLATE READY (1).png",
+    badgeClass: "badge-mid",
+    ringClass: "ring-mid",
+    headline: "You've stopped watching. Now it's time to build.",
+    sub: "You've crossed from passive to active — you're preparing before the pressure arrives. That instinct is rare. Most professionals wait until the disruption is undeniable. You're already moving. The next step is structure: turning that momentum into field-specific capability that holds up under real conditions.",
+    signals: [
+      { icon: "⚡", title: "Proactive Mover", desc: "You're preparing before the pressure lands — that puts you ahead of most professionals at your level." },
+      { icon: "🔧", title: "Momentum Without Structure", desc: "You're moving, but without a field-specific framework your progress is slower than it needs to be." },
+      { icon: "🎯", title: "Clear Upside", desc: "A focused 4-week sprint can convert your current momentum into structured, measurable AI capability." }
+    ],
+    cta: {
+      eyebrow: "The Right Next Step",
+      headline: "Convert Momentum Into Field-Ready Capability",
+      body: "The Brixgate Expert Practitioner Programme takes professionals who are already moving and gives them the structure and field-specific depth to get ahead — not just keep up.",
+      btn: "Find My Programme →",
+      href: "programme.html"
+    }
+  },
+  {
+    min: 6, max: 9,
+    label: "AI Beginner",
+    badgeImg: "AI READINESS TEMPLATE BEGINNER (1).png",
     badgeClass: "badge-low",
     ringClass: "ring-low",
-    headline: "The gap is real — and it's widening.",
-    sub: "You're not alone — the majority of professionals are in this position. But the window to act is narrowing. AI is already changing hiring decisions, promotion criteria, and how work gets evaluated. Waiting is not a neutral choice. The professionals who move now will be the ones who lead the next cycle.",
+    headline: "Awareness is where every important decision begins.",
+    sub: "You're not behind — you're at the start of a deliberate path. Every practitioner in this space once stood exactly where you are. Awareness is not a consolation prize; it is the first move. The professionals who act on this moment are the ones who look back and say they saw it coming.",
     signals: [
-      { icon: "🔴", title: "Low Current Usage", desc: "AI is not yet part of how you work, which means you're not building the intuition that comes from practice." },
-      { icon: "🔴", title: "Limited Field Clarity", desc: "You haven't yet mapped where AI applies in your specific role — this is the first thing to fix." },
-      { icon: "🟡", title: "No Plan Yet", desc: "Knowing you need to act and having a plan to act are different. Now is the time to close that gap." }
+      { icon: "👁️", title: "You See It Coming", desc: "Recognising the shift before it's forced on you is the most important advantage. You have it." },
+      { icon: "🗺️", title: "Map Not Yet Drawn", desc: "You haven't yet mapped where AI applies in your specific role — this is the single most important first move." },
+      { icon: "🟡", title: "The Window Is Open", desc: "The professionals who act now set the standard others catch up to. The window is open — act before it closes." }
     ],
     cta: {
       eyebrow: "Start Here",
       headline: "The Time to Move Is Now — Not Next Year.",
-      body: "The Brixgate Expert Practitioner Programme starts where you are and takes you to field-specific AI fluency in 4 weeks. No prior AI experience needed.",
-      btn: "See the Programme →",
+      body: "The Brixgate Expert Practitioner Programme starts exactly where you are and takes you to field-specific AI fluency in 4 weeks. No prior AI experience required.",
+      btn: "Start Here →",
       href: "programme.html"
     }
   }
@@ -1016,6 +1106,7 @@ let answers  = [];
 let _quizCapturedEmail = '';
 let _lastScorePct = 0;
 let _lastTierLabel = '';
+let _currentTier = null;
 
 function startAssessment() {
   // Save profession if typed
@@ -1049,7 +1140,7 @@ function renderQuestion() {
   nextBtn.classList.toggle('enabled', answers[currentQ] !== null);
 
   document.getElementById('q-card').innerHTML = `
-    <div class="q-number">Question ${q.id}</div>
+    <div class="q-number">Question ${currentQ + 1} of ${QUIZ_COUNT}</div>
     <div class="q-text">${q.text}</div>
     <div class="q-options">
       ${q.options.map((o, i) => `
@@ -1102,22 +1193,76 @@ function showResultsWithModal() {
 function dismissCaptureModal() {
   document.getElementById('capture-screen').classList.remove('active');
   document.getElementById('results-screen').classList.remove('results-blurred');
+  // Re-render badge canvas with submitted name
+  if (_currentTier) {
+    var n = (document.getElementById('capture-name').value || '').trim()
+         || localStorage.getItem('bxQuizName') || '';
+    renderBadgeCanvas(_currentTier, n);
+  }
+}
+
+/* ── Badge canvas ─────────────────────────────────────────── */
+function renderBadgeCanvas(tier, userName) {
+  var canvas = document.getElementById('badgeCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var img = new Image();
+  img.onload = function () {
+    canvas.width  = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    ctx.drawImage(img, 0, 0);
+
+    if (userName) {
+      var maxSize = Math.round(img.naturalWidth * 0.07);
+      var minSize = Math.round(img.naturalWidth * 0.035);
+      var fSize   = maxSize;
+      ctx.textAlign    = 'center';
+      ctx.textBaseline = 'middle';
+      // Auto-shrink font if name is too wide
+      do {
+        ctx.font = '900 ' + fSize + 'px "DM Sans", Arial, sans-serif';
+        if (ctx.measureText(userName).width <= img.naturalWidth * 0.82) break;
+        fSize -= 3;
+      } while (fSize > minSize);
+      ctx.fillStyle = '#FFFFFF';
+      // Name at ~19% from top — clear gap above badge icon
+      ctx.fillText(userName, img.naturalWidth / 2, img.naturalHeight * 0.19);
+    }
+  };
+  img.src = 'assets/' + tier.badgeImg;
+}
+
+function downloadBadge() {
+  var canvas = document.getElementById('badgeCanvas');
+  if (!canvas || canvas.width === 0) return;
+  var link = document.createElement('a');
+  var name = (_currentTier ? _currentTier.label.replace(/\s+/g, '-').toLowerCase() : 'badge');
+  link.download = 'brixgate-' + name + '.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
 }
 
 function submitCapture() {
+  const name     = document.getElementById('capture-name').value.trim();
   const email    = document.getElementById('capture-email').value.trim();
-  const emailErr = document.getElementById('email-error');
+  const errEl    = document.getElementById('email-error');
 
+  errEl.style.display = 'block';
+  if (!name) { errEl.textContent = 'Please enter your name.'; return; }
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  emailErr.style.display = emailOk ? 'none' : 'block';
-  if (!emailOk) return;
+  if (!emailOk) { errEl.textContent = 'Please enter a valid email address.'; return; }
+  errEl.style.display = 'none';
 
   _quizCapturedEmail = email;
+  try {
+    localStorage.setItem('bxQuizEmail', email);
+    localStorage.setItem('bxQuizName',  name);
+  } catch(e) {}
   dismissCaptureModal();
 
   if (typeof postQuestionnaireSummary === 'function') {
     var occ = typeof selectedProfession !== 'undefined' ? selectedProfession : '';
-    postQuestionnaireSummary(1, email, _lastScorePct, tierLabelToRatingLevel(_lastTierLabel), 'general-ai-readiness', occ);
+    postQuestionnaireSummary(1, email, _lastScorePct, tierLabelToRatingLevel(_lastTierLabel), 'general-ai-readiness', occ, '', name);
   }
 }
 
@@ -1144,10 +1289,10 @@ function showResults() {
   // Store for API call after modal is submitted
   _lastScorePct = scorePct;
   _lastTierLabel = tier.label;
+  _currentTier   = tier;
 
-  // Render badge
-  document.getElementById('result-badge').className = 'result-tier-badge ' + tier.badgeClass;
-  document.getElementById('result-badge').innerHTML = `<span>●</span> ${tier.label}`;
+  // Render badge canvas (name added after capture modal is dismissed)
+  renderBadgeCanvas(tier, localStorage.getItem('bxQuizName') || '');
 
   // Render ring
   document.getElementById('result-ring').className = 'result-score-ring ' + tier.ringClass;
@@ -1173,6 +1318,12 @@ function showResults() {
     <p style="font-size:0.9rem;color:#4A5568;line-height:1.7;margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto">${tier.cta.body}</p>
     <a href="${tier.cta.href}" class="btn btn-primary btn-lg">${tier.cta.btn}</a>
   `;
+
+  // Show "Apply as Practitioner" only for perfect 100% score
+  var expertBtn = document.getElementById('quiz-expert-btn');
+  if (expertBtn) {
+    expertBtn.style.display = scorePct === 100 ? 'inline-flex' : 'none';
+  }
 }
 
 function restartAssessment() {
@@ -1182,9 +1333,17 @@ function restartAssessment() {
   _quizCapturedEmail = '';
   _lastScorePct = 0;
   _lastTierLabel = '';
+  _currentTier   = null;
+  var bc = document.getElementById('badgeCanvas');
+  if (bc) { var c = bc.getContext('2d'); c.clearRect(0,0,bc.width,bc.height); }
   document.getElementById('results-screen').style.display = 'none';
   document.getElementById('results-screen').classList.remove('results-blurred');
   document.getElementById('capture-screen').classList.remove('active');
+  var nameEl = document.getElementById('capture-name');
+  var emailEl = document.getElementById('capture-email');
+  if (nameEl) nameEl.value = '';
+  if (emailEl) emailEl.value = '';
+  document.getElementById('email-error').style.display = 'none';
   document.getElementById('intro-screen').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1284,5 +1443,26 @@ function copyShareLink(e) {
   <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
+
+<!-- LinkedIn Insight Tag -->
+<script type="text/javascript">
+_linkedin_partner_id = "9372724";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script><script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9372724&fmt=gif" />
+</noscript>
+
+<!-- <script src="popup.js"></script> -->
 </body>
 </html>
