@@ -138,14 +138,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary {
-  background: var(--red);
+  background: linear-gradient(90deg, #FF294E, #FF5748);
   color: var(--white);
-  border-color: var(--red);
+  border-color: transparent;
 }
 
 .btn-primary:hover {
-  background: var(--orange);
-  border-color: var(--orange);
+  background: linear-gradient(90deg, #e0223f, #e64a3d);
+  border-color: transparent;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255,41,78,0.4);
 }
@@ -1783,7 +1783,7 @@ textarea.form-control {
   .packages-grid { grid-template-columns: 1fr; }
 
   /* ── Back to top + WhatsApp — avoid overlap ── */
-  .back-to-top { right: 16px; bottom: 88px; }
+  .back-to-top { right: 16px; bottom: 80px; }
   .whatsapp-float { right: 16px; bottom: 24px; }
 
   /* ── Overflow safety ── */
@@ -1895,8 +1895,8 @@ body.show-cad .currency-cad { display: inline !important; }
 /* ---------- Back to top ---------- */
 .back-to-top {
   position: fixed;
-  bottom: 32px;
-  right: 32px;
+  bottom: 80px;
+  right: 28px;
   width: 44px;
   height: 44px;
   background: var(--red);
@@ -1957,21 +1957,49 @@ body.show-cad .currency-cad { display: inline !important; }
   bottom: 28px;
   right: 28px;
   z-index: 999;
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
   background: #25D366;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 20px rgba(37,211,102,0.45);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+  transition: all 0.25s ease;
   text-decoration: none;
+  overflow: hidden;
+}
+
+.whatsapp-float svg {
+  flex-shrink: 0;
+  min-width: 22px;
+}
+
+.whatsapp-float::after {
+  content: "Chat with Dee";
+  white-space: nowrap;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: var(--font-main);
+  color: #fff;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-width 0.25s ease, opacity 0.2s ease, margin 0.25s ease;
+  margin-left: 0;
 }
 
 .whatsapp-float:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 28px rgba(37,211,102,0.6);
+  width: auto;
+  border-radius: 50px;
+  padding: 0 14px 0 12px;
+  box-shadow: 0 6px 24px rgba(37,211,102,0.55);
+}
+
+.whatsapp-float:hover::after {
+  max-width: 120px;
+  opacity: 1;
+  margin-left: 7px;
 }
 
 /* ============================================================
@@ -2055,4 +2083,103 @@ body.show-cad .currency-cad { display: inline !important; }
 .bg-white .expert-field,
 .bg-light .expert-field {
   color: #4A5568;
+}
+
+/* Sprint section — horizontal scroll carousel on mobile */
+@media (max-width: 768px) {
+  .sprint-grid {
+    display: flex !important;
+    flex-direction: row;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 12px;
+    scrollbar-width: none;
+    gap: 16px !important;
+  }
+  .sprint-grid::-webkit-scrollbar { display: none; }
+  .sprint-grid > * {
+    min-width: 72vw;
+    max-width: 72vw;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+}
+
+/* Hero CTA buttons — reduced size on mobile */
+@media (max-width: 768px) {
+  .hero-cta-row .btn,
+  .hero-cta-row .btn-lg { padding: 11px 18px; font-size: 0.82rem; }
+}
+@media (max-width: 480px) {
+  .hero-cta-row .btn,
+  .hero-cta-row .btn-lg { padding: 11px 18px; font-size: 0.82rem; }
+}
+
+/* Scholarship banner animations */
+@keyframes scholarshipSheen {
+  0%,100% { transform: translateX(0) rotate(20deg); opacity: 0.6; }
+  50% { transform: translateX(220px) rotate(20deg); opacity: 0.15; }
+}
+@keyframes scholarshipPulse {
+  0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; }
+}
+
+/* ── Nav programmes dropdown ── */
+.nav-prog-chevron {
+  background: none;
+  border: none;
+  padding: 2px 3px;
+  cursor: pointer;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  opacity: 0.7;
+}
+.nav-prog-chevron:hover { opacity: 1; }
+
+.nav-prog-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.nav-prog-trigger {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+.nav-prog-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding-top: 14px;
+  z-index: 200;
+}
+.nav-prog-menu-inner {
+  background: #ffffff;
+  border: 1px solid #E8E3DE;
+  border-radius: 12px;
+  padding: 8px;
+  min-width: 210px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+.nav-prog-dropdown:hover .nav-prog-menu,
+.nav-prog-dropdown.open .nav-prog-menu {
+  display: block;
+}
+.nav-prog-menu a {
+  display: block;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #021024;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+.nav-prog-menu a:hover {
+  background: #FFF5F6;
+  color: #FF294E;
 }

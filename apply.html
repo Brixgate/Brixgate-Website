@@ -704,9 +704,20 @@
     </a>
     <div class="nav-links">
       <a href="index.html">Home</a>
-      <a href="programme.html">Programme</a>
+      <div class="nav-prog-dropdown">
+        <a href="programme.html">Programme</a><button class="nav-prog-chevron" type="button" aria-label="Toggle programmes menu"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-prog-menu">
+          <div class="nav-prog-menu-inner">
+            <a href="programme-engineering.html">Software Engineering</a>
+            <a href="programme-cybersecurity.html">Cybersecurity</a>
+            <a href="programme-finance.html">Financial Modelling</a>
+            <a href="programme-marketing.html">Product Marketing</a>
+          </div>
+        </div>
+      </div>
       <a href="experts.html">Experts</a>
       <a href="organisations.html">For Organisations</a>
+      <a href="https://wa.me/2347088093620?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme." target="_blank" rel="noopener">Chat with us</a>
     </div>
     <div class="nav-cta">
       <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
@@ -780,7 +791,7 @@
           </div>
 
           <div style="margin-top:16px;padding-top:14px;display:flex;align-items:center;justify-content:flex-end">
-            <a href="programme.html#pricing" style="font-size:0.75rem;color:var(--red);font-weight:700;text-decoration:none">Full pricing →</a>
+            <a href="programme.html#pricing" style="font-size:0.75rem;color:var(--red);font-weight:700;text-decoration:none">Full pricing   </a>
           </div>
         </div>
       </div>
@@ -904,20 +915,33 @@
           </div>
 
           <div style="margin-top:16px;display:flex;align-items:center;gap:8px">
-            <a href="programme.html#pricing" style="font-size:0.78rem;color:var(--red);font-weight:700;text-decoration:none;white-space:nowrap;margin-left:auto">Full pricing →</a>
+            <a href="programme.html#pricing" style="font-size:0.78rem;color:var(--red);font-weight:700;text-decoration:none;white-space:nowrap;margin-left:auto">Full pricing   </a>
           </div>
         </div>
 
       </div>
 
+      <!-- ====== CHAT WITH DEE BAR ====== -->
+      <a href="https://wa.me/2347088093620?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20My%20Field%20programme" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(90deg,rgba(37,211,102,0.16),rgba(37,211,102,0.08));border:1px solid rgba(37,211,102,0.45);border-radius:12px;padding:12px 16px;margin-bottom:20px;text-decoration:none;color:var(--white);font-size:0.88rem;font-weight:600;flex-wrap:wrap;text-align:center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366" style="flex-shrink:0"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.48 1.34 5L2 22l5.2-1.36c1.46.8 3.1 1.22 4.8 1.22h.01c5.5 0 9.96-4.46 9.96-9.96 0-2.66-1.04-5.16-2.92-7.04A9.9 9.9 0 0 0 12.04 2zm0 18.2h-.01c-1.5 0-2.98-.4-4.26-1.16l-.3-.18-3.09.81.83-3.01-.2-.31a8.17 8.17 0 0 1-1.26-4.39c0-4.53 3.69-8.22 8.23-8.22 2.2 0 4.26.86 5.82 2.42a8.16 8.16 0 0 1 2.4 5.81c0 4.53-3.69 8.23-8.22 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.71-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.36-.77-1.86-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.44.06-.67.31-.23.25-.87.86-.87 2.1 0 1.24.9 2.43 1.02 2.6.12.17 1.78 2.72 4.31 3.81.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+        Not sure yet? <span style="color:#25D366;font-weight:800;text-decoration:underline">Chat with Dee on WhatsApp</span>
+      </a>
+
       <!-- ====== APPLICATION CARD — multi-step ====== -->
       <div class="apply-form-card" style="opacity:1;transform:none" id="apply-card">
 
-        <!-- Promo code reminder -->
-        <div style="background:rgba(255,41,78,0.12);border:1.5px solid rgba(255,41,78,0.35);border-radius:10px;padding:12px 16px;margin-bottom:22px;display:flex;align-items:center;gap:10px;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-          <div style="font-size:0.82rem;color:rgba(255,255,255,0.85);line-height:1.4">
-            Use promo code <strong style="background:rgba(255,41,78,0.25);color:#FF294E;padding:2px 8px;border-radius:4px;font-family:monospace;font-size:0.85rem;letter-spacing:.04em;font-weight:800">BRIXEB20</strong> at checkout to get <strong style="color:#FF294E">20% off</strong> your programme fee.
+        <!-- Scholarship promo banner -->
+        <div style="position:relative;overflow:hidden;border-radius:12px;padding:16px 18px;margin-bottom:22px;background:linear-gradient(120deg,rgba(255,41,78,0.18),rgba(255,87,72,0.08));border:1px solid rgba(255,87,72,0.4)">
+          <div style="position:absolute;top:-40%;left:-10%;width:60%;height:220%;background:rgba(255,255,255,0.04);transform:rotate(20deg);animation:scholarshipSheen 5s ease-in-out infinite;pointer-events:none"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:relative;z-index:1">
+            <span style="display:inline-flex;align-items:center;gap:6px;background:#FF294E;color:#fff;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px">
+              <span style="width:6px;height:6px;border-radius:50%;background:#fff;animation:scholarshipPulse 1.6s infinite;display:inline-block"></span>
+              Scholarship Ongoing
+            </span>
+            <span style="font-size:12px;color:#FFD3D8;font-weight:600">Ends 30th July</span>
+          </div>
+          <div style="margin-top:10px;position:relative;z-index:1">
+            <div style="font-size:13px;color:#C7CDE0;line-height:1.5">A limited number of scholarship slots are open right now. <strong style="color:#fff">Your fee is automatically reduced</strong> at checkout. No code needed.</div>
           </div>
         </div>
 
@@ -1058,7 +1082,7 @@
           <p class="form-note">By applying you confirm you are 18 or older and agree to our <a href="privacy-policy.html">Privacy Policy</a>. We'll never share your details with third parties.</p>
 
           <div class="practitioner-nudge">
-            <p>Are you a practitioner who has already applied AI in your field? <a href="join-as-expert.html">Join our expert network instead →</a></p>
+            <p>Are you a practitioner who has already applied AI in your field? <a href="join-as-expert.html">Join our expert network instead   </a></p>
           </div>
         </div>
 
@@ -1226,13 +1250,13 @@
 <script>
   /* ============================================================
      BRIXGATE — Apply page
-     Flow: Register → Review → Redirect to Paystack hosted page
+     Flow: Register    Review    Redirect to Paystack hosted page
      After payment, Paystack redirects to callback.html
   ============================================================ */
 
   var API_BASE = 'https://dev.api.brixgate.com/api/v1';
 
-  /* programme ID → field name */
+  /* programme ID    field name */
   /* Populated dynamically from GET /programs — do not hardcode here */
   var PROGRAM_ID_TO_FIELD = {};
   var FIELD_TO_PROGRAM_ID = {};
@@ -1245,7 +1269,7 @@
   var CURRENCY_SYMS = { ngn: '₦', usd: '$', gbp: '£', eur: '€', cad: 'C$' };
 
   var _programId    = null;
-  var _pricingPlans = {};   /* plan_type → plan object */
+  var _pricingPlans = {};   /* plan_type    plan object */
 
   function getActiveCurrency() {
     var c = window.bxActiveCurrency || '';
@@ -2040,7 +2064,7 @@
     });
   })();
 
-  /* ---------- STEP 1 → STEP 2: Register applicant ---------- */
+  /* ---------- STEP 1    STEP 2: Register applicant ---------- */
   document.getElementById('apply-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -2204,13 +2228,13 @@
       });
   });
 
-  /* ---------- STEP 2 → STEP 1: Edit ---------- */
+  /* ---------- STEP 2    STEP 1: Edit ---------- */
   document.getElementById('back-to-form').addEventListener('click', function() {
     hideReviewError();
     showPanel('form');
   });
 
-  /* ---------- STEP 2 → Paystack: Initiate payment & redirect ---------- */
+  /* ---------- STEP 2    Paystack: Initiate payment & redirect ---------- */
   document.getElementById('pay-btn').addEventListener('click', function() {
     hideReviewError();
 

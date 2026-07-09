@@ -115,7 +115,7 @@
       .problem-item .stat { font-size: 2rem; }
       /* Programme intro */
       .programme-intro { grid-template-columns: 1fr; gap: 40px; }
-      /* Regions → 2col on tablet */
+      /* Regions   2col on tablet */
       .regions-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 540px) {
@@ -124,9 +124,9 @@
     @media (max-width: 480px) {
       .hero-sub { font-size: 0.95rem; }
       .hero-headline { font-size: clamp(1.6rem, 8vw, 2rem); }
-      /* Org teaser sidebar → hide on very small screens */
+      /* Org teaser sidebar    hide on very small screens */
       .org-packages-preview { display: none; }
-      /* Regions → 1col on phone */
+      /* Regions    1col on phone */
       .regions-grid { grid-template-columns: 1fr !important; max-width: 100%; }
     }
 
@@ -672,9 +672,20 @@
 
     <div class="nav-links">
       <a href="index.html">Home</a>
-      <a href="programme.html">Programme</a>
+      <div class="nav-prog-dropdown">
+        <a href="programme.html">Programme</a><button class="nav-prog-chevron" type="button" aria-label="Toggle programmes menu"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-prog-menu">
+          <div class="nav-prog-menu-inner">
+            <a href="programme-engineering.html">Software Engineering</a>
+            <a href="programme-cybersecurity.html">Cybersecurity</a>
+            <a href="programme-finance.html">Financial Modelling</a>
+            <a href="programme-marketing.html">Product Marketing</a>
+          </div>
+        </div>
+      </div>
       <a href="experts.html">Experts</a>
       <a href="organisations.html">For Organisations</a>
+      <a href="https://wa.me/2347088093620?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme." target="_blank" rel="noopener">Chat with us</a>
     </div>
 
     <div class="nav-cta">
@@ -725,6 +736,22 @@
           <a href="aiquiz.html" class="btn btn-primary">Take an AI test</a>
           <a href="apply.html" class="btn btn-outline">Start your application</a>
         </div>
+
+        <!--
+        SAVED CONCEPT — hero "View Programmes" dropdown (for future use):
+        <div class="hero-prog-dropdown">
+          <button class="btn btn-outline hero-prog-btn" type="button">
+            View Programmes
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="hero-prog-menu">
+            <a href="programme-engineering.html">Software Engineering</a>
+            <a href="programme-cybersecurity.html">Cybersecurity</a>
+            <a href="programme-finance.html">Financial Modelling</a>
+            <a href="programme-marketing.html">Product Marketing</a>
+          </div>
+        </div>
+        -->
 
         <div class="hero-social-proof fade-up" style="transition-delay:0.3s">
           <div class="proof-avatars">
@@ -836,7 +863,7 @@
         <div style="font-size:0.75rem;color:var(--muted)">Take the free 3-minute check — no sign-up, instant result</div>
       </div>
     </div>
-    <a href="aiquiz.html" style="font-size:0.8rem;font-weight:700;color:var(--red);white-space:nowrap;border:1px solid rgba(255,41,78,0.3);padding:8px 18px;border-radius:20px;text-decoration:none;background:rgba(255,41,78,0.06);transition:background 0.2s" onmouseover="this.style.background='rgba(255,41,78,0.12)'" onmouseout="this.style.background='rgba(255,41,78,0.06)'">Take the AI Readiness Check →</a>
+    <a href="aiquiz.html" style="font-size:0.8rem;font-weight:700;color:var(--red);white-space:nowrap;border:1px solid rgba(255,41,78,0.3);padding:8px 18px;border-radius:20px;text-decoration:none;background:rgba(255,41,78,0.06);transition:background 0.2s" onmouseover="this.style.background='rgba(255,41,78,0.12)'" onmouseout="this.style.background='rgba(255,41,78,0.06)'">Take the AI Readiness Check   </a>
   </div>
 </div> -->
 
@@ -849,7 +876,7 @@
         <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--red);margin-bottom:8px">Be AI-Native in Your Field in Under 4 Weeks.</div>
         <h2 style="font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:900;color:#021024;line-height:1.2">4 Programmes Open Now.<br/>More Unlocking Throughout 2026.</h2>
       </div>
-      <a href="programme.html" style="font-size:0.88rem;font-weight:700;color:var(--red);white-space:nowrap;display:flex;align-items:center;gap:6px;text-decoration:none">Browse all programmes →</a>
+      <a href="programme.html" style="font-size:0.88rem;font-weight:700;color:var(--red);white-space:nowrap;display:flex;align-items:center;gap:6px;text-decoration:none">Browse all programmes   </a>
     </div>
 
     <!-- ═══ NEW CARD DESIGN (TEMP — to revert, delete this block and uncomment ORIGINAL CARDS below) ═══ -->
@@ -959,7 +986,7 @@
         </div>
         <div class="prog-card-img-frame">
           <img src="assets/Software Engineering.png" alt="Software Engineering" loading="lazy" />
-          <span class="prog-card-view-btn">View Courses →</span>
+          <span class="prog-card-view-btn">View Courses   </span>
         </div>
       </a>
 
@@ -978,7 +1005,7 @@
         </div>
         <div class="prog-card-img-frame">
           <img src="assets/Product Marketing.png" alt="Product Marketing" loading="lazy" />
-          <span class="prog-card-view-btn">View Course →</span>
+          <span class="prog-card-view-btn">View Course   </span>
         </div>
       </a>
 
@@ -997,7 +1024,7 @@
         </div>
         <div class="prog-card-img-frame">
           <img src="assets/Cybersecurity.png" alt="Cybersecurity" loading="lazy" />
-          <span class="prog-card-view-btn">View Course →</span>
+          <span class="prog-card-view-btn">View Course   </span>
         </div>
       </a>
 
@@ -1016,7 +1043,7 @@
         </div>
         <div class="prog-card-img-frame">
           <img src="assets/Financial Modelling.png" alt="Financial Modelling" loading="lazy" />
-          <span class="prog-card-view-btn">View Course →</span>
+          <span class="prog-card-view-btn">View Course   </span>
         </div>
       </a>
 
@@ -1032,7 +1059,7 @@
           <div style="font-size:0.88rem;font-weight:800;color:#021024;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Product Marketing</div>
           <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-top:1px">● Open</div>
         </div>
-        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0">→</span>
+        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0">  </span>
       </a>
 
       <a href="programme-cybersecurity.html" class="field-card-quick">
@@ -1041,7 +1068,7 @@
           <div style="font-size:0.88rem;font-weight:800;color:#021024;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Cybersecurity</div>
           <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-top:1px">● Open</div>
         </div>
-        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0">→</span>
+        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0">  </span>
       </a>
 
       <a href="programme-engineering.html" class="field-card-quick">
@@ -1050,7 +1077,7 @@
           <div style="font-size:0.88rem;font-weight:800;color:#021024;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Software Engineering</div>
           <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-top:1px">● Open</div>
         </div>
-        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0">→</span>
+        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0">  </span>
       </a>
 
       <a href="programme-devops.html" class="field-card-quick">
@@ -1059,7 +1086,7 @@
           <div style="font-size:0.88rem;font-weight:800;color:#021024;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Cloud &amp; DevOps</div>
           <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-top:1px">● Open</div>
         </div>
-        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0">→</span>
+        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0">  </span>
       </a>
 
     </div>
@@ -1564,7 +1591,7 @@
 
 
 <!-- Hero Panel Carousel removed -->
-</script>
+
 
 <!-- LinkedIn Insight Tag -->
 <script type="text/javascript">

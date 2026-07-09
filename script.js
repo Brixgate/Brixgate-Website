@@ -508,3 +508,17 @@ window.tierLabelToRatingLevel = function(label) {
   var el = document.getElementById('footer-year');
   if (el) el.textContent = new Date().getFullYear();
 }());
+
+/* ── Nav programmes dropdown (chevron toggle) ── */
+(function() {
+  var wrap = document.querySelector('.nav-prog-dropdown');
+  var chevron = document.querySelector('.nav-prog-chevron');
+  if (!wrap || !chevron) return;
+  chevron.addEventListener('click', function(e) {
+    e.stopPropagation();
+    wrap.classList.toggle('open');
+  });
+  document.addEventListener('click', function() {
+    if (wrap) wrap.classList.remove('open');
+  });
+}());

@@ -176,9 +176,20 @@
     </a>
     <div class="nav-links">
       <a href="index.html">Home</a>
-      <a href="programme.html" class="active">Programme</a>
+      <div class="nav-prog-dropdown">
+        <a href="programme.html">Programme</a><button class="nav-prog-chevron" type="button" aria-label="Toggle programmes menu"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-prog-menu">
+          <div class="nav-prog-menu-inner">
+            <a href="programme-engineering.html">Software Engineering</a>
+            <a href="programme-cybersecurity.html">Cybersecurity</a>
+            <a href="programme-finance.html">Financial Modelling</a>
+            <a href="programme-marketing.html">Product Marketing</a>
+          </div>
+        </div>
+      </div>
       <a href="experts.html">Experts</a>
       <a href="organisations.html">For Organisations</a>
+      <a href="https://wa.me/2347088093620?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme." target="_blank" rel="noopener">Chat with us</a>
     </div>
     <div class="nav-cta">
       <a href="apply.html?program_id=4" class="btn btn-outline-dark btn-sm">Apply Now</a>
@@ -489,7 +500,7 @@
 </section>
 
 <!-- ====== AI IN THIS FIELD: SKILLS ====== -->
-<section class="section-pad bg-white">
+<section class="section-pad bg-white" style="display:none">
   <div class="container">
     <div style="text-align:center;margin-bottom:48px" class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">What You Will Master</div>
@@ -523,7 +534,7 @@
       <div class="eyebrow-tag">The Sprint</div>
       <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900">How the Product Marketing<br />Sprint Works</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+    <div class="sprint-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
       <div class="card fade-up" style="padding:28px 24px">
         <div style="font-size:1.8rem;margin-bottom:12px">🎯</div>
         <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px">Week 0</div>
@@ -553,7 +564,7 @@
 </section>
 
 <!-- ====== WHAT YOU WILL BUILD ====== -->
-<section class="section-pad bg-white">
+<section class="section-pad bg-white" style="display:none">
   <div class="container">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center" class="fade-up">
       <div>
