@@ -116,7 +116,7 @@
       .cohort-info-bar > div:nth-child(odd) { border-right: 1px solid #1A3050 !important; }
       .cohort-info-bar > div:last-child { border-bottom: none !important; }
 
-      /* All inline 3-col and 4-col grids → 1 col */
+      /* All inline 3-col and 4-col grids    1 col */
       [style*="grid-template-columns:repeat(3,1fr)"],
       [style*="grid-template-columns: repeat(3, 1fr)"],
       [style*="grid-template-columns:repeat(4,1fr)"],
@@ -125,7 +125,7 @@
         gap: 16px !important;
       }
 
-      /* 2-col grids → 1 col */
+      /* 2-col grids    1 col */
       [style*="grid-template-columns:1fr 1fr"],
       [style*="grid-template-columns: 1fr 1fr"] {
         grid-template-columns: 1fr !important;
@@ -137,7 +137,7 @@
         grid-template-columns: 1fr !important;
       }
 
-      /* Pricing grid → stack */
+      /* Pricing grid    stack */
       #pricing-cards { grid-template-columns: 1fr !important; max-width: 100% !important; gap: 16px !important; }
 
       /* Kill large gaps that cause overflow */
@@ -155,7 +155,7 @@
       .container { padding-left: 16px !important; padding-right: 16px !important; }
       .card { min-width: 0 !important; }
 
-      /* Stat mini-grid inside hero card → 1 col */
+      /* Stat mini-grid inside hero card    1 col */
       [style*="grid-template-columns:repeat(3,1fr);gap:16px"] {
         grid-template-columns: repeat(3, 1fr) !important;
       }
@@ -166,7 +166,7 @@
       /* FAQ/Curriculum section — ensure text doesn't overflow */
       details summary, details div { word-break: break-word; }
 
-      /* Comparison table / 3-col border table → stack */
+      /* Comparison table / 3-col border table    stack */
       [style*="grid-template-columns:repeat(3,1fr);gap:0;border"] {
         grid-template-columns: 1fr !important;
         border-radius: 12px !important;
@@ -176,7 +176,7 @@
         border-bottom: 1px solid #E8E3DE;
       }
 
-      /* Cohort panel with 220px sidebar → stack */
+      /* Cohort panel with 220px sidebar    stack */
       [style*="grid-template-columns:220px 1fr"] {
         grid-template-columns: 1fr !important;
       }
@@ -223,9 +223,20 @@
     </a>
     <div class="nav-links">
       <a href="index.html">Home</a>
-      <a href="programme.html" class="active">Programme</a>
+      <div class="nav-prog-dropdown">
+        <a href="programme.html">Programme</a><button class="nav-prog-chevron" type="button" aria-label="Toggle programmes menu"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-prog-menu">
+          <div class="nav-prog-menu-inner">
+            <a href="programme-engineering.html">Software Engineering</a>
+            <a href="programme-cybersecurity.html">Cybersecurity</a>
+            <a href="programme-finance.html">Financial Modelling</a>
+            <a href="programme-marketing.html">Product Marketing</a>
+          </div>
+        </div>
+      </div>
       <a href="experts.html">Experts</a>
       <a href="organisations.html">For Organisations</a>
+      <a href="https://wa.me/2347088093620?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme." target="_blank" rel="noopener">Chat with us</a>
     </div>
     <div class="nav-cta">
       <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
@@ -257,7 +268,7 @@
         </h1>
         <p style="font-size:1.2rem;color:var(--muted);line-height:1.4;margin-bottom:32px;max-width:530px">Become an AI-native engineer. 8 live classes covering the full development lifecycle — prompting, code review, security, testing, and shipping production-ready work with confidence.</p>
         
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div class="hero-cta-row" style="display:flex;gap:12px;flex-wrap:wrap">
           <a href="#quiz-field" class="btn btn-primary btn-lg">Validate Your Skill Level</a>
           <a href="apply.html?program_id=1" class="btn btn-outline btn-lg">Apply Now</a>
         </div>
@@ -313,7 +324,7 @@
           Where Are You on the <br><span style="color:var(--red)">AI Readiness Spectrum in Software Engineering?</span>
         </h2>
         <p style="font-size:1rem;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.65">
-          5 questions. 90 seconds. Get a clear read on your current level — and what the Expert Practitioner Programme will unlock for you.
+          5 questions. 90 seconds.
         </p>
       </div>
 
@@ -425,7 +436,7 @@
             <p id="qf_engineering_body" style="font-size:0.95rem;color:var(--muted);line-height:1.65;max-width:520px;margin:0 auto 28px"></p>
             <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
               <a href="apply.html?program_id=1" id="qf_engineering_cta_link" class="btn btn-primary btn-lg">Apply Now</a>
-              <a href="#pricing" id="qf_engineering_pricing_link" style="color:var(--muted);font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:4px">View pricing first →</a>
+              <a href="#pricing" id="qf_engineering_pricing_link" style="color:var(--muted);font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:4px">View pricing first   </a>
             </div>
             <div style="margin-top:20px">
               <button onclick="qfReset('qf_engineering')" style="background:none;border:none;color:var(--muted);font-size:0.82rem;cursor:pointer;text-decoration:underline">Retake the quiz</button>
@@ -635,7 +646,7 @@
 </section>
 
 <!-- ====== AI IN THIS FIELD: SKILLS ====== -->
-<section class="section-pad bg-white">
+<section class="section-pad bg-white" style="display:none">
   <div class="container">
     <div style="text-align:center;margin-bottom:48px" class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">What You Will Master</div>
@@ -674,7 +685,7 @@
       <div class="eyebrow-tag">The Sprint</div>
       <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900">How the Engineering & Infrastructure<br />Sprint Works</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+    <div class="sprint-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
       <div class="card fade-up" style="padding:28px 24px">
         <div style="font-size:1.8rem;margin-bottom:12px">🎯</div>
         <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px">Week 0</div>
@@ -704,7 +715,7 @@
 </section>
 
 <!-- ====== WHAT YOU WILL BUILD ====== -->
-<section class="section-pad bg-white">
+<section class="section-pad bg-white" style="display:none">
   <div class="container">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center" class="fade-up">
       <div>
@@ -1057,9 +1068,9 @@
 (function() {
   const ID = 'qf_engineering';
   const TIERS = [
-      { min: 5, max: 9, label: 'Foundation Level', color: '#FF5748', headline: 'You\'re at the starting line. That\'s exactly where this programme begins.', body: 'Most professionals in your field are in the same position. The Expert Practitioner Programme is built for exactly this moment — structured, practitioner-led, and designed to move you from curiosity to capability in four weeks.', cta: 'Reserve Your Seat →' },
+      { min: 5, max: 9, label: 'Foundation Level', color: '#FF5748', headline: 'You\'re at the starting line. That\'s exactly where this programme begins.', body: 'Most professionals in your field are in the same position. The Expert Practitioner Programme is built for exactly this moment — structured, practitioner-led, and designed to move you from curiosity to capability in four weeks.', cta: 'Reserve Your Seat   ' },
       { min: 10, max: 14, label: 'Emerging Practitioner', color: '#FF8C00', headline: 'You have awareness. The programme turns awareness into applied advantage.', body: 'You\'re ahead of most professionals who haven\'t started yet. But awareness without application doesn\'t move the needle. The sprint will give you the structured framework, practitioner guidance, and peer accountability to make your AI knowledge operational.', cta: 'Apply Now →' },
-      { min: 15, max: 18, label: 'Practitioner Level', color: '#22c55e', headline: 'You\'re ahead of most. The sprint sharpens your edge.', body: 'You\'re applying AI in your field, but there\'s a gap between occasional use and systematic advantage. The Expert Practitioner Programme will give you the framework, the network, and the field-verified certification to formalise what you\'ve built — and take it further.', cta: 'Join Next Cohort →' },
+      { min: 15, max: 18, label: 'Practitioner Level', color: '#22c55e', headline: 'You\'re ahead of most. The sprint sharpens your edge.', body: 'You\'re applying AI in your field, but there\'s a gap between occasional use and systematic advantage. The Expert Practitioner Programme will give you the framework, the network, and the field-verified certification to formalise what you\'ve built — and take it further.', cta: 'Join Next Cohort   ' },
       { min: 19, max: 20, label: 'Expert Practitioner', color: '#3b82f6', headline: 'You\'re already operating at a high level. Consider becoming an Expert.', body: 'Your score suggests you\'re already applying AI at a level that most professionals in your field haven\'t reached. You\'d be a strong candidate for our Expert Practitioner pathway — sharing what you know while continuing to grow.', cta: 'Join as Expert →' }
   ];
 
@@ -1182,10 +1193,10 @@
     if (!btn) return;
     if (scores[currentQ] !== undefined) {
       btn.classList.add('qf-enabled');
-      btn.textContent = currentQ === totalQ - 1 ? 'See My Results →' : 'Next Question →';
+      btn.textContent = currentQ === totalQ - 1 ? 'See My Results   ' : 'Next Question   ';
     } else {
       btn.classList.remove('qf-enabled');
-      btn.textContent = currentQ === totalQ - 1 ? 'See My Results →' : 'Next Question →';
+      btn.textContent = currentQ === totalQ - 1 ? 'See My Results   ' : 'Next Question   ';
     }
   }
 
@@ -1211,10 +1222,10 @@
       const pricingLink = document.getElementById(ID + '_pricing_link');
       if (total >= 19) {
         if (ctaLink) ctaLink.href = 'join-as-expert.html';
-        if (pricingLink) { pricingLink.href = 'join-as-expert.html#earnings'; pricingLink.textContent = 'What you can earn →'; }
+        if (pricingLink) { pricingLink.href = 'join-as-expert.html#earnings'; pricingLink.textContent = 'What you can earn   '; }
       } else {
         if (ctaLink) ctaLink.href = 'apply.html?program_id=1';
-        if (pricingLink) { pricingLink.href = '#pricing'; pricingLink.textContent = 'View pricing first →'; }
+        if (pricingLink) { pricingLink.href = '#pricing'; pricingLink.textContent = 'View pricing first   '; }
       }
       document.getElementById(ID + '_result').classList.add('qf-visible');
       document.querySelectorAll('#' + ID + '_container .qf-question').forEach(el => el.classList.remove('qf-active'));

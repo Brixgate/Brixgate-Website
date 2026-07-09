@@ -80,6 +80,7 @@
     @media (max-width: 768px) {
       .field-hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
       .hero-metrics { display: none; }
+      .hero-ai-panel { display: none; }
     }
   </style>
 <script src="tracking.js"></script>
@@ -105,9 +106,20 @@
     </a>
     <div class="nav-links">
       <a href="index.html">Home</a>
-      <a href="programme.html" class="active">Programme</a>
+      <div class="nav-prog-dropdown">
+        <a href="programme.html">Programme</a><button class="nav-prog-chevron" type="button" aria-label="Toggle programmes menu"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-prog-menu">
+          <div class="nav-prog-menu-inner">
+            <a href="programme-engineering.html">Software Engineering</a>
+            <a href="programme-cybersecurity.html">Cybersecurity</a>
+            <a href="programme-finance.html">Financial Modelling</a>
+            <a href="programme-marketing.html">Product Marketing</a>
+          </div>
+        </div>
+      </div>
       <a href="experts.html">Experts</a>
       <a href="organisations.html">For Organisations</a>
+      <a href="https://wa.me/2347088093620?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme." target="_blank" rel="noopener">Chat with us</a>
     </div>
     <div class="nav-cta">
       <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
@@ -138,12 +150,12 @@
         </h1>
         <p style="font-size:1.15rem;color:var(--muted);line-height:1.7;margin-bottom:32px;max-width:480px">Grow Revenue. Faster Than Your Competitors Can Imitate.</p>
         <!-- Price pill — visible in hero so cost is clear before scrolling -->
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div class="hero-cta-row" style="display:flex;gap:12px;flex-wrap:wrap">
           <a href="#quiz-field" class="btn btn-primary btn-lg">Validate Your Skill Level</a>
           <a href="#waitlist-form" class="btn btn-outline btn-lg">Join the Waitlist</a>
         </div>
       </div>
-      <div class="fade-in" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:20px;padding:36px 32px">
+      <div class="fade-in hero-ai-panel" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:20px;padding:36px 32px">
         <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:16px">What AI Looks Like in Marketing & Sales</div>
         <p style="font-size:1rem;color:var(--muted);line-height:1.7">When a marketing team uses AI to generate 50 campaign variants overnight, optimise spend in real time, and predict which leads will convert before the sales team calls — that is AI-native revenue growth.</p>
         <div class="hero-metrics" style="margin-top:28px;padding-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center">
@@ -190,7 +202,7 @@
           Where Are You on the<br /><span style="color:var(--red)">AI Readiness Spectrum in Marketing & Sales?</span>
         </h2>
         <p style="font-size:1rem;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.65">
-          5 questions. 90 seconds. Get a clear read on your current level — and what the Expert Practitioner Programme will unlock for you.
+          5 questions. 90 seconds. 
         </p>
       </div>
 
@@ -340,7 +352,7 @@
 </section>
 
 <!-- ====== AI IN THIS FIELD: SKILLS ====== -->
-<section class="section-pad bg-white">
+<section class="section-pad bg-white" style="display:none">
   <div class="container">
     <div style="text-align:center;margin-bottom:48px" class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">What You Will Master</div>
@@ -374,7 +386,7 @@
       <div class="eyebrow-tag">The Sprint</div>
       <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900">How the Marketing & Sales<br />Sprint Works</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+    <div class="sprint-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
       <div class="card fade-up" style="padding:28px 24px">
         <div style="font-size:1.8rem;margin-bottom:12px">🎯</div>
         <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px">Week 0</div>
@@ -404,7 +416,7 @@
 </section>
 
 <!-- ====== WHAT YOU WILL BUILD ====== -->
-<section class="section-pad bg-white">
+<section class="section-pad bg-white" style="display:none">
   <div class="container">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center" class="fade-up">
       <div>

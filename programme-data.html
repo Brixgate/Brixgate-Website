@@ -100,9 +100,20 @@
     </a>
     <div class="nav-links">
       <a href="index.html">Home</a>
-      <a href="programme.html" class="active">Programme</a>
+      <div class="nav-prog-dropdown">
+        <a href="programme.html">Programme</a><button class="nav-prog-chevron" type="button" aria-label="Toggle programmes menu"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-prog-menu">
+          <div class="nav-prog-menu-inner">
+            <a href="programme-engineering.html">Software Engineering</a>
+            <a href="programme-cybersecurity.html">Cybersecurity</a>
+            <a href="programme-finance.html">Financial Modelling</a>
+            <a href="programme-marketing.html">Product Marketing</a>
+          </div>
+        </div>
+      </div>
       <a href="experts.html">Experts</a>
       <a href="organisations.html">For Organisations</a>
+      <a href="https://wa.me/2347088093620?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme." target="_blank" rel="noopener">Chat with us</a>
     </div>
     <div class="nav-cta">
       <span class="btn btn-outline-dark btn-sm" style="opacity:0.5;cursor:not-allowed;pointer-events:none">Coming Soon</span>
@@ -145,9 +156,9 @@
               <span class="currency-ngn">₦250,000</span><span class="currency-usd">$156</span><!--<span class="currency-gbp">£122</span>--><span class="currency-ngn" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~$156</span><span class="currency-usd" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span><!--<span class="currency-gbp" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span>-->
             </span>
           </div>
-          <a href="#pricing" style="font-size:0.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--muted)'">All pricing tiers →</a>
+          <a href="#pricing" style="font-size:0.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--muted)'">All pricing tiers   </a>
         </div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div class="hero-cta-row" style="display:flex;gap:12px;flex-wrap:wrap">
           <a href="#quiz-field" class="btn btn-primary btn-lg">Validate Your Skill Level</a>
           <span class="btn btn-outline btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none">Coming Soon</span>
         </div>
@@ -199,7 +210,7 @@
           Where Are You on the<br /><span style="color:var(--red)">AI Readiness Spectrum in Data & Analytics?</span>
         </h2>
         <p style="font-size:1rem;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.65">
-          5 questions. 90 seconds. Get a clear read on your current level — and what the Expert Practitioner Programme will unlock for you.
+          5 questions. 90 seconds.
         </p>
       </div>
 
@@ -293,7 +304,7 @@
             <p id="qf_data_body" style="font-size:0.95rem;color:var(--muted);line-height:1.65;max-width:520px;margin:0 auto 28px"></p>
             <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
               <span class="btn btn-primary btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none">Coming Soon</span>
-              <a href="#pricing" style="color:var(--muted);font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:4px">View pricing first →</a>
+              <a href="#pricing" style="color:var(--muted);font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:4px">View pricing first   </a>
             </div>
             <div style="margin-top:20px">
               <button onclick="qfReset('qf_data')" style="background:none;border:none;color:var(--muted);font-size:0.82rem;cursor:pointer;text-decoration:underline">Retake the quiz</button>
@@ -349,7 +360,7 @@
 </section>
 
 <!-- ====== AI IN THIS FIELD: SKILLS ====== -->
-<section class="section-pad bg-white">
+<section class="section-pad bg-white" style="display:none">
   <div class="container">
     <div style="text-align:center;margin-bottom:48px" class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">What You Will Master</div>
@@ -383,7 +394,7 @@
       <div class="eyebrow-tag">The Sprint</div>
       <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900">How the Data & Analytics<br />Sprint Works</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+    <div class="sprint-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
       <div class="card fade-up" style="padding:28px 24px">
         <div style="font-size:1.8rem;margin-bottom:12px">🎯</div>
         <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px">Week 0</div>
@@ -413,7 +424,7 @@
 </section>
 
 <!-- ====== WHAT YOU WILL BUILD ====== -->
-<section class="section-pad bg-white">
+<section class="section-pad bg-white" style="display:none">
   <div class="container">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center" class="fade-up">
       <div>
@@ -596,9 +607,9 @@
         <div style="background:#021024;border-radius:16px;padding:36px">
           <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:16px">By the End of Week 4, You Will Have</div>
           <div style="display:flex;flex-direction:column;gap:14px">
-            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Build an end-to-end AI-augmented analytics pipeline on real business data</span></div>
-            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Deploy AI-assisted anomaly detection and root cause analysis for your data product</span></div>
-            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Create an AI model governance and quality monitoring framework your team can run</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">  </span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Build an end-to-end AI-augmented analytics pipeline on real business data</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">  </span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Deploy AI-assisted anomaly detection and root cause analysis for your data product</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">  </span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Create an AI model governance and quality monitoring framework your team can run</span></div>
           </div>
         </div>
 
@@ -741,10 +752,10 @@
 (function() {
   const ID = 'qf_data';
   const TIERS = [
-      { min: 5, max: 9, label: 'Foundation Level', color: '#FF5748', headline: 'You\'re at the starting line. That\'s exactly where this programme begins.', body: 'Most professionals in your field are in the same position. The Expert Practitioner Programme is built for exactly this moment — structured, practitioner-led, and designed to move you from curiosity to capability in four weeks.', cta: 'Reserve your seat before this cohort fills →' },
-      { min: 10, max: 14, label: 'Emerging Practitioner', color: '#FF8C00', headline: 'You have awareness. The programme turns awareness into applied advantage.', body: 'You\'re ahead of most professionals who haven\'t started yet. But awareness without application doesn\'t move the needle. The sprint will give you the structured framework, practitioner guidance, and peer accountability to make your AI knowledge operational.', cta: 'Apply now and close the gap →' },
-      { min: 15, max: 18, label: 'Practitioner Level', color: '#22c55e', headline: 'You\'re ahead of most. The sprint sharpens your edge.', body: 'You\'re applying AI in your field, but there\'s a gap between occasional use and systematic advantage. The Expert Practitioner Programme will give you the framework, the network, and the field-verified certification to formalise what you\'ve built — and take it further.', cta: 'Join the next cohort and formalise your advantage →' },
-      { min: 19, max: 20, label: 'Expert Practitioner', color: '#3b82f6', headline: 'You\'re already operating at a high level. Consider becoming an Expert.', body: 'Your score suggests you\'re already applying AI at a level that most professionals in your field haven\'t reached. You\'d be a strong candidate for our Expert Practitioner pathway — sharing what you know while continuing to grow.', cta: 'Explore joining as an Expert Practitioner →' }
+      { min: 5, max: 9, label: 'Foundation Level', color: '#FF5748', headline: 'You\'re at the starting line. That\'s exactly where this programme begins.', body: 'Most professionals in your field are in the same position. The Expert Practitioner Programme is built for exactly this moment — structured, practitioner-led, and designed to move you from curiosity to capability in four weeks.', cta: 'Reserve your seat before this cohort fills   ' },
+      { min: 10, max: 14, label: 'Emerging Practitioner', color: '#FF8C00', headline: 'You have awareness. The programme turns awareness into applied advantage.', body: 'You\'re ahead of most professionals who haven\'t started yet. But awareness without application doesn\'t move the needle. The sprint will give you the structured framework, practitioner guidance, and peer accountability to make your AI knowledge operational.', cta: 'Apply now and close the gap   ' },
+      { min: 15, max: 18, label: 'Practitioner Level', color: '#22c55e', headline: 'You\'re ahead of most. The sprint sharpens your edge.', body: 'You\'re applying AI in your field, but there\'s a gap between occasional use and systematic advantage. The Expert Practitioner Programme will give you the framework, the network, and the field-verified certification to formalise what you\'ve built — and take it further.', cta: 'Join the next cohort and formalise your advantage   ' },
+      { min: 19, max: 20, label: 'Expert Practitioner', color: '#3b82f6', headline: 'You\'re already operating at a high level. Consider becoming an Expert.', body: 'Your score suggests you\'re already applying AI at a level that most professionals in your field haven\'t reached. You\'d be a strong candidate for our Expert Practitioner pathway — sharing what you know while continuing to grow.', cta: 'Explore joining as an Expert Practitioner   ' }
   ];
 
   const scores = {};
@@ -798,10 +809,10 @@
     if (!btn) return;
     if (scores[currentQ] !== undefined) {
       btn.classList.add('qf-enabled');
-      btn.textContent = currentQ === totalQ - 1 ? 'See My Results →' : 'Next Question →';
+      btn.textContent = currentQ === totalQ - 1 ? 'See My Results   ' : 'Next Question   ';
     } else {
       btn.classList.remove('qf-enabled');
-      btn.textContent = currentQ === totalQ - 1 ? 'See My Results →' : 'Next Question →';
+      btn.textContent = currentQ === totalQ - 1 ? 'See My Results   ' : 'Next Question   ';
     }
   }
 
