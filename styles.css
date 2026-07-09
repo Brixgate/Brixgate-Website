@@ -2131,19 +2131,23 @@ body.show-cad .currency-cad { display: inline !important; }
   border: none;
   padding: 2px 3px;
   cursor: pointer;
-  color: inherit;
+  color: #4A5568;
   display: inline-flex;
   align-items: center;
   vertical-align: middle;
-  opacity: 0.7;
+  opacity: 1;
+  transition: transform 0.2s ease;
 }
 .nav-prog-chevron:hover { opacity: 1; }
+.nav-prog-dropdown:hover .nav-prog-chevron,
+.nav-prog-dropdown.open .nav-prog-chevron { transform: rotate(180deg); opacity: 1; }
 
 .nav-prog-dropdown {
   position: relative;
   display: inline-flex;
   align-items: center;
 }
+.nav-prog-dropdown > a { padding-right: 2px; }
 .nav-prog-trigger {
   display: inline-flex;
   align-items: center;
