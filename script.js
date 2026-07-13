@@ -522,3 +522,40 @@ window.tierLabelToRatingLevel = function(label) {
     if (wrap) wrap.classList.remove('open');
   });
 }());
+
+/* ── Instagram video grid & modal ── */
+(function () {
+  var modal    = document.getElementById('ig-modal');
+  var modalVid = document.getElementById('ig-modal-video');
+  var backdrop = modal && modal.querySelector('.ig-modal-backdrop');
+  var closeBtn = modal && modal.querySelector('.ig-modal-close');
+  if (!modal || !modalVid) return;
+
+  function openModal(src) {
+    modalVid.src = src;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    modalVid.play();
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    modalVid.pause();
+    modalVid.src = '';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.ig-video-card').forEach(function (card) {
+    card.addEventListener('click', function () { openModal(card.dataset.src); });
+  });
+
+  if (backdrop) backdrop.addEventListener('click', closeModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  modalVid.addEventListener('ended', closeModal);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeModal();
+  });
+}());
