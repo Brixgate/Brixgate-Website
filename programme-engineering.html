@@ -449,143 +449,155 @@
 </section>
 
 <!-- ====== CURRICULUM ====== -->
+<style>
+  .curr-wrapper { max-width: 800px; margin: 0 auto; }
+  .curr-control-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #E8E3DE; }
+  .curr-control-label { font-size: 0.82rem; font-weight: 800; color: #021024; text-transform: uppercase; letter-spacing: .08em; }
+  .curr-expand-all { font-size: 0.85rem; font-weight: 700; color: #FF294E; background: none; border: none; cursor: pointer; padding: 0; }
+  .curr-expand-all:hover { text-decoration: underline; }
+  .curr-item { border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 8px; overflow: hidden; background: #fff; }
+  .curr-item summary { padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; list-style: none; cursor: pointer; background: #fff; }
+  .curr-item summary::-webkit-details-marker { display: none; }
+  .curr-item summary:focus { outline: none; }
+  .curr-item-title { display: flex; align-items: center; gap: 12px; }
+  .curr-item-num { font-size: 0.68rem; font-weight: 800; color: #fff; background: #FF294E; border-radius: 6px; padding: 3px 8px; letter-spacing: .04em; white-space: nowrap; flex-shrink: 0; }
+  .curr-item-name { font-size: 0.93rem; font-weight: 700; color: #021024; line-height: 1.3; }
+  .curr-chevron { flex-shrink: 0; color: #9CA3AF; transition: transform 0.2s ease; }
+  .curr-item[open] .curr-chevron { transform: rotate(180deg); }
+  .curr-item-body { padding: 0 20px 16px; border-top: 1px solid #F3F4F6; }
+  .curr-item-body ul { list-style: none; padding: 0; margin: 0; }
+  .curr-item-body li { font-size: 0.87rem; color: #4A5568; padding: 9px 0; border-bottom: 1px solid #F3F4F6; display: flex; gap: 12px; align-items: flex-start; line-height: 1.55; }
+  .curr-item-body li:last-child { border-bottom: none; }
+  .curr-item-body li::before { content: '—'; color: #9CA3AF; flex-shrink: 0; font-weight: 600; margin-top: 1px; }
+</style>
 <section class="section-pad bg-white">
   <div class="container">
-    <div style="max-width:800px;margin:0 auto" class="fade-up">
+    <div class="curr-wrapper fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">Programme Curriculum</div>
-      <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:12px">8 Classes. Full AI Engineering Lifecycle.</h2>
-      <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:32px">Each class builds on the last — from model landscape and prompting fundamentals through to a live capstone defence and your 30-day post-programme roadmap.</p>
+      <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:10px">8 Classes. Full AI Engineering Lifecycle.</h2>
+      <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:28px">Each class builds on the last — from model landscape and prompting fundamentals through to a live capstone defence and your 30-day post-programme roadmap.</p>
 
-      <!-- Class 1 -->
-      <details open style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px">
-        <summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024">
-          <span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Class 1</span>Foundations &amp; Environment Setup</span>
-          <span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0">+</span>
+      <div class="curr-control-bar">
+        <span class="curr-control-label">Content · 8 classes</span>
+        <button class="curr-expand-all" onclick="bxCurrToggleAll(this)">Expand all</button>
+      </div>
+
+      <details class="curr-item" open>
+        <summary>
+          <span class="curr-item-title"><span class="curr-item-num">Class 1</span><span class="curr-item-name">Foundations &amp; Environment Setup</span></span>
+          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;background:#fff">
-          <ul style="list-style:none;padding:0;margin:8px 0 0">
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>What "AI-native" means vs AI-assisted vs AI-aware development</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Deep-dive comparison of major coding models: Claude, GPT-4o, Gemini, DeepSeek, Qwen, Mistral, LLaMA, StarCoder2</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>IDE setup: VS Code, JetBrains, GitHub Copilot, Cursor, and local models via Ollama</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Anatomy of a strong engineering prompt — role, context, task, constraints, output format</li>
-          </ul>
-        </div>
+        <div class="curr-item-body"><ul>
+          <li>What "AI-native" means vs AI-assisted vs AI-aware development</li>
+          <li>Deep-dive comparison of major coding models: Claude, GPT-4o, Gemini, DeepSeek, Qwen, Mistral, LLaMA, StarCoder2</li>
+          <li>IDE setup: VS Code, JetBrains, GitHub Copilot, Cursor, and local models via Ollama</li>
+          <li>Anatomy of a strong engineering prompt — role, context, task, constraints, output format</li>
+        </ul></div>
       </details>
 
-      <!-- Class 2 -->
-      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px">
-        <summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024">
-          <span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Class 2</span>Practical Interactions, Documentation &amp; Planning</span>
-          <span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0">+</span>
+      <details class="curr-item">
+        <summary>
+          <span class="curr-item-title"><span class="curr-item-num">Class 2</span><span class="curr-item-name">Practical Interactions, Documentation &amp; Planning</span></span>
+          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;background:#fff">
-          <ul style="list-style:none;padding:0;margin:8px 0 0">
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Advanced prompt engineering — multi-step, iterative, and chained prompts</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>AI for requirements: turning vague briefs into technical specs, user stories, and architecture decisions</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Technical documentation at scale: README, OpenAPI/Swagger, ADRs, release notes, onboarding docs</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Understanding legacy codebases with AI — explaining mystery functions and mapping dependencies</li>
-          </ul>
-        </div>
+        <div class="curr-item-body"><ul>
+          <li>Advanced prompt engineering — multi-step, iterative, and chained prompts</li>
+          <li>AI for requirements: turning vague briefs into technical specs, user stories, and architecture decisions</li>
+          <li>Technical documentation at scale: README, OpenAPI/Swagger, ADRs, release notes, onboarding docs</li>
+          <li>Understanding legacy codebases with AI — explaining mystery functions and mapping dependencies</li>
+        </ul></div>
       </details>
 
-      <!-- Class 3 -->
-      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px">
-        <summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024">
-          <span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Class 3</span>Code Generation, Review &amp; Refactoring</span>
-          <span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0">+</span>
+      <details class="curr-item">
+        <summary>
+          <span class="curr-item-title"><span class="curr-item-num">Class 3</span><span class="curr-item-name">Code Generation, Review &amp; Refactoring</span></span>
+          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;background:#fff">
-          <ul style="list-style:none;padding:0;margin:8px 0 0">
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Generating production-ready functions, APIs, and modules — and knowing what to validate before committing</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>AI-assisted refactoring — naming, modularity, design patterns, and breaking monoliths</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Using AI as a structured first-pass code reviewer: readability, performance, security, design quality</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>The right mental model: what to delegate to AI vs what must remain with the engineer</li>
-          </ul>
-        </div>
+        <div class="curr-item-body"><ul>
+          <li>Generating production-ready functions, APIs, and modules — and knowing what to validate before committing</li>
+          <li>AI-assisted refactoring — naming, modularity, design patterns, and breaking monoliths</li>
+          <li>Using AI as a structured first-pass code reviewer: readability, performance, security, design quality</li>
+          <li>The right mental model: what to delegate to AI vs what must remain with the engineer</li>
+        </ul></div>
       </details>
 
-      <!-- Class 4 -->
-      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px">
-        <summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024">
-          <span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Class 4</span>Debugging, Testing &amp; Quality Assurance</span>
-          <span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0">+</span>
+      <details class="curr-item">
+        <summary>
+          <span class="curr-item-title"><span class="curr-item-num">Class 4</span><span class="curr-item-name">Debugging, Testing &amp; Quality Assurance</span></span>
+          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;background:#fff">
-          <ul style="list-style:none;padding:0;margin:8px 0 0">
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Feeding stack traces and logs to AI effectively — hypothesis-first debugging workflows</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>AI-driven test generation: unit, integration, and E2E — with edge cases AI commonly misses</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>TDD workflows assisted by AI, and reviewing AI-written tests for shallow or false coverage</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Performance profiling and static analysis with AI-guided interpretation</li>
-          </ul>
-        </div>
+        <div class="curr-item-body"><ul>
+          <li>Feeding stack traces and logs to AI effectively — hypothesis-first debugging workflows</li>
+          <li>AI-driven test generation: unit, integration, and E2E — with edge cases AI commonly misses</li>
+          <li>TDD workflows assisted by AI, and reviewing AI-written tests for shallow or false coverage</li>
+          <li>Performance profiling and static analysis with AI-guided interpretation</li>
+        </ul></div>
       </details>
 
-      <!-- Class 5 -->
-      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px">
-        <summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024">
-          <span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Class 5</span>Security, Ethics &amp; Safe AI Practice</span>
-          <span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0">+</span>
+      <details class="curr-item">
+        <summary>
+          <span class="curr-item-title"><span class="curr-item-num">Class 5</span><span class="curr-item-name">Security, Ethics &amp; Safe AI Practice</span></span>
+          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;background:#fff">
-          <ul style="list-style:none;padding:0;margin:8px 0 0">
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Common vulnerabilities in AI-generated code: injection, insecure defaults, hardcoded credentials</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>What not to put in prompts: PII, credentials, client data, proprietary logic — and when to use local models</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Hallucination: why it happens, how to detect it, and how to verify AI outputs</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Building a personal AI safety policy — licensing, data retention, and professional accountability</li>
-          </ul>
-        </div>
+        <div class="curr-item-body"><ul>
+          <li>Common vulnerabilities in AI-generated code: injection, insecure defaults, hardcoded credentials</li>
+          <li>What not to put in prompts: PII, credentials, client data, proprietary logic — and when to use local models</li>
+          <li>Hallucination: why it happens, how to detect it, and how to verify AI outputs</li>
+          <li>Building a personal AI safety policy — licensing, data retention, and professional accountability</li>
+        </ul></div>
       </details>
 
-      <!-- Class 6 -->
-      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px">
-        <summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024">
-          <span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Class 6</span>AI-Enhanced Productivity &amp; Workflows</span>
-          <span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0">+</span>
+      <details class="curr-item">
+        <summary>
+          <span class="curr-item-title"><span class="curr-item-num">Class 6</span><span class="curr-item-name">AI-Enhanced Productivity &amp; Workflows</span></span>
+          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;background:#fff">
-          <ul style="list-style:none;padding:0;margin:8px 0 0">
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Mapping AI tools to each SDLC phase — requirements, design, build, test, deploy</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Building reusable prompt templates and a personal AI workflow OS</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Standardising AI usage across an engineering team — shared libraries and norms</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Full productivity lab: take a real feature from brief to working code, tracking AI prompts throughout</li>
-          </ul>
-        </div>
+        <div class="curr-item-body"><ul>
+          <li>Mapping AI tools to each SDLC phase — requirements, design, build, test, deploy</li>
+          <li>Building reusable prompt templates and a personal AI workflow OS</li>
+          <li>Standardising AI usage across an engineering team — shared libraries and norms</li>
+          <li>Full productivity lab: take a real feature from brief to working code, tracking AI prompts throughout</li>
+        </ul></div>
       </details>
 
-      <!-- Class 7 -->
-      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px">
-        <summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024">
-          <span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Class 7</span>Capstone Project &amp; Defence</span>
-          <span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0">+</span>
+      <details class="curr-item">
+        <summary>
+          <span class="curr-item-title"><span class="curr-item-num">Class 7</span><span class="curr-item-name">Capstone Project &amp; Defence</span></span>
+          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;background:#fff">
-          <ul style="list-style:none;padding:0;margin:8px 0 0">
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Build a real project: working code on GitHub with prompt log, test suite, and reflection document</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Project tracks: beginner (CRUD app / API), intermediate (authenticated REST / AI feature), advanced (multi-service / CI-CD pipeline)</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Live 5–10 minute defence: walk through your AI workflow, justify two decisions where you overruled the AI</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Practitioner and peer Q&amp;A — rigorous, practical, and employer-ready</li>
-          </ul>
-        </div>
+        <div class="curr-item-body"><ul>
+          <li>Build a real project: working code on GitHub with prompt log, test suite, and reflection document</li>
+          <li>Project tracks: beginner (CRUD app / API), intermediate (authenticated REST / AI feature), advanced (multi-service / CI-CD pipeline)</li>
+          <li>Live 5–10 minute defence: walk through your AI workflow, justify two decisions where you overruled the AI</li>
+          <li>Practitioner and peer Q&amp;A — rigorous, practical, and employer-ready</li>
+        </ul></div>
       </details>
 
-      <!-- Class 8 -->
-      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px">
-        <summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024">
-          <span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Class 8</span>What's Next — The Future of AI in Engineering</span>
-          <span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0">+</span>
+      <details class="curr-item">
+        <summary>
+          <span class="curr-item-title"><span class="curr-item-num">Class 8</span><span class="curr-item-name">What's Next — The Future of AI in Engineering</span></span>
+          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;background:#fff">
-          <ul style="list-style:none;padding:0;margin:8px 0 0">
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Honest assessment of where AI coding tools are today — capabilities, limits, and what's overhyped</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Agentic AI: autonomous coding agents (Devin, SWE-agent, Claude Code, OpenHands) — what they can and cannot do</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Reasoning models vs generation models, longer context windows, multimodal coding</li>
-            <li style="font-size:0.88rem;color:#4A5568;padding:8px 0;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">✓</span>Career positioning: how to talk about AI fluency, skills that stay irreplaceable, your 30-day implementation roadmap</li>
-          </ul>
-        </div>
+        <div class="curr-item-body"><ul>
+          <li>Honest assessment of where AI coding tools are today — capabilities, limits, and what's overhyped</li>
+          <li>Agentic AI: autonomous coding agents (Devin, SWE-agent, Claude Code, OpenHands) — what they can and cannot do</li>
+          <li>Reasoning models vs generation models, longer context windows, multimodal coding</li>
+          <li>Career positioning: how to talk about AI fluency, skills that stay irreplaceable, your 30-day implementation roadmap</li>
+        </ul></div>
       </details>
+
     </div>
   </div>
 </section>
+<script>
+function bxCurrToggleAll(btn) {
+  var section = btn.closest('.curr-wrapper');
+  var items   = section.querySelectorAll('.curr-item');
+  var anyOpen = Array.from(items).some(function(d) { return d.hasAttribute('open'); });
+  items.forEach(function(d) { anyOpen ? d.removeAttribute('open') : d.setAttribute('open', ''); });
+  btn.textContent = anyOpen ? 'Expand all' : 'Collapse all';
+}
+</script>
 
 <!-- ====== TOOLS USED ====== -->
 <section class="section-pad bg-white">
