@@ -182,10 +182,17 @@
       ? BX_API_BASE
       : 'https://dev.api.brixgate.com';
 
+    var path = window.location.pathname;
+    var primaryField = path.indexOf('cybersecurity') > -1  ? 'Cybersecurity'
+                     : path.indexOf('finance')       > -1  ? 'Financial Modelling'
+                     : path.indexOf('marketing')     > -1  ? 'Product Marketing'
+                     : path.indexOf('engineering')   > -1  ? 'Software Engineering'
+                     : 'General';
+
     fetch(base + '/api/v1/waitlist', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ primary_field: email }),
+      body:    JSON.stringify({ name: '', email: email, phone: '', primary_field: primaryField }),
     })
       .then(function (r) { return r.json(); })
       .then(function () {
