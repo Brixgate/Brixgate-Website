@@ -1157,7 +1157,7 @@
             </div>
             <div class="price-row">
               <span class="price-row-label">Cohort</span>
-              <span class="price-row-value">May/Jun 2026</span>
+              <span class="price-row-value" id="review-cohort-date">—</span>
             </div>
             <div class="price-row total">
               <span class="price-row-label">Total Due Today</span>
@@ -1267,6 +1267,14 @@
   /* Populated dynamically from GET /programs — do not hardcode here */
   var PROGRAM_ID_TO_FIELD = {};
   var FIELD_TO_PROGRAM_ID = {};
+
+  /* Cohort start dates by field name */
+  var FIELD_COHORT_DATE = {
+    'Cybersecurity':       'Jul 31, 2026',
+    'Financial Modelling': 'Aug 3, 2026',
+    'Product Marketing':   'Aug 7, 2026',
+    'Software Engineering':'Aug 14, 2026'
+  };
 
   /* Static fallback used only if the /programs fetch fails.
      Only list programmes that are currently open for enrolment. */
@@ -1617,6 +1625,8 @@
         for (var fi = 0; fi < fieldSel.options.length; fi++) {
           if (fieldSel.options[fi].value === fieldName) { fieldSel.selectedIndex = fi; break; }
         }
+        var cohortEl = document.getElementById('review-cohort-date');
+        if (cohortEl) cohortEl.textContent = FIELD_COHORT_DATE[fieldName] || '—';
       }
       fetchPricingPlans(_programId);
     }
@@ -1627,6 +1637,8 @@
         var selected = this.options[this.selectedIndex];
         var pid3 = parseInt(selected.getAttribute('data-program-id')) || FIELD_TO_PROGRAM_ID[selected.value] || null;
         if (pid3) applyProgramId(pid3);
+        var cohortEl = document.getElementById('review-cohort-date');
+        if (cohortEl) cohortEl.textContent = FIELD_COHORT_DATE[selected.value] || '—';
       });
     }
 
