@@ -80,6 +80,9 @@
     @media (max-width: 768px) {
       .field-hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
       .hero-metrics { display: none; }
+      .bx-beginner-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
+      .bx-beginner-grid > div:first-child { order: 2; }
+      .bx-beginner-grid > div:last-child  { order: 1; }
     }
   </style>
 <script src="tracking.js"></script>
@@ -359,6 +362,24 @@
         <div style="font-size:0.75rem;font-weight:800;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px">Eligibility Criteria</div>
         <ul style="list-style:none;padding:0;margin:0 0 28px"><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Working cybersecurity professional with 1+ years in the field</li><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Interest in applying AI to real security operations</li><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Problem-solving mindset and readiness for hands-on work</li></ul>
         <a href="apply.html?program_id=2" class="btn btn-primary btn-lg" style="display:inline-flex">Apply Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== BEGINNER SECTION 1 ====== -->
+<section class="section-pad" style="background:#F6F4F2">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center" class="fade-up bx-beginner-grid">
+      <div>
+        <div class="eyebrow-tag" style="color:var(--red)">New to Cybersecurity?</div>
+        <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.2;margin-bottom:16px">You Don't Need Experience.<br/>You Need the Right Start.</h2>
+        <p style="font-size:0.95rem;color:#4A5568;line-height:1.75;margin-bottom:12px">Breaking into cybersecurity doesn't require a degree or years of IT background. What it requires is structure, mentorship, and hands-on exposure to real security workflows — and that's exactly what this track delivers.</p>
+        <p style="font-size:0.95rem;color:#4A5568;line-height:1.75;margin-bottom:28px">Our beginner track takes you from zero familiarity to a foundational understanding of threat landscapes, security tools, and AI-augmented defence — in just 4 weeks.</p>
+        <a href="apply.html?program_id=2" class="btn btn-primary btn-lg">Apply as a Beginner</a>
+      </div>
+      <div style="border-radius:16px;overflow:hidden;aspect-ratio:4/3">
+        <img src="assets/AI READINESS TEMPLATE BEGINNER (1).png" alt="Beginner cybersecurity learner" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy" />
       </div>
     </div>
   </div>
@@ -648,7 +669,7 @@
 </section>
 
 <!-- ====== PRICING ====== -->
-<section id="pricing" class="section-pad bg-dark" style="display:none">
+<section id="pricing" class="section-pad bg-dark">
   <div class="container">
     <div style="text-align:center;margin-bottom:16px" class="fade-up">
       <div class="eyebrow-tag">Pricing</div>
@@ -664,6 +685,27 @@
     </div>
     <div id="pricing-cards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto" class="stagger">
       <div style="text-align:center;color:var(--muted);padding:40px;grid-column:1/-1">Loading pricing…</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== BEGINNER SECTION 2 ====== -->
+<section class="section-pad bg-dark">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center" class="fade-up bx-beginner-grid">
+      <div style="border-radius:16px;overflow:hidden;aspect-ratio:4/3">
+        <img src="assets/Cybersecurity.png" alt="Cybersecurity learning path" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy" />
+      </div>
+      <div>
+        <div class="eyebrow-tag" style="color:var(--red)">Your Learning Path</div>
+        <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--white);line-height:1.2;margin-bottom:16px">From Curious to Certified.<br/>In 4 Weeks.</h2>
+        <p style="font-size:0.95rem;color:rgba(255,255,255,0.65);line-height:1.75;margin-bottom:12px">Every cybersecurity professional started somewhere. Our structured beginner cohort pairs you with a practitioner mentor who walks you through the fundamentals — network security, threat detection, incident response basics, and how AI is reshaping every layer of the field.</p>
+        <p style="font-size:0.95rem;color:rgba(255,255,255,0.65);line-height:1.75;margin-bottom:28px">You'll finish with a verified certificate, a portfolio project, and the foundation to take your first steps in the industry — or confidently transition from a neighbouring field.</p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+          <a href="apply.html?program_id=2" class="btn btn-primary btn-lg">Start Your Journey</a>
+          <a href="#quiz-field" style="font-size:0.88rem;font-weight:700;color:rgba(255,255,255,0.6);text-decoration:none">Validate your level first →</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>

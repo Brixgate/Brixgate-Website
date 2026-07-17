@@ -671,8 +671,9 @@
       .apply-wrapper              { display: flex; flex-direction: column; row-gap: 28px; }
       /* Form first on mobile */
       .apply-form-card            { order: 2; padding: 32px 24px; }
-      .apply-sidebar:first-child  { order: 1; }
-      .apply-sidebar:nth-child(2) { order: 3; }
+      .apply-sidebar:first-child  { order: 1; width: 100%; box-sizing: border-box; }
+      .apply-sidebar:nth-child(2) { order: 3; width: 100%; box-sizing: border-box; }
+      .apply-sidebar:first-child > div { width: 100%; box-sizing: border-box; }
       .form-row                   { grid-template-columns: 1fr; }
       .review-grid                { grid-template-columns: 1fr; }
     }
@@ -1015,6 +1016,21 @@
               </select>
             </div>
 
+            <div class="form-group" style="margin-bottom:28px">
+              <label style="margin-bottom:10px;display:block">I am applying as a</label>
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <span class="enroll-toggle-btn" id="level-btn-professional" onclick="selectLevelBadge('Professional')" style="cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:22px;font-size:0.82rem;font-weight:700;border:2px solid #FF294E;background:rgba(255,41,78,0.13);color:#FF294E;user-select:none;transition:all .2s">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+                  Professional
+                </span>
+                <span class="enroll-toggle-btn" id="level-btn-beginner" onclick="selectLevelBadge('Beginner')" style="cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:22px;font-size:0.82rem;font-weight:700;border:2px solid var(--border-card);background:rgba(255,255,255,0.04);color:var(--muted);user-select:none;transition:all .2s">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                  Beginner
+                </span>
+              </div>
+              <input type="hidden" id="applicant-level" name="applicant_level" value="Professional" />
+            </div>
+
             <div class="form-group">
               <label for="role">Current Role</label>
               <select id="role" name="role" required>
@@ -1126,6 +1142,10 @@
             <div class="review-field">
               <div class="review-field-label">Field</div>
               <div class="review-field-value" id="review-field-val">—</div>
+            </div>
+            <div class="review-field">
+              <div class="review-field-label">Applying as</div>
+              <div class="review-field-value" id="review-level">—</div>
             </div>
             <div class="review-field">
               <div class="review-field-label">Role</div>
@@ -1559,6 +1579,21 @@
     updateEnrollmentUI(type, teamSize);
   };
 
+  window.selectLevelBadge = function(level) {
+    var hiddenEl = document.getElementById('applicant-level');
+    if (hiddenEl) hiddenEl.value = level;
+    var active   = { border: '2px solid #FF294E', background: 'rgba(255,41,78,0.13)', color: '#FF294E' };
+    var inactive = { border: '2px solid var(--border-card)', background: 'rgba(255,255,255,0.04)', color: 'var(--muted)' };
+    ['Professional', 'Beginner'].forEach(function(l) {
+      var btn = document.getElementById('level-btn-' + l.toLowerCase());
+      if (!btn) return;
+      var s = l === level ? active : inactive;
+      btn.style.border      = s.border;
+      btn.style.background  = s.background;
+      btn.style.color       = s.color;
+    });
+  };
+
   /* ---------- Populate programme dropdown from backend ---------- */
   function populateProgrammes(list) {
     var fieldSel = document.getElementById('field');
@@ -1605,6 +1640,7 @@
   /* ---------- URL param pre-fill (?program_id=X or ?field=Name) ---------- */
   document.addEventListener('DOMContentLoaded', function () {
     selectEnrollBadge('Individual');
+    selectLevelBadge('Professional');
 
     var params = new URLSearchParams(window.location.search);
 
@@ -2125,11 +2161,14 @@
     var submitBtn = this.querySelector('button[type="submit"]');
     setSubmitState(submitBtn, true, 'Setting up your account…');
 
+    var applicantLevel = (document.getElementById('applicant-level') || {}).value || 'Professional';
+
     apiPost('/auth/applicants', {
-      name:         fullName,
-      email:        email,
-      primaryField: field || undefined,
-      currentRole:  role  || undefined
+      name:           fullName,
+      email:          email,
+      primaryField:   field          || undefined,
+      currentRole:    role           || undefined,
+      applicantLevel: applicantLevel || undefined
     })
       .then(function(data) {
         console.log('[Brixgate] /auth/applicants response:', JSON.stringify(data));
@@ -2164,6 +2203,7 @@
         document.getElementById('review-name').textContent      = fullName;
         document.getElementById('review-email').textContent     = email;
         document.getElementById('review-field-val').textContent = field;
+        document.getElementById('review-level').textContent     = applicantLevel;
         document.getElementById('review-role').textContent      = role;
 
         var enrollReviewEl = document.getElementById('review-enrollment');
