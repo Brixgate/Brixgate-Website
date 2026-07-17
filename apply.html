@@ -1288,13 +1288,16 @@
   var PROGRAM_ID_TO_FIELD = {};
   var FIELD_TO_PROGRAM_ID = {};
 
-  /* Cohort start dates by field name */
-  var FIELD_COHORT_DATE = {
-    'Cybersecurity':       'Jul 31, 2026',
-    'Financial Modelling': 'Aug 3, 2026',
-    'Product Marketing':   'Aug 7, 2026',
-    'Software Engineering':'Aug 14, 2026'
-  };
+  /* Cohort start dates — resolved by keyword so API name variations don't break the lookup */
+  function getCohortDate(fieldName) {
+    if (!fieldName) return null;
+    var n = fieldName.toLowerCase();
+    if (n.indexOf('cyber') !== -1 || n.indexOf('security') !== -1) return 'Jul 31, 2026';
+    if (n.indexOf('financial') !== -1 || n.indexOf('finance') !== -1 || n.indexOf('banking') !== -1 || n.indexOf('modelling') !== -1 || n.indexOf('modeling') !== -1) return 'Aug 3, 2026';
+    if (n.indexOf('marketing') !== -1 || n.indexOf('sales') !== -1) return 'Aug 7, 2026';
+    if (n.indexOf('engineer') !== -1 || n.indexOf('software') !== -1 || n.indexOf('coding') !== -1) return 'Aug 14, 2026';
+    return null;
+  }
 
   /* Static fallback used only if the /programs fetch fails.
      Only list programmes that are currently open for enrolment. */
@@ -1662,7 +1665,7 @@
           if (fieldSel.options[fi].value === fieldName) { fieldSel.selectedIndex = fi; break; }
         }
         var cohortEl = document.getElementById('review-cohort-date');
-        if (cohortEl) cohortEl.textContent = FIELD_COHORT_DATE[fieldName] || '—';
+        if (cohortEl) cohortEl.textContent = getCohortDate(fieldName) || '—';
       }
       fetchPricingPlans(_programId);
     }
@@ -1674,7 +1677,7 @@
         var pid3 = parseInt(selected.getAttribute('data-program-id')) || FIELD_TO_PROGRAM_ID[selected.value] || null;
         if (pid3) applyProgramId(pid3);
         var cohortEl = document.getElementById('review-cohort-date');
-        if (cohortEl) cohortEl.textContent = FIELD_COHORT_DATE[selected.value] || '—';
+        if (cohortEl) cohortEl.textContent = getCohortDate(selected.value) || '—';
       });
     }
 

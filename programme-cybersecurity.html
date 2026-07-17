@@ -499,8 +499,6 @@ function bxCurrToggleAll(btn) {
   </div>
 </section>
 
-<!-- ====== HOW THE SPRINT WORKS - ORIGINAL BACKUP (hidden, swap display:none to restore) ====== -->
-<div style="display:none">
 <!-- ====== HOW THE SPRINT WORKS ====== -->
 <section class="section-pad bg-dark">
   <div class="container">
@@ -536,9 +534,8 @@ function bxCurrToggleAll(btn) {
     </div>
   </div>
 </section>
-</div>
 
-<!-- ====== HOW THE SPRINT WORKS ====== -->
+<!-- ====== HOW THE SPRINT WORKS - NEW SCROLL ANIMATION (hidden) ====== -->
 <style>
   #sprint-scroll-outer { position: relative; }
   #sprint-sticky {
@@ -546,7 +543,7 @@ function bxCurrToggleAll(btn) {
     top: 0;
     height: 100vh;
     overflow: hidden;
-    background: #021024;
+    background: #F6F4F2;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -596,7 +593,7 @@ function bxCurrToggleAll(btn) {
     gap: 16px;
     padding: 18px 22px;
     border-radius: 12px;
-    border: 1.5px solid rgba(255,255,255,0.12);
+    border: 1.5px solid #E8E3DE;
     transition: border-color 0.35s ease, background 0.35s ease;
   }
   .sprint-pill.sp-active {
@@ -616,13 +613,13 @@ function bxCurrToggleAll(btn) {
   .sprint-pill-name {
     font-size: 0.9rem;
     font-weight: 700;
-    color: #fff;
+    color: #021024;
     line-height: 1.3;
   }
   .sprint-progress-track {
     width: 100%;
     height: 2px;
-    background: rgba(255,255,255,0.1);
+    background: #E8E3DE;
     border-radius: 2px;
     margin-bottom: 36px;
     overflow: hidden;
@@ -646,12 +643,12 @@ function bxCurrToggleAll(btn) {
     .sprint-pill { flex: 1 1 calc(50% - 5px); min-width: 140px; }
   }
 </style>
-<div id="sprint-scroll-outer" style="height:450vh">
+<div id="sprint-scroll-outer" style="height:450vh;display:none">
   <div id="sprint-sticky">
     <div class="sprint-inner">
       <div class="sprint-header">
-        <div class="eyebrow-tag">The Sprint</div>
-        <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:#fff;margin-bottom:0">How the Cybersecurity<br/>Sprint Works</h2>
+        <div class="eyebrow-tag" style="color:var(--red)">The Sprint</div>
+        <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:#021024;margin-bottom:0">How the Cybersecurity<br/>Sprint Works</h2>
       </div>
       <div class="sprint-progress-track">
         <div class="sprint-progress-fill" id="sprint-progress-fill"></div>
@@ -664,29 +661,29 @@ function bxCurrToggleAll(btn) {
           <div class="sprint-panel sp-active" data-sprint-panel="0">
             <div style="font-size:2.4rem;margin-bottom:16px">🎯</div>
             <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#FF294E;margin-bottom:10px">Week 0</div>
-            <h3 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:#fff;margin-bottom:14px;line-height:1.2">Field Assessment</h3>
-            <p style="font-size:0.93rem;color:rgba(255,255,255,0.65);line-height:1.75">Map your current AI maturity and identify the highest-leverage skills for your specific role in Cybersecurity. Before you sprint, you know exactly where you stand.</p>
+            <h3 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:#021024;margin-bottom:14px;line-height:1.2">Field Assessment</h3>
+            <p style="font-size:0.93rem;color:#4A5568;line-height:1.75">Map your current AI maturity and identify the highest-leverage skills for your specific role in Cybersecurity. Before you sprint, you know exactly where you stand.</p>
           </div>
 
           <div class="sprint-panel" data-sprint-panel="1">
             <div style="font-size:2.4rem;margin-bottom:16px">👥</div>
             <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#FF294E;margin-bottom:10px">Week 1</div>
-            <h3 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:#fff;margin-bottom:14px;line-height:1.2">Placed in Your Cohort</h3>
-            <p style="font-size:0.93rem;color:rgba(255,255,255,0.65);line-height:1.75">You join a small, curated cohort of Cybersecurity professionals — led by a verified Expert Practitioner who has deployed AI in your exact domain.</p>
+            <h3 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:#021024;margin-bottom:14px;line-height:1.2">Placed in Your Cohort</h3>
+            <p style="font-size:0.93rem;color:#4A5568;line-height:1.75">You join a small, curated cohort of Cybersecurity professionals — led by a verified Expert Practitioner who has deployed AI in your exact domain.</p>
           </div>
 
           <div class="sprint-panel" data-sprint-panel="2">
             <div style="font-size:2.4rem;margin-bottom:16px">🚀</div>
             <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#FF294E;margin-bottom:10px">Weeks 2–4</div>
-            <h3 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:#fff;margin-bottom:14px;line-height:1.2">Structured Sprint</h3>
-            <p style="font-size:0.93rem;color:rgba(255,255,255,0.65);line-height:1.75">Live sessions, applied projects, and peer accountability. Every session builds directly on your Cybersecurity context — not generic AI theory.</p>
+            <h3 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:#021024;margin-bottom:14px;line-height:1.2">Structured Sprint</h3>
+            <p style="font-size:0.93rem;color:#4A5568;line-height:1.75">Live sessions, applied projects, and peer accountability. Every session builds directly on your Cybersecurity context — not generic AI theory.</p>
           </div>
 
           <div class="sprint-panel" data-sprint-panel="3">
             <div style="font-size:2.4rem;margin-bottom:16px">🏆</div>
             <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#FF294E;margin-bottom:10px">End of Sprint</div>
-            <h3 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:#fff;margin-bottom:14px;line-height:1.2">Certification</h3>
-            <p style="font-size:0.93rem;color:rgba(255,255,255,0.65);line-height:1.75">Receive your Brixgate Expert Practitioner Certificate — field-verified, practitioner-assessed, and employer-ready in Cybersecurity.</p>
+            <h3 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:#021024;margin-bottom:14px;line-height:1.2">Certification</h3>
+            <p style="font-size:0.93rem;color:#4A5568;line-height:1.75">Receive your Brixgate Expert Practitioner Certificate — field-verified, practitioner-assessed, and employer-ready in Cybersecurity.</p>
           </div>
 
         </div>
