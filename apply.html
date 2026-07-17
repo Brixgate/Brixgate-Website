@@ -1287,6 +1287,7 @@
   /* Populated dynamically from GET /programs — do not hardcode here */
   var PROGRAM_ID_TO_FIELD = {};
   var FIELD_TO_PROGRAM_ID = {};
+  var PROGRAM_ID_TO_DATE  = {};  /* keyed by program ID, set in populateProgrammes */
 
   /* Cohort start dates — resolved by keyword so API name variations don't break the lookup */
   function getCohortDate(fieldName) {
@@ -1613,6 +1614,9 @@
       var id = p.id;
       PROGRAM_ID_TO_FIELD[id] = displayName;
       FIELD_TO_PROGRAM_ID[displayName] = id;
+      /* Use API date if present, otherwise fall back to hardcoded keyword map */
+      var apiDate = p.start_date || p.cohort_date || p.startDate || p.cohortDate || null;
+      PROGRAM_ID_TO_DATE[id] = apiDate || getCohortDate(displayName) || '—';
       var opt = document.createElement('option');
       opt.value = displayName;
       opt.setAttribute('data-program-id', id);
@@ -1665,7 +1669,7 @@
           if (fieldSel.options[fi].value === fieldName) { fieldSel.selectedIndex = fi; break; }
         }
         var cohortEl = document.getElementById('review-cohort-date');
-        if (cohortEl) cohortEl.textContent = getCohortDate(fieldName) || '—';
+        if (cohortEl) cohortEl.textContent = PROGRAM_ID_TO_DATE[_programId] || getCohortDate(fieldName) || '—';
       }
       fetchPricingPlans(_programId);
     }
@@ -1677,7 +1681,8 @@
         var pid3 = parseInt(selected.getAttribute('data-program-id')) || FIELD_TO_PROGRAM_ID[selected.value] || null;
         if (pid3) applyProgramId(pid3);
         var cohortEl = document.getElementById('review-cohort-date');
-        if (cohortEl) cohortEl.textContent = getCohortDate(selected.value) || '—';
+        var pid4 = parseInt(selected.getAttribute('data-program-id')) || null;
+        if (cohortEl) cohortEl.textContent = (pid4 && PROGRAM_ID_TO_DATE[pid4]) || getCohortDate(selected.value) || '—';
       });
     }
 
