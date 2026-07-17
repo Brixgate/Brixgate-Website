@@ -296,7 +296,7 @@
             <p id="qf_marketing_body" style="font-size:0.95rem;color:var(--muted);line-height:1.65;max-width:520px;margin:0 auto 28px"></p>
             <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
               <a href="#waitlist-form" class="btn btn-primary btn-lg">Join the Waitlist</a>
-              <a href="#pricing" style="color:var(--muted);font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:4px">View pricing first →</a>
+              <a href="#pricing" style="color:var(--muted);font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:4px">View pricing</a>
             </div>
             <div style="margin-top:20px">
               <button onclick="qfReset('qf_marketing')" style="background:none;border:none;color:var(--muted);font-size:0.82rem;cursor:pointer;text-decoration:underline">Retake the quiz</button>
@@ -309,16 +309,102 @@
 </section>
 
 <!-- ====== CURRICULUM ====== -->
+<style>
+  .curr-wrapper { max-width: 800px; margin: 0 auto; }
+  .curr-control-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #E8E3DE; }
+  .curr-control-label { font-size: 0.82rem; font-weight: 800; color: #021024; text-transform: uppercase; letter-spacing: .08em; }
+  .curr-expand-all { font-size: 0.85rem; font-weight: 700; color: #FF294E; background: none; border: none; cursor: pointer; padding: 0; }
+  .curr-expand-all:hover { text-decoration: underline; }
+  .curr-item { border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 8px; overflow: hidden; background: #fff; }
+  .curr-item summary { padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; list-style: none; cursor: pointer; background: #fff; }
+  .curr-item summary::-webkit-details-marker { display: none; }
+  .curr-item summary:focus { outline: none; }
+  .curr-item-title { display: flex; align-items: center; gap: 12px; }
+  .curr-item-num { font-size: 0.75rem; font-weight: 800; color: #FF294E; white-space: nowrap; flex-shrink: 0; }
+  .curr-item-name { font-size: 0.93rem; font-weight: 700; color: #021024; line-height: 1.3; }
+  .curr-chevron { flex-shrink: 0; color: #9CA3AF; transition: transform 0.2s ease; }
+  .curr-item[open] .curr-chevron { transform: rotate(180deg); }
+  .curr-item-body { padding: 0 20px 16px; border-top: 1px solid #F3F4F6; }
+  .curr-item-body ul { list-style: none; padding: 0; margin: 0; }
+  .curr-item-body li { font-size: 0.87rem; color: #4A5568; padding: 7px 0; display: flex; gap: 12px; align-items: flex-start; line-height: 1.55; }
+  .curr-item-body li::before { content: '—'; color: #9CA3AF; flex-shrink: 0; font-weight: 600; margin-top: 1px; }
+</style>
 <section class="section-pad bg-white">
   <div class="container">
-    <div style="max-width:800px;margin:0 auto" class="fade-up">
+    <div class="curr-wrapper fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">Programme Curriculum</div>
-      <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:12px">What You Will Cover</h2>
-      <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:32px">Every week builds on the last — from foundations through to a deployed, practitioner-assessed capstone project.</p>
-      <details open style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 1</span>AI Across the Marketing & Sales Funnel</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>How AI is transforming demand generation, content, and customer intelligence</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>LLMs for copy, creative briefing, and campaign ideation</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Evaluating AI-generated content for brand safety and accuracy</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Personalisation at scale — the AI-native marketing architecture</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 2</span>Content, Creative & Campaign AI</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>AI-assisted content creation workflows (copy, visuals, video scripts)</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Building editorial calendars and campaign plans with AI</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>SEO and keyword strategy automation using AI tools</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>A/B testing and optimisation using AI-powered analytics</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 3</span>Sales Intelligence & Customer AI</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>AI-powered lead scoring and pipeline prioritisation</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>CRM data enrichment and contact intelligence automation</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Building an AI sales assistant for objection handling and outreach</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Churn prediction and customer retention modelling</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 4</span>Capstone & Certification</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Capstone: deploy an AI-augmented marketing or sales workflow</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Expert practitioner review and brand safety audit</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>ROI documentation — employer-ready portfolio artefact</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Brixgate Expert Practitioner Certificate — Marketing & Sales</li></ul></div></details>
+      <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:10px">4 Weeks. Full AI Marketing Lifecycle.</h2>
+      <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:28px">Every week builds on the last — from foundations through to a deployed, practitioner-assessed capstone project.</p>
+
+      <div class="curr-control-bar">
+        <span class="curr-control-label">Content · 4 weeks</span>
+        <button class="curr-expand-all" onclick="bxCurrToggleAll(this)">Expand all</button>
+      </div>
+
+      <details class="curr-item" open>
+        <summary>
+          <span class="curr-item-title"><span class="curr-item-num">Week 1</span><span class="curr-item-name">AI Across the Marketing &amp; Sales Funnel</span></span>
+          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="curr-item-body"><ul>
+          <li>How AI is transforming demand generation, content, and customer intelligence</li>
+          <li>LLMs for copy, creative briefing, and campaign ideation</li>
+          <li>Evaluating AI-generated content for brand safety and accuracy</li>
+          <li>Personalisation at scale — the AI-native marketing architecture</li>
+        </ul></div>
+      </details>
+
+      <details class="curr-item">
+        <summary>
+          <span class="curr-item-title"><span class="curr-item-num">Week 2</span><span class="curr-item-name">Content, Creative &amp; Campaign AI</span></span>
+          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="curr-item-body"><ul>
+          <li>AI-assisted content creation workflows (copy, visuals, video scripts)</li>
+          <li>Building editorial calendars and campaign plans with AI</li>
+          <li>SEO and keyword strategy automation using AI tools</li>
+          <li>A/B testing and optimisation using AI-powered analytics</li>
+        </ul></div>
+      </details>
+
+      <details class="curr-item">
+        <summary>
+          <span class="curr-item-title"><span class="curr-item-num">Week 3</span><span class="curr-item-name">Sales Intelligence &amp; Customer AI</span></span>
+          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="curr-item-body"><ul>
+          <li>AI-powered lead scoring and pipeline prioritisation</li>
+          <li>CRM data enrichment and contact intelligence automation</li>
+          <li>Building an AI sales assistant for objection handling and outreach</li>
+          <li>Churn prediction and customer retention modelling</li>
+        </ul></div>
+      </details>
+
+      <details class="curr-item">
+        <summary>
+          <span class="curr-item-title"><span class="curr-item-num">Week 4</span><span class="curr-item-name">Capstone &amp; Certification</span></span>
+          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="curr-item-body"><ul>
+          <li>Capstone: deploy an AI-augmented marketing or sales workflow</li>
+          <li>Expert practitioner review and brand safety audit</li>
+          <li>ROI documentation — employer-ready portfolio artefact</li>
+          <li>Brixgate Expert Practitioner Certificate — Marketing &amp; Sales</li>
+        </ul></div>
+      </details>
+
     </div>
   </div>
 </section>
+<script>
+function bxCurrToggleAll(btn) {
+  var section = btn.closest('.curr-wrapper');
+  var items   = section.querySelectorAll('.curr-item');
+  var anyOpen = Array.from(items).some(function(d) { return d.hasAttribute('open'); });
+  items.forEach(function(d) { anyOpen ? d.removeAttribute('open') : d.setAttribute('open', ''); });
+  btn.textContent = anyOpen ? 'Expand all' : 'Collapse all';
+}
+</script>
 
 <!-- ====== TOOLS USED ====== -->
 <section class="section-pad bg-white">

@@ -325,16 +325,102 @@
 </section>
 
 <!-- ====== CURRICULUM ====== -->
+<style>
+  .curr-wrapper { max-width: 800px; margin: 0 auto; }
+  .curr-control-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #E8E3DE; }
+  .curr-control-label { font-size: 0.82rem; font-weight: 800; color: #021024; text-transform: uppercase; letter-spacing: .08em; }
+  .curr-expand-all { font-size: 0.85rem; font-weight: 700; color: #FF294E; background: none; border: none; cursor: pointer; padding: 0; }
+  .curr-expand-all:hover { text-decoration: underline; }
+  .curr-item { border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 8px; overflow: hidden; background: #fff; }
+  .curr-item summary { padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; list-style: none; cursor: pointer; background: #fff; }
+  .curr-item summary::-webkit-details-marker { display: none; }
+  .curr-item summary:focus { outline: none; }
+  .curr-item-title { display: flex; align-items: center; gap: 12px; }
+  .curr-item-num { font-size: 0.75rem; font-weight: 800; color: #FF294E; white-space: nowrap; flex-shrink: 0; }
+  .curr-item-name { font-size: 0.93rem; font-weight: 700; color: #021024; line-height: 1.3; }
+  .curr-chevron { flex-shrink: 0; color: #9CA3AF; transition: transform 0.2s ease; }
+  .curr-item[open] .curr-chevron { transform: rotate(180deg); }
+  .curr-item-body { padding: 0 20px 16px; border-top: 1px solid #F3F4F6; }
+  .curr-item-body ul { list-style: none; padding: 0; margin: 0; }
+  .curr-item-body li { font-size: 0.87rem; color: #4A5568; padding: 7px 0; display: flex; gap: 12px; align-items: flex-start; line-height: 1.55; }
+  .curr-item-body li::before { content: '—'; color: #9CA3AF; flex-shrink: 0; font-weight: 600; margin-top: 1px; }
+</style>
 <section class="section-pad bg-white">
   <div class="container">
-    <div style="max-width:800px;margin:0 auto" class="fade-up">
+    <div class="curr-wrapper fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">Programme Curriculum</div>
-      <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:12px">What You Will Cover</h2>
-      <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:32px">Every week builds on the last — from foundations through to a deployed, practitioner-assessed capstone project.</p>
-      <details open style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 1</span>AI Foundations for Security</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>How LLMs and AI systems operate in security contexts</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Prompt engineering for threat analysis and intelligence gathering</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>AI-driven threat intelligence platform overview</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Data security implications of using AI in SOC environments</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 2</span>AI-Augmented Attack & Defence</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>AI-assisted penetration testing and SIEM triage</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Automated vulnerability scanning and incident detection</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Ethical hacking exercises using AI recon tools</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Building automated detection pipelines from scratch</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 3</span>Operational AI Security Toolkit</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Designing AI-integrated incident response playbooks</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Compliance automation dashboards using AI</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Custom threat detection model prototyping</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>GRC workflow automation with AI assistance</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 4</span>Capstone & Certification</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Capstone: build a live AI-powered security workflow</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Peer assessment and expert practitioner review</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Portfolio artefact presentation</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Brixgate Expert Practitioner Certificate — Cybersecurity</li></ul></div></details>
+      <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:10px">4 Weeks. Full AI Security Lifecycle.</h2>
+      <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:28px">Every week builds on the last — from foundations through to a deployed, practitioner-assessed capstone project.</p>
+
+      <div class="curr-control-bar">
+        <span class="curr-control-label">Content · 4 weeks</span>
+        <button class="curr-expand-all" onclick="bxCurrToggleAll(this)">Expand all</button>
+      </div>
+
+      <details class="curr-item" open>
+        <summary>
+          <span class="curr-item-title"><span class="curr-item-num">Week 1</span><span class="curr-item-name">AI Foundations for Security</span></span>
+          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="curr-item-body"><ul>
+          <li>How LLMs and AI systems operate in security contexts</li>
+          <li>Prompt engineering for threat analysis and intelligence gathering</li>
+          <li>AI-driven threat intelligence platform overview</li>
+          <li>Data security implications of using AI in SOC environments</li>
+        </ul></div>
+      </details>
+
+      <details class="curr-item">
+        <summary>
+          <span class="curr-item-title"><span class="curr-item-num">Week 2</span><span class="curr-item-name">AI-Augmented Attack &amp; Defence</span></span>
+          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="curr-item-body"><ul>
+          <li>AI-assisted penetration testing and SIEM triage</li>
+          <li>Automated vulnerability scanning and incident detection</li>
+          <li>Ethical hacking exercises using AI recon tools</li>
+          <li>Building automated detection pipelines from scratch</li>
+        </ul></div>
+      </details>
+
+      <details class="curr-item">
+        <summary>
+          <span class="curr-item-title"><span class="curr-item-num">Week 3</span><span class="curr-item-name">Operational AI Security Toolkit</span></span>
+          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="curr-item-body"><ul>
+          <li>Designing AI-integrated incident response playbooks</li>
+          <li>Compliance automation dashboards using AI</li>
+          <li>Custom threat detection model prototyping</li>
+          <li>GRC workflow automation with AI assistance</li>
+        </ul></div>
+      </details>
+
+      <details class="curr-item">
+        <summary>
+          <span class="curr-item-title"><span class="curr-item-num">Week 4</span><span class="curr-item-name">Capstone &amp; Certification</span></span>
+          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="curr-item-body"><ul>
+          <li>Capstone: build a live AI-powered security workflow</li>
+          <li>Peer assessment and expert practitioner review</li>
+          <li>Portfolio artefact presentation</li>
+          <li>Brixgate Expert Practitioner Certificate — Cybersecurity</li>
+        </ul></div>
+      </details>
+
     </div>
   </div>
 </section>
+<script>
+function bxCurrToggleAll(btn) {
+  var section = btn.closest('.curr-wrapper');
+  var items   = section.querySelectorAll('.curr-item');
+  var anyOpen = Array.from(items).some(function(d) { return d.hasAttribute('open'); });
+  items.forEach(function(d) { anyOpen ? d.removeAttribute('open') : d.setAttribute('open', ''); });
+  btn.textContent = anyOpen ? 'Expand all' : 'Collapse all';
+}
+</script>
 
 <!-- ====== TOOLS USED ====== -->
 <section class="section-pad bg-white">
@@ -690,21 +776,18 @@
 </section>
 
 <!-- ====== BEGINNER SECTION 2 ====== -->
-<section class="section-pad bg-dark">
+<section class="section-pad" style="background:#F6F4F2">
   <div class="container">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center" class="fade-up bx-beginner-grid">
-      <div style="border-radius:16px;overflow:hidden;aspect-ratio:16/10;background:#021024">
-        <img src="assets/Rectangle 171.png" alt="Cybersecurity learning path" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy" />
+      <div style="border-radius:16px;overflow:hidden;aspect-ratio:3/4;background:#E8E3DE">
+        <img src="assets/Rectangle 171.png" alt="Cybersecurity learning path" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block" loading="lazy" />
       </div>
       <div>
         <div class="eyebrow-tag" style="color:var(--red)">Your Learning Path</div>
-        <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--white);line-height:1.2;margin-bottom:16px">From Curious to Certified.<br/>In 4 Weeks.</h2>
-        <p style="font-size:0.95rem;color:rgba(255,255,255,0.65);line-height:1.75;margin-bottom:12px">Every cybersecurity professional started somewhere. Our structured beginner cohort pairs you with a practitioner mentor who walks you through the fundamentals — network security, threat detection, incident response basics, and how AI is reshaping every layer of the field.</p>
-        <p style="font-size:0.95rem;color:rgba(255,255,255,0.65);line-height:1.75;margin-bottom:28px">You'll finish with a verified certificate, a portfolio project, and the foundation to take your first steps in the industry — or confidently transition from a neighbouring field.</p>
-        <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
-          <a href="apply.html?program_id=2" class="btn btn-primary btn-lg">Start Your Journey</a>
-          <a href="#quiz-field" style="font-size:0.88rem;font-weight:700;color:rgba(255,255,255,0.6);text-decoration:none">Validate your level first →</a>
-        </div>
+        <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.2;margin-bottom:16px">From Curious to Certified.<br/>In 4 Weeks.</h2>
+        <p style="font-size:0.95rem;color:#4A5568;line-height:1.75;margin-bottom:12px">Every cybersecurity professional started somewhere. Our structured beginner cohort pairs you with a practitioner mentor who walks you through the fundamentals — network security, threat detection, incident response basics, and how AI is reshaping every layer of the field.</p>
+        <p style="font-size:0.95rem;color:#4A5568;line-height:1.75;margin-bottom:28px">You'll finish with a verified certificate, a portfolio project, and the foundation to take your first steps in the industry — or confidently transition from a neighbouring field.</p>
+        <a href="apply.html?program_id=2" class="btn btn-primary btn-lg">Start Your Journey</a>
       </div>
     </div>
   </div>
