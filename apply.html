@@ -1181,6 +1181,9 @@
           <!-- Coupon status banner — shown after auto-apply on Continue -->
           <div id="review-coupon-banner" style="display:none;margin-bottom:16px;border-radius:10px;padding:12px 16px;font-size:0.84rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
 
+          <!-- Payment plan selector — always shown; instalment pills appear when API returns options -->
+          <div id="payment-options-container"></div>
+
           <div class="review-section-label">Programme &amp; Fee</div>
           <div class="price-breakdown">
             <div class="price-row">
@@ -1205,9 +1208,6 @@
               <span class="price-row-value" id="review-total">—</span>
             </div>
           </div>
-
-          <!-- Payment plan selector — hidden until installment options load -->
-          <div id="payment-options-container"></div>
 
           <!-- Error banner for pay-step errors — shown on THIS panel so user always sees it -->
           <div id="review-error-banner" style="display:none;background:rgba(255,41,78,0.08);border:1.5px solid rgba(255,41,78,0.35);border-radius:12px;padding:14px 16px;margin-bottom:16px">
