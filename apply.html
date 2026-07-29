@@ -1563,6 +1563,7 @@
   function selectPaymentPlan(optId) {
     _selectedPaymentOptionId = optId || null;
     renderPaymentOptions();
+    _updateReviewPanelPrices();
   }
 
   function updateFeesDisplay() {
