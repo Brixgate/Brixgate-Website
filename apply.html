@@ -1420,17 +1420,20 @@
   }
 
   /* Fetches installment options for a pricing plan and re-renders the selector */
-  function fetchPaymentOptions(planId, currency) {
+  function fetchPaymentOptions(planId, currency, token) {
     _paymentOptions          = [];
     _selectedPaymentOptionId = null;
     renderPaymentOptions();
     if (!planId) return;
     var cur = (currency || getActiveCurrency()).toUpperCase();
-    fetch(API_BASE + '/pricing-plans/' + planId + '/payment-options?currency=' + cur)
+    var headers = { 'Content-Type': 'application/json' };
+    var tok = token || (function() { try { return sessionStorage.getItem('bxAccessToken'); } catch(e) { return null; } })();
+    if (tok) headers['Authorization'] = 'Bearer ' + tok;
+    fetch(API_BASE + '/pricing-plans/' + planId + '/payment-options?currency=' + cur, { headers: headers })
       .then(function(r) { return r.json(); })
       .then(function(data) {
         var raw = (data && data.data) || {};
-        var opts = Array.isArray(raw) ? raw : (raw.payment_options || raw.options || []);
+        var opts = Array.isArray(raw) ? raw : (raw.payment_options || raw.paymentOptions || raw.options || []);
         _paymentOptions = opts;
         renderPaymentOptions();
       })
@@ -2400,6 +2403,10 @@
         /* resolve program ID from field if not set by URL param */
         if (!_programId) _programId = FIELD_TO_PROGRAM_ID[field] || null;
         _session.programId = _programId;
+
+        /* Re-fetch payment options now that we have a token — endpoint requires auth */
+        var activePlan = _pricingPlans['INDIVIDUAL'] || _pricingPlans['TEAM'] || Object.values(_pricingPlans)[0];
+        if (activePlan && activePlan.id) fetchPaymentOptions(activePlan.id, getActiveCurrency(), token);
 
         document.getElementById('review-name').textContent      = fullName;
         document.getElementById('review-email').textContent     = email;
