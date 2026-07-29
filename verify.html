@@ -634,6 +634,14 @@
   <a href="apply.html" class="btn btn-primary">Apply Now</a>
 </div>
 
+<!-- ====== LOADING VIEW ====== -->
+<div id="loading-view" style="display:none;padding:120px 0;text-align:center">
+  <div style="display:inline-flex;flex-direction:column;align-items:center;gap:20px">
+    <div style="width:48px;height:48px;border:3px solid rgba(255,41,78,0.2);border-top-color:#FF294E;border-radius:50%;animation:spin 0.8s linear infinite"></div>
+    <div style="font-size:0.88rem;color:var(--muted)">Verifying certificate…</div>
+  </div>
+</div>
+
 <!-- ====== ENTRY VIEW (default: no ?id param) ====== -->
 <div id="entry-view" style="display:none">
 <section class="entry-hero">
@@ -1065,66 +1073,180 @@
 <button class="back-to-top">↑</button>
 <script src="script.js"></script>
 <script>
-  // Known valid certificate IDs
-  var VALID_IDS = ['BX-2026-SE-00142'];
+  var CERT_API_BASE = (typeof BX_API_BASE !== 'undefined') ? BX_API_BASE : 'https://dev.api.brixgate.com';
 
-  // Navigate to verify page with given ID
   function goVerify(inputId) {
     var val = document.getElementById(inputId).value.trim().toUpperCase();
-    if (val) {
-      window.location.href = 'verify.html?id=' + encodeURIComponent(val);
+    if (val) window.location.href = 'verify.html?id=' + encodeURIComponent(val);
+  }
+
+  ['entry-id-input', 'retry-id-input'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('keydown', function(e) { if (e.key === 'Enter') goVerify(id); });
+  });
+
+  function handleVerify() {
+    var val = document.getElementById('cert-id-input').value.trim().toUpperCase();
+    if (val) window.location.href = 'verify.html?id=' + encodeURIComponent(val);
+  }
+  var certInput = document.getElementById('cert-id-input');
+  if (certInput) certInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') handleVerify(); });
+
+  function setText(id, val) {
+    var el = document.getElementById(id);
+    if (el && val) el.textContent = val;
+  }
+
+  function showNotFound(id) {
+    document.getElementById('loading-view').style.display = 'none';
+    document.getElementById('notfound-view').style.display = 'block';
+    var display = document.getElementById('notfound-id-display');
+    if (display) display.textContent = 'Certificate "' + id + '" not found';
+    var retry = document.getElementById('retry-id-input');
+    if (retry) retry.value = id;
+  }
+
+  function populateProfile(cert, rawId) {
+    var certId   = cert.certificateNumber || cert.certificate_number || rawId;
+    var name     = cert.holderName || cert.holder_name || cert.name || cert.graduateName || '';
+    var field    = cert.field || cert.primaryField || cert.primary_field || cert.program || cert.programme || '';
+    var issued   = cert.issuedAt || cert.issued_at || cert.issuedDate || cert.completionDate || cert.completion_date || '';
+    var cohort   = cert.cohort || '';
+
+    /* Format issued date if it looks like an ISO date string */
+    if (issued && issued.indexOf('-') !== -1) {
+      try {
+        issued = new Date(issued).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+      } catch(e) {}
+    }
+
+    /* Banner */
+    setText('banner-cert-id', certId);
+
+    /* Profile hero */
+    if (name) {
+      var nameEl = document.querySelector('.profile-name');
+      if (nameEl) nameEl.textContent = name;
+      var titleEl = document.querySelector('.profile-title');
+      if (titleEl && field) titleEl.textContent = 'Certified Brixer — AI in ' + field;
+      /* Eyebrow above name */
+      var eyebrowEl = document.querySelector('.profile-hero-inner .fade-up [style*="text-transform:uppercase"]');
+      if (eyebrowEl && field) eyebrowEl.textContent = 'Brixer · ' + field;
+    }
+
+    /* Meta chips */
+    var chips = document.querySelectorAll('.profile-meta .meta-chip');
+    chips.forEach(function(chip) {
+      if (chip.classList.contains('accent') && field) chip.textContent = field;
+      if (chip.textContent.indexOf('Certificate:') !== -1) chip.textContent = 'Certificate: ' + certId;
+    });
+
+    /* Mini certificate card */
+    var miniName = document.querySelector('.cert-mini-name');
+    if (miniName && name) miniName.textContent = name;
+    var miniField = document.querySelector('.cert-mini-field');
+    if (miniField && field) miniField.textContent = field + ' · AI in my Field';
+    var miniDate = document.querySelector('.cert-mini-date');
+    if (miniDate && issued) miniDate.textContent = 'Issued: ' + issued;
+    var certIdVal = document.querySelector('.cert-id-val');
+    if (certIdVal) certIdVal.textContent = certId;
+
+    /* Full certificate overlay */
+    var overlayName = document.querySelector('.cert-full [style*="font-size:2.4rem"]');
+    if (overlayName && name) overlayName.textContent = name;
+    var overlayField = document.querySelector('.cert-full [style*="font-size:1.1rem"][style*="color:var(--red)"]');
+    if (overlayField && field) overlayField.textContent = field;
+    var overlayDate = document.querySelector('.cert-full [style*="opacity:0.2"]');
+    if (overlayDate && issued) overlayDate.textContent = 'Issued ' + issued + (cohort ? ' · ' + cohort : '') + ' · brixgate.com';
+
+    /* Competencies section — update "What {Name} Mastered" heading */
+    if (name) {
+      var compHeading = document.querySelector('.comp-grid')
+        ? document.querySelector('.comp-grid').closest('section').querySelector('h2')
+        : null;
+      if (compHeading) compHeading.textContent = (cert.competencies && cert.competencies.length ? cert.competencies.length : '8') + ' Competencies. All Field-Verified.';
+      var compEyebrow = document.querySelector('.comp-grid')
+        ? document.querySelector('.comp-grid').closest('section').querySelector('.eyebrow')
+        : null;
+      if (compEyebrow) compEyebrow.textContent = 'What ' + name.split(' ')[0] + ' Mastered';
+    }
+
+    /* Expert assessment — populate if API returns assessment data */
+    if (cert.expertName || cert.expert_name) {
+      var eName = cert.expertName || cert.expert_name;
+      var eRole = cert.expertRole || cert.expert_role || '';
+      var eText = cert.expertAssessment || cert.expert_assessment || cert.assessment || '';
+      var expertNameEl = document.querySelector('.expert-name');
+      if (expertNameEl) expertNameEl.textContent = eName;
+      var expertRoleEl = document.querySelector('.expert-role');
+      if (expertRoleEl && eRole) expertRoleEl.textContent = eRole;
+      var expertQuoteEl = document.querySelector('.expert-quote');
+      if (expertQuoteEl && eText) expertQuoteEl.textContent = eText;
+      /* Also update overlay expert signature */
+      var overlaySig = document.querySelector('.cert-full [style*="font-size:0.75rem"][style*="font-weight:700"]');
+      if (overlaySig) overlaySig.textContent = eName;
+    }
+
+    /* Expert assessment heading */
+    if (name) {
+      var assessEyebrow = document.querySelector('.expert-card')
+        ? document.querySelector('.expert-card').closest('section').querySelector('.eyebrow')
+        : null;
+      var assessHeading = document.querySelector('.expert-card')
+        ? document.querySelector('.expert-card').closest('section').querySelector('h2')
+        : null;
+      if (assessHeading) assessHeading.textContent = "What " + name.split(' ')[0] + "'s Expert Says";
+    }
+
+    /* Stats — update competency count if available */
+    if (cert.competencies && cert.competencies.length) {
+      var compStat = document.querySelectorAll('.stat-val')[1];
+      if (compStat) compStat.textContent = cert.competencies.length;
+    }
+
+    /* Project section */
+    if (cert.projectTitle || cert.project_title) {
+      var projTitle = document.querySelector('.project-title');
+      if (projTitle) projTitle.textContent = cert.projectTitle || cert.project_title;
+    }
+    if (cert.projectDescription || cert.project_description) {
+      var projDesc = document.querySelector('.project-desc');
+      if (projDesc) projDesc.textContent = cert.projectDescription || cert.project_description;
+    }
+    if (name) {
+      var projectHeading = document.querySelector('.project-card')
+        ? document.querySelector('.project-card').closest('section').querySelector('h2')
+        : null;
+      if (projectHeading) projectHeading.textContent = 'What ' + name.split(' ')[0] + ' Built';
     }
   }
 
-  // Allow Enter key on both inputs
-  ['entry-id-input', 'retry-id-input'].forEach(function(id) {
-    var el = document.getElementById(id);
-    if (el) {
-      el.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') goVerify(id);
-      });
-    }
-  });
-
-  // State machine — runs on page load
   (function() {
     var params = new URLSearchParams(window.location.search);
     var id = (params.get('id') || '').trim().toUpperCase();
 
     if (!id) {
-      // No ID in URL — show entry view
       document.getElementById('entry-view').style.display = 'block';
-
-    } else if (VALID_IDS.indexOf(id) !== -1) {
-      // Valid ID — show verified profile
-      document.getElementById('verified-banner').style.display = 'flex';
-      document.getElementById('banner-cert-id').textContent = id;
-      document.getElementById('profile-view').style.display = 'block';
-
-    } else {
-      // Unknown ID — show not-found view
-      document.getElementById('notfound-view').style.display = 'block';
-      var display = document.getElementById('notfound-id-display');
-      if (display) display.textContent = 'Certificate "' + id + '" not found';
-      // Pre-fill retry input
-      var retry = document.getElementById('retry-id-input');
-      if (retry) retry.value = id;
+      return;
     }
+
+    document.getElementById('loading-view').style.display = 'block';
+
+    fetch(CERT_API_BASE + '/api/v1/certificates/verify/' + encodeURIComponent(id))
+      .then(function(r) {
+        if (r.status === 404) throw new Error('NOT_FOUND');
+        if (!r.ok) throw new Error('API_ERROR');
+        return r.json();
+      })
+      .then(function(data) {
+        var cert = (data && data.data) ? data.data : data;
+        if (!cert || data.success === false) throw new Error('NOT_FOUND');
+        window.location.href = 'certificate.html?id=' + encodeURIComponent(id);
+      })
+      .catch(function() {
+        showNotFound(id);
+      });
   })();
-
-  // "Verify another" form inside profile view — also navigates
-  function handleVerify() {
-    var val = document.getElementById('cert-id-input').value.trim().toUpperCase();
-    if (val) {
-      window.location.href = 'verify.html?id=' + encodeURIComponent(val);
-    }
-  }
-  var certInput = document.getElementById('cert-id-input');
-  if (certInput) {
-    certInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') handleVerify();
-    });
-  }
 </script>
 
 <!-- ====== WHATSAPP CHAT WIDGET ====== -->
