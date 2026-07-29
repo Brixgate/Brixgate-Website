@@ -1147,34 +1147,34 @@
           <p class="form-subtitle">Confirm your details before proceeding to secure payment.</p>
 
           <div class="review-section-label">Your Details</div>
-          <div class="review-grid">
-            <div class="review-field">
-              <div class="review-field-label">Name</div>
-              <div class="review-field-value" id="review-name">—</div>
+          <div class="price-breakdown" style="background:rgba(255,255,255,0.04);border-color:var(--border-card);margin-bottom:20px">
+            <div class="price-row">
+              <span class="price-row-label">Name</span>
+              <span class="price-row-value" id="review-name">—</span>
             </div>
-            <div class="review-field">
-              <div class="review-field-label">Email</div>
-              <div class="review-field-value" id="review-email" style="word-break:break-all;font-size:0.82rem">—</div>
+            <div class="price-row">
+              <span class="price-row-label">Email</span>
+              <span class="price-row-value" id="review-email" style="word-break:break-all;font-size:0.78rem">—</span>
             </div>
-            <div class="review-field">
-              <div class="review-field-label">Phone</div>
-              <div class="review-field-value" id="review-phone">—</div>
+            <div class="price-row">
+              <span class="price-row-label">Phone</span>
+              <span class="price-row-value" id="review-phone">—</span>
             </div>
-            <div class="review-field">
-              <div class="review-field-label">Field</div>
-              <div class="review-field-value" id="review-field-val">—</div>
+            <div class="price-row">
+              <span class="price-row-label">Field</span>
+              <span class="price-row-value" id="review-field-val">—</span>
             </div>
-            <div class="review-field">
-              <div class="review-field-label">Applying as</div>
-              <div class="review-field-value" id="review-level">—</div>
+            <div class="price-row">
+              <span class="price-row-label">Applying as</span>
+              <span class="price-row-value" id="review-level">—</span>
             </div>
-            <div class="review-field">
-              <div class="review-field-label">Role</div>
-              <div class="review-field-value" id="review-role">—</div>
+            <div class="price-row">
+              <span class="price-row-label">Role</span>
+              <span class="price-row-value" id="review-role">—</span>
             </div>
-            <div class="review-field" id="review-enrollment-row">
-              <div class="review-field-label">Enrolment</div>
-              <div class="review-field-value" id="review-enrollment">—</div>
+            <div class="price-row" id="review-enrollment-row">
+              <span class="price-row-label">Enrolment</span>
+              <span class="price-row-value" id="review-enrollment">—</span>
             </div>
           </div>
 
@@ -1446,34 +1446,34 @@
   function renderPaymentOptions() {
     var container = document.getElementById('payment-options-container');
     if (!container) return;
-    if (!_paymentOptions || !_paymentOptions.length) {
-      container.innerHTML = '';
-      return;
-    }
-    var cur = getActiveCurrency();
-    var sym = CURRENCY_SYMS[cur] || '';
+
+    var cur            = getActiveCurrency();
+    var sym            = CURRENCY_SYMS[cur] || '';
+    var hasInstallments = _paymentOptions && _paymentOptions.length > 0;
 
     var html = '<div class="review-section-label" style="margin-top:4px">Payment Plan</div>';
     html += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">';
 
-    /* Full payment pill */
+    /* Full payment pill — always shown */
     var fullActive = !_selectedPaymentOptionId;
     html += '<button type="button" onclick="selectPaymentPlan(null)" style="padding:7px 14px;border-radius:20px;border:1.5px solid ' +
       (fullActive ? '#FF294E' : 'rgba(255,255,255,0.18)') +
       ';background:' + (fullActive ? 'rgba(255,41,78,0.13)' : 'rgba(255,255,255,0.04)') +
       ';color:' + (fullActive ? '#FF294E' : 'var(--muted)') +
-      ';font-size:0.82rem;font-weight:600;cursor:pointer">Pay in Full</button>';
+      ';font-size:0.82rem;font-weight:600;cursor:pointer;transition:all .2s">Pay in Full</button>';
 
-    /* Installment option pills */
-    _paymentOptions.forEach(function(opt) {
-      var isActive = _selectedPaymentOptionId === opt.id;
-      var label    = opt.name || opt.label || ((opt.installments ? opt.installments.length : 2) + ' Installments');
-      html += '<button type="button" onclick="selectPaymentPlan(' + opt.id + ')" style="padding:7px 14px;border-radius:20px;border:1.5px solid ' +
-        (isActive ? '#FF294E' : 'rgba(255,255,255,0.18)') +
-        ';background:' + (isActive ? 'rgba(255,41,78,0.13)' : 'rgba(255,255,255,0.04)') +
-        ';color:' + (isActive ? '#FF294E' : 'var(--muted)') +
-        ';font-size:0.82rem;font-weight:600;cursor:pointer">' + label + '</button>';
-    });
+    /* Installment option pills — only when the API returned options */
+    if (hasInstallments) {
+      _paymentOptions.forEach(function(opt) {
+        var isActive = _selectedPaymentOptionId === opt.id;
+        var label    = opt.name || opt.label || ((opt.installments ? opt.installments.length : 2) + ' Instalments');
+        html += '<button type="button" onclick="selectPaymentPlan(' + opt.id + ')" style="padding:7px 14px;border-radius:20px;border:1.5px solid ' +
+          (isActive ? '#FF294E' : 'rgba(255,255,255,0.18)') +
+          ';background:' + (isActive ? 'rgba(255,41,78,0.13)' : 'rgba(255,255,255,0.04)') +
+          ';color:' + (isActive ? '#FF294E' : 'var(--muted)') +
+          ';font-size:0.82rem;font-weight:600;cursor:pointer;transition:all .2s">' + label + '</button>';
+      });
+    }
     html += '</div>';
 
     /* Installment schedule breakdown when a plan is chosen */
@@ -2450,6 +2450,7 @@
             }
           }
           setSubmitState(submitBtn, false, 'Continue to Review');
+          renderPaymentOptions();
           showPanel('review');
         }
 
