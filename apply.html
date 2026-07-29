@@ -2137,27 +2137,44 @@
     var isTeam = et === 'Team';
     var size   = parseInt((document.getElementById('team-size') || {}).value) || 1;
 
-    var origStr, payStr;
+    /* Full price (what shows on the enrolment row) */
+    var fullAmt, origStr;
     if (vp) {
+      fullAmt = Number(vp.payableAmount);
       origStr = sym + Number(vp.totalAmount).toLocaleString();
-      payStr  = sym + Number(vp.payableAmount).toLocaleString();
     } else {
       var brk = getPlanBreakdown(isTeam ? 'TEAM' : 'INDIVIDUAL', cur);
-      origStr = payStr = brk ? sym + Number(brk.final_price).toLocaleString() : '—';
+      fullAmt = brk ? Number(brk.final_price) : 0;
+      origStr = brk ? sym + fullAmt.toLocaleString() : '—';
     }
 
-    var rvItem   = document.getElementById('review-price-item');
-    var rvTotal  = document.getElementById('review-total');
-    var rvBtn    = document.getElementById('pay-btn-label');
-    var rvRow    = document.getElementById('review-coupon-row');
-    var rvCode   = document.getElementById('review-coupon-code-lbl');
-    var rvAmt    = document.getElementById('review-coupon-discount');
-    var rvEnroll = document.getElementById('review-enroll-label');
+    /* If an instalment plan is selected, show first instalment for total + button */
+    var payStr, totalLabelStr;
+    if (_selectedPaymentOptionId) {
+      var selOpt = (_paymentOptions || []).find(function(o) { return o.id === _selectedPaymentOptionId; });
+      var nInst  = selOpt && (selOpt.number_of_installments || (selOpt.installments && selOpt.installments.length));
+      var due    = nInst ? Math.round(fullAmt / nInst) : fullAmt;
+      payStr       = sym + due.toLocaleString();
+      totalLabelStr = 'Due Today (1st of ' + (nInst || 1) + ')';
+    } else {
+      payStr        = sym + fullAmt.toLocaleString();
+      totalLabelStr = 'Total Due Today';
+    }
 
-    if (rvItem)   rvItem.textContent  = origStr;
-    if (rvTotal)  rvTotal.textContent = payStr;
-    if (rvBtn)    rvBtn.textContent   = 'Pay ' + payStr + ' via Paystack';
-    if (rvEnroll) rvEnroll.textContent = isTeam && size >= 2
+    var rvItem       = document.getElementById('review-price-item');
+    var rvTotal      = document.getElementById('review-total');
+    var rvTotalLabel = document.getElementById('review-total-label');
+    var rvBtn        = document.getElementById('pay-btn-label');
+    var rvRow        = document.getElementById('review-coupon-row');
+    var rvCode       = document.getElementById('review-coupon-code-lbl');
+    var rvAmt        = document.getElementById('review-coupon-discount');
+    var rvEnroll     = document.getElementById('review-enroll-label');
+
+    if (rvItem)       rvItem.textContent       = origStr;
+    if (rvTotal)      rvTotal.textContent      = payStr;
+    if (rvTotalLabel) rvTotalLabel.textContent = totalLabelStr;
+    if (rvBtn)        rvBtn.textContent        = 'Pay ' + payStr + ' via Paystack';
+    if (rvEnroll)     rvEnroll.textContent     = isTeam && size >= 2
       ? 'Team Enrolment (' + size + ' people)'
       : 'Individual Enrolment';
 
