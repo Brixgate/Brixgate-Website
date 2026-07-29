@@ -1432,9 +1432,16 @@
     fetch(API_BASE + '/pricing-plans/' + planId + '/payment-options?currency=' + cur, { headers: headers })
       .then(function(r) { return r.json(); })
       .then(function(data) {
-        var raw = (data && data.data) || {};
-        var opts = Array.isArray(raw) ? raw : (raw.payment_options || raw.paymentOptions || raw.options || []);
-        _paymentOptions = opts;
+        /* Response shape: data.data.breakdowns[].payment_options[]
+           Find the breakdown matching the requested currency, then take its payment_options.
+           Filter out implicit:true entries (the "Full Payment" default) — we render that ourselves. */
+        var root       = (data && data.data) || {};
+        var breakdowns = root.breakdowns || [];
+        var breakdown  = breakdowns.find(function(b) {
+          return b.currency && b.currency.toUpperCase() === cur;
+        }) || breakdowns[0] || {};
+        var allOpts = breakdown.payment_options || [];
+        _paymentOptions = allOpts.filter(function(o) { return !o.implicit; });
         renderPaymentOptions();
       })
       .catch(function(err) {
@@ -1469,7 +1476,9 @@
     if (hasInstallments) {
       _paymentOptions.forEach(function(opt) {
         var isActive = _selectedPaymentOptionId === opt.id;
-        var label    = opt.name || opt.label || ((opt.installments ? opt.installments.length : 2) + ' Instalments');
+        /* Build a user-friendly label: prefer number_of_installments, fall back to title */
+        var n     = opt.number_of_installments || (opt.installments && opt.installments.length);
+        var label = n ? ('Pay in ' + n + ' Instalments') : (opt.title || opt.name || opt.label || 'Instalment Plan');
         html += '<button type="button" onclick="selectPaymentPlan(' + opt.id + ')" style="padding:7px 14px;border-radius:20px;border:1.5px solid ' +
           (isActive ? '#FF294E' : 'rgba(255,255,255,0.18)') +
           ';background:' + (isActive ? 'rgba(255,41,78,0.13)' : 'rgba(255,255,255,0.04)') +
@@ -1479,22 +1488,41 @@
     }
     html += '</div>';
 
-    /* Installment schedule breakdown when a plan is chosen */
+    /* Instalment schedule breakdown when a plan is chosen */
     if (_selectedPaymentOptionId) {
       var selected = _paymentOptions.find(function(o) { return o.id === _selectedPaymentOptionId; });
-      if (selected && selected.installments && selected.installments.length) {
-        html += '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:0.82rem">';
-        html += '<div style="font-weight:600;margin-bottom:8px;color:var(--text)">Installment Schedule</div>';
-        selected.installments.forEach(function(inst, i) {
-          var amt = sym + Number(inst.amount_value || inst.amount || 0).toLocaleString();
-          var due = i === 0 ? 'Due today' : 'Due in ' + (inst.due_offset_days || inst.due_days || (i * 30)) + ' days';
-          var isLast = i === selected.installments.length - 1;
-          html += '<div style="display:flex;justify-content:space-between;padding:5px 0;' + (!isLast ? 'border-bottom:1px solid rgba(255,255,255,0.07)' : '') + '">' +
-            '<span style="color:var(--muted)">Payment ' + (i + 1) + ' — ' + due + '</span>' +
-            '<span style="font-weight:600">' + amt + '</span>' +
-            '</div>';
-        });
-        html += '</div>';
+      if (selected) {
+        /* Use explicit installments array if available, else synthesise equal splits */
+        var schedule = selected.installments && selected.installments.length ? selected.installments : null;
+        var n2       = selected.number_of_installments || (schedule && schedule.length) || 0;
+
+        /* Get the full price for this currency to calculate equal splits */
+        var fullAmt = (function() {
+          var vp3 = _validatedPricing[cur];
+          if (vp3) return Number(vp3.payableAmount);
+          var et3  = (document.getElementById('enrollment-type') || {}).value || '';
+          var brk3 = getPlanBreakdown(et3 === 'Team' ? 'TEAM' : 'INDIVIDUAL', cur);
+          return brk3 ? Number(brk3.final_price) : 0;
+        })();
+
+        if (n2 > 0) {
+          html += '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:0.82rem">';
+          html += '<div style="font-weight:600;margin-bottom:8px;color:rgba(255,255,255,0.85)">Instalment Schedule</div>';
+          for (var i = 0; i < n2; i++) {
+            var inst     = schedule ? schedule[i] : null;
+            var instAmt  = inst ? Number(inst.amount_value || inst.amount || 0)
+                                : Math.round(fullAmt / n2);
+            var dueLabel = i === 0 ? 'Due today'
+                         : inst    ? 'Due in ' + (inst.due_offset_days || inst.due_days || (i * 30)) + ' days'
+                         : 'Due at instalment ' + (i + 1);
+            var isLast2  = i === n2 - 1;
+            html += '<div style="display:flex;justify-content:space-between;padding:5px 0;' + (!isLast2 ? 'border-bottom:1px solid rgba(255,255,255,0.07)' : '') + '">' +
+              '<span style="color:var(--muted)">Payment ' + (i + 1) + ' — ' + dueLabel + '</span>' +
+              '<span style="font-weight:600">' + sym + instAmt.toLocaleString() + '</span>' +
+              '</div>';
+          }
+          html += '</div>';
+        }
       }
     }
 
@@ -1504,23 +1532,28 @@
     var totalLabel = document.getElementById('review-total-label');
     var totalVal   = document.getElementById('review-total');
     if (_selectedPaymentOptionId) {
-      var sel = _paymentOptions.find(function(o) { return o.id === _selectedPaymentOptionId; });
-      var firstInst = sel && sel.installments && sel.installments[0];
-      if (firstInst && totalLabel) totalLabel.textContent = 'Due Today (1st installment)';
-      if (firstInst && totalVal)   totalVal.textContent   = sym + Number(firstInst.amount_value || firstInst.amount || 0).toLocaleString();
+      var sel2    = _paymentOptions.find(function(o) { return o.id === _selectedPaymentOptionId; });
+      var n3      = sel2 && (sel2.number_of_installments || (sel2.installments && sel2.installments.length));
+      var fullAmt2 = (function() {
+        var vp4 = _validatedPricing[cur];
+        if (vp4) return Number(vp4.payableAmount);
+        var et4  = (document.getElementById('enrollment-type') || {}).value || '';
+        var brk4 = getPlanBreakdown(et4 === 'Team' ? 'TEAM' : 'INDIVIDUAL', cur);
+        return brk4 ? Number(brk4.final_price) : 0;
+      })();
+      var firstInstAmt = n3 ? Math.round(fullAmt2 / n3) : fullAmt2;
+      if (totalLabel) totalLabel.textContent = 'Due Today (1st of ' + (n3 || 1) + ')';
+      if (totalVal)   totalVal.textContent   = sym + firstInstAmt.toLocaleString();
     } else {
       if (totalLabel) totalLabel.textContent = 'Total Due Today';
-      /* Restore the validated/full price */
       if (totalVal) {
-        var cur2 = getActiveCurrency();
-        var vp   = _validatedPricing[cur2];
-        var sym2 = CURRENCY_SYMS[cur2] || '';
-        if (vp) {
-          totalVal.textContent = sym2 + Number(vp.payableAmount).toLocaleString();
+        var vp5 = _validatedPricing[cur];
+        if (vp5) {
+          totalVal.textContent = sym + Number(vp5.payableAmount).toLocaleString();
         } else {
-          var et2  = (document.getElementById('enrollment-type') || {}).value || '';
-          var brk2 = getPlanBreakdown(et2 === 'Team' ? 'TEAM' : 'INDIVIDUAL', cur2);
-          totalVal.textContent = brk2 ? sym2 + Number(brk2.final_price).toLocaleString() : '—';
+          var et5  = (document.getElementById('enrollment-type') || {}).value || '';
+          var brk5 = getPlanBreakdown(et5 === 'Team' ? 'TEAM' : 'INDIVIDUAL', cur);
+          totalVal.textContent = brk5 ? sym + Number(brk5.final_price).toLocaleString() : '—';
         }
       }
     }
