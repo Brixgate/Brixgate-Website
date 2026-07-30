@@ -1276,6 +1276,7 @@
   var CURRENCY_SYMS = { ngn: '₦', usd: '$', gbp: '£', eur: '€', cad: 'C$' };
 
   var _programId    = null;
+  var _cohortId     = null;  /* active cohort ID — required as entity_id by the backend */
   var _pricingPlans = {};   /* plan_type    plan object */
 
   function getActiveCurrency() {
@@ -1609,8 +1610,21 @@
 
     var fieldSel = document.getElementById('field');
 
+    function fetchCohortId(programId) {
+      if (!programId) return;
+      fetch(API_BASE + '/programs/' + programId + '/cohorts')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var cohorts = (data && data.data && data.data.cohorts) || [];
+          var active  = cohorts.find(function(c) { return c.status === 'OPEN'; }) || cohorts[0];
+          if (active) _cohortId = active.id;
+        })
+        .catch(function() {});
+    }
+
     function applyProgramId(pid) {
       _programId = parseInt(pid) || null;
+      _cohortId  = null;
       if (!_programId || !fieldSel) return;
       var fieldName = PROGRAM_ID_TO_FIELD[_programId];
       if (fieldName) {
@@ -1618,6 +1632,7 @@
           if (fieldSel.options[fi].value === fieldName) { fieldSel.selectedIndex = fi; break; }
         }
       }
+      fetchCohortId(_programId);
       fetchPricingPlans(_programId);
     }
 
@@ -1793,7 +1808,7 @@
     var calls = ACTIVE_CURRENCIES.map(function(c) {
       var payload = {
         payment_type:    'ENROLLMENT',
-        entity_id:       _programId,
+        entity_id:       _cohortId || _programId,
         pricing_plan_id: plan.id,
         currency:        c.toUpperCase(),
         enrollment_type: isTeam ? 'TEAM' : 'INDIVIDUAL',
@@ -2280,7 +2295,7 @@
     /* Build payload — only include team_name for team enrollments */
     var initiatePayload = {
       payment_type:          'ENROLLMENT',
-      entity_id:             _session.programId,
+      entity_id:             _cohortId || _session.programId,
       pricing_plan_id:       plan.id || undefined,
       currency:              cur.toUpperCase(),
       coupon_code:           payloadCoupon,
