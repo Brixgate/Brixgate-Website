@@ -1935,6 +1935,16 @@
       }
     }
 
+    /* Level pre-fill from ?level=Professional or ?level=Beginner */
+    var levelParam = params.get('level');
+    if (levelParam) {
+      var lvlSel = document.getElementById('applicant-level');
+      if (lvlSel) {
+        var lvlNorm = levelParam.charAt(0).toUpperCase() + levelParam.slice(1).toLowerCase();
+        lvlSel.value = lvlNorm;
+      }
+    }
+
     /* Live listeners */
     var enrollSel3 = document.getElementById('enrollment-type');
     if (enrollSel3) {
