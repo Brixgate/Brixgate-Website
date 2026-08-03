@@ -1332,7 +1332,7 @@
   var CURRENCY_SYMS = { ngn: '₦', usd: '$', gbp: '£', eur: '€', cad: 'C$' };
 
   var _programId              = null;
-  var _cohortId               = null;  /* active cohort ID for the selected program */
+  var _cohortId               = null;  /* active cohort ID — required as entity_id by the backend */
   var _pricingPlans           = {};    /* plan_type → plan object */
   var _paymentOptions         = [];    /* from GET /pricing-plans/{id}/payment-options */
   var _selectedPaymentOptionId = null; /* null = full payment, number = installment plan ID */
@@ -1870,6 +1870,18 @@
     }
 
     var fieldSel = document.getElementById('field');
+
+    function fetchCohortId(programId) {
+      if (!programId) return;
+      fetch(API_BASE + '/programs/' + programId + '/cohorts')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var cohorts = (data && data.data && data.data.cohorts) || [];
+          var active  = cohorts.find(function(c) { return c.status === 'OPEN'; }) || cohorts[0];
+          if (active) _cohortId = active.id;
+        })
+        .catch(function() {});
+    }
 
     function applyProgramId(pid) {
       _programId = parseInt(pid) || null;
