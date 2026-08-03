@@ -671,8 +671,9 @@
       .apply-wrapper              { display: flex; flex-direction: column; row-gap: 28px; }
       /* Form first on mobile */
       .apply-form-card            { order: 2; padding: 32px 24px; }
-      .apply-sidebar:first-child  { order: 1; }
-      .apply-sidebar:nth-child(2) { order: 3; }
+      .apply-sidebar:first-child  { order: 1; width: 100%; box-sizing: border-box; }
+      .apply-sidebar:nth-child(2) { order: 3; width: 100%; box-sizing: border-box; }
+      .apply-sidebar:first-child > div { width: 100%; box-sizing: border-box; }
       .form-row                   { grid-template-columns: 1fr; }
       .review-grid                { grid-template-columns: 1fr; }
     }
@@ -938,7 +939,6 @@
               <span style="width:6px;height:6px;border-radius:50%;background:#fff;animation:scholarshipPulse 1.6s infinite;display:inline-block"></span>
               Scholarship Ongoing
             </span>
-            <span style="font-size:12px;color:#FFD3D8;font-weight:600">Ends 30th July</span>
           </div>
           <div style="margin-top:10px;position:relative;z-index:1">
             <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px">
@@ -1009,9 +1009,41 @@
             </div>
 
             <div class="form-group">
+              <label for="apply-phone-num">Phone Number</label>
+              <div style="display:flex;gap:8px">
+                <select id="apply-phone-cc" autocomplete="tel-country-code" style="padding:13px 10px;border-radius:8px;border:1.5px solid var(--border-card);background:rgba(255,255,255,0.05);color:var(--white);font-family:inherit;font-size:0.88rem;outline:none;cursor:pointer;flex-shrink:0;width:130px;box-sizing:border-box;transition:border-color .2s">
+                  <option value="+234-NG">🇳🇬 +234</option>
+                  <option value="+1-US">🇺🇸 +1</option>
+                  <option value="+44-GB">🇬🇧 +44</option>
+                  <option value="+254-KE">🇰🇪 +254</option>
+                  <option value="+233-GH">🇬🇭 +233</option>
+                  <option value="+27-ZA">🇿🇦 +27</option>
+                  <option value="+256-UG">🇺🇬 +256</option>
+                  <option value="+255-TZ">🇹🇿 +255</option>
+                  <option value="+251-ET">🇪🇹 +251</option>
+                  <option value="+212-MA">🇲🇦 +212</option>
+                  <option value="+20-EG">🇪🇬 +20</option>
+                  <option value="+49-DE">🇩🇪 +49</option>
+                  <option value="+33-FR">🇫🇷 +33</option>
+                  <option value="+971-AE">🇦🇪 +971</option>
+                  <option value="+1-CA">🇨🇦 +1</option>
+                </select>
+                <input type="tel" id="apply-phone-num" name="phone" placeholder="080 0000 0000" autocomplete="tel-national" required style="flex:1;min-width:0" />
+              </div>
+            </div>
+
+            <div class="form-group">
               <label for="field">Programme</label>
               <select id="field" name="field" required>
                 <option value="" disabled selected>Loading programmes…</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="applicant-level">I am applying as a</label>
+              <select id="applicant-level" name="applicant_level">
+                <option value="Professional" selected>Professional</option>
+                <option value="Beginner">Beginner</option>
               </select>
             </div>
 
@@ -1114,31 +1146,42 @@
           <p class="form-subtitle">Confirm your details before proceeding to secure payment.</p>
 
           <div class="review-section-label">Your Details</div>
-          <div class="review-grid">
-            <div class="review-field">
-              <div class="review-field-label">Name</div>
-              <div class="review-field-value" id="review-name">—</div>
+          <div class="price-breakdown" style="background:rgba(255,255,255,0.04);border-color:var(--border-card);margin-bottom:20px">
+            <div class="price-row">
+              <span class="price-row-label">Name</span>
+              <span class="price-row-value" id="review-name">—</span>
             </div>
-            <div class="review-field">
-              <div class="review-field-label">Email</div>
-              <div class="review-field-value" id="review-email" style="word-break:break-all;font-size:0.82rem">—</div>
+            <div class="price-row">
+              <span class="price-row-label">Email</span>
+              <span class="price-row-value" id="review-email" style="word-break:break-all;font-size:0.78rem">—</span>
             </div>
-            <div class="review-field">
-              <div class="review-field-label">Field</div>
-              <div class="review-field-value" id="review-field-val">—</div>
+            <div class="price-row">
+              <span class="price-row-label">Phone</span>
+              <span class="price-row-value" id="review-phone">—</span>
             </div>
-            <div class="review-field">
-              <div class="review-field-label">Role</div>
-              <div class="review-field-value" id="review-role">—</div>
+            <div class="price-row">
+              <span class="price-row-label">Field</span>
+              <span class="price-row-value" id="review-field-val">—</span>
             </div>
-            <div class="review-field" id="review-enrollment-row">
-              <div class="review-field-label">Enrolment</div>
-              <div class="review-field-value" id="review-enrollment">—</div>
+            <div class="price-row">
+              <span class="price-row-label">Applying as</span>
+              <span class="price-row-value" id="review-level">—</span>
+            </div>
+            <div class="price-row">
+              <span class="price-row-label">Role</span>
+              <span class="price-row-value" id="review-role">—</span>
+            </div>
+            <div class="price-row" id="review-enrollment-row">
+              <span class="price-row-label">Enrolment</span>
+              <span class="price-row-value" id="review-enrollment">—</span>
             </div>
           </div>
 
           <!-- Coupon status banner — shown after auto-apply on Continue -->
           <div id="review-coupon-banner" style="display:none;margin-bottom:16px;border-radius:10px;padding:12px 16px;font-size:0.84rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
+
+          <!-- Payment plan selector — always shown; instalment pills appear when API returns options -->
+          <div id="payment-options-container"></div>
 
           <div class="review-section-label">Programme &amp; Fee</div>
           <div class="price-breakdown">
@@ -1157,10 +1200,10 @@
             </div>
             <div class="price-row">
               <span class="price-row-label">Cohort</span>
-              <span class="price-row-value">May/Jun 2026</span>
+              <span class="price-row-value" id="review-cohort-date">—</span>
             </div>
             <div class="price-row total">
-              <span class="price-row-label">Total Due Today</span>
+              <span class="price-row-label" id="review-total-label">Total Due Today</span>
               <span class="price-row-value" id="review-total">—</span>
             </div>
           </div>
@@ -1265,8 +1308,21 @@
 
   /* programme ID    field name */
   /* Populated dynamically from GET /programs — do not hardcode here */
-  var PROGRAM_ID_TO_FIELD = {};
-  var FIELD_TO_PROGRAM_ID = {};
+  var PROGRAM_ID_TO_FIELD    = {};
+  var FIELD_TO_PROGRAM_ID    = {};
+  var PROGRAM_ID_TO_DATE     = {};  /* keyed by program ID, set in populateProgrammes */
+  var PROGRAM_ID_TO_COHORT_ID = {}; /* keyed by program ID, used for entity_id in payment calls */
+
+  /* Cohort start dates — resolved by keyword so API name variations don't break the lookup */
+  function getCohortDate(fieldName) {
+    if (!fieldName) return null;
+    var n = fieldName.toLowerCase();
+    if (n.indexOf('cyber') !== -1 || n.indexOf('security') !== -1) return 'Jul 31, 2026';
+    if (n.indexOf('financial') !== -1 || n.indexOf('finance') !== -1 || n.indexOf('banking') !== -1 || n.indexOf('modelling') !== -1 || n.indexOf('modeling') !== -1) return 'Aug 21, 2026';
+    if (n.indexOf('marketing') !== -1 || n.indexOf('sales') !== -1) return 'Aug 7, 2026';
+    if (n.indexOf('engineer') !== -1 || n.indexOf('software') !== -1 || n.indexOf('coding') !== -1) return 'Aug 31, 2026';
+    return null;
+  }
 
   /* Static fallback used only if the /programs fetch fails.
      Only list programmes that are currently open for enrolment. */
@@ -1275,9 +1331,11 @@
   ];
   var CURRENCY_SYMS = { ngn: '₦', usd: '$', gbp: '£', eur: '€', cad: 'C$' };
 
-  var _programId    = null;
-  var _cohortId     = null;  /* active cohort ID — required as entity_id by the backend */
-  var _pricingPlans = {};   /* plan_type    plan object */
+  var _programId              = null;
+  var _cohortId               = null;  /* active cohort ID — required as entity_id by the backend */
+  var _pricingPlans           = {};    /* plan_type → plan object */
+  var _paymentOptions         = [];    /* from GET /pricing-plans/{id}/payment-options */
+  var _selectedPaymentOptionId = null; /* null = full payment, number = installment plan ID */
 
   function getActiveCurrency() {
     var c = window.bxActiveCurrency || '';
@@ -1350,11 +1408,161 @@
         var plans = (data && data.data && data.data.pricing_plans) || [];
         plans.forEach(function(p) { _pricingPlans[p.plan_type] = p; });
         updateFeesDisplay();
+        /* Fetch installment options using the INDIVIDUAL plan (applies to both types) */
+        var indPlan = _pricingPlans['INDIVIDUAL'] || plans[0];
+        if (indPlan && indPlan.id) fetchPaymentOptions(indPlan.id, getActiveCurrency());
       })
       .catch(function(err) {
         console.warn('[Brixgate] Pricing unavailable:', err.message);
         setPricingUnavailable();
       });
+  }
+
+  /* Fetches installment options for a pricing plan and re-renders the selector */
+  function fetchPaymentOptions(planId, currency, token) {
+    _paymentOptions          = [];
+    _selectedPaymentOptionId = null;
+    renderPaymentOptions();
+    if (!planId) return;
+    var cur = (currency || getActiveCurrency()).toUpperCase();
+    var headers = { 'Content-Type': 'application/json' };
+    var tok = token || (function() { try { return sessionStorage.getItem('bxAccessToken'); } catch(e) { return null; } })();
+    if (tok) headers['Authorization'] = 'Bearer ' + tok;
+    fetch(API_BASE + '/pricing-plans/' + planId + '/payment-options?currency=' + cur, { headers: headers })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        /* Response shape: data.data.breakdowns[].payment_options[]
+           Find the breakdown matching the requested currency, then take its payment_options.
+           Filter out implicit:true entries (the "Full Payment" default) — we render that ourselves. */
+        var root       = (data && data.data) || {};
+        var breakdowns = root.breakdowns || [];
+        var breakdown  = breakdowns.find(function(b) {
+          return b.currency && b.currency.toUpperCase() === cur;
+        }) || breakdowns[0] || {};
+        var allOpts = breakdown.payment_options || [];
+        _paymentOptions = allOpts.filter(function(o) { return !o.implicit; });
+        renderPaymentOptions();
+      })
+      .catch(function(err) {
+        console.warn('[Brixgate] Payment options unavailable:', err.message);
+        _paymentOptions = [];
+        renderPaymentOptions();
+      });
+  }
+
+  /* Renders the payment plan selector into #payment-options-container.
+     Hidden when no installment options are available. */
+  function renderPaymentOptions() {
+    var container = document.getElementById('payment-options-container');
+    if (!container) return;
+
+    var cur            = getActiveCurrency();
+    var sym            = CURRENCY_SYMS[cur] || '';
+    var hasInstallments = _paymentOptions && _paymentOptions.length > 0;
+
+    var html = '<div class="review-section-label" style="margin-top:4px">Payment Plan</div>';
+    html += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">';
+
+    /* Full payment pill — always shown */
+    var fullActive = !_selectedPaymentOptionId;
+    html += '<button type="button" onclick="selectPaymentPlan(null)" style="padding:7px 14px;border-radius:20px;border:1.5px solid ' +
+      (fullActive ? '#FF294E' : 'rgba(255,255,255,0.18)') +
+      ';background:' + (fullActive ? 'rgba(255,41,78,0.13)' : 'rgba(255,255,255,0.04)') +
+      ';color:' + (fullActive ? '#FF294E' : 'var(--muted)') +
+      ';font-size:0.82rem;font-weight:600;cursor:pointer;transition:all .2s">Pay in Full</button>';
+
+    /* Installment option pills — only when the API returned options */
+    if (hasInstallments) {
+      _paymentOptions.forEach(function(opt) {
+        var isActive = _selectedPaymentOptionId === opt.id;
+        /* Build a user-friendly label: prefer number_of_installments, fall back to title */
+        var n     = opt.number_of_installments || (opt.installments && opt.installments.length);
+        var label = n ? ('Pay in ' + n + ' Instalments') : (opt.title || opt.name || opt.label || 'Instalment Plan');
+        html += '<button type="button" onclick="selectPaymentPlan(' + opt.id + ')" style="padding:7px 14px;border-radius:20px;border:1.5px solid ' +
+          (isActive ? '#FF294E' : 'rgba(255,255,255,0.18)') +
+          ';background:' + (isActive ? 'rgba(255,41,78,0.13)' : 'rgba(255,255,255,0.04)') +
+          ';color:' + (isActive ? '#FF294E' : 'var(--muted)') +
+          ';font-size:0.82rem;font-weight:600;cursor:pointer;transition:all .2s">' + label + '</button>';
+      });
+    }
+    html += '</div>';
+
+    /* Instalment schedule breakdown when a plan is chosen */
+    if (_selectedPaymentOptionId) {
+      var selected = _paymentOptions.find(function(o) { return o.id === _selectedPaymentOptionId; });
+      if (selected) {
+        /* Use explicit installments array if available, else synthesise equal splits */
+        var schedule = selected.installments && selected.installments.length ? selected.installments : null;
+        var n2       = selected.number_of_installments || (schedule && schedule.length) || 0;
+
+        /* Get the full price for this currency to calculate equal splits */
+        var fullAmt = (function() {
+          var vp3 = _validatedPricing[cur];
+          if (vp3) return Number(vp3.payableAmount);
+          var et3  = (document.getElementById('enrollment-type') || {}).value || '';
+          var brk3 = getPlanBreakdown(et3 === 'Team' ? 'TEAM' : 'INDIVIDUAL', cur);
+          return brk3 ? Number(brk3.final_price) : 0;
+        })();
+
+        if (n2 > 0) {
+          html += '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:0.82rem">';
+          html += '<div style="font-weight:600;margin-bottom:8px;color:rgba(255,255,255,0.85)">Instalment Schedule</div>';
+          for (var i = 0; i < n2; i++) {
+            var inst     = schedule ? schedule[i] : null;
+            var instAmt  = inst ? Number(inst.amount_value || inst.amount || 0)
+                                : Math.round(fullAmt / n2);
+            var dueLabel = i === 0 ? 'Due today'
+                         : inst    ? 'Due in ' + (inst.due_offset_days || inst.due_days || (i * 30)) + ' days'
+                         : 'Due at instalment ' + (i + 1);
+            var isLast2  = i === n2 - 1;
+            html += '<div style="display:flex;justify-content:space-between;padding:5px 0;' + (!isLast2 ? 'border-bottom:1px solid rgba(255,255,255,0.07)' : '') + '">' +
+              '<span style="color:var(--muted)">Payment ' + (i + 1) + ' — ' + dueLabel + '</span>' +
+              '<span style="font-weight:600">' + sym + instAmt.toLocaleString() + '</span>' +
+              '</div>';
+          }
+          html += '</div>';
+        }
+      }
+    }
+
+    container.innerHTML = html;
+
+    /* Update "Total Due Today" label and amount in the price breakdown */
+    var totalLabel = document.getElementById('review-total-label');
+    var totalVal   = document.getElementById('review-total');
+    if (_selectedPaymentOptionId) {
+      var sel2    = _paymentOptions.find(function(o) { return o.id === _selectedPaymentOptionId; });
+      var n3      = sel2 && (sel2.number_of_installments || (sel2.installments && sel2.installments.length));
+      var fullAmt2 = (function() {
+        var vp4 = _validatedPricing[cur];
+        if (vp4) return Number(vp4.payableAmount);
+        var et4  = (document.getElementById('enrollment-type') || {}).value || '';
+        var brk4 = getPlanBreakdown(et4 === 'Team' ? 'TEAM' : 'INDIVIDUAL', cur);
+        return brk4 ? Number(brk4.final_price) : 0;
+      })();
+      var firstInstAmt = n3 ? Math.round(fullAmt2 / n3) : fullAmt2;
+      if (totalLabel) totalLabel.textContent = 'Due Today (1st of ' + (n3 || 1) + ')';
+      if (totalVal)   totalVal.textContent   = sym + firstInstAmt.toLocaleString();
+    } else {
+      if (totalLabel) totalLabel.textContent = 'Total Due Today';
+      if (totalVal) {
+        var vp5 = _validatedPricing[cur];
+        if (vp5) {
+          totalVal.textContent = sym + Number(vp5.payableAmount).toLocaleString();
+        } else {
+          var et5  = (document.getElementById('enrollment-type') || {}).value || '';
+          var brk5 = getPlanBreakdown(et5 === 'Team' ? 'TEAM' : 'INDIVIDUAL', cur);
+          totalVal.textContent = brk5 ? sym + Number(brk5.final_price).toLocaleString() : '—';
+        }
+      }
+    }
+  }
+
+  /* Called by inline onclick on payment plan pills */
+  function selectPaymentPlan(optId) {
+    _selectedPaymentOptionId = optId || null;
+    renderPaymentOptions();
+    _updateReviewPanelPrices();
   }
 
   function updateFeesDisplay() {
@@ -1552,6 +1760,21 @@
     updateEnrollmentUI(type, teamSize);
   };
 
+  window.selectLevelBadge = function(level) {
+    var hiddenEl = document.getElementById('applicant-level');
+    if (hiddenEl) hiddenEl.value = level;
+    var active   = { border: '2px solid #FF294E', background: 'rgba(255,41,78,0.13)', color: '#FF294E' };
+    var inactive = { border: '2px solid var(--border-card)', background: 'rgba(255,255,255,0.04)', color: 'var(--muted)' };
+    ['Professional', 'Beginner'].forEach(function(l) {
+      var btn = document.getElementById('level-btn-' + l.toLowerCase());
+      if (!btn) return;
+      var s = l === level ? active : inactive;
+      btn.style.border      = s.border;
+      btn.style.background  = s.background;
+      btn.style.color       = s.color;
+    });
+  };
+
   /* ---------- Populate programme dropdown from backend ---------- */
   function populateProgrammes(list) {
     var fieldSel = document.getElementById('field');
@@ -1559,8 +1782,9 @@
 
     /* Clear all options then add placeholder */
     fieldSel.innerHTML = '<option value="" disabled selected>Select your programme</option>';
-    PROGRAM_ID_TO_FIELD = {};
-    FIELD_TO_PROGRAM_ID = {};
+    PROGRAM_ID_TO_FIELD     = {};
+    FIELD_TO_PROGRAM_ID     = {};
+    PROGRAM_ID_TO_COHORT_ID = {};
 
     list.forEach(function(p) {
       /* Strip leading "AI in " prefix for a clean display label */
@@ -1568,6 +1792,12 @@
       var id = p.id;
       PROGRAM_ID_TO_FIELD[id] = displayName;
       FIELD_TO_PROGRAM_ID[displayName] = id;
+      /* Use API date if present, otherwise fall back to hardcoded keyword map */
+      var apiDate = p.start_date || p.cohort_date || p.startDate || p.cohortDate || null;
+      PROGRAM_ID_TO_DATE[id] = apiDate || getCohortDate(displayName) || '—';
+      /* Capture cohort ID if embedded in the programs response */
+      var cid = p.cohort_id || p.activeCohortId || p.active_cohort_id || p.cohortId || null;
+      if (cid) PROGRAM_ID_TO_COHORT_ID[id] = cid;
       var opt = document.createElement('option');
       opt.value = displayName;
       opt.setAttribute('data-program-id', id);
@@ -1595,9 +1825,40 @@
       });
   }
 
+  /* Fetches the active cohort ID for a given program.
+     First checks PROGRAM_ID_TO_COHORT_ID (populated from /programs if the API embeds it),
+     then falls back to GET /programs/{id}/cohorts to find the active cohort. */
+  function fetchCohortId(programId) {
+    if (!programId) return Promise.resolve(null);
+    if (PROGRAM_ID_TO_COHORT_ID[programId]) {
+      _cohortId = PROGRAM_ID_TO_COHORT_ID[programId];
+      return Promise.resolve(_cohortId);
+    }
+    return fetch(API_BASE + '/programs/' + programId + '/cohorts')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var raw = (data && data.data) || {};
+        var cohorts = Array.isArray(raw) ? raw : (raw.cohorts || raw.items || []);
+        /* Pick OPEN/ACTIVE cohort first; fall back to first in list */
+        var active = cohorts.find(function(c) {
+          return c.status && /open|active|current/i.test(c.status);
+        }) || cohorts[0];
+        if (active && active.id) {
+          _cohortId = active.id;
+          PROGRAM_ID_TO_COHORT_ID[programId] = _cohortId;
+        }
+        return _cohortId;
+      })
+      .catch(function(err) {
+        console.warn('[Brixgate] Could not fetch cohort ID for program', programId, err.message);
+        return null;
+      });
+  }
+
   /* ---------- URL param pre-fill (?program_id=X or ?field=Name) ---------- */
   document.addEventListener('DOMContentLoaded', function () {
     selectEnrollBadge('Individual');
+    selectLevelBadge('Professional');
 
     var params = new URLSearchParams(window.location.search);
 
@@ -1625,12 +1886,17 @@
     function applyProgramId(pid) {
       _programId = parseInt(pid) || null;
       _cohortId  = null;
+      _paymentOptions = [];
+      _selectedPaymentOptionId = null;
+      renderPaymentOptions();
       if (!_programId || !fieldSel) return;
       var fieldName = PROGRAM_ID_TO_FIELD[_programId];
       if (fieldName) {
         for (var fi = 0; fi < fieldSel.options.length; fi++) {
           if (fieldSel.options[fi].value === fieldName) { fieldSel.selectedIndex = fi; break; }
         }
+        var cohortEl = document.getElementById('review-cohort-date');
+        if (cohortEl) cohortEl.textContent = PROGRAM_ID_TO_DATE[_programId] || getCohortDate(fieldName) || '—';
       }
       fetchCohortId(_programId);
       fetchPricingPlans(_programId);
@@ -1642,6 +1908,9 @@
         var selected = this.options[this.selectedIndex];
         var pid3 = parseInt(selected.getAttribute('data-program-id')) || FIELD_TO_PROGRAM_ID[selected.value] || null;
         if (pid3) applyProgramId(pid3);
+        var cohortEl = document.getElementById('review-cohort-date');
+        var pid4 = parseInt(selected.getAttribute('data-program-id')) || null;
+        if (cohortEl) cohortEl.textContent = (pid4 && PROGRAM_ID_TO_DATE[pid4]) || getCohortDate(selected.value) || '—';
       });
     }
 
@@ -1675,6 +1944,16 @@
           if (enrollSel2.options[ei].value === targetVal) { enrollSel2.selectedIndex = ei; break; }
         }
         updateEnrollmentUI(targetVal, '');
+      }
+    }
+
+    /* Level pre-fill from ?level=Professional or ?level=Beginner */
+    var levelParam = params.get('level');
+    if (levelParam) {
+      var lvlSel = document.getElementById('applicant-level');
+      if (lvlSel) {
+        var lvlNorm = levelParam.charAt(0).toUpperCase() + levelParam.slice(1).toLowerCase();
+        lvlSel.value = lvlNorm;
       }
     }
 
@@ -1880,27 +2159,44 @@
     var isTeam = et === 'Team';
     var size   = parseInt((document.getElementById('team-size') || {}).value) || 1;
 
-    var origStr, payStr;
+    /* Full price (what shows on the enrolment row) */
+    var fullAmt, origStr;
     if (vp) {
+      fullAmt = Number(vp.payableAmount);
       origStr = sym + Number(vp.totalAmount).toLocaleString();
-      payStr  = sym + Number(vp.payableAmount).toLocaleString();
     } else {
       var brk = getPlanBreakdown(isTeam ? 'TEAM' : 'INDIVIDUAL', cur);
-      origStr = payStr = brk ? sym + Number(brk.final_price).toLocaleString() : '—';
+      fullAmt = brk ? Number(brk.final_price) : 0;
+      origStr = brk ? sym + fullAmt.toLocaleString() : '—';
     }
 
-    var rvItem   = document.getElementById('review-price-item');
-    var rvTotal  = document.getElementById('review-total');
-    var rvBtn    = document.getElementById('pay-btn-label');
-    var rvRow    = document.getElementById('review-coupon-row');
-    var rvCode   = document.getElementById('review-coupon-code-lbl');
-    var rvAmt    = document.getElementById('review-coupon-discount');
-    var rvEnroll = document.getElementById('review-enroll-label');
+    /* If an instalment plan is selected, show first instalment for total + button */
+    var payStr, totalLabelStr;
+    if (_selectedPaymentOptionId) {
+      var selOpt = (_paymentOptions || []).find(function(o) { return o.id === _selectedPaymentOptionId; });
+      var nInst  = selOpt && (selOpt.number_of_installments || (selOpt.installments && selOpt.installments.length));
+      var due    = nInst ? Math.round(fullAmt / nInst) : fullAmt;
+      payStr       = sym + due.toLocaleString();
+      totalLabelStr = 'Due Today (1st of ' + (nInst || 1) + ')';
+    } else {
+      payStr        = sym + fullAmt.toLocaleString();
+      totalLabelStr = 'Total Due Today';
+    }
 
-    if (rvItem)   rvItem.textContent  = origStr;
-    if (rvTotal)  rvTotal.textContent = payStr;
-    if (rvBtn)    rvBtn.textContent   = 'Pay ' + payStr + ' via Paystack';
-    if (rvEnroll) rvEnroll.textContent = isTeam && size >= 2
+    var rvItem       = document.getElementById('review-price-item');
+    var rvTotal      = document.getElementById('review-total');
+    var rvTotalLabel = document.getElementById('review-total-label');
+    var rvBtn        = document.getElementById('pay-btn-label');
+    var rvRow        = document.getElementById('review-coupon-row');
+    var rvCode       = document.getElementById('review-coupon-code-lbl');
+    var rvAmt        = document.getElementById('review-coupon-discount');
+    var rvEnroll     = document.getElementById('review-enroll-label');
+
+    if (rvItem)       rvItem.textContent       = origStr;
+    if (rvTotal)      rvTotal.textContent      = payStr;
+    if (rvTotalLabel) rvTotalLabel.textContent = totalLabelStr;
+    if (rvBtn)        rvBtn.textContent        = 'Pay ' + payStr + ' via Paystack';
+    if (rvEnroll)     rvEnroll.textContent     = isTeam && size >= 2
       ? 'Team Enrolment (' + size + ' people)'
       : 'Individual Enrolment';
 
@@ -2118,6 +2414,17 @@
     var isTeam         = (enrollmentType === 'Team');
     var fullName       = firstName + ' ' + lastName;
 
+    var ccEl       = document.getElementById('apply-phone-cc');
+    var phoneNumEl = document.getElementById('apply-phone-num');
+    var cc         = ccEl ? ccEl.value.replace(/-[A-Z]+$/, '') : '+234';
+    var phoneRaw   = phoneNumEl ? phoneNumEl.value.replace(/\D/g, '') : '';
+    var phone      = phoneRaw ? (cc + phoneRaw) : '';
+
+    if (!phone) {
+      if (phoneNumEl) { phoneNumEl.style.borderColor = 'var(--red)'; phoneNumEl.focus(); phoneNumEl.addEventListener('input', function() { phoneNumEl.style.borderColor = ''; }, { once: true }); }
+      return;
+    }
+
     /* Validate team size if team is selected (min 2) */
     if (isTeam && teamSize < 2) {
       var tsSel = document.getElementById('team-size');
@@ -2128,11 +2435,16 @@
     var submitBtn = this.querySelector('button[type="submit"]');
     setSubmitState(submitBtn, true, 'Setting up your account…');
 
+    var applicantLevel = (document.getElementById('applicant-level') || {}).value || 'Professional';
+
     apiPost('/auth/applicants', {
-      name:         fullName,
-      email:        email,
-      primaryField: field || undefined,
-      currentRole:  role  || undefined
+      name:            fullName,
+      email:           email,
+      fullPhoneNumber: phone          || undefined,
+      primaryField:    field          || undefined,
+      currentRole:     role           || undefined,
+      programLevel:    applicantLevel || undefined,
+      programId:       _programId     || undefined
     })
       .then(function(data) {
         console.log('[Brixgate] /auth/applicants response:', JSON.stringify(data));
@@ -2164,9 +2476,16 @@
         if (!_programId) _programId = FIELD_TO_PROGRAM_ID[field] || null;
         _session.programId = _programId;
 
+        /* Re-fetch payment options now that we have a token — endpoint requires auth */
+        var activePlan = _pricingPlans['INDIVIDUAL'] || _pricingPlans['TEAM'] || Object.values(_pricingPlans)[0];
+        if (activePlan && activePlan.id) fetchPaymentOptions(activePlan.id, getActiveCurrency(), token);
+
         document.getElementById('review-name').textContent      = fullName;
         document.getElementById('review-email').textContent     = email;
+        var reviewPhoneEl = document.getElementById('review-phone');
+        if (reviewPhoneEl) reviewPhoneEl.textContent = phone || '—';
         document.getElementById('review-field-val').textContent = field;
+        document.getElementById('review-level').textContent     = applicantLevel;
         document.getElementById('review-role').textContent      = role;
 
         var enrollReviewEl = document.getElementById('review-enrollment');
@@ -2210,6 +2529,7 @@
             }
           }
           setSubmitState(submitBtn, false, 'Continue to Review');
+          renderPaymentOptions();
           showPanel('review');
         }
 
@@ -2297,6 +2617,7 @@
       payment_type:          'ENROLLMENT',
       entity_id:             _cohortId || _session.programId,
       pricing_plan_id:       plan.id || undefined,
+      payment_option_id:     _selectedPaymentOptionId || undefined,
       currency:              cur.toUpperCase(),
       coupon_code:           payloadCoupon,
       enrollment_type:       isTeamPay ? 'TEAM' : 'INDIVIDUAL',
@@ -2325,10 +2646,11 @@
           throw new Error(errMsg);
         }
 
+        /* Support both old nested format (data.data.checkout) and new flat format (data.data.authorization_url) */
         var checkout         = data.data.checkout || {};
         var payment          = data.data.payment  || {};
-        var authorizationUrl = checkout.authorizationUrl || checkout.authorization_url;
-        var reference        = payment.brixgateReference || payment.brxgateReference || payment.paymentReference || payment.payment_reference || payment.brixgate_reference;
+        var authorizationUrl = data.data.authorization_url || checkout.authorizationUrl || checkout.authorization_url;
+        var reference        = data.data.reference || payment.brixgateReference || payment.brxgateReference || payment.paymentReference || payment.payment_reference || payment.brixgate_reference;
 
         /* Store reference as backup in sessionStorage */
         if (reference) {

@@ -423,13 +423,35 @@ window.tierLabelToRatingLevel = function(label) {
       'padding:24px'
     ].join(';'));
     var inputStyle = 'width:100%;padding:13px 16px;border-radius:8px;border:1.5px solid #1A3050;background:rgba(255,255,255,0.05);color:#fff;font-size:0.92rem;margin-bottom:10px;outline:none;box-sizing:border-box;';
+    var ccStyle    = 'padding:13px 10px;border-radius:8px;border:1.5px solid #1A3050;background:rgba(255,255,255,0.05);color:#fff;font-size:0.88rem;outline:none;cursor:pointer;flex-shrink:0;width:116px;box-sizing:border-box;';
+    var phoneStyle = 'padding:13px 16px;border-radius:8px;border:1.5px solid #1A3050;background:rgba(255,255,255,0.05);color:#fff;font-size:0.92rem;outline:none;box-sizing:border-box;flex:1;min-width:0;';
     el.innerHTML =
       '<div style="background:#0D1C34;border:1px solid #1A3050;border-radius:20px;padding:40px 32px;max-width:440px;width:100%;text-align:center;">' +
         '<div style="font-size:2rem;margin-bottom:12px;">🎯</div>' +
         '<h3 style="font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:8px;">Your Results Are Ready</h3>' +
         '<p style="font-size:0.88rem;color:#7A94A8;line-height:1.6;margin-bottom:20px;">Enter your details to receive your result and unlock a <strong style="color:#FF294E;">10% coupon</strong> for the programme.</p>' +
         '<input id="bx-quiz-name" type="text" placeholder="Full name" autocomplete="name" style="' + inputStyle + '" />' +
-        '<input id="bx-quiz-email" type="email" placeholder="your@email.com" autocomplete="email" style="' + inputStyle + 'margin-bottom:6px;" />' +
+        '<input id="bx-quiz-email" type="email" placeholder="your@email.com" autocomplete="email" style="' + inputStyle + '" />' +
+        '<div style="display:flex;gap:8px;margin-bottom:10px;">' +
+          '<select id="bx-quiz-cc" style="' + ccStyle + '">' +
+            '<option value="+234">🇳🇬 +234</option>' +
+            '<option value="+233">🇬🇭 +233</option>' +
+            '<option value="+254">🇰🇪 +254</option>' +
+            '<option value="+27">🇿🇦 +27</option>' +
+            '<option value="+255">🇹🇿 +255</option>' +
+            '<option value="+256">🇺🇬 +256</option>' +
+            '<option value="+251">🇪🇹 +251</option>' +
+            '<option value="+1">🇺🇸 +1</option>' +
+            '<option value="+44">🇬🇧 +44</option>' +
+            '<option value="+971">🇦🇪 +971</option>' +
+            '<option value="+91">🇮🇳 +91</option>' +
+            '<option value="+49">🇩🇪 +49</option>' +
+            '<option value="+33">🇫🇷 +33</option>' +
+            '<option value="+61">🇦🇺 +61</option>' +
+            '<option value="+1-CA">🇨🇦 +1</option>' +
+          '</select>' +
+          '<input id="bx-quiz-phone" type="tel" placeholder="Phone number" autocomplete="tel" style="' + phoneStyle + '" />' +
+        '</div>' +
         '<div id="bx-quiz-err" style="color:#FF294E;font-size:0.78rem;min-height:18px;margin-bottom:10px;text-align:left;"></div>' +
         '<button onclick="submitQuizCapture()" style="width:100%;padding:14px;background:linear-gradient(135deg,#FF294E,#FF5748);border:none;border-radius:10px;color:#fff;font-weight:800;font-size:1rem;cursor:pointer;margin-bottom:12px;">Get My Results</button>' +
         '<br/><a href="#" onclick="skipQuizCapture(event)" style="color:#7A94A8;font-size:0.82rem;text-decoration:underline;">Skip — just show me results</a>' +
@@ -448,14 +470,19 @@ window.tierLabelToRatingLevel = function(label) {
   };
 
   window.submitQuizCapture = function () {
-    var nameEl    = document.getElementById('bx-quiz-name');
-    var emailEl   = document.getElementById('bx-quiz-email');
-    var errEl     = document.getElementById('bx-quiz-err');
-    var name      = nameEl  ? nameEl.value.trim()  : '';
-    var email     = emailEl ? emailEl.value.trim() : '';
+    var nameEl   = document.getElementById('bx-quiz-name');
+    var emailEl  = document.getElementById('bx-quiz-email');
+    var ccEl     = document.getElementById('bx-quiz-cc');
+    var phoneEl  = document.getElementById('bx-quiz-phone');
+    var errEl    = document.getElementById('bx-quiz-err');
+    var name     = nameEl  ? nameEl.value.trim()  : '';
+    var email    = emailEl ? emailEl.value.trim() : '';
+    var cc       = ccEl    ? ccEl.value.replace(/-[A-Z]+$/, '') : '+234';
+    var phoneRaw = phoneEl ? phoneEl.value.replace(/\D/g, '')   : '';
+    var phone    = phoneRaw ? (cc + phoneRaw) : '';
     if (errEl) errEl.textContent = '';
     if (!name) {
-      if (nameEl)  { nameEl.style.borderColor = '#FF294E'; nameEl.focus(); }
+      if (nameEl)  { nameEl.style.borderColor  = '#FF294E'; nameEl.focus(); }
       if (errEl)   errEl.textContent = 'Please enter your name.';
       return;
     }
@@ -464,10 +491,16 @@ window.tierLabelToRatingLevel = function(label) {
       if (errEl)   errEl.textContent = 'Please enter a valid email address.';
       return;
     }
+    if (!phoneRaw) {
+      if (phoneEl) { phoneEl.style.borderColor = '#FF294E'; phoneEl.focus(); }
+      if (errEl)   errEl.textContent = 'Please enter your phone number.';
+      return;
+    }
     try {
-      localStorage.setItem(_captureKey, '1');
+      localStorage.setItem(_captureKey,   '1');
       localStorage.setItem('bxQuizEmail', email);
       localStorage.setItem('bxQuizName',  name);
+      localStorage.setItem('bxQuizPhone', phone);
     } catch (e) {}
     document.getElementById('bx-quiz-capture').style.display = 'none';
     if (_captureCallback) { var cb = _captureCallback; _captureCallback = null; cb(); }

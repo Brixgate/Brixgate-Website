@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brixer Certificate — Brixgate</title>
+  <meta name="description" content="Verified Brixgate Brixer Certificate." />
+  <link rel="icon" type="image/png" href="assets/faviii.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .nav { top: 0 !important; }
+    body { background: var(--bg-dark); padding-top: var(--nav-height); }
+
+    /* ── Loading / Error states ── */
+    .state-wrap {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      text-align: center;
+      padding: 60px 24px;
+    }
+    .spinner {
+      width: 44px; height: 44px;
+      border: 3px solid rgba(255,41,78,0.15);
+      border-top-color: #FF294E;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* ── Verified banner ── */
+    .cert-verified-bar {
+      background: linear-gradient(90deg, #0a4a2a 0%, #0d5c33 100%);
+      border-bottom: 1px solid rgba(52,199,89,0.3);
+      padding: 13px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .cert-verified-dot {
+      width: 22px; height: 22px;
+      background: #34C759;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: #fff; font-weight: 900; flex-shrink: 0;
+    }
+    .cert-verified-text {
+      font-size: 0.84rem; font-weight: 700;
+      color: rgba(255,255,255,0.9);
+    }
+    .cert-verified-id {
+      font-size: 0.75rem; font-weight: 700;
+      color: rgba(52,199,89,0.9);
+      padding: 3px 10px;
+      background: rgba(52,199,89,0.12);
+      border: 1px solid rgba(52,199,89,0.25);
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+      font-family: monospace;
+    }
+
+    /* ── Main layout ── */
+    .cert-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+
+    /* ── Certificate visual ── */
+    .cert-visual {
+      background: #021024;
+      border: 2px solid #FF294E;
+      border-radius: 16px;
+      padding: 56px 64px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 48px;
+    }
+    .cert-visual::before {
+      content: 'BRIXGATE';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-20deg);
+      font-size: 6.5rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.022);
+      letter-spacing: 0.2em;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .cert-corner {
+      position: absolute;
+      width: 44px; height: 44px;
+      border-color: rgba(255,41,78,0.45);
+      border-style: solid;
+    }
+    .cert-corner.tl { top: 18px; left: 18px; border-width: 2px 0 0 2px; border-radius: 4px 0 0 0; }
+    .cert-corner.tr { top: 18px; right: 18px; border-width: 2px 2px 0 0; border-radius: 0 4px 0 0; }
+    .cert-corner.bl { bottom: 18px; left: 18px; border-width: 0 0 2px 2px; border-radius: 0 0 0 4px; }
+    .cert-corner.br { bottom: 18px; right: 18px; border-width: 0 2px 2px 0; border-radius: 0 0 4px 0; }
+
+    .cert-logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+    .cert-divider {
+      width: 56px; height: 2px;
+      background: var(--red);
+      margin: 0 auto 28px;
+    }
+    .cert-certifies {
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.45);
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+    .cert-holder-name {
+      text-align: center;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .cert-completed-text {
+      text-align: center;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      font-style: italic;
+      margin-bottom: 22px;
+    }
+    .cert-field-name {
+      text-align: center;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--red);
+      letter-spacing: 0.03em;
+      margin-bottom: 4px;
+    }
+    .cert-programme-label {
+      text-align: center;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .cert-footer-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-top: 44px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      gap: 24px;
+    }
+    .cert-sig-block { flex: 1; }
+    .cert-sig-line {
+      width: 120px;
+      height: 1px;
+      background: rgba(255,255,255,0.18);
+      margin-bottom: 8px;
+    }
+    .cert-sig-name {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.75);
+    }
+    .cert-sig-role {
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.35);
+      margin-top: 2px;
+    }
+    .cert-qr-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .cert-qr-img {
+      width: 72px; height: 72px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 4px;
+    }
+    .cert-qr-img img { width: 100%; height: 100%; display: block; }
+    .cert-id-mono {
+      font-size: 0.58rem;
+      color: rgba(255,255,255,0.3);
+      font-family: monospace;
+      letter-spacing: 0.04em;
+    }
+    .cert-sig-block-right { flex: 1; text-align: right; }
+    .cert-sig-line-right {
+      width: 120px;
+      height: 1px;
+      background: rgba(255,255,255,0.18);
+      margin-bottom: 8px;
+      margin-left: auto;
+    }
+    .cert-watermark-footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.18);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── Details grid below cert ── */
+    .cert-details-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .cert-detail-cell {
+      background: var(--bg-card);
+      padding: 24px 28px;
+    }
+    .cert-detail-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .cert-detail-val {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.3;
+    }
+    .cert-detail-val.mono {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: rgba(255,41,78,0.85);
+    }
+
+    /* ── Programme blurb ── */
+    .cert-blurb {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 32px 36px;
+      margin-bottom: 40px;
+    }
+    .cert-blurb-label {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+    .cert-blurb-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .cert-blurb-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ── Action row ── */
+    .cert-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    /* ── Verify another ── */
+    .verify-another {
+      border-top: 1px solid var(--border-card);
+      padding-top: 40px;
+    }
+    .verify-another-label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--red);
+      margin-bottom: 8px;
+    }
+    .verify-another h3 {
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .verify-row {
+      display: flex;
+      max-width: 440px;
+      gap: 0;
+    }
+    .verify-row input {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-right: none;
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+      padding: 13px 18px;
+      color: var(--white);
+      font-size: 0.88rem;
+      font-family: monospace;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .verify-row input:focus { border-color: var(--red); }
+    .verify-row input::placeholder { color: var(--muted); }
+    .verify-row button {
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 13px 22px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .2s;
+    }
+    .verify-row button:hover { background: var(--orange); }
+
+    /* ── Not found state ── */
+    .notfound-icon {
+      width: 68px; height: 68px;
+      background: rgba(255,41,78,0.08);
+      border: 1px solid rgba(255,41,78,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+    }
+
+    @media (max-width: 700px) {
+      .cert-visual { padding: 36px 28px; }
+      .cert-footer-row { flex-direction: column; align-items: center; gap: 28px; }
+      .cert-sig-block, .cert-sig-block-right { text-align: center; }
+      .cert-sig-line, .cert-sig-line-right { margin-left: auto; margin-right: auto; }
+      .cert-details-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+<script src="tracking.js"></script>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+
+<!-- ── Verified banner (shown after successful API response) ── -->
+<div id="cert-verified-bar" class="cert-verified-bar" style="display:none">
+  <div class="cert-verified-dot">✓</div>
+  <span class="cert-verified-text">This certificate has been verified by Brixgate</span>
+  <span class="cert-verified-id" id="banner-cert-id">—</span>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <div class="nav-prog-dropdown">
+        <a href="programme.html">Programme</a><button class="nav-prog-chevron" type="button" aria-label="Toggle programmes menu"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-prog-menu">
+          <div class="nav-prog-menu-inner">
+            <a href="programme-engineering.html">Software Engineering</a>
+            <a href="programme-cybersecurity.html">Cybersecurity</a>
+            <a href="programme-finance.html">Financial Modelling</a>
+            <a href="programme-marketing.html">Product Marketing</a>
+          </div>
+        </div>
+      </div>
+      <a href="experts.html">Experts</a>
+      <a href="organisations.html">For Organisations</a>
+      <a href="https://wa.me/2347088093620?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme." target="_blank" rel="noopener">Chat with us</a>
+    </div>
+    <div class="nav-cta">
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
+      <a href="apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="programme.html">Programme</a>
+  <a href="experts.html">Experts</a>
+  <a href="organisations.html">For Organisations</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
+  <a href="apply.html" class="btn btn-primary">Apply Now</a>
+</div>
+
+<!-- ── Loading state ── -->
+<div id="view-loading" class="state-wrap">
+  <div class="spinner"></div>
+  <div style="font-size:0.88rem;color:var(--muted)">Verifying certificate…</div>
+</div>
+
+<!-- ── Not found state ── -->
+<div id="view-notfound" style="display:none">
+<div class="state-wrap">
+  <div class="notfound-icon">🔍</div>
+  <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.12em">Certificate Not Found</div>
+  <h2 style="font-size:1.8rem;font-weight:900;color:var(--white);margin:0" id="notfound-title">We couldn't find that certificate</h2>
+  <p style="font-size:0.9rem;color:var(--muted);max-width:460px;line-height:1.7;margin:0">This ID isn't in our records. Certificates are added as cohorts graduate — if this was recently issued, it may take up to 48 hours to appear. Check the ID on the physical certificate for typos.</p>
+
+  <div class="verify-row" style="margin-top:8px">
+    <input type="text" id="retry-input" placeholder="Try another ID…" autocomplete="off" />
+    <button onclick="goVerify('retry-input')">Verify</button>
+  </div>
+
+  <p style="font-size:0.78rem;color:var(--muted)">Need help? Email <a href="mailto:we@brixgate.com" style="color:var(--red);font-weight:700">we@brixgate.com</a></p>
+</div>
+</div>
+
+<!-- ── Certificate view ── -->
+<div id="view-cert" style="display:none">
+<div class="cert-page">
+
+  <!-- Certificate visual -->
+  <div class="cert-visual">
+    <div class="cert-corner tl"></div>
+    <div class="cert-corner tr"></div>
+    <div class="cert-corner bl"></div>
+    <div class="cert-corner br"></div>
+
+    <div class="cert-logo-row">
+      <img src="assets/logo-color-nobg.svg" alt="Brixgate" style="height:32px" />
+    </div>
+    <div style="text-align:center;font-size:0.62rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:10px">Brixer Certificate</div>
+    <div class="cert-divider"></div>
+
+    <div class="cert-certifies">This certifies that</div>
+    <div class="cert-holder-name" id="cert-name">—</div>
+    <div class="cert-completed-text">has successfully completed the</div>
+    <div class="cert-field-name" id="cert-field">—</div>
+    <div class="cert-programme-label">AI in my Field · Expert Practitioner Programme</div>
+
+    <div class="cert-footer-row">
+      <div class="cert-sig-block">
+        <div class="cert-sig-line"></div>
+        <div class="cert-sig-name" id="cert-director-sig">Programme Director</div>
+        <div class="cert-sig-role" id="cert-director-role">Brixgate</div>
+      </div>
+
+      <div class="cert-qr-block">
+        <div class="cert-qr-img">
+          <img id="cert-qr" src="" alt="Verification QR" />
+        </div>
+        <div class="cert-id-mono" id="cert-id-mono">—</div>
+      </div>
+
+      <div class="cert-sig-block-right">
+        <div class="cert-sig-line-right"></div>
+        <div class="cert-sig-name" id="cert-expert-sig">Expert Practitioner</div>
+        <div class="cert-sig-role" id="cert-expert-role">Brixgate Certified Expert</div>
+      </div>
+    </div>
+
+    <div class="cert-watermark-footer" id="cert-watermark">— · brixgate.com</div>
+  </div>
+
+  <!-- Details grid -->
+  <div class="cert-details-grid">
+    <div class="cert-detail-cell">
+      <div class="cert-detail-label">Certificate Holder</div>
+      <div class="cert-detail-val" id="detail-name">—</div>
+    </div>
+    <div class="cert-detail-cell">
+      <div class="cert-detail-label">Programme</div>
+      <div class="cert-detail-val" id="detail-field">—</div>
+    </div>
+    <div class="cert-detail-cell">
+      <div class="cert-detail-label">Certificate ID</div>
+      <div class="cert-detail-val mono" id="detail-cert-id">—</div>
+    </div>
+    <div class="cert-detail-cell">
+      <div class="cert-detail-label">Date Issued</div>
+      <div class="cert-detail-val" id="detail-issued">—</div>
+    </div>
+    <div class="cert-detail-cell">
+      <div class="cert-detail-label">Duration</div>
+      <div class="cert-detail-val">4-Week Sprint</div>
+    </div>
+    <div class="cert-detail-cell">
+      <div class="cert-detail-label">Issued by</div>
+      <div class="cert-detail-val">Brixgate Ltd.</div>
+    </div>
+  </div>
+
+  <!-- Programme blurb -->
+  <div class="cert-blurb">
+    <div class="cert-blurb-label">About This Programme</div>
+    <div class="cert-blurb-title" id="blurb-title">AI in my Field — Expert Practitioner Programme</div>
+    <div class="cert-blurb-desc" id="blurb-desc">The Brixgate AI in my Field programme is a practitioner-led, four-week intensive sprint that embeds AI directly into professional workflows. Participants complete field-specific applied projects assessed by verified Expert Practitioners — earning a public Brixer Certificate that verifies their competency to employers in seconds.</div>
+  </div>
+
+  <!-- Actions -->
+  <div class="cert-actions">
+    <a id="share-linkedin" href="#" target="_blank" class="btn btn-primary">Share on LinkedIn</a>
+    <a href="apply.html" class="btn btn-outline">Apply to Brixgate</a>
+  </div>
+
+  <!-- Verify another -->
+  <div class="verify-another">
+    <div class="verify-another-label">Verify Another Certificate</div>
+    <h3>Enter a Certificate ID</h3>
+    <div class="verify-row">
+      <input type="text" id="verify-another-input" placeholder="e.g. BX-2026-SE-00142" autocomplete="off" />
+      <button onclick="goVerify('verify-another-input')">Verify</button>
+    </div>
+  </div>
+
+</div>
+</div><!-- /view-cert -->
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo footer-logo">
+          <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+        </a>
+        <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook">
+            <img src="assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block">
+          </a>
+          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram">
+            <img src="assets/social.png" alt="Instagram" width="22" height="22" style="display:block">
+          </a>
+          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter">
+            <img src="assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block">
+          </a>
+          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn">
+            <img src="assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block">
+          </a>
+          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email">
+            <img src="assets/gmail.png" alt="Email" width="22" height="22" style="display:block">
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Programme</h5>
+        <ul>
+          <li><a href="programme.html">AI in my Field</a></li>
+          <li><a href="programme.html#fields">All Fields</a></li>
+          <li><a href="programme.html#pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Experts</h5>
+        <ul>
+          <li><a href="experts.html">Meet Our Experts</a></li>
+          <li><a href="join-as-expert.html">Join as Expert</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Organisation</h5>
+        <ul>
+          <li><a href="organisations.html">Corporate Programmes</a></li>
+          <li><a href="verify.html">Verify a Certificate</a></li>
+          <li><a href="apply.html">Apply Now</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="footer-year">2026</span> Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
+    <div class="footer-bottom-links">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top">↑</button>
+<script src="script.js"></script>
+<script>
+  var CERT_API_BASE = (typeof BX_API_BASE !== 'undefined') ? BX_API_BASE : 'https://dev.api.brixgate.com';
+
+  /* Field → blurb copy */
+  var FIELD_BLURBS = {
+    'cybersecurity':       { title: 'AI in Cybersecurity — Expert Practitioner Programme', desc: 'A four-week field-specific sprint that integrates AI into active security practice. Participants move from passive tool users to practitioners who leverage AI for threat modelling, vulnerability assessment, and incident response — with every competency assessed in real applied work by a verified Expert Practitioner.' },
+    'software engineering':{ title: 'AI in Software Engineering — Expert Practitioner Programme', desc: 'A four-week intensive sprint embedding AI into every layer of the engineering workflow — from code generation and debugging to testing, LLM integration, and AI-native development habits. Assessed through a deployed applied project reviewed by a verified Expert Practitioner in the field.' },
+    'financial modelling':  { title: 'AI in Financial Modelling — Expert Practitioner Programme', desc: 'A four-week sprint that integrates AI into financial analysis, risk modelling, and decision intelligence. Participants apply AI tools to real financial workflows and complete an applied project assessed by a verified Expert Practitioner with deep domain experience.' },
+    'product marketing':   { title: 'AI in Product Marketing — Expert Practitioner Programme', desc: 'A four-week sprint building AI fluency across the full marketing and sales lifecycle — content, campaigns, customer intelligence, and strategy. Assessed through a deployed applied project reviewed by a verified Expert Practitioner in the field.' },
+  };
+
+  function getBlurb(field) {
+    if (!field) return null;
+    var key = field.toLowerCase();
+    for (var k in FIELD_BLURBS) {
+      if (key.indexOf(k) !== -1 || k.indexOf(key) !== -1) return FIELD_BLURBS[k];
+    }
+    return null;
+  }
+
+  function setText(id, val) {
+    var el = document.getElementById(id);
+    if (el && val) el.textContent = val;
+  }
+
+  function goVerify(inputId) {
+    var val = (document.getElementById(inputId).value || '').trim().toUpperCase();
+    if (val) window.location.href = 'certificate.html?id=' + encodeURIComponent(val);
+  }
+
+  ['retry-input', 'verify-another-input'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('keydown', function(e) { if (e.key === 'Enter') goVerify(id); });
+  });
+
+  function showNotFound(id) {
+    document.getElementById('view-loading').style.display = 'none';
+    document.getElementById('view-notfound').style.display = 'block';
+    var t = document.getElementById('notfound-title');
+    if (t && id) t.textContent = 'Certificate "' + id + '" not found';
+    var r = document.getElementById('retry-input');
+    if (r && id) r.value = id;
+  }
+
+  function populateCert(cert, rawId) {
+    var certId  = cert.certificateNumber || cert.certificate_number || rawId;
+    var name    = cert.holderName || cert.holder_name || cert.name || cert.graduateName || '';
+    var field   = cert.field || cert.primaryField || cert.primary_field || cert.program || cert.programme || '';
+    var issued  = cert.issuedAt || cert.issued_at || cert.issuedDate || cert.completionDate || cert.completion_date || '';
+    var cohort  = cert.cohort || '';
+    var expertName = cert.expertName || cert.expert_name || '';
+    var expertRole = cert.expertRole || cert.expert_role || '';
+
+    if (issued && issued.indexOf('-') !== -1) {
+      try { issued = new Date(issued).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }); } catch(e) {}
+    }
+
+    /* Banner */
+    document.getElementById('cert-verified-bar').style.display = 'flex';
+    setText('banner-cert-id', certId);
+
+    /* Certificate visual */
+    setText('cert-name', name || '—');
+    setText('cert-field', field || '—');
+    setText('cert-id-mono', certId);
+    /* Left signature — tutor from metadata.signatories[0], right from signatories[1] */
+    var meta        = cert.metadata || {};
+    var signatories = Array.isArray(meta.signatories) ? meta.signatories : [];
+    var directorName = signatories[0]
+                    || cert.tutorName || cert.tutor_name
+                    || cert.instructorName || cert.instructor_name
+                    || cert.directorName || cert.director_name || '';
+    var directorRole = cert.tutorRole || cert.tutor_role
+                    || cert.instructorRole || cert.instructor_role
+                    || cert.directorRole || cert.director_role || 'Brixgate';
+    if (directorName) setText('cert-director-sig', directorName);
+    if (directorRole) setText('cert-director-role', directorRole);
+
+    if (expertName) setText('cert-expert-sig', expertName);
+    if (expertRole) setText('cert-expert-role', expertRole);
+    var wmText = (issued ? issued : '') + (cohort ? ' · ' + cohort : '') + ' · brixgate.com';
+    setText('cert-watermark', wmText);
+
+    /* QR code */
+    var certUrl = 'https://brixgate.com/certificate.html?id=' + encodeURIComponent(certId);
+    var qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=' + encodeURIComponent(certUrl) + '&margin=2';
+    var qrEl = document.getElementById('cert-qr');
+    if (qrEl) qrEl.src = qrSrc;
+
+    /* Details grid */
+    setText('detail-name', name || '—');
+    setText('detail-field', field || '—');
+    setText('detail-cert-id', certId);
+    setText('detail-issued', issued || '—');
+
+    /* Programme blurb */
+    var blurb = getBlurb(field);
+    if (blurb) {
+      setText('blurb-title', blurb.title);
+      setText('blurb-desc', blurb.desc);
+    }
+
+    /* LinkedIn share */
+    var linkedInUrl = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(certUrl);
+    var liLink = document.getElementById('share-linkedin');
+    if (liLink) liLink.href = linkedInUrl;
+  }
+
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var id = (params.get('id') || '').trim().toUpperCase();
+
+    if (!id) {
+      window.location.href = 'verify.html';
+      return;
+    }
+
+    document.getElementById('view-loading').style.display = 'flex';
+
+    fetch(CERT_API_BASE + '/api/v1/certificates/verify/' + encodeURIComponent(id))
+      .then(function(r) {
+        if (r.status === 404) throw new Error('NOT_FOUND');
+        if (!r.ok) throw new Error('API_ERROR');
+        return r.json();
+      })
+      .then(function(data) {
+        var cert = (data && data.data) ? data.data : data;
+        if (!cert || data.success === false) throw new Error('NOT_FOUND');
+        document.getElementById('view-loading').style.display = 'none';
+        populateCert(cert, id);
+        document.getElementById('view-cert').style.display = 'block';
+      })
+      .catch(function() {
+        showNotFound(id);
+      });
+  })();
+</script>
+
+<a href="https://wa.me/2347088093620?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme."
+   target="_blank" rel="noopener"
+   class="whatsapp-float"
+   aria-label="Chat with us on WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+</body>
+</html>
