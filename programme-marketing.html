@@ -158,7 +158,7 @@
       <div class="fade-in hero-ai-panel" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:20px;padding:36px 32px">
         <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:16px">What AI Looks Like in Marketing & Sales</div>
         <p style="font-size:1rem;color:var(--muted);line-height:1.7">When a marketing team uses AI to generate 50 campaign variants overnight, optimise spend in real time, and predict which leads will convert before the sales team calls — that is AI-native revenue growth.</p>
-        <div class="hero-metrics" style="margin-top:28px;padding-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center">
+        <div class="hero-metrics" style="margin-top:28px;padding-top:20px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px;text-align:center">
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">4</div><div style="font-size:0.72rem;color:var(--muted)">Week Sprint</div></div>
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Live</div><div style="font-size:0.72rem;color:var(--muted)">Cohort Sessions</div></div>
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Field</div><div style="font-size:0.72rem;color:var(--muted)">Verified Certificate</div></div>
@@ -171,15 +171,11 @@
 <!-- ====== COHORT INFO BAR ====== -->
 <div style="background:#0D1C34;border-bottom:1px solid #1A3050">
   <div class="container">
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0">
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0">
       <!-- <div style="padding:20px 24px;border-right:1px solid #1A3050">
         <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Application Closes</div>
         <div style="font-size:1rem;font-weight:800;color:#fff">June 5, 2026</div>
       </div> -->
-      <div style="padding:20px 24px;border-right:1px solid #1A3050">
-        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Cohort Start Date</div>
-        <div style="font-size:1rem;font-weight:800;color:#fff">August 7, 2026</div>
-      </div>
       <div style="padding:20px 24px;border-right:1px solid #1A3050">
         <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Programme Duration</div>
         <div style="font-size:1rem;font-weight:800;color:#fff">4 Weeks</div>
@@ -535,29 +531,14 @@ function bxCurrToggleAll(btn) {
 </section>
 
 <!-- ====== PROGRAMME COHORTS ====== -->
-<section class="section-pad bg-white" style="display:none">
+<section class="section-pad bg-white">
   <div class="container">
     <div class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">Programme Cohorts</div>
       <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px">Open Cohorts</h2>
       <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px">Cohort-based delivery means you learn alongside peers in your field and leave with a network, not just a certificate.</p>
-      <div style="max-width:450px">
-        <div style="border:1.5px solid #E8E3DE;border-radius:14px;overflow:hidden">
-          <div style="background:#021024;padding:16px 24px;display:flex;justify-content:space-between;align-items:center">
-            <div style="font-size:0.95rem;font-weight:800;color:#fff">AI in Marketing & Sales &#8212; Cohort 1</div>
-            <span style="background:#34C759;color:#fff;font-size:0.7rem;font-weight:800;padding:4px 12px;border-radius:50px">Open</span>
-          </div>
-          <div style="padding:24px;background:#F9F8F7;display:grid;grid-template-columns:1fr 1fr;gap:16px">
-            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Start Date</div><div style="font-size:0.95rem;font-weight:800;color:#021024">June 12, 2026</div></div>
-            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">End Date</div><div style="font-size:0.95rem;font-weight:800;color:#021024">July 10, 2026</div></div>
-            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Cohort</div><div style="font-size:0.95rem;font-weight:800;color:#021024">1</div></div>
-            <div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Lead Practitioner</div><div style="font-size:0.95rem;font-weight:800;color:#021024">Temi Adebisi</div></div>
-          </div>
-          <div style="padding:16px 24px;background:#fff;display:flex;justify-content:space-between;align-items:center">
-            <div style="display:flex;align-items:center;gap:6px"><span style="color:#F59E0B">&#9733;</span><span style="font-size:0.88rem;font-weight:700;color:#021024">4.9</span><span style="font-size:0.78rem;color:#7A94A8">Practitioner Rating</span></div>
-            <a href="#waitlist-form" class="btn btn-primary" style="padding:10px 20px;font-size:0.85rem">Join the Waitlist</a>
-          </div>
-        </div>
+      <div id="cohort-cards-container" style="display:flex;flex-wrap:wrap;gap:20px">
+        <!-- cohort cards rendered by JS -->
       </div>
     </div>
   </div>
@@ -996,6 +977,69 @@ document.addEventListener('DOMContentLoaded', function() {
 <a href="#" class="back-to-top" aria-label="Back to top">↑</a>
 
 <script src="script.js"></script>
+<script>
+var PROGRAM_ID = 0;
+/* ====== Dynamic Cohort Cards ====== */
+(function() {
+  var STATUS_CFG = {
+    OPEN:     { label: 'Open',     bg: '#22c55e' },
+    UPCOMING: { label: 'Upcoming', bg: '#F59E0B' },
+    CLOSED:   { label: 'Closed',   bg: '#7A94A8' },
+  };
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    var d = new Date(iso);
+    return isNaN(d) ? iso : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+  function renderCard(c) {
+    var st    = STATUS_CFG[c.status] || { label: c.status || '—', bg: '#7A94A8' };
+    var instr = (c.instructors || []).map(function(i) { return i.name || i.full_name || ''; }).filter(Boolean).join(', ');
+    var fmt   = (c.learning_format || '').replace(/_/g, ' ').replace(/\b\w/g, function(ch) { return ch.toUpperCase(); });
+    var details = [
+      { l: 'Start Date', v: fmtDate(c.start_date) },
+      { l: 'End Date',   v: fmtDate(c.end_date)   },
+    ];
+    if (c.duration) details.push({ l: 'Duration', v: c.duration });
+    if (fmt)        details.push({ l: 'Format',   v: fmt });
+    if (instr)      details.push({ l: 'Lead Practitioner', v: instr });
+    var detailsHtml = details.map(function(d) {
+      return '<div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">' + d.l + '</div>'
+           + '<div style="font-size:0.95rem;font-weight:800;color:#021024">' + d.v + '</div></div>';
+    }).join('');
+    var footer = c.status !== 'CLOSED'
+      ? '<div style="padding:16px 24px;background:#fff"><a href="apply.html?program_id=' + PROGRAM_ID + '" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Apply Now</a></div>'
+      : '';
+    return '<div style="border:1.5px solid #E8E3DE;border-radius:14px;overflow:hidden;min-width:280px;max-width:380px;flex:0 0 auto">'
+         +   '<div style="background:#021024;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px">'
+         +     '<div style="font-size:0.95rem;font-weight:800;color:#fff">' + (c.title || 'Cohort') + '</div>'
+         +     '<span style="background:' + st.bg + ';color:#fff;font-size:0.7rem;font-weight:800;padding:4px 12px;border-radius:50px;white-space:nowrap">' + st.label + '</span>'
+         +   '</div>'
+         +   '<div style="padding:24px;background:#F9F8F7;display:grid;grid-template-columns:1fr 1fr;gap:16px">' + detailsHtml + '</div>'
+         +   footer
+         + '</div>';
+  }
+  var el = document.getElementById('cohort-cards-container');
+  if (!PROGRAM_ID) {
+    if (el) el.innerHTML = '<p style="color:#7A94A8;font-size:0.9rem">Cohort schedule coming soon.</p>';
+    return;
+  }
+  fetch('https://dev.api.brixgate.com/api/v1/programs/' + PROGRAM_ID + '/cohorts')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var cohorts = (data && data.data && data.data.cohorts) || [];
+      var visible = cohorts.filter(function(c) { return c.status !== 'CLOSED'; });
+      if (!el) return;
+      if (!visible.length) {
+        var applyLink = PROGRAM_ID ? 'apply.html?program_id=' + PROGRAM_ID : 'apply.html';
+        el.innerHTML = '<p style="color:#7A94A8;font-size:0.9rem">No upcoming cohorts right now. <a href="' + applyLink + '" style="color:var(--red);font-weight:700">Apply to join the waitlist</a> and we\'ll notify you when the next cohort opens.</p>';
+        return;
+      }
+      el.innerHTML = visible.map(renderCard).join('');
+    })
+    .catch(function() {});
+})();
+
+</script>
 <script>
 // ====== Field-Specific Quiz (marketing) ======
 (function() {
