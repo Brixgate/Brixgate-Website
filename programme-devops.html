@@ -791,7 +791,7 @@ var PROGRAM_ID = 3;
            + '<div style="font-size:0.95rem;font-weight:800;color:#021024">' + d.v + '</div></div>';
     }).join('');
     var footer = c.status !== 'CLOSED'
-      ? '<div style="padding:16px 24px;background:#fff"><a href="apply.html?program_id=' + PROGRAM_ID + '" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Apply Now</a></div>'
+      ? '<div style="padding:16px 24px;background:#fff"><a href="apply.html?program_id=' + PROGRAM_ID + '&cohort_id=' + c.id + '" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Apply Now</a></div>'
       : '';
     return '<div style="border:1.5px solid #E8E3DE;border-radius:14px;overflow:hidden;min-width:280px;max-width:380px;flex:0 0 auto">'
          +   '<div style="background:#021024;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px">'

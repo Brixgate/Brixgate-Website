@@ -863,6 +863,13 @@
         <div style="margin-top:24px;background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:24px">
           <div style="font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px" id="fees2-header">Fee Summary</div>
 
+          <!-- Cohort info — shown when a cohort is selected -->
+          <div id="fees2-cohort-info" style="display:none;padding-bottom:12px;border-bottom:1px solid var(--border-card);margin-bottom:12px">
+            <div style="font-size:0.65rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Selected Cohort</div>
+            <div style="font-size:0.82rem;font-weight:700;color:var(--white);line-height:1.4" id="fees2-cohort-name">—</div>
+            <div style="font-size:0.75rem;color:var(--muted);margin-top:3px">Starts <span id="fees2-cohort-start">—</span></div>
+          </div>
+
           <!-- Original price row — always visible -->
           <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border-card)">
             <span style="font-size:0.85rem;color:var(--muted)" id="fees2-label">Individual Enrolment</span>
@@ -1037,6 +1044,33 @@
               <select id="field" name="field" required>
                 <option value="" disabled selected>Loading programmes…</option>
               </select>
+            </div>
+
+            <div class="form-group" id="cohort-select-group" style="display:none">
+              <label for="cohort-select">Cohort</label>
+              <select id="cohort-select">
+                <option value="" disabled selected>Select a cohort</option>
+              </select>
+            </div>
+            <div id="cohort-info-panel" style="display:none;margin-top:-8px;margin-bottom:20px;padding:12px 14px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:10px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <div>
+                  <div style="font-size:0.63rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px">Start Date</div>
+                  <div style="font-size:0.8rem;font-weight:700;color:var(--white)" id="cohort-info-start">—</div>
+                </div>
+                <div>
+                  <div style="font-size:0.63rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px">End Date</div>
+                  <div style="font-size:0.8rem;font-weight:700;color:var(--white)" id="cohort-info-end">—</div>
+                </div>
+                <div>
+                  <div style="font-size:0.63rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px">Format</div>
+                  <div style="font-size:0.8rem;font-weight:700;color:var(--white)" id="cohort-info-format">—</div>
+                </div>
+                <div>
+                  <div style="font-size:0.63rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px">Status</div>
+                  <div style="font-size:0.8rem;font-weight:700" id="cohort-info-status">—</div>
+                </div>
+              </div>
             </div>
 
             <div class="form-group">
@@ -1333,6 +1367,7 @@
 
   var _programId              = null;
   var _cohortId               = null;  /* active cohort ID — required as entity_id by the backend */
+  var _selectedCohort         = null;  /* full cohort object from API — used for review display */
   var _pricingPlans           = {};    /* plan_type → plan object */
   var _paymentOptions         = [];    /* from GET /pricing-plans/{id}/payment-options */
   var _selectedPaymentOptionId = null; /* null = full payment, number = installment plan ID */
@@ -1871,22 +1906,118 @@
 
     var fieldSel = document.getElementById('field');
 
-    function fetchCohortId(programId) {
+    /* ── Cohort helpers ── */
+    function fmtDateShort(iso) {
+      if (!iso) return '—';
+      var d = new Date(iso);
+      return isNaN(d) ? iso : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function updateCohortUI() {
+      var c            = _selectedCohort;
+      var cohortDateEl = document.getElementById('review-cohort-date');
+      var infoPanel    = document.getElementById('cohort-info-panel');
+      var f2info       = document.getElementById('fees2-cohort-info');
+
+      if (!c) {
+        if (cohortDateEl) cohortDateEl.textContent = '—';
+        if (infoPanel)    infoPanel.style.display = 'none';
+        if (f2info)       f2info.style.display = 'none';
+        return;
+      }
+
+      var startFmt    = fmtDateShort(c.start_date);
+      var endFmt      = fmtDateShort(c.end_date);
+      var fmt         = (c.learning_format || '').replace(/_/g, ' ').replace(/\b\w/g, function(ch) { return ch.toUpperCase(); });
+      var statusColor = c.status === 'OPEN' ? '#22c55e' : '#F59E0B';
+
+      if (cohortDateEl) cohortDateEl.textContent = (c.title || '—') + ' · Starts ' + startFmt;
+
+      if (infoPanel) {
+        var si = document.getElementById('cohort-info-start');
+        var ei = document.getElementById('cohort-info-end');
+        var fi2 = document.getElementById('cohort-info-format');
+        var sti = document.getElementById('cohort-info-status');
+        if (si)  si.textContent  = startFmt;
+        if (ei)  ei.textContent  = endFmt;
+        if (fi2) fi2.textContent = fmt || '—';
+        if (sti) { sti.textContent = c.status; sti.style.color = statusColor; }
+        infoPanel.style.display = 'block';
+      }
+
+      if (f2info) {
+        var nameEl  = document.getElementById('fees2-cohort-name');
+        var startEl = document.getElementById('fees2-cohort-start');
+        if (nameEl)  nameEl.textContent  = c.title || '—';
+        if (startEl) startEl.textContent = startFmt;
+        f2info.style.display = 'block';
+      }
+    }
+
+    /* Fetches cohorts for a program, populates the cohort dropdown,
+       and auto-selects: preselectedId if provided, else earliest by start_date */
+    function loadCohorts(programId, preselectedId) {
+      var sel = document.getElementById('cohort-select');
+      var grp = document.getElementById('cohort-select-group');
+      if (!sel) return;
+      sel.innerHTML = '<option value="" disabled selected>Loading cohorts…</option>';
+      if (grp) grp.style.display = 'none';
+      _cohortId       = null;
+      _selectedCohort = null;
+      updateCohortUI();
       if (!programId) return;
+
       fetch(API_BASE + '/programs/' + programId + '/cohorts')
         .then(function(r) { return r.json(); })
         .then(function(data) {
-          var cohorts = (data && data.data && data.data.cohorts) || [];
-          var active  = cohorts.find(function(c) { return c.status === 'OPEN'; }) || cohorts[0];
-          if (active) _cohortId = active.id;
+          var raw     = (data && data.data) || {};
+          var cohorts = Array.isArray(raw) ? raw : (raw.cohorts || raw.items || []);
+          var visible = cohorts
+            .filter(function(c) { return c.status !== 'CLOSED'; })
+            .sort(function(a, b) { return new Date(a.start_date) - new Date(b.start_date); });
+
+          sel.innerHTML = '';
+          if (!visible.length) {
+            sel.innerHTML = '<option value="" disabled selected>No cohorts available</option>';
+            if (grp) grp.style.display = 'block';
+            return;
+          }
+
+          visible.forEach(function(c) {
+            var opt     = document.createElement('option');
+            opt.value   = c.id;
+            var dateStr = c.start_date ? fmtDateShort(c.start_date) : '';
+            var tag     = c.status === 'OPEN' ? ' (Open)' : ' (Upcoming)';
+            opt.textContent = c.title + (dateStr ? ' · ' + dateStr : '') + tag;
+            opt.setAttribute('data-cohort-json', JSON.stringify(c));
+            sel.appendChild(opt);
+          });
+
+          /* Pick preselectedId if valid, else default to earliest (first after sort) */
+          var target = null;
+          if (preselectedId) {
+            target = visible.find(function(c) { return String(c.id) === String(preselectedId); });
+          }
+          if (!target) target = visible[0];
+
+          sel.value       = String(target.id);
+          _cohortId       = target.id;
+          _selectedCohort = target;
+          if (programId) PROGRAM_ID_TO_COHORT_ID[programId] = _cohortId;
+          if (grp) grp.style.display = 'block';
+          updateCohortUI();
         })
-        .catch(function() {});
+        .catch(function() {
+          sel.innerHTML = '<option value="" disabled selected>Could not load cohorts</option>';
+          if (grp) grp.style.display = 'block';
+        });
     }
 
-    function applyProgramId(pid) {
-      _programId = parseInt(pid) || null;
-      _cohortId  = null;
-      _paymentOptions = [];
+    function applyProgramId(pid, preselectedCohortId) {
+      _programId       = parseInt(pid) || null;
+      _cohortId        = null;
+      _selectedCohort  = null;
+      _paymentOptions  = [];
       _selectedPaymentOptionId = null;
       renderPaymentOptions();
       if (!_programId || !fieldSel) return;
@@ -1895,11 +2026,27 @@
         for (var fi = 0; fi < fieldSel.options.length; fi++) {
           if (fieldSel.options[fi].value === fieldName) { fieldSel.selectedIndex = fi; break; }
         }
-        var cohortEl = document.getElementById('review-cohort-date');
-        if (cohortEl) cohortEl.textContent = PROGRAM_ID_TO_DATE[_programId] || getCohortDate(fieldName) || '—';
       }
-      fetchCohortId(_programId);
+      loadCohorts(_programId, preselectedCohortId || null);
       fetchPricingPlans(_programId);
+    }
+
+    /* Cohort selector change — update _cohortId and review UI */
+    var cohortSel = document.getElementById('cohort-select');
+    if (cohortSel) {
+      cohortSel.addEventListener('change', function() {
+        var opt = this.options[this.selectedIndex];
+        if (!opt || !opt.value) return;
+        try {
+          _selectedCohort = JSON.parse(opt.getAttribute('data-cohort-json'));
+          _cohortId = parseInt(opt.value) || null;
+        } catch(e) {
+          _cohortId = parseInt(opt.value) || null;
+          _selectedCohort = null;
+        }
+        if (_programId) PROGRAM_ID_TO_COHORT_ID[_programId] = _cohortId;
+        updateCohortUI();
+      });
     }
 
     /* When user changes field dropdown, update program ID and fetch pricing */
@@ -1908,26 +2055,24 @@
         var selected = this.options[this.selectedIndex];
         var pid3 = parseInt(selected.getAttribute('data-program-id')) || FIELD_TO_PROGRAM_ID[selected.value] || null;
         if (pid3) applyProgramId(pid3);
-        var cohortEl = document.getElementById('review-cohort-date');
-        var pid4 = parseInt(selected.getAttribute('data-program-id')) || null;
-        if (cohortEl) cohortEl.textContent = (pid4 && PROGRAM_ID_TO_DATE[pid4]) || getCohortDate(selected.value) || '—';
       });
     }
 
     /* Fetch programmes first, then run URL-param prefill once dropdown is ready */
     fetchProgrammes().then(function() {
-      var pidParam   = params.get('program_id');
-      var fieldParam = params.get('field');
+      var pidParam    = params.get('program_id');
+      var fieldParam  = params.get('field');
+      var cohortParam = params.get('cohort_id');
 
       if (pidParam) {
-        applyProgramId(pidParam);
+        applyProgramId(pidParam, cohortParam);
       } else if (fieldParam && fieldSel) {
         /* Support legacy ?field= links */
         for (var fi = 0; fi < fieldSel.options.length; fi++) {
           if (fieldSel.options[fi].value.toLowerCase() === fieldParam.toLowerCase()) {
             fieldSel.selectedIndex = fi;
             var pid2 = parseInt(fieldSel.options[fi].getAttribute('data-program-id')) || FIELD_TO_PROGRAM_ID[fieldSel.options[fi].value];
-            if (pid2) applyProgramId(pid2);
+            if (pid2) applyProgramId(pid2, cohortParam);
             break;
           }
         }
