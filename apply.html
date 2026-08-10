@@ -1229,9 +1229,12 @@
               <span class="price-row-label">Sprint Duration</span>
               <span class="price-row-value">4 Weeks</span>
             </div>
-            <div class="price-row">
-              <span class="price-row-label">Cohort</span>
-              <span class="price-row-value" id="review-cohort-date">—</span>
+            <div class="price-row" style="align-items:flex-start">
+              <span class="price-row-label" style="padding-top:2px">Cohort</span>
+              <div style="text-align:right;max-width:62%">
+                <div class="price-row-value" id="review-cohort-name" style="line-height:1.4;white-space:normal">—</div>
+                <div style="font-size:0.72rem;color:var(--muted);margin-top:3px" id="review-cohort-start-line"></div>
+              </div>
             </div>
             <div class="price-row total">
               <span class="price-row-label" id="review-total-label">Total Due Today</span>
@@ -1914,14 +1917,16 @@
 
     function updateCohortUI() {
       var c            = _selectedCohort;
-      var cohortDateEl = document.getElementById('review-cohort-date');
-      var infoPanel    = document.getElementById('cohort-info-panel');
-      var f2info       = document.getElementById('fees2-cohort-info');
+      var cohortNameEl  = document.getElementById('review-cohort-name');
+      var cohortStartEl = document.getElementById('review-cohort-start-line');
+      var infoPanel     = document.getElementById('cohort-info-panel');
+      var f2info        = document.getElementById('fees2-cohort-info');
 
       if (!c) {
-        if (cohortDateEl) cohortDateEl.textContent = '—';
-        if (infoPanel)    infoPanel.style.display = 'none';
-        if (f2info)       f2info.style.display = 'none';
+        if (cohortNameEl)  cohortNameEl.textContent  = '—';
+        if (cohortStartEl) cohortStartEl.textContent = '';
+        if (infoPanel)     infoPanel.style.display   = 'none';
+        if (f2info)        f2info.style.display      = 'none';
         return;
       }
 
@@ -1930,7 +1935,8 @@
       var fmt         = (c.learning_format || '').replace(/_/g, ' ').replace(/\b\w/g, function(ch) { return ch.toUpperCase(); });
       var statusColor = c.status === 'OPEN' ? '#22c55e' : '#F59E0B';
 
-      if (cohortDateEl) cohortDateEl.textContent = (c.title || '—') + ' · Starts ' + startFmt;
+      if (cohortNameEl)  cohortNameEl.textContent  = c.title || '—';
+      if (cohortStartEl) cohortStartEl.textContent = startFmt ? 'Starts ' + startFmt : '';
 
       if (infoPanel) {
         var si = document.getElementById('cohort-info-start');
