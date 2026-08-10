@@ -1575,7 +1575,9 @@
         var brk4 = getPlanBreakdown(et4 === 'Team' ? 'TEAM' : 'INDIVIDUAL', cur);
         return brk4 ? Number(brk4.final_price) : 0;
       })();
-      var firstInstAmt = n3 ? Math.round(fullAmt2 / n3) : fullAmt2;
+      var firstInstAmt = (sel2 && sel2.installments && sel2.installments.length)
+        ? Number(sel2.installments[0].amount_value || sel2.installments[0].amount || 0) || (n3 ? Math.round(fullAmt2 / n3) : fullAmt2)
+        : (n3 ? Math.round(fullAmt2 / n3) : fullAmt2);
       if (totalLabel) totalLabel.textContent = 'Due Today (1st of ' + (n3 || 1) + ')';
       if (totalVal)   totalVal.textContent   = sym + firstInstAmt.toLocaleString();
     } else {
@@ -2320,8 +2322,10 @@
     if (_selectedPaymentOptionId) {
       var selOpt = (_paymentOptions || []).find(function(o) { return o.id === _selectedPaymentOptionId; });
       var nInst  = selOpt && (selOpt.number_of_installments || (selOpt.installments && selOpt.installments.length));
-      var due    = nInst ? Math.round(fullAmt / nInst) : fullAmt;
-      payStr       = sym + due.toLocaleString();
+      var due    = (selOpt && selOpt.installments && selOpt.installments.length)
+        ? Number(selOpt.installments[0].amount_value || selOpt.installments[0].amount || 0) || (nInst ? Math.round(fullAmt / nInst) : fullAmt)
+        : (nInst ? Math.round(fullAmt / nInst) : fullAmt);
+      payStr        = sym + due.toLocaleString();
       totalLabelStr = 'Due Today (1st of ' + (nInst || 1) + ')';
     } else {
       payStr        = sym + fullAmt.toLocaleString();
