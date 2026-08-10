@@ -423,6 +423,21 @@ function bxCurrToggleAll(btn) {
   </div>
 </section>
 
+<!-- ====== PROGRAMME COHORTS ====== -->
+<section class="section-pad bg-white">
+  <div class="container">
+    <div class="fade-up">
+      <div class="eyebrow-tag" style="color:var(--red)">Programme Cohorts</div>
+      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px">Open Cohorts</h2>
+      <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px">Cohort-based delivery means you learn alongside peers in your field and leave with a network, not just a certificate.</p>
+      <div id="cohort-cards-container" style="display:flex;flex-wrap:wrap;gap:20px">
+        <!-- cohort cards rendered by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- ====== WHO IS THIS FOR ====== -->
 <section class="section-pad bg-white">
   <div class="container">
@@ -534,20 +549,6 @@ function bxCurrToggleAll(btn) {
           <div style="font-size:0.78rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Plus</div>
           <p style="font-size:0.88rem;color:#2E3A4A;line-height:1.5;margin:0">Brixgate Expert Practitioner Certificate — field-verified in Finance & Banking, practitioner-assessed, and recognised by employers across Africa and internationally.</p>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ====== PROGRAMME COHORTS ====== -->
-<section class="section-pad bg-white">
-  <div class="container">
-    <div class="fade-up">
-      <div class="eyebrow-tag" style="color:var(--red)">Programme Cohorts</div>
-      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px">Open Cohorts</h2>
-      <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px">Cohort-based delivery means you learn alongside peers in your field and leave with a network, not just a certificate.</p>
-      <div id="cohort-cards-container" style="display:flex;flex-wrap:wrap;gap:20px">
-        <!-- cohort cards rendered by JS -->
       </div>
     </div>
   </div>
@@ -1016,7 +1017,7 @@ var PROGRAM_ID = 3;
            + '<div style="font-size:0.95rem;font-weight:800;color:#021024">' + d.v + '</div></div>';
     }).join('');
     var footer = c.status !== 'CLOSED'
-      ? '<div style="padding:16px 24px;background:#fff"><a href="apply.html?program_id=' + PROGRAM_ID + '" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Apply Now</a></div>'
+      ? '<div style="padding:16px 24px;background:#fff"><a href="apply.html?program_id=' + PROGRAM_ID + '&cohort_id=' + c.id + '" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Apply Now</a></div>'
       : '';
     return '<div style="border:1.5px solid #E8E3DE;border-radius:14px;overflow:hidden;min-width:280px;max-width:380px;flex:0 0 auto">'
          +   '<div style="background:#021024;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px">'
