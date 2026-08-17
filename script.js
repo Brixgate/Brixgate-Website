@@ -143,158 +143,69 @@
     });
   }
 
-  /* ---------- Currency Toggle — location-aware multi-currency ----------
+  /* ---------- Currency — automatic IP-based detection ----------
    *
-   *  Logic:
-   *   1. If the visitor has ever manually chosen a currency, honour that
-   *      preference (stored in localStorage key 'bxCurrencyV2').
-   *      V2 key busts any stale V1 values from the old two-currency system.
-   *   2. Otherwise fetch their country via api.country.is (lightweight,
-   *      no-auth, CORS-open) and map it to their local currency:
-   *        Nigeria (NG)         → NGN (₦)
-   *        UK (GB)              → GBP (£)
-   *        Everything else      → USD ($)
-   *   3. While the lookup is in-flight, start with NGN so the page never
-   *      flashes a price-less state (NGN is our primary market).
-   *   4. The "local" label (label-ngn element) updates its text to reflect
-   *      the detected or chosen local currency symbol/code.
-   *   5. Manual toggle always wins and persists across page reloads.
+   *  Nigeria IP  → NGN (₦)   |   Everywhere else → USD ($)
+   *
+   *  Flow:
+   *   1. Default to NGN immediately so prices never flash blank.
+   *   2. Check localStorage cache (bxGeoCache). If it exists and is
+   *      less than 24 h old, apply it instantly — no network call.
+   *   3. Otherwise call ip-api.com/json (free, no key, CORS-open),
+   *      cache the result with a timestamp, then apply.
+   *   4. If the fetch fails, fall back to the browser timezone:
+   *      Africa/Lagos → NGN, anything else → USD.
    *
    * --------------------------------------------------------- */
   function initCurrencyToggle() {
-    var usdLabels   = document.querySelectorAll('.label-usd');
-    var localLabels = document.querySelectorAll('.label-ngn');
-    var curBtns     = document.querySelectorAll('.cur-btn[data-cur]');
+    if (!document.querySelector('.currency-ngn, .currency-usd')) return;
 
-    if (!usdLabels.length && !localLabels.length && !curBtns.length) return;
+    var CACHE_KEY  = 'bxGeoCache';
+    var CACHE_TTL  = 86400000; /* 24 hours in ms */
 
-    /* currency metadata — only NGN and USD active; others commented for future re-enable */
-    var CURRENCY_META = {
-      ngn: { label: '₦ NGN' },
-      usd: { label: '$ USD' }
-      // gbp: { label: '£ GBP' },
-      // eur: { label: '€ EUR' },
-      // cad: { label: 'C$ CAD' }
-    };
-
-    /* country → currency code — all non-NGN countries map to USD */
-    var COUNTRY_MAP = {
-      'NG': 'ngn'
-      // 'GB': 'gbp', 'CA': 'cad',
-      // 'DE': 'eur', 'FR': 'eur', 'ES': 'eur', 'IT': 'eur',
-      // 'NL': 'eur', 'BE': 'eur', 'AT': 'eur', 'PT': 'eur',
-      // 'FI': 'eur', 'IE': 'eur', 'GR': 'eur', 'LU': 'eur',
-      // 'SK': 'eur', 'SI': 'eur', 'EE': 'eur', 'LV': 'eur',
-      // 'LT': 'eur', 'MT': 'eur', 'CY': 'eur', 'HR': 'eur'
-    };
-
-    var activeCurrCode = 'ngn';
-
-    function applyState(persist) {
-      document.body.classList.remove('show-usd'/*, 'show-gbp', 'show-eur', 'show-cad'*/);
-      if (activeCurrCode !== 'ngn') {
-        document.body.classList.add('show-' + activeCurrCode);
-      }
-      window.bxActiveCurrency = activeCurrCode;
-
-      var meta = CURRENCY_META[activeCurrCode] || CURRENCY_META.ngn;
-      var isUSD = (activeCurrCode === 'usd');
-
-      usdLabels.forEach(function(l) { l.classList.toggle('active', isUSD); });
-      localLabels.forEach(function(l) {
-        l.textContent = isUSD ? (l.dataset.localLabel || '₦ NGN') : meta.label;
-        l.classList.toggle('active', !isUSD);
-      });
-
-      curBtns.forEach(function(btn) {
-        btn.classList.toggle('active', btn.dataset.cur === activeCurrCode);
-      });
-
-      if (persist) {
-        try { localStorage.setItem('bxCurrencyV2', activeCurrCode); } catch(e) {}
-      }
+    function apply(isNigeria) {
+      document.body.classList.toggle('show-usd', !isNigeria);
+      window.bxActiveCurrency = isNigeria ? 'ngn' : 'usd';
     }
 
-    /* old-style toggle clicks */
-    usdLabels.forEach(function(l) {
-      l.addEventListener('click', function() { activeCurrCode = 'usd'; applyState(true); });
-    });
-    localLabels.forEach(function(l) {
-      l.addEventListener('click', function() {
-        activeCurrCode = l.dataset.localCode || 'ngn';
-        applyState(true);
-      });
-    });
-    document.querySelectorAll('.toggle-switch').forEach(function(t) {
-      t.addEventListener('click', function() {
-        if (activeCurrCode === 'usd') {
-          activeCurrCode = (localLabels[0] && localLabels[0].dataset.localCode) || 'ngn';
-        } else {
-          activeCurrCode = 'usd';
-        }
-        applyState(true);
-      });
-    });
-
-    /* new 5-button toggle clicks */
-    curBtns.forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        activeCurrCode = btn.dataset.cur;
-        applyState(true);
-      });
-    });
-
-    function setLocalLabel(code) {
-      var meta = CURRENCY_META[code] || CURRENCY_META.ngn;
-      localLabels.forEach(function(l) {
-        l.dataset.localCode  = code;
-        l.dataset.localLabel = meta.label;
-        l.textContent = meta.label;
-      });
+    function saveCache(countryCode) {
+      try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+          country: countryCode,
+          ts: Date.now()
+        }));
+      } catch(e) {}
     }
 
-    /* restore saved preference */
-    var saved;
-    try { saved = localStorage.getItem('bxCurrencyV2'); } catch(e) {}
-
-    if (saved && CURRENCY_META[saved]) {
-      activeCurrCode = saved;
-      setLocalLabel(saved !== 'usd' ? saved : 'ngn');
-      applyState(false);
-      if (saved === 'usd') {
-        fetch('https://api.country.is/', { cache: 'no-store' })
-          .then(function(r) { return r.json(); })
-          .then(function(data) {
-            var c = (data && data.country) ? data.country.toUpperCase() : '';
-            var loc = COUNTRY_MAP[c] || 'ngn';
-            if (loc === 'usd') loc = 'ngn';
-            setLocalLabel(loc);
-          }).catch(function() {});
-      }
-      return;
+    function detect() {
+      fetch('https://ip-api.com/json/?fields=status,countryCode', { cache: 'no-store' })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (!data || data.status !== 'success') throw new Error('bad response');
+          var country = (data.countryCode || '').toUpperCase();
+          saveCache(country);
+          apply(country === 'NG');
+        })
+        .catch(function() {
+          /* timezone fallback — Africa/Lagos = Nigeria */
+          try {
+            var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            apply(tz === 'Africa/Lagos');
+          } catch(e) {}
+        });
     }
 
-    /* no saved preference — start NGN then detect */
-    activeCurrCode = 'ngn';
-    setLocalLabel('ngn');
-    applyState(false);
+    /* start with NGN while detection runs */
+    apply(true);
 
-    fetch('https://api.country.is/', { cache: 'no-store' })
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        var c = (data && data.country) ? data.country.toUpperCase() : '';
-        var detected = COUNTRY_MAP[c] || 'usd';
-        if (detected !== 'usd') {
-          setLocalLabel(detected);
-          activeCurrCode = detected;
-          applyState(false);
-        } else {
-          setLocalLabel('ngn');
-          activeCurrCode = 'usd';
-          applyState(false);
-        }
-      })
-      .catch(function() {});
+    var cache;
+    try { cache = JSON.parse(localStorage.getItem(CACHE_KEY)); } catch(e) {}
+
+    if (cache && cache.country && cache.ts && (Date.now() - cache.ts < CACHE_TTL)) {
+      apply(cache.country === 'NG');
+    } else {
+      detect();
+    }
   }
 
   /* ---------- Animated Counters ---------- */
