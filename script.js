@@ -143,69 +143,63 @@
     });
   }
 
-  /* ---------- Currency — automatic IP-based detection ----------
+  /* ---------- Currency Toggle — manual NGN / USD ----------
    *
-   *  Nigeria IP  → NGN (₦)   |   Everywhere else → USD ($)
-   *
-   *  Flow:
-   *   1. Default to NGN immediately so prices never flash blank.
-   *   2. Check localStorage cache (bxGeoCache). If it exists and is
-   *      less than 24 h old, apply it instantly — no network call.
-   *   3. Otherwise call ip-api.com/json (free, no key, CORS-open),
-   *      cache the result with a timestamp, then apply.
-   *   4. If the fetch fails, fall back to the browser timezone:
-   *      Africa/Lagos → NGN, anything else → USD.
+   *  Users pick their currency via toggle buttons/labels.
+   *  Choice is saved to localStorage (bxCurrencyV2) and
+   *  restored on every page. Defaults to NGN.
    *
    * --------------------------------------------------------- */
   function initCurrencyToggle() {
-    if (!document.querySelector('.currency-ngn, .currency-usd')) return;
+    var usdLabels = document.querySelectorAll('.label-usd');
+    var ngnLabels = document.querySelectorAll('.label-ngn');
+    var curBtns   = document.querySelectorAll('.cur-btn[data-cur]');
 
-    var CACHE_KEY  = 'bxGeoCache';
-    var CACHE_TTL  = 86400000; /* 24 hours in ms */
+    if (!usdLabels.length && !ngnLabels.length && !curBtns.length) return;
 
-    function apply(isNigeria) {
-      document.body.classList.toggle('show-usd', !isNigeria);
-      window.bxActiveCurrency = isNigeria ? 'ngn' : 'usd';
+    var activeCur = 'ngn';
+
+    function applyState() {
+      var isUSD = activeCur === 'usd';
+      document.body.classList.toggle('show-usd', isUSD);
+      window.bxActiveCurrency = activeCur;
+
+      usdLabels.forEach(function(l) { l.classList.toggle('active', isUSD); });
+      ngnLabels.forEach(function(l) { l.classList.toggle('active', !isUSD); });
+      curBtns.forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.cur === activeCur);
+      });
+
+      try { localStorage.setItem('bxCurrencyV2', activeCur); } catch(e) {}
     }
 
-    function saveCache(countryCode) {
-      try {
-        localStorage.setItem(CACHE_KEY, JSON.stringify({
-          country: countryCode,
-          ts: Date.now()
-        }));
-      } catch(e) {}
-    }
+    /* restore saved preference */
+    try {
+      var saved = localStorage.getItem('bxCurrencyV2');
+      if (saved === 'ngn' || saved === 'usd') activeCur = saved;
+    } catch(e) {}
 
-    function detect() {
-      fetch('https://ip-api.com/json/?fields=status,countryCode', { cache: 'no-store' })
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          if (!data || data.status !== 'success') throw new Error('bad response');
-          var country = (data.countryCode || '').toUpperCase();
-          saveCache(country);
-          apply(country === 'NG');
-        })
-        .catch(function() {
-          /* timezone fallback — Africa/Lagos = Nigeria */
-          try {
-            var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            apply(tz === 'Africa/Lagos');
-          } catch(e) {}
-        });
-    }
+    applyState();
 
-    /* start with NGN while detection runs */
-    apply(true);
-
-    var cache;
-    try { cache = JSON.parse(localStorage.getItem(CACHE_KEY)); } catch(e) {}
-
-    if (cache && cache.country && cache.ts && (Date.now() - cache.ts < CACHE_TTL)) {
-      apply(cache.country === 'NG');
-    } else {
-      detect();
-    }
+    /* wire up clicks */
+    usdLabels.forEach(function(l) {
+      l.addEventListener('click', function() { activeCur = 'usd'; applyState(); });
+    });
+    ngnLabels.forEach(function(l) {
+      l.addEventListener('click', function() { activeCur = 'ngn'; applyState(); });
+    });
+    document.querySelectorAll('.toggle-switch').forEach(function(t) {
+      t.addEventListener('click', function() {
+        activeCur = activeCur === 'usd' ? 'ngn' : 'usd';
+        applyState();
+      });
+    });
+    curBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        activeCur = btn.dataset.cur;
+        applyState();
+      });
+    });
   }
 
   /* ---------- Animated Counters ---------- */
