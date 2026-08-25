@@ -1012,71 +1012,8 @@
       </div>
     </div>
 
-    <div class="price-grid stagger">
-
-      <!-- Individual -->
-      <div class="price-card fade-up">
-        <div class="price-tier">Individual</div>
-        <div class="price-amount">
-          <span class="currency-ngn">₦250,000<span class="price-original">was ₦320,000</span></span>
-          <span class="currency-usd">$156<span class="price-original">was $200</span></span>
-          <!--<span class="currency-gbp">£122<span class="price-original">was £160</span>--></span>
-          <!--<span class="currency-eur">€145<span class="price-original">was €185</span>--></span>
-          <!--<span class="currency-cad">C$212<span class="price-original">was C$270</span>--></span>
-        </div>
-        <div class="price-period">Per person / programme</div>
-        <p class="price-description">For self-directed professionals ready to transform their AI practice independently.</p>
-        <ul class="price-features">
-          <li>Full 4-week sprint access</li>
-          <li>Matched Expert Practitioner</li>
-          <li>Field Assessment &amp; mapping</li>
-          <li>Peer cohort membership</li>
-          <li>Applied project support</li>
-          <li>Expert Practitioner Certificate</li>
-        </ul>
-        <a href="apply.html" class="btn btn-outline-red" style="width:100%;justify-content:center">Apply Now</a>
-      </div>
-
-      <!-- Teams — Most Popular -->
-      <div class="price-card featured fade-up">
-        <div class="price-tier">Teams</div>
-        <div class="price-amount">
-          <span class="currency-ngn">₦200,000<span class="price-original">was ₦260,000</span></span>
-          <span class="currency-usd">$125<span class="price-original">was $160</span></span>
-          <!--<span class="currency-gbp">£98<span class="price-original">was £125</span>--></span>
-          <!--<span class="currency-eur">€116<span class="price-original">was €148</span>--></span>
-          <!--<span class="currency-cad">C$170<span class="price-original">was C$216</span>--></span>
-        </div>
-        <div class="price-period">Per seat / programme</div>
-        <p class="price-description">For organisations enrolling individuals. Team pricing, full programme quality.</p>
-        <ul class="price-features">
-          <li>Everything in Individual tier</li>
-          <li>Organisation-aligned cohort</li>
-          <li>Manager progress reporting</li>
-          <li>Post-sprint implementation guide</li>
-          <li>Priority expert matching</li>
-          <li>Invoice billing available</li>
-        </ul>
-        <a href="apply.html" class="btn btn-primary" style="width:100%;justify-content:center">Apply Now</a>
-      </div>
-
-      <!-- Corporate — No price -->
-      <div class="price-card fade-up">
-        <div class="price-tier">Corporate</div>
-        <div class="price-amount" style="font-size:1.4rem;font-weight:800;color:#FF294E">Custom Pricing</div>
-        <div class="price-period">Tailored to your organisation</div>
-        <p class="price-description">Full-scale enterprise AI transformation. Custom curriculum, dedicated expert team.</p>
-        <ul class="price-features">
-          <li>Everything in Teams tier</li>
-          <li>Dedicated cohort manager</li>
-          <li>Custom curriculum design</li>
-          <li>Executive leadership track</li>
-          <li>Organisation-wide reporting</li>
-          <li>SLA &amp; enterprise support</li>
-        </ul>
-        <a href="organisations.html#contact" class="btn btn-outline-red" style="width:100%;justify-content:center">Consult Team</a>
-      </div>
-
+    <div id="pricing-cards" class="price-grid stagger">
+      <div style="text-align:center;color:var(--muted);padding:40px;grid-column:1/-1;font-size:0.9rem">Loading pricing…</div>
     </div>
     <div style="font-size:0.75rem;color:var(--muted);margin-top:40px;text-align:center">All prices exclude applicable local taxes.</div>
   </div>
@@ -1430,6 +1367,66 @@
     });
 
     qeShowQuestion(1);
+  })();
+
+  /* ── Dynamic pricing from API ── */
+  (function() {
+    var SYMS = { NGN: '₦', USD: '$', GBP: '£', EUR: '€', CAD: 'C$' };
+    var CURRENCIES = ['ngn','usd','gbp','eur','cad'];
+    function priceSpans(bds) {
+      return CURRENCIES.map(function(c) {
+        var cur = c.toUpperCase();
+        var b = (bds || []).find(function(x) { return x.currency === cur; });
+        return '<span class="currency-' + c + '">' + (b ? (SYMS[cur]||'') + Number(b.final_price||b.finalPrice||0).toLocaleString() : '') + '</span>';
+      }).join('');
+    }
+    function render(plans) {
+      var el = document.getElementById('pricing-cards');
+      if (!el) return;
+      if (!plans || !plans.length) {
+        el.innerHTML = '<div style="text-align:center;color:var(--muted);padding:40px;grid-column:1/-1">Contact us for pricing information.</div>';
+        return;
+      }
+      var ind  = plans.find(function(p) { return p.plan_type === 'INDIVIDUAL'; });
+      var team = plans.find(function(p) { return p.plan_type === 'TEAM'; });
+      var html = '';
+      if (ind) html +=
+        '<div class="price-card fade-up">' +
+        '<div class="price-tier">Individual</div>' +
+        '<div class="price-amount">' + priceSpans(ind.breakdowns) + '</div>' +
+        '<div class="price-period">Per person / programme</div>' +
+        '<p class="price-description">For self-directed professionals ready to transform their AI practice independently.</p>' +
+        '<ul class="price-features"><li>Full 4-week sprint access</li><li>Matched Expert Practitioner</li><li>Field Assessment &amp; mapping</li><li>Peer cohort membership</li><li>Applied project support</li><li>Expert Practitioner Certificate</li></ul>' +
+        '<a href="apply.html" class="btn btn-outline-red" style="width:100%;justify-content:center">Apply Now</a></div>';
+      if (team) html +=
+        '<div class="price-card featured fade-up">' +
+        '<div class="price-tier">Teams</div>' +
+        '<div class="price-amount">' + priceSpans(team.breakdowns) + '</div>' +
+        '<div class="price-period">Per seat / programme</div>' +
+        '<p class="price-description">For organisations enrolling individuals. Team pricing, full programme quality.</p>' +
+        '<ul class="price-features"><li>Everything in Individual tier</li><li>Organisation-aligned cohort</li><li>Manager progress reporting</li><li>Post-sprint implementation guide</li><li>Priority expert matching</li><li>Invoice billing available</li></ul>' +
+        '<a href="apply.html" class="btn btn-primary" style="width:100%;justify-content:center">Apply Now</a></div>';
+      html +=
+        '<div class="price-card fade-up">' +
+        '<div class="price-tier">Corporate</div>' +
+        '<div class="price-amount" style="font-size:1.4rem;font-weight:800;color:#FF294E">Custom Pricing</div>' +
+        '<div class="price-period">Tailored to your organisation</div>' +
+        '<p class="price-description">Full-scale enterprise AI transformation. Custom curriculum, dedicated expert team.</p>' +
+        '<ul class="price-features"><li>Everything in Teams tier</li><li>Dedicated cohort manager</li><li>Custom curriculum design</li><li>Executive leadership track</li><li>Organisation-wide reporting</li><li>SLA &amp; enterprise support</li></ul>' +
+        '<a href="organisations.html#contact" class="btn btn-outline-red" style="width:100%;justify-content:center">Consult Team</a></div>';
+      el.innerHTML = html;
+      el.querySelectorAll('.fade-up').forEach(function(e) { e.classList.add('visible'); });
+    }
+    fetch('https://dev.api.brixgate.com/api/v1/pricing-plans')
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        var plans = (d && d.data && d.data.pricing_plans) || [];
+        if (!plans.length && d && d.data && typeof d.data === 'object') {
+          Object.values(d.data).forEach(function(v) { if (Array.isArray(v)) plans = plans.concat(v); });
+        }
+        render(plans);
+      })
+      .catch(function() { render([]); });
   })();
 </script>
 

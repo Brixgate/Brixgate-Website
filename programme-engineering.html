@@ -1424,7 +1424,7 @@ var PROGRAM_ID = 1;
     return CURRENCIES.map(function(c) {
       var cur = c.toUpperCase();
       var b = (breakdowns || []).find(function(x) { return x.currency === cur; });
-      var val = b ? (SYMS[cur] || '') + Number(b.final_price).toLocaleString() : '—';
+      var val = b ? (SYMS[cur] || '') + Number(b.final_price||b.finalPrice||0).toLocaleString() : '—';
       return '<span class="currency-' + c + '">' + val + '</span>';
     }).join('');
   }

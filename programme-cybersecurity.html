@@ -1409,7 +1409,7 @@ var PROGRAM_ID = 2;
     return CURRENCIES.map(function(c) {
       var cur = c.toUpperCase();
       var b = (bds || []).find(function(x) { return x.currency === cur; });
-      return '<span class="currency-' + c + '">' + (b ? (SYMS[cur]||'') + Number(b.final_price).toLocaleString() : '—') + '</span>';
+      return '<span class="currency-' + c + '">' + (b ? (SYMS[cur]||'') + Number(b.final_price||b.finalPrice||0).toLocaleString() : '—') + '</span>';
     }).join('');
   }
   function render(plans) {
