@@ -1457,6 +1457,169 @@
   </div>
 </section>
 
+<!-- ====== TESTIMONIALS ====== -->
+<section class="section-pad bg-light" id="testimonials">
+  <div class="container">
+    <div class="section-header fade-up" style="margin-bottom:56px">
+      <span class="eyebrow">From Our Cohorts</span>
+      <h2 style="color:var(--bg-dark)">Real Practitioners.<br/>Real Results.</h2>
+      <div class="divider-red"></div>
+      <p style="color:#4A5568">These aren't hypothetical wins. Every quote is from someone who built something real during the programme.</p>
+    </div>
+
+    <div class="testimonial-grid stagger">
+
+      <!-- Card 1 -->
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-meta">
+          <div class="testimonial-avatar">OI</div>
+          <div>
+            <div class="testimonial-name">Osho Iseoluwa</div>
+            <div class="testimonial-sub">Software Engineering · Built <span class="testimonial-project">Project Pulse</span></div>
+          </div>
+        </div>
+        <blockquote class="testimonial-quote">
+          "I used to think prompting was just typing a request and hoping for the best. This programme taught me it takes tenacity and precision — the same discipline as writing actual code."
+        </blockquote>
+        <div class="testimonial-stack">
+          <span>Node.js</span><span>MongoDB</span><span>React</span><span>Vite</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-meta">
+          <div class="testimonial-avatar">AN</div>
+          <div>
+            <div class="testimonial-name">Adaeze Nwosu</div>
+            <div class="testimonial-sub">Financial Modelling · Built <span class="testimonial-project">CashLens</span></div>
+          </div>
+        </div>
+        <blockquote class="testimonial-quote">
+          "I came in knowing Excel inside out. I left automating entire reporting workflows my team had been doing manually for three years. The ROI was immediate."
+        </blockquote>
+        <div class="testimonial-stack">
+          <span>Python</span><span>Pandas</span><span>Claude API</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-meta">
+          <div class="testimonial-avatar">TK</div>
+          <div>
+            <div class="testimonial-name">Tunde Kadiri</div>
+            <div class="testimonial-sub">Product Marketing · Built <span class="testimonial-project">BriefBot</span></div>
+          </div>
+        </div>
+        <blockquote class="testimonial-quote">
+          "Every brief I write now takes a quarter of the time. BriefBot doesn't just help me draft — it challenges my assumptions. That part came from the programme, not the tool."
+        </blockquote>
+        <div class="testimonial-stack">
+          <span>Next.js</span><span>OpenAI</span><span>Notion API</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .testimonial-card {
+    background: #ffffff;
+    border: 1px solid #E2E8F0;
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .testimonial-card:hover {
+    box-shadow: 0 12px 40px rgba(2,16,36,0.10);
+    transform: translateY(-4px);
+  }
+
+  .testimonial-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .testimonial-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--bg-dark);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .testimonial-name {
+    font-size: 0.97rem;
+    font-weight: 700;
+    color: var(--bg-dark);
+    line-height: 1.3;
+  }
+
+  .testimonial-sub {
+    font-size: 0.78rem;
+    color: #7A94A8;
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+
+  .testimonial-project {
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  .testimonial-quote {
+    font-size: 0.96rem;
+    line-height: 1.75;
+    color: #2E3A4A;
+    font-style: italic;
+    border-left: 3px solid var(--red);
+    padding-left: 18px;
+    margin: 0;
+    flex: 1;
+  }
+
+  .testimonial-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .testimonial-stack span {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #4A5568;
+    background: #F1F5F9;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    padding: 4px 10px;
+  }
+
+  @media (max-width: 900px) {
+    .testimonial-grid { grid-template-columns: 1fr; }
+    .testimonial-card { gap: 20px; }
+  }
+</style>
+
 <!-- ====== INSTAGRAM VIDEOS ====== -->
 <section class="section-pad ig-videos-section">
   <div class="container">
