@@ -1466,7 +1466,9 @@
       <div class="divider-red"></div>
       <p style="color:#4A5568">These aren't hypothetical wins. Every quote is from someone who built something real during the programme.</p>
     </div>
+  </div>
 
+  <div class="testimonial-outer">
     <div class="testimonial-grid stagger">
 
       <!-- Card 1 -->
@@ -1475,7 +1477,7 @@
           <div class="testimonial-avatar">OI</div>
           <div>
             <div class="testimonial-name">Osho Iseoluwa</div>
-            <div class="testimonial-sub">Software Engineering · Built <span class="testimonial-project">Project Pulse</span></div>
+            <div class="testimonial-sub">Software Engineering Cohort · Built <span class="testimonial-project">Project Pulse</span></div>
           </div>
         </div>
         <blockquote class="testimonial-quote">
@@ -1489,34 +1491,34 @@
       <!-- Card 2 -->
       <div class="testimonial-card fade-up">
         <div class="testimonial-meta">
-          <div class="testimonial-avatar">AN</div>
+          <div class="testimonial-avatar">CU</div>
           <div>
-            <div class="testimonial-name">Adaeze Nwosu</div>
-            <div class="testimonial-sub">Financial Modelling · Built <span class="testimonial-project">CashLens</span></div>
+            <div class="testimonial-name">Chuka Ukachi</div>
+            <div class="testimonial-sub">Software Engineering Cohort · Built <span class="testimonial-project">Project Pulse</span></div>
           </div>
         </div>
         <blockquote class="testimonial-quote">
-          "I came in knowing Excel inside out. I left automating entire reporting workflows my team had been doing manually for three years. The ROI was immediate."
+          "Even when my hardware gave out on me, I kept shipping. That's what this programme builds in you: the instinct to adapt and finish what you started."
         </blockquote>
         <div class="testimonial-stack">
-          <span>Python</span><span>Pandas</span><span>Claude API</span>
+          <span>React</span><span>TypeScript</span><span>Express</span><span>SQLite</span>
         </div>
       </div>
 
       <!-- Card 3 -->
       <div class="testimonial-card fade-up">
         <div class="testimonial-meta">
-          <div class="testimonial-avatar">TK</div>
+          <div class="testimonial-avatar">ZS</div>
           <div>
-            <div class="testimonial-name">Tunde Kadiri</div>
-            <div class="testimonial-sub">Product Marketing · Built <span class="testimonial-project">BriefBot</span></div>
+            <div class="testimonial-name">Zainab Suleiman</div>
+            <div class="testimonial-sub">Software Engineering Cohort · Built <span class="testimonial-project">Project Pulse</span></div>
           </div>
         </div>
         <blockquote class="testimonial-quote">
-          "Every brief I write now takes a quarter of the time. BriefBot doesn't just help me draft — it challenges my assumptions. That part came from the programme, not the tool."
+          "I kept accepting whatever the AI gave me until my code stopped making sense to me. Once I started asking it why, not just what, I actually became a better engineer."
         </blockquote>
         <div class="testimonial-stack">
-          <span>Next.js</span><span>OpenAI</span><span>Notion API</span>
+          <span>Python</span><span>FastAPI</span><span>Redis</span><span>Docker</span>
         </div>
       </div>
 
@@ -1525,17 +1527,23 @@
 </section>
 
 <style>
+  .testimonial-outer {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
   .testimonial-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 28px;
   }
 
   .testimonial-card {
     background: #ffffff;
     border: 1px solid #E2E8F0;
     border-radius: var(--radius-lg);
-    padding: 32px;
+    padding: 36px;
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -1614,9 +1622,10 @@
     padding: 4px 10px;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 960px) {
     .testimonial-grid { grid-template-columns: 1fr; }
-    .testimonial-card { gap: 20px; }
+    .testimonial-outer { padding: 0 20px; }
+    .testimonial-card { gap: 20px; padding: 28px 24px; }
   }
 </style>
 
