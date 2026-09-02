@@ -8,644 +8,621 @@
   <meta property="og:title" content="Brixgate — AI in my Field" />
   <meta property="og:description" content="The world needs AI-native professionals. We build them." />
   <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#021024" />
+  <meta name="theme-color" content="#FFFFFF" />
   <link rel="icon" type="image/png" href="assets/faviii.png" />
   <link rel="stylesheet" href="styles.css" />
 
   <style>
-    /* ---- Hero specific ---- */
-    .hero-split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: center;
+    /* ============================================================
+       LANDING PAGE — "Precision & Air"
+       Scoped to body.lp so it layers cleanly over styles.css
+       ============================================================ */
+    :root {
+      --lp-ink:      #021024;
+      --lp-ink-2:    #1B2A41;
+      --lp-body:     #4A5568;
+      --lp-muted:    #6B7A90;
+      --lp-faint:    #98A4B5;
+      --lp-line:     #E6E8EC;
+      --lp-line-2:   #EEF0F3;
+      --lp-surface:  #F6F5F5;
+      --lp-surface-2:#FAFAFA;
+      --lp-red:      #FF294E;
+      --lp-red-soft: rgba(255,41,78,0.08);
+      --lp-green:    #16A34A;
+      --lp-r-lg: 24px;
+      --lp-r-md: 16px;
+      --lp-r-sm: 10px;
+      --lp-ease: cubic-bezier(.2,.7,.2,1);
+      --lp-shadow-sm: 0 1px 2px rgba(2,16,36,.04), 0 4px 12px -4px rgba(2,16,36,.06);
+      --lp-shadow-md: 0 1px 2px rgba(2,16,36,.04), 0 16px 40px -12px rgba(2,16,36,.14);
+      --lp-shadow-lg: 0 2px 4px rgba(2,16,36,.04), 0 32px 64px -24px rgba(2,16,36,.22);
     }
 
-    .hero-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-visual {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-img-frame {
-      border-radius: 20px;
-      overflow: hidden;
-      border: 2px solid rgba(255,41,78,0.3);
-      position: relative;
-    }
-
-    .hero-img-frame img {
-      width: 100%;
-      height: 500px;
-      object-fit: cover;
-      display: block;
-      filter: brightness(0.88) saturate(1.1);
-    }
-
-    .hero-img-badge {
-      position: absolute;
-      background: rgba(2,16,36,0.92);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 14px;
-      padding: 14px 18px;
-    }
-
-    .hero-badge-weeks {
-      bottom: 162px;
-      left: -20px;
-    }
-
-    .hero-badge-fields {
-      top: -14px;
-      right: -14px;
-      background: var(--red);
-      border-color: rgba(255,255,255,0.2);
-    }
-
-    .hero-badge-cert {
-      top: 50%;
-      right: -22px;
-      transform: translateY(-50%);
-    }
-
-    /* Quick fields browser */
-    .field-card-quick {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 16px;
+    body.lp {
       background: #fff;
-      border-radius: 12px;
-      border: 1.5px solid #E8E3DE;
-      text-decoration: none;
-      color: inherit;
-      transition: all 0.2s ease;
+      color: var(--lp-ink);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
-    .field-card-quick:hover {
-      border-color: var(--red);
-      background: #FFF5F6;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(255,41,78,0.1);
-    }
-    .field-card-quick.coming-soon {
-      opacity: 0.5;
-      cursor: default;
-      pointer-events: none;
+    body.lp ::selection { background: rgba(255,41,78,.18); }
+
+    .lp .lp-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
     }
 
-    @media (max-width: 960px) {
-      .hero-split { grid-template-columns: 1fr; gap: 0; }
-      .hero-visual { display: none; }
-      .field-grid-quick { grid-template-columns: repeat(2, 1fr) !important; }
+    /* ---------- Type ---------- */
+    .lp h1, .lp h2, .lp h3 { color: var(--lp-ink); }
+    .lp .lp-display {
+      font-size: clamp(2.7rem, 6.2vw, 4.9rem);
+      line-height: 1.0;
+      letter-spacing: -0.038em;
+      font-weight: 800;
+      margin: 0;
     }
-    @media (max-width: 768px) {
-      /* Hero sub — fix minimum font-size from 0.72rem (11.5px) to readable */
-      .hero-sub { font-size: 1rem; line-height: 1.6; }
-      .hero-headline { font-size: clamp(1.7rem, 7vw, 2.4rem); }
-      .hero-tag { font-size: 0.72rem; }
-      /* Social proof — stack on tablet */
-      .hero-social-proof { flex-direction: column; align-items: flex-start; gap: 10px; }
-      .proof-text { font-size: 0.85rem; }
-      /* Problem grid stats */
-      .problem-item .stat { font-size: 2rem; }
-      /* Programme intro */
-      .programme-intro { grid-template-columns: 1fr; gap: 40px; }
-      /* Regions   2col on tablet */
-      .regions-grid { grid-template-columns: repeat(2, 1fr); }
+    .lp .lp-h2 {
+      font-size: clamp(2rem, 3.7vw, 2.95rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      font-weight: 800;
+      margin: 0;
     }
-    @media (max-width: 540px) {
-      .field-grid-quick { grid-template-columns: 1fr !important; }
+    .lp .lp-h3 {
+      font-size: 1.2rem;
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+      font-weight: 700;
+      margin: 0;
     }
-    @media (max-width: 480px) {
-      .hero-sub { font-size: 0.95rem; }
-      .hero-headline { font-size: clamp(1.6rem, 8vw, 2rem); }
-      /* Org teaser sidebar    hide on very small screens */
-      .org-packages-preview { display: none; }
-      /* Regions    1col on phone */
-      .regions-grid { grid-template-columns: 1fr !important; max-width: 100%; }
+    .lp .lp-lead {
+      font-size: 1.12rem;
+      line-height: 1.65;
+      color: var(--lp-body);
+      margin: 0;
     }
-
-    .hero-tag {
+    .lp .lp-p {
+      font-size: 0.98rem;
+      line-height: 1.65;
+      color: var(--lp-body);
+      margin: 0;
+    }
+    .lp .lp-eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: rgba(255,41,78,0.1);
-      border: 1px solid rgba(255,41,78,0.25);
-      border-radius: 50px;
-      padding: 8px 16px;
-      font-size: 0.78rem;
+      gap: 10px;
+      font-size: 0.72rem;
       font-weight: 700;
-      color: var(--red);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      margin-bottom: 28px;
+      color: var(--lp-red);
+      margin-bottom: 18px;
     }
-
-    .hero-tag::before {
+    .lp .lp-eyebrow::before {
       content: '';
-      width: 8px;
-      height: 8px;
-      background: var(--red);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
+      width: 18px; height: 2px;
+      background: currentColor;
+      border-radius: 2px;
     }
+    .lp .lp-head { max-width: 720px; }
+    .lp .lp-head .lp-h2 { margin-bottom: 18px; }
+    .lp .lp-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+    .lp .lp-head.center .lp-eyebrow { justify-content: center; }
+    .lp .lp-head.center .lp-lead { margin-left: auto; margin-right: auto; }
 
-    .hero-headline {
-      font-size: clamp(1.8rem, 4vw, 3.4rem);
-      font-weight: 900;
-      line-height: 1.08;
-      margin-bottom: 24px;
-      letter-spacing: -0.02em;
-    }
-
-    .hero-headline .accent { color: var(--red); }
-
-    .hero-sub {
-      font-size: clamp(0.72rem, 1.8vw, 1.05rem);
-      color: var(--muted);
-      line-height: 1.4;
-      max-width: 560px;
-      margin-bottom: 40px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-bottom: 56px;
-    }
-
-    .hero-social-proof {
-      display: flex;
+    /* ---------- Buttons ---------- */
+    .lp .lp-btn {
+      display: inline-flex;
       align-items: center;
-      gap: 16px;
+      justify-content: center;
+      gap: 10px;
+      height: 52px;
+      padding: 0 26px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.005em;
+      white-space: nowrap;
+      transition: transform .25s var(--lp-ease), box-shadow .25s var(--lp-ease), background .2s, color .2s, border-color .2s;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      font-family: inherit;
     }
-
-    .proof-avatars {
-      display: flex;
+    .lp .lp-btn svg { transition: transform .25s var(--lp-ease); flex-shrink: 0; }
+    .lp .lp-btn:hover svg { transform: translateX(3px); }
+    .lp .lp-btn-red {
+      background: var(--lp-red);
+      color: #fff;
+      box-shadow: 0 10px 28px -10px rgba(255,41,78,.6);
     }
-
-    .proof-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 2px solid var(--bg-dark);
-      overflow: hidden;
-      margin-left: -10px;
-      flex-shrink: 0;
+    .lp .lp-btn-red:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -12px rgba(255,41,78,.7); background: #FF3A5C; }
+    .lp .lp-btn-ghost {
+      background: #fff;
+      color: var(--lp-ink);
+      border-color: var(--lp-line);
     }
-
-    .proof-avatar:first-child { margin-left: 0; }
-
-    .proof-text {
-      font-size: 0.84rem;
-      color: var(--muted);
-      line-height: 1.4;
+    .lp .lp-btn-ghost:hover { border-color: var(--lp-ink); transform: translateY(-2px); box-shadow: var(--lp-shadow-sm); }
+    .lp .lp-btn-ink { background: var(--lp-ink); color: #fff; }
+    .lp .lp-btn-ink:hover { background: #0B1F3F; transform: translateY(-2px); box-shadow: var(--lp-shadow-md); }
+    .lp .lp-btn-white { background: #fff; color: var(--lp-ink); }
+    .lp .lp-btn-white:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -12px rgba(0,0,0,.5); }
+    .lp .lp-btn-outline-light { background: transparent; color: #fff; border-color: rgba(255,255,255,.28); }
+    .lp .lp-btn-outline-light:hover { border-color: #fff; transform: translateY(-2px); }
+    .lp .lp-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.95rem; font-weight: 700; color: var(--lp-ink);
+      transition: color .2s;
     }
+    .lp .lp-link svg { transition: transform .25s var(--lp-ease); }
+    .lp .lp-link:hover { color: var(--lp-red); }
+    .lp .lp-link:hover svg { transform: translateX(3px); }
 
-    .proof-text strong { color: var(--white); }
-
-    /* ---- Global ticker ---- */
-    .global-ticker {
-      background: linear-gradient(90deg, var(--red) 0%, var(--footer-red) 100%);
-      padding: 12px 0;
-      overflow: hidden;
+    /* ---------- Pills / chips ---------- */
+    .lp .lp-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      height: 32px; padding: 0 14px 0 12px;
+      border-radius: 999px;
+      border: 1px solid var(--lp-line);
+      background: #fff;
+      font-size: 0.8rem; font-weight: 600; color: var(--lp-ink-2);
+      letter-spacing: -0.005em;
+    }
+    .lp .lp-dot {
+      position: relative; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--lp-green); flex-shrink: 0;
+    }
+    .lp .lp-dot::after {
+      content: ''; position: absolute; inset: -4px; border-radius: 50%;
+      background: var(--lp-green); opacity: .35;
+      animation: lpPulse 1.8s ease-out infinite;
+    }
+    .lp .lp-chip {
+      display: inline-flex; align-items: center;
+      height: 28px; padding: 0 12px; border-radius: 8px;
+      background: var(--lp-surface); border: 1px solid var(--lp-line-2);
+      font-size: 0.76rem; font-weight: 600; color: var(--lp-body);
       white-space: nowrap;
     }
 
-    .ticker-track {
-      display: inline-flex;
-      gap: 48px;
-      animation: ticker 28s linear infinite;
-    }
+    /* ---------- Section rhythm ---------- */
+    .lp .lp-section { padding: 120px 0; }
+    .lp .lp-section.tight { padding: 88px 0; }
+    .lp .lp-surface { background: var(--lp-surface); }
 
-    .ticker-track:hover { animation-play-state: paused; }
+    @keyframes lpPulse { 0% { transform: scale(.6); opacity: .5 } 100% { transform: scale(1.9); opacity: 0 } }
+    @keyframes lpRise { from { opacity: 0; transform: translateY(26px) } to { opacity: 1; transform: none } }
+    @keyframes lpFloatA { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
+    @keyframes lpFloatB { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-14px) } }
+    @keyframes lpFloatC { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
+    @keyframes lpMarquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+    @keyframes lpShimmer { from { background-position: 200% 0 } to { background-position: -200% 0 } }
+    @keyframes lpBar { from { width: 0 } to { width: 42% } }
 
-    @keyframes ticker {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    .ticker-item {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: rgba(255,255,255,0.9);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .ticker-item::after {
-      content: '●';
-      font-size: 0.4rem;
-      opacity: 0.6;
-    }
-
-    /* ---- Problem section ---- */
-    .problem-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-      border-radius: var(--radius-md);
+    /* ============================================================
+       HERO
+       ============================================================ */
+    .lp .lp-hero {
+      position: relative;
       overflow: hidden;
-      background: #E8E3DE;
-    }
-
-    .problem-item {
       background: #fff;
-      padding: 32px 28px;
-      transition: var(--transition);
+      padding: 72px 0 104px;
+      min-height: calc(100vh - var(--banner-height) - var(--nav-height));
+      display: flex;
+      align-items: center;
     }
-
-    .problem-item:hover { background: #FFF5F6; }
-
-    .problem-item .stat {
-      font-size: 2.4rem;
-      font-weight: 900;
-      color: var(--red);
+    .lp .lp-hero-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
       display: block;
-      line-height: 1;
-      margin-bottom: 8px;
+      pointer-events: none;
+      -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.10) 34%, rgba(0,0,0,.55) 52%, rgba(0,0,0,.92) 68%, #000 80%);
+              mask-image: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.10) 34%, rgba(0,0,0,.55) 52%, rgba(0,0,0,.92) 68%, #000 80%);
     }
-
-    .problem-item h4 {
-      font-size: 0.95rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--bg-dark);
+    /* Fallback texture if WebGL is unavailable */
+    .lp .lp-hero.no-gl::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(2,16,36,.14) 1px, transparent 1.2px);
+      background-size: 22px 22px;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.6) 55%, #000 80%);
+              mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.6) 55%, #000 80%);
     }
-
-    .problem-item p {
-      font-size: 0.86rem;
-      color: #6B7280;
-      line-height: 1.65;
+    .lp .lp-hero-fade {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 160px;
+      background: linear-gradient(180deg, rgba(255,255,255,0), #fff);
+      pointer-events: none;
     }
-
-    /* ---- Programme overview ---- */
-    .programme-intro {
+    .lp .lp-hero-grid {
+      position: relative;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-      margin-bottom: 80px;
-    }
-
-    .programme-intro-text h2 {
-      font-size: clamp(1.8rem, 2.8vw, 2.4rem);
-      margin-bottom: 20px;
-      line-height: 1.2;
-    }
-
-    .programme-intro-text p {
-      font-size: 0.95rem;
-      color: var(--muted);
-      line-height: 1.75;
-      margin-bottom: 12px;
-    }
-
-    .diff-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin: 24px 0;
-    }
-
-    .diff-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.8);
-    }
-
-    .diff-icon {
-      width: 32px;
-      height: 32px;
-      padding: 4px;
-      background: rgba(255,41,78,0.15);
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .programme-visual {
-      background: linear-gradient(135deg, var(--bg-card) 0%, var(--cta-secondary) 100%);
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-lg);
-      padding: 40px 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .programme-visual-header {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .programme-name {
-      font-size: 1.6rem;
-      font-weight: 900;
-      color: var(--white);
-      line-height: 1.2;
-    }
-
-    .programme-name span { color: var(--red); }
-
-    .programme-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding: 20px 0;
-      border-top: 1px solid var(--border-card);
-      border-bottom: 1px solid var(--border-card);
-    }
-
-    .meta-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.84rem;
-    }
-
-    .meta-label { color: var(--muted); }
-    .meta-value { color: var(--white); font-weight: 700; }
-    .meta-value.red { color: var(--red); }
-
-    /* ---- Sectors teaser ---- */
-    .sectors-teaser {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .sector-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: 50px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: rgba(255,255,255,0.75);
-      transition: var(--transition);
-    }
-
-    .sector-pill:hover {
-      border-color: var(--red);
-      color: var(--white);
-    }
-
-    /* ---- Expert teaser ---- */
-    .expert-teaser-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    /* ---- Org teaser ---- */
-    .org-teaser {
-      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(27,58,92,0.6) 100%);
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-lg);
-      padding: 64px 48px;
-      display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
       gap: 48px;
       align-items: center;
     }
-
-    .org-teaser h2 {
-      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-      margin-bottom: 16px;
+    .lp .lp-hero-copy { max-width: 600px; }
+    .lp .lp-rise { animation: lpRise .9s var(--lp-ease) both; }
+    .lp .lp-hero-pill { margin-bottom: 28px; }
+    .lp .lp-hero-pill .sep { width: 1px; height: 14px; background: var(--lp-line); }
+    .lp .lp-hero-pill .brand { color: var(--lp-red); font-weight: 700; }
+    .lp .lp-display .period { color: var(--lp-red); }
+    .lp .lp-hero-sub { margin: 28px 0 36px; max-width: 520px; }
+    .lp .lp-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .lp .lp-hero-proof {
+      display: flex; align-items: center; gap: 14px;
+      margin-top: 44px; padding-top: 28px;
+      border-top: 1px solid var(--lp-line-2);
     }
-
-    .org-teaser p {
-      font-size: 0.95rem;
-      color: var(--muted);
-      max-width: 480px;
-      line-height: 1.7;
-      margin-bottom: 28px;
+    .lp .lp-avatars { display: flex; }
+    .lp .lp-avatars img {
+      width: 36px; height: 36px; border-radius: 50%; object-fit: cover;
+      border: 2px solid #fff; margin-left: -10px;
+      box-shadow: 0 1px 3px rgba(2,16,36,.15);
     }
+    .lp .lp-avatars img:first-child { margin-left: 0; }
+    .lp .lp-proof-text { font-size: 0.86rem; color: var(--lp-muted); line-height: 1.4; }
+    .lp .lp-proof-text strong { color: var(--lp-ink); font-weight: 700; }
+    .lp .lp-flags { letter-spacing: .08em; font-size: 0.95rem; }
 
-    .org-packages-preview {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      min-width: 280px;
-    }
-
-    .org-package-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border-card);
-      border-radius: 10px;
-      padding: 14px 18px;
-      gap: 16px;
-    }
-
-    .org-package-row:first-child {
-      border-color: var(--red);
-    }
-
-    .pkg-name { font-size: 0.88rem; font-weight: 700; color: var(--white); }
-    .pkg-seats { font-size: 0.78rem; color: var(--muted); }
-    .pkg-price { font-size: 0.9rem; font-weight: 800; color: var(--red); white-space: nowrap; }
-
-    /* ---- Global presence ---- */
-    .globe-section {
-      text-align: center;
-      padding: 96px 0;
-      background: var(--bg-light);
-      color: var(--body-dark);
-    }
-
-    .globe-section h2 { color: var(--bg-dark); margin-bottom: 14px; font-size: clamp(1.8rem, 3vw, 2.6rem); }
-    .globe-section > .container > p { color: rgba(46,58,74,0.7); font-size: 1.05rem; max-width: 580px; margin: 0 auto 56px; line-height: 1.7; }
-
-    .regions-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      max-width: 860px;
-      margin: 0 auto 56px;
-    }
-
-    .region-card {
-      background: var(--white);
-      border: 1px solid rgba(0,0,0,0.08);
-      border-radius: var(--radius-md);
-      padding: 28px 24px;
-      transition: var(--transition);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    }
-
-    .region-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 30px rgba(255,41,78,0.1);
-      border-color: rgba(255,41,78,0.25);
-    }
-
-    .region-flag { font-size: 2.2rem; margin-bottom: 12px; }
-    .region-title { font-size: 1rem; font-weight: 800; color: var(--bg-dark); margin-bottom: 4px; }
-    .region-desc { font-size: 0.84rem; color: rgba(46,58,74,0.65); line-height: 1.55; }
-
-    @media (max-width: 768px) {
-      .problem-grid { grid-template-columns: 1fr; }
-      .programme-intro { grid-template-columns: 1fr; gap: 40px; }
-      .expert-teaser-grid { grid-template-columns: 1fr; }
-      .org-teaser { grid-template-columns: 1fr; gap: 32px; }
-      .org-packages-preview { min-width: unset; }
-      .regions-grid { grid-template-columns: 1fr; max-width: 400px; }
-    }
-
-    /* ---- Hero Panel Carousel ---- */
-    /*
-      Paralucent Condensed @font-face — drop the font files in assets/ and uncomment.
-      Rename the src paths to match whatever filenames you use.
-    @font-face {
-      font-family: 'Paralucent Condensed';
-      src: url('assets/Paralucent-Condensed-Bold.woff2') format('woff2'),
-           url('assets/Paralucent-Condensed-Bold.woff') format('woff');
-      font-weight: 700 900;
-      font-style: normal;
-      font-display: swap;
-    }
-    */
-    /* CSS grid trick: all slides occupy the same cell so the container
-       sizes to the tallest child without needing a fixed height */
-    .hero-panel-wrap {
-      display: grid;
-    }
-    .hero-panel-slide {
-      grid-area: 1 / 1;
-      opacity: 0;
-      transition: opacity 1.2s ease;
-      pointer-events: none;
-    }
-    .hero-panel-slide.hero-panel-active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* ---- Event Banner ---- */
-    .event-banner {
-      background: linear-gradient(118deg, rgb(253,27,49) 2%, rgb(44,1,4) 105%);
+    /* Hero stage: floating UI cards over the 3D network */
+    .lp .lp-stage {
       position: relative;
-      overflow: hidden;
-      padding: 0;
+      height: 560px;
     }
-    .event-banner-robot {
-      position: absolute;
-      right: 12%;
-      bottom: 0;
-      width: 36%;
-      max-width: 560px;
+    .lp .lp-stage-glow {
+      position: absolute; inset: 8% 4%;
+      background: radial-gradient(closest-side, rgba(255,41,78,.10), rgba(255,41,78,0) 70%);
+      filter: blur(20px);
       pointer-events: none;
-      line-height: 0;
-      z-index: 1;
     }
-    .event-banner-robot img {
-      width: 100%;
-      display: block;
-    }
-    .event-banner-logo {
+    .lp .lp-card {
       position: absolute;
-      right: -2%;
-      top: 0;
-      bottom: 0;
-      width: 62%;
-      pointer-events: none;
-      z-index: 0; /* behind robot (z-index:1) */
+      background: rgba(255,255,255,.78);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+              backdrop-filter: blur(18px) saturate(1.4);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: var(--lp-shadow-lg), inset 0 1px 0 rgba(255,255,255,.9);
+      border-radius: var(--lp-r-md);
+      will-change: transform;
+      transition: transform .6s var(--lp-ease);
     }
-    .event-banner-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: right center;
-      display: block;
-      opacity: 0.18;
-    }
-    .event-banner-content {
-      position: relative;
-      z-index: 2;
-      padding: 84px 0 100px;
-    }
-    .event-banner-heading {
-      font-family: 'Paralucent Condensed', 'DM Sans', var(--font-heading);
-      font-size: clamp(2.4rem, 5vw, 4.4rem);
-      font-weight: 900;
-      color: #fff;
-      line-height: 1.02;
-      letter-spacing: -0.02em;
-      margin: 0 0 16px;
-    }
-    .event-banner-sub {
-      font-size: clamp(0.9rem, 1.4vw, 1.02rem);
-      color: rgba(255,255,255,0.85);
-      margin: 0 0 28px;
-      line-height: 1.55;
-      max-width: 500px;
-    }
-    .event-banner-meta {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      flex-wrap: wrap;
-      margin-bottom: 32px;
-    }
-    .event-banner-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #fff;
-      font-size: 0.97rem;
-      font-weight: 500;
-    }
-    .event-banner-cta {
-      display: inline-block;
+    .lp .lp-card > .in { padding: 20px 22px; }
+    .lp .lp-card-a { top: 30px; right: 8px; width: 214px; animation: lpRise .9s .35s var(--lp-ease) both; }
+    .lp .lp-card-a > .in { animation: lpFloatA 7s ease-in-out infinite; }
+    .lp .lp-card-b { top: 168px; left: -8px; width: 330px; animation: lpRise .9s .55s var(--lp-ease) both; }
+    .lp .lp-card-b > .in { animation: lpFloatB 8.5s ease-in-out infinite; }
+    .lp .lp-card-c { bottom: 44px; right: 36px; width: 268px; animation: lpRise .9s .75s var(--lp-ease) both; }
+    .lp .lp-card-c > .in { animation: lpFloatC 6.5s ease-in-out infinite; }
+
+    .lp .lp-card-kicker { font-size: .66rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--lp-muted); }
+    .lp .lp-card-big { font-size: 2.35rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--lp-ink); margin-top: 6px; }
+    .lp .lp-card-sub { font-size: .8rem; color: var(--lp-body); margin-top: 6px; font-weight: 500; }
+
+    .lp .lp-live { display: flex; align-items: center; justify-content: space-between; }
+    .lp .lp-live-tag { display: inline-flex; align-items: center; gap: 7px; font-size: .66rem; font-weight: 800; letter-spacing: .12em; color: var(--lp-red); }
+    .lp .lp-live-tag .lp-dot { background: var(--lp-red); }
+    .lp .lp-live-tag .lp-dot::after { background: var(--lp-red); }
+    .lp .lp-live-title { font-size: 1.02rem; font-weight: 700; color: var(--lp-ink); margin-top: 10px; letter-spacing: -0.01em; }
+    .lp .lp-live-meta { font-size: .78rem; color: var(--lp-muted); margin-top: 2px; }
+    .lp .lp-live-row { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; }
+    .lp .lp-live-row .lp-avatars img { width: 30px; height: 30px; }
+    .lp .lp-live-count { font-size: .74rem; font-weight: 700; color: var(--lp-body); }
+    .lp .lp-bar { height: 6px; border-radius: 999px; background: var(--lp-line-2); margin-top: 14px; overflow: hidden; }
+    .lp .lp-bar > i { display: block; height: 100%; width: 42%; background: linear-gradient(90deg, var(--lp-red), #FF5748); border-radius: inherit; animation: lpBar 1.6s 1.1s var(--lp-ease) both; }
+    .lp .lp-bar-label { display: flex; justify-content: space-between; font-size: .7rem; color: var(--lp-muted); margin-top: 8px; font-weight: 600; }
+
+    .lp .lp-cert { display: flex; align-items: center; gap: 14px; }
+    .lp .lp-cert-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--lp-ink); display: grid; place-items: center; flex-shrink: 0; }
+    .lp .lp-cert-title { font-size: .92rem; font-weight: 700; color: var(--lp-ink); letter-spacing: -0.01em; }
+    .lp .lp-cert-sub { display: inline-flex; align-items: center; gap: 5px; font-size: .74rem; color: var(--lp-green); font-weight: 700; margin-top: 3px; }
+
+    /* ============================================================
+       MARQUEE
+       ============================================================ */
+    .lp .lp-marquee {
+      border-top: 1px solid var(--lp-line-2);
+      border-bottom: 1px solid var(--lp-line-2);
       background: #fff;
-      color: #c71526;
-      font-weight: 700;
-      font-size: 0.95rem;
-      padding: 12px 26px;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: opacity 0.2s, transform 0.2s;
+      padding: 22px 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
     }
-    .event-banner-cta:hover {
-      opacity: 0.92;
-      transform: translateY(-1px);
+    .lp .lp-marquee-label {
+      padding: 0 32px 0 32px;
+      font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--lp-muted); white-space: nowrap;
+      border-right: 1px solid var(--lp-line-2);
+      margin-right: 24px;
     }
-    @media (max-width: 860px) {
-      .event-banner-robot { width: 44%; }
+    .lp .lp-marquee-viewport {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+              mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    }
+    .lp .lp-marquee-track { display: flex; gap: 10px; width: max-content; animation: lpMarquee 48s linear infinite; }
+    .lp .lp-marquee:hover .lp-marquee-track { animation-play-state: paused; }
+    .lp .lp-marquee .lp-chip { height: 34px; padding: 0 16px; font-size: .82rem; background: #fff; border-color: var(--lp-line); color: var(--lp-ink-2); border-radius: 999px; }
+    .lp .lp-marquee .lp-chip.on { border-color: rgba(255,41,78,.35); color: var(--lp-ink); }
+    .lp .lp-marquee .lp-chip.on::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--lp-green); margin-right: 8px; }
+
+    /* ============================================================
+       STATS
+       ============================================================ */
+    .lp .lp-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--lp-line); border-radius: var(--lp-r-lg); overflow: hidden; background: #fff; }
+    .lp .lp-stat { padding: 40px 36px; border-right: 1px solid var(--lp-line); }
+    .lp .lp-stat:last-child { border-right: 0; }
+    .lp .lp-stat-num { font-size: 3.1rem; font-weight: 800; letter-spacing: -0.045em; line-height: 1; color: var(--lp-ink); font-variant-numeric: tabular-nums; }
+    .lp .lp-stat-num .accent { color: var(--lp-red); }
+    .lp .lp-stat-title { font-size: .95rem; font-weight: 700; color: var(--lp-ink); margin-top: 16px; line-height: 1.35; letter-spacing: -0.01em; }
+    .lp .lp-stat-desc { font-size: .84rem; color: var(--lp-muted); margin-top: 8px; line-height: 1.55; }
+
+    /* ============================================================
+       PROGRAMMES
+       ============================================================ */
+    .lp .lp-prog-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 44px; flex-wrap: wrap; }
+    .lp .lp-prog-tools { display: flex; align-items: center; gap: 18px; }
+    .lp .lp-seg { display: inline-flex; padding: 3px; border-radius: 999px; background: #fff; border: 1px solid var(--lp-line); }
+    .lp .lp-seg .cur-btn {
+      height: 32px; padding: 0 14px; border-radius: 999px; border: 0; background: transparent;
+      font-size: .78rem; font-weight: 700; color: var(--lp-muted); cursor: pointer; font-family: inherit;
+      transition: background .2s, color .2s;
+    }
+    .lp .lp-seg .cur-btn.active { background: var(--lp-ink); color: #fff; }
+    .lp .lp-prog-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .lp .lp-prog {
+      position: relative;
+      display: flex; flex-direction: column;
+      background: #fff;
+      border: 1px solid var(--lp-line);
+      border-radius: var(--lp-r-lg);
+      padding: 22px 22px 22px;
+      transition: transform .35s var(--lp-ease), box-shadow .35s var(--lp-ease), border-color .3s;
+      overflow: hidden;
+      min-height: 480px;
+    }
+    .lp .lp-prog::after {
+      content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3px;
+      background: var(--lp-red); transform: scaleX(0); transform-origin: left;
+      transition: transform .4s var(--lp-ease);
+    }
+    .lp .lp-prog:hover { transform: translateY(-6px); box-shadow: var(--lp-shadow-md); border-color: transparent; }
+    .lp .lp-prog:hover::after { transform: scaleX(1); }
+    .lp .lp-prog-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .lp .lp-prog-status { display: inline-flex; align-items: center; gap: 7px; font-size: .7rem; font-weight: 700; color: var(--lp-ink); letter-spacing: .04em; text-transform: uppercase; }
+    .lp .lp-prog-dur { font-size: .72rem; font-weight: 700; color: var(--lp-muted); }
+    .lp .lp-prog-art { margin: 18px -4px 0; border-radius: 14px; height: 176px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; padding: 12px 12px 0; }
+    .lp .lp-prog-art img { max-height: 100%; width: auto; object-fit: contain; transition: transform .5s var(--lp-ease); }
+    .lp .lp-prog:hover .lp-prog-art img { transform: translateY(-4px) scale(1.03); }
+    .lp .lp-prog-name { font-size: 1.32rem; font-weight: 800; letter-spacing: -0.025em; color: var(--lp-ink); margin-top: 20px; line-height: 1.15; }
+    .lp .lp-prog-desc { font-size: .88rem; color: var(--lp-body); line-height: 1.55; margin-top: 8px; flex: 1; }
+    .lp .lp-prog-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--lp-line-2); }
+    .lp .lp-prog-price { font-size: .78rem; color: var(--lp-muted); font-weight: 600; line-height: 1.2; }
+    .lp .lp-prog-price b { display: block; font-size: 1.02rem; color: var(--lp-ink); font-weight: 800; letter-spacing: -0.02em; margin-top: 2px; }
+    .lp .lp-prog-price[hidden] { display: none; }
+    .lp .lp-prog-go { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--lp-line); display: grid; place-items: center; color: var(--lp-ink); transition: background .25s, color .25s, border-color .25s, transform .25s var(--lp-ease); flex-shrink: 0; }
+    .lp .lp-prog:hover .lp-prog-go { background: var(--lp-ink); color: #fff; border-color: var(--lp-ink); }
+    .lp .lp-prog-go svg { transition: transform .25s var(--lp-ease); }
+    .lp .lp-prog:hover .lp-prog-go svg { transform: translate(1px, -1px); }
+    .lp .lp-upcoming { margin-top: 28px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .lp .lp-upcoming-label { font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--lp-muted); margin-right: 6px; }
+    .lp .lp-upcoming .lp-chip { background: #fff; color: var(--lp-muted); }
+    .lp .currency-usd { display: none; }
+    body.lp.show-usd .currency-usd { display: inline; }
+    body.lp.show-usd .currency-ngn { display: none; }
+
+    /* ============================================================
+       WHY — two column, sticky left
+       ============================================================ */
+    .lp .lp-why { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 96px; align-items: start; }
+    .lp .lp-why-left { position: sticky; top: calc(var(--nav-height) + 40px); }
+    .lp .lp-why-left .lp-lead { margin: 18px 0 32px; }
+    .lp .lp-feat { border-top: 1px solid var(--lp-line); }
+    .lp .lp-feat-row { display: grid; grid-template-columns: 56px 1fr; gap: 24px; padding: 34px 0; border-bottom: 1px solid var(--lp-line); align-items: start; }
+    .lp .lp-feat-num { font-size: .78rem; font-weight: 800; color: var(--lp-faint); letter-spacing: .06em; padding-top: 6px; font-variant-numeric: tabular-nums; }
+    .lp .lp-feat-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--lp-red-soft); color: var(--lp-red); display: grid; place-items: center; margin-bottom: 16px; }
+    .lp .lp-feat-title { font-size: 1.22rem; font-weight: 700; letter-spacing: -0.02em; color: var(--lp-ink); }
+    .lp .lp-feat-desc { font-size: .96rem; color: var(--lp-body); line-height: 1.6; margin-top: 8px; max-width: 520px; }
+    .lp .lp-meta-card { margin-top: 36px; border: 1px solid var(--lp-line); border-radius: var(--lp-r-md); padding: 6px 22px; background: var(--lp-surface-2); }
+    .lp .lp-meta-row { display: flex; justify-content: space-between; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--lp-line-2); font-size: .88rem; }
+    .lp .lp-meta-row:last-child { border-bottom: 0; }
+    .lp .lp-meta-row span:first-child { color: var(--lp-muted); font-weight: 600; }
+    .lp .lp-meta-row span:last-child { color: var(--lp-ink); font-weight: 700; text-align: right; }
+    .lp .lp-meta-row .red { color: var(--lp-red); }
+
+    /* ============================================================
+       JOURNEY
+       ============================================================ */
+    .lp .lp-steps { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 56px; }
+    .lp .lp-steps::before { content: ''; position: absolute; left: 24px; right: 24px; top: 24px; height: 1px; background: var(--lp-line); }
+    .lp .lp-step { position: relative; }
+    .lp .lp-step-n {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: #fff; border: 1.5px solid var(--lp-line);
+      display: grid; place-items: center;
+      font-size: .82rem; font-weight: 800; color: var(--lp-ink); letter-spacing: .02em;
+      position: relative; z-index: 1;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .lp .lp-step:hover .lp-step-n { border-color: var(--lp-red); box-shadow: 0 0 0 6px var(--lp-red-soft); }
+    .lp .lp-step-title { font-size: 1.05rem; font-weight: 700; color: var(--lp-ink); margin-top: 22px; letter-spacing: -0.015em; }
+    .lp .lp-step-desc { font-size: .9rem; color: var(--lp-body); line-height: 1.6; margin-top: 8px; padding-right: 12px; }
+    .lp .lp-journey-cta { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 56px; }
+
+    /* ============================================================
+       EXPERTS
+       ============================================================ */
+    .lp .lp-exp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+    .lp .lp-exp {
+      background: #fff; border: 1px solid var(--lp-line); border-radius: var(--lp-r-lg); padding: 28px;
+      display: flex; flex-direction: column; gap: 18px;
+      transition: transform .35s var(--lp-ease), box-shadow .35s var(--lp-ease);
+    }
+    .lp .lp-exp:hover { transform: translateY(-4px); box-shadow: var(--lp-shadow-md); }
+    .lp .lp-exp-head { display: flex; align-items: center; gap: 14px; }
+    .lp .lp-exp-ava { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex-shrink: 0; background: var(--lp-ink); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: .95rem; letter-spacing: .04em; }
+    .lp .lp-exp-name { font-size: 1.02rem; font-weight: 700; color: var(--lp-ink); letter-spacing: -0.01em; }
+    .lp .lp-exp-role { font-size: .82rem; color: var(--lp-muted); margin-top: 2px; }
+    .lp .lp-exp-bio { font-size: .9rem; color: var(--lp-body); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
+    .lp .lp-exp-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+    .lp .lp-exp-foot { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--lp-line-2); }
+    .lp .lp-verified { display: inline-flex; align-items: center; gap: 6px; font-size: .74rem; font-weight: 700; color: var(--lp-green); }
+    .lp .lp-exp-li { display: inline-flex; align-items: center; gap: 6px; font-size: .78rem; font-weight: 700; color: var(--lp-ink); }
+    .lp .lp-exp-li:hover { color: var(--lp-red); }
+    .lp .lp-skel { border: 1px solid var(--lp-line); border-radius: var(--lp-r-lg); padding: 28px; }
+    .lp .lp-skel i { display: block; border-radius: 8px; background: linear-gradient(90deg, #F1F3F6 25%, #E9ECF0 50%, #F1F3F6 75%); background-size: 200% 100%; animation: lpShimmer 1.4s linear infinite; }
+    .lp .lp-exp-cta { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 48px; }
+
+    /* ============================================================
+       TESTIMONIALS
+       ============================================================ */
+    .lp .lp-quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 56px; align-items: start; }
+    .lp .lp-quote {
+      background: #fff; border: 1px solid var(--lp-line); border-radius: var(--lp-r-lg); padding: 32px;
+      display: flex; flex-direction: column; gap: 22px;
+      transition: transform .35s var(--lp-ease), box-shadow .35s var(--lp-ease);
+    }
+    .lp .lp-quote:nth-child(2) { margin-top: 36px; }
+    .lp .lp-quote:hover { transform: translateY(-4px); box-shadow: var(--lp-shadow-md); }
+    .lp .lp-quote-mark { width: 36px; height: 36px; color: var(--lp-red); }
+    .lp .lp-quote-text { font-size: 1.05rem; line-height: 1.65; color: var(--lp-ink-2); letter-spacing: -0.01em; margin: 0; flex: 1; }
+    .lp .lp-quote-meta { display: flex; align-items: center; gap: 12px; padding-top: 20px; border-top: 1px solid var(--lp-line-2); }
+    .lp .lp-quote-ava { width: 42px; height: 42px; border-radius: 50%; background: var(--lp-ink); color: #fff; font-size: .74rem; font-weight: 800; letter-spacing: .05em; display: grid; place-items: center; flex-shrink: 0; }
+    .lp .lp-quote-name { font-size: .95rem; font-weight: 700; color: var(--lp-ink); }
+    .lp .lp-quote-sub { font-size: .78rem; color: var(--lp-muted); margin-top: 2px; }
+    .lp .lp-quote-sub b { color: var(--lp-red); font-weight: 700; }
+    .lp .lp-quote-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    /* ============================================================
+       VIDEOS
+       ============================================================ */
+    .lp .lp-videos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 56px; }
+    .lp .lp-video {
+      position: relative; aspect-ratio: 9 / 13; border-radius: var(--lp-r-lg); overflow: hidden; cursor: pointer;
+      background: var(--lp-ink); border: 1px solid var(--lp-line);
+      transition: transform .35s var(--lp-ease), box-shadow .35s var(--lp-ease);
+    }
+    .lp .lp-video:hover { transform: translateY(-4px); box-shadow: var(--lp-shadow-md); }
+    .lp .lp-video video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .lp .lp-video::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(2,16,36,0) 55%, rgba(2,16,36,.55)); pointer-events: none; }
+    .lp .lp-video-play { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,.92); display: grid; place-items: center; z-index: 1; transition: transform .3s var(--lp-ease), background .2s; box-shadow: 0 8px 24px rgba(2,16,36,.3); }
+    .lp .lp-video:hover .lp-video-play { transform: translate(-50%, -50%) scale(1.08); background: #fff; }
+    .lp .lp-video-cap { position: absolute; left: 18px; right: 18px; bottom: 18px; z-index: 1; color: #fff; font-size: .8rem; font-weight: 700; letter-spacing: .02em; }
+
+    /* ============================================================
+       ORGANISATIONS BAND
+       ============================================================ */
+    .lp .lp-band {
+      position: relative; overflow: hidden;
+      background: var(--lp-ink); color: #fff;
+      border-radius: 32px;
+      padding: 80px 72px;
+      display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 64px; align-items: center;
+    }
+    .lp .lp-band::before { content: ''; position: absolute; right: -120px; top: -160px; width: 520px; height: 520px; background: radial-gradient(closest-side, rgba(255,41,78,.38), rgba(255,41,78,0)); filter: blur(10px); pointer-events: none; }
+    .lp .lp-band::after { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1.2px); background-size: 22px 22px; -webkit-mask-image: linear-gradient(120deg, transparent 40%, #000); mask-image: linear-gradient(120deg, transparent 40%, #000); pointer-events: none; }
+    .lp .lp-band > * { position: relative; z-index: 1; }
+    .lp .lp-band .lp-h2 { color: #fff; }
+    .lp .lp-band .lp-h2 .red { color: var(--lp-red); }
+    .lp .lp-band .lp-lead { color: rgba(255,255,255,.72); margin: 18px 0 32px; }
+    .lp .lp-band .lp-eyebrow { color: rgba(255,255,255,.6); }
+    .lp .lp-pkgs { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: var(--lp-r-md); padding: 8px 24px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+    .lp .lp-pkg { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .lp .lp-pkg:last-child { border-bottom: 0; }
+    .lp .lp-pkg-name { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
+    .lp .lp-pkg-seats { font-size: .82rem; font-weight: 700; color: rgba(255,255,255,.7); background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); padding: 6px 12px; border-radius: 999px; }
+    .lp .lp-pkgs-label { font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.5); padding: 16px 0 6px; }
+
+    /* ============================================================
+       GLOBAL
+       ============================================================ */
+    .lp .lp-countries { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 36px; }
+    .lp .lp-country { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 999px; background: #fff; border: 1px solid var(--lp-line); font-size: .88rem; font-weight: 600; color: var(--lp-ink-2); }
+    .lp .lp-regions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+    .lp .lp-region { background: #fff; border: 1px solid var(--lp-line); border-radius: var(--lp-r-lg); padding: 32px; transition: transform .35s var(--lp-ease), box-shadow .35s var(--lp-ease); }
+    .lp .lp-region:hover { transform: translateY(-4px); box-shadow: var(--lp-shadow-md); }
+    .lp .lp-region-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--lp-red-soft); color: var(--lp-red); display: grid; place-items: center; margin-bottom: 20px; }
+    .lp .lp-region-title { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.015em; color: var(--lp-ink); }
+    .lp .lp-region-desc { font-size: .9rem; color: var(--lp-body); line-height: 1.6; margin-top: 8px; }
+
+    /* ============================================================
+       FINAL CTA
+       ============================================================ */
+    .lp .lp-cta { position: relative; overflow: hidden; background: var(--lp-ink); color: #fff; padding: 150px 0; text-align: center; }
+    .lp .lp-cta-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+    .lp .lp-cta-glow { position: absolute; left: 50%; top: 50%; width: 900px; height: 900px; transform: translate(-50%, -50%); background: radial-gradient(closest-side, rgba(255,41,78,.28), rgba(255,41,78,0)); pointer-events: none; }
+    .lp .lp-cta-in { position: relative; max-width: 800px; margin: 0 auto; }
+    .lp .lp-cta .lp-eyebrow { color: rgba(255,255,255,.65); justify-content: center; }
+    .lp .lp-cta .lp-h2 { color: #fff; font-size: clamp(2.2rem, 4.6vw, 3.6rem); }
+    .lp .lp-cta .lp-lead { color: rgba(255,255,255,.7); margin: 22px auto 40px; max-width: 600px; }
+    .lp .lp-cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .lp .lp-cta-note { font-size: .8rem; color: rgba(255,255,255,.4); margin-top: 24px; }
+
+    /* Footer sits on the dark CTA — remove the seam */
+    .lp .footer { border-top: 1px solid rgba(255,255,255,.08); }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 1100px) {
+      .lp .lp-prog-grid { grid-template-columns: repeat(2, 1fr); }
+      .lp .lp-stats { grid-template-columns: repeat(2, 1fr); }
+      .lp .lp-stat:nth-child(2) { border-right: 0; }
+      .lp .lp-stat:nth-child(1), .lp .lp-stat:nth-child(2) { border-bottom: 1px solid var(--lp-line); }
+      .lp .lp-band { padding: 64px 48px; gap: 48px; }
+    }
+    @media (max-width: 960px) {
+      .lp .lp-section { padding: 88px 0; }
+      .lp .lp-hero { padding: 48px 0 72px; min-height: 0; }
+      .lp .lp-hero-grid { grid-template-columns: 1fr; gap: 40px; }
+      .lp .lp-hero-copy { max-width: 640px; }
+      .lp .lp-hero-canvas { -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.6) 55%, #000); mask-image: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.6) 55%, #000); }
+      .lp .lp-stage { height: 440px; max-width: 560px; }
+      .lp .lp-card-b { left: 0; }
+      .lp .lp-card-c { right: 0; }
+      .lp .lp-why { grid-template-columns: 1fr; gap: 48px; }
+      .lp .lp-why-left { position: static; }
+      .lp .lp-steps { grid-template-columns: repeat(2, 1fr); gap: 40px 24px; }
+      .lp .lp-steps::before { display: none; }
+      .lp .lp-exp-grid, .lp .lp-quotes, .lp .lp-videos, .lp .lp-regions { grid-template-columns: 1fr; }
+      .lp .lp-quote:nth-child(2) { margin-top: 0; }
+      .lp .lp-videos { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+      .lp .lp-band { grid-template-columns: 1fr; padding: 56px 32px; border-radius: 24px; }
+      .lp .lp-marquee { grid-template-columns: 1fr; gap: 14px; }
+      .lp .lp-marquee-label { border-right: 0; margin: 0; padding: 0 32px; }
     }
     @media (max-width: 640px) {
-      .event-banner-robot { display: none; }
-      .event-banner-heading { font-size: clamp(2rem, 8vw, 2.8rem); }
+      .lp .lp-container { padding: 0 20px; }
+      .lp .lp-hero { padding: 36px 0 56px; }
+      .lp .lp-hero-actions .lp-btn { width: 100%; }
+      .lp .lp-hero-proof { flex-direction: column; align-items: flex-start; }
+      .lp .lp-stage { height: 400px; }
+      .lp .lp-card-a { width: 170px; right: 0; top: 10px; }
+      .lp .lp-card-a .lp-card-big { font-size: 1.8rem; }
+      .lp .lp-card-b { width: min(300px, 88%); top: 140px; }
+      .lp .lp-card-c { width: 232px; bottom: 16px; }
+      .lp .lp-stats { grid-template-columns: 1fr; }
+      .lp .lp-stat { border-right: 0; border-bottom: 1px solid var(--lp-line); padding: 28px 24px; }
+      .lp .lp-stat:last-child { border-bottom: 0; }
+      .lp .lp-stat-num { font-size: 2.5rem; }
+      .lp .lp-prog-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px; padding: 4px 20px 20px; margin: 0 -20px; scrollbar-width: none; }
+      .lp .lp-prog-grid::-webkit-scrollbar { display: none; }
+      .lp .lp-prog { min-width: 82vw; scroll-snap-align: start; min-height: 0; }
+      .lp .lp-steps { grid-template-columns: 1fr; gap: 32px; }
+      .lp .lp-videos { grid-template-columns: 1fr; }
+      .lp .lp-video { aspect-ratio: 4 / 5; }
+      .lp .lp-band { padding: 44px 24px; }
+      .lp .lp-cta { padding: 100px 0; }
+      .lp .lp-feat-row { grid-template-columns: 1fr; gap: 6px; }
+      .lp .lp-feat-num { padding-top: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .lp .lp-rise, .lp .lp-card, .lp .lp-card > .in, .lp .lp-marquee-track, .lp .lp-bar > i, .lp .lp-dot::after { animation: none !important; }
     }
   </style>
 <script src="tracking.js"></script>
 </head>
-<body>
+<body class="lp">
 
 <!-- Scroll Progress -->
 <div id="scroll-progress"></div>
@@ -709,111 +686,104 @@
   <a href="apply.html" class="btn btn-primary">Apply Now</a>
 </div>
 
-<!-- ====== HERO ====== -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <!-- <div class="hero-grid-overlay"></div> -->
-  <div class="hero-map-overlay"></div>
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="lp-hero" id="lp-hero">
+  <canvas class="lp-hero-canvas" id="lp-net" aria-hidden="true"></canvas>
+  <div class="lp-hero-fade" aria-hidden="true"></div>
 
-  <div class="container">
-    <div class="hero-split">
+  <div class="lp-container">
+    <div class="lp-hero-grid">
 
-      <!-- LEFT: Text content -->
-      <div class="hero-content">
-        <div class="hero-tag">AI in my Field </div> 
+      <!-- Copy -->
+      <div class="lp-hero-copy">
+        <div class="lp-pill lp-hero-pill lp-rise">
+          <span class="lp-dot"></span>
+          <span>Cohorts now open</span>
+          <span class="sep"></span>
+          <span class="brand">AI in my Field</span>
+        </div>
 
-        <h1 class="hero-headline fade-up">
-          The World Needs<br/><span style="white-space:nowrap"><span class="accent">AI-Native</span> Professionals.</span><br/>Are You One?
+        <h1 class="lp-display lp-rise" style="animation-delay:.08s">
+          Master AI<br/>in your field.<br/>In four weeks<span class="period">.</span>
         </h1>
 
-        <p class="hero-sub fade-up" style="transition-delay:0.1s">
-          Brixgate's field-specific AI sprint transforms working professionals into
-          Expert Practitioners in 4 weeks. Not a course. A career-defining
-          transformation, taught by people who have already done it in your field.
+        <p class="lp-lead lp-hero-sub lp-rise" style="animation-delay:.16s">
+          Field-specific sprints that turn working professionals into certified Expert Practitioners — taught live by people who have already done it in your profession.
         </p>
 
-        <div class="hero-actions fade-up" style="transition-delay:0.2s">
-          <a href="aiquiz.html" class="btn btn-primary">Take an AI test</a>
-          <a href="apply.html" class="btn btn-outline">Start your application</a>
+        <div class="lp-hero-actions lp-rise" style="animation-delay:.24s">
+          <a href="apply.html" class="lp-btn lp-btn-red">
+            Apply now
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="aiquiz.html" class="lp-btn lp-btn-ghost">Take the free AI test</a>
         </div>
 
-        <!--
-        SAVED CONCEPT — hero "View Programmes" dropdown (for future use):
-        <div class="hero-prog-dropdown">
-          <button class="btn btn-outline hero-prog-btn" type="button">
-            View Programmes
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="hero-prog-menu">
-            <a href="programme-engineering.html">Software Engineering</a>
-            <a href="programme-cybersecurity.html">Cybersecurity</a>
-            <a href="programme-finance.html">Financial Modelling</a>
-            <a href="programme-marketing.html">Product Marketing</a>
+        <div class="lp-hero-proof lp-rise" style="animation-delay:.34s">
+          <div class="lp-avatars">
+            <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=72&h=72&fit=crop&crop=face" alt="" />
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=72&h=72&fit=crop&crop=face" alt="" />
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face" alt="" />
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=72&h=72&fit=crop&crop=face" alt="" />
           </div>
-        </div>
-        -->
-
-        <div class="hero-social-proof fade-up" style="transition-delay:0.3s">
-          <div class="proof-avatars">
-            <div class="proof-avatar"><img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=72&h=72&fit=crop&crop=face" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block"></div>
-            <div class="proof-avatar"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=72&h=72&fit=crop&crop=face" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block"></div>
-            <div class="proof-avatar"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block"></div>
-            <div class="proof-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=72&h=72&fit=crop&crop=face" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block"></div>
+          <div class="lp-proof-text">
+            <strong>Practitioners across</strong> <span class="lp-flags">🇳🇬 🇬🇧 🇺🇸 🇰🇪 🇬🇭 🇿🇦</span><br/>
+            Small cohorts · Live sessions · Field-verified certificate
           </div>
-          <p class="proof-text">
-            Be among the <strong>first Expert Practitioners</strong> to earn<br/>
-            their careers with AI in my Field
-          </p>
         </div>
       </div>
 
-      <!-- RIGHT: Visual — panel carousel (whole panel crossfades) -->
-      <div class="hero-visual fade-in" style="transition-delay:0.25s">
-        <div id="heroPanelWrap">
+      <!-- Stage -->
+      <div class="lp-stage" id="lp-stage" aria-hidden="true">
+        <div class="lp-stage-glow"></div>
 
-          <div>
-            <div style="position:relative;padding:0 22px 20px 0">
-              <div class="hero-img-frame">
-                <img
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=750&fit=crop&crop=center&auto=format&q=80"
-                  alt="A diverse global team of professionals collaborating on AI transformation"
-                />
-                <!-- Image overlay gradient -->
-                <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(2,16,36,0.6) 100%);pointer-events:none"></div>
-                <!-- Bottom caption -->
-                <div style="position:absolute;bottom:20px;left:20px;right:20px">
-                  <div style="font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:.08em">Brixgate Practitioners — Africa, UK &amp; US</div>
-                  <div style="font-size:0.72rem;color:rgba(255,255,255,0.55);margin-top:2px">Nigeria · Kenya · United Kingdom · United States</div>
-                </div>
+        <div class="lp-card lp-card-a" data-depth="1.4">
+          <div class="in">
+            <div class="lp-card-kicker">Sprint length</div>
+            <div class="lp-card-big">4 weeks</div>
+            <div class="lp-card-sub">to Expert Practitioner</div>
+          </div>
+        </div>
+
+        <div class="lp-card lp-card-b" data-depth="0.8">
+          <div class="in">
+            <div class="lp-live">
+              <span class="lp-live-tag"><span class="lp-dot"></span>LIVE COHORT</span>
+              <span class="lp-card-kicker">Week 2 of 4</span>
+            </div>
+            <div class="lp-live-title">Cybersecurity · Applied sprint</div>
+            <div class="lp-live-meta">Practitioner-led · Small group</div>
+            <div class="lp-live-row">
+              <div class="lp-avatars">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=60&h=60&fit=crop&crop=face" alt="" />
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" alt="" />
+                <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=60&h=60&fit=crop&crop=face" alt="" />
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=60&h=60&fit=crop&crop=face" alt="" />
               </div>
+              <span class="lp-live-count">+ cohort</span>
+            </div>
+            <div class="lp-bar"><i></i></div>
+            <div class="lp-bar-label"><span>Sprint progress</span><span>42%</span></div>
+          </div>
+        </div>
 
-              <!-- Floating badge: 4 Weeks -->
-              <div class="hero-img-badge hero-badge-weeks">
-                <div style="font-size:1.2rem;font-weight:900;color:#fff;line-height:1">4 Weeks</div>
-                <div style="font-size:0.68rem;color:rgba(255,255,255,0.6);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">To Expert Practitioner</div>
+        <div class="lp-card lp-card-c" data-depth="1.1">
+          <div class="in">
+            <div class="lp-cert">
+              <div class="lp-cert-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
               </div>
-
-              <!-- Floating badge: Fields -->
-              <div class="hero-img-badge hero-badge-fields">
-                <div style="font-size:0.65rem;font-weight:800;color:rgba(255,255,255,0.8);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px">Launching with</div>
-                <div style="font-size:1.1rem;font-weight:900;color:#fff">4 Programmes</div>
-              </div>
-
-              <!-- Floating badge: Certificate -->
-              <div class="hero-img-badge hero-badge-cert">
-                <div style="display:flex;align-items:center;gap:8px">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
-                  <div>
-                    <div style="font-size:0.72rem;font-weight:800;color:#fff;white-space:nowrap">Field-Verified</div>
-                    <div style="font-size:0.65rem;color:rgba(255,255,255,0.6)">Certificate</div>
-                  </div>
+              <div>
+                <div class="lp-cert-title">Expert Practitioner Certificate</div>
+                <div class="lp-cert-sub">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  Field-verified
                 </div>
               </div>
             </div>
           </div>
-
-          </div>
-
         </div>
       </div>
 
@@ -821,835 +791,389 @@
   </div>
 </section>
 
-<!-- ====== GLOBAL TICKER ====== -->
-<div class="global-ticker">
-  <div class="ticker-track">
-    <span class="ticker-item">Engineering &amp; Infrastructure</span>
-    <span class="ticker-item">Finance &amp; Banking</span>
-    <span class="ticker-item">Healthcare &amp; Medicine</span>
-    <span class="ticker-item">Legal &amp; Compliance</span>
-    <span class="ticker-item">Product Marketing</span>
-    <span class="ticker-item">Human Resources</span>
-    <span class="ticker-item">Cybersecurity</span>
-    <span class="ticker-item">Data &amp; Analytics</span>
-    <span class="ticker-item">Education &amp; Training</span>
-    <span class="ticker-item">Operations &amp; Supply Chain</span>
-    <span class="ticker-item">Marketing &amp; Sales</span>
-    <span class="ticker-item">Manufacturing</span>
-    <!-- Repeat for seamless loop -->
-    <span class="ticker-item">Engineering &amp; Infrastructure</span>
-    <span class="ticker-item">Finance &amp; Banking</span>
-    <span class="ticker-item">Healthcare &amp; Medicine</span>
-    <span class="ticker-item">Legal &amp; Compliance</span>
-    <span class="ticker-item">Product Marketing</span>
-    <span class="ticker-item">Human Resources</span>
-    <span class="ticker-item">Cybersecurity</span>
-    <span class="ticker-item">Data &amp; Analytics</span>
-    <span class="ticker-item">Education &amp; Training</span>
-    <span class="ticker-item">Operations &amp; Supply Chain</span>
-    <span class="ticker-item">Marketing &amp; Sales</span>
-    <span class="ticker-item">Manufacturing</span>
+<!-- ============================================================
+     FIELDS MARQUEE
+     ============================================================ -->
+<div class="lp-marquee" aria-label="Fields we build for">
+  <div class="lp-marquee-label">Fields we're building for</div>
+  <div class="lp-marquee-viewport">
+    <div class="lp-marquee-track">
+      <span class="lp-chip on">Software Engineering</span>
+      <span class="lp-chip on">Cybersecurity</span>
+      <span class="lp-chip on">Financial Modelling</span>
+      <span class="lp-chip on">Product Marketing</span>
+      <span class="lp-chip">Data &amp; Analytics</span>
+      <span class="lp-chip">Cloud &amp; DevOps</span>
+      <span class="lp-chip">Healthcare &amp; Medicine</span>
+      <span class="lp-chip">Legal &amp; Compliance</span>
+      <span class="lp-chip">Human Resources</span>
+      <span class="lp-chip">Education &amp; Training</span>
+      <span class="lp-chip">Operations &amp; Supply Chain</span>
+      <span class="lp-chip">Manufacturing</span>
+      <!-- duplicate for seamless loop -->
+      <span class="lp-chip on">Software Engineering</span>
+      <span class="lp-chip on">Cybersecurity</span>
+      <span class="lp-chip on">Financial Modelling</span>
+      <span class="lp-chip on">Product Marketing</span>
+      <span class="lp-chip">Data &amp; Analytics</span>
+      <span class="lp-chip">Cloud &amp; DevOps</span>
+      <span class="lp-chip">Healthcare &amp; Medicine</span>
+      <span class="lp-chip">Legal &amp; Compliance</span>
+      <span class="lp-chip">Human Resources</span>
+      <span class="lp-chip">Education &amp; Training</span>
+      <span class="lp-chip">Operations &amp; Supply Chain</span>
+      <span class="lp-chip">Manufacturing</span>
+    </div>
   </div>
 </div>
 
+<!-- ============================================================
+     STATS
+     ============================================================ -->
+<section class="lp-section tight">
+  <div class="lp-container">
+    <div class="lp-head fade-up" style="margin-bottom:48px">
+      <span class="lp-eyebrow">The gap is real</span>
+      <h2 class="lp-h2">AI is reshaping every profession.<br/>Most professionals aren't ready.</h2>
+      <p class="lp-lead">Generic AI-tools training is everywhere. Field-specific, practitioner-led transformation is what closes the gap.</p>
+    </div>
 
-<!-- ====== READINESS STRIP ====== -->
-<!-- <div style="background:var(--bg-card);padding:16px 24px">
-  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:12px">
-      <div style="width:32px;height:32px;background:rgba(255,41,78,0.1);border:1px solid rgba(255,41,78,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--red);font-weight:900;flex-shrink:0">?</div>
-      <div>
-        <div style="font-size:0.82rem;font-weight:700;color:var(--white)">Not sure where you stand with AI in your profession?</div>
-        <div style="font-size:0.75rem;color:var(--muted)">Take the free 3-minute check — no sign-up, instant result</div>
+    <div class="lp-stats stagger">
+      <div class="lp-stat fade-up">
+        <div class="lp-stat-num"><span data-count="87" data-suffix="%">0%</span></div>
+        <div class="lp-stat-title">of executives cite AI skills gaps as their top workforce risk</div>
+        <div class="lp-stat-desc">The gap between AI capability and professional readiness widens every quarter.</div>
       </div>
-    </div>
-    <a href="aiquiz.html" style="font-size:0.8rem;font-weight:700;color:var(--red);white-space:nowrap;border:1px solid rgba(255,41,78,0.3);padding:8px 18px;border-radius:20px;text-decoration:none;background:rgba(255,41,78,0.06);transition:background 0.2s" onmouseover="this.style.background='rgba(255,41,78,0.12)'" onmouseout="this.style.background='rgba(255,41,78,0.06)'">Take the AI Readiness Check   </a>
-  </div>
-</div> -->
-
-
-<!-- ====== QUICK PROGRAMME BROWSER ====== -->
-<section style="padding:72px 0 56px;background:#F6F4F2">
-  <div class="container">
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px">
-      <div>
-        <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--red);margin-bottom:8px">Be AI-Native in Your Field in Under 4 Weeks.</div>
-        <h2 style="font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:900;color:#021024;line-height:1.2">4 Programmes Open Now.<br/>More Unlocking Throughout 2026.</h2>
+      <div class="lp-stat fade-up">
+        <div class="lp-stat-num"><span data-count="3" data-suffix="×">0×</span></div>
+        <div class="lp-stat-title">productivity gap between AI-native and AI-aware professionals</div>
+        <div class="lp-stat-desc">Awareness isn't enough. The professionals who win have embedded AI into daily practice.</div>
       </div>
-      <a href="programme.html" style="font-size:0.88rem;font-weight:700;color:var(--red);white-space:nowrap;display:flex;align-items:center;gap:6px;text-decoration:none">Browse all programmes   </a>
-    </div>
-
-    <!-- ═══ NEW CARD DESIGN (TEMP — to revert, delete this block and uncomment ORIGINAL CARDS below) ═══ -->
-    <style>
-      .prog-card-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-        margin-bottom: 16px;
-      }
-      .prog-card-new {
-        display: flex;
-        flex-direction: column;
-        border-radius: 20px;
-        overflow: hidden;
-        text-decoration: none;
-        transition: transform .2s, box-shadow .2s;
-        flex-shrink: 0;
-        min-height: 380px;
-      }
-      .prog-card-new:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 16px 40px rgba(0,0,0,0.13);
-      }
-      .prog-card-img-frame {
-        flex: 1;
-        position: relative;
-        display: flex;
-        align-items: flex-end;
-        overflow: hidden;
-      }
-      .prog-card-img-frame img {
-        width: 100%;
-        height: auto;
-        display: block;
-        object-fit: contain;
-        object-position: bottom center;
-        border-radius: 12px 12px 0 0;
-      }
-      .prog-card-view-btn {
-        position: absolute;
-        bottom: 12px;
-        right: 12px;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        background: rgba(2,16,36,0.55);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        color: #fff;
-        font-size: 0.78rem;
-        font-weight: 700;
-        border-radius: 30px;
-        padding: 7px 14px;
-        letter-spacing: .02em;
-        white-space: nowrap;
-      }
-      @media (max-width: 700px) {
-        .prog-card-grid {
-          display: flex;
-          flex-direction: row;
-          overflow-x: auto;
-          -webkit-overflow-scrolling: touch;
-          scroll-snap-type: x mandatory;
-          gap: 12px;
-          padding-bottom: 12px;
-          /* hide scrollbar but keep scroll */
-          scrollbar-width: none;
-          -ms-overflow-style: none;
-        }
-        .prog-card-grid::-webkit-scrollbar { display: none; }
-        .prog-card-new {
-          min-width: 72vw;
-          max-width: 72vw;
-          scroll-snap-align: start;
-        }
-      }
-      @media (max-width: 480px) {
-        .prog-card-new {
-          min-width: 80vw;
-          max-width: 80vw;
-        }
-      }
-    </style>
-
-    <style>
-      @keyframes livePulse {
-        0%, 100% { transform: scale(1); opacity: 0.5; }
-        50%       { transform: scale(2.2); opacity: 0; }
-      }
-    </style>
-
-    <div class="prog-card-grid">
-
-      <!-- Software Engineering — OPEN (shown first) -->
-      <a href="programme-engineering.html" class="prog-card-new" style="background:#D4E9F7">
-        <div style="padding:22px 20px 14px">
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:0.68rem;font-weight:700;color:#021024;border:1.5px solid rgba(2,16,36,0.28);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">
-            <span style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:8px;height:8px;flex-shrink:0">
-              <span style="position:absolute;width:8px;height:8px;border-radius:50%;background:#22c55e;animation:livePulse 1.8s ease-in-out infinite;opacity:0.5"></span>
-              <span style="position:relative;width:6px;height:6px;border-radius:50%;background:#22c55e;display:block"></span>
-            </span>
-            Open
-          </span>
-          <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Software Engineering</div>
-          <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Write code that ships. Debug like it's production, because it is.</div>
-        </div>
-        <div class="prog-card-img-frame">
-          <img src="assets/Software Engineering.png" alt="Software Engineering" loading="lazy" />
-          <span class="prog-card-view-btn">View Courses   </span>
-        </div>
-      </a>
-
-      <!-- Product Marketing — Open -->
-      <a href="programme-marketing.html" class="prog-card-new" style="background:#3DD9C3">
-        <div style="padding:22px 20px 14px">
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:0.68rem;font-weight:700;color:#021024;border:1.5px solid rgba(2,16,36,0.28);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">
-            <span style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:8px;height:8px;flex-shrink:0">
-              <span style="position:absolute;width:8px;height:8px;border-radius:50%;background:#22c55e;animation:livePulse 1.8s ease-in-out infinite;opacity:0.5"></span>
-              <span style="position:relative;width:6px;height:6px;border-radius:50%;background:#22c55e;display:block"></span>
-            </span>
-            Open
-          </span>
-          <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Product Marketing</div>
-          <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Position products people actually want, then prove it with numbers that hold up.</div>
-        </div>
-        <div class="prog-card-img-frame">
-          <img src="assets/Product Marketing.png" alt="Product Marketing" loading="lazy" />
-          <span class="prog-card-view-btn">View Course   </span>
-        </div>
-      </a>
-
-      <!-- Cybersecurity — Open -->
-      <a href="programme-cybersecurity.html" class="prog-card-new" style="background:#F0EAD8">
-        <div style="padding:22px 20px 14px">
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:0.68rem;font-weight:700;color:#021024;border:1.5px solid rgba(2,16,36,0.28);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">
-            <span style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:8px;height:8px;flex-shrink:0">
-              <span style="position:absolute;width:8px;height:8px;border-radius:50%;background:#22c55e;animation:livePulse 1.8s ease-in-out infinite;opacity:0.5"></span>
-              <span style="position:relative;width:6px;height:6px;border-radius:50%;background:#22c55e;display:block"></span>
-            </span>
-            Open
-          </span>
-          <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Cybersecurity</div>
-          <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Chase intrusions, patch the holes, think like the attacker before they do.</div>
-        </div>
-        <div class="prog-card-img-frame">
-          <img src="assets/Cybersecurity.png" alt="Cybersecurity" loading="lazy" />
-          <span class="prog-card-view-btn">View Course   </span>
-        </div>
-      </a>
-
-      <!-- Financial Modelling — Open -->
-      <a href="programme-finance.html" class="prog-card-new" style="background:#E8E0F5">
-        <div style="padding:22px 20px 14px">
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:0.68rem;font-weight:700;color:#021024;border:1.5px solid rgba(2,16,36,0.28);border-radius:30px;padding:3px 11px;margin-bottom:12px;letter-spacing:.04em">
-            <span style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:8px;height:8px;flex-shrink:0">
-              <span style="position:absolute;width:8px;height:8px;border-radius:50%;background:#22c55e;animation:livePulse 1.8s ease-in-out infinite;opacity:0.5"></span>
-              <span style="position:relative;width:6px;height:6px;border-radius:50%;background:#22c55e;display:block"></span>
-            </span>
-            Open
-          </span>
-          <div style="font-size:1.5rem;font-weight:900;color:#021024;line-height:1.1;margin-bottom:8px">Financial Modelling</div>
-          <div style="font-size:0.8rem;color:rgba(2,16,36,0.65);line-height:1.55">Turn spreadsheets into decisions. Stress-test the numbers until they can't lie.</div>
-        </div>
-        <div class="prog-card-img-frame">
-          <img src="assets/Financial Modelling.png" alt="Financial Modelling" loading="lazy" />
-          <span class="prog-card-view-btn">View Course   </span>
-        </div>
-      </a>
-
-    </div>
-    <!-- ═══ END NEW CARD DESIGN ═══ -->
-
-    <!-- ═══ ORIGINAL CARDS (commented out — restore by removing these comment tags) ═══
-    <div class="field-grid-quick" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
-
-      <a href="programme-product.html" class="field-card-quick">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:0.88rem;font-weight:800;color:#021024;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Product Marketing</div>
-          <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-top:1px">● Open</div>
-        </div>
-        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0">  </span>
-      </a>
-
-      <a href="programme-cybersecurity.html" class="field-card-quick">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:0.88rem;font-weight:800;color:#021024;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Cybersecurity</div>
-          <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-top:1px">● Open</div>
-        </div>
-        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0">  </span>
-      </a>
-
-      <a href="programme-engineering.html" class="field-card-quick">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:0.88rem;font-weight:800;color:#021024;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Software Engineering</div>
-          <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-top:1px">● Open</div>
-        </div>
-        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0">  </span>
-      </a>
-
-      <a href="programme-devops.html" class="field-card-quick">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:0.88rem;font-weight:800;color:#021024;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Cloud &amp; DevOps</div>
-          <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-top:1px">● Open</div>
-        </div>
-        <span style="color:var(--red);font-weight:900;font-size:0.9rem;flex-shrink:0">  </span>
-      </a>
-
-    </div>
-    ═══ END ORIGINAL CARDS ═══ -->
-
-    <!-- Coming soon / inactive programmes hidden -->
-    <!--
-    <div class="field-grid-quick" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
-      Data Science, Finance, Marketing, Project Management, HR, Legal, Healthcare, Education
-    </div>
-    -->
-
-  </div>
-</section>
-
-
-<!-- Event banner removed -->
-
-
-<!-- ====== THE PROBLEM ====== -->
-<section class="section-pad bg-light">
-  <div class="container">
-    <div class="section-header fade-up">
-      <span class="eyebrow">The Gap Is Real</span>
-      <h2>AI is already reshaping every profession.<br/>Most professionals aren't ready.</h2>
-      <div class="divider-red"></div>
-      <p>Generic AI tools training is everywhere. Field-specific, practitioner-led transformation — that is what Brixgate provides.</p>
-    </div>
-
-    <div class="problem-grid stagger">
-      <div class="problem-item fade-up">
-        <span class="stat">87%</span>
-        <h4>of executives cite AI skills gaps as their top workforce risk</h4>
-        <p>The gap between AI capability and professional readiness is widening every quarter. Generic upskilling is not closing it.</p>
+      <div class="lp-stat fade-up">
+        <div class="lp-stat-num"><span data-count="92" data-suffix="%">0%</span></div>
+        <div class="lp-stat-title">of generic AI programmes fail to produce real workflow change</div>
+        <div class="lp-stat-desc">Theory without field context doesn't stick. Curriculum has to come from inside the profession.</div>
       </div>
-      <div class="problem-item fade-up">
-        <span class="stat">3×</span>
-        <h4>productivity gap between AI-native and AI-aware professionals</h4>
-        <p>It is not enough to be aware of AI. The professionals who win are those who have embedded it into their daily practice.</p>
-      </div>
-      <div class="problem-item fade-up">
-        <span class="stat">92%</span>
-        <h4>of generic AI programmes fail to produce real workflow change</h4>
-        <p>Theory without field context doesn't stick. Professionals need curriculum built from the inside of their own profession.</p>
-      </div>
-      <div class="problem-item fade-up">
-        <span class="stat">$1.5T</span>
-        <h4>in projected value sits locked inside AI-unready organisations</h4>
-        <p>The organisations that unlock AI at the practitioner level — not just the executive level — will capture disproportionate value.</p>
+      <div class="lp-stat fade-up">
+        <div class="lp-stat-num"><span class="accent">$</span>1.5T</div>
+        <div class="lp-stat-title">in projected value locked inside AI-unready organisations</div>
+        <div class="lp-stat-desc">Organisations that unlock AI at practitioner level capture disproportionate value.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ====== PROGRAMME OVERVIEW ====== -->
-<section class="section-pad bg-dark">
-  <div class="container">
-    <div class="programme-intro">
-      <div class="programme-intro-text slide-left">
-        <span class="eyebrow">AI in my Field</span>
-        <h2>Not a Course.<br/>A Career-Defining Transformation.</h2>
-        <p>AI application is unique to every profession, which is why Brixgate builds every curriculum from scratch. Our programs are designed and delivered by industry practitioners who have already mastered AI in your specific field.</p>
-
-        <div class="diff-list">
-          <div class="diff-item">
-            <div class="diff-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
-            <span><strong>Field-native curriculum</strong> — built for your profession, not repurposed generic content</span>
-          </div>
-          <div class="diff-item">
-            <div class="diff-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-            <span><strong>Practitioner-led</strong> — taught by people who have already done it in your domain</span>
-          </div>
-          <div class="diff-item">
-            <div class="diff-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-            <span><strong>Applied, not theoretical</strong> — real projects, real deliverables, real workflow change</span>
-          </div>
-          <div class="diff-item">
-            <div class="diff-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
-            <span><strong>Certified</strong> Brixgate Expert Practitioner Certificate, field-verified</span>
-          </div>
+<!-- ============================================================
+     PROGRAMMES
+     ============================================================ -->
+<section class="lp-section lp-surface" id="programmes">
+  <div class="lp-container">
+    <div class="lp-prog-head fade-up">
+      <div class="lp-head" style="max-width:640px">
+        <span class="lp-eyebrow">Programmes</span>
+        <h2 class="lp-h2">Four fields open now.<br/>More unlocking through 2026.</h2>
+      </div>
+      <div class="lp-prog-tools">
+        <div class="lp-seg" role="group" aria-label="Currency">
+          <button type="button" class="cur-btn active" data-cur="ngn">NGN</button>
+          <button type="button" class="cur-btn" data-cur="usd">USD</button>
         </div>
-
-        <a href="programme.html" class="btn btn-primary">View Full Programme</a>
+        <a href="programme.html" class="lp-link">Browse all
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
       </div>
+    </div>
 
-      <div class="programme-visual slide-right">
-        <div class="programme-visual-header">Flagship Product</div>
-        <div class="programme-name">AI in <span>my Field</span></div>
-        <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Expert Practitioner Programme — building the AI-native professionals that every sector now needs.</p>
+    <div class="lp-prog-grid stagger">
 
-        <div class="programme-meta">
-          <div class="meta-row">
-            <span class="meta-label">Format</span>
-            <span class="meta-value">4-Week Intensive Sprint</span>
-          </div>
-          <div class="meta-row">
-            <span class="meta-label">Delivery</span>
-            <span class="meta-value">Live Sessions + Applied Projects</span>
-          </div>
-          <div class="meta-row">
-            <span class="meta-label">Cohort</span>
-            <span class="meta-value">Small Group · Expert-Led</span>
-          </div>
-          <div class="meta-row">
-            <span class="meta-label">Outcome</span>
-            <span class="meta-value red">Expert Practitioner Certificate</span>
-          </div>
-          <div class="meta-row">
-            <span class="meta-label">Individual from</span>
-            <span class="meta-value red">
-              <span class="currency-usd">$156</span>
-              <span class="currency-ngn">₦250,000</span>
-            </span>
-          </div>
+      <a href="programme-engineering.html" class="lp-prog fade-up">
+        <div class="lp-prog-top">
+          <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
+          <span class="lp-prog-dur">4-week sprint</span>
         </div>
+        <div class="lp-prog-art" style="background:#D4E9F7">
+          <img src="assets/Software Engineering.png" alt="" loading="lazy" />
+        </div>
+        <div class="lp-prog-name">Software Engineering</div>
+        <div class="lp-prog-desc">Write code that ships. Debug like it's production, because it is.</div>
+        <div class="lp-prog-foot">
+          <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
+          <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+        </div>
+      </a>
 
-        <a href="apply.html" class="btn btn-primary" style="width:100%;justify-content:center">Apply for Next Cohort</a>
-      </div>
+      <a href="programme-cybersecurity.html" class="lp-prog fade-up">
+        <div class="lp-prog-top">
+          <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
+          <span class="lp-prog-dur">4-week sprint</span>
+        </div>
+        <div class="lp-prog-art" style="background:#F0EAD8">
+          <img src="assets/Cybersecurity.png" alt="" loading="lazy" />
+        </div>
+        <div class="lp-prog-name">Cybersecurity</div>
+        <div class="lp-prog-desc">Chase intrusions, patch the holes, think like the attacker before they do.</div>
+        <div class="lp-prog-foot">
+          <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
+          <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+        </div>
+      </a>
+
+      <a href="programme-finance.html" class="lp-prog fade-up">
+        <div class="lp-prog-top">
+          <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
+          <span class="lp-prog-dur">4-week sprint</span>
+        </div>
+        <div class="lp-prog-art" style="background:#E8E0F5">
+          <img src="assets/Financial Modelling.png" alt="" loading="lazy" />
+        </div>
+        <div class="lp-prog-name">Financial Modelling</div>
+        <div class="lp-prog-desc">Turn spreadsheets into decisions. Stress-test the numbers until they can't lie.</div>
+        <div class="lp-prog-foot">
+          <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
+          <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+        </div>
+      </a>
+
+      <a href="programme-marketing.html" class="lp-prog fade-up">
+        <div class="lp-prog-top">
+          <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
+          <span class="lp-prog-dur">4-week sprint</span>
+        </div>
+        <div class="lp-prog-art" style="background:#D6F5EF">
+          <img src="assets/Product Marketing.png" alt="" loading="lazy" />
+        </div>
+        <div class="lp-prog-name">Product Marketing</div>
+        <div class="lp-prog-desc">Position products people actually want, then prove it with numbers that hold up.</div>
+        <div class="lp-prog-foot">
+          <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
+          <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+        </div>
+      </a>
+
     </div>
 
-    <!-- 3 Pillars -->
-    <!-- <div class="section-header fade-up">
-      <span class="eyebrow">The Framework</span>
-      <h2>Three Pillars. One Transformation.</h2>
-      <div class="divider-red"></div>
-    </div>
-
-    <div class="grid-3 stagger">
-      <div class="pillar-card fade-up">
-        <div class="pillar-num">01</div>
-        <div class="pillar-title">Capacity</div>
-        <p class="pillar-body">Technical and conceptual fluency to use AI effectively in your specific field. Not general literacy — field-specific depth that lets you lead, not just follow.</p>
-      </div>
-      <div class="pillar-card fade-up">
-        <div class="pillar-num">02</div>
-        <div class="pillar-title">Character</div>
-        <p class="pillar-body">Professional judgment to deploy AI ethically, accountably, and confidently. The practitioners who earn trust in the AI era are those who bring integrity to every decision.</p>
-      </div>
-      <div class="pillar-card fade-up">
-        <div class="pillar-num">03</div>
-        <div class="pillar-title">Cadence</div>
-        <p class="pillar-body">Habits and workflows that embed AI into daily practice so it compounds over time. Not a one-off sprint — a permanent shift in how you work, think, and deliver.</p>
-      </div>
-    </div> -->
-  </div>
-</section>
-
-<!-- ====== TALENT JOURNEY ====== -->
-<section class="section-pad bg-light">
-  <div class="container">
-    <div class="section-header fade-up">
-      <span class="eyebrow">Your Journey</span>
-      <h2>From Professional to<br/>Expert Practitioner in 4 Steps</h2>
-      <div class="divider-red"></div>
-      <p>Every participant moves through a structured journey — from where you are today to where the AI era demands you to be.</p>
-    </div>
-
-    <div style="background:#fff;border-radius:20px;padding:32px 24px 28px;box-shadow:0 2px 24px rgba(0,0,0,0.06);">
-    <div class="journey-steps stagger">
-      <div class="journey-step fade-up">
-        <div class="step-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg></div>
-        <div class="step-title"> Apply &amp; Express Interest</div>
-        <div class="step-desc">Share your field and goals. Every application is reviewed personally no automated filtering.</div>
-      </div>
-      <div class="journey-step fade-up">
-        <div class="step-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
-        <div class="step-title"> Field Assessment</div>
-        <div class="step-desc">A quick mapping of your AI readiness where you are now and where to focus your sprint.</div>
-      </div>
-      <div class="journey-step fade-up">
-        <div class="step-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        <div class="step-title"> Placed in Your Cohort</div>
-        <div class="step-desc">You join a small, field-specific cohort led by a practitioner who has already deployed AI in your domain.</div>
-      </div>
-      <div class="journey-step fade-up">
-        <div class="step-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
-        <div class="step-title"> 4-Week Sprint + Certificate</div>
-        <div class="step-desc">Live sessions, real projects, peer cohort then your field-verified Brixgate Expert Practitioner Certificate.</div>
-      </div>
-    </div>
-    </div>
-
-    <div style="text-align:center;margin-top:28px" class="fade-up">
-      <div class="journey-cta-row" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center">
-        <a href="apply.html" class="btn btn-primary btn-lg">Begin Your Journey</a>
-        <a href="programme.html" class="btn btn-outline btn-lg">Full Programme Details</a>
-      </div>
+    <div class="lp-upcoming fade-up">
+      <span class="lp-upcoming-label">Unlocking in 2026</span>
+      <span class="lp-chip">Data &amp; Analytics</span>
+      <span class="lp-chip">Cloud &amp; DevOps</span>
+      <span class="lp-chip">Product Management</span>
+      <span class="lp-chip">Human Resources</span>
+      <span class="lp-chip">Legal</span>
+      <span class="lp-chip">Healthcare</span>
+      <span class="lp-chip">Education</span>
+      <span class="lp-chip">Operations</span>
+      <span class="lp-chip">Manufacturing</span>
     </div>
   </div>
 </section>
 
-<!-- ====== EXPERT TEASER ====== -->
-<section class="section-pad bg-light">
-  <div class="container">
-    <div class="section-header fade-up">
-      <span class="eyebrow">Our Expert Practitioners</span>
-      <h2 style="color:var(--bg-dark)">Taught by People Who Have<br/>Already Done It in Your Field</h2>
-      <div class="divider-red"></div>
-      <p>Every Brixgate expert is a verified practitioner — not an academic, not a generalist AI trainer. They are professionals who have already applied AI transformation in their specific domain.</p>
-    </div>
+<!-- ============================================================
+     WHY BRIXGATE
+     ============================================================ -->
+<section class="lp-section">
+  <div class="lp-container">
+    <div class="lp-why">
+      <div class="lp-why-left fade-up">
+        <span class="lp-eyebrow">Why Brixgate</span>
+        <h2 class="lp-h2">Not a course.<br/>A career-defining transformation.</h2>
+        <p class="lp-lead">AI application is unique to every profession — so we build every curriculum from scratch, with practitioners who have already mastered AI in your specific field.</p>
+        <a href="programme.html" class="lp-btn lp-btn-ink">View the full programme
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
 
-    <!-- Loading state -->
-    <div id="experts-teaser-loading" style="text-align:center;padding:40px 0;color:var(--muted);font-size:0.9rem">Loading practitioners…</div>
-
-    <!-- API-populated grid (hidden until loaded) -->
-    <div class="expert-teaser-grid stagger" id="experts-teaser-grid" style="display:none"></div>
-
-    <div style="text-align:center;margin-top:48px" class="fade-up">
-      <a href="experts.html" class="btn btn-outline-dark" style="margin-right:16px">Meet All Experts</a>
-      <a href="join-as-expert.html" class="btn btn-outline-red">Join as an Expert</a>
-    </div>
-  </div>
-</section>
-
-<script>
- 
-
-  function makeCard(e) {
-    var card = document.createElement('div');
-    card.className = 'expert-card fade-up visible';
-
-    /* Header */
-    var header = document.createElement('div');
-    header.className = 'expert-card-header';
-    if (e.profile_image_url) {
-      var img = document.createElement('img');
-      img.src = e.profile_image_url;
-      img.alt = e.name || 'Expert';
-      img.className = 'expert-avatar';
-      img.style.cssText = 'border-radius:50%;width:64px;height:64px;object-fit:cover;flex-shrink:0;';
-      img.onerror = function() { img.parentNode.replaceChild(makeAvatar(e.name), img); };
-      header.appendChild(img);
-    } else {
-      header.appendChild(makeAvatar(e.name));
-    }
-    var nameGroup = document.createElement('div');
-    var nameEl = document.createElement('div');
-    nameEl.className = 'expert-name';
-    nameEl.textContent = e.name || '';
-    var roleEl = document.createElement('div');
-    roleEl.className = 'expert-role';
-    roleEl.textContent = e.title || e.current_role || e.occupation || '';
-    nameGroup.appendChild(nameEl);
-    nameGroup.appendChild(roleEl);
-    header.appendChild(nameGroup);
-    card.appendChild(header);
-
-    /* Bio */
-    if (e.biography) {
-      var bio = document.createElement('p');
-      bio.className = 'expert-bio';
-      bio.textContent = e.biography.length > 200 ? e.biography.substring(0, 200) + '…' : e.biography;
-      card.appendChild(bio);
-    }
-
-    /* Expertise pills — split on comma, max 3 */
-    var expertiseSource = e.expertise || e.primary_field || '';
-    var pills = expertiseSource.split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 3);
-    if (pills.length) {
-      var pillWrap = document.createElement('div');
-      pillWrap.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px;padding:0 24px 16px;';
-      pills.forEach(function(pill) {
-        var tag = document.createElement('span');
-        tag.className = 'expert-field-tag';
-        tag.textContent = pill;
-        pillWrap.appendChild(tag);
-      });
-      card.appendChild(pillWrap);
-    }
-
-    /* Credentials */
-    var creds = document.createElement('div');
-    creds.className = 'expert-credentials';
-    var vBadge = document.createElement('span');
-    vBadge.className = 'credential-badge';
-    vBadge.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Verified Practitioner';
-    creds.appendChild(vBadge);
-    if (e.years_of_experience) {
-      var yoe = document.createElement('span');
-      yoe.className = 'credential-badge';
-      yoe.textContent = e.years_of_experience + '+ Years';
-      creds.appendChild(yoe);
-    }
-    if (e.location) {
-      var loc = document.createElement('span');
-      loc.className = 'credential-badge';
-      loc.textContent = e.location;
-      creds.appendChild(loc);
-    }
-    card.appendChild(creds);
-
-    /* LinkedIn */
-    if (e.linkedin_url) {
-      var liWrap = document.createElement('div');
-      liWrap.style.cssText = 'padding:14px 24px 20px;margin-top:14px;';
-      var liLink = document.createElement('a');
-      liLink.href = e.linkedin_url;
-      liLink.target = '_blank';
-      liLink.rel = 'noopener noreferrer';
-      liLink.style.cssText = 'display:inline-flex;align-items:center;gap:7px;font-size:0.8rem;color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s;';
-      liLink.onmouseover = function() { this.style.opacity = '0.75'; };
-      liLink.onmouseout  = function() { this.style.opacity = '1'; };
-      var liSvg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-      liSvg.setAttribute('width','14'); liSvg.setAttribute('height','14');
-      liSvg.setAttribute('viewBox','0 0 24 24'); liSvg.setAttribute('fill','currentColor');
-      var liPath = document.createElementNS('http://www.w3.org/2000/svg','path');
-      liPath.setAttribute('d','M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z');
-      liSvg.appendChild(liPath);
-      liLink.appendChild(liSvg);
-      liLink.appendChild(document.createTextNode('View LinkedIn'));
-      liWrap.appendChild(liLink);
-      card.appendChild(liWrap);
-    }
-
-    return card;
-  }
-
-  fetch(API_BASE + '/experts')
-    .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-    .then(function(json) {
-      var experts = json && json.data && json.data.experts;
-      if (!experts || experts.length === 0) { loadingEl.style.display = 'none'; return; }
-      /* Show first 3 only */
-      experts.slice(0, 3).forEach(function(expert) { grid.appendChild(makeCard(expert)); });
-      loadingEl.style.display = 'none';
-      grid.style.display = '';
-    })
-    .catch(function() {
-      /* On failure silently hide the loading text — CTAs below still visible */
-      loadingEl.style.display = 'none';
-    });
-})();
-</script>
-
-<!-- ====== FOR ORGANISATIONS TEASER ====== -->
-<section class="section-pad bg-dark">
-  <div class="container">
-    <div class="org-teaser fade-up">
-      <div>
-        <span class="eyebrow">For Organisations</span>
-        <h2>Build an AI-Native Team.<br/><span class="text-red">Not Just AI-Aware.</span></h2>
-        <p>Deploy AI transformation across your teams at scale. Brixgate's corporate packages are designed for organisations that need more than awareness — they need real practitioner-level capability, by field, by department, by role.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <a href="organisations.html#contact" class="btn btn-primary">Get a Quote</a>
-          <a href="organisations.html" class="btn btn-outline">Explore Corporate Packages</a>
+        <div class="lp-meta-card">
+          <div class="lp-meta-row"><span>Format</span><span>4-week intensive sprint</span></div>
+          <div class="lp-meta-row"><span>Delivery</span><span>Live sessions + applied projects</span></div>
+          <div class="lp-meta-row"><span>Cohort</span><span>Small group · Expert-led</span></div>
+          <div class="lp-meta-row"><span>Outcome</span><span class="red">Expert Practitioner Certificate</span></div>
         </div>
       </div>
-      <div class="org-packages-preview">
-        <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Corporate Packages</div>
-        <div class="org-package-row">
-          <div class="pkg-name">Starter</div>
-          <div class="pkg-seats">5 seats</div>
-        </div>
-        <div class="org-package-row">
-          <div class="pkg-name">Team Sprint</div>
-          <div class="pkg-seats">20 seats</div>
-        </div>
-        <div class="org-package-row">
-          <div class="pkg-name">Department Build</div>
-          <div class="pkg-seats">50 seats</div>
-        </div>
-        <div class="org-package-row">
-          <div class="pkg-name">Enterprise</div>
-          <div class="pkg-seats">100+ seats</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ====== TESTIMONIALS ====== -->
-<section class="section-pad bg-light" id="testimonials">
-  <div class="container">
-    <div class="section-header fade-up" style="margin-bottom:56px">
-      <span class="eyebrow">From Our Cohorts</span>
-      <h2 style="color:var(--bg-dark)">Real Practitioners.<br/>Real Results.</h2>
-      <div class="divider-red"></div>
-      <p style="color:#4A5568">These aren't hypothetical wins. Every quote is from someone who built something real during the programme.</p>
-    </div>
-  </div>
-
-  <div class="testimonial-outer">
-    <div class="testimonial-grid stagger">
-
-      <!-- Card 1 -->
-      <div class="testimonial-card fade-up">
-        <div class="testimonial-meta">
-          <div class="testimonial-avatar">OI</div>
+      <div class="lp-feat stagger">
+        <div class="lp-feat-row fade-up">
+          <div class="lp-feat-num">01</div>
           <div>
-            <div class="testimonial-name">Osho Iseoluwa</div>
-            <div class="testimonial-sub">Software Engineering Cohort · Built <span class="testimonial-project">Project Pulse</span></div>
+            <div class="lp-feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+            <div class="lp-feat-title">Field-native curriculum</div>
+            <div class="lp-feat-desc">Built for your profession from the ground up — never repurposed generic content. Every exercise maps to work you'll actually do.</div>
           </div>
         </div>
-        <blockquote class="testimonial-quote">
-          "I used to think prompting was just typing a request and hoping for the best. This programme taught me it takes tenacity and precision — the same discipline as writing actual code."
-        </blockquote>
-        <div class="testimonial-stack">
-          <span>Node.js</span><span>MongoDB</span><span>React</span><span>Vite</span>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="testimonial-card fade-up">
-        <div class="testimonial-meta">
-          <div class="testimonial-avatar">CU</div>
+        <div class="lp-feat-row fade-up">
+          <div class="lp-feat-num">02</div>
           <div>
-            <div class="testimonial-name">Chuka Ukachi</div>
-            <div class="testimonial-sub">Software Engineering Cohort · Built <span class="testimonial-project">Project Pulse</span></div>
+            <div class="lp-feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="lp-feat-title">Practitioner-led</div>
+            <div class="lp-feat-desc">Taught by verified professionals who have already deployed AI in your domain — not academics, not generalist AI trainers.</div>
           </div>
         </div>
-        <blockquote class="testimonial-quote">
-          "Even when my hardware gave out on me, I kept shipping. That's what this programme builds in you: the instinct to adapt and finish what you started."
-        </blockquote>
-        <div class="testimonial-stack">
-          <span>React</span><span>TypeScript</span><span>Express</span><span>SQLite</span>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="testimonial-card fade-up">
-        <div class="testimonial-meta">
-          <div class="testimonial-avatar">ZS</div>
+        <div class="lp-feat-row fade-up">
+          <div class="lp-feat-num">03</div>
           <div>
-            <div class="testimonial-name">Zainab Suleiman</div>
-            <div class="testimonial-sub">Software Engineering Cohort · Built <span class="testimonial-project">Project Pulse</span></div>
+            <div class="lp-feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+            <div class="lp-feat-title">Applied, not theoretical</div>
+            <div class="lp-feat-desc">Real projects, real deliverables, real workflow change. You leave with something you built — and the habits to keep building.</div>
           </div>
         </div>
-        <blockquote class="testimonial-quote">
-          "I kept accepting whatever the AI gave me until my code stopped making sense to me. Once I started asking it why, not just what, I actually became a better engineer."
-        </blockquote>
-        <div class="testimonial-stack">
-          <span>Python</span><span>FastAPI</span><span>Redis</span><span>Docker</span>
+        <div class="lp-feat-row fade-up">
+          <div class="lp-feat-num">04</div>
+          <div>
+            <div class="lp-feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+            <div class="lp-feat-title">Certified &amp; field-verified</div>
+            <div class="lp-feat-desc">Finish with the Brixgate Expert Practitioner Certificate — verifiable by any employer, anywhere.</div>
+          </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<style>
-  .testimonial-outer {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  .testimonial-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-  }
-
-  .testimonial-card {
-    background: #ffffff;
-    border: 1px solid #E2E8F0;
-    border-radius: var(--radius-lg);
-    padding: 36px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    transition: box-shadow 0.25s ease, transform 0.25s ease;
-  }
-  .testimonial-card:hover {
-    box-shadow: 0 12px 40px rgba(2,16,36,0.10);
-    transform: translateY(-4px);
-  }
-
-  .testimonial-meta {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .testimonial-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: var(--bg-dark);
-    color: #fff;
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.04em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .testimonial-name {
-    font-size: 0.97rem;
-    font-weight: 700;
-    color: var(--bg-dark);
-    line-height: 1.3;
-  }
-
-  .testimonial-sub {
-    font-size: 0.78rem;
-    color: #7A94A8;
-    margin-top: 2px;
-    line-height: 1.4;
-  }
-
-  .testimonial-project {
-    color: var(--red);
-    font-weight: 700;
-  }
-
-  .testimonial-quote {
-    font-size: 0.96rem;
-    line-height: 1.75;
-    color: #2E3A4A;
-    font-style: italic;
-    border-left: 3px solid var(--red);
-    padding-left: 18px;
-    margin: 0;
-    flex: 1;
-  }
-
-  .testimonial-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .testimonial-stack span {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    color: #4A5568;
-    background: #F1F5F9;
-    border: 1px solid #E2E8F0;
-    border-radius: 6px;
-    padding: 4px 10px;
-  }
-
-  @media (max-width: 960px) {
-    .testimonial-grid { grid-template-columns: 1fr; }
-    .testimonial-outer { padding: 0 20px; }
-    .testimonial-card { gap: 20px; padding: 28px 24px; }
-  }
-</style>
-
-<!-- ====== INSTAGRAM VIDEOS ====== -->
-<section class="section-pad ig-videos-section">
-  <div class="container">
-    <div class="section-header fade-up" style="text-align:center;margin-bottom:48px">
-      <span class="eyebrow">From Our Community</span>
-      <h2 style="color:var(--bg-dark)">Want to Hear More?</h2>
-      <div class="divider-red"></div>
-      <p style="max-width:520px;margin:0 auto">Hear directly from our practitioners and experts — in their own words.</p>
+<!-- ============================================================
+     JOURNEY
+     ============================================================ -->
+<section class="lp-section lp-surface">
+  <div class="lp-container">
+    <div class="lp-head center fade-up">
+      <span class="lp-eyebrow">Your journey</span>
+      <h2 class="lp-h2">From professional to Expert Practitioner in four steps.</h2>
+      <p class="lp-lead">A structured path from where you are today to where the AI era needs you to be.</p>
     </div>
-    <div class="ig-video-grid">
-      <div class="ig-video-card fade-up" data-src="assets/613e33708baf44b09faf7a3914e0225c (1).mp4">
-        <video class="ig-video-thumb" src="assets/613e33708baf44b09faf7a3914e0225c (1).mp4" preload="metadata" muted playsinline></video>
-        <div class="ig-play-btn"><div class="ig-play-btn-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+
+    <div class="lp-steps stagger">
+      <div class="lp-step fade-up">
+        <div class="lp-step-n">01</div>
+        <div class="lp-step-title">Apply &amp; express interest</div>
+        <div class="lp-step-desc">Share your field and goals. Every application is reviewed personally — no automated filtering.</div>
       </div>
-      <div class="ig-video-card fade-up" data-src="assets/Female Video.mp4">
-        <video class="ig-video-thumb" src="assets/Female Video.mp4" preload="metadata" muted playsinline></video>
-        <div class="ig-play-btn"><div class="ig-play-btn-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+      <div class="lp-step fade-up">
+        <div class="lp-step-n">02</div>
+        <div class="lp-step-title">Field assessment</div>
+        <div class="lp-step-desc">A quick mapping of your AI readiness — where you are now, and where to focus your sprint.</div>
       </div>
-      <div class="ig-video-card fade-up" data-src="assets/male Video.mp4">
-        <video class="ig-video-thumb" src="assets/male Video.mp4" preload="metadata" muted playsinline></video>
-        <div class="ig-play-btn"><div class="ig-play-btn-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+      <div class="lp-step fade-up">
+        <div class="lp-step-n">03</div>
+        <div class="lp-step-title">Placed in your cohort</div>
+        <div class="lp-step-desc">Join a small, field-specific cohort led by a practitioner who has already deployed AI in your domain.</div>
+      </div>
+      <div class="lp-step fade-up">
+        <div class="lp-step-n">04</div>
+        <div class="lp-step-title">4-week sprint + certificate</div>
+        <div class="lp-step-desc">Live sessions, real projects, a peer cohort — then your field-verified Expert Practitioner Certificate.</div>
+      </div>
+    </div>
+
+    <div class="lp-journey-cta fade-up">
+      <a href="apply.html" class="lp-btn lp-btn-red">Begin your journey
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="programme.html" class="lp-btn lp-btn-ghost">Full programme details</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     EXPERTS (API-fed)
+     ============================================================ -->
+<section class="lp-section" id="experts">
+  <div class="lp-container">
+    <div class="lp-head center fade-up">
+      <span class="lp-eyebrow">Our Expert Practitioners</span>
+      <h2 class="lp-h2">Taught by people who have already done it in your field.</h2>
+      <p class="lp-lead">Every Brixgate expert is a verified practitioner — professionals who have applied AI transformation in their own domain.</p>
+    </div>
+
+    <div class="lp-exp-grid" id="lp-exp-grid">
+      <div class="lp-skel"><i style="width:56px;height:56px;border-radius:50%"></i><i style="height:14px;width:60%;margin-top:18px"></i><i style="height:12px;width:40%;margin-top:8px"></i><i style="height:12px;margin-top:22px"></i><i style="height:12px;margin-top:8px"></i><i style="height:12px;width:85%;margin-top:8px"></i></div>
+      <div class="lp-skel"><i style="width:56px;height:56px;border-radius:50%"></i><i style="height:14px;width:60%;margin-top:18px"></i><i style="height:12px;width:40%;margin-top:8px"></i><i style="height:12px;margin-top:22px"></i><i style="height:12px;margin-top:8px"></i><i style="height:12px;width:85%;margin-top:8px"></i></div>
+      <div class="lp-skel"><i style="width:56px;height:56px;border-radius:50%"></i><i style="height:14px;width:60%;margin-top:18px"></i><i style="height:12px;width:40%;margin-top:8px"></i><i style="height:12px;margin-top:22px"></i><i style="height:12px;margin-top:8px"></i><i style="height:12px;width:85%;margin-top:8px"></i></div>
+    </div>
+
+    <div class="lp-exp-cta fade-up">
+      <a href="experts.html" class="lp-btn lp-btn-ink">Meet all experts</a>
+      <a href="join-as-expert.html" class="lp-btn lp-btn-ghost">Join as an expert</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIALS
+     ============================================================ -->
+<section class="lp-section lp-surface" id="testimonials">
+  <div class="lp-container">
+    <div class="lp-head center fade-up">
+      <span class="lp-eyebrow">From our cohorts</span>
+      <h2 class="lp-h2">Real practitioners. Real results.</h2>
+      <p class="lp-lead">Every quote is from someone who built something real during the programme.</p>
+    </div>
+
+    <div class="lp-quotes stagger">
+      <div class="lp-quote fade-up">
+        <svg class="lp-quote-mark" viewBox="0 0 36 36" fill="currentColor" aria-hidden="true"><path d="M10.5 22.5c-2.2 0-4-.8-5.3-2.3C3.9 18.7 3.2 16.8 3.2 14.5c0-2.9.9-5.6 2.7-8.1C7.7 3.9 10.1 2 13.1.6l1.4 2.4c-2 1-3.6 2.3-4.8 3.9-1.2 1.6-1.8 3.2-1.8 4.9 0 .5.1.9.2 1.2.7-.6 1.7-.9 2.9-.9 1.8 0 3.2.6 4.3 1.7 1.1 1.1 1.6 2.5 1.6 4.2 0 1.7-.6 3.1-1.8 4.2-1.2 1-2.7 1.5-4.6 1.5zm17.8 0c-2.2 0-4-.8-5.3-2.3-1.3-1.5-2-3.4-2-5.7 0-2.9.9-5.6 2.7-8.1C25.5 3.9 27.9 2 30.9.6l1.4 2.4c-2 1-3.6 2.3-4.8 3.9-1.2 1.6-1.8 3.2-1.8 4.9 0 .5.1.9.2 1.2.7-.6 1.7-.9 2.9-.9 1.8 0 3.2.6 4.3 1.7 1.1 1.1 1.6 2.5 1.6 4.2 0 1.7-.6 3.1-1.8 4.2-1.2 1-2.7 1.5-4.6 1.5z"/></svg>
+        <p class="lp-quote-text">I used to think prompting was just typing a request and hoping for the best. This programme taught me it takes tenacity and precision — the same discipline as writing actual code.</p>
+        <div class="lp-quote-stack"><span class="lp-chip">Node.js</span><span class="lp-chip">MongoDB</span><span class="lp-chip">React</span><span class="lp-chip">Vite</span></div>
+        <div class="lp-quote-meta">
+          <div class="lp-quote-ava">OI</div>
+          <div>
+            <div class="lp-quote-name">Osho Iseoluwa</div>
+            <div class="lp-quote-sub">Software Engineering Cohort · Built <b>Project Pulse</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lp-quote fade-up">
+        <svg class="lp-quote-mark" viewBox="0 0 36 36" fill="currentColor" aria-hidden="true"><path d="M10.5 22.5c-2.2 0-4-.8-5.3-2.3C3.9 18.7 3.2 16.8 3.2 14.5c0-2.9.9-5.6 2.7-8.1C7.7 3.9 10.1 2 13.1.6l1.4 2.4c-2 1-3.6 2.3-4.8 3.9-1.2 1.6-1.8 3.2-1.8 4.9 0 .5.1.9.2 1.2.7-.6 1.7-.9 2.9-.9 1.8 0 3.2.6 4.3 1.7 1.1 1.1 1.6 2.5 1.6 4.2 0 1.7-.6 3.1-1.8 4.2-1.2 1-2.7 1.5-4.6 1.5zm17.8 0c-2.2 0-4-.8-5.3-2.3-1.3-1.5-2-3.4-2-5.7 0-2.9.9-5.6 2.7-8.1C25.5 3.9 27.9 2 30.9.6l1.4 2.4c-2 1-3.6 2.3-4.8 3.9-1.2 1.6-1.8 3.2-1.8 4.9 0 .5.1.9.2 1.2.7-.6 1.7-.9 2.9-.9 1.8 0 3.2.6 4.3 1.7 1.1 1.1 1.6 2.5 1.6 4.2 0 1.7-.6 3.1-1.8 4.2-1.2 1-2.7 1.5-4.6 1.5z"/></svg>
+        <p class="lp-quote-text">Even when my hardware gave out on me, I kept shipping. That's what this programme builds in you: the instinct to adapt and finish what you started.</p>
+        <div class="lp-quote-stack"><span class="lp-chip">React</span><span class="lp-chip">TypeScript</span><span class="lp-chip">Express</span><span class="lp-chip">SQLite</span></div>
+        <div class="lp-quote-meta">
+          <div class="lp-quote-ava">CU</div>
+          <div>
+            <div class="lp-quote-name">Chuka Ukachi</div>
+            <div class="lp-quote-sub">Software Engineering Cohort · Built <b>Project Pulse</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lp-quote fade-up">
+        <svg class="lp-quote-mark" viewBox="0 0 36 36" fill="currentColor" aria-hidden="true"><path d="M10.5 22.5c-2.2 0-4-.8-5.3-2.3C3.9 18.7 3.2 16.8 3.2 14.5c0-2.9.9-5.6 2.7-8.1C7.7 3.9 10.1 2 13.1.6l1.4 2.4c-2 1-3.6 2.3-4.8 3.9-1.2 1.6-1.8 3.2-1.8 4.9 0 .5.1.9.2 1.2.7-.6 1.7-.9 2.9-.9 1.8 0 3.2.6 4.3 1.7 1.1 1.1 1.6 2.5 1.6 4.2 0 1.7-.6 3.1-1.8 4.2-1.2 1-2.7 1.5-4.6 1.5zm17.8 0c-2.2 0-4-.8-5.3-2.3-1.3-1.5-2-3.4-2-5.7 0-2.9.9-5.6 2.7-8.1C25.5 3.9 27.9 2 30.9.6l1.4 2.4c-2 1-3.6 2.3-4.8 3.9-1.2 1.6-1.8 3.2-1.8 4.9 0 .5.1.9.2 1.2.7-.6 1.7-.9 2.9-.9 1.8 0 3.2.6 4.3 1.7 1.1 1.1 1.6 2.5 1.6 4.2 0 1.7-.6 3.1-1.8 4.2-1.2 1-2.7 1.5-4.6 1.5z"/></svg>
+        <p class="lp-quote-text">I kept accepting whatever the AI gave me until my code stopped making sense to me. Once I started asking it why, not just what, I actually became a better engineer.</p>
+        <div class="lp-quote-stack"><span class="lp-chip">Python</span><span class="lp-chip">FastAPI</span><span class="lp-chip">Redis</span><span class="lp-chip">Docker</span></div>
+        <div class="lp-quote-meta">
+          <div class="lp-quote-ava">ZS</div>
+          <div>
+            <div class="lp-quote-name">Zainab Suleiman</div>
+            <div class="lp-quote-sub">Software Engineering Cohort · Built <b>Project Pulse</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     VIDEOS
+     ============================================================ -->
+<section class="lp-section">
+  <div class="lp-container">
+    <div class="lp-head center fade-up">
+      <span class="lp-eyebrow">From our community</span>
+      <h2 class="lp-h2">Hear it in their own words.</h2>
+      <p class="lp-lead">Practitioners and experts on what changed for them.</p>
+    </div>
+
+    <div class="lp-videos stagger">
+      <div class="lp-video ig-video-card fade-up" data-src="assets/613e33708baf44b09faf7a3914e0225c (1).mp4">
+        <video src="assets/613e33708baf44b09faf7a3914e0225c (1).mp4" preload="metadata" muted playsinline></video>
+        <div class="lp-video-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="#021024"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
+        <div class="lp-video-cap">Practitioner story</div>
+      </div>
+      <div class="lp-video ig-video-card fade-up" data-src="assets/Female Video.mp4">
+        <video src="assets/Female Video.mp4" preload="metadata" muted playsinline></video>
+        <div class="lp-video-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="#021024"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
+        <div class="lp-video-cap">Practitioner story</div>
+      </div>
+      <div class="lp-video ig-video-card fade-up" data-src="assets/male Video.mp4">
+        <video src="assets/male Video.mp4" preload="metadata" muted playsinline></video>
+        <div class="lp-video-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="#021024"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
+        <div class="lp-video-cap">Practitioner story</div>
       </div>
     </div>
   </div>
@@ -1664,50 +1188,101 @@
   </div>
 </div>
 
-<!-- ====== GLOBAL PRESENCE ====== -->
-<section class="globe-section">
-  <div class="container">
-    <span class="eyebrow" style="color:var(--red)">Global Reach</span>
-    <h2>Building AI-Native Professionals.<br/>Everywhere.</h2>
-    <p>From Lagos to London. Nairobi to New York. Brixgate is a global AI expertise marketplace — rooted in Africa, built for the world.</p>
-
-    <div class="regions-grid stagger">
-      <div class="region-card fade-up">
-        <div class="region-flag"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-        <div class="region-title">Pan-Africa</div>
-        <div class="region-desc">Nigeria, Kenya, Ghana, South Africa and expanding across all 54 countries. Africa leads in our vision and our practice.</div>
+<!-- ============================================================
+     FOR ORGANISATIONS
+     ============================================================ -->
+<section class="lp-section tight">
+  <div class="lp-container">
+    <div class="lp-band fade-up">
+      <div>
+        <span class="lp-eyebrow">For organisations</span>
+        <h2 class="lp-h2">Build an AI-native team.<br/><span class="red">Not just AI-aware.</span></h2>
+        <p class="lp-lead">Deploy AI transformation across your teams at scale — real practitioner-level capability, by field, by department, by role.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="organisations.html#contact" class="lp-btn lp-btn-white">Get a quote</a>
+          <a href="organisations.html" class="lp-btn lp-btn-outline-light">Explore corporate packages</a>
+        </div>
       </div>
-      <div class="region-card fade-up">
-        <div class="region-flag"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-        <div class="region-title">UK &amp; Europe</div>
-        <div class="region-desc">Supporting diaspora professionals and enterprise clients in Britain and the EU. Practitioner-certified and employer-ready across borders.</div>
-      </div>
-      <div class="region-card fade-up">
-        <div class="region-flag"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-        <div class="region-title">North America</div>
-        <div class="region-desc">US and Canadian enterprise talent markets. Field-specific AI transformation with global certification recognised by leading employers.</div>
+      <div class="lp-pkgs">
+        <div class="lp-pkgs-label">Corporate packages</div>
+        <div class="lp-pkg"><span class="lp-pkg-name">Starter</span><span class="lp-pkg-seats">5 seats</span></div>
+        <div class="lp-pkg"><span class="lp-pkg-name">Team Sprint</span><span class="lp-pkg-seats">20 seats</span></div>
+        <div class="lp-pkg"><span class="lp-pkg-name">Department Build</span><span class="lp-pkg-seats">50 seats</span></div>
+        <div class="lp-pkg"><span class="lp-pkg-name">Enterprise</span><span class="lp-pkg-seats">100+ seats</span></div>
       </div>
     </div>
-
-    <a href="organisations.html" class="btn btn-primary btn-lg">Partner with Brixgate</a>
   </div>
 </section>
 
-<!-- ====== CTA ====== -->
-<section class="cta-section">
-  <div class="container">
-    <span class="eyebrow white">Next Cohort Now Forming</span>
-    <h2>Your Field Is Being Transformed by AI. Be the One Who Leads It.</h2>
-    <p>Cohort seats are limited we keep groups small so every participant gets the practitioner attention they need. Don't wait for the next one.</p>
-    <div class="cta-buttons">
-      <a href="apply.html" class="btn btn-primary btn-lg">Apply to Become a Brixer</a>
-      <a href="aiquiz.html" class="btn btn-outline btn-lg">Check Your AI Readiness</a>
+<!-- ============================================================
+     GLOBAL
+     ============================================================ -->
+<section class="lp-section lp-surface">
+  <div class="lp-container">
+    <div class="lp-head center fade-up">
+      <span class="lp-eyebrow">Global reach</span>
+      <h2 class="lp-h2">Rooted in Africa.<br/>Built for the world.</h2>
+      <p class="lp-lead">From Lagos to London. Nairobi to New York. A global AI expertise marketplace with Africa leading in vision and in practice.</p>
     </div>
-    <p style="font-size:0.78rem;color:rgba(255,255,255,0.35);margin-top:20px">No CV required. Takes under 2 minutes. We respond within 48 hours.</p>
+
+    <div class="lp-countries fade-up">
+      <span class="lp-country">🇳🇬 Nigeria</span>
+      <span class="lp-country">🇬🇧 United Kingdom</span>
+      <span class="lp-country">🇺🇸 United States</span>
+      <span class="lp-country">🇰🇪 Kenya</span>
+      <span class="lp-country">🇬🇭 Ghana</span>
+      <span class="lp-country">🇿🇦 South Africa</span>
+    </div>
+
+    <div class="lp-regions stagger">
+      <div class="lp-region fade-up">
+        <div class="lp-region-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <div class="lp-region-title">Pan-Africa</div>
+        <div class="lp-region-desc">Nigeria, Kenya, Ghana, South Africa — and expanding across all 54 countries.</div>
+      </div>
+      <div class="lp-region fade-up">
+        <div class="lp-region-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <div class="lp-region-title">UK &amp; Europe</div>
+        <div class="lp-region-desc">Diaspora professionals and enterprise clients across Britain and the EU. Practitioner-certified across borders.</div>
+      </div>
+      <div class="lp-region fade-up">
+        <div class="lp-region-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <div class="lp-region-title">North America</div>
+        <div class="lp-region-desc">US and Canadian enterprise talent markets, with certification recognised by leading employers.</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:48px" class="fade-up">
+      <a href="organisations.html" class="lp-btn lp-btn-ink">Partner with Brixgate</a>
+    </div>
   </div>
 </section>
 
-<!-- ====== FOOTER ====== -->
+<!-- ============================================================
+     FINAL CTA
+     ============================================================ -->
+<section class="lp-cta" id="lp-cta">
+  <canvas class="lp-cta-canvas" id="lp-stars" aria-hidden="true"></canvas>
+  <div class="lp-cta-glow" aria-hidden="true"></div>
+  <div class="lp-container">
+    <div class="lp-cta-in">
+      <span class="lp-eyebrow fade-up">Next cohort now forming</span>
+      <h2 class="lp-h2 fade-up">Your field is being transformed by AI. Be the one who leads it.</h2>
+      <p class="lp-lead fade-up">Cohort seats are limited — we keep groups small so every participant gets real practitioner attention.</p>
+      <div class="lp-cta-actions fade-up">
+        <a href="apply.html" class="lp-btn lp-btn-red">Apply to become a Brixer
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="aiquiz.html" class="lp-btn lp-btn-outline-light">Check your AI readiness</a>
+      </div>
+      <p class="lp-cta-note fade-up">No CV required. Takes under 2 minutes. We respond within 48 hours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
 <footer class="footer">
   <div class="container">
     <div class="footer-inner">
@@ -1784,9 +1359,7 @@
 
 <script src="script.js"></script>
 
-<!-- <script src="popup.js"></script> -->
-
-<!-- ====== WHATSAPP CHAT WIDGET ====== -->
+<!-- WhatsApp -->
 <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme."
    target="_blank" rel="noopener"
    class="whatsapp-float"
@@ -1795,9 +1368,381 @@
   <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
+<!-- ============================================================
+     3D NETWORK + AMBIENT PARTICLES (Three.js, vendored)
+     ============================================================ -->
+<script src="assets/vendor/three.min.js"></script>
+<script>
+(function () {
+  'use strict';
 
-<!-- Hero Panel Carousel removed -->
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasGL = (function () {
+    try { var c = document.createElement('canvas'); return !!(window.WebGLRenderingContext && (c.getContext('webgl') || c.getContext('experimental-webgl'))); }
+    catch (e) { return false; }
+  })();
+  var hero = document.getElementById('lp-hero');
+  if (!window.THREE || !hasGL) { if (hero) hero.classList.add('no-gl'); return; }
 
+  /* ---- shared shaders ---- */
+  var POINT_VS = [
+    'attribute float aSize; attribute vec3 aColor; attribute float aPhase;',
+    'uniform float uTime; uniform float uPixelRatio;',
+    'varying vec3 vColor; varying float vAlpha;',
+    'void main(){',
+    '  vColor = aColor;',
+    '  vAlpha = 0.72 + 0.28 * sin(uTime * 1.3 + aPhase);',
+    '  vec4 mv = modelViewMatrix * vec4(position, 1.0);',
+    '  gl_PointSize = aSize * uPixelRatio * (150.0 / -mv.z);',
+    '  gl_Position = projectionMatrix * mv;',
+    '}'
+  ].join('\n');
+  var POINT_FS = [
+    'precision mediump float;',
+    'varying vec3 vColor; varying float vAlpha; uniform float uOpacity;',
+    'void main(){',
+    '  float d = length(gl_PointCoord - 0.5);',
+    '  float a = 1.0 - smoothstep(0.32, 0.5, d);',
+    '  if (a < 0.01) discard;',
+    '  gl_FragColor = vec4(vColor, a * vAlpha * uOpacity);',
+    '}'
+  ].join('\n');
+  var LINE_VS = [
+    'attribute float aAlpha; varying float vA;',
+    'void main(){ vA = aAlpha; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }'
+  ].join('\n');
+  var LINE_FS = [
+    'precision mediump float;',
+    'uniform vec3 uColor; uniform float uOpacity; varying float vA;',
+    'void main(){ gl_FragColor = vec4(uColor, vA * uOpacity); }'
+  ].join('\n');
+
+  /* ---- particle network factory ---- */
+  function createField(canvas, o) {
+    var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
+    renderer.setClearColor(0x000000, 0);
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    renderer.setPixelRatio(dpr);
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(50, 1, 1, 400);
+    camera.position.z = 90;
+
+    var group = new THREE.Group();
+    scene.add(group);
+
+    var N = o.count;
+    var HX = 60, HY = 36, HZ = o.depth || 22;
+    var pos = new Float32Array(N * 3);
+    var vel = new Float32Array(N * 3);
+    var col = new Float32Array(N * 3);
+    var siz = new Float32Array(N);
+    var pha = new Float32Array(N);
+
+    var cInk = new THREE.Color(o.inkColor), cRed = new THREE.Color(0xFF294E);
+    for (var i = 0; i < N; i++) {
+      pos[i*3]   = (Math.random() * 2 - 1) * HX;
+      pos[i*3+1] = (Math.random() * 2 - 1) * HY;
+      pos[i*3+2] = (Math.random() * 2 - 1) * HZ;
+      var s = o.speed;
+      vel[i*3]   = (Math.random() * 2 - 1) * s;
+      vel[i*3+1] = (Math.random() * 2 - 1) * s;
+      vel[i*3+2] = (Math.random() * 2 - 1) * s * 0.5;
+      var red = Math.random() < o.redRatio;
+      var c = red ? cRed : cInk;
+      col[i*3] = c.r; col[i*3+1] = c.g; col[i*3+2] = c.b;
+      siz[i] = red ? o.sizeRed : (o.sizeMin + Math.random() * (o.sizeMax - o.sizeMin));
+      pha[i] = Math.random() * Math.PI * 2;
+    }
+
+    var pGeo = new THREE.BufferGeometry();
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    pGeo.setAttribute('aColor', new THREE.BufferAttribute(col, 3));
+    pGeo.setAttribute('aSize', new THREE.BufferAttribute(siz, 1));
+    pGeo.setAttribute('aPhase', new THREE.BufferAttribute(pha, 1));
+    var pMat = new THREE.ShaderMaterial({
+      vertexShader: POINT_VS, fragmentShader: POINT_FS,
+      uniforms: { uTime: { value: 0 }, uPixelRatio: { value: dpr }, uOpacity: { value: o.pointOpacity } },
+      transparent: true, depthWrite: false, blending: THREE.NormalBlending
+    });
+    group.add(new THREE.Points(pGeo, pMat));
+
+    var lines = null, lPos, lAlp, lGeo;
+    if (o.lines) {
+      var MAXSEG = N * 8;
+      lPos = new Float32Array(MAXSEG * 2 * 3);
+      lAlp = new Float32Array(MAXSEG * 2);
+      lGeo = new THREE.BufferGeometry();
+      lGeo.setAttribute('position', new THREE.BufferAttribute(lPos, 3).setUsage(THREE.DynamicDrawUsage));
+      lGeo.setAttribute('aAlpha', new THREE.BufferAttribute(lAlp, 1).setUsage(THREE.DynamicDrawUsage));
+      var lMat = new THREE.ShaderMaterial({
+        vertexShader: LINE_VS, fragmentShader: LINE_FS,
+        uniforms: { uColor: { value: cInk }, uOpacity: { value: o.lineOpacity } },
+        transparent: true, depthWrite: false
+      });
+      lines = new THREE.LineSegments(lGeo, lMat);
+      group.add(lines);
+    }
+
+    var R = o.linkRadius || 16, R2 = R * R;
+    var mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+    var running = false, raf = 0, t0 = performance.now();
+    var W = 1, H = 1;
+
+    function resize() {
+      var r = canvas.getBoundingClientRect();
+      W = Math.max(1, r.width); H = Math.max(1, r.height);
+      renderer.setSize(W, H, false);
+      camera.aspect = W / H;
+      camera.updateProjectionMatrix();
+      // Fit the field to the viewport at z=0
+      var vFov = camera.fov * Math.PI / 180;
+      var visH = 2 * Math.tan(vFov / 2) * camera.position.z;
+      var visW = visH * camera.aspect;
+      HX = visW / 2 + 6; HY = visH / 2 + 6;
+    }
+
+    function step() {
+      var t = (performance.now() - t0) / 1000;
+      pMat.uniforms.uTime.value = t;
+
+      mouse.x += (mouse.tx - mouse.x) * 0.05;
+      mouse.y += (mouse.ty - mouse.y) * 0.05;
+      group.rotation.y = mouse.x * 0.22 + Math.sin(t * 0.08) * 0.04;
+      group.rotation.x = -mouse.y * 0.14 + Math.cos(t * 0.07) * 0.03;
+
+      var mx = mouse.x * HX, my = mouse.y * HY;
+      var P = pGeo.attributes.position.array;
+      for (var i = 0; i < N; i++) {
+        var ix = i*3, iy = ix+1, iz = ix+2;
+        P[ix] += vel[ix]; P[iy] += vel[iy]; P[iz] += vel[iz];
+        if (P[ix] >  HX) { P[ix] =  HX; vel[ix] *= -1; } else if (P[ix] < -HX) { P[ix] = -HX; vel[ix] *= -1; }
+        if (P[iy] >  HY) { P[iy] =  HY; vel[iy] *= -1; } else if (P[iy] < -HY) { P[iy] = -HY; vel[iy] *= -1; }
+        if (P[iz] >  HZ) { P[iz] =  HZ; vel[iz] *= -1; } else if (P[iz] < -HZ) { P[iz] = -HZ; vel[iz] *= -1; }
+        if (o.repel) {
+          var dx = P[ix] - mx, dy = P[iy] - my, d2 = dx*dx + dy*dy;
+          if (d2 < 220 && d2 > 0.01) { var f = (1 - d2 / 220) * 0.08; P[ix] += dx * f; P[iy] += dy * f; }
+        }
+      }
+      pGeo.attributes.position.needsUpdate = true;
+
+      if (lines) {
+        var seg = 0, MAX = lPos.length / 6;
+        for (var a = 0; a < N && seg < MAX; a++) {
+          var ax = P[a*3], ay = P[a*3+1], az = P[a*3+2];
+          for (var b = a + 1; b < N && seg < MAX; b++) {
+            var ddx = ax - P[b*3], ddy = ay - P[b*3+1], ddz = az - P[b*3+2];
+            var dd = ddx*ddx + ddy*ddy + ddz*ddz;
+            if (dd < R2) {
+              var al = 1 - dd / R2;
+              var k = seg * 6;
+              lPos[k] = ax; lPos[k+1] = ay; lPos[k+2] = az;
+              lPos[k+3] = P[b*3]; lPos[k+4] = P[b*3+1]; lPos[k+5] = P[b*3+2];
+              lAlp[seg*2] = al; lAlp[seg*2+1] = al;
+              seg++;
+            }
+          }
+        }
+        lGeo.setDrawRange(0, seg * 2);
+        lGeo.attributes.position.needsUpdate = true;
+        lGeo.attributes.aAlpha.needsUpdate = true;
+      }
+
+      renderer.render(scene, camera);
+      if (running && !reduced) raf = requestAnimationFrame(step);
+    }
+
+    function start() { if (running) return; running = true; if (reduced) { step(); return; } raf = requestAnimationFrame(step); }
+    function stop() { running = false; cancelAnimationFrame(raf); }
+
+    resize();
+    window.addEventListener('resize', function () { resize(); if (reduced) step(); }, { passive: true });
+
+    return {
+      start: start, stop: stop,
+      setMouse: function (nx, ny) { mouse.tx = nx; mouse.ty = ny; }
+    };
+  }
+
+  /* ---- attach: hero network ---- */
+  var isMobile = window.innerWidth < 760;
+  var netCanvas = document.getElementById('lp-net');
+  var net = createField(netCanvas, {
+    count: isMobile ? 80 : 170,
+    speed: 0.035,
+    depth: 24,
+    inkColor: 0x021024,
+    redRatio: 0.12,
+    sizeMin: 1.6, sizeMax: 2.6, sizeRed: 3.4,
+    pointOpacity: 0.62,
+    lines: true, lineOpacity: 0.16, linkRadius: 17,
+    repel: true
+  });
+
+  /* ---- attach: CTA ambient ---- */
+  var starsCanvas = document.getElementById('lp-stars');
+  var stars = createField(starsCanvas, {
+    count: isMobile ? 120 : 240,
+    speed: 0.02,
+    depth: 40,
+    inkColor: 0xFFFFFF,
+    redRatio: 0.18,
+    sizeMin: 1.2, sizeMax: 2.4, sizeRed: 3.0,
+    pointOpacity: 0.55,
+    lines: true, lineOpacity: 0.07, linkRadius: 14,
+    repel: false
+  });
+
+  /* ---- run only while on screen ---- */
+  function watch(el, field) {
+    if (!('IntersectionObserver' in window)) { field.start(); return; }
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) { e.isIntersecting ? field.start() : field.stop(); });
+    }, { threshold: 0.02 }).observe(el);
+  }
+  watch(hero, net);
+  watch(document.getElementById('lp-cta'), stars);
+
+  /* ---- mouse parallax: network + floating cards ---- */
+  var cards = Array.prototype.slice.call(document.querySelectorAll('#lp-stage .lp-card'));
+  var cx = 0, cy = 0, tx = 0, ty = 0, parRaf = 0;
+  function onMove(e) {
+    var nx = (e.clientX / window.innerWidth) * 2 - 1;
+    var ny = -((e.clientY / window.innerHeight) * 2 - 1);
+    net.setMouse(nx, ny);
+    tx = nx; ty = ny;
+    if (!parRaf) parRaf = requestAnimationFrame(tick);
+  }
+  function tick() {
+    cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
+    for (var i = 0; i < cards.length; i++) {
+      var d = parseFloat(cards[i].getAttribute('data-depth')) || 1;
+      cards[i].style.transform = 'translate3d(' + (cx * 14 * d).toFixed(2) + 'px,' + (-cy * 10 * d).toFixed(2) + 'px,0)';
+    }
+    if (Math.abs(tx - cx) > 0.001 || Math.abs(ty - cy) > 0.001) parRaf = requestAnimationFrame(tick); else parRaf = 0;
+  }
+  if (!reduced && !isMobile) window.addEventListener('mousemove', onMove, { passive: true });
+
+  var cta = document.getElementById('lp-cta');
+  if (cta && !reduced && !isMobile) cta.addEventListener('mousemove', function (e) {
+    stars.setMouse((e.clientX / window.innerWidth) * 2 - 1, -((e.clientY / window.innerHeight) * 2 - 1));
+  }, { passive: true });
+})();
+</script>
+
+<!-- ============================================================
+     DATA: live pricing + experts
+     ============================================================ -->
+<script>
+(function () {
+  'use strict';
+  var LP_API = 'https://dev.api.brixgate.com/api/v1';
+
+  /* ---- footer year ---- */
+  var y = document.getElementById('footer-year'); if (y) y.textContent = new Date().getFullYear();
+
+  /* ---- pricing: "From" price per card, fetched live ---- */
+  function collectPlans(json) {
+    var d = json && json.data, out = [];
+    if (!d) return out;
+    if (Array.isArray(d.pricing_plans)) return d.pricing_plans;
+    if (Array.isArray(d)) return d;
+    if (typeof d === 'object') {
+      Object.keys(d).forEach(function (k) {
+        var v = d[k];
+        if (Array.isArray(v)) out = out.concat(v);
+        else if (v && Array.isArray(v.pricing_plans)) out = out.concat(v.pricing_plans);
+      });
+    }
+    return out;
+  }
+  function fmt(cur, n) {
+    var s = Math.round(n).toLocaleString('en-US');
+    return cur === 'NGN' ? '₦' + s : cur === 'USD' ? '$' + s : cur === 'GBP' ? '£' + s : s;
+  }
+  fetch(LP_API + '/pricing-plans')
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (json) {
+      var plans = collectPlans(json);
+      var min = {};
+      plans.forEach(function (p) {
+        var type = String(p.plan_type || p.planType || '').toUpperCase();
+        if (type && type !== 'INDIVIDUAL') return;
+        (p.breakdowns || []).forEach(function (b) {
+          var cur = String(b.currency || '').toUpperCase();
+          var v = Number(b.final_price != null ? b.final_price : b.finalPrice);
+          if (!cur || !isFinite(v) || v <= 0) return;
+          if (min[cur] == null || v < min[cur]) min[cur] = v;
+        });
+      });
+      if (min.NGN == null && min.USD == null) return;
+      document.querySelectorAll('[data-price]').forEach(function (el) {
+        var n = el.querySelector('[data-ngn]'), u = el.querySelector('[data-usd]');
+        if (n && min.NGN != null) n.textContent = fmt('NGN', min.NGN);
+        if (u && min.USD != null) u.textContent = fmt('USD', min.USD);
+        el.hidden = false;
+      });
+    })
+    .catch(function () { /* keep price hidden — never show a fake number */ });
+
+  /* ---- experts: first three verified practitioners ---- */
+  var grid = document.getElementById('lp-exp-grid');
+  if (!grid) return;
+
+  function initials(name) {
+    return String(name || '').split(/\s+/).filter(Boolean).slice(0, 2).map(function (s) { return s[0].toUpperCase(); }).join('') || 'BX';
+  }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e;
+  }
+  function card(x) {
+    var c = el('div', 'lp-exp fade-up visible');
+
+    var head = el('div', 'lp-exp-head');
+    if (x.profile_image_url) {
+      var img = el('img', 'lp-exp-ava'); img.src = x.profile_image_url; img.alt = x.name || '';
+      img.onerror = function () { img.replaceWith(el('div', 'lp-exp-ava', initials(x.name))); };
+      head.appendChild(img);
+    } else head.appendChild(el('div', 'lp-exp-ava', initials(x.name)));
+    var nm = el('div');
+    nm.appendChild(el('div', 'lp-exp-name', x.name || ''));
+    nm.appendChild(el('div', 'lp-exp-role', x.title || x.current_role || x.occupation || ''));
+    head.appendChild(nm);
+    c.appendChild(head);
+
+    if (x.biography) c.appendChild(el('p', 'lp-exp-bio', x.biography));
+
+    var src = x.expertise || x.primary_field || '';
+    var chips = src.split(',').map(function (s) { return s.trim(); }).filter(Boolean).slice(0, 3);
+    if (chips.length) {
+      var w = el('div', 'lp-exp-chips');
+      chips.forEach(function (t) { w.appendChild(el('span', 'lp-chip', t)); });
+      c.appendChild(w);
+    }
+
+    var foot = el('div', 'lp-exp-foot');
+    var v = el('span', 'lp-verified');
+    v.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Verified practitioner';
+    foot.appendChild(v);
+    if (x.linkedin_url) {
+      var a = el('a', 'lp-exp-li', 'LinkedIn'); a.href = x.linkedin_url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      foot.appendChild(a);
+    }
+    c.appendChild(foot);
+    return c;
+  }
+
+  fetch(LP_API + '/experts')
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (json) {
+      var list = json && json.data && json.data.experts;
+      if (!list || !list.length) { grid.remove(); return; }
+      grid.innerHTML = '';
+      list.slice(0, 3).forEach(function (x) { grid.appendChild(card(x)); });
+    })
+    .catch(function () { grid.remove(); });
+})();
+</script>
 
 <!-- LinkedIn Insight Tag -->
 <script type="text/javascript">
