@@ -316,8 +316,7 @@
     .lp .lp-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
     .lp .lp-hero-proof {
       display: flex; align-items: center; gap: 14px;
-      margin-top: 44px; padding-top: 28px;
-      border-top: 1px solid var(--lp-line-2);
+      margin-top: 42px;
     }
     .lp .lp-avatars { display: flex; }
     .lp .lp-avatars img {
@@ -355,10 +354,11 @@
 
     /* Live session tile — a real face, Product-School style */
     .lp .lp-card-video { top: 6px; right: 0; width: 250px; padding: 0; overflow: hidden; animation: lpRise .9s .35s var(--lp-ease) both; }
-    .lp .lp-card-video > .in { padding: 0; animation: lpFloatA 7s ease-in-out infinite; }
-    .lp .lp-vid { position: relative; aspect-ratio: 4/3; overflow: hidden; background: var(--lp-ink); }
+    .lp .lp-card-video > .in { padding: 10px; animation: lpFloatA 7s ease-in-out infinite; }
+    /* Inset + rounded so the photo reads as a card within a card, not a hard-edged block */
+    .lp .lp-vid { position: relative; aspect-ratio: 4/3; overflow: hidden; background: var(--lp-ink); border-radius: 12px; }
     .lp .lp-vid img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .lp .lp-vid::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(1,11,30,.15) 0%, transparent 38%, rgba(1,11,30,.72) 100%); }
+    .lp .lp-vid::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(180deg, rgba(2,16,36,.15) 0%, transparent 38%, rgba(2,16,36,.74) 100%); }
     .lp .lp-vid-live {
       position: absolute; top: 10px; left: 10px; z-index: 2;
       display: inline-flex; align-items: center; gap: 6px;
@@ -370,10 +370,10 @@
     .lp .lp-vid-name { position: absolute; left: 12px; bottom: 10px; z-index: 2; color: #fff; }
     .lp .lp-vid-name b { display: block; font-size: .78rem; font-weight: 700; letter-spacing: -0.01em; }
     .lp .lp-vid-name span { display: block; font-size: .66rem; color: rgba(255,255,255,.8); margin-top: 1px; }
-    .lp .lp-vid-foot { padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .lp .lp-vid-foot { padding: 11px 6px 3px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .lp .lp-vid-foot .lp-card-kicker { font-size: .6rem; }
     .lp .lp-tiles { display: flex; gap: 4px; }
-    .lp .lp-tiles img { width: 26px; height: 26px; border-radius: 5px; object-fit: cover; display: block; }
+    .lp .lp-tiles img { width: 26px; height: 26px; border-radius: 7px; object-fit: cover; display: block; }
     @keyframes lpBlink { 0%,100% { opacity: 1 } 50% { opacity: .25 } }
     .lp .lp-card > .in { padding: 20px 22px; }
     .lp .lp-card-a { top: 268px; right: 2px; width: 194px; animation: lpRise .9s .66s var(--lp-ease) both; }
@@ -634,10 +634,10 @@
       background: #fff;
       border: 1px solid var(--lp-line);
       border-radius: var(--lp-r-lg);
-      padding: 22px 22px 22px;
+      padding: 18px 20px 20px;
       transition: transform .35s var(--lp-ease), box-shadow .35s var(--lp-ease), border-color .3s;
       overflow: hidden;
-      min-height: 480px;
+      min-height: 0;
     }
     .lp .lp-prog::after {
       content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3px;
@@ -649,19 +649,18 @@
     .lp .lp-prog-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .lp .lp-prog-status { display: inline-flex; align-items: center; gap: 7px; font-size: .7rem; font-weight: 700; color: var(--lp-ink); letter-spacing: .04em; text-transform: uppercase; }
     .lp .lp-prog-dur { font-size: .72rem; font-weight: 700; color: var(--lp-muted); }
-    /* Artwork is portrait (~0.9 ratio) and designed to stand at the card's base,
-       so the frame matches that ratio instead of squashing it into a letterbox. */
-    .lp .lp-prog-art { margin: 18px -6px 0; border-radius: 14px; aspect-ratio: 5 / 4; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+    /* Art fills the whole frame edge to edge; the portrait source is cropped
+       from the top so the subject at the base of the illustration is kept. */
+    .lp .lp-prog-art { margin: 14px 0 0; border-radius: 14px; aspect-ratio: 16 / 11; overflow: hidden; }
     .lp .lp-prog-art img {
-      width: auto; height: 108%; max-width: none; max-height: none;
-      object-fit: contain; object-position: bottom center;
-      transform-origin: bottom center;
-      transition: transform .5s var(--lp-ease);
+      width: 100%; height: 100%; max-width: none; max-height: none;
+      object-fit: cover; object-position: center 62%;
+      transition: transform .55s var(--lp-ease);
     }
-    .lp .lp-prog:hover .lp-prog-art img { transform: scale(1.05); }
-    .lp .lp-prog-name { font-size: 1.32rem; font-weight: 800; letter-spacing: -0.025em; color: var(--lp-ink); margin-top: 20px; line-height: 1.15; }
-    .lp .lp-prog-desc { font-size: .88rem; color: var(--lp-body); line-height: 1.55; margin-top: 8px; flex: 1; }
-    .lp .lp-prog-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--lp-line-2); }
+    .lp .lp-prog:hover .lp-prog-art img { transform: scale(1.06); }
+    .lp .lp-prog-name { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.025em; color: var(--lp-ink); margin-top: 16px; line-height: 1.15; }
+    .lp .lp-prog-desc { font-size: .85rem; color: var(--lp-body); line-height: 1.5; margin-top: 7px; flex: 1; }
+    .lp .lp-prog-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--lp-line-2); }
     .lp .lp-prog-price { font-size: .78rem; color: var(--lp-muted); font-weight: 600; line-height: 1.2; }
     .lp .lp-prog-price b { display: block; font-size: 1.02rem; color: var(--lp-ink); font-weight: 800; letter-spacing: -0.02em; margin-top: 2px; }
     .lp .lp-prog-price[hidden] { display: none; }
@@ -855,6 +854,75 @@
     .lp .lp-mosaic .shade::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(1,11,30,.68)); }
 
     /* ============================================================
+       FAQ
+       ============================================================ */
+    .lp .lp-faq-wrap { display: grid; grid-template-columns: minmax(0,.78fr) minmax(0,1.22fr); gap: 80px; align-items: start; }
+    .lp .lp-faq-head { position: sticky; top: calc(var(--lp-nav-h, 63px) + var(--banner-height) + 40px); }
+    .lp .lp-faq-head .lp-h2 { margin-bottom: 20px; }
+    .lp .lp-faq-list { border-top: 1px solid var(--lp-line); }
+    .lp .lp-faq-item { border-bottom: 1px solid var(--lp-line); }
+    .lp .lp-faq-q {
+      width: 100%; background: none; border: 0; padding: 24px 4px;
+      display: flex; align-items: center; justify-content: space-between; gap: 28px;
+      font-family: inherit; font-size: 1.02rem; font-weight: 600; letter-spacing: -0.015em;
+      color: var(--lp-ink); text-align: left; cursor: pointer;
+      transition: color .2s;
+    }
+    .lp .lp-faq-q:hover { color: var(--lp-red); }
+    .lp .lp-faq-q:focus-visible { outline: 2px solid var(--lp-red); outline-offset: 3px; border-radius: 6px; }
+    .lp .lp-faq-chev {
+      flex-shrink: 0; color: var(--lp-muted);
+      transition: transform .38s var(--lp-ease), color .2s;
+    }
+    .lp .lp-faq-item.open .lp-faq-chev { transform: rotate(180deg); color: var(--lp-red); }
+    .lp .lp-faq-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .38s var(--lp-ease); }
+    .lp .lp-faq-item.open .lp-faq-a { grid-template-rows: 1fr; }
+    .lp .lp-faq-a > div { overflow: hidden; }
+    .lp .lp-faq-a p { font-size: .95rem; line-height: 1.68; color: var(--lp-body); margin: 0 0 24px; padding-right: 40px; max-width: 640px; }
+    .lp .lp-faq-a a { color: var(--lp-red); font-weight: 600; }
+    .lp .lp-faq-a a:hover { text-decoration: underline; }
+
+    /* ============================================================
+       ANIMATED ICONS
+       ============================================================ */
+    .lp .ico-spin  { transition: transform .6s var(--lp-ease); transform-origin: 50% 50%; }
+    .lp .lp-model:hover .ico-spin { transform: rotate(180deg); }
+
+    .lp .ico-draw { stroke-dasharray: 30; stroke-dashoffset: 30; }
+    .lp .lp-model.seen .ico-draw { animation: icoDraw .7s .15s var(--lp-ease) forwards; }
+    .lp .lp-model:hover .ico-draw { animation: icoDraw .5s var(--lp-ease) forwards; }
+    @keyframes icoDraw { to { stroke-dashoffset: 0 } }
+
+    .lp .ico-pulse { transform-origin: 50% 50%; }
+    .lp .lp-model:hover .ico-pulse { animation: icoPulse 1.1s var(--lp-ease) infinite; }
+    @keyframes icoPulse { 0%,100% { transform: scale(1); opacity: 1 } 50% { transform: scale(1.12); opacity: .78 } }
+
+    /* Feature icons in the "why" list */
+    .lp .lp-feat-icon svg { transition: transform .5s var(--lp-ease); }
+    .lp .lp-feat-row:hover .lp-feat-icon svg { transform: scale(1.14) rotate(-8deg); }
+    .lp .lp-feat-icon { transition: background .3s, color .3s; }
+    .lp .lp-feat-row:hover .lp-feat-icon { background: var(--lp-red); color: #fff; }
+
+    /* Journey step numbers */
+    .lp .lp-step-n { overflow: hidden; }
+    .lp .lp-step-n::after {
+      content: ''; position: absolute; inset: 0; border-radius: 50%;
+      background: var(--lp-red); transform: scale(0); opacity: .1;
+      transition: transform .45s var(--lp-ease);
+    }
+    .lp .lp-step:hover .lp-step-n::after { transform: scale(1); }
+
+    /* Region icons */
+    .lp .lp-region-icon svg { transition: transform .6s var(--lp-ease); }
+    .lp .lp-region:hover .lp-region-icon svg { transform: rotate(20deg) scale(1.1); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lp .ico-spin, .lp .ico-draw, .lp .ico-pulse,
+      .lp .lp-feat-icon svg, .lp .lp-region-icon svg { animation: none !important; transition: none !important; }
+      .lp .ico-draw { stroke-dashoffset: 0; }
+    }
+
+    /* ============================================================
        FINAL CTA
        ============================================================ */
     .lp .lp-cta { position: relative; overflow: hidden; background: var(--lp-ink); color: #fff; padding: 150px 0; text-align: center; }
@@ -894,6 +962,8 @@
       .lp .lp-bento-wrap { grid-template-columns: 1fr; gap: 48px; }
       .lp .lp-models { grid-template-columns: 1fr; }
       .lp .lp-quote-feature { padding: 44px 36px; border-radius: 22px; }
+      .lp .lp-faq-wrap { grid-template-columns: 1fr; gap: 40px; }
+      .lp .lp-faq-head { position: static; }
       .lp .lp-why { grid-template-columns: 1fr; gap: 48px; }
       .lp .lp-why-left { position: static; }
       .lp .lp-steps { grid-template-columns: repeat(2, 1fr); gap: 40px 24px; }
@@ -930,6 +1000,8 @@
       .lp .lp-quote-feature { padding: 34px 24px; }
       .lp .lp-qf-by { flex-wrap: wrap; gap: 10px; }
       .lp .lp-qf-src { margin-left: 0; }
+      .lp .lp-faq-q { font-size: .95rem; gap: 16px; padding: 20px 2px; }
+      .lp .lp-faq-a p { padding-right: 0; font-size: .9rem; }
       .lp .lp-stats { grid-template-columns: 1fr; }
       .lp .lp-stat { border-right: 0; border-bottom: 1px solid var(--lp-line); padding: 28px 24px; }
       .lp .lp-stat:last-child { border-bottom: 0; }
@@ -1381,17 +1453,17 @@
 
     <div class="lp-models stagger">
       <div class="lp-model fade-up">
-        <div class="lp-model-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="m16.24 16.24 2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="m16.24 7.76 2.83-2.83"/></svg></div>
+        <div class="lp-model-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g class="ico-spin"><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="m16.24 16.24 2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="m16.24 7.76 2.83-2.83"/></g></svg></div>
         <h3>Pick the right model</h3>
         <p>Reasoning, speed and cost differ sharply between models. You learn to match the model to the job instead of defaulting to whichever one you opened first.</p>
       </div>
       <div class="lp-model fade-up">
-        <div class="lp-model-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <div class="lp-model-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="ico-draw" d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
         <h3>Verify before you ship</h3>
         <p>AI fails quietly and confidently. Every sprint drills the habit of checking output against the standards of your own profession before it reaches anyone else.</p>
       </div>
       <div class="lp-model fade-up">
-        <div class="lp-model-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="lp-model-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="ico-pulse" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <h3>Know the limits</h3>
         <p>Confidentiality, bias, hallucination, accountability. Field-specific judgement about where AI has no business being is as valuable as knowing how to prompt it.</p>
       </div>
@@ -1400,15 +1472,15 @@
     <!-- FEATURED QUOTE — content pending from Brixgate, see notes -->
     <figure class="lp-quote-feature fade-up cursor-zone" id="featured-quote" data-cursor="Quote">
       <svg class="lp-qf-mark" viewBox="0 0 36 36" fill="currentColor" aria-hidden="true"><path d="M10.5 22.5c-2.2 0-4-.8-5.3-2.3C3.9 18.7 3.2 16.8 3.2 14.5c0-2.9.9-5.6 2.7-8.1C7.7 3.9 10.1 2 13.1.6l1.4 2.4c-2 1-3.6 2.3-4.8 3.9-1.2 1.6-1.8 3.2-1.8 4.9 0 .5.1.9.2 1.2.7-.6 1.7-.9 2.9-.9 1.8 0 3.2.6 4.3 1.7 1.1 1.1 1.6 2.5 1.6 4.2 0 1.7-.6 3.1-1.8 4.2-1.2 1-2.7 1.5-4.6 1.5zm17.8 0c-2.2 0-4-.8-5.3-2.3-1.3-1.5-2-3.4-2-5.7 0-2.9.9-5.6 2.7-8.1C25.5 3.9 27.9 2 30.9.6l1.4 2.4c-2 1-3.6 2.3-4.8 3.9-1.2 1.6-1.8 3.2-1.8 4.9 0 .5.1.9.2 1.2.7-.6 1.7-.9 2.9-.9 1.8 0 3.2.6 4.3 1.7 1.1 1.1 1.6 2.5 1.6 4.2 0 1.7-.6 3.1-1.8 4.2-1.2 1-2.7 1.5-4.6 1.5z"/></svg>
-      <blockquote class="lp-qf-text" data-quote-slot>
-        Quote slot ready — send the exact wording and a source link and it drops straight in here.
+      <blockquote class="lp-qf-text">
+        “You can’t just step in front of the train and stop it. The only move that’s going to work is steering the train — steer it 10 degrees in a different direction from where it was going. That can be done. That’s possible, but we have to do it now.”
       </blockquote>
       <figcaption class="lp-qf-by">
         <div>
-          <b data-quote-author>Attribution pending</b>
-          <span data-quote-role>Add speaker and organisation</span>
+          <b>Dario Amodei</b>
+          <span>Co-founder &amp; CEO, Anthropic</span>
         </div>
-        <span class="lp-qf-src">Source link required</span>
+        <a class="lp-qf-src" href="https://www.axios.com/2025/05/28/ai-jobs-white-collar-unemployment-anthropic" target="_blank" rel="noopener">Axios · May 2025 ↗</a>
       </figcaption>
     </figure>
   </div>
@@ -1747,6 +1819,118 @@
 
     <div style="text-align:center;margin-top:48px" class="fade-up">
       <a href="organisations.html" class="lp-btn lp-btn-ink">Partner with Brixgate</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FAQ
+     ============================================================ -->
+<section class="lp-section lp-surface" id="faq">
+  <div class="lp-container">
+    <div class="lp-faq-wrap">
+
+      <div class="lp-faq-head fade-up">
+        <h2 class="lp-h2">Frequently Asked Questions</h2>
+        <p class="lp-p">Can't find what you're looking for?
+          <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%20have%20a%20question%20about%20the%20AI%20in%20my%20Field%20programme." target="_blank" rel="noopener" style="color:var(--lp-red);font-weight:600">Chat with us on WhatsApp</a>
+          or email <a href="mailto:we@brixgate.com" style="color:var(--lp-red);font-weight:600">we@brixgate.com</a>.
+        </p>
+      </div>
+
+      <div class="lp-faq-list fade-up" id="lp-faq-list">
+
+        <div class="lp-faq-item">
+          <button class="lp-faq-q" type="button" aria-expanded="false" aria-controls="faq-a1">
+            <span>What is the AI in my Field programme?</span>
+            <svg class="lp-faq-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="lp-faq-a" id="faq-a1" role="region"><div>
+            <p>A four-week intensive sprint that turns a working professional into an AI-native practitioner in their own field. Every curriculum is built from scratch for a specific profession and delivered live by a practitioner who has already applied AI in that domain — so the work you do maps directly onto the job you actually have.</p>
+          </div></div>
+        </div>
+
+        <div class="lp-faq-item">
+          <button class="lp-faq-q" type="button" aria-expanded="false" aria-controls="faq-a2">
+            <span>Do I need a technical background to join?</span>
+            <svg class="lp-faq-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="lp-faq-a" id="faq-a2" role="region"><div>
+            <p>No. The programme is organised by profession, not by coding ability. Software Engineering and Cybersecurity assume you already work in those fields, while tracks like Financial Modelling and Product Marketing are built for professionals with no engineering background at all. If you're unsure which fits, take the <a href="aiquiz.html">free AI readiness check</a> — it takes about three minutes.</p>
+          </div></div>
+        </div>
+
+        <div class="lp-faq-item">
+          <button class="lp-faq-q" type="button" aria-expanded="false" aria-controls="faq-a3">
+            <span>How long does it take, and how much time do I need each week?</span>
+            <svg class="lp-faq-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="lp-faq-a" id="faq-a3" role="region"><div>
+            <p>Four weeks from start to certificate. The sprint combines live sessions with applied project work you complete between them. Exact session times vary by cohort and field — you'll get the schedule for your specific cohort before it begins.</p>
+          </div></div>
+        </div>
+
+        <div class="lp-faq-item">
+          <button class="lp-faq-q" type="button" aria-expanded="false" aria-controls="faq-a4">
+            <span>Is it live, or self-paced?</span>
+            <svg class="lp-faq-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="lp-faq-a" id="faq-a4" role="region"><div>
+            <p>Live. Sessions are taught in real time to a small, field-specific cohort, so you can ask your instructor about your own work rather than watching a recording alone. Cohorts are deliberately kept small so everyone gets practitioner attention.</p>
+          </div></div>
+        </div>
+
+        <div class="lp-faq-item">
+          <button class="lp-faq-q" type="button" aria-expanded="false" aria-controls="faq-a5">
+            <span>Which fields are open right now?</span>
+            <svg class="lp-faq-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="lp-faq-a" id="faq-a5" role="region"><div>
+            <p>Four are open: <a href="programme-engineering.html">Software Engineering</a>, <a href="programme-cybersecurity.html">Cybersecurity</a>, <a href="programme-finance.html">Financial Modelling</a> and <a href="programme-marketing.html">Product Marketing</a>. More fields — including Data &amp; Analytics, Cloud &amp; DevOps, Legal, Healthcare and HR — unlock through 2026.</p>
+          </div></div>
+        </div>
+
+        <div class="lp-faq-item">
+          <button class="lp-faq-q" type="button" aria-expanded="false" aria-controls="faq-a6">
+            <span>What certificate do I earn, and can an employer verify it?</span>
+            <svg class="lp-faq-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="lp-faq-a" id="faq-a6" role="region"><div>
+            <p>You finish with the Brixgate Expert Practitioner Certificate, issued for your specific field. Anyone can confirm a certificate is genuine on our <a href="verify.html">verification page</a> — no account needed.</p>
+          </div></div>
+        </div>
+
+        <div class="lp-faq-item">
+          <button class="lp-faq-q" type="button" aria-expanded="false" aria-controls="faq-a7">
+            <span>How much does it cost?</span>
+            <svg class="lp-faq-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="lp-faq-a" id="faq-a7" role="region"><div>
+            <p>Pricing is shown live on each programme card above and on every programme page, in both naira and dollars — use the NGN / USD toggle to switch. Team rates work out lower per person. A scholarship round is currently running, and eligible fees are reduced automatically at checkout with no code needed.</p>
+          </div></div>
+        </div>
+
+        <div class="lp-faq-item">
+          <button class="lp-faq-q" type="button" aria-expanded="false" aria-controls="faq-a8">
+            <span>Can my company enrol a whole team?</span>
+            <svg class="lp-faq-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="lp-faq-a" id="faq-a8" role="region"><div>
+            <p>Yes. Corporate packages run from a five-seat starter through to enterprise rollouts of a hundred seats and up, and can be split by field, department or role. See <a href="organisations.html">corporate programmes</a> or <a href="organisations.html#contact">request a quote</a>.</p>
+          </div></div>
+        </div>
+
+        <div class="lp-faq-item">
+          <button class="lp-faq-q" type="button" aria-expanded="false" aria-controls="faq-a9">
+            <span>How do I apply, and what happens next?</span>
+            <svg class="lp-faq-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="lp-faq-a" id="faq-a9" role="region"><div>
+            <p>Start with the <a href="apply.html">application form</a> — no CV required, and it takes under two minutes. Every application is reviewed personally rather than filtered automatically, and we respond within 48 hours. From there you'll do a short field assessment and be placed in the cohort that matches your field and level.</p>
+          </div></div>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
@@ -2140,6 +2324,56 @@
   window.addEventListener('resize', sync, { passive: true });
   window.addEventListener('load', sync);
   if (window.ResizeObserver) new ResizeObserver(sync).observe(nav);
+})();
+
+/* ---- FAQ accordion (self-contained; does not use script.js's broken one) ---- */
+(function () {
+  'use strict';
+  var list = document.getElementById('lp-faq-list');
+  if (!list) return;
+  var items = [].slice.call(list.querySelectorAll('.lp-faq-item'));
+
+  items.forEach(function (item) {
+    var btn = item.querySelector('.lp-faq-q');
+    var panel = item.querySelector('.lp-faq-a');
+    if (!btn || !panel) return;
+    panel.setAttribute('aria-hidden', 'true');
+
+    btn.addEventListener('click', function () {
+      var willOpen = !item.classList.contains('open');
+      // one open at a time, like the reference
+      items.forEach(function (other) {
+        if (other === item) return;
+        other.classList.remove('open');
+        var ob = other.querySelector('.lp-faq-q'), op = other.querySelector('.lp-faq-a');
+        if (ob) ob.setAttribute('aria-expanded', 'false');
+        if (op) op.setAttribute('aria-hidden', 'true');
+      });
+      item.classList.toggle('open', willOpen);
+      btn.setAttribute('aria-expanded', String(willOpen));
+      panel.setAttribute('aria-hidden', String(!willOpen));
+    });
+  });
+
+  var first = items[0];
+  if (first) {
+    first.classList.add('open');
+    first.querySelector('.lp-faq-q').setAttribute('aria-expanded', 'true');
+    first.querySelector('.lp-faq-a').setAttribute('aria-hidden', 'false');
+  }
+})();
+
+/* ---- Play the icon draw-in once each model card scrolls into view ---- */
+(function () {
+  'use strict';
+  var cards = document.querySelectorAll('.lp-model');
+  if (!cards.length || !('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.4 });
+  cards.forEach(function (c) { io.observe(c); });
 })();
 
 /* ---- Marquee upgrades text wordmarks to real logos when files exist ----
