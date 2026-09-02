@@ -576,14 +576,19 @@
     .lp .lp-logos-track:hover .lp-wordmark { color: #B6BFCC; }
     .lp .lp-wordmark:hover { color: var(--lp-ink); }
     .lp .lp-wordmark i { width: 9px; height: 9px; border-radius: 2px; background: currentColor; display: block; flex-shrink: 0; transform: rotate(45deg); }
-    /* Upgraded to a real logo file once one exists in assets/logos/ */
+    /* Upgraded to a real logo file once one exists in assets/logos/.
+       Height is set per-logo by JS from its aspect ratio: a square mark
+       needs to be much taller than a wide wordmark to carry equal weight. */
     .lp .lp-wordmark.has-logo { gap: 0; }
     .lp .lp-wm-img {
-      height: 26px; width: auto; display: block;
+      height: 32px; width: auto; max-width: 150px; display: block;
+      /* grayscale + opacity only. Do NOT use brightness(0): marks like Notion
+         rely on a white fill for their negative space, and flattening to black
+         turns them into solid blocks. */
       filter: grayscale(1) opacity(.55);
-      transition: filter .3s var(--lp-ease);
+      transition: filter .3s var(--lp-ease), transform .3s var(--lp-ease);
     }
-    .lp .lp-wordmark:hover .lp-wm-img { filter: none; }
+    .lp .lp-wordmark:hover .lp-wm-img { filter: none; transform: scale(1.06); }
 
     .lp .lp-models { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 64px; }
     .lp .lp-model { background: #fff; border: 1px solid var(--lp-line); border-radius: var(--lp-r-lg); padding: 28px; transition: transform .35s var(--lp-ease), box-shadow .35s var(--lp-ease); }
@@ -2407,10 +2412,21 @@
     resolve(slug).then(function (url) {
       if (!url) return;
       var img = document.createElement('img');
-      img.src = url;
       img.alt = label;
       img.className = 'lp-wm-img';
-      img.loading = 'lazy';
+      img.onload = function () {
+        // Optically normalise: wide wordmarks read big at a small height,
+        // square marks need far more height to carry the same weight.
+        var ar = img.naturalWidth / (img.naturalHeight || 1);
+        var h = ar >= 3.5 ? 30 : ar >= 2.0 ? 36 : 46;
+        // Per-logo exceptions where ink density beats aspect ratio:
+        // copilot is one solid filled glyph, so it reads far heavier than
+        // an outline mark of the same box at the same height.
+        var TUNE = { copilot: 33 };
+        if (TUNE[slug]) h = TUNE[slug];
+        img.style.height = h + 'px';
+      };
+      img.src = url;
       w.textContent = '';
       w.appendChild(img);
       w.classList.add('has-logo');
