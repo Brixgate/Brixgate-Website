@@ -675,8 +675,313 @@
     }
   </style>
 <script src="tracking.js"></script>
+<style>
+/* ============================================================
+   APPLY PAGE — light, roomy. Scoped to body.ap.
+   Only visual: every id/hook the payment JS uses is untouched.
+   ============================================================ */
+:root {
+  --ap-ink:#021024; --ap-ink2:#1B2A41; --ap-body:#4A5568; --ap-muted:#6B7A90;
+  --ap-faint:#98A4B5; --ap-line:#E6E8EC; --ap-line2:#EEF0F3; --ap-surface:#F7F8FA;
+  --ap-red:#FF294E; --ap-green:#16A34A;
+  --ap-ease:cubic-bezier(.2,.7,.2,1); --ap-r:16px;
+  --ap-sh:0 1px 2px rgba(2,16,36,.04), 0 14px 34px -16px rgba(2,16,36,.16);
+  --g-navy:#021024; --g-card:#0D1C34; --g-steel:#1B3A5C;
+  --g-wine:#9A2335; --g-deep:#C4173A; --g-red:#FF294E; --g-orange:#FF5748;
+}
+body.ap {
+  background:#fff !important; color:var(--ap-ink);
+  padding-top: calc(var(--banner-height) + var(--ap-nav-h, 63px));
+  -webkit-font-smoothing:antialiased;
+}
+body.ap .nav {
+  background:rgba(255,255,255,.85);
+  -webkit-backdrop-filter:blur(16px) saturate(1.7); backdrop-filter:blur(16px) saturate(1.7);
+  border-bottom:1px solid rgba(2,16,36,.07); box-shadow:none;
+}
+body.ap .nav.scrolled { background:rgba(255,255,255,.62); box-shadow:0 10px 34px -18px rgba(2,16,36,.3); }
+
+/* kill the old dark sections */
+body.ap .section-pad.bg-dark,
+body.ap .section-pad-sm.bg-dark { background:transparent !important; }
+body.ap .page-header { background:transparent !important; }
+
+/* ---------- header ---------- */
+.ap-head { padding:64px 0 44px; text-align:center; }
+.ap-crumb { font-size:.78rem; color:var(--ap-muted); margin-bottom:20px; }
+.ap-crumb a { color:var(--ap-muted); } .ap-crumb a:hover { color:var(--ap-red); }
+.ap-tag {
+  display:inline-flex; align-items:center; gap:8px; height:30px; padding:0 14px;
+  border-radius:999px; background:rgba(255,41,78,.07); border:1px solid rgba(255,41,78,.18);
+  color:var(--ap-red); font-size:.7rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+  margin-bottom:22px;
+}
+.ap-dot { width:7px; height:7px; border-radius:50%; background:var(--ap-red); position:relative; }
+.ap-dot::after { content:''; position:absolute; inset:-3px; border-radius:50%; background:var(--ap-red); opacity:.35; animation:apPulse 1.8s ease-out infinite; }
+@keyframes apPulse { 0%{transform:scale(.6);opacity:.5} 100%{transform:scale(2);opacity:0} }
+.ap-h1 { font-size:clamp(2rem,3.8vw,2.9rem); font-weight:800; letter-spacing:-.032em; line-height:1.1; margin:0 auto; max-width:680px; color:var(--ap-ink); }
+.ap-sub { font-size:1.02rem; color:var(--ap-body); line-height:1.62; margin:18px auto 0; max-width:520px; }
+
+/* ---------- layout ---------- */
+.ap-wrap { max-width:1140px; margin:0 auto; padding:0 32px; }
+.ap-grid { display:grid !important; grid-template-columns:minmax(0,1fr) 372px !important; gap:56px !important; align-items:start; padding-bottom:104px; }
+
+/* ---------- form card ---------- */
+body.ap .apply-form-card {
+  background:#fff !important; border:1px solid var(--ap-line) !important;
+  border-radius:22px !important; padding:44px 46px !important; box-shadow:var(--ap-sh) !important;
+}
+body.ap .apply-form-card h3 { font-size:1.5rem !important; font-weight:750 !important; letter-spacing:-.026em; color:var(--ap-ink) !important; margin:0 0 8px !important; }
+body.ap .form-subtitle { font-size:.94rem !important; color:var(--ap-body) !important; margin:0 0 8px !important; }
+
+/* two honest steps */
+body.ap .step-indicator { display:flex !important; align-items:center; gap:0; margin:0 0 34px !important; }
+body.ap .step-item { display:flex; align-items:center; gap:10px; }
+body.ap .step-dot {
+  width:26px !important; height:26px !important; border-radius:50% !important;
+  display:grid !important; place-items:center; font-size:.74rem !important; font-weight:800 !important;
+  background:#fff !important; border:1.5px solid var(--ap-line) !important; color:var(--ap-faint) !important;
+  transition:all .3s var(--ap-ease);
+}
+body.ap .step-dot.active { background:var(--ap-ink) !important; border-color:var(--ap-ink) !important; color:#fff !important; }
+body.ap .step-dot.done { background:var(--ap-green) !important; border-color:var(--ap-green) !important; color:#fff !important; }
+body.ap .step-label { font-size:.82rem !important; font-weight:650 !important; color:var(--ap-faint) !important; }
+body.ap .step-label.active { color:var(--ap-ink) !important; }
+body.ap .step-label.done { color:var(--ap-green) !important; }
+body.ap .step-line { flex:1; height:1.5px !important; background:var(--ap-line) !important; margin:0 16px !important; border-radius:2px; }
+body.ap .step-line.done { background:var(--ap-green) !important; }
+
+/* ---------- field groups ---------- */
+.ap-fieldset { border:0; padding:0; margin:0 0 38px; }
+.ap-legend {
+  display:flex; align-items:baseline; gap:12px; width:100%;
+  padding:0 0 14px; margin:0 0 22px; border-bottom:1px solid var(--ap-line2);
+}
+.ap-legend .n {
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.66rem; font-weight:700; letter-spacing:.13em; color:var(--ap-red);
+}
+.ap-legend .t { font-size:.72rem; font-weight:750; letter-spacing:.13em; text-transform:uppercase; color:var(--ap-muted); }
+
+body.ap .form-group { margin-bottom:20px !important; }
+body.ap .form-row { display:grid !important; grid-template-columns:1fr 1fr; gap:16px !important; }
+body.ap .form-group label {
+  display:block; font-size:.84rem !important; font-weight:650 !important;
+  color:var(--ap-ink) !important; margin-bottom:8px !important; letter-spacing:-.005em;
+}
+body.ap .form-group input,
+body.ap .form-group select,
+body.ap .form-group textarea,
+body.ap #apply-phone-cc {
+  width:100%; height:48px; padding:0 14px !important;
+  background:#fff !important; border:1.5px solid var(--ap-line) !important;
+  border-radius:11px !important; color:var(--ap-ink) !important;
+  font-family:inherit; font-size:.94rem !important; outline:none;
+  transition:border-color .2s, box-shadow .2s, background .2s;
+}
+body.ap .form-group input::placeholder { color:#A9B4C2 !important; }
+body.ap .form-group input:hover, body.ap .form-group select:hover { border-color:#D3D9E1 !important; }
+body.ap .form-group input:focus,
+body.ap .form-group select:focus,
+body.ap #apply-phone-cc:focus {
+  border-color:var(--ap-red) !important; box-shadow:0 0 0 4px rgba(255,41,78,.10) !important;
+}
+body.ap .form-group select { cursor:pointer; appearance:none; -webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236B7A90' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") !important;
+  background-repeat:no-repeat !important; background-position:right 14px center !important; padding-right:38px !important;
+}
+.ap-hint { font-size:.78rem; color:var(--ap-muted); margin-top:7px; display:flex; align-items:center; gap:6px; }
+.ap-req { color:var(--ap-red); font-weight:700; }
+
+/* inline validation */
+body.ap .form-group.invalid input,
+body.ap .form-group.invalid select { border-color:var(--ap-red) !important; background:rgba(255,41,78,.03) !important; }
+.ap-err { display:none; font-size:.78rem; color:var(--ap-red); margin-top:7px; font-weight:600; align-items:center; gap:6px; }
+body.ap .form-group.invalid .ap-err { display:flex; }
+
+/* ---------- enrolment choice cards ---------- */
+.ap-choice { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+body.ap .enroll-toggle-btn {
+  all:unset; box-sizing:border-box; cursor:pointer; display:block !important;
+  padding:20px 22px !important; border-radius:14px !important;
+  border:1.5px solid var(--ap-line) !important; background:#fff !important;
+  transition:border-color .22s var(--ap-ease), box-shadow .22s var(--ap-ease), transform .22s var(--ap-ease) !important;
+  position:relative;
+}
+body.ap .enroll-toggle-btn:hover { border-color:#C9D0DA !important; transform:translateY(-2px); }
+body.ap .enroll-toggle-btn.is-on {
+  border-color:var(--ap-red) !important;
+  box-shadow:0 0 0 4px rgba(255,41,78,.09) !important;
+}
+.ap-choice-top { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.ap-choice-ic { width:36px; height:36px; border-radius:10px; background:var(--ap-surface); color:var(--ap-ink); display:grid; place-items:center; }
+body.ap .enroll-toggle-btn.is-on .ap-choice-ic { background:rgba(255,41,78,.09); color:var(--ap-red); }
+.ap-choice-radio { width:19px; height:19px; border-radius:50%; border:1.5px solid var(--ap-line); position:relative; flex-shrink:0; transition:border-color .2s, background .2s; }
+body.ap .enroll-toggle-btn.is-on .ap-choice-radio { border-color:var(--ap-red); background:var(--ap-red); }
+.ap-choice-radio::after { content:''; position:absolute; left:50%; top:50%; width:6px; height:6px; border-radius:50%; background:#fff; transform:translate(-50%,-50%) scale(0); transition:transform .22s var(--ap-ease); }
+body.ap .enroll-toggle-btn.is-on .ap-choice-radio::after { transform:translate(-50%,-50%) scale(1); }
+.ap-choice-t { font-size:1rem; font-weight:700; color:var(--ap-ink); margin-top:14px; letter-spacing:-.015em; }
+.ap-choice-d { font-size:.83rem; color:var(--ap-body); line-height:1.5; margin-top:5px; }
+
+/* ---------- preselected programme chip ---------- */
+.ap-locked {
+  display:flex; align-items:center; gap:14px;
+  background:var(--ap-surface); border:1px solid var(--ap-line);
+  border-radius:13px; padding:15px 17px;
+}
+.ap-locked-ic { width:38px; height:38px; border-radius:10px; background:#fff; border:1px solid var(--ap-line); display:grid; place-items:center; color:var(--ap-red); flex-shrink:0; }
+.ap-locked-t { font-size:.94rem; font-weight:700; color:var(--ap-ink); }
+.ap-locked-s { font-size:.78rem; color:var(--ap-muted); margin-top:2px; }
+.ap-locked button { margin-left:auto; background:none; border:0; cursor:pointer; font-family:inherit;
+  font-size:.8rem; font-weight:700; color:var(--ap-red); padding:6px 2px; }
+.ap-locked button:hover { text-decoration:underline; }
+
+/* ---------- scholarship strip ---------- */
+.ap-scholar {
+  position:relative; overflow:hidden; border-radius:13px; padding:14px 18px; margin-bottom:26px;
+  display:flex; align-items:center; gap:13px; flex-wrap:wrap;
+  background:linear-gradient(110deg, rgba(255,41,78,.06), rgba(255,87,72,.03));
+  border:1px solid rgba(255,41,78,.18);
+}
+.ap-scholar .pill { display:inline-flex; align-items:center; gap:6px; background:var(--ap-red); color:#fff;
+  font-size:.63rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; padding:5px 11px; border-radius:999px; white-space:nowrap; }
+.ap-scholar p { font-size:.85rem; color:var(--ap-body); line-height:1.5; margin:0; }
+.ap-scholar b { color:var(--ap-ink); }
+
+/* ---------- order summary (sticky) ---------- */
+.ap-rail { position:sticky; top:calc(var(--ap-nav-h,63px) + var(--banner-height) + 24px); }
+.ap-sum { background:#fff; border:1px solid var(--ap-line); border-radius:20px; overflow:hidden; box-shadow:var(--ap-sh); }
+.ap-sum-h {
+  padding:20px 24px; border-bottom:1px solid var(--ap-line2);
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.ap-sum-h span { font-size:.7rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--ap-muted); }
+.ap-sum-b { padding:22px 24px; }
+.ap-line { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:11px 0; font-size:.89rem; }
+.ap-line .k { color:var(--ap-body); }
+.ap-line .v { color:var(--ap-ink); font-weight:650; text-align:right; }
+.ap-line.total { border-top:1px solid var(--ap-line); margin-top:10px; padding-top:18px; }
+.ap-line.total .k { font-size:.95rem; font-weight:700; color:var(--ap-ink); }
+.ap-line.total .v { font-size:1.5rem; font-weight:800; letter-spacing:-.03em; }
+.ap-line.disc .v { color:var(--ap-green); }
+.ap-sum-f { padding:0 24px 24px; }
+.ap-trust { display:flex; flex-direction:column; gap:9px; margin-top:18px; padding-top:18px; border-top:1px solid var(--ap-line2); }
+.ap-trust div { display:flex; align-items:center; gap:9px; font-size:.79rem; color:var(--ap-muted); }
+.ap-trust svg { flex-shrink:0; color:var(--ap-green); }
+
+/* currency toggle */
+body.ap .currency-toggle-5, .ap-cur { display:inline-flex; padding:3px; border-radius:999px; background:var(--ap-surface); border:1px solid var(--ap-line); }
+body.ap .cur-btn {
+  height:28px; padding:0 13px; border-radius:999px; border:0; background:transparent;
+  font-family:inherit; font-size:.75rem; font-weight:700; color:var(--ap-muted); cursor:pointer;
+  transition:background .2s, color .2s;
+}
+body.ap .cur-btn.active { background:var(--ap-ink); color:#fff; }
+
+/* ---------- buttons ---------- */
+body.ap .apply-form-card .btn,
+body.ap #pay-btn, body.ap #back-to-form {
+  height:52px !important; border-radius:999px !important; font-size:.95rem !important; font-weight:700 !important;
+  display:inline-flex !important; align-items:center; justify-content:center; gap:9px;
+  transition:transform .24s var(--ap-ease), box-shadow .24s, background .2s, border-color .2s !important;
+}
+body.ap .btn-primary, body.ap #pay-btn {
+  background:linear-gradient(135deg, var(--g-red), var(--g-orange)) !important; border:0 !important; color:#fff !important;
+  box-shadow:0 12px 30px -12px rgba(255,41,78,.6) !important;
+}
+body.ap .btn-primary:hover, body.ap #pay-btn:hover { transform:translateY(-2px); box-shadow:0 18px 40px -14px rgba(255,41,78,.7) !important; }
+body.ap #back-to-form { background:#fff !important; color:var(--ap-ink) !important; border:1.5px solid var(--ap-line) !important; }
+body.ap #back-to-form:hover { border-color:var(--ap-ink) !important; }
+
+/* ---------- review rows ---------- */
+body.ap .price-row, body.ap .price-row-label, body.ap .price-row-value { color:inherit !important; }
+body.ap .price-row { display:flex; justify-content:space-between; gap:16px; padding:12px 0; border-bottom:1px solid var(--ap-line2); font-size:.89rem; }
+body.ap .price-row-label { color:var(--ap-body) !important; }
+body.ap .price-row-value { color:var(--ap-ink) !important; font-weight:650; text-align:right; }
+
+/* error banners */
+body.ap #form-error-banner, body.ap #review-error-banner {
+  background:rgba(255,41,78,.05) !important; border:1px solid rgba(255,41,78,.25) !important;
+  border-radius:12px !important; color:var(--ap-ink) !important;
+}
+
+/* draft-restored note */
+.ap-draft {
+  display:none; align-items:center; gap:10px; margin-bottom:22px;
+  background:rgba(22,163,74,.06); border:1px solid rgba(22,163,74,.22);
+  border-radius:11px; padding:11px 15px; font-size:.83rem; color:#15803D;
+}
+.ap-draft.show { display:flex; }
+.ap-draft button { margin-left:auto; background:none; border:0; cursor:pointer; font-family:inherit; font-size:.78rem; font-weight:700; color:#15803D; text-decoration:underline; }
+
+/* paystack handoff note */
+.ap-handoff { font-size:.79rem; color:var(--ap-muted); text-align:center; margin-top:14px; line-height:1.5; }
+
+/* motion primitives */
+html.ap-anim .ap-rise { opacity:0; transform:translateY(20px); }
+@media (prefers-reduced-motion:reduce) { .ap-rise { opacity:1 !important; transform:none !important; } }
+
+@media (max-width:1000px) {
+  .ap-grid { grid-template-columns:1fr !important; gap:36px !important; }
+  .ap-rail { position:static; }
+  .ap-sum { max-width:520px; }
+}
+@media (max-width:640px) {
+  .ap-wrap { padding:0 20px; }
+  .ap-head { padding:44px 0 32px; }
+  body.ap .apply-form-card { padding:30px 24px !important; border-radius:18px !important; }
+  body.ap .form-row { grid-template-columns:1fr; }
+  .ap-choice { grid-template-columns:1fr; }
+  .ap-grid { padding-bottom:64px; }
+  body.ap .step-label { display:none !important; }
+  body.ap .step-line { margin:0 10px !important; }
+}
+
+/* ---------- layout: card + sticky summary ---------- */
+body.ap .apply-wrapper {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) 372px !important;
+  gap:56px !important; align-items:start !important;
+  max-width:1140px; margin:0 auto; padding:0 32px 104px;
+}
+/* the old pricing table sidebar is replaced by the summary rail */
+body.ap .apply-sidebar-col { display:none !important; }
+/* the WhatsApp link was a stray grid child - span it under the card */
+body.ap .apply-wrapper > a { grid-column:1 / 2; }
+
+/* ---------- team fields: only for team applicants ----------
+   updateEnrollmentUI() toggles a .visible class on these groups, but no
+   stylesheet ever defined it, so they were always shown - including to
+   people applying as an individual. */
+body.ap #team-name-group,
+body.ap #team-size-group { display:none !important; }
+body.ap #team-name-group.visible,
+body.ap #team-size-group.visible { display:block !important; }
+
+/* neutralise the inline colours updateEnrollmentUI writes onto the
+   choice cards, so the new card styling wins */
+body.ap .enroll-toggle-btn[style] {
+  border-color:var(--ap-line) !important;
+  background:#fff !important;
+  color:var(--ap-ink) !important;
+}
+body.ap .enroll-toggle-btn.is-on[style] {
+  border-color:var(--ap-red) !important;
+  background:#fff !important;
+}
+
+@media (max-width:1000px) {
+  body.ap .apply-wrapper { grid-template-columns:1fr !important; gap:36px !important; }
+  body.ap .apply-wrapper > a { grid-column:auto; }
+}
+@media (max-width:640px) {
+  body.ap .apply-wrapper { padding:0 20px 64px; }
+}
+</style>
+
+<script>(function(){var m=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;if(!m)document.documentElement.className+=" ap-anim";})();</script>
 </head>
-<body>
+<body class="ap">
 
 <div id="scroll-progress"></div>
 
@@ -959,13 +1264,14 @@
             <div class="step-line"></div>
             <div class="step-item">
               <div class="step-dot">2</div>
-              <div class="step-label">Review</div>
+              <div class="step-label">Review &amp; pay</div>
             </div>
-            <div class="step-line"></div>
-            <div class="step-item">
-              <div class="step-dot">3</div>
-              <div class="step-label">Payment</div>
-            </div>
+          </div>
+
+          <div class="ap-draft" id="ap-draft">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>We restored what you filled in last time.</span>
+            <button type="button">Start over</button>
           </div>
 
           <h3>Apply for the Programme</h3>
@@ -974,22 +1280,32 @@
           <form id="apply-form" novalidate>
 
             <!-- ── Enrollment type — first choice in the form ── -->
-            <div class="form-group" style="margin-bottom:28px">
-              <label style="margin-bottom:10px;display:block">I am applying as</label>
-              <div style="display:flex;gap:10px;flex-wrap:wrap">
-                <span class="enroll-toggle-btn" id="enroll-btn-individual" onclick="selectEnrollBadge('Individual')" style="cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:22px;font-size:0.82rem;font-weight:700;border:2px solid #FF294E;background:rgba(255,41,78,0.13);color:#FF294E;user-select:none;transition:all .2s">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
-                  Individual
+            <div class="ap-fieldset">
+              <div class="ap-legend"><span class="n">01</span><span class="t">How are you applying?</span></div>
+              <div class="ap-choice">
+                <span class="enroll-toggle-btn is-on" id="enroll-btn-individual" onclick="selectEnrollBadge('Individual')" role="radio" tabindex="0">
+                  <span class="ap-choice-top">
+                    <span class="ap-choice-ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></span>
+                    <span class="ap-choice-radio"></span>
+                  </span>
+                  <span class="ap-choice-t">Just me</span>
+                  <span class="ap-choice-d">One seat, paid by you.</span>
                 </span>
-                <span class="enroll-toggle-btn" id="enroll-btn-team" onclick="selectEnrollBadge('Team')" style="cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:22px;font-size:0.82rem;font-weight:700;border:2px solid var(--border-card);background:rgba(255,255,255,0.04);color:var(--muted);user-select:none;transition:all .2s">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.85"/></svg>
-                  Team / Organisation
+                <span class="enroll-toggle-btn" id="enroll-btn-team" onclick="selectEnrollBadge('Team')" role="radio" tabindex="0">
+                  <span class="ap-choice-top">
+                    <span class="ap-choice-ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.85"/></svg></span>
+                    <span class="ap-choice-radio"></span>
+                  </span>
+                  <span class="ap-choice-t">My team</span>
+                  <span class="ap-choice-d">Multiple seats, invoice available.</span>
                 </span>
               </div>
-              <!-- legacy badge elements kept hidden — used by updateEnrollmentUI for state display elsewhere -->
               <span id="badge-individual" style="display:none"></span>
               <span id="badge-team" style="display:none"></span>
             </div>
+
+            <div class="ap-fieldset">
+              <div class="ap-legend"><span class="n">02</span><span class="t">About you</span></div>
 
             <div class="form-row">
               <div class="form-group">
@@ -1035,7 +1351,16 @@
               </p>
             </div>
 
-            <div class="form-group">
+            </div>
+
+            <div class="ap-fieldset">
+              <div class="ap-legend"><span class="n">03</span><span class="t">Your programme</span></div>
+              <div class="ap-locked" id="ap-locked" style="display:none">
+                <span class="ap-locked-ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                <span><span class="ap-locked-t" id="ap-locked-name">—</span><span class="ap-locked-s">Selected from the programme page</span></span>
+                <button type="button" id="ap-locked-change">Change</button>
+              </div>
+              <div class="form-group">
               <label for="field">Programme</label>
               <select id="field" name="field" required>
                 <option value="" disabled selected>Loading programmes…</option>
@@ -1127,7 +1452,9 @@
                   <input type="text" id="coupon-code" name="coupon_code" placeholder="e.g. BRIX20" autocomplete="off" style="background:rgba(255,255,255,0.05);border:1px solid var(--border-card);border-radius:8px;padding:13px 16px;color:var(--white);font-family:inherit;font-size:0.92rem;outline:none;flex:1;box-sizing:border-box;transition:border-color .2s;text-transform:uppercase;letter-spacing:.05em" oninput="this.value=this.value.toUpperCase()" />
                   <button type="button" onclick="applyCoupon()" style="padding:13px 22px;background:var(--red);border:none;border-radius:8px;color:#fff;font-size:0.85rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s;line-height:1" onmouseover="this.style.background='var(--orange)'" onmouseout="this.style.background='var(--red)'">Apply</button>
                 </div>
-                <div id="coupon-feedback" style="margin-top:6px;font-size:0.78rem;display:none"></div>
+                </div>
+
+            <div id="coupon-feedback" style="margin-top:6px;font-size:0.78rem;display:none"></div>
               </div>
             </div>
 
@@ -1160,12 +1487,7 @@
             <div class="step-line done"></div>
             <div class="step-item">
               <div class="step-dot active">2</div>
-              <div class="step-label active">Review</div>
-            </div>
-            <div class="step-line"></div>
-            <div class="step-item">
-              <div class="step-dot">3</div>
-              <div class="step-label">Payment</div>
+              <div class="step-label active">Review &amp; pay</div>
             </div>
           </div>
 
@@ -1247,6 +1569,7 @@
           <button id="pay-btn" class="btn btn-primary pay-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span id="pay-btn-label">Pay Securely via Paystack</span>
           </button>
+            <p class="ap-handoff">You will be taken to Paystack to complete payment, then returned here.</p>
 
           <a class="back-link" id="back-to-form"> Edit my details</a>
 
@@ -1257,7 +1580,33 @@
 
         <!-- Payment states handled by callback.html after Paystack redirect -->
 
-      </div><!-- /apply-form-card -->
+      </div>
+
+      <!-- ====== ORDER SUMMARY (sticky) ====== -->
+      <aside class="ap-rail ap-rise">
+        <div class="ap-sum">
+          <div class="ap-sum-h">
+            <span>Your application</span>
+            <div class="ap-cur" role="group" aria-label="Currency">
+              <button type="button" class="cur-btn active" data-cur="ngn">NGN</button>
+              <button type="button" class="cur-btn" data-cur="usd">USD</button>
+            </div>
+          </div>
+          <div class="ap-sum-b">
+            <div class="ap-line"><span class="k">Programme</span><span class="v" id="ap-sum-prog">Not selected yet</span></div>
+            <div class="ap-line"><span class="k">Applying as</span><span class="v" id="ap-sum-type">Individual</span></div>
+            <div class="ap-line"><span class="k">Cohort</span><span class="v" id="ap-sum-cohort">Next available</span></div>
+            <div class="ap-line"><span class="k">Duration</span><span class="v">4 weeks</span></div>
+            <div class="ap-trust">
+              <div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>No charge until you confirm on the next step</div>
+              <div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Card payments secured by Paystack</div>
+              <div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>We respond to every application within 48 hours</div>
+              <div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Scholarship applied automatically — no code needed</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+<!-- /apply-form-card -->
     </div>
   </div>
 </section>
@@ -2866,5 +3215,233 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 </noscript>
 
 <!-- <script src="popup.js"></script> -->
+<script src="assets/vendor/motion.js"></script>
+<script>
+/* ============================================================
+   APPLY PAGE — UX layer.
+   Additive only: reads/decorates existing controls, never replaces
+   the payment logic or its element ids.
+   ============================================================ */
+(function () {
+  'use strict';
+  var M = window.Motion;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- real nav height ---- */
+  (function () {
+    var nav = document.querySelector('.nav'); if (!nav) return;
+    var sync = function () { document.documentElement.style.setProperty('--ap-nav-h', nav.offsetHeight + 'px'); };
+    sync(); window.addEventListener('resize', sync, { passive: true }); window.addEventListener('load', sync);
+    if (window.ResizeObserver) new ResizeObserver(sync).observe(nav);
+  })();
+
+  /* ---- reveal (fail-safe: never leave content invisible) ---- */
+  function revealAll() {
+    document.documentElement.classList.remove('ap-anim');
+    if (document.getAnimations) document.getAnimations().forEach(function (a) { try { a.finish(); } catch (e) {} });
+    document.querySelectorAll('.ap-rise').forEach(function (el) { el.style.opacity = 1; el.style.transform = 'none'; });
+  }
+  window.addEventListener('load', function () { setTimeout(revealAll, 2400); });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) setTimeout(revealAll, 1000); });
+
+  if (M && M.animate && !reduced) {
+    M.animate(document.querySelectorAll('.ap-rise'),
+      { opacity: [0, 1], y: [20, 0] },
+      { delay: M.stagger(0.07, { start: 0.05 }), duration: 0.6, easing: [0.2, 0.7, 0.2, 1] });
+  } else {
+    revealAll();
+  }
+
+  /* ---- enrolment choice cards mirror the existing badge state ---- */
+  var btnInd = document.getElementById('enroll-btn-individual');
+  var btnTeam = document.getElementById('enroll-btn-team');
+  function syncChoice() {
+    var type = (document.getElementById('enrollment-type') || {}).value || 'Individual';
+    var isTeam = /team/i.test(type);
+    if (btnInd) btnInd.classList.toggle('is-on', !isTeam);
+    if (btnTeam) btnTeam.classList.toggle('is-on', isTeam);
+  }
+  syncChoice();
+  [btnInd, btnTeam].forEach(function (b) { if (b) b.addEventListener('click', function () { setTimeout(syncChoice, 0); }); });
+  var etSel = document.getElementById('enrollment-type');
+  if (etSel) etSel.addEventListener('change', syncChoice);
+  if (window.MutationObserver) {
+    var tn = document.getElementById('team-name-group');
+    if (tn) new MutationObserver(syncChoice).observe(tn, { attributes: true, attributeFilter: ['style', 'class'] });
+  }
+
+  /* ---- preselect programme from ?program_id= and collapse the picker ---- */
+  (function () {
+    var pid = new URLSearchParams(location.search).get('program_id');
+    var sel = document.getElementById('field');
+    var lock = document.getElementById('ap-locked');
+    if (!pid || !sel || !lock) return;
+
+    function tryLock() {
+      var opt = [].slice.call(sel.options).find(function (o) { return String(o.value) === String(pid); });
+      if (!opt || !opt.textContent.trim()) return false;
+      document.getElementById('ap-locked-name').textContent = opt.textContent.trim();
+      lock.style.display = 'flex';
+      var grp = sel.closest('.form-group');
+      if (grp) grp.style.display = 'none';
+      return true;
+    }
+    // the programme list is fetched, so wait for it to populate
+    if (!tryLock()) {
+      var tries = 0;
+      var iv = setInterval(function () {
+        if (tryLock() || ++tries > 40) clearInterval(iv);
+      }, 250);
+    }
+    var change = document.getElementById('ap-locked-change');
+    if (change) change.addEventListener('click', function () {
+      lock.style.display = 'none';
+      var grp = sel.closest('.form-group');
+      if (grp) grp.style.display = '';
+      sel.focus();
+    });
+  })();
+
+  /* ---- inline validation with real messages ---- */
+  var MSG = {
+    'first-name': 'Enter your first name.',
+    'last-name': 'Enter your last name.',
+    'email': 'Enter a valid email address.',
+    'apply-phone-num': 'Enter your phone number.',
+    'field': 'Choose a programme.',
+    'role': 'Select your current role.'
+  };
+  function groupOf(el) { return el.closest('.form-group'); }
+  function errNode(g) {
+    var e = g.querySelector('.ap-err');
+    if (!e) {
+      e = document.createElement('div'); e.className = 'ap-err';
+      e.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span>';
+      g.appendChild(e);
+    }
+    return e;
+  }
+  function validate(el, showIt) {
+    var g = groupOf(el); if (!g) return true;
+    var v = (el.value || '').trim();
+    var ok = true;
+    if (el.required && !v) ok = false;
+    if (ok && el.type === 'email' && v) ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    if (ok && el.id === 'apply-phone-num' && v) ok = v.replace(/\D/g, '').length >= 7;
+    if (showIt) {
+      g.classList.toggle('invalid', !ok);
+      if (!ok) errNode(g).querySelector('span').textContent =
+        (el.type === 'email' && v) ? 'That email address does not look right.' : (MSG[el.id] || 'This field is required.');
+    } else if (ok) {
+      g.classList.remove('invalid');
+    }
+    return ok;
+  }
+  var watched = ['first-name', 'last-name', 'email', 'apply-phone-num', 'field', 'role'];
+  watched.forEach(function (id) {
+    var el = document.getElementById(id); if (!el) return;
+    el.addEventListener('blur', function () { validate(el, true); });
+    el.addEventListener('input', function () { if (groupOf(el).classList.contains('invalid')) validate(el, true); });
+    el.addEventListener('change', function () { if (groupOf(el).classList.contains('invalid')) validate(el, true); });
+  });
+  var form = document.getElementById('apply-form');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      var firstBad = null;
+      watched.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (!el || el.offsetParent === null) return;
+        if (!validate(el, true) && !firstBad) firstBad = el;
+      });
+      if (firstBad) {
+        e.preventDefault(); e.stopImmediatePropagation();
+        firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(function () { firstBad.focus({ preventScroll: true }); }, 300);
+      }
+    }, true); // capture: run before the payment handler
+  }
+
+  /* ---- draft save / restore ---- */
+  var KEY = 'bxApplyDraft';
+  var DRAFT_IDS = ['first-name', 'last-name', 'email', 'apply-phone-cc', 'apply-phone-num',
+                   'field', 'applicant-level', 'role', 'team-name', 'team-size'];
+  function saveDraft() {
+    try {
+      var d = {};
+      DRAFT_IDS.forEach(function (id) { var el = document.getElementById(id); if (el && el.value) d[id] = el.value; });
+      var et = document.getElementById('enrollment-type'); if (et) d._type = et.value;
+      if (Object.keys(d).length) localStorage.setItem(KEY, JSON.stringify({ t: Date.now(), d: d }));
+    } catch (e) {}
+  }
+  function clearDraft() { try { localStorage.removeItem(KEY); } catch (e) {} }
+  window.bxClearApplyDraft = clearDraft;
+
+  (function restore() {
+    var raw; try { raw = localStorage.getItem(KEY); } catch (e) { return; }
+    if (!raw) return;
+    var parsed; try { parsed = JSON.parse(raw); } catch (e) { return; }
+    // drop drafts older than 7 days
+    if (!parsed || !parsed.d || (Date.now() - (parsed.t || 0)) > 6048e5) { clearDraft(); return; }
+    var note = document.getElementById('ap-draft');
+    var filled = 0;
+    Object.keys(parsed.d).forEach(function (id) {
+      if (id === '_type') return;
+      var el = document.getElementById(id);
+      if (el && !el.value) { el.value = parsed.d[id]; filled++; }
+    });
+    // programme list loads async — re-apply once it exists
+    if (parsed.d['field']) {
+      var sel = document.getElementById('field'), tries = 0;
+      var iv = setInterval(function () {
+        if (!sel) return clearInterval(iv);
+        if ([].slice.call(sel.options).some(function (o) { return o.value === parsed.d['field']; })) {
+          if (!sel.value) { sel.value = parsed.d['field']; sel.dispatchEvent(new Event('change', { bubbles: true })); }
+          clearInterval(iv);
+        } else if (++tries > 40) clearInterval(iv);
+      }, 250);
+    }
+    if (filled && note) {
+      note.classList.add('show');
+      var btn = note.querySelector('button');
+      if (btn) btn.addEventListener('click', function () {
+        clearDraft();
+        DRAFT_IDS.forEach(function (id) { var el = document.getElementById(id); if (el) el.value = ''; });
+        note.classList.remove('show');
+      });
+    }
+  })();
+
+  DRAFT_IDS.forEach(function (id) {
+    var el = document.getElementById(id); if (!el) return;
+    el.addEventListener('change', saveDraft);
+    el.addEventListener('blur', saveDraft);
+  });
+  window.addEventListener('beforeunload', saveDraft);
+
+  /* ---- mirror the fee panel into the sticky summary ---- */
+  function textOf(id) { var e = document.getElementById(id); return e ? e.textContent.trim() : ''; }
+  function syncSummary() {
+    var map = {
+      'ap-sum-prog': function () {
+        var lock = document.getElementById('ap-locked-name');
+        if (lock && lock.textContent.trim()) return lock.textContent.trim();
+        var sel = document.getElementById('field');
+        return (sel && sel.selectedIndex > -1 && sel.value) ? sel.options[sel.selectedIndex].textContent.trim() : 'Not selected yet';
+      },
+      'ap-sum-type': function () { return (document.getElementById('enrollment-type') || {}).value || 'Individual'; },
+      'ap-sum-cohort': function () { return textOf('cohort-info-start') || 'Next available'; }
+    };
+    Object.keys(map).forEach(function (id) {
+      var el = document.getElementById(id); if (el) el.textContent = map[id]();
+    });
+  }
+  syncSummary();
+  ['field', 'cohort-select', 'enrollment-type', 'team-size'].forEach(function (id) {
+    var el = document.getElementById(id); if (el) el.addEventListener('change', function () { setTimeout(syncSummary, 60); });
+  });
+  setInterval(syncSummary, 1200);
+})();
+</script>
+
 </body>
 </html>

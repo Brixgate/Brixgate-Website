@@ -212,6 +212,112 @@
     }
   </style>
 <script src="tracking.js"></script>
+
+<style>
+/* ============================================================
+   CALLBACK — light restyle. All state ids left untouched.
+   ============================================================ */
+:root{
+  --cb-ink:#021024; --cb-body:#4A5568; --cb-muted:#6B7A90; --cb-line:#E6E8EC;
+  --cb-surface:#F7F8FA; --cb-red:#FF294E; --cb-green:#16A34A;
+  --g-navy:#021024; --g-steel:#1B3A5C; --g-wine:#9A2335; --g-deep:#C4173A;
+  --g-red:#FF294E; --g-orange:#FF5748;
+  --cb-ease:cubic-bezier(.2,.7,.2,1);
+}
+body{ background:#fff !important; color:var(--cb-ink) !important; }
+.callback-wrap{ display:grid; place-items:center; padding:80px 24px !important; background:#fff !important; }
+.callback-card{
+  background:#fff !important; border:1px solid var(--cb-line) !important;
+  border-radius:24px !important; padding:56px 52px !important; max-width:560px; width:100%;
+  text-align:center; box-shadow:0 1px 2px rgba(2,16,36,.04), 0 26px 60px -26px rgba(2,16,36,.20) !important;
+}
+
+/* loading */
+.spinner{
+  width:52px !important; height:52px !important; margin:0 auto 28px !important;
+  border:3px solid var(--cb-line) !important; border-top-color:var(--cb-red) !important;
+  border-radius:50%; animation:cbSpin .9s linear infinite;
+}
+@keyframes cbSpin{ to{ transform:rotate(360deg) } }
+.loading-title{ font-size:1.4rem !important; font-weight:750 !important; letter-spacing:-.024em; color:var(--cb-ink) !important; }
+.loading-sub{ font-size:.95rem !important; color:var(--cb-body) !important; margin-top:12px !important; line-height:1.6; }
+.progress-dots{ display:flex; gap:7px; justify-content:center; margin-top:26px !important; }
+.progress-dots span, .progress-dots div{ width:7px !important; height:7px !important; border-radius:50%; background:var(--cb-line) !important; }
+
+/* icons */
+.success-icon-wrap, .failed-icon-wrap{
+  width:74px !important; height:74px !important; border-radius:50% !important;
+  display:grid !important; place-items:center; margin:0 auto 26px !important;
+}
+.success-icon-wrap{ background:rgba(22,163,74,.10) !important; color:var(--cb-green) !important;
+  animation:cbPop .5s var(--cb-ease) both; }
+.failed-icon-wrap{ background:rgba(255,41,78,.09) !important; color:var(--cb-red) !important;
+  animation:cbPop .5s var(--cb-ease) both; }
+@keyframes cbPop{ from{ transform:scale(.7); opacity:0 } to{ transform:scale(1); opacity:1 } }
+.success-icon-wrap svg, .failed-icon-wrap svg{ width:34px; height:34px; }
+
+.success-title, .failed-title{
+  font-size:1.7rem !important; font-weight:800 !important; letter-spacing:-.03em;
+  color:var(--cb-ink) !important; line-height:1.15;
+}
+.success-body, .failed-body{
+  font-size:1rem !important; color:var(--cb-body) !important; line-height:1.68 !important;
+  margin:16px auto 0 !important; max-width:420px;
+}
+
+/* reference */
+.ref-box{
+  background:var(--cb-surface) !important; border:1px solid var(--cb-line) !important;
+  border-radius:12px !important; padding:16px 18px !important; margin:28px 0 0 !important;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace !important;
+  font-size:.84rem !important; color:var(--cb-ink) !important; word-break:break-all;
+}
+
+
+/* actions */
+.action-row{ display:flex; gap:11px; justify-content:center; flex-wrap:wrap; margin-top:30px !important; }
+.action-row .btn, .action-row a{
+  height:48px; padding:0 24px; border-radius:999px;
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font-size:.9rem; font-weight:700; font-family:inherit;
+  transition:transform .24s var(--cb-ease), box-shadow .24s, background .2s, border-color .2s;
+}
+.action-row .btn-primary, .action-row a.btn-primary{
+  background:linear-gradient(135deg,var(--g-red),var(--g-orange)) !important;
+  border:0 !important; color:#fff !important; box-shadow:0 12px 28px -12px rgba(255,41,78,.6);
+}
+.action-row .btn-primary:hover{ transform:translateY(-2px); }
+.action-row .btn-outline, .action-row a.btn-outline{
+  background:#fff !important; color:var(--cb-ink) !important; border:1.5px solid var(--cb-line) !important;
+}
+.action-row .btn-outline:hover{ border-color:var(--cb-ink) !important; transform:translateY(-2px); }
+
+.cb-help{ font-size:.82rem; color:var(--cb-muted); margin-top:24px; line-height:1.6; }
+.cb-help a{ color:var(--cb-red); font-weight:650; }
+
+
+/* Legacy inline colours in this page were written for a dark card
+   (color:var(--white) on white = invisible). Re-map them. */
+.callback-card [style*="var(--white)"]:not(.btn):not(a):not(button),
+.callback-card [style*="color:#fff"]:not(.btn):not(a):not(button),
+.callback-card [style*="color: #fff"]:not(.btn):not(a):not(button) { color:var(--cb-ink) !important; }
+/* filled buttons keep white text on their coloured ground */
+.callback-card .btn-primary, .callback-card a.btn-primary,
+.callback-card .btn-primary * { color:#fff !important; }
+.callback-card [style*="var(--muted)"] { color:var(--cb-muted) !important; }
+/* numbered chips keep white text on their red circle */
+.callback-card [style*="background:var(--red)"],
+.callback-card [style*="background: var(--red)"] { color:#fff !important; }
+.callback-card strong, .callback-card em { color:var(--cb-ink) !important; }
+.callback-card a[href^="mailto"] { color:var(--cb-red) !important; font-weight:650; }
+
+@media (max-width:600px){
+  .callback-wrap{ padding:44px 18px !important; }
+  .callback-card{ padding:36px 26px !important; border-radius:20px !important; }
+  .success-title, .failed-title{ font-size:1.4rem !important; }
+  .action-row .btn, .action-row a{ width:100%; }
+}
+</style>
 </head>
 <body>
 
@@ -243,7 +349,7 @@
 
       <!-- Critical action box — catches the eye immediately -->
       <div style="background:rgba(255,41,78,0.07);border:1.5px solid rgba(255,41,78,0.4);border-radius:14px;padding:20px 22px;margin-bottom:24px;text-align:left">
-        <div style="font-size:0.72rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">⚡ Action Required — Do This Now</div>
+        <div style="font-size:0.72rem;font-weight:800;color:#C4173A;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">⚡ Action Required — Do This Now</div>
         <div style="display:flex;flex-direction:column;gap:10px">
           <div style="display:flex;align-items:flex-start;gap:12px">
             <div style="min-width:22px;height:22px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;color:#fff;margin-top:1px">1</div>
