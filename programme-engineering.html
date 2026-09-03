@@ -493,150 +493,222 @@ html.cp-anim .cp-fade { opacity:0; }
     if (!m) document.documentElement.className += ' cp-anim';
   })();
 </script>
+
 <style>
 /* ============================================================
-   FOOTER v2 — gradient CTA band fused into the footer
-   Scoped to .bx-foot so the old .footer stays untouched elsewhere.
+   COURSE PAGE v2 — whitespace-forward sections
    ============================================================ */
-.bx-foot { position: relative; background: var(--g-navy); color: #fff; overflow: hidden; }
+.cp-sec  { padding: 132px 0; }
+.cp-sec.tight { padding: 96px 0; }
+.cp-chapter { padding: 132px 0; }
+.cp-narrow { max-width: 900px; margin-inline: auto; }
+.cp-mb { margin-bottom: 72px; }
 
-/* --- CTA band --- */
-.bx-foot-cta {
-  position: relative; overflow: hidden;
-  padding: 72px 0;
-  background:
-    radial-gradient(90% 150% at 100% 0%, rgba(255,87,72,.55) 0%, rgba(255,41,78,.20) 40%, transparent 68%),
-    radial-gradient(70% 120% at 0% 100%, rgba(27,58,92,.60) 0%, transparent 62%),
-    linear-gradient(112deg, var(--g-navy) 0%, var(--g-card) 24%, var(--g-steel) 46%, var(--g-wine) 76%, var(--g-deep) 100%);
+/* ---------- section label row ---------- */
+.cp-label {
+  display: flex; align-items: baseline; gap: 16px;
+  padding-bottom: 20px; margin-bottom: 56px;
+  border-bottom: 1px solid var(--cp-line);
 }
-.bx-foot-cta::after {
-  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .26; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+.cp-label .n {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .7rem; font-weight: 700; letter-spacing: .14em; color: var(--cp-red);
 }
-.bx-foot-cta-in {
-  position: relative; z-index: 1;
-  display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap;
-}
-.bx-foot-cta h2 {
-  font-size: clamp(1.7rem, 3vw, 2.5rem); line-height: 1.1; letter-spacing: -.03em; font-weight: 800; margin: 0; color: #fff;
-}
-.bx-foot-cta p { font-size: .95rem; color: rgba(255,255,255,.74); margin: 12px 0 0; max-width: 460px; line-height: 1.6; }
-.bx-foot-cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.cp-label .t { font-size: .74rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--cp-muted); }
+.cp-chapter .cp-label { border-bottom-color: rgba(255,255,255,.16); }
+.cp-chapter .cp-label .t { color: rgba(255,255,255,.6); }
+.cp-chapter .cp-label .n { color: #FFCDBC; }
 
-/* --- body --- */
-.bx-foot-body { position: relative; padding: 68px 0 0; }
-/* oversized watermark wordmark */
-.bx-foot-mark {
-  position: absolute; left: 50%; bottom: -2.2vw; transform: translateX(-50%);
-  font-size: clamp(6rem, 17vw, 15rem); font-weight: 900; letter-spacing: -.055em; line-height: .8;
-  color: rgba(255,255,255,.032); white-space: nowrap; pointer-events: none; user-select: none;
+/* ============================================================
+   OUTCOMES — big airy numbered list, two columns
+   ============================================================ */
+.cp-out { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 72px; }
+.cp-out-item { padding: 34px 0; border-top: 1px solid var(--cp-line); }
+.cp-out-n {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .7rem; font-weight: 700; color: var(--cp-faint); letter-spacing: .1em; margin-bottom: 14px;
 }
-.bx-foot-grid {
-  position: relative; z-index: 1;
-  display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr 1.3fr; gap: 44px;
-  padding-bottom: 52px;
-}
-.bx-foot-brand p { font-size: .87rem; color: #7A94A8; line-height: 1.6; margin: 14px 0 20px; max-width: 260px; }
-.bx-foot-brand .nav-logo-img { height: 40px; }
-.bx-foot-social { display: flex; gap: 9px; }
-.bx-foot-social a {
-  width: 36px; height: 36px; border-radius: 9px;
-  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10);
-  display: grid; place-items: center;
-  transition: transform .25s var(--cp-ease, cubic-bezier(.2,.7,.2,1)), background .25s, border-color .25s;
-}
-.bx-foot-social a:hover { transform: translateY(-3px); background: rgba(255,41,78,.14); border-color: rgba(255,41,78,.5); }
+.cp-out-t { font-size: 1.28rem; font-weight: 700; letter-spacing: -.022em; color: var(--cp-ink); line-height: 1.25; }
+.cp-out-d { font-size: .95rem; line-height: 1.68; color: var(--cp-body); margin-top: 12px; max-width: 440px; }
 
-.bx-foot-col h5 {
-  font-size: .68rem; font-weight: 800; color: rgba(255,255,255,.44);
-  text-transform: uppercase; letter-spacing: .13em; margin: 0 0 16px;
+/* ============================================================
+   CURRICULUM — week rail, no accordion
+   ============================================================ */
+.cp-weeks { display: flex; flex-direction: column; gap: 0; }
+.cp-week {
+  display: grid; grid-template-columns: 190px 1fr; gap: 56px;
+  padding: 56px 0; border-top: 1px solid var(--cp-line);
+  position: relative;
 }
-.bx-foot-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 11px; }
-.bx-foot-col a {
-  font-size: .87rem; color: #9FB3C4; transition: color .2s, padding-left .2s;
-  display: inline-flex; align-items: center; gap: 7px;
-}
-.bx-foot-col a:hover { color: #fff; padding-left: 3px; }
-.bx-foot-col .tag {
-  font-size: .6rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
-  background: rgba(34,197,94,.16); color: #6EE7A0; padding: 2px 7px; border-radius: 5px;
-}
-
-/* --- cohort alerts --- */
-.bx-foot-sub h5 { font-size: .68rem; font-weight: 800; color: rgba(255,255,255,.44); text-transform: uppercase; letter-spacing: .13em; margin: 0 0 10px; }
-.bx-foot-sub p { font-size: .84rem; color: #7A94A8; line-height: 1.55; margin: 0 0 16px; }
-.bx-foot-form { display: flex; gap: 8px; }
-.bx-foot-form input {
-  flex: 1; min-width: 0; height: 44px; padding: 0 14px;
-  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14);
-  border-radius: 10px; color: #fff; font-family: inherit; font-size: .87rem; outline: none;
-  transition: border-color .2s, background .2s;
-}
-.bx-foot-form input::placeholder { color: #64798C; }
-.bx-foot-form input:focus { border-color: var(--g-red); background: rgba(255,255,255,.08); }
-.bx-foot-form button {
-  height: 44px; padding: 0 18px; border: 0; border-radius: 10px; cursor: pointer;
+.cp-week:last-child { border-bottom: 1px solid var(--cp-line); }
+.cp-week-side { position: relative; }
+.cp-week-tag {
+  display: inline-flex; align-items: center; height: 26px; padding: 0 11px; border-radius: 7px;
   background: linear-gradient(135deg, var(--g-red), var(--g-orange)); color: #fff;
-  font-family: inherit; font-size: .87rem; font-weight: 700; white-space: nowrap;
-  transition: transform .22s var(--cp-ease, cubic-bezier(.2,.7,.2,1)), box-shadow .22s;
+  font-size: .64rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
 }
-.bx-foot-form button:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -10px rgba(255,41,78,.7); }
-.bx-foot-note { font-size: .74rem; margin-top: 10px; min-height: 17px; }
-.bx-foot-note.ok  { color: #6EE7A0; }
-.bx-foot-note.err { color: #FF8A9B; }
-.bx-foot-note.idle { color: #64798C; }
+.cp-week-big {
+  font-size: 4.2rem; font-weight: 800; letter-spacing: -.06em; line-height: .85;
+  color: var(--cp-ink); margin-top: 18px; font-variant-numeric: tabular-nums;
+}
+.cp-week-sub { font-size: .78rem; color: var(--cp-muted); margin-top: 8px; font-weight: 600; }
+.cp-week-t { font-size: 1.42rem; font-weight: 700; letter-spacing: -.026em; color: var(--cp-ink); line-height: 1.2; }
+.cp-week-d { font-size: .97rem; line-height: 1.7; color: var(--cp-body); margin-top: 14px; max-width: 620px; }
+.cp-week-list { list-style: none; padding: 0; margin: 22px 0 0; display: grid; grid-template-columns: repeat(2,1fr); gap: 10px 28px; }
+.cp-week-list li { font-size: .88rem; color: var(--cp-body); line-height: 1.55; display: flex; gap: 10px; align-items: flex-start; }
+.cp-week-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--cp-red); flex-shrink: 0; margin-top: 8px; }
 
-/* --- bottom bar --- */
-.bx-foot-bottom {
-  position: relative; z-index: 1;
-  border-top: 1px solid rgba(255,255,255,.08);
-  padding: 22px 0 26px;
-  display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap;
+/* ============================================================
+   FIT — who it's for / not for, side by side
+   ============================================================ */
+.cp-fit { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.cp-fit-col { border-radius: var(--cp-r); padding: 40px 38px; }
+.cp-fit-yes { background: #fff; border: 1px solid var(--cp-line); }
+.cp-fit-no  { background: var(--cp-surface); border: 1px solid var(--cp-line); }
+.cp-fit-h { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+.cp-fit-h span { font-size: 1.06rem; font-weight: 700; letter-spacing: -.015em; }
+.cp-fit-ic { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; flex-shrink: 0; }
+.cp-fit-yes .cp-fit-ic { background: rgba(22,163,74,.12); color: var(--cp-green); }
+.cp-fit-no  .cp-fit-ic { background: rgba(255,41,78,.10); color: var(--cp-red); }
+.cp-fit ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 18px; }
+.cp-fit li { font-size: .94rem; line-height: 1.6; color: var(--cp-body); display: flex; gap: 13px; align-items: flex-start; }
+.cp-fit li svg { flex-shrink: 0; margin-top: 3px; }
+.cp-fit li b { color: var(--cp-ink); font-weight: 650; }
+
+/* ============================================================
+   HOW IT WORKS — alternating image rows
+   ============================================================ */
+.cp-step { display: grid; grid-template-columns: repeat(2, 1fr); gap: 80px; align-items: center; padding: 64px 0; }
+.cp-step:nth-child(even) .cp-step-media { order: -1; }
+.cp-step-media { border-radius: var(--cp-r); overflow: hidden; aspect-ratio: 3/2; background: var(--cp-surface); position: relative; }
+.cp-step-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .9s var(--cp-ease); }
+.cp-step:hover .cp-step-media img { transform: scale(1.04); }
+.cp-step-n {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .7rem; font-weight: 700; letter-spacing: .14em; color: var(--cp-red); margin-bottom: 16px;
 }
-.bx-foot-bottom p { font-size: .78rem; color: #64798C; margin: 0; }
-.bx-foot-legal { display: flex; gap: 20px; flex-wrap: wrap; }
-.bx-foot-legal a { font-size: .78rem; color: #64798C; transition: color .2s; }
-.bx-foot-legal a:hover { color: #fff; }
-.bx-foot-where {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: .76rem; color: #9FB3C4;
-  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10);
-  padding: 6px 12px; border-radius: 999px;
+.cp-step-t { font-size: 1.55rem; font-weight: 700; letter-spacing: -.028em; color: var(--cp-ink); line-height: 1.18; }
+.cp-step-d { font-size: 1rem; line-height: 1.72; color: var(--cp-body); margin-top: 16px; max-width: 460px; }
+
+/* ============================================================
+   TOOLS — logo tiles
+   ============================================================ */
+.cp-tools { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.cp-tool {
+  aspect-ratio: 3/2; border: 1px solid var(--cp-line); border-radius: 14px; background: #fff;
+  display: grid; place-items: center; padding: 22px;
+  transition: transform .3s var(--cp-ease), box-shadow .3s var(--cp-ease), border-color .3s;
+}
+.cp-tool:hover { transform: translateY(-4px); box-shadow: var(--cp-shadow); border-color: transparent; }
+.cp-tool img { max-width: 100%; max-height: 34px; width: auto; height: auto; display: block;
+  filter: grayscale(1) opacity(.55); transition: filter .3s var(--cp-ease); }
+.cp-tool:hover img { filter: none; }
+.cp-tools-note { font-size: .86rem; color: var(--cp-muted); margin-top: 26px; text-align: center; }
+
+/* ============================================================
+   START DATES
+   ============================================================ */
+.cp-dates { display: flex; flex-direction: column; gap: 12px; }
+.cp-date {
+  display: grid; grid-template-columns: 130px 1fr auto; gap: 32px; align-items: center;
+  background: #fff; border: 1px solid var(--cp-line); border-radius: var(--cp-r); padding: 26px 30px;
+  transition: transform .3s var(--cp-ease), box-shadow .3s var(--cp-ease), border-color .3s;
+}
+.cp-date:hover { transform: translateY(-3px); box-shadow: var(--cp-shadow); border-color: transparent; }
+.cp-date-when b { display: block; font-size: 1.12rem; font-weight: 800; letter-spacing: -.02em; color: var(--cp-ink); }
+.cp-date-when span { display: block; font-size: .78rem; color: var(--cp-muted); margin-top: 4px; font-weight: 600; }
+.cp-date-meta { display: flex; gap: 30px; flex-wrap: wrap; }
+.cp-date-meta div span { display: block; font-size: .64rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--cp-faint); }
+.cp-date-meta div b { display: block; font-size: .9rem; font-weight: 700; color: var(--cp-ink); margin-top: 5px; }
+.cp-date-status { display: inline-flex; align-items: center; gap: 7px; font-size: .72rem; font-weight: 800;
+  letter-spacing: .05em; text-transform: uppercase; color: var(--cp-green); }
+
+/* ============================================================
+   PRICING
+   ============================================================ */
+.cp-price-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 860px; margin-inline: auto; }
+.cp-price {
+  position: relative; border-radius: 22px; padding: 40px 36px; overflow: hidden;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  transition: transform .35s var(--cp-ease), background .3s;
+}
+.cp-price:hover { transform: translateY(-5px); background: rgba(255,255,255,.10); }
+.cp-price.feat { background: rgba(255,255,255,.97); color: var(--cp-ink); border-color: transparent;
+  box-shadow: 0 34px 70px -26px rgba(0,0,0,.55); }
+.cp-price-k { font-size: .68rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+.cp-price.feat .cp-price-k { color: var(--cp-muted); }
+.cp-price-v { font-size: 2.9rem; font-weight: 800; letter-spacing: -.05em; line-height: 1; margin-top: 14px; color: #fff; }
+.cp-price.feat .cp-price-v { color: var(--cp-ink); }
+.cp-price-per { font-size: .82rem; color: rgba(255,255,255,.62); margin-top: 8px; }
+.cp-price.feat .cp-price-per { color: var(--cp-muted); }
+.cp-price ul { list-style: none; padding: 0; margin: 28px 0; display: flex; flex-direction: column; gap: 13px; }
+.cp-price li { font-size: .89rem; line-height: 1.5; color: rgba(255,255,255,.82); display: flex; gap: 11px; align-items: flex-start; }
+.cp-price.feat li { color: var(--cp-body); }
+.cp-price li svg { flex-shrink: 0; margin-top: 2px; color: #7CEFA6; }
+.cp-price.feat li svg { color: var(--cp-green); }
+.cp-price .cp-btn { width: 100%; }
+.cp-price-badge {
+  position: absolute; top: 18px; right: 18px;
+  font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  background: linear-gradient(135deg, var(--g-red), var(--g-orange)); color: #fff;
+  padding: 5px 11px; border-radius: 7px;
 }
 
-
-/* Self-contained buttons so the footer renders identically on any page,
-   regardless of whether that page defines .cp-btn or .lp-btn. */
-.bx-foot .cp-btn {
-  display:inline-flex; align-items:center; justify-content:center; gap:10px;
-  height:52px; padding:0 26px; border-radius:999px;
-  font-family:inherit; font-size:.95rem; font-weight:700; white-space:nowrap;
-  border:1.5px solid transparent; cursor:pointer; text-decoration:none;
-  transition:transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s, background .2s, border-color .2s;
+/* ============================================================
+   FAQ (matches the landing page system)
+   ============================================================ */
+.cp-faq-wrap { display: grid; grid-template-columns: minmax(0,.78fr) minmax(0,1.22fr); gap: 80px; align-items: start; }
+.cp-faq-head { position: sticky; top: calc(var(--cp-nav-h,63px) + var(--banner-height) + 40px); }
+.cp-faq-list { border-top: 1px solid var(--cp-line); }
+.cp-faq-item { border-bottom: 1px solid var(--cp-line); }
+.cp-faq-q {
+  width: 100%; background: none; border: 0; padding: 24px 4px;
+  display: flex; align-items: center; justify-content: space-between; gap: 28px;
+  font-family: inherit; font-size: 1.02rem; font-weight: 600; letter-spacing: -.015em;
+  color: var(--cp-ink); text-align: left; cursor: pointer; transition: color .2s;
 }
-.bx-foot .cp-btn svg { transition:transform .25s cubic-bezier(.2,.7,.2,1); flex-shrink:0; }
-.bx-foot .cp-btn:hover svg { transform:translateX(3px); }
-.bx-foot .cp-btn-white { background:#fff; color:#021024; }
-.bx-foot .cp-btn-white:hover { transform:translateY(-2px); box-shadow:0 16px 36px -12px rgba(0,0,0,.5); }
-.bx-foot .cp-btn-glass {
-  background:rgba(255,255,255,.10); color:#fff; border-color:rgba(255,255,255,.34);
-  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
-}
-.bx-foot .cp-btn-glass:hover { background:rgba(255,255,255,.18); border-color:#fff; transform:translateY(-2px); }
+.cp-faq-q:hover { color: var(--cp-red); }
+.cp-faq-q:focus-visible { outline: 2px solid var(--cp-red); outline-offset: 3px; border-radius: 6px; }
+.cp-faq-chev { flex-shrink: 0; color: var(--cp-muted); transition: transform .38s var(--cp-ease), color .2s; }
+.cp-faq-item.open .cp-faq-chev { transform: rotate(180deg); color: var(--cp-red); }
+.cp-faq-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .38s var(--cp-ease); }
+.cp-faq-item.open .cp-faq-a { grid-template-rows: 1fr; }
+.cp-faq-a > div { overflow: hidden; }
+.cp-faq-a p { font-size: .95rem; line-height: 1.68; color: var(--cp-body); margin: 0 0 24px; padding-right: 40px; max-width: 640px; }
 
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
 @media (max-width: 1080px) {
-  .bx-foot-grid { grid-template-columns: 1.4fr 1fr 1fr; gap: 36px; }
-  .bx-foot-sub { grid-column: 1 / -1; max-width: 460px; }
+  .cp-tools { grid-template-columns: repeat(3, 1fr); }
+  .cp-out { gap: 4px 44px; }
+  .cp-week { grid-template-columns: 150px 1fr; gap: 36px; }
+  .cp-step { gap: 48px; }
 }
-@media (max-width: 700px) {
-  .bx-foot-cta { padding: 52px 0; }
-  .bx-foot-cta-in { flex-direction: column; align-items: flex-start; gap: 26px; }
-  .bx-foot-cta-actions { width: 100%; }
-  .bx-foot-cta-actions > a { flex: 1; justify-content: center; }
-  .bx-foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .bx-foot-brand { grid-column: 1 / -1; }
-  .bx-foot-body { padding-top: 48px; }
-  .bx-foot-bottom { flex-direction: column; align-items: flex-start; }
+@media (max-width: 900px) {
+  .cp-sec, .cp-chapter { padding: 88px 0; }
+  .cp-out { grid-template-columns: 1fr; }
+  .cp-fit { grid-template-columns: 1fr; }
+  .cp-faq-wrap { grid-template-columns: 1fr; gap: 40px; }
+  .cp-faq-head { position: static; }
+  .cp-step { grid-template-columns: 1fr; gap: 32px; padding: 44px 0; }
+  .cp-step:nth-child(even) .cp-step-media { order: 0; }
+  .cp-price-grid { grid-template-columns: 1fr; }
+  .cp-date { grid-template-columns: 1fr; gap: 20px; }
+}
+@media (max-width: 640px) {
+  .cp-sec, .cp-chapter { padding: 68px 0; }
+  .cp-label { margin-bottom: 36px; }
+  .cp-mb { margin-bottom: 44px; }
+  .cp-week { grid-template-columns: 1fr; gap: 18px; padding: 40px 0; }
+  .cp-week-big { font-size: 3rem; margin-top: 12px; }
+  .cp-week-list { grid-template-columns: 1fr; }
+  .cp-tools { grid-template-columns: repeat(2, 1fr); }
+  .cp-fit-col { padding: 30px 26px; }
+  .cp-price { padding: 32px 26px; }
+  .cp-out-item { padding: 26px 0; }
+  .cp-date-meta { gap: 20px; }
 }
 </style>
 
@@ -904,230 +976,269 @@ html.cp-anim .cp-fade { opacity:0; }
   </div>
 </section>
 
+<!-- ====== WHAT YOU'LL LEARN ====== -->
+<section class="cp-sec">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">01</span><span class="t">What you'll walk away with</span></div>
+
+    <div class="cp-head cp-mb cp-rise">
+      <h2 class="cp-h2" data-lines>Six things you'll own<br/>by the final week</h2>
+      <p class="cp-lead cp-gradbar">Not topics you sat through — artefacts and habits you can show a hiring manager or apply to Monday's sprint.</p>
+    </div>
+
+    <div class="cp-out" data-stagger>
+      <div class="cp-out-item">
+        <div class="cp-out-n">01</div>
+        <div class="cp-out-t">A prompting system for engineers</div>
+        <p class="cp-out-d">Role, context, constraints, output contract. Repeatable structure that gets usable code instead of plausible-looking code.</p>
+      </div>
+      <div class="cp-out-item">
+        <div class="cp-out-n">02</div>
+        <div class="cp-out-t">A code review checklist for AI output</div>
+        <p class="cp-out-d">What to check before you commit anything a model wrote — readability, hidden coupling, performance, and the security holes it won't mention.</p>
+      </div>
+      <div class="cp-out-item">
+        <div class="cp-out-n">03</div>
+        <div class="cp-out-t">A working capstone you deployed</div>
+        <p class="cp-out-d">A real service with a test suite you understand and an architecture decision record explaining why it looks the way it does.</p>
+      </div>
+      <div class="cp-out-item">
+        <div class="cp-out-n">04</div>
+        <div class="cp-out-t">A personal AI safety policy</div>
+        <p class="cp-out-d">What you will and won't put into a model, how to handle client code, and how to stay inside your employer's policy without stalling.</p>
+      </div>
+      <div class="cp-out-item">
+        <div class="cp-out-n">05</div>
+        <div class="cp-out-t">A model-selection instinct</div>
+        <p class="cp-out-d">Which model for which job, when a cheaper one is enough, and when to stop prompting and write it yourself.</p>
+      </div>
+      <div class="cp-out-item">
+        <div class="cp-out-n">06</div>
+        <div class="cp-out-t">A 30-day post-programme plan</div>
+        <p class="cp-out-d">The habits that survive contact with a real backlog, written for your actual stack and team.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ====== CURRICULUM ====== -->
-<style>
-  .curr-wrapper { max-width: 800px; margin: 0 auto; }
-  .curr-control-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #E8E3DE; }
-  .curr-control-label { font-size: 0.82rem; font-weight: 800; color: #021024; text-transform: uppercase; letter-spacing: .08em; }
-  .curr-expand-all { font-size: 0.85rem; font-weight: 700; color: #FF294E; background: none; border: none; cursor: pointer; padding: 0; }
-  .curr-expand-all:hover { text-decoration: underline; }
-  .curr-item { border:1px solid var(--cp-line); border-radius:14px; margin-bottom:10px; overflow:hidden; background:#fff; transition:border-color .25s var(--cp-ease), box-shadow .25s var(--cp-ease); }
-  .curr-item:hover { border-color:#D6DAE1; box-shadow:0 10px 26px -14px rgba(2,16,36,.18); }
-  .curr-item[open] { border-color:transparent; box-shadow:0 14px 34px -16px rgba(2,16,36,.20); }
-  .curr-item summary { padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; list-style: none; cursor: pointer; background: #fff; }
-  .curr-item summary::-webkit-details-marker { display: none; }
-  .curr-item summary:focus { outline: none; }
-  .curr-item-title { display: flex; align-items: center; gap: 12px; }
-  .curr-item-num { font-size:.68rem; font-weight:800; color:#fff; white-space:nowrap; flex-shrink:0; background:linear-gradient(135deg,var(--g-red),var(--g-orange)); padding:5px 10px; border-radius:7px; letter-spacing:.03em; }
-  .curr-item-name { font-size: 0.93rem; font-weight: 700; color: #021024; line-height: 1.3; }
-  .curr-chevron { flex-shrink: 0; color: #9CA3AF; transition: transform 0.2s ease; }
-  .curr-item[open] .curr-chevron { transform: rotate(180deg); }
-  .curr-item-body { padding: 0 20px 16px; border-top: 1px solid #F3F4F6; }
-  .curr-item-body ul { list-style: none; padding: 0; margin: 0; }
-  .curr-item-body li { font-size: 0.87rem; color: #4A5568; padding: 7px 0; display: flex; gap: 12px; align-items: flex-start; line-height: 1.55; }
-  .curr-item-body li::before { content: '—'; color: #9CA3AF; flex-shrink: 0; font-weight: 600; margin-top: 1px; }
-</style>
-<section class="cp-sec">
-  <div class="container">
-    <div class="curr-wrapper fade-up">
-      <div class="eyebrow-tag" style="color:var(--red)">Programme Curriculum</div>
-      <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:10px">8 Classes. Full AI Engineering Lifecycle.</h2>
-      <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:28px">Each class builds on the last — from model landscape and prompting fundamentals through to a live capstone defence and your 30-day post-programme roadmap.</p>
+<section class="cp-sec cp-surface" id="curriculum">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">02</span><span class="t">Curriculum · 8 classes over 4 weeks</span></div>
 
-      <div class="curr-control-bar">
-        <span class="curr-control-label">Content · 8 classes</span>
-        <button class="curr-expand-all" onclick="bxCurrToggleAll(this)">Expand all</button>
-      </div>
-
-      <details class="curr-item" open>
-        <summary>
-          <span class="curr-item-title"><span class="curr-item-num">Class 1</span><span class="curr-item-name">Foundations &amp; Environment Setup</span></span>
-          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="curr-item-body"><ul>
-          <li>What "AI-native" means vs AI-assisted vs AI-aware development</li>
-          <li>Deep-dive comparison of major coding models: Claude, GPT-4o, Gemini, DeepSeek, Qwen, Mistral, LLaMA, StarCoder2</li>
-          <li>IDE setup: VS Code, JetBrains, GitHub Copilot, Cursor, and local models via Ollama</li>
-          <li>Anatomy of a strong engineering prompt — role, context, task, constraints, output format</li>
-        </ul></div>
-      </details>
-
-      <details class="curr-item">
-        <summary>
-          <span class="curr-item-title"><span class="curr-item-num">Class 2</span><span class="curr-item-name">Practical Interactions, Documentation &amp; Planning</span></span>
-          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="curr-item-body"><ul>
-          <li>Advanced prompt engineering — multi-step, iterative, and chained prompts</li>
-          <li>AI for requirements: turning vague briefs into technical specs, user stories, and architecture decisions</li>
-          <li>Technical documentation at scale: README, OpenAPI/Swagger, ADRs, release notes, onboarding docs</li>
-          <li>Understanding legacy codebases with AI — explaining mystery functions and mapping dependencies</li>
-        </ul></div>
-      </details>
-
-      <details class="curr-item">
-        <summary>
-          <span class="curr-item-title"><span class="curr-item-num">Class 3</span><span class="curr-item-name">Code Generation, Review &amp; Refactoring</span></span>
-          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="curr-item-body"><ul>
-          <li>Generating production-ready functions, APIs, and modules — and knowing what to validate before committing</li>
-          <li>AI-assisted refactoring — naming, modularity, design patterns, and breaking monoliths</li>
-          <li>Using AI as a structured first-pass code reviewer: readability, performance, security, design quality</li>
-          <li>The right mental model: what to delegate to AI vs what must remain with the engineer</li>
-        </ul></div>
-      </details>
-
-      <details class="curr-item">
-        <summary>
-          <span class="curr-item-title"><span class="curr-item-num">Class 4</span><span class="curr-item-name">Debugging, Testing &amp; Quality Assurance</span></span>
-          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="curr-item-body"><ul>
-          <li>Feeding stack traces and logs to AI effectively — hypothesis-first debugging workflows</li>
-          <li>AI-driven test generation: unit, integration, and E2E — with edge cases AI commonly misses</li>
-          <li>TDD workflows assisted by AI, and reviewing AI-written tests for shallow or false coverage</li>
-          <li>Performance profiling and static analysis with AI-guided interpretation</li>
-        </ul></div>
-      </details>
-
-      <details class="curr-item">
-        <summary>
-          <span class="curr-item-title"><span class="curr-item-num">Class 5</span><span class="curr-item-name">Security, Ethics &amp; Safe AI Practice</span></span>
-          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="curr-item-body"><ul>
-          <li>Common vulnerabilities in AI-generated code: injection, insecure defaults, hardcoded credentials</li>
-          <li>What not to put in prompts: PII, credentials, client data, proprietary logic — and when to use local models</li>
-          <li>Hallucination: why it happens, how to detect it, and how to verify AI outputs</li>
-          <li>Building a personal AI safety policy — licensing, data retention, and professional accountability</li>
-        </ul></div>
-      </details>
-
-      <details class="curr-item">
-        <summary>
-          <span class="curr-item-title"><span class="curr-item-num">Class 6</span><span class="curr-item-name">AI-Enhanced Productivity &amp; Workflows</span></span>
-          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="curr-item-body"><ul>
-          <li>Mapping AI tools to each SDLC phase — requirements, design, build, test, deploy</li>
-          <li>Building reusable prompt templates and a personal AI workflow OS</li>
-          <li>Standardising AI usage across an engineering team — shared libraries and norms</li>
-          <li>Full productivity lab: take a real feature from brief to working code, tracking AI prompts throughout</li>
-        </ul></div>
-      </details>
-
-      <details class="curr-item">
-        <summary>
-          <span class="curr-item-title"><span class="curr-item-num">Class 7</span><span class="curr-item-name">Capstone Project &amp; Defence</span></span>
-          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="curr-item-body"><ul>
-          <li>Build a real project: working code on GitHub with prompt log, test suite, and reflection document</li>
-          <li>Project tracks: beginner (CRUD app / API), intermediate (authenticated REST / AI feature), advanced (multi-service / CI-CD pipeline)</li>
-          <li>Live 5–10 minute defence: walk through your AI workflow, justify two decisions where you overruled the AI</li>
-          <li>Practitioner and peer Q&amp;A — rigorous, practical, and employer-ready</li>
-        </ul></div>
-      </details>
-
-      <details class="curr-item">
-        <summary>
-          <span class="curr-item-title"><span class="curr-item-num">Class 8</span><span class="curr-item-name">What's Next — The Future of AI in Engineering</span></span>
-          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="curr-item-body"><ul>
-          <li>Honest assessment of where AI coding tools are today — capabilities, limits, and what's overhyped</li>
-          <li>Agentic AI: autonomous coding agents (Devin, SWE-agent, Claude Code, OpenHands) — what they can and cannot do</li>
-          <li>Reasoning models vs generation models, longer context windows, multimodal coding</li>
-          <li>Career positioning: how to talk about AI fluency, skills that stay irreplaceable, your 30-day implementation roadmap</li>
-        </ul></div>
-      </details>
-
+    <div class="cp-head cp-mb cp-rise">
+      <h2 class="cp-h2" data-lines>Four weeks.<br/>One lifecycle.</h2>
+      <p class="cp-lead">Each week closes a loop — you finish with something that runs, not notes you'll never reopen.</p>
     </div>
-  </div>
-</section>
-<script>
-function bxCurrToggleAll(btn) {
-  var section = btn.closest('.curr-wrapper');
-  var items   = section.querySelectorAll('.curr-item');
-  var anyOpen = Array.from(items).some(function(d) { return d.hasAttribute('open'); });
-  items.forEach(function(d) { anyOpen ? d.removeAttribute('open') : d.setAttribute('open', ''); });
-  btn.textContent = anyOpen ? 'Expand all' : 'Collapse all';
-}
-</script>
 
-<!-- ====== TOOLS USED ====== -->
-<section class="cp-sec">
-  <div class="container">
-    <div class="fade-up">
-      <div class="eyebrow-tag" style="color:var(--red)">Tools &amp; Platforms</div>
-      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px">15+ AI Tools Across the Full Development Stack</h2>
-      <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px">You will work hands-on with the tools that AI-native engineers actually use — from AI-powered IDEs to local model inference. Real stacks, not toy environments.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:10px">
-        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Claude (Anthropic)</div>
-        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">GPT-4o / Codex</div>
-        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">GitHub Copilot</div>
-        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Cursor</div>
-        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Windsurf</div>
-        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">VS Code + AI Extensions</div>
-        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Gemini Pro / 2.0</div>
-        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">DeepSeek Coder</div>
-        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Ollama (local models)</div>
-        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">LM Studio</div>
-        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Aider (terminal AI)</div>
-        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">GitHub Actions (AI)</div>
-        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Claude Code</div>
-        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">CodeRabbit</div>
-        <div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Qwen2.5-Coder</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ====== PROGRAMME COHORTS ====== -->
-<section class="cp-sec">
-  <div class="container">
-    <div class="fade-up">
-      <div class="eyebrow-tag" style="color:var(--red)">Programme Cohorts</div>
-      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px">Open Cohorts</h2>
-      <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px">Cohort-based delivery means you learn alongside peers in your field and leave with a network, not just a certificate.</p>
-      <div id="cohort-cards-container" style="display:flex;flex-wrap:wrap;gap:20px">
-        <!-- cohort cards rendered by JS -->
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ====== WHO IS THIS FOR ====== -->
-<section class="cp-sec">
-  <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start" class="fade-up">
-      <div>
-        <div class="eyebrow-tag" style="color:var(--red)">Who Is This For</div>
-        <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px">Built for Practising Software Engineers</h2>
-        <p style="font-size:0.88rem;color:#4A5568;line-height:1.7;margin-bottom:28px">This programme is for engineers who are already writing code professionally and want to operate at the level AI makes possible — systematically, securely, and fast.</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <div style="padding:14px 20px;background:#EFF6FF;border-radius:10px;font-size:0.88rem;font-weight:700;color:#1D4ED8">Backend Developer</div>
-          <div style="padding:14px 20px;background:#FFF7ED;border-radius:10px;font-size:0.88rem;font-weight:700;color:#C2410C">Frontend / Full-Stack Dev</div>
-          <div style="padding:14px 20px;background:#F0FFF4;border-radius:10px;font-size:0.88rem;font-weight:700;color:#15803D">DevOps / Platform Engineer</div>
-          <div style="padding:14px 20px;background:#FDF4FF;border-radius:10px;font-size:0.88rem;font-weight:700;color:#7E22CE">Mobile Developer</div>
-          <div style="padding:14px 20px;background:#FFF1F2;border-radius:10px;font-size:0.88rem;font-weight:700;color:#BE123C">Engineering Tech Lead</div>
-          <div style="padding:14px 20px;background:#FFFBEB;border-radius:10px;font-size:0.88rem;font-weight:700;color:#B45309">QA / Test Engineer</div>
+    <div class="cp-weeks">
+      <article class="cp-week cp-rise">
+        <div class="cp-week-side">
+          <span class="cp-week-tag">Week 01</span>
+          <div class="cp-week-big">01</div>
+          <div class="cp-week-sub">Classes 1–2</div>
         </div>
+        <div>
+          <h3 class="cp-week-t">Foundations, environment and the prompt as a spec</h3>
+          <p class="cp-week-d">Where the models actually differ, how to set up an IDE that helps rather than autocompletes noise, and how to write a prompt that reads like a specification instead of a wish.</p>
+          <ul class="cp-week-list">
+            <li>AI-native vs AI-assisted vs AI-aware</li>
+            <li>Model comparison for real coding work</li>
+            <li>IDE, Copilot, Cursor and local models</li>
+            <li>Turning vague briefs into technical specs</li>
+            <li>Documentation at scale: ADRs, OpenAPI, READMEs</li>
+            <li>Reading a legacy codebase with AI</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="cp-week cp-rise">
+        <div class="cp-week-side">
+          <span class="cp-week-tag">Week 02</span>
+          <div class="cp-week-big">02</div>
+          <div class="cp-week-sub">Classes 3–4</div>
+        </div>
+        <div>
+          <h3 class="cp-week-t">Generation, review and refactoring you can defend</h3>
+          <p class="cp-week-d">The week most engineers change how they work. You stop accepting output and start interrogating it — reviewing generated diffs the way you'd review a colleague's.</p>
+          <ul class="cp-week-list">
+            <li>Production functions, APIs and modules</li>
+            <li>Validating before you commit</li>
+            <li>AI-assisted refactoring and design patterns</li>
+            <li>Breaking down monoliths</li>
+            <li>AI as a structured first-pass reviewer</li>
+            <li>What stays with the engineer, always</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="cp-week cp-rise">
+        <div class="cp-week-side">
+          <span class="cp-week-tag">Week 03</span>
+          <div class="cp-week-big">03</div>
+          <div class="cp-week-sub">Classes 5–6</div>
+        </div>
+        <div>
+          <h3 class="cp-week-t">Testing, security and shipping responsibly</h3>
+          <p class="cp-week-d">AI fails quietly and confidently. This week is about catching it before production does — and about the judgement calls no model will make for you.</p>
+          <ul class="cp-week-list">
+            <li>Test suites you actually understand</li>
+            <li>Hypothesis-first debugging workflows</li>
+            <li>Security review of generated code</li>
+            <li>Secrets, licensing and data leakage</li>
+            <li>Employer AI policy in practice</li>
+            <li>CI/CD with AI in the loop</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="cp-week cp-rise">
+        <div class="cp-week-side">
+          <span class="cp-week-tag">Week 04</span>
+          <div class="cp-week-big">04</div>
+          <div class="cp-week-sub">Classes 7–8</div>
+        </div>
+        <div>
+          <h3 class="cp-week-t">Capstone build and live defence</h3>
+          <p class="cp-week-d">You ship something real and then explain every decision to a practitioner and your peers. The defence is the point — anyone can generate code, few can justify it.</p>
+          <ul class="cp-week-list">
+            <li>Choose your track: CRUD, REST + auth, or multi-service</li>
+            <li>Build with a full prompt log</li>
+            <li>Architecture decision record</li>
+            <li>Live defence to your cohort</li>
+            <li>Practitioner feedback round</li>
+            <li>Your 30-day roadmap</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ====== HOW IT WORKS ====== -->
+<section class="cp-sec">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">03</span><span class="t">How it works</span></div>
+
+    <div class="cp-head cp-mb cp-rise">
+      <h2 class="cp-h2" data-lines>Live, small,<br/>and hands on the keyboard</h2>
+      <p class="cp-lead">No pre-recorded playlist. You show up, you build, and someone who has done it reviews what you made.</p>
+    </div>
+
+    <div>
+      <div class="cp-step cp-rise">
+        <div>
+          <div class="cp-step-n">STEP 01</div>
+          <h3 class="cp-step-t">Live sessions with a practitioner</h3>
+          <p class="cp-step-d">Small cohorts, taught live by an engineer who has shipped AI-assisted code in production. You can interrupt, argue, and ask the awkward question — that's the point of it being live.</p>
+        </div>
+        <div class="cp-step-media"><img src="assets/course/present.jpg" alt="Practitioner leading a live Brixgate session" loading="lazy" /></div>
       </div>
-      <div>
-        <div style="font-size:0.75rem;font-weight:800;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px">Eligibility Criteria</div>
-        <ul style="list-style:none;padding:0;margin:0 0 28px">
-          <li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">✓</span>Software engineer, developer, or technical lead with 1+ years of professional coding experience</li>
-          <li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">✓</span>Comfortable writing and reading code in at least one programming language</li>
-          <li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">✓</span>Readiness to build a real capstone project and defend it live</li>
-        </ul>
-        <a href="apply.html?program_id=1" class="btn btn-primary btn-lg" style="display:inline-flex">Apply Now</a>
+
+      <div class="cp-step cp-rise">
+        <div>
+          <div class="cp-step-n">STEP 02</div>
+          <h3 class="cp-step-t">Build every week, not just at the end</h3>
+          <p class="cp-step-d">Each class ends with something to make before the next one. By week four the capstone isn't a scramble — it's the accumulation of what you already built.</p>
+        </div>
+        <div class="cp-step-media"><img src="assets/course/desk.jpg" alt="Engineer building during the sprint" loading="lazy" /></div>
+      </div>
+
+      <div class="cp-step cp-rise">
+        <div>
+          <div class="cp-step-n">STEP 03</div>
+          <h3 class="cp-step-t">Get reviewed by peers and a practitioner</h3>
+          <p class="cp-step-d">Your work gets read by people solving the same problems. Reviewing someone else's prompt log teaches as much as writing your own.</p>
+        </div>
+        <div class="cp-step-media"><img src="assets/course/pair.jpg" alt="Peer review during the programme" loading="lazy" /></div>
+      </div>
+
+      <div class="cp-step cp-rise">
+        <div>
+          <div class="cp-step-n">STEP 04</div>
+          <h3 class="cp-step-t">Defend it, then take the certificate</h3>
+          <p class="cp-step-d">A live capstone defence in front of your cohort, then a field-verified Expert Practitioner Certificate any employer can check.</p>
+        </div>
+        <div class="cp-step-media"><img src="assets/course/review.jpg" alt="Capstone defence session" loading="lazy" /></div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- ====== TOOLS ====== -->
+<section class="cp-sec cp-surface">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">04</span><span class="t">Tools &amp; platforms</span></div>
+
+    <div class="cp-head center cp-mb cp-rise" style="max-width:640px">
+      <h2 class="cp-h2">The stack you'll actually work in</h2>
+      <p class="cp-lead">Model-agnostic by design. You learn to choose, not to depend.</p>
+    </div>
+
+    <div class="cp-tools" data-stagger>
+      <div class="cp-tool"><img src="assets/logos/claude.svg" alt="Claude" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/openai.svg" alt="OpenAI" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/gemini.svg" alt="Gemini" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/copilot.svg" alt="GitHub Copilot" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/cursor.svg" alt="Cursor" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/perplexity.svg" alt="Perplexity" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/n8n.svg" alt="n8n" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/notion.svg" alt="Notion" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/midjourney.svg" alt="Midjourney" loading="lazy" /></div>
+      <div class="cp-tool" style="border-style:dashed"><span style="font-size:.82rem;font-weight:700;color:var(--cp-muted);text-align:center;line-height:1.4">Your own<br/>stack</span></div>
+    </div>
+
+    <p class="cp-tools-note cp-rise">Tools our practitioners build with. Brixgate is not affiliated with these companies.</p>
+  </div>
+</section>
+
+<!-- ====== WHO IT'S FOR ====== -->
+<section class="cp-sec">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">05</span><span class="t">Fit check</span></div>
+
+    <div class="cp-head cp-mb cp-rise">
+      <h2 class="cp-h2" data-lines>Worth being honest<br/>about who this suits</h2>
+      <p class="cp-lead">We'd rather you self-select out now than sit through four weeks that weren't built for you.</p>
+    </div>
+
+    <div class="cp-fit" data-stagger>
+      <div class="cp-fit-col cp-fit-yes">
+        <div class="cp-fit-h">
+          <span class="cp-fit-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span>This is for you if…</span>
+        </div>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You <b>write code professionally</b> and have at least a year of doing it for real.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You already use AI tools but suspect you're <b>using them shallowly</b>.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You want to <b>ship faster without losing ownership</b> of what you ship.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You can commit to <b>live sessions</b> and building between them.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You're comfortable having your work <b>reviewed in front of peers</b>.</span></li>
+        </ul>
+      </div>
+
+      <div class="cp-fit-col cp-fit-no">
+        <div class="cp-fit-h">
+          <span class="cp-fit-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+          <span>This isn't for you if…</span>
+        </div>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You're <b>learning to code from scratch</b> — start with fundamentals first.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You want a <b>passive, watch-at-2x</b> course. Nothing here is pre-recorded.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You're looking for a <b>certificate without the build</b>. The capstone is mandatory.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You already <b>train models or run ML pipelines</b> — this will be too foundational.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You can't spare <b>a few hours a week</b> for four weeks. Wait for a better window.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cp-rise" style="margin-top:44px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+      <span style="font-size:.92rem;color:var(--cp-body)">Not sure where you land?</span>
+      <a href="#quiz-field" class="cp-btn cp-btn-ghost" style="height:44px;font-size:.88rem">Take the 90-second check</a>
+    </div>
+  </div>
+</section>
+
 
 <!-- ====== AI IN THIS FIELD: SKILLS ====== -->
 <section class="cp-sec" style="display:none">
@@ -1289,22 +1400,6 @@ function bxCurrToggleAll(btn) {
   </div>
 </section>
 
-<!-- ====== FAQ ====== -->
-<section class="cp-sec">
-  <div class="container">
-    <div style="max-width:760px;margin:0 auto" class="fade-up">
-      <div style="text-align:center;margin-bottom:32px">
-        <div class="eyebrow-tag" style="color:var(--red)">FAQ</div>
-        <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark)">Common Questions</h2>
-      </div>
-      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024">Do I need to be a senior engineer?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0">No — but you do need to be actively working in software engineering. This is not a beginner coding course. You need 1+ years of professional experience writing code. The capstone track you choose (beginner, intermediate, advanced) will match your level.</p></div></details>
-      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024">Which programming languages are covered?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0">The programme is language-agnostic. The prompting, review, security, and workflow principles apply regardless of your stack. Practitioner examples and live sessions use Python, JavaScript/TypeScript, and Go — but your capstone can be in any language.</p></div></details>
-      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024">Is AI-generated code actually safe to ship?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0">Yes — with proper review. The programme dedicates an entire class to security and responsible AI use. You will leave with a concrete review checklist and personal AI safety policy designed for production environments.</p></div></details>
-      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024">Can I build my capstone project on real work from my job?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0">Yes — and we encourage it. The capstone is designed to be a real project you deploy immediately. Just ensure you are not committing proprietary code to a public repository, and follow your employer's AI usage policy (we cover this in Class 5).</p></div></details>
-    </div>
-  </div>
-</section>
-
 <!-- ====== VALUE / ROI ====== -->
 <section class="cp-sec cp-surface">
   <div class="container">
@@ -1412,23 +1507,106 @@ function bxCurrToggleAll(btn) {
   </div>
 </section>
 
-<!-- ====== PRICING ====== -->
-<section id="pricing" class="cp-chapter cp-grain">
-  <div class="container">
-    <div style="text-align:center;margin-bottom:16px" class="fade-up">
-      <div class="eyebrow-tag">Pricing</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900">Invest in Your AI Advantage</h2>
-      <p style="font-size:0.95rem;color:var(--muted);margin-top:12px;margin-bottom:24px">Engineering &amp; Infrastructure Expert Practitioner Programme</p>
-      <div class="currency-toggle-5">
-        <button class="cur-btn" data-cur="ngn">₦ NGN</button>
-        <button class="cur-btn" data-cur="usd">$ USD</button>
-      </div>
+<!-- ====== UPCOMING START DATES ====== -->
+<section class="cp-sec cp-surface" id="start-dates">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">06</span><span class="t">Upcoming start dates</span></div>
+
+    <div class="cp-head cp-mb cp-rise">
+      <h2 class="cp-h2">Pick a cohort</h2>
+      <p class="cp-lead">Groups stay small on purpose. When a cohort fills, it closes.</p>
     </div>
-    <div id="pricing-cards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto" class="stagger">
-      <div style="text-align:center;color:var(--muted);padding:40px;grid-column:1/-1">Loading pricing…</div>
+
+    <div class="cp-dates" id="cohort-cards-container">
+      <div class="cp-date" style="opacity:.55">
+        <div class="cp-date-when"><b>Loading…</b><span>Fetching cohorts</span></div>
+        <div class="cp-date-meta"></div>
+        <div></div>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- ====== PRICING ====== -->
+<section class="cp-chapter cp-grain" id="pricing">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">07</span><span class="t">Investment</span></div>
+
+    <div class="cp-head center cp-mb cp-rise" style="max-width:620px">
+      <h2 class="cp-h2">One fee. Everything included.</h2>
+      <p class="cp-lead">No upsells, no locked modules. Scholarship places are applied automatically at checkout.</p>
+    </div>
+
+    <div class="cp-price-grid" id="pricing-cards">
+      <div class="cp-price" style="grid-column:1/-1;text-align:center;opacity:.6">
+        <div class="cp-price-k">Loading pricing…</div>
+      </div>
+    </div>
+
+    <div class="cp-rise" style="text-align:center;margin-top:34px">
+      <span style="font-size:.84rem;color:rgba(255,255,255,.6)">Paying for a team? <a href="organisations.html" style="color:#FFCDBC;font-weight:700">Talk to us about seats</a></span>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FAQ ====== -->
+<section class="cp-sec">
+  <div class="cp-wrap">
+    <div class="cp-faq-wrap">
+      <div class="cp-faq-head cp-rise">
+        <div class="cp-label" style="margin-bottom:28px"><span class="n">08</span><span class="t">FAQ</span></div>
+        <h2 class="cp-h2">Questions people<br/>actually ask</h2>
+        <p class="cp-lead" style="margin-top:18px">Still unsure? <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%20have%20a%20question%20about%20the%20Software%20Engineering%20programme." target="_blank" rel="noopener" style="color:var(--cp-red);font-weight:600">Message us on WhatsApp</a> and a human will answer.</p>
+      </div>
+
+      <div class="cp-faq-list" id="cp-faq">
+        <div class="cp-faq-item">
+          <button class="cp-faq-q" type="button" aria-expanded="false">Do I need to be a senior engineer?
+            <svg class="cp-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="cp-faq-a" aria-hidden="true"><div><p>No — but you do need to be actively working in software engineering. This isn't a beginner coding course. You need at least a year of professional experience writing code. The capstone track you pick (CRUD, REST + auth, or multi-service) matches your level.</p></div></div>
+        </div>
+        <div class="cp-faq-item">
+          <button class="cp-faq-q" type="button" aria-expanded="false">Which programming languages are covered?
+            <svg class="cp-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="cp-faq-a" aria-hidden="true"><div><p>It's language-agnostic. The prompting, review, security and workflow principles apply to any stack. Live examples use Python, JavaScript/TypeScript and Go, but your capstone can be in whatever you actually work in.</p></div></div>
+        </div>
+        <div class="cp-faq-item">
+          <button class="cp-faq-q" type="button" aria-expanded="false">Is AI-generated code actually safe to ship?
+            <svg class="cp-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="cp-faq-a" aria-hidden="true"><div><p>Only with proper review — which is exactly why a full week goes to testing and security. You leave with a concrete review checklist and a personal AI safety policy written for production environments, not a workshop.</p></div></div>
+        </div>
+        <div class="cp-faq-item">
+          <button class="cp-faq-q" type="button" aria-expanded="false">Can I use real work from my job as the capstone?
+            <svg class="cp-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="cp-faq-a" aria-hidden="true"><div><p>Yes, and we encourage it — the capstone is meant to be something you deploy. Just don't push proprietary code to a public repo, and follow your employer's AI usage policy. We cover exactly how to navigate that in week three.</p></div></div>
+        </div>
+        <div class="cp-faq-item">
+          <button class="cp-faq-q" type="button" aria-expanded="false">How much time does it take each week?
+            <svg class="cp-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="cp-faq-a" aria-hidden="true"><div><p>Two live sessions plus build time between them. Most people spend a few hours a week outside class. It's designed to run alongside a full-time job — but not alongside a week you already know is chaos.</p></div></div>
+        </div>
+        <div class="cp-faq-item">
+          <button class="cp-faq-q" type="button" aria-expanded="false">What if I miss a live session?
+            <svg class="cp-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="cp-faq-a" aria-hidden="true"><div><p>Sessions are recorded so you can catch up, and your practitioner will point you at what to prioritise. But the value is in being there — if you expect to miss more than one, take the next cohort instead.</p></div></div>
+        </div>
+        <div class="cp-faq-item">
+          <button class="cp-faq-q" type="button" aria-expanded="false">Is the certificate worth anything to employers?
+            <svg class="cp-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="cp-faq-a" aria-hidden="true"><div><p>The certificate is verifiable at <a href="verify.html" style="color:var(--cp-red);font-weight:600">brixgate.com/verify</a>, but the artefact matters more. Graduates report that the capstone and prompt log — evidence you can reason about AI-assisted work — is what actually moves interviews.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <!-- ====== WAITLIST ====== -->
 <section id="waitlist" class="cp-chapter cp-grain">
@@ -1515,7 +1693,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     btn.textContent = 'Joining…';
     btn.disabled = true;
-    fetch((window.BX_API_BASE || 'https://api.brixgate.com') + '/api/v1/waitlist', {
+    fetch((window.BX_API_BASE || 'https://dev.api.brixgate.com') + '/api/v1/waitlist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({ name: name, email: email, phone: phone, primary_field: course })
@@ -1558,130 +1736,77 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <!-- ====== FOOTER ====== -->
-<footer class="bx-foot">
-
-  <!-- CTA band -->
-  <div class="bx-foot-cta">
-    <div class="container bx-foot-cta-in">
-      <div>
-        <h2>Next cohort is forming.<br/>Take the seat.</h2>
-        <p>Small groups, live sessions, and a practitioner who has already done it in your field. Applications are reviewed personally.</p>
-      </div>
-      <div class="bx-foot-cta-actions">
-        <a href="apply.html" class="cp-btn cp-btn-white">
-          Apply now
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo footer-logo">
+          <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
         </a>
-        <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme." target="_blank" rel="noopener" class="cp-btn cp-btn-glass">Talk to us</a>
+        <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook">
+            <img src="assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block">
+          </a>
+          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram">
+            <img src="assets/social.png" alt="Instagram" width="22" height="22" style="display:block">
+          </a>
+          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X">
+            <img src="assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block">
+          </a>
+          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn" title="LinkedIn">
+            <img src="assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block">
+          </a>
+          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us">
+            <img src="assets/gmail.png" alt="Email" width="22" height="22" style="display:block">
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Programme</h5>
+        <ul>
+          <li><a href="programme.html">AI in my Field</a></li>
+          <li><a href="programme.html#journey">The Journey</a></li>
+          <li><a href="programme.html#pillars">The Framework</a></li>
+          <li><a href="programme.html#sectors">Sectors Covered</a></li>
+          <li><a href="programme.html#pricing">Pricing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Experts</h5>
+        <ul>
+          <li><a href="experts.html">Meet Our Experts</a></li>
+          <li><a href="experts.html#qualify">Become an Expert</a></li>
+          <li><a href="experts.html#criteria">Qualification Criteria</a></li>
+          <li><a href="experts.html#apply">Expert Application</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Organisation</h5>
+        <ul>
+          <li><a href="organisations.html">Corporate Programmes</a></li>
+          <li><a href="organisations.html#packages">Packages &amp; Pricing</a></li>
+          <li><a href="organisations.html#contact">Request a Demo</a></li>
+          <li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li>
+          <li><a href="apply.html">Apply Now</a></li>
+          <li><a href="verify.html">Verify a Certificate</a></li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <!-- Body -->
-  <div class="bx-foot-body">
-    <div class="bx-foot-mark" aria-hidden="true">Brixgate</div>
-    <div class="container">
-      <div class="bx-foot-grid">
-
-        <div class="bx-foot-brand">
-          <a href="index.html" class="nav-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
-          <p>The global AI expertise marketplace. We turn working professionals into AI-native practitioners through field-specific, practitioner-led sprints.</p>
-          <div class="bx-foot-social">
-            <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook"><img src="assets/Facebook.png" alt="" width="20" height="20"></a>
-            <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/social.png" alt="" width="20" height="20"></a>
-            <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" aria-label="X"><img src="assets/twitter (1).png" alt="" width="20" height="20"></a>
-            <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/linkedin.png" alt="" width="20" height="20"></a>
-            <a href="mailto:we@brixgate.com" aria-label="Email"><img src="assets/gmail.png" alt="" width="20" height="20"></a>
-          </div>
-        </div>
-
-        <div class="bx-foot-col">
-          <h5>Programmes</h5>
-          <ul>
-            <li><a href="programme-engineering.html">Software Engineering <span class="tag">Open</span></a></li>
-            <li><a href="programme-cybersecurity.html">Cybersecurity <span class="tag">Open</span></a></li>
-            <li><a href="programme-finance.html">Financial Modelling</a></li>
-            <li><a href="programme-marketing.html">Product Marketing</a></li>
-            <li><a href="programme.html">All programmes</a></li>
-          </ul>
-        </div>
-
-        <div class="bx-foot-col">
-          <h5>Company</h5>
-          <ul>
-            <li><a href="experts.html">Our experts</a></li>
-            <li><a href="join-as-expert.html">Become an expert</a></li>
-            <li><a href="organisations.html">For organisations</a></li>
-            <li><a href="aiquiz.html">AI readiness check</a></li>
-          </ul>
-        </div>
-
-        <div class="bx-foot-col">
-          <h5>Support</h5>
-          <ul>
-            <li><a href="apply.html">Apply now</a></li>
-            <li><a href="verify.html">Verify a certificate</a></li>
-            <li><a href="https://portal.brixgate.com/login" target="_blank" rel="noopener">Student portal</a></li>
-            <li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li>
-          </ul>
-        </div>
-
-        <div class="bx-foot-sub">
-          <h5>Cohort alerts</h5>
-          <p>One email when a new cohort opens in your field. Nothing else.</p>
-          <form class="bx-foot-form" id="bx-foot-form" novalidate>
-            <input type="email" id="bx-foot-email" placeholder="you@work.com" autocomplete="email" aria-label="Email address" required />
-            <button type="submit" id="bx-foot-btn">Notify me</button>
-          </form>
-          <div class="bx-foot-note idle" id="bx-foot-note">We only email about cohort openings.</div>
-        </div>
-
-      </div>
-
-      <div class="bx-foot-bottom">
-        <p>© <span id="footer-year">2026</span> Brixgate Ltd. Headquarters: Lagos, Nigeria.</p>
-        <span class="bx-foot-where">🇳🇬 🇬🇧 🇺🇸 🇰🇪 🇬🇭 🇿🇦 &nbsp;·&nbsp; NGN / USD</span>
-        <div class="bx-foot-legal">
-          <a href="privacy-policy.html">Privacy</a>
-          <a href="terms.html">Terms</a>
-          <a href="verify.html">Verify</a>
-        </div>
-      </div>
+  <div class="footer-bottom">
+    <p>© <span id="footer-year">2025</span> Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
+    <div class="footer-bottom-links">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="#">Cookie Policy</a>
     </div>
   </div>
 </footer>
-
-<script>
-/* Cohort-alert capture. Posts to the existing waitlist endpoint; on any
-   failure it says so plainly rather than pretending the signup worked. */
-(function () {
-  var f = document.getElementById('bx-foot-form');
-  if (!f) return;
-  var input = document.getElementById('bx-foot-email');
-  var btn   = document.getElementById('bx-foot-btn');
-  var note  = document.getElementById('bx-foot-note');
-  function say(msg, cls) { note.textContent = msg; note.className = 'bx-foot-note ' + cls; }
-
-  f.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var email = (input.value || '').trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { say('Enter a valid email address.', 'err'); input.focus(); return; }
-    btn.disabled = true; btn.textContent = 'Sending…';
-    fetch((window.BX_API_BASE || 'https://dev.api.brixgate.com') + '/api/v1/waitlist', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, source: 'footer_cohort_alerts' })
-    })
-      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json().catch(function () { return {}; }); })
-      .then(function () { f.reset(); say("You're on the list. We'll email when a cohort opens.", 'ok'); })
-      .catch(function () { say('Could not sign you up just now — email we@brixgate.com and we will add you.', 'err'); })
-      .finally(function () { btn.disabled = false; btn.textContent = 'Notify me'; });
-  });
-
-  var y = document.getElementById('footer-year');
-  if (y) y.textContent = new Date().getFullYear();
-})();
-</script>
 
 
 <a href="#" class="back-to-top" aria-label="Back to top">↑</a>
@@ -1891,7 +2016,6 @@ var PROGRAM_ID = 1;
     var fmt   = (c.learning_format || '').replace(/_/g, ' ').replace(/\b\w/g, function(ch) { return ch.toUpperCase(); });
 
     var details = [
-      { l: 'Start Date', v: fmtDate(c.start_date) },
       { l: 'End Date',   v: fmtDate(c.end_date)   },
     ];
     if (c.duration)  details.push({ l: 'Duration', v: c.duration });
@@ -1903,17 +2027,20 @@ var PROGRAM_ID = 1;
            + '<div style="font-size:0.95rem;font-weight:800;color:#021024">' + d.v + '</div></div>';
     }).join('');
 
-    var footer = c.status !== 'CLOSED'
-      ? '<div style="padding:16px 24px;background:#fff"><a href="apply.html?program_id=' + PROGRAM_ID + '&cohort_id=' + c.id + '" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Apply Now</a></div>'
-      : '';
 
-    return '<div style="border:1.5px solid #E8E3DE;border-radius:14px;overflow:hidden;min-width:280px;max-width:380px;flex:0 0 auto">'
-         +   '<div style="background:#021024;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px">'
-         +     '<div style="font-size:0.95rem;font-weight:800;color:#fff">' + (c.title || 'Cohort') + '</div>'
-         +     '<span style="background:' + st.bg + ';color:#fff;font-size:0.7rem;font-weight:800;padding:4px 12px;border-radius:50px;white-space:nowrap">' + st.label + '</span>'
+    var metaHtml = details.map(function (d) {
+      return '<div><span>' + d.l + '</span><b>' + d.v + '</b></div>';
+    }).join('');
+    var cta = c.status !== 'CLOSED'
+      ? '<a href="apply.html?program_id=' + PROGRAM_ID + '&cohort_id=' + c.id + '" class="cp-btn cp-btn-red" style="height:44px;font-size:.88rem">Apply</a>'
+      : '<span class="cp-date-status" style="color:#98A4B5">Closed</span>';
+    return '<div class="cp-date">'
+         +   '<div class="cp-date-when"><b>' + fmtDate(c.start_date) + '</b><span>' + (c.title || 'Cohort') + '</span></div>'
+         +   '<div class="cp-date-meta">' + metaHtml + '</div>'
+         +   '<div style="display:flex;align-items:center;gap:14px">'
+         +     '<span class="cp-date-status" style="color:' + st.bg + '"><span style="width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block"></span>' + st.label + '</span>'
+         +     cta
          +   '</div>'
-         +   '<div style="padding:24px;background:#F9F8F7;display:grid;grid-template-columns:1fr 1fr;gap:16px">' + detailsHtml + '</div>'
-         +   footer
          + '</div>';
   }
 
@@ -1961,31 +2088,29 @@ var PROGRAM_ID = 1;
     var html = '';
 
     if (indPlan) {
-      html += '<div class="card fade-up" style="padding:32px 28px">' +
-        '<div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Individual</div>' +
-        '<div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px">' + priceSpans(indPlan.breakdowns) + '</div>' +
-        '<div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">Per person / programme</div>' +
-        '<ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">' +
-        '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Full 4-week sprint</li>' +
-        '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Field assessment</li>' +
-        '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Expert-led cohort sessions</li>' +
-        '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Expert Practitioner Certificate</li>' +
+      html += '<div class="cp-price">' +
+        '<div class="cp-price-k">Individual</div>' +
+        '<div class="cp-price-v">' + priceSpans(indPlan.breakdowns) + '</div>' +
+        '<div class="cp-price-per">Per person · full programme</div>' +
+        '<ul>' + '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Full 4-week sprint</li>' +
+        '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All 8 live classes</li>' +
+        '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Capstone review &amp; live defence</li>' +
+        '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Expert Practitioner Certificate</li>' +
         '</ul>' +
-        '<a href="apply.html?program_id=' + PROGRAM_ID + '" class="btn btn-outline" style="width:100%;justify-content:center;display:flex">Apply Now</a></div>';
+        '<a href="apply.html?program_id=' + PROGRAM_ID + '" class="cp-btn cp-btn-white">Apply now</a></div>';
     }
     if (teamPlan) {
-      html += '<div class="card fade-up" style="padding:32px 28px;border-color:var(--red);position:relative">' +
-        '<div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;white-space:nowrap">Most Popular</div>' +
-        '<div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Team</div>' +
-        '<div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px">' + priceSpans(teamPlan.breakdowns) + '</div>' +
-        '<div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">Per seat / programme</div>' +
-        '<ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">' +
-        '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Individual</li>' +
-        '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Organisation-aligned cohort</li>' +
-        '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Manager progress reporting</li>' +
-        '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Invoice billing available</li>' +
+      html += '<div class="cp-price feat">' +
+        '<div class="cp-price-badge">Most popular</div>' +
+        '<div class="cp-price-k">Team</div>' +
+        '<div class="cp-price-v">' + priceSpans(teamPlan.breakdowns) + '</div>' +
+        '<div class="cp-price-per">Per seat · full programme</div>' +
+        '<ul>' + '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Everything in Individual</li>' +
+        '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Organisation-aligned cohort</li>' +
+        '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Manager progress reporting</li>' +
+        '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Invoice billing available</li>' +
         '</ul>' +
-        '<a href="apply.html?program_id=' + PROGRAM_ID + '&type=team" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Apply Now</a></div>';
+        '<a href="apply.html?program_id=' + PROGRAM_ID + '" class="cp-btn cp-btn-red">Apply now</a></div>';
     }
     html += '<div class="card fade-up" style="padding:32px 28px">' +
       '<div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Corporate</div>' +
@@ -2218,5 +2343,38 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 })();
 </script>
 
+
+<script>
+/* ---- FAQ accordion (self-contained; script.js's initFaqAccordion is out of scope) ---- */
+(function () {
+  var list = document.getElementById('cp-faq');
+  if (!list) return;
+  var items = [].slice.call(list.querySelectorAll('.cp-faq-item'));
+  items.forEach(function (item) {
+    var btn = item.querySelector('.cp-faq-q');
+    var panel = item.querySelector('.cp-faq-a');
+    if (!btn || !panel) return;
+    btn.addEventListener('click', function () {
+      var isOpen = item.classList.contains('open');
+      items.forEach(function (other) {
+        if (other === item) return;
+        other.classList.remove('open');
+        var ob = other.querySelector('.cp-faq-q'), op = other.querySelector('.cp-faq-a');
+        if (ob) ob.setAttribute('aria-expanded', 'false');
+        if (op) op.setAttribute('aria-hidden', 'true');
+      });
+      item.classList.toggle('open', !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      panel.setAttribute('aria-hidden', String(isOpen));
+    });
+  });
+  var first = items[0];
+  if (first) {
+    first.classList.add('open');
+    first.querySelector('.cp-faq-q').setAttribute('aria-expanded', 'true');
+    first.querySelector('.cp-faq-a').setAttribute('aria-hidden', 'false');
+  }
+})();
+</script>
 </body>
 </html>
