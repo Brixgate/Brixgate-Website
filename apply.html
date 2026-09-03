@@ -813,15 +813,15 @@ body.ap .enroll-toggle-btn.is-on {
   border-color:var(--ap-red) !important;
   box-shadow:0 0 0 4px rgba(255,41,78,.09) !important;
 }
-.ap-choice-top { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.ap-choice-top { display:flex !important; align-items:center; justify-content:space-between; gap:10px; }
 .ap-choice-ic { width:36px; height:36px; border-radius:10px; background:var(--ap-surface); color:var(--ap-ink); display:grid; place-items:center; }
 body.ap .enroll-toggle-btn.is-on .ap-choice-ic { background:rgba(255,41,78,.09); color:var(--ap-red); }
 .ap-choice-radio { width:19px; height:19px; border-radius:50%; border:1.5px solid var(--ap-line); position:relative; flex-shrink:0; transition:border-color .2s, background .2s; }
 body.ap .enroll-toggle-btn.is-on .ap-choice-radio { border-color:var(--ap-red); background:var(--ap-red); }
 .ap-choice-radio::after { content:''; position:absolute; left:50%; top:50%; width:6px; height:6px; border-radius:50%; background:#fff; transform:translate(-50%,-50%) scale(0); transition:transform .22s var(--ap-ease); }
 body.ap .enroll-toggle-btn.is-on .ap-choice-radio::after { transform:translate(-50%,-50%) scale(1); }
-.ap-choice-t { font-size:1rem; font-weight:700; color:var(--ap-ink); margin-top:14px; letter-spacing:-.015em; }
-.ap-choice-d { font-size:.83rem; color:var(--ap-body); line-height:1.5; margin-top:5px; }
+.ap-choice-t { display:block; font-size:1rem; font-weight:700; color:var(--ap-ink); margin-top:14px; letter-spacing:-.015em; }
+.ap-choice-d { display:block; font-size:.83rem; color:var(--ap-body); line-height:1.5; margin-top:5px; }
 
 /* ---------- preselected programme chip ---------- */
 .ap-locked {
@@ -980,6 +980,132 @@ body.ap .enroll-toggle-btn.is-on[style] {
 </style>
 
 <script>(function(){var m=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;if(!m)document.documentElement.className+=" ap-anim";})();</script>
+<style>
+/* ============================================================
+   APPLY v2 — full-height split.
+   Left: fixed gradient identity panel (the "why").
+   Right: white scrolling form (the "what").
+   Purely structural/visual — no payment id is touched.
+   ============================================================ */
+
+/* the page no longer needs top padding: the split owns the viewport */
+body.ap { padding-top:0 !important; }
+body.ap .region-banner { display:none !important; }
+body.ap .nav { display:none !important; }
+body.ap .nav-mobile { display:none !important; }
+
+/* kill the old stacked header entirely */
+body.ap .ap-head, body.ap .page-header { display:none !important; }
+
+/* ---------- the split ---------- */
+body.ap .apply-wrapper {
+  display:grid !important;
+  grid-template-columns:clamp(360px, 34vw, 480px) minmax(0,1fr) !important;
+  gap:0 !important;
+  max-width:none !important;
+  padding:0 !important;
+  align-items:stretch !important;
+  min-height:100vh;
+}
+body.ap .apply-sidebar-col { display:none !important; }
+body.ap .ap-rail { display:none !important; }
+
+/* ---------- LEFT: gradient identity panel ---------- */
+.ap-side {
+  grid-column:1; grid-row:1 / span 6;
+  position:relative; overflow:hidden; color:#fff;
+  padding:44px 46px 40px;
+  display:flex; flex-direction:column;
+  background:
+    radial-gradient(90% 120% at 100% 100%, rgba(255,87,72,.72) 0%, rgba(255,41,78,.34) 34%, transparent 66%),
+    radial-gradient(70% 80% at 0% 0%, rgba(27,58,92,.75) 0%, transparent 60%),
+    linear-gradient(158deg, var(--g-navy) 0%, var(--g-card) 22%, var(--g-steel) 44%, var(--g-wine) 72%, var(--g-deep) 100%);
+}
+.ap-side::after {
+  content:''; position:absolute; inset:0; pointer-events:none; opacity:.26; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+.ap-side > * { position:relative; z-index:1; }
+.ap-side-in { position:sticky; top:44px; display:flex; flex-direction:column; height:calc(100vh - 84px); }
+
+.ap-back {
+  display:inline-flex; align-items:center; gap:9px; align-self:flex-start;
+  font-size:.84rem; font-weight:650; color:rgba(255,255,255,.78);
+  padding:8px 14px 8px 10px; border-radius:999px;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14);
+  transition:background .22s, color .22s, transform .22s var(--ap-ease);
+}
+.ap-back:hover { background:rgba(255,255,255,.15); color:#fff; transform:translateX(-2px); }
+.ap-side-logo { height:30px; width:auto; margin:34px 0 0; opacity:.95; }
+
+.ap-side-tag {
+  display:inline-flex; align-items:center; gap:8px; align-self:flex-start; margin-top:auto;
+  height:28px; padding:0 13px; border-radius:999px;
+  background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.2);
+  font-size:.66rem; font-weight:800; letter-spacing:.11em; text-transform:uppercase; color:#fff;
+}
+.ap-side-h {
+  font-size:clamp(1.7rem, 2.3vw, 2.2rem); font-weight:800; letter-spacing:-.032em;
+  line-height:1.1; margin:18px 0 0; color:#fff;
+}
+.ap-side-sub { font-size:.94rem; color:rgba(255,255,255,.74); line-height:1.6; margin:14px 0 0; max-width:330px; }
+
+.ap-price-box {
+  margin:28px 0 0; padding:20px 22px; border-radius:16px;
+  background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.16);
+  -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+}
+.ap-price-k { font-size:.63rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:rgba(255,255,255,.6); }
+.ap-price-v { font-size:2.1rem; font-weight:800; letter-spacing:-.045em; line-height:1; margin-top:8px; color:#fff; }
+.ap-price-meta { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+.ap-price-meta span {
+  font-size:.72rem; font-weight:650; color:rgba(255,255,255,.86);
+  background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.14);
+  padding:5px 11px; border-radius:999px;
+}
+
+.ap-incl { list-style:none; padding:0; margin:26px 0 0; display:flex; flex-direction:column; gap:12px; }
+.ap-incl li { display:flex; gap:11px; align-items:flex-start; font-size:.88rem; color:rgba(255,255,255,.84); line-height:1.5; }
+.ap-incl svg { flex-shrink:0; margin-top:2px; color:#7CEFA6; }
+
+.ap-side-foot { margin-top:auto; padding-top:26px; border-top:1px solid rgba(255,255,255,.16); }
+.ap-side-quote { font-size:.87rem; color:rgba(255,255,255,.80); line-height:1.62; font-style:italic; }
+.ap-side-by { font-size:.75rem; color:rgba(255,255,255,.55); margin-top:10px; }
+.ap-side-secure { display:flex; align-items:center; gap:9px; margin-top:20px; font-size:.75rem; color:rgba(255,255,255,.6); }
+
+/* ---------- RIGHT: form column ---------- */
+body.ap .apply-form-card {
+  grid-column:2 !important;
+  background:transparent !important; border:0 !important; box-shadow:none !important;
+  border-radius:0 !important;
+  padding:56px clamp(32px, 5vw, 84px) 40px !important;
+  max-width:720px; width:100%;
+}
+body.ap .apply-wrapper > a { grid-column:2 !important; justify-self:start; margin:0 clamp(32px,5vw,84px) 64px; }
+
+/* scholarship strip sits inside the form column now */
+body.ap .ap-scholar { margin-bottom:30px; }
+
+/* ---------- responsive: stack, panel becomes a compact header ---------- */
+@media (max-width:1000px) {
+  body.ap .apply-wrapper { grid-template-columns:1fr !important; min-height:0; }
+  .ap-side { grid-column:1; grid-row:auto; padding:26px 24px 30px; }
+  .ap-side-in { position:static; height:auto; }
+  .ap-side-logo { margin-top:20px; }
+  .ap-side-tag { margin-top:22px; }
+  .ap-side-h { font-size:1.55rem; }
+  .ap-side-sub { max-width:none; }
+  .ap-incl { display:grid; grid-template-columns:1fr 1fr; gap:10px 18px; }
+  .ap-side-foot { display:none; }
+  body.ap .apply-form-card { grid-column:1 !important; padding:36px 24px 32px !important; max-width:none; }
+  body.ap .apply-wrapper > a { grid-column:1 !important; margin:0 24px 48px; }
+}
+@media (max-width:600px) {
+  .ap-incl { grid-template-columns:1fr; }
+  .ap-price-v { font-size:1.8rem; }
+}
+</style>
+
 </head>
 <body class="ap">
 
@@ -1053,16 +1179,51 @@ body.ap .enroll-toggle-btn.is-on[style] {
   <div class="container">
 
     <!-- Scholarship promo banner — full-width, above the two-column grid -->
-    <div style="position:relative;overflow:hidden;border-radius:12px;padding:12px 16px;margin-bottom:28px;background:linear-gradient(120deg,rgba(255,41,78,0.18),rgba(255,87,72,0.08));border:1px solid rgba(255,87,72,0.4);display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-      <div style="position:absolute;top:-40%;left:-10%;width:60%;height:220%;background:rgba(255,255,255,0.04);transform:rotate(20deg);animation:scholarshipSheen 5s ease-in-out infinite;pointer-events:none"></div>
-      <span style="display:inline-flex;align-items:center;gap:6px;background:#FF294E;color:#fff;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;white-space:nowrap;flex-shrink:0;position:relative;z-index:1">
-        <span style="width:6px;height:6px;border-radius:50%;background:#fff;animation:scholarshipPulse 1.6s infinite;display:inline-block"></span>
-        Scholarship Ongoing
-      </span>
-      <div style="font-size:13px;color:#C7CDE0;line-height:1.5;position:relative;z-index:1">A limited number of scholarship slots are open right now. <strong style="color:#fff">Your fee is automatically reduced</strong> at checkout. No code needed.</div>
-    </div>
+    
 
     <div class="apply-wrapper">
+      <!-- ====== LEFT: gradient identity panel ====== -->
+      <aside class="ap-side">
+        <div class="ap-side-in">
+          <a href="programme.html" class="ap-back">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Back to programmes
+          </a>
+          <a href="index.html"><img src="assets/logo-white.svg" alt="Brixgate" class="ap-side-logo" onerror="this.src='assets/logo-light.svg'" /></a>
+
+          <span class="ap-side-tag"><span class="ap-dot" style="background:#4ade80"></span>Applications open</span>
+          <h1 class="ap-side-h" id="ap-side-prog">AI in my Field</h1>
+          <p class="ap-side-sub">Four weeks, live, with a practitioner who has already done it in your field.</p>
+
+          <div class="ap-price-box">
+            <div class="ap-price-k">Programme fee</div>
+            <div class="ap-price-v" id="ap-side-price">—</div>
+            <div class="ap-price-meta">
+              <span id="ap-side-type">Individual</span>
+              <span id="ap-side-cohort">Next cohort</span>
+              <span>4 weeks</span>
+            </div>
+          </div>
+
+          <ul class="ap-incl">
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>8 live classes, never pre-recorded</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>A capstone you build and defend</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Field-verified certificate</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Scholarship applied automatically</li>
+          </ul>
+
+          <div class="ap-side-foot">
+            <p class="ap-side-quote">"I finished with a working service, a test suite I understand, and a prompt log showing how I built it. That artefact got me noticed in my next interview."</p>
+            <div class="ap-side-by">Software Engineer · Cohort 01</div>
+            <div class="ap-side-secure">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Payments secured by Paystack
+            </div>
+          </div>
+        </div>
+      </aside>
+
+
 
       <!-- ====== PRICING TABLE ====== -->
       <div class="apply-sidebar-col">
@@ -1272,6 +1433,11 @@ body.ap .enroll-toggle-btn.is-on[style] {
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             <span>We restored what you filled in last time.</span>
             <button type="button">Start over</button>
+          </div>
+
+          <div class="ap-scholar">
+            <span class="pill"><span style="width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block"></span>Scholarship ongoing</span>
+            <p>A limited number of scholarship places are open. <b>Your fee is reduced automatically</b> at checkout — no code needed.</p>
           </div>
 
           <h3>Apply for the Programme</h3>
@@ -3278,8 +3444,13 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     if (!pid || !sel || !lock) return;
 
     function tryLock() {
-      var opt = [].slice.call(sel.options).find(function (o) { return String(o.value) === String(pid); });
-      if (!opt || !opt.textContent.trim()) return false;
+      // The page's own applyProgramId() selects the option for us; option
+      // values are display names, and the numeric id lives on data-program-id.
+      var opt = [].slice.call(sel.options).find(function (o) {
+        return String(o.getAttribute('data-program-id')) === String(pid);
+      });
+      if (!opt) return false;
+      if (sel.value !== opt.value) sel.value = opt.value;
       document.getElementById('ap-locked-name').textContent = opt.textContent.trim();
       lock.style.display = 'flex';
       var grp = sel.closest('.form-group');
@@ -3440,6 +3611,54 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     var el = document.getElementById(id); if (el) el.addEventListener('change', function () { setTimeout(syncSummary, 60); });
   });
   setInterval(syncSummary, 1200);
+})();
+
+/* ---- mirror live state into the gradient panel ---- */
+(function () {
+  'use strict';
+  function txt(id) { var e = document.getElementById(id); return e ? e.textContent.trim() : ''; }
+  function set(id, v) { var e = document.getElementById(id); if (e && v && e.textContent !== v) e.textContent = v; }
+
+  function progName() {
+    var lock = document.getElementById('ap-locked-name');
+    if (lock && lock.textContent.trim() && lock.textContent.trim() !== '\u2014') return lock.textContent.trim();
+    var sel = document.getElementById('field');
+    if (sel && sel.value && sel.selectedIndex > -1) return sel.options[sel.selectedIndex].textContent.trim();
+    return 'AI in my Field';
+  }
+
+  /* The fee panel already renders the correct, currency-aware figure.
+     Read whichever currency span is actually visible so the panel can
+     never disagree with what the payment step will charge. */
+  function livePrice() {
+    // review-total is what the payment step will actually charge, already
+    // currency-resolved. Never derive a second figure that could disagree.
+    var t = txt('review-total');
+    if (t && t !== '\u2014') return t;
+    var host = document.getElementById('review-price-item');
+    if (host) {
+      var v = host.textContent.trim();
+      if (v && v !== '\u2014') return v;
+    }
+    return '';
+  }
+
+  function sync() {
+    set('ap-side-prog', progName());
+    set('ap-side-type', (document.getElementById('enrollment-type') || {}).value || 'Individual');
+    var c = txt('cohort-info-start');
+    set('ap-side-cohort', c || 'Next cohort');
+    var pr = livePrice();
+    var el = document.getElementById('ap-side-price');
+    if (el) el.textContent = pr || '\u2014';
+  }
+
+  sync();
+  ['field', 'cohort-select', 'enrollment-type', 'team-size'].forEach(function (id) {
+    var e = document.getElementById(id); if (e) e.addEventListener('change', function () { setTimeout(sync, 80); });
+  });
+  document.querySelectorAll('.cur-btn').forEach(function (b) { b.addEventListener('click', function () { setTimeout(sync, 80); }); });
+  setInterval(sync, 900);
 })();
 </script>
 
