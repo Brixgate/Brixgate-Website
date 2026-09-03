@@ -1106,6 +1106,121 @@ body.ap .ap-scholar { margin-bottom:30px; }
 }
 </style>
 
+<style>
+/* ============================================================
+   BRAND WAVE PATTERN — reusable across the site.
+   Put .bx-waves on any positioned element.
+   ============================================================ */
+.bx-waves::before {
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:0;
+  background-image:url('assets/pattern/waves.svg');
+  background-repeat:no-repeat; background-position:center;
+  background-size:cover;
+  opacity:.55;
+}
+.bx-waves.is-dense::before { background-image:url('assets/pattern/waves-dense.svg'); }
+.bx-waves.on-dark::before { opacity:.34; mix-blend-mode:screen; }
+.bx-waves.on-light::before { opacity:.5; }
+.bx-waves > * { position:relative; z-index:1; }
+
+/* ============================================================
+   APPLY — DARK VARIANT  (body.ap.ap-dark, via ?theme=dark)
+   ============================================================ */
+body.ap.ap-dark {
+  --ap-ink:#F2F5F9; --ap-ink2:#DCE3EC; --ap-body:#9FB0C4; --ap-muted:#7E8FA3;
+  --ap-faint:#5C6B7E; --ap-line:#1E2F45; --ap-line2:#182437; --ap-surface:#0E1928;
+  background:#070E18 !important; color:#F2F5F9;
+}
+body.ap.ap-dark .ap-side {
+  background:
+    radial-gradient(90% 120% at 100% 100%, rgba(255,87,72,.50) 0%, rgba(255,41,78,.22) 34%, transparent 66%),
+    radial-gradient(70% 80% at 0% 0%, rgba(27,58,92,.85) 0%, transparent 62%),
+    linear-gradient(158deg, #01060F 0%, #061426 24%, #12304C 48%, #6E1A2C 76%, #A81733 100%);
+}
+/* form column sits on near-black */
+body.ap.ap-dark .apply-form-card { background:transparent !important; }
+body.ap.ap-dark .apply-wrapper { background:#070E18; }
+
+body.ap.ap-dark .ap-legend { border-bottom-color:#1B2A3D !important; }
+body.ap.ap-dark .ap-legend .t { color:#7E8FA3 !important; }
+body.ap.ap-dark .apply-form-card h3 { color:#F2F5F9 !important; }
+body.ap.ap-dark .form-subtitle { color:#9FB0C4 !important; }
+body.ap.ap-dark .form-group label { color:#DCE3EC !important; }
+
+body.ap.ap-dark .form-group input,
+body.ap.ap-dark .form-group select,
+body.ap.ap-dark .form-group textarea,
+body.ap.ap-dark #apply-phone-cc {
+  background:#0D1826 !important; border-color:#1E2F45 !important; color:#F2F5F9 !important;
+}
+body.ap.ap-dark .form-group input::placeholder { color:#55677C !important; }
+body.ap.ap-dark .form-group input:hover, .ap-dark .form-group select:hover { border-color:#2A3F59 !important; }
+body.ap.ap-dark .form-group input:focus, .ap-dark .form-group select:focus, .ap-dark #apply-phone-cc:focus {
+  border-color:var(--g-red) !important; box-shadow:0 0 0 4px rgba(255,41,78,.16) !important; background:#101E2F !important;
+}
+body.ap.ap-dark .form-group select {
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237E8FA3' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") !important;
+}
+
+/* choice cards */
+body.ap.ap-dark .enroll-toggle-btn,
+body.ap.ap-dark .enroll-toggle-btn[style] {
+  background:#0D1826 !important; border-color:#1E2F45 !important; color:#F2F5F9 !important;
+}
+body.ap.ap-dark .enroll-toggle-btn:hover { border-color:#2A3F59 !important; }
+body.ap.ap-dark .enroll-toggle-btn.is-on,
+body.ap.ap-dark .enroll-toggle-btn.is-on[style] {
+  background:rgba(255,41,78,.09) !important; border-color:var(--g-red) !important;
+  box-shadow:0 0 0 4px rgba(255,41,78,.12) !important;
+}
+body.ap.ap-dark .ap-choice-ic { background:#132030; color:#DCE3EC; }
+body.ap.ap-dark .enroll-toggle-btn.is-on .ap-choice-ic { background:rgba(255,41,78,.14); color:#FF6B85; }
+body.ap.ap-dark .ap-choice-radio { border-color:#2A3F59; }
+body.ap.ap-dark .ap-choice-t { color:#F2F5F9; }
+body.ap.ap-dark .ap-choice-d { color:#9FB0C4; }
+
+/* steps */
+body.ap.ap-dark .step-dot { background:#0D1826 !important; border-color:#1E2F45 !important; color:#5C6B7E !important; }
+body.ap.ap-dark .step-dot.active { background:#fff !important; border-color:#fff !important; color:#070E18 !important; }
+body.ap.ap-dark .step-line { background:#1E2F45 !important; }
+body.ap.ap-dark .step-label { color:#5C6B7E !important; }
+body.ap.ap-dark .step-label.active { color:#F2F5F9 !important; }
+
+/* misc surfaces */
+body.ap.ap-dark .ap-locked { background:#0D1826; border-color:#1E2F45; }
+body.ap.ap-dark .ap-locked-ic { background:#132030; border-color:#1E2F45; }
+body.ap.ap-dark .ap-locked-t { color:#F2F5F9; }
+body.ap.ap-dark .ap-scholar { background:linear-gradient(110deg, rgba(255,41,78,.13), rgba(255,87,72,.06)); border-color:rgba(255,41,78,.3); }
+body.ap.ap-dark .ap-scholar p { color:#C3D0DE; }
+body.ap.ap-dark .ap-scholar b { color:#fff; }
+body.ap.ap-dark .ap-draft { background:rgba(22,163,74,.10); border-color:rgba(22,163,74,.28); color:#6EE7A0; }
+body.ap.ap-dark .ap-draft button { color:#6EE7A0; }
+body.ap.ap-dark .ap-hint, .ap-dark .ap-handoff { color:#7E8FA3; }
+body.ap.ap-dark .price-row { border-bottom-color:#182437; }
+body.ap.ap-dark .price-row-label { color:#9FB0C4 !important; }
+body.ap.ap-dark .price-row-value { color:#F2F5F9 !important; }
+body.ap.ap-dark #back-to-form { background:#0D1826 !important; color:#F2F5F9 !important; border-color:#1E2F45 !important; }
+body.ap.ap-dark #back-to-form:hover { border-color:#F2F5F9 !important; }
+body.ap.ap-dark #form-error-banner, .ap-dark #review-error-banner { background:rgba(255,41,78,.10) !important; }
+/* legacy inline colours meant for a dark card are correct again here */
+body.ap.ap-dark .apply-form-card [style*="var(--white)"]:not(.btn):not(a):not(button) { color:#F2F5F9 !important; }
+
+/* ---------- theme switch (comparison aid) ---------- */
+.ap-theme {
+  position:fixed; right:20px; bottom:88px; z-index:60;
+  display:inline-flex; align-items:center; gap:8px;
+  height:40px; padding:0 15px; border-radius:999px; cursor:pointer;
+  font-family:inherit; font-size:.8rem; font-weight:700;
+  background:rgba(2,16,36,.9); color:#fff; border:1px solid rgba(255,255,255,.16);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  box-shadow:0 10px 30px -12px rgba(0,0,0,.5);
+  transition:transform .22s var(--ap-ease), background .2s;
+}
+.ap-theme:hover { transform:translateY(-2px); }
+.ap-dark .ap-theme { background:rgba(255,255,255,.92); color:#070E18; border-color:rgba(0,0,0,.1); }
+@media (max-width:700px) { .ap-theme { right:14px; bottom:84px; height:36px; font-size:.75rem; } }
+</style>
+
 </head>
 <body class="ap">
 
@@ -1183,7 +1298,7 @@ body.ap .ap-scholar { margin-bottom:30px; }
 
     <div class="apply-wrapper">
       <!-- ====== LEFT: gradient identity panel ====== -->
-      <aside class="ap-side">
+      <aside class="ap-side bx-waves on-dark">
         <div class="ap-side-in">
           <a href="programme.html" class="ap-back">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -1777,32 +1892,7 @@ body.ap .ap-scholar { margin-bottom:30px; }
   </div>
 </section>
 
-<!-- ====== SOCIAL PROOF ====== -->
-<section class="section-pad-sm bg-dark">
-  <div class="container">
-    <div class="stats-bar stagger" style="display:flex;flex-wrap:wrap;justify-content:space-around;align-items:center;gap:20px;padding:24px 0">
-      <div class="stat-item fade-up">
-        <div class="stat-num" data-count="12" data-suffix="+">12+</div>
-        <div class="stat-label">Fields Covered</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item fade-up">
-        <div class="stat-num" data-count="6">6</div>
-        <div class="stat-label">Active Countries</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item fade-up">
-        <div class="stat-num" data-count="4" data-suffix=" Weeks">4 Weeks</div>
-        <div class="stat-label">Sprint Duration</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item fade-up">
-        <div class="stat-num" data-count="100" data-suffix="%">100%</div>
-        <div class="stat-label">Practitioner-Led</div>
-      </div>
-    </div>
-  </div>
-</section>
+
 
 <footer class="footer">
   <div class="container">
@@ -3662,5 +3752,27 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 })();
 </script>
 
+<button class="ap-theme" id="ap-theme" type="button" aria-label="Toggle colour theme">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <span id="ap-theme-label">Dark</span>
+</button>
+<script>
+/* Theme is a comparison aid: ?theme=dark or the toggle, remembered locally. */
+(function () {
+  var KEY = 'bxApplyTheme';
+  var qp = new URLSearchParams(location.search).get('theme');
+  var saved = null; try { saved = localStorage.getItem(KEY); } catch (e) {}
+  var dark = qp ? qp === 'dark' : saved === 'dark';
+  function apply(d) {
+    document.body.classList.toggle('ap-dark', d);
+    var l = document.getElementById('ap-theme-label');
+    if (l) l.textContent = d ? 'Light' : 'Dark';
+    try { localStorage.setItem(KEY, d ? 'dark' : 'light'); } catch (e) {}
+  }
+  apply(dark);
+  var b = document.getElementById('ap-theme');
+  if (b) b.addEventListener('click', function () { apply(!document.body.classList.contains('ap-dark')); });
+})();
+</script>
 </body>
 </html>
