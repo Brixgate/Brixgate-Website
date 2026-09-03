@@ -199,8 +199,449 @@
     }
   </style>
 <script src="tracking.js"></script>
+<style>
+/* ============================================================
+   COURSE PAGE — "Chapters & Glass"
+   Scoped to body.cp. Shares the landing page's brand ramp.
+   ============================================================ */
+:root {
+  --cp-ink:      #021024;
+  --cp-ink-2:    #1B2A41;
+  --cp-body:     #4A5568;
+  --cp-muted:    #6B7A90;
+  --cp-faint:    #98A4B5;
+  --cp-line:     #E6E8EC;
+  --cp-line-2:   #EEF0F3;
+  --cp-surface:  #F6F5F5;
+  --cp-red:      #FF294E;
+  --cp-red-soft: rgba(255,41,78,.08);
+  --cp-green:    #16A34A;
+  --cp-ease: cubic-bezier(.2,.7,.2,1);
+  --cp-r:    18px;
+  --cp-r-sm: 12px;
+  --cp-shadow:    0 1px 2px rgba(2,16,36,.04), 0 16px 40px -14px rgba(2,16,36,.16);
+  --cp-shadow-lg: 0 2px 4px rgba(2,16,36,.04), 0 36px 70px -26px rgba(2,16,36,.26);
+
+  /* brand gradient ramp (same tokens as the landing page) */
+  --g-navy:   #021024;
+  --g-card:   #0D1C34;
+  --g-steel:  #1B3A5C;
+  --g-wine:   #9A2335;
+  --g-deep:   #C4173A;
+  --g-red:    #FF294E;
+  --g-orange: #FF5748;
+}
+
+body.cp { background:#fff; color:var(--cp-ink); -webkit-font-smoothing:antialiased;
+  padding-top: calc(var(--banner-height) + var(--cp-nav-h, 63px)); }
+body.cp ::selection { background: rgba(255,41,78,.18); }
+
+/* Glass nav, same contract as the landing page */
+body.cp .nav {
+  background: rgba(255,255,255,.82);
+  -webkit-backdrop-filter: blur(16px) saturate(1.7); backdrop-filter: blur(16px) saturate(1.7);
+  border-bottom: 1px solid rgba(2,16,36,.07); box-shadow:none;
+  transition: background .35s var(--cp-ease), backdrop-filter .35s var(--cp-ease), border-color .35s var(--cp-ease), box-shadow .35s var(--cp-ease), top .35s cubic-bezier(.4,0,.2,1);
+}
+body.cp .nav.scrolled {
+  background: rgba(255,255,255,.58);
+  -webkit-backdrop-filter: blur(26px) saturate(1.9); backdrop-filter: blur(26px) saturate(1.9);
+  box-shadow: 0 10px 34px -18px rgba(2,16,36,.30);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  body.cp .nav, body.cp .nav.scrolled { background: rgba(255,255,255,.96); }
+}
+
+.cp-wrap { max-width:1200px; margin:0 auto; padding:0 32px; }
+.cp-sec  { padding:104px 0; }
+.cp-sec.tight { padding:76px 0; }
+.cp-surface { background:var(--cp-surface); }
+
+/* ---------- type ---------- */
+.cp-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:.72rem; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--cp-red); margin-bottom:18px; }
+.cp-eyebrow::before { content:''; width:18px; height:2px; background:currentColor; border-radius:2px; }
+.cp-h2 { font-size:clamp(1.9rem,3.4vw,2.75rem); line-height:1.1; letter-spacing:-.03em; font-weight:800; margin:0; color:var(--cp-ink); }
+.cp-lead { font-size:1.08rem; line-height:1.65; color:var(--cp-body); margin:0; }
+.cp-p { font-size:.97rem; line-height:1.65; color:var(--cp-body); margin:0; }
+.cp-head { max-width:720px; }
+.cp-head .cp-h2 { margin-bottom:16px; }
+.cp-head.center { margin-inline:auto; text-align:center; }
+.cp-head.center .cp-eyebrow { justify-content:center; }
+.cp-gradbar { padding-left:22px; border-left:3px solid transparent;
+  border-image: linear-gradient(180deg, var(--g-red) 0%, var(--g-orange) 46%, var(--g-steel) 100%) 1; }
+
+/* ---------- buttons ---------- */
+.cp-btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; height:52px; padding:0 26px;
+  border-radius:999px; font-size:.95rem; font-weight:700; white-space:nowrap; border:1.5px solid transparent;
+  cursor:pointer; font-family:inherit; transition:transform .25s var(--cp-ease), box-shadow .25s var(--cp-ease), background .2s, color .2s, border-color .2s; }
+.cp-btn svg { transition:transform .25s var(--cp-ease); flex-shrink:0; }
+.cp-btn:hover svg { transform:translateX(3px); }
+.cp-btn-red { background:var(--cp-red); color:#fff; box-shadow:0 10px 28px -10px rgba(255,41,78,.6); }
+.cp-btn-red:hover { transform:translateY(-2px); background:#FF3A5C; }
+.cp-btn-ink { background:var(--cp-ink); color:#fff; }
+.cp-btn-ink:hover { transform:translateY(-2px); background:#0B1F3F; }
+.cp-btn-ghost { background:#fff; color:var(--cp-ink); border-color:var(--cp-line); }
+.cp-btn-ghost:hover { border-color:var(--cp-ink); transform:translateY(-2px); }
+.cp-btn-white { background:#fff; color:var(--cp-ink); }
+.cp-btn-white:hover { transform:translateY(-2px); }
+.cp-btn-glass { background:rgba(255,255,255,.10); color:#fff; border-color:rgba(255,255,255,.34);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); }
+.cp-btn-glass:hover { background:rgba(255,255,255,.18); border-color:#fff; }
+.cp-chip { display:inline-flex; align-items:center; height:28px; padding:0 12px; border-radius:8px;
+  background:var(--cp-surface); border:1px solid var(--cp-line-2); font-size:.76rem; font-weight:600; color:var(--cp-body); white-space:nowrap; }
+
+/* grain used on every gradient surface */
+.cp-grain::after { content:''; position:absolute; inset:0; pointer-events:none; opacity:.28; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E"); }
+
+/* ============================================================
+   HERO — gradient + fractal glass
+   ============================================================ */
+.cp-hero { position:relative; overflow:hidden; color:#fff; padding:84px 0 96px;
+  background:
+    radial-gradient(105% 130% at 100% 104%, rgba(255,87,72,.92) 0%, rgba(255,41,78,.55) 30%, rgba(196,23,58,.20) 52%, transparent 68%),
+    radial-gradient(70% 80% at 86% 6%, rgba(255,41,78,.30) 0%, transparent 62%),
+    radial-gradient(80% 90% at 4% 8%, rgba(27,58,92,.60) 0%, transparent 60%),
+    linear-gradient(118deg, var(--g-navy) 0%, var(--g-card) 20%, var(--g-steel) 38%, var(--g-wine) 64%, var(--g-deep) 82%, var(--g-orange) 100%); }
+.cp-hero-grid { position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr); gap:56px; align-items:center; }
+.cp-hero h1 { font-size:clamp(2.4rem,4.6vw,3.7rem); line-height:1.04; letter-spacing:-.035em; font-weight:800; margin:0 0 22px; color:#fff; }
+.cp-hero h1 .accent { color:#FFCDBC; }
+.cp-hero .cp-lead { color:rgba(255,255,255,.86); max-width:520px; }
+.cp-pill { display:inline-flex; align-items:center; gap:9px; height:34px; padding:0 15px; border-radius:999px;
+  background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28); color:#fff; font-size:.78rem; font-weight:600;
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); margin-bottom:24px; }
+.cp-dot { position:relative; width:8px; height:8px; border-radius:50%; background:#4ade80; flex-shrink:0; }
+.cp-dot::after { content:''; position:absolute; inset:-4px; border-radius:50%; background:#4ade80; opacity:.35; animation:cpPulse 1.8s ease-out infinite; }
+@keyframes cpPulse { 0%{transform:scale(.6);opacity:.5} 100%{transform:scale(1.9);opacity:0} }
+.cp-hero-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:34px; }
+.cp-hero-meta { display:flex; gap:30px; margin-top:38px; padding-top:26px; border-top:1px solid rgba(255,255,255,.18); flex-wrap:wrap; }
+.cp-hero-meta b { display:block; font-size:1.4rem; font-weight:800; letter-spacing:-.03em; line-height:1; }
+.cp-hero-meta span { display:block; font-size:.76rem; color:rgba(255,255,255,.66); margin-top:7px; font-weight:600; }
+
+/* fractal glass stack */
+.cp-glass-stage { position:relative; height:440px; }
+.cp-glass {
+  position:absolute; border-radius:20px; overflow:hidden;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.30);
+  -webkit-backdrop-filter:blur(22px) saturate(1.5); backdrop-filter:blur(22px) saturate(1.5);
+  box-shadow:0 30px 70px -22px rgba(1,11,30,.6), inset 0 1px 0 rgba(255,255,255,.4);
+  padding:22px 24px; will-change:transform;
+}
+/* refracted edge highlight */
+.cp-glass::before { content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background:linear-gradient(135deg, rgba(255,255,255,.34) 0%, rgba(255,255,255,0) 34%, rgba(255,255,255,0) 66%, rgba(255,255,255,.16) 100%); }
+.cp-glass-1 { top:0; right:0; width:300px; }
+.cp-glass-2 { top:170px; left:0; width:290px; }
+.cp-glass-3 { bottom:0; right:34px; width:264px; }
+.cp-glass-k { font-size:.64rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.72); }
+.cp-glass-t { font-size:1.02rem; font-weight:700; color:#fff; margin-top:9px; letter-spacing:-.01em; }
+.cp-glass-s { font-size:.8rem; color:rgba(255,255,255,.72); margin-top:5px; line-height:1.5; }
+.cp-glass-row { display:flex; align-items:center; justify-content:space-between; margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,.18); }
+.cp-glass-big { font-size:2rem; font-weight:800; letter-spacing:-.04em; color:#fff; line-height:1; }
+.cp-mini-bar { height:5px; border-radius:999px; background:rgba(255,255,255,.22); overflow:hidden; margin-top:14px; }
+.cp-mini-bar > i { display:block; height:100%; width:0; border-radius:inherit; background:linear-gradient(90deg,#fff,#FFCDBC); }
+
+/* ============================================================
+   FACT RAIL under hero
+   ============================================================ */
+.cp-facts { background:var(--g-card); border-bottom:1px solid var(--g-steel); }
+.cp-facts-in { display:grid; grid-template-columns:repeat(4,1fr); }
+.cp-fact { padding:22px 26px; border-right:1px solid rgba(255,255,255,.10); }
+.cp-fact:last-child { border-right:0; }
+.cp-fact dt { font-size:.66rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#7A94A8; margin-bottom:7px; }
+.cp-fact dd { font-size:1rem; font-weight:800; color:#fff; margin:0; }
+
+/* ============================================================
+   TWO-COLUMN with sticky enrol rail
+   ============================================================ */
+.cp-split { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:60px; align-items:start; }
+.cp-rail { position:sticky; top:calc(var(--cp-nav-h,63px) + 24px); }
+.cp-enrol { position:relative; overflow:hidden; border-radius:var(--cp-r); color:#fff; padding:28px 26px;
+  background: radial-gradient(90% 120% at 100% 0%, rgba(255,87,72,.5) 0%, transparent 60%),
+              linear-gradient(150deg, var(--g-navy) 0%, var(--g-steel) 52%, var(--g-wine) 100%);
+  box-shadow:var(--cp-shadow-lg); }
+.cp-enrol > * { position:relative; z-index:1; }
+.cp-enrol-k { font-size:.66rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:rgba(255,255,255,.62); }
+.cp-enrol-price { font-size:2.3rem; font-weight:800; letter-spacing:-.045em; line-height:1; margin-top:8px; }
+.cp-enrol-sub { font-size:.8rem; color:rgba(255,255,255,.66); margin-top:6px; }
+.cp-enrol ul { list-style:none; padding:0; margin:22px 0; display:flex; flex-direction:column; gap:11px; }
+.cp-enrol li { font-size:.85rem; color:rgba(255,255,255,.84); display:flex; gap:10px; align-items:flex-start; line-height:1.45; }
+.cp-enrol li svg { flex-shrink:0; margin-top:2px; color:#7CEFA6; }
+.cp-enrol .cp-btn { width:100%; }
+.cp-enrol-foot { margin-top:14px; font-size:.72rem; color:rgba(255,255,255,.5); text-align:center; }
+
+/* ============================================================
+   CURRICULUM with scroll-linked rail
+   ============================================================ */
+.cp-curr { position:relative; }
+.cp-curr-track { position:absolute; left:26px; top:14px; bottom:14px; width:2px; background:var(--cp-line); border-radius:2px; }
+.cp-curr-fill { position:absolute; left:0; top:0; width:100%; height:0%; border-radius:2px;
+  background:linear-gradient(180deg, var(--g-red), var(--g-orange)); }
+.cp-mod { position:relative; display:grid; grid-template-columns:54px 1fr; gap:24px; padding:22px 0; }
+.cp-mod-n { width:54px; height:54px; border-radius:50%; background:#fff; border:1.5px solid var(--cp-line);
+  display:grid; place-items:center; font-size:.85rem; font-weight:800; color:var(--cp-ink); position:relative; z-index:1;
+  transition:border-color .3s, box-shadow .3s, background .3s, color .3s; }
+.cp-mod.is-on .cp-mod-n { background:var(--cp-red); border-color:var(--cp-red); color:#fff; box-shadow:0 0 0 6px var(--cp-red-soft); }
+.cp-mod-t { font-size:1.12rem; font-weight:700; letter-spacing:-.018em; color:var(--cp-ink); }
+.cp-mod-d { font-size:.93rem; color:var(--cp-body); line-height:1.62; margin-top:8px; max-width:600px; }
+.cp-mod-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:12px; }
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.cp-grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.cp-grid-2 { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+.cp-card { background:#fff; border:1px solid var(--cp-line); border-radius:var(--cp-r); padding:26px;
+  transition:transform .35s var(--cp-ease), box-shadow .35s var(--cp-ease); }
+.cp-card:hover { transform:translateY(-4px); box-shadow:var(--cp-shadow); }
+.cp-card-ic { width:42px; height:42px; border-radius:12px; background:var(--cp-red-soft); color:var(--cp-red);
+  display:grid; place-items:center; margin-bottom:16px; }
+.cp-card h3 { font-size:1.04rem; font-weight:700; letter-spacing:-.015em; margin:0; }
+.cp-card p { font-size:.9rem; color:var(--cp-body); line-height:1.6; margin:8px 0 0; }
+
+/* ============================================================
+   DARK CHAPTER — gradient block with light cards
+   ============================================================ */
+.cp-chapter { position:relative; overflow:hidden; color:#fff; padding:104px 0;
+  background:
+    radial-gradient(90% 120% at 100% 0%, rgba(255,87,72,.5) 0%, rgba(255,41,78,.2) 38%, transparent 66%),
+    radial-gradient(80% 100% at 0% 100%, rgba(27,58,92,.55) 0%, transparent 62%),
+    linear-gradient(112deg, var(--g-navy) 0%, var(--g-card) 26%, var(--g-steel) 46%, var(--g-wine) 74%, var(--g-deep) 100%); }
+.cp-chapter > * { position:relative; z-index:1; }
+.cp-chapter .cp-h2 { color:#fff; }
+.cp-chapter .cp-lead { color:rgba(255,255,255,.78); }
+.cp-chapter .cp-eyebrow { color:rgba(255,255,255,.66); }
+.cp-lcard { background:rgba(255,255,255,.96); border-radius:var(--cp-r); padding:26px; color:var(--cp-ink);
+  transition:transform .35s var(--cp-ease), box-shadow .35s var(--cp-ease); }
+.cp-lcard:hover { transform:translateY(-4px); box-shadow:0 30px 60px -24px rgba(0,0,0,.5); }
+.cp-lcard h3 { font-size:1.04rem; font-weight:700; letter-spacing:-.015em; margin:0; }
+.cp-lcard p { font-size:.9rem; color:var(--cp-body); line-height:1.6; margin:8px 0 0; }
+.cp-gcard { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.15); border-radius:var(--cp-r); padding:26px;
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  transition:transform .35s var(--cp-ease), background .3s; }
+.cp-gcard:hover { transform:translateY(-4px); background:rgba(255,255,255,.11); }
+.cp-gcard h3 { font-size:1.04rem; font-weight:700; margin:0; color:#fff; }
+.cp-gcard p { font-size:.9rem; color:rgba(255,255,255,.72); line-height:1.6; margin:8px 0 0; }
+
+/* ============================================================
+   ANIMATION PRIMITIVES (Motion drives these)
+   ============================================================ */
+/* Hidden ONLY when JS confirms it can animate. Without JS, or if Motion
+   fails to load, content renders normally instead of staying invisible. */
+html.cp-anim .cp-rise { opacity:0; transform:translateY(26px); }
+html.cp-anim .cp-fade { opacity:0; }
+.cp-line { display:block; overflow:hidden; }
+.cp-line > span { display:block; }
+@media (prefers-reduced-motion: reduce) {
+  .cp-rise, .cp-fade { opacity:1 !important; transform:none !important; }
+  .cp-line > span { transform:none !important; }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1080px) {
+  .cp-split { grid-template-columns:1fr; gap:44px; }
+  .cp-rail { position:static; }
+  .cp-enrol { max-width:420px; }
+  .cp-facts-in { grid-template-columns:repeat(2,1fr); }
+  .cp-fact:nth-child(2) { border-right:0; }
+  .cp-fact:nth-child(-n+2) { border-bottom:1px solid rgba(255,255,255,.10); }
+}
+@media (max-width:960px) {
+  .cp-sec, .cp-chapter { padding:76px 0; }
+  .cp-hero { padding:56px 0 72px; }
+  .cp-hero-grid { grid-template-columns:1fr; gap:44px; }
+  .cp-glass-stage { height:400px; max-width:520px; }
+  .cp-grid-3 { grid-template-columns:1fr; }
+}
+@media (max-width:640px) {
+  .cp-wrap { padding:0 20px; }
+  .cp-sec, .cp-chapter { padding:60px 0; }
+  .cp-hero-actions .cp-btn { width:100%; }
+  .cp-glass-stage { height:360px; }
+  .cp-glass-1 { width:min(240px,72%); }
+  .cp-glass-2 { width:min(240px,74%); top:150px; }
+  .cp-glass-3 { display:none; }
+  .cp-facts-in { grid-template-columns:1fr; }
+  .cp-fact { border-right:0; border-bottom:1px solid rgba(255,255,255,.10); }
+  .cp-fact:last-child { border-bottom:0; }
+  .cp-grid-2 { grid-template-columns:1fr; }
+  .cp-mod { grid-template-columns:44px 1fr; gap:16px; }
+  .cp-mod-n { width:44px; height:44px; font-size:.78rem; }
+  .cp-curr-track { left:21px; }
+  .cp-hero-meta { gap:20px; }
+}
+
+/* Accent text inside gradient chapters: brand red sits on the red end of the
+   ramp and loses contrast, so accents shift to a warm light tint. */
+.cp-chapter h1 span[style*="--red"],
+.cp-chapter h2 span[style*="--red"],
+.cp-chapter h3 span[style*="--red"] { color:#FFCDBC !important; }
+.cp-chapter .eyebrow, .cp-chapter .eyebrow-tag { color:rgba(255,255,255,.72) !important; }
+.cp-chapter .divider-red { background:rgba(255,255,255,.35) !important; }
+/* Checkmarks / bullets keep colour but lift off the ground */
+.cp-chapter li > span[style*="--red"] { color:#FFCDBC !important; }
+</style>
+
+<script>
+  /* Set before paint so .cp-rise can hide without risking a blank page if JS dies. */
+  (function(){
+    var m = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!m) document.documentElement.className += ' cp-anim';
+  })();
+</script>
+<style>
+/* ============================================================
+   FOOTER v2 — gradient CTA band fused into the footer
+   Scoped to .bx-foot so the old .footer stays untouched elsewhere.
+   ============================================================ */
+.bx-foot { position: relative; background: var(--g-navy); color: #fff; overflow: hidden; }
+
+/* --- CTA band --- */
+.bx-foot-cta {
+  position: relative; overflow: hidden;
+  padding: 72px 0;
+  background:
+    radial-gradient(90% 150% at 100% 0%, rgba(255,87,72,.55) 0%, rgba(255,41,78,.20) 40%, transparent 68%),
+    radial-gradient(70% 120% at 0% 100%, rgba(27,58,92,.60) 0%, transparent 62%),
+    linear-gradient(112deg, var(--g-navy) 0%, var(--g-card) 24%, var(--g-steel) 46%, var(--g-wine) 76%, var(--g-deep) 100%);
+}
+.bx-foot-cta::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .26; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+.bx-foot-cta-in {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap;
+}
+.bx-foot-cta h2 {
+  font-size: clamp(1.7rem, 3vw, 2.5rem); line-height: 1.1; letter-spacing: -.03em; font-weight: 800; margin: 0; color: #fff;
+}
+.bx-foot-cta p { font-size: .95rem; color: rgba(255,255,255,.74); margin: 12px 0 0; max-width: 460px; line-height: 1.6; }
+.bx-foot-cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* --- body --- */
+.bx-foot-body { position: relative; padding: 68px 0 0; }
+/* oversized watermark wordmark */
+.bx-foot-mark {
+  position: absolute; left: 50%; bottom: -2.2vw; transform: translateX(-50%);
+  font-size: clamp(6rem, 17vw, 15rem); font-weight: 900; letter-spacing: -.055em; line-height: .8;
+  color: rgba(255,255,255,.032); white-space: nowrap; pointer-events: none; user-select: none;
+}
+.bx-foot-grid {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr 1.3fr; gap: 44px;
+  padding-bottom: 52px;
+}
+.bx-foot-brand p { font-size: .87rem; color: #7A94A8; line-height: 1.6; margin: 14px 0 20px; max-width: 260px; }
+.bx-foot-brand .nav-logo-img { height: 40px; }
+.bx-foot-social { display: flex; gap: 9px; }
+.bx-foot-social a {
+  width: 36px; height: 36px; border-radius: 9px;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10);
+  display: grid; place-items: center;
+  transition: transform .25s var(--cp-ease, cubic-bezier(.2,.7,.2,1)), background .25s, border-color .25s;
+}
+.bx-foot-social a:hover { transform: translateY(-3px); background: rgba(255,41,78,.14); border-color: rgba(255,41,78,.5); }
+
+.bx-foot-col h5 {
+  font-size: .68rem; font-weight: 800; color: rgba(255,255,255,.44);
+  text-transform: uppercase; letter-spacing: .13em; margin: 0 0 16px;
+}
+.bx-foot-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 11px; }
+.bx-foot-col a {
+  font-size: .87rem; color: #9FB3C4; transition: color .2s, padding-left .2s;
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.bx-foot-col a:hover { color: #fff; padding-left: 3px; }
+.bx-foot-col .tag {
+  font-size: .6rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+  background: rgba(34,197,94,.16); color: #6EE7A0; padding: 2px 7px; border-radius: 5px;
+}
+
+/* --- cohort alerts --- */
+.bx-foot-sub h5 { font-size: .68rem; font-weight: 800; color: rgba(255,255,255,.44); text-transform: uppercase; letter-spacing: .13em; margin: 0 0 10px; }
+.bx-foot-sub p { font-size: .84rem; color: #7A94A8; line-height: 1.55; margin: 0 0 16px; }
+.bx-foot-form { display: flex; gap: 8px; }
+.bx-foot-form input {
+  flex: 1; min-width: 0; height: 44px; padding: 0 14px;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14);
+  border-radius: 10px; color: #fff; font-family: inherit; font-size: .87rem; outline: none;
+  transition: border-color .2s, background .2s;
+}
+.bx-foot-form input::placeholder { color: #64798C; }
+.bx-foot-form input:focus { border-color: var(--g-red); background: rgba(255,255,255,.08); }
+.bx-foot-form button {
+  height: 44px; padding: 0 18px; border: 0; border-radius: 10px; cursor: pointer;
+  background: linear-gradient(135deg, var(--g-red), var(--g-orange)); color: #fff;
+  font-family: inherit; font-size: .87rem; font-weight: 700; white-space: nowrap;
+  transition: transform .22s var(--cp-ease, cubic-bezier(.2,.7,.2,1)), box-shadow .22s;
+}
+.bx-foot-form button:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -10px rgba(255,41,78,.7); }
+.bx-foot-note { font-size: .74rem; margin-top: 10px; min-height: 17px; }
+.bx-foot-note.ok  { color: #6EE7A0; }
+.bx-foot-note.err { color: #FF8A9B; }
+.bx-foot-note.idle { color: #64798C; }
+
+/* --- bottom bar --- */
+.bx-foot-bottom {
+  position: relative; z-index: 1;
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding: 22px 0 26px;
+  display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap;
+}
+.bx-foot-bottom p { font-size: .78rem; color: #64798C; margin: 0; }
+.bx-foot-legal { display: flex; gap: 20px; flex-wrap: wrap; }
+.bx-foot-legal a { font-size: .78rem; color: #64798C; transition: color .2s; }
+.bx-foot-legal a:hover { color: #fff; }
+.bx-foot-where {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: .76rem; color: #9FB3C4;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10);
+  padding: 6px 12px; border-radius: 999px;
+}
+
+
+/* Self-contained buttons so the footer renders identically on any page,
+   regardless of whether that page defines .cp-btn or .lp-btn. */
+.bx-foot .cp-btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  height:52px; padding:0 26px; border-radius:999px;
+  font-family:inherit; font-size:.95rem; font-weight:700; white-space:nowrap;
+  border:1.5px solid transparent; cursor:pointer; text-decoration:none;
+  transition:transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s, background .2s, border-color .2s;
+}
+.bx-foot .cp-btn svg { transition:transform .25s cubic-bezier(.2,.7,.2,1); flex-shrink:0; }
+.bx-foot .cp-btn:hover svg { transform:translateX(3px); }
+.bx-foot .cp-btn-white { background:#fff; color:#021024; }
+.bx-foot .cp-btn-white:hover { transform:translateY(-2px); box-shadow:0 16px 36px -12px rgba(0,0,0,.5); }
+.bx-foot .cp-btn-glass {
+  background:rgba(255,255,255,.10); color:#fff; border-color:rgba(255,255,255,.34);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+}
+.bx-foot .cp-btn-glass:hover { background:rgba(255,255,255,.18); border-color:#fff; transform:translateY(-2px); }
+
+@media (max-width: 1080px) {
+  .bx-foot-grid { grid-template-columns: 1.4fr 1fr 1fr; gap: 36px; }
+  .bx-foot-sub { grid-column: 1 / -1; max-width: 460px; }
+}
+@media (max-width: 700px) {
+  .bx-foot-cta { padding: 52px 0; }
+  .bx-foot-cta-in { flex-direction: column; align-items: flex-start; gap: 26px; }
+  .bx-foot-cta-actions { width: 100%; }
+  .bx-foot-cta-actions > a { flex: 1; justify-content: center; }
+  .bx-foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .bx-foot-brand { grid-column: 1 / -1; }
+  .bx-foot-body { padding-top: 48px; }
+  .bx-foot-bottom { flex-direction: column; align-items: flex-start; }
+}
+</style>
+
 </head>
-<body>
+<body class="cp">
 
   <!-- Region Banner -->
 <div class="region-banner" id="region-banner">
@@ -255,63 +696,82 @@
   <a href="apply.html?program_id=1" class="btn btn-primary">Apply Now</a>
 </div>
 
-<!-- ====== FIELD HERO ====== -->
-<section class="section-hero bg-dark" style="padding-top:calc(var(--nav-height) - 20px);padding-bottom:80px">
-  <div class="container">
-    <div class="field-hero-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center">
-      <div class="fade-up">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-          <span style="background:rgba(255,41,78,0.15);color:var(--red);font-size:0.75rem;font-weight:800;padding:4px 14px;border-radius:50px;letter-spacing:.08em;text-transform:uppercase">Expert Practitioner Programme</span>
+<!-- ====== HERO ====== -->
+<section class="cp-hero cp-grain" id="cp-hero">
+  <div class="cp-wrap">
+    <div class="cp-hero-grid">
+
+      <div>
+        <div class="cp-pill cp-rise"><span class="cp-dot"></span>Cohort 04 · Applications open</div>
+
+        <h1 class="cp-rise">AI in<br/><span class="accent">Software Engineering</span></h1>
+
+        <p class="cp-lead cp-rise">Become an AI-native engineer. Eight live classes across the full development lifecycle — prompting, code review, security, testing, and shipping production work you can defend.</p>
+
+        <div class="cp-hero-actions cp-rise">
+          <a href="apply.html?program_id=1" class="cp-btn cp-btn-white">
+            Apply now
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#quiz-field" class="cp-btn cp-btn-glass">Validate your skill level</a>
         </div>
-        <h1 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:20px">
-          AI in <br><span style="color:var(--red)">Software Engineering</span>
-        </h1>
-        <p style="font-size:1.2rem;color:var(--muted);line-height:1.4;margin-bottom:32px;max-width:530px">Become an AI-native engineer. 8 live classes covering the full development lifecycle — prompting, code review, security, testing, and shipping production-ready work with confidence.</p>
-        
-        <div class="hero-cta-row" style="display:flex;gap:12px;flex-wrap:wrap">
-          <a href="#quiz-field" class="btn btn-primary btn-lg">Validate Your Skill Level</a>
-          <a href="apply.html?program_id=1" class="btn btn-outline btn-lg">Apply Now</a>
+
+        <div class="cp-hero-meta cp-rise">
+          <div><b>8</b><span>Live classes</span></div>
+          <div><b>4</b><span>Weeks, end to end</span></div>
+          <div><b>1</b><span>Capstone you own</span></div>
+          <div><b>Verified</b><span>Field certificate</span></div>
         </div>
       </div>
-       <!-- HERO CARD COMMENTED OUT — replaced with image -->
-      <div class="fade-in" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:20px;padding:36px 32px">
-        <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:16px">What AI-Native Software Engineering Looks Like</div>
-        <p style="font-size:1rem;color:var(--muted);line-height:1.7">When a developer generates production-quality code with structured prompts, conducts AI-powered code review in their CI/CD pipeline, debugs with hypothesis-first AI workflows, and ships faster with full ownership, that is an AI-native engineer.</p>
-        <div style="margin-top:28px;padding-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center">
-          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">8</div><div style="font-size:0.72rem;color:var(--muted)">Live Classes</div></div>
-          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Real</div><div style="font-size:0.72rem;color:var(--muted)">Capstone Project</div></div>
-          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Field</div><div style="font-size:0.72rem;color:var(--muted)">Verified Certificate</div></div>
+
+      <div class="cp-glass-stage" aria-hidden="true">
+        <div class="cp-glass cp-glass-1" data-depth="1.3">
+          <div class="cp-glass-k">Week 02 · In session</div>
+          <div class="cp-glass-t">AI-assisted code review</div>
+          <div class="cp-glass-s">Reading generated diffs like a reviewer, not a passenger.</div>
+          <div class="cp-mini-bar"><i data-fill="42"></i></div>
+          <div class="cp-glass-row" style="border-top:0;padding-top:10px;margin-top:10px">
+            <span class="cp-glass-k">Sprint progress</span>
+            <span class="cp-glass-k" style="color:#fff">42%</span>
+          </div>
+        </div>
+
+        <div class="cp-glass cp-glass-2" data-depth="0.85">
+          <div class="cp-glass-k">Capstone artefact</div>
+          <div class="cp-glass-t">Production REST service</div>
+          <div class="cp-glass-s">Test suite, prompt log, and an architecture decision record.</div>
+          <div class="cp-glass-row">
+            <span class="cp-glass-k">Shipped by you</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7CEFA6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+
+        <div class="cp-glass cp-glass-3" data-depth="1.1">
+          <div class="cp-glass-k">Cohort size</div>
+          <div class="cp-glass-big">Small</div>
+          <div class="cp-glass-s">Practitioner-led. Everyone gets reviewed.</div>
         </div>
       </div>
-      <!-- <div class="fade-in" style="display:flex;align-items:flex-end;justify-content:center;">
-        <img src="assets/Engineering Hero image.png" alt="AI-Native Software Engineering" style="width:100%;height:auto;border-radius:12px 12px 0 0;display:block;object-fit:contain;object-position:bottom center;" />
-      </div> -->
+
     </div>
   </div>
 </section>
 
-<!-- ====== COHORT INFO BAR ====== -->
-<div style="background:#0D1C34;border-bottom:1px solid #1A3050">
-  <div class="container">
-    <div class="cohort-info-bar" style="display:grid;grid-template-columns:repeat(2,1fr);gap:0">
-      <!-- <div style="padding:20px 24px;border-right:1px solid #1A3050">
-        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Application Closes</div>
-        <div style="font-size:1rem;font-weight:800;color:#fff">June 19, 2026</div>
-      </div> -->
-      <div style="padding:20px 24px;border-right:1px solid #1A3050">
-        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Programme Duration</div>
-        <div style="font-size:1rem;font-weight:800;color:#fff">4 Weeks</div>
-      </div>
-      <div style="padding:20px 24px">
-        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Learning Format</div>
-        <div style="font-size:1rem;font-weight:800;color:#fff">Live, Online</div>
-      </div>
-    </div>
+<!-- ====== FACT RAIL ====== -->
+<div class="cp-facts">
+  <div class="cp-wrap">
+    <dl class="cp-facts-in">
+      <div class="cp-fact"><dt>Duration</dt><dd>4 weeks</dd></div>
+      <div class="cp-fact"><dt>Format</dt><dd>Live, online</dd></div>
+      <div class="cp-fact"><dt>Timezone</dt><dd>Africa / Lagos</dd></div>
+      <div class="cp-fact"><dt>Outcome</dt><dd>Expert Practitioner Certificate</dd></div>
+    </dl>
   </div>
 </div>
 
+
 <!-- ====== VALIDATE YOUR SKILL LEVEL (QUIZ) ====== -->
-<section id="quiz-field" class="section-pad" style="background:var(--bg-dark)">
+<section id="quiz-field" class="cp-chapter cp-grain">
   <div class="container">
     <div style="max-width:800px;margin:0 auto">
       <div class="fade-up" style="text-align:center;margin-bottom:48px;max-width:750px;margin-left:auto;margin-right:auto">
@@ -451,12 +911,14 @@
   .curr-control-label { font-size: 0.82rem; font-weight: 800; color: #021024; text-transform: uppercase; letter-spacing: .08em; }
   .curr-expand-all { font-size: 0.85rem; font-weight: 700; color: #FF294E; background: none; border: none; cursor: pointer; padding: 0; }
   .curr-expand-all:hover { text-decoration: underline; }
-  .curr-item { border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 8px; overflow: hidden; background: #fff; }
-  .curr-item summary { padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; list-style: none; cursor: pointer; background: #fff; }
+  .curr-item { border:1px solid var(--cp-line); border-radius:14px; margin-bottom:10px; overflow:hidden; background:#fff; transition:border-color .25s var(--cp-ease), box-shadow .25s var(--cp-ease); }
+  .curr-item:hover { border-color:#D6DAE1; box-shadow:0 10px 26px -14px rgba(2,16,36,.18); }
+  .curr-item[open] { border-color:transparent; box-shadow:0 14px 34px -16px rgba(2,16,36,.20); }
+  .curr-item summary { padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; list-style: none; cursor: pointer; background: #fff; }
   .curr-item summary::-webkit-details-marker { display: none; }
   .curr-item summary:focus { outline: none; }
   .curr-item-title { display: flex; align-items: center; gap: 12px; }
-  .curr-item-num { font-size: 0.75rem; font-weight: 800; color: #FF294E; white-space: nowrap; flex-shrink: 0; }
+  .curr-item-num { font-size:.68rem; font-weight:800; color:#fff; white-space:nowrap; flex-shrink:0; background:linear-gradient(135deg,var(--g-red),var(--g-orange)); padding:5px 10px; border-radius:7px; letter-spacing:.03em; }
   .curr-item-name { font-size: 0.93rem; font-weight: 700; color: #021024; line-height: 1.3; }
   .curr-chevron { flex-shrink: 0; color: #9CA3AF; transition: transform 0.2s ease; }
   .curr-item[open] .curr-chevron { transform: rotate(180deg); }
@@ -465,7 +927,7 @@
   .curr-item-body li { font-size: 0.87rem; color: #4A5568; padding: 7px 0; display: flex; gap: 12px; align-items: flex-start; line-height: 1.55; }
   .curr-item-body li::before { content: '—'; color: #9CA3AF; flex-shrink: 0; font-weight: 600; margin-top: 1px; }
 </style>
-<section class="section-pad bg-white">
+<section class="cp-sec">
   <div class="container">
     <div class="curr-wrapper fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">Programme Curriculum</div>
@@ -595,7 +1057,7 @@ function bxCurrToggleAll(btn) {
 </script>
 
 <!-- ====== TOOLS USED ====== -->
-<section class="section-pad bg-white">
+<section class="cp-sec">
   <div class="container">
     <div class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">Tools &amp; Platforms</div>
@@ -623,7 +1085,7 @@ function bxCurrToggleAll(btn) {
 </section>
 
 <!-- ====== PROGRAMME COHORTS ====== -->
-<section class="section-pad bg-white">
+<section class="cp-sec">
   <div class="container">
     <div class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">Programme Cohorts</div>
@@ -638,7 +1100,7 @@ function bxCurrToggleAll(btn) {
 
 
 <!-- ====== WHO IS THIS FOR ====== -->
-<section class="section-pad bg-white">
+<section class="cp-sec">
   <div class="container">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start" class="fade-up">
       <div>
@@ -668,7 +1130,7 @@ function bxCurrToggleAll(btn) {
 </section>
 
 <!-- ====== AI IN THIS FIELD: SKILLS ====== -->
-<section class="section-pad bg-white" style="display:none">
+<section class="cp-sec" style="display:none">
   <div class="container">
     <div style="text-align:center;margin-bottom:48px" class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">What You Will Master</div>
@@ -701,7 +1163,7 @@ function bxCurrToggleAll(btn) {
 </section>
 
 <!-- ====== HOW THE SPRINT WORKS ====== -->
-<section class="section-pad bg-dark">
+<section class="cp-chapter cp-grain">
   <div class="container">
     <div style="text-align:center;margin-bottom:48px" class="fade-up">
       <div class="eyebrow-tag">The Sprint</div>
@@ -737,7 +1199,7 @@ function bxCurrToggleAll(btn) {
 </section>
 
 <!-- ====== WHAT YOU WILL BUILD ====== -->
-<section class="section-pad bg-white" style="display:none">
+<section class="cp-sec" style="display:none">
   <div class="container">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center" class="fade-up">
       <div>
@@ -769,7 +1231,7 @@ function bxCurrToggleAll(btn) {
 </section>
 
 <!-- ====== OUR PRACTITIONERS ====== -->
-<section class="section-pad bg-dark">
+<section class="cp-chapter cp-grain">
   <div class="container">
     <div class="fade-up" style="margin-bottom:36px">
       <div class="eyebrow-tag" style="color:var(--red)">Your Practitioner</div>
@@ -801,7 +1263,7 @@ function bxCurrToggleAll(btn) {
 </section>
 
 <!-- ====== TESTIMONIALS ====== -->
-<section class="section-pad bg-white">
+<section class="cp-sec">
   <div class="container">
     <div style="text-align:center;margin-bottom:36px" class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">Alumni Reviews</div>
@@ -828,7 +1290,7 @@ function bxCurrToggleAll(btn) {
 </section>
 
 <!-- ====== FAQ ====== -->
-<section class="section-pad bg-white">
+<section class="cp-sec">
   <div class="container">
     <div style="max-width:760px;margin:0 auto" class="fade-up">
       <div style="text-align:center;margin-bottom:32px">
@@ -844,7 +1306,7 @@ function bxCurrToggleAll(btn) {
 </section>
 
 <!-- ====== VALUE / ROI ====== -->
-<section class="section-pad" style="background:#F6F4F2">
+<section class="cp-sec cp-surface">
   <div class="container">
     <div style="text-align:center;margin-bottom:48px" class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">Why This Investment Pays Off</div>
@@ -951,7 +1413,7 @@ function bxCurrToggleAll(btn) {
 </section>
 
 <!-- ====== PRICING ====== -->
-<section id="pricing" class="section-pad bg-dark">
+<section id="pricing" class="cp-chapter cp-grain">
   <div class="container">
     <div style="text-align:center;margin-bottom:16px" class="fade-up">
       <div class="eyebrow-tag">Pricing</div>
@@ -969,7 +1431,7 @@ function bxCurrToggleAll(btn) {
 </section>
 
 <!-- ====== WAITLIST ====== -->
-<section id="waitlist" style="background:var(--bg-dark);padding:90px 0">
+<section id="waitlist" class="cp-chapter cp-grain">
   <div class="container">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center" class="waitlist-grid">
       <div class="fade-up">
@@ -1082,7 +1544,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!-- ====== CTA ====== -->
-<section class="section-pad" style="background:var(--red);text-align:center">
+<section class="cp-chapter cp-grain" style="text-align:center">
   <div class="container">
     <div class="fade-up">
       <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;color:#fff;margin-bottom:16px">Ready to Become an AI-Native<br />Software Engineer?</h2>
@@ -1096,76 +1558,131 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <!-- ====== FOOTER ====== -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <a href="index.html" class="nav-logo footer-logo">
-          <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+<footer class="bx-foot">
+
+  <!-- CTA band -->
+  <div class="bx-foot-cta">
+    <div class="container bx-foot-cta-in">
+      <div>
+        <h2>Next cohort is forming.<br/>Take the seat.</h2>
+        <p>Small groups, live sessions, and a practitioner who has already done it in your field. Applications are reviewed personally.</p>
+      </div>
+      <div class="bx-foot-cta-actions">
+        <a href="apply.html" class="cp-btn cp-btn-white">
+          Apply now
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
-        <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
-        <div class="footer-social">
-          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook">
-            <img src="assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block">
-          </a>
-          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram">
-            <img src="assets/social.png" alt="Instagram" width="22" height="22" style="display:block">
-          </a>
-          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X">
-            <img src="assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block">
-          </a>
-          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn" title="LinkedIn">
-            <img src="assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block">
-          </a>
-          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us">
-            <img src="assets/gmail.png" alt="Email" width="22" height="22" style="display:block">
-          </a>
-        </div>
-      </div>
-
-      <div class="footer-col">
-        <h5>Programme</h5>
-        <ul>
-          <li><a href="programme.html">AI in my Field</a></li>
-          <li><a href="programme.html#journey">The Journey</a></li>
-          <li><a href="programme.html#pillars">The Framework</a></li>
-          <li><a href="programme.html#sectors">Sectors Covered</a></li>
-          <li><a href="programme.html#pricing">Pricing</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h5>Experts</h5>
-        <ul>
-          <li><a href="experts.html">Meet Our Experts</a></li>
-          <li><a href="experts.html#qualify">Become an Expert</a></li>
-          <li><a href="experts.html#criteria">Qualification Criteria</a></li>
-          <li><a href="join-as-expert.html">Join as Expert</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h5>Organisation</h5>
-        <ul>
-          <li><a href="organisations.html">Corporate Programmes</a></li>
-          <li><a href="organisations.html#packages">Packages &amp; Pricing</a></li>
-          <li><a href="organisations.html#contact">Request a Demo</a></li>
-          <li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li>
-          <li><a href="verify.html">Verify a Certificate</a></li>
-        </ul>
+        <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme." target="_blank" rel="noopener" class="cp-btn cp-btn-glass">Talk to us</a>
       </div>
     </div>
   </div>
 
-  <div class="footer-bottom">
-    <p>© <span id="footer-year">2026</span> Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
-    <div class="footer-bottom-links">
-      <a href="privacy-policy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
-      <a href="#">Cookie Policy</a>
+  <!-- Body -->
+  <div class="bx-foot-body">
+    <div class="bx-foot-mark" aria-hidden="true">Brixgate</div>
+    <div class="container">
+      <div class="bx-foot-grid">
+
+        <div class="bx-foot-brand">
+          <a href="index.html" class="nav-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+          <p>The global AI expertise marketplace. We turn working professionals into AI-native practitioners through field-specific, practitioner-led sprints.</p>
+          <div class="bx-foot-social">
+            <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook"><img src="assets/Facebook.png" alt="" width="20" height="20"></a>
+            <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/social.png" alt="" width="20" height="20"></a>
+            <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" aria-label="X"><img src="assets/twitter (1).png" alt="" width="20" height="20"></a>
+            <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/linkedin.png" alt="" width="20" height="20"></a>
+            <a href="mailto:we@brixgate.com" aria-label="Email"><img src="assets/gmail.png" alt="" width="20" height="20"></a>
+          </div>
+        </div>
+
+        <div class="bx-foot-col">
+          <h5>Programmes</h5>
+          <ul>
+            <li><a href="programme-engineering.html">Software Engineering <span class="tag">Open</span></a></li>
+            <li><a href="programme-cybersecurity.html">Cybersecurity <span class="tag">Open</span></a></li>
+            <li><a href="programme-finance.html">Financial Modelling</a></li>
+            <li><a href="programme-marketing.html">Product Marketing</a></li>
+            <li><a href="programme.html">All programmes</a></li>
+          </ul>
+        </div>
+
+        <div class="bx-foot-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="experts.html">Our experts</a></li>
+            <li><a href="join-as-expert.html">Become an expert</a></li>
+            <li><a href="organisations.html">For organisations</a></li>
+            <li><a href="aiquiz.html">AI readiness check</a></li>
+          </ul>
+        </div>
+
+        <div class="bx-foot-col">
+          <h5>Support</h5>
+          <ul>
+            <li><a href="apply.html">Apply now</a></li>
+            <li><a href="verify.html">Verify a certificate</a></li>
+            <li><a href="https://portal.brixgate.com/login" target="_blank" rel="noopener">Student portal</a></li>
+            <li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li>
+          </ul>
+        </div>
+
+        <div class="bx-foot-sub">
+          <h5>Cohort alerts</h5>
+          <p>One email when a new cohort opens in your field. Nothing else.</p>
+          <form class="bx-foot-form" id="bx-foot-form" novalidate>
+            <input type="email" id="bx-foot-email" placeholder="you@work.com" autocomplete="email" aria-label="Email address" required />
+            <button type="submit" id="bx-foot-btn">Notify me</button>
+          </form>
+          <div class="bx-foot-note idle" id="bx-foot-note">We only email about cohort openings.</div>
+        </div>
+
+      </div>
+
+      <div class="bx-foot-bottom">
+        <p>© <span id="footer-year">2026</span> Brixgate Ltd. Headquarters: Lagos, Nigeria.</p>
+        <span class="bx-foot-where">🇳🇬 🇬🇧 🇺🇸 🇰🇪 🇬🇭 🇿🇦 &nbsp;·&nbsp; NGN / USD</span>
+        <div class="bx-foot-legal">
+          <a href="privacy-policy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="verify.html">Verify</a>
+        </div>
+      </div>
     </div>
   </div>
 </footer>
+
+<script>
+/* Cohort-alert capture. Posts to the existing waitlist endpoint; on any
+   failure it says so plainly rather than pretending the signup worked. */
+(function () {
+  var f = document.getElementById('bx-foot-form');
+  if (!f) return;
+  var input = document.getElementById('bx-foot-email');
+  var btn   = document.getElementById('bx-foot-btn');
+  var note  = document.getElementById('bx-foot-note');
+  function say(msg, cls) { note.textContent = msg; note.className = 'bx-foot-note ' + cls; }
+
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = (input.value || '').trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { say('Enter a valid email address.', 'err'); input.focus(); return; }
+    btn.disabled = true; btn.textContent = 'Sending…';
+    fetch((window.BX_API_BASE || 'https://dev.api.brixgate.com') + '/api/v1/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, source: 'footer_cohort_alerts' })
+    })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json().catch(function () { return {}; }); })
+      .then(function () { f.reset(); say("You're on the list. We'll email when a cohort opens.", 'ok'); })
+      .catch(function () { say('Could not sign you up just now — email we@brixgate.com and we will add you.', 'err'); })
+      .finally(function () { btn.disabled = false; btn.textContent = 'Notify me'; });
+  });
+
+  var y = document.getElementById('footer-year');
+  if (y) y.textContent = new Date().getFullYear();
+})();
+</script>
+
 
 <a href="#" class="back-to-top" aria-label="Back to top">↑</a>
 
@@ -1524,5 +2041,182 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 </noscript>
 
 <!-- <script src="popup.js"></script> -->
+<!-- ====== MOTION LAYER ====== -->
+<script src="assets/vendor/motion.js"></script>
+<script>
+(function () {
+  'use strict';
+  var M = window.Motion;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Measure the real nav height so nothing sits under a dead band. */
+  (function () {
+    var nav = document.querySelector('.nav');
+    if (!nav) return;
+    var sync = function () { document.documentElement.style.setProperty('--cp-nav-h', nav.offsetHeight + 'px'); };
+    sync();
+    window.addEventListener('resize', sync, { passive: true });
+    window.addEventListener('load', sync);
+    if (window.ResizeObserver) new ResizeObserver(sync).observe(nav);
+  })();
+
+  /* Failsafe: if anything is still hidden after load (Motion missing, a
+     throttled/background tab, an animation that never fired), show it. */
+  function revealAll() {
+    document.documentElement.classList.remove('cp-anim');
+    /* A running WAAPI animation outranks inline styles, and animations created
+       while the tab is hidden never progress - so finish them first, otherwise
+       elements stay stuck on their opening keyframe (invisible). */
+    if (document.getAnimations) {
+      document.getAnimations().forEach(function (a) {
+        try { a.finish(); } catch (e) { try { a.cancel(); } catch (e2) {} }
+      });
+    }
+    document.querySelectorAll('.cp-rise, .cp-fade').forEach(function (el) {
+      if (el.getAnimations) el.getAnimations().forEach(function (a) { try { a.finish(); } catch (e) {} });
+      el.style.opacity = 1; el.style.transform = 'none';
+    });
+    document.querySelectorAll('[data-stagger] > *').forEach(function (el) { el.style.opacity = 1; });
+    document.querySelectorAll('.cp-line > span').forEach(function (el) { el.style.transform = 'none'; });
+    document.querySelectorAll('.cp-mini-bar > i').forEach(function (i) {
+      if (!i.style.width) i.style.width = (i.dataset.fill || 40) + '%';
+    });
+  }
+  window.addEventListener('load', function () { setTimeout(revealAll, 2600); });
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) setTimeout(revealAll, 1200);
+  });
+
+  /* No Motion or reduced motion: reveal everything and stop. */
+  if (!M || !M.animate || reduced) {
+    revealAll();
+    return;
+  }
+
+  var animate = M.animate, inView = M.inView, scroll = M.scroll, stagger = M.stagger;
+  var SPRING = { type: 'spring', stiffness: 260, damping: 30 };
+
+  /* ---- Hero: spring in on load, staggered ---- */
+  var heroRise = document.querySelectorAll('.cp-hero .cp-rise');
+  if (heroRise.length) {
+    animate(heroRise, { opacity: [0, 1], y: [26, 0] },
+      { delay: stagger(0.08, { startDelay: 0.05 }), duration: 0.7, easing: [0.2, 0.7, 0.2, 1] });
+  }
+
+  /* ---- Glass panels: settle in with a spring ---- */
+  var glass = document.querySelectorAll('.cp-glass');
+  if (glass.length) {
+    animate(glass, { opacity: [0, 1], y: [40, 0], scale: [0.94, 1] },
+      { delay: stagger(0.12, { startDelay: 0.25 }), duration: 0.9, easing: [0.2, 0.7, 0.2, 1] });
+  }
+
+  /* ---- Progress bars fill when seen ---- */
+  document.querySelectorAll('.cp-mini-bar > i').forEach(function (bar) {
+    inView(bar, function () {
+      animate(bar, { width: ['0%', (bar.dataset.fill || 40) + '%'] },
+        { duration: 1.1, delay: 0.5, easing: [0.2, 0.7, 0.2, 1] });
+    }, { amount: 0.4 });
+  });
+
+  /* ---- Generic reveal: anything .cp-rise / .cp-fade outside the hero ---- */
+  document.querySelectorAll('.cp-rise, .cp-fade').forEach(function (el) {
+    if (el.closest('.cp-hero')) return;
+    inView(el, function () {
+      var isRise = el.classList.contains('cp-rise');
+      animate(el, isRise ? { opacity: [0, 1], y: [26, 0] } : { opacity: [0, 1] },
+        { duration: 0.62, easing: [0.2, 0.7, 0.2, 1] });
+    }, { amount: 0.15, margin: '0px 0px -60px 0px' });
+  });
+
+  /* ---- Staggered groups: children of [data-stagger] ---- */
+  document.querySelectorAll('[data-stagger]').forEach(function (group) {
+    var kids = group.children;
+    if (!kids.length) return;
+    Array.prototype.forEach.call(kids, function (k) { k.style.opacity = 0; });
+    inView(group, function () {
+      animate(kids, { opacity: [0, 1], y: [22, 0] },
+        { delay: stagger(0.07), duration: 0.6, easing: [0.2, 0.7, 0.2, 1] });
+    }, { amount: 0.12, margin: '0px 0px -70px 0px' });
+  });
+
+  /* ---- Headings reveal line by line ---- */
+  document.querySelectorAll('[data-lines]').forEach(function (h) {
+    var raw = h.innerHTML.split(/<br\s*\/?>/i);
+    if (raw.length < 2) return;
+    h.innerHTML = raw.map(function (l) {
+      return '<span class="cp-line"><span>' + l + '</span></span>';
+    }).join('');
+    var inner = h.querySelectorAll('.cp-line > span');
+    inner.forEach(function (s) { s.style.transform = 'translateY(105%)'; });
+    inView(h, function () {
+      animate(inner, { y: ['105%', '0%'] },
+        { delay: stagger(0.08), duration: 0.75, easing: [0.2, 0.7, 0.2, 1] });
+    }, { amount: 0.4 });
+  });
+
+  /* ---- Curriculum: rail fills with scroll, modules light up ---- */
+  var curr = document.querySelector('.cp-curr');
+  if (curr && scroll) {
+    var fill = curr.querySelector('.cp-curr-fill');
+    if (fill) {
+      scroll(function (p) { fill.style.height = (p * 100).toFixed(1) + '%'; }, {
+        target: curr,
+        offset: ['start 68%', 'end 70%']
+      });
+    }
+    curr.querySelectorAll('.cp-mod').forEach(function (m) {
+      inView(m, function () {
+        m.classList.add('is-on');
+        return function () { m.classList.remove('is-on'); };
+      }, { amount: 0.55 });
+    });
+  }
+
+  /* ---- Parallax drift on gradient chapter blocks ---- */
+  if (scroll) {
+    document.querySelectorAll('[data-parallax]').forEach(function (el) {
+      var amt = parseFloat(el.dataset.parallax) || 40;
+      scroll(function (p) { el.style.transform = 'translateY(' + ((p - 0.5) * amt).toFixed(1) + 'px)'; }, {
+        target: el.parentElement || el,
+        offset: ['start end', 'end start']
+      });
+    });
+  }
+
+  /* ---- Hero glass follows the pointer ---- */
+  (function () {
+    if (window.innerWidth < 960) return;
+    var panels = Array.prototype.slice.call(document.querySelectorAll('.cp-glass'));
+    if (!panels.length) return;
+    var tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+    function tick() {
+      cx += (tx - cx) * 0.07; cy += (ty - cy) * 0.07;
+      panels.forEach(function (p) {
+        var d = parseFloat(p.dataset.depth) || 1;
+        p.style.transform = 'translate3d(' + (cx * 15 * d).toFixed(2) + 'px,' + (-cy * 11 * d).toFixed(2) + 'px,0)';
+      });
+      if (Math.abs(tx - cx) > 0.001 || Math.abs(ty - cy) > 0.001) raf = requestAnimationFrame(tick); else raf = 0;
+    }
+    window.addEventListener('mousemove', function (e) {
+      tx = (e.clientX / window.innerWidth) * 2 - 1;
+      ty = -((e.clientY / window.innerHeight) * 2 - 1);
+      if (!raf) raf = requestAnimationFrame(tick);
+    }, { passive: true });
+  })();
+
+  /* ---- Counters ---- */
+  document.querySelectorAll('[data-countup]').forEach(function (el) {
+    var target = parseFloat(el.dataset.countup);
+    var suffix = el.dataset.suffix || '';
+    inView(el, function () {
+      animate(0, target, {
+        duration: 1.4, easing: [0.2, 0.7, 0.2, 1],
+        onUpdate: function (v) { el.textContent = Math.round(v).toLocaleString() + suffix; }
+      });
+    }, { amount: 0.6 });
+  });
+})();
+</script>
+
 </body>
 </html>
