@@ -2541,7 +2541,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 
   /* ---- Quiz: animate each question in as it becomes active ---- */
   (function () {
-    var box = document.getElementById('qf_engineering_container');
+    var box = document.querySelector('[id^="qf_"][id$="_container"]');
     if (!box || !window.MutationObserver) return;
     new MutationObserver(function (muts) {
       muts.forEach(function (m) {

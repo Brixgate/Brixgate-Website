@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cybersecurity — AI in my Field | Brixgate</title>
-  <meta name="description" content="Cybersecurity professionals who apply AI to threat detection, vulnerability assessment, and incident response are shifting from reactive defence to proactive intelligence — operating one step ahead of the threat landscape." />
+  <title>AI in Cybersecurity — Expert Practitioner Programme | Brixgate</title>
+  <meta name="description" content="Become an AI-native security practitioner. Four weeks, live, covering threat analysis, AI-assisted detection, red-team tooling and shipping an AI security workflow you defend." />
   <link rel="icon" type="image/png" href="assets/faviii.png" />
   <link rel="stylesheet" href="styles.css" />
   <style>
@@ -55,6 +55,25 @@
     .qf-next-btn.qf-enabled { opacity: 1; pointer-events: auto; }
     .qf-result { display: none; }
     .qf-result.qf-visible { display: block; }
+    .qf-capture { display: none; }
+    .qf-capture.qf-visible { display: block; }
+    .qf-capture input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-dark);
+      border: 1.5px solid var(--border-card);
+      border-radius: 10px;
+      color: var(--white);
+      font-size: 0.9rem;
+      font-family: var(--font-main);
+      margin-bottom: 12px;
+      outline: none;
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+    }
+    .qf-capture input:focus { border-color: var(--red); }
+    .qf-capture input::placeholder { color: var(--muted); opacity: 0.6; }
+    .qf-capture-error { color: var(--red); font-size: 0.78rem; margin-bottom: 10px; display: none; }
     .result-badge {
       display: inline-block;
       padding: 5px 16px;
@@ -77,20 +96,839 @@
       border-radius: 8px;
       transition: width 1s ease;
     }
+    /* ── Global mobile safety ── */
+    html, body { max-width: 100%; overflow-x: hidden; }
+
     @media (max-width: 768px) {
-      .field-hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-      .hero-metrics { display: none; }
-      .bx-beginner-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
-      .bx-beginner-grid > div:first-child { order: 2; }
-      .bx-beginner-grid > div:last-child  { order: 1; }
+      .field-hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+    }
+
+    /* ── Below 425px: full mobile overrides ── */
+    @media (max-width: 425px) {
+      /* Hero */
+      .field-hero-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+      /* Hide the right-side "What AI-Native Software Engineering Looks Like" card */
+      .field-hero-grid > *:last-child { display: none !important; }
+
+      /* Cohort info bar: 2×2 */
+      .cohort-info-bar { grid-template-columns: 1fr 1fr !important; }
+      .cohort-info-bar > div { border-right: none !important; border-bottom: 1px solid #1A3050; }
+      .cohort-info-bar > div:nth-child(odd) { border-right: 1px solid #1A3050 !important; }
+      .cohort-info-bar > div:last-child { border-bottom: none !important; }
+
+      /* All inline 3-col and 4-col grids    1 col */
+      [style*="grid-template-columns:repeat(3,1fr)"],
+      [style*="grid-template-columns: repeat(3, 1fr)"],
+      [style*="grid-template-columns:repeat(4,1fr)"],
+      [style*="grid-template-columns: repeat(4, 1fr)"] {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+
+      /* 2-col grids    1 col */
+      [style*="grid-template-columns:1fr 1fr"],
+      [style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+
+      /* Sprint section specifically */
+      [style*="grid-template-columns:repeat(auto-fit"] {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Pricing grid    stack */
+      #pricing-cards { grid-template-columns: 1fr !important; max-width: 100% !important; gap: 16px !important; }
+
+      /* Kill large gaps that cause overflow */
+      [style*="gap:80px"] { gap: 24px !important; }
+      [style*="gap:64px"] { gap: 24px !important; }
+      [style*="gap:48px"] { gap: 20px !important; }
+
+      /* Font size reductions */
+      h1, h2, h3 { word-break: break-word; }
+      [style*="font-size:clamp(2rem"] { font-size: clamp(1.5rem, 6vw, 2rem) !important; }
+      [style*="font-size:1.15rem"] { font-size: 0.95rem !important; }
+      [style*="font-size:1.05rem"] { font-size: 0.92rem !important; }
+
+      /* Prevent any element from exceeding viewport */
+      .container { padding-left: 16px !important; padding-right: 16px !important; }
+      .card { min-width: 0 !important; }
+
+      /* Stat mini-grid inside hero card    1 col */
+      [style*="grid-template-columns:repeat(3,1fr);gap:16px"] {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+
+      /* CTA buttons: stack on tiny screens */
+      [style*="display:flex;gap:12px;flex-wrap:wrap"] { flex-direction: column; }
+
+      /* FAQ/Curriculum section — ensure text doesn't overflow */
+      details summary, details div { word-break: break-word; }
+
+      /* Comparison table / 3-col border table    stack */
+      [style*="grid-template-columns:repeat(2,1fr);gap:0;border"] {
+        grid-template-columns: 1fr !important;
+        border-radius: 12px !important;
+      }
+      [style*="grid-template-columns:repeat(3,1fr);gap:0;border"] > div {
+        border-right: none !important;
+        border-bottom: 1px solid #E8E3DE;
+      }
+
+      /* Cohort panel with 220px sidebar    stack */
+      [style*="grid-template-columns:220px 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Instructor grid 1fr 1fr */
+      [style*="grid-template-columns:1fr 1fr;gap:10px"] {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+      }
+    }
+
+    /* ── Below 375px extra safety ── */
+    @media (max-width: 375px) {
+      .container { padding-left: 12px !important; padding-right: 12px !important; }
+      [style*="padding:32px 28px"] { padding: 20px 16px !important; }
+      [style*="padding:28px 24px"] { padding: 18px 14px !important; }
+      [style*="padding:36px 32px"] { padding: 20px 16px !important; }
+      [style*="padding:40px 36px"] { padding: 24px 16px !important; }
+      h1 { font-size: clamp(1.4rem, 7vw, 1.8rem) !important; }
     }
   </style>
 <script src="tracking.js"></script>
-</head>
-<body>
+<style>
+/* ============================================================
+   COURSE PAGE — "Chapters & Glass"
+   Scoped to body.cp. Shares the landing page's brand ramp.
+   ============================================================ */
+:root {
+  --cp-ink:      #021024;
+  --cp-ink-2:    #1B2A41;
+  --cp-body:     #4A5568;
+  --cp-muted:    #6B7A90;
+  --cp-faint:    #98A4B5;
+  --cp-line:     #E6E8EC;
+  --cp-line-2:   #EEF0F3;
+  --cp-surface:  #F6F5F5;
+  --cp-red:      #FF294E;
+  --cp-red-soft: rgba(255,41,78,.08);
+  --cp-green:    #16A34A;
+  --cp-ease: cubic-bezier(.2,.7,.2,1);
+  --cp-r:    18px;
+  --cp-r-sm: 12px;
+  --cp-shadow:    0 1px 2px rgba(2,16,36,.04), 0 16px 40px -14px rgba(2,16,36,.16);
+  --cp-shadow-lg: 0 2px 4px rgba(2,16,36,.04), 0 36px 70px -26px rgba(2,16,36,.26);
 
-<!-- ====== NAV ====== -->
-<!-- Region Banner -->
+  /* brand gradient ramp (same tokens as the landing page) */
+  --g-navy:   #021024;
+  --g-card:   #0D1C34;
+  --g-steel:  #1B3A5C;
+  --g-wine:   #9A2335;
+  --g-deep:   #C4173A;
+  --g-red:    #FF294E;
+  --g-orange: #FF5748;
+}
+
+body.cp { background:#fff; color:var(--cp-ink); -webkit-font-smoothing:antialiased;
+  padding-top: calc(var(--banner-height) + var(--cp-nav-h, 63px)); }
+body.cp ::selection { background: rgba(255,41,78,.18); }
+
+/* Glass nav, same contract as the landing page */
+body.cp .nav {
+  background: rgba(255,255,255,.82);
+  -webkit-backdrop-filter: blur(16px) saturate(1.7); backdrop-filter: blur(16px) saturate(1.7);
+  border-bottom: 1px solid rgba(2,16,36,.07); box-shadow:none;
+  transition: background .35s var(--cp-ease), backdrop-filter .35s var(--cp-ease), border-color .35s var(--cp-ease), box-shadow .35s var(--cp-ease), top .35s cubic-bezier(.4,0,.2,1);
+}
+body.cp .nav.scrolled {
+  background: rgba(255,255,255,.58);
+  -webkit-backdrop-filter: blur(26px) saturate(1.9); backdrop-filter: blur(26px) saturate(1.9);
+  box-shadow: 0 10px 34px -18px rgba(2,16,36,.30);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  body.cp .nav, body.cp .nav.scrolled { background: rgba(255,255,255,.96); }
+}
+
+.cp-wrap { max-width:1200px; margin:0 auto; padding:0 32px; }
+.cp-sec  { padding:104px 0; }
+.cp-sec.tight { padding:76px 0; }
+.cp-surface { background:var(--cp-surface); }
+
+/* ---------- type ---------- */
+.cp-eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:.72rem; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--cp-red); margin-bottom:18px; }
+.cp-eyebrow::before { content:''; width:18px; height:2px; background:currentColor; border-radius:2px; }
+.cp-h2 { font-size:clamp(1.9rem,3.4vw,2.75rem); line-height:1.1; letter-spacing:-.03em; font-weight:800; margin:0; color:var(--cp-ink); }
+.cp-lead { font-size:1.08rem; line-height:1.65; color:var(--cp-body); margin:0; }
+.cp-p { font-size:.97rem; line-height:1.65; color:var(--cp-body); margin:0; }
+.cp-head { max-width:720px; }
+.cp-head .cp-h2 { margin-bottom:16px; }
+.cp-head.center { margin-inline:auto; text-align:center; }
+.cp-head.center .cp-eyebrow { justify-content:center; }
+.cp-gradbar { padding-left:22px; border-left:3px solid transparent;
+  border-image: linear-gradient(180deg, var(--g-red) 0%, var(--g-orange) 46%, var(--g-steel) 100%) 1; }
+
+/* ---------- buttons ---------- */
+.cp-btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; height:52px; padding:0 26px;
+  border-radius:999px; font-size:.95rem; font-weight:700; white-space:nowrap; border:1.5px solid transparent;
+  cursor:pointer; font-family:inherit; transition:transform .25s var(--cp-ease), box-shadow .25s var(--cp-ease), background .2s, color .2s, border-color .2s; }
+.cp-btn svg { transition:transform .25s var(--cp-ease); flex-shrink:0; }
+.cp-btn:hover svg { transform:translateX(3px); }
+.cp-btn-red { background:var(--cp-red); color:#fff; box-shadow:0 10px 28px -10px rgba(255,41,78,.6); }
+.cp-btn-red:hover { transform:translateY(-2px); background:#FF3A5C; }
+.cp-btn-ink { background:var(--cp-ink); color:#fff; }
+.cp-btn-ink:hover { transform:translateY(-2px); background:#0B1F3F; }
+.cp-btn-ghost { background:#fff; color:var(--cp-ink); border-color:var(--cp-line); }
+.cp-btn-ghost:hover { border-color:var(--cp-ink); transform:translateY(-2px); }
+.cp-btn-white { background:#fff; color:var(--cp-ink); }
+.cp-btn-white:hover { transform:translateY(-2px); }
+.cp-btn-glass { background:rgba(255,255,255,.10); color:#fff; border-color:rgba(255,255,255,.34);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); }
+.cp-btn-glass:hover { background:rgba(255,255,255,.18); border-color:#fff; }
+.cp-chip { display:inline-flex; align-items:center; height:28px; padding:0 12px; border-radius:8px;
+  background:var(--cp-surface); border:1px solid var(--cp-line-2); font-size:.76rem; font-weight:600; color:var(--cp-body); white-space:nowrap; }
+
+/* grain used on every gradient surface */
+.cp-grain::after { content:''; position:absolute; inset:0; pointer-events:none; opacity:.28; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E"); }
+
+/* ============================================================
+   HERO — gradient + fractal glass
+   ============================================================ */
+.cp-hero { position:relative; overflow:hidden; color:#fff; padding:84px 0 96px;
+  background:
+    radial-gradient(105% 130% at 100% 104%, rgba(255,87,72,.92) 0%, rgba(255,41,78,.55) 30%, rgba(196,23,58,.20) 52%, transparent 68%),
+    radial-gradient(70% 80% at 86% 6%, rgba(255,41,78,.30) 0%, transparent 62%),
+    radial-gradient(80% 90% at 4% 8%, rgba(27,58,92,.60) 0%, transparent 60%),
+    linear-gradient(118deg, var(--g-navy) 0%, var(--g-card) 20%, var(--g-steel) 38%, var(--g-wine) 64%, var(--g-deep) 82%, var(--g-orange) 100%); }
+.cp-hero-grid { position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr); gap:56px; align-items:center; }
+.cp-hero h1 { font-size:clamp(2.4rem,4.6vw,3.7rem); line-height:1.04; letter-spacing:-.035em; font-weight:800; margin:0 0 22px; color:#fff; }
+.cp-hero h1 .accent { color:#FFCDBC; }
+.cp-hero .cp-lead { color:rgba(255,255,255,.86); max-width:520px; }
+.cp-pill { display:inline-flex; align-items:center; gap:9px; height:34px; padding:0 15px; border-radius:999px;
+  background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28); color:#fff; font-size:.78rem; font-weight:600;
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); margin-bottom:24px; }
+.cp-dot { position:relative; width:8px; height:8px; border-radius:50%; background:#4ade80; flex-shrink:0; }
+.cp-dot::after { content:''; position:absolute; inset:-4px; border-radius:50%; background:#4ade80; opacity:.35; animation:cpPulse 1.8s ease-out infinite; }
+@keyframes cpPulse { 0%{transform:scale(.6);opacity:.5} 100%{transform:scale(1.9);opacity:0} }
+.cp-hero-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:34px; }
+.cp-hero-meta { display:flex; gap:30px; margin-top:38px; padding-top:26px; border-top:1px solid rgba(255,255,255,.18); flex-wrap:wrap; }
+.cp-hero-meta b { display:block; font-size:1.4rem; font-weight:800; letter-spacing:-.03em; line-height:1; }
+.cp-hero-meta span { display:block; font-size:.76rem; color:rgba(255,255,255,.66); margin-top:7px; font-weight:600; }
+
+/* fractal glass stack */
+.cp-glass-stage { position:relative; height:440px; }
+.cp-glass {
+  position:absolute; border-radius:20px; overflow:hidden;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.30);
+  -webkit-backdrop-filter:blur(22px) saturate(1.5); backdrop-filter:blur(22px) saturate(1.5);
+  box-shadow:0 30px 70px -22px rgba(1,11,30,.6), inset 0 1px 0 rgba(255,255,255,.4);
+  padding:22px 24px; will-change:transform;
+}
+/* refracted edge highlight */
+.cp-glass::before { content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background:linear-gradient(135deg, rgba(255,255,255,.34) 0%, rgba(255,255,255,0) 34%, rgba(255,255,255,0) 66%, rgba(255,255,255,.16) 100%); }
+.cp-glass-1 { top:0; right:0; width:300px; }
+.cp-glass-2 { top:170px; left:0; width:290px; }
+.cp-glass-3 { bottom:0; right:34px; width:264px; }
+.cp-glass-k { font-size:.64rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.72); }
+.cp-glass-t { font-size:1.02rem; font-weight:700; color:#fff; margin-top:9px; letter-spacing:-.01em; }
+.cp-glass-s { font-size:.8rem; color:rgba(255,255,255,.72); margin-top:5px; line-height:1.5; }
+.cp-glass-row { display:flex; align-items:center; justify-content:space-between; margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,.18); }
+.cp-glass-big { font-size:2rem; font-weight:800; letter-spacing:-.04em; color:#fff; line-height:1; }
+.cp-mini-bar { height:5px; border-radius:999px; background:rgba(255,255,255,.22); overflow:hidden; margin-top:14px; }
+.cp-mini-bar > i { display:block; height:100%; width:0; border-radius:inherit; background:linear-gradient(90deg,#fff,#FFCDBC); }
+
+/* ============================================================
+   FACT RAIL under hero
+   ============================================================ */
+.cp-facts { background:var(--g-card); border-bottom:1px solid var(--g-steel); }
+.cp-facts-in { display:grid; grid-template-columns:repeat(4,1fr); }
+.cp-fact { padding:22px 26px; border-right:1px solid rgba(255,255,255,.10); }
+.cp-fact:last-child { border-right:0; }
+.cp-fact dt { font-size:.66rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#7A94A8; margin-bottom:7px; }
+.cp-fact dd { font-size:1rem; font-weight:800; color:#fff; margin:0; }
+
+/* ============================================================
+   TWO-COLUMN with sticky enrol rail
+   ============================================================ */
+.cp-split { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:60px; align-items:start; }
+.cp-rail { position:sticky; top:calc(var(--cp-nav-h,63px) + 24px); }
+.cp-enrol { position:relative; overflow:hidden; border-radius:var(--cp-r); color:#fff; padding:28px 26px;
+  background: radial-gradient(90% 120% at 100% 0%, rgba(255,87,72,.5) 0%, transparent 60%),
+              linear-gradient(150deg, var(--g-navy) 0%, var(--g-steel) 52%, var(--g-wine) 100%);
+  box-shadow:var(--cp-shadow-lg); }
+.cp-enrol > * { position:relative; z-index:1; }
+.cp-enrol-k { font-size:.66rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:rgba(255,255,255,.62); }
+.cp-enrol-price { font-size:2.3rem; font-weight:800; letter-spacing:-.045em; line-height:1; margin-top:8px; }
+.cp-enrol-sub { font-size:.8rem; color:rgba(255,255,255,.66); margin-top:6px; }
+.cp-enrol ul { list-style:none; padding:0; margin:22px 0; display:flex; flex-direction:column; gap:11px; }
+.cp-enrol li { font-size:.85rem; color:rgba(255,255,255,.84); display:flex; gap:10px; align-items:flex-start; line-height:1.45; }
+.cp-enrol li svg { flex-shrink:0; margin-top:2px; color:#7CEFA6; }
+.cp-enrol .cp-btn { width:100%; }
+.cp-enrol-foot { margin-top:14px; font-size:.72rem; color:rgba(255,255,255,.5); text-align:center; }
+
+/* ============================================================
+   CURRICULUM with scroll-linked rail
+   ============================================================ */
+.cp-curr { position:relative; }
+.cp-curr-track { position:absolute; left:26px; top:14px; bottom:14px; width:2px; background:var(--cp-line); border-radius:2px; }
+.cp-curr-fill { position:absolute; left:0; top:0; width:100%; height:0%; border-radius:2px;
+  background:linear-gradient(180deg, var(--g-red), var(--g-orange)); }
+.cp-mod { position:relative; display:grid; grid-template-columns:54px 1fr; gap:24px; padding:22px 0; }
+.cp-mod-n { width:54px; height:54px; border-radius:50%; background:#fff; border:1.5px solid var(--cp-line);
+  display:grid; place-items:center; font-size:.85rem; font-weight:800; color:var(--cp-ink); position:relative; z-index:1;
+  transition:border-color .3s, box-shadow .3s, background .3s, color .3s; }
+.cp-mod.is-on .cp-mod-n { background:var(--cp-red); border-color:var(--cp-red); color:#fff; box-shadow:0 0 0 6px var(--cp-red-soft); }
+.cp-mod-t { font-size:1.12rem; font-weight:700; letter-spacing:-.018em; color:var(--cp-ink); }
+.cp-mod-d { font-size:.93rem; color:var(--cp-body); line-height:1.62; margin-top:8px; max-width:600px; }
+.cp-mod-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:12px; }
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.cp-grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.cp-grid-2 { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+.cp-card { background:#fff; border:1px solid var(--cp-line); border-radius:var(--cp-r); padding:26px;
+  transition:transform .35s var(--cp-ease), box-shadow .35s var(--cp-ease); }
+.cp-card:hover { transform:translateY(-4px); box-shadow:var(--cp-shadow); }
+.cp-card-ic { width:42px; height:42px; border-radius:12px; background:var(--cp-red-soft); color:var(--cp-red);
+  display:grid; place-items:center; margin-bottom:16px; }
+.cp-card h3 { font-size:1.04rem; font-weight:700; letter-spacing:-.015em; margin:0; }
+.cp-card p { font-size:.9rem; color:var(--cp-body); line-height:1.6; margin:8px 0 0; }
+
+/* ============================================================
+   DARK CHAPTER — gradient block with light cards
+   ============================================================ */
+.cp-chapter { position:relative; overflow:hidden; color:#fff; padding:104px 0;
+  background:
+    radial-gradient(90% 120% at 100% 0%, rgba(255,87,72,.5) 0%, rgba(255,41,78,.2) 38%, transparent 66%),
+    radial-gradient(80% 100% at 0% 100%, rgba(27,58,92,.55) 0%, transparent 62%),
+    linear-gradient(112deg, var(--g-navy) 0%, var(--g-card) 26%, var(--g-steel) 46%, var(--g-wine) 74%, var(--g-deep) 100%); }
+.cp-chapter > * { position:relative; z-index:1; }
+.cp-chapter .cp-h2 { color:#fff; }
+.cp-chapter .cp-lead { color:rgba(255,255,255,.78); }
+.cp-chapter .cp-eyebrow { color:rgba(255,255,255,.66); }
+.cp-lcard { background:rgba(255,255,255,.96); border-radius:var(--cp-r); padding:26px; color:var(--cp-ink);
+  transition:transform .35s var(--cp-ease), box-shadow .35s var(--cp-ease); }
+.cp-lcard:hover { transform:translateY(-4px); box-shadow:0 30px 60px -24px rgba(0,0,0,.5); }
+.cp-lcard h3 { font-size:1.04rem; font-weight:700; letter-spacing:-.015em; margin:0; }
+.cp-lcard p { font-size:.9rem; color:var(--cp-body); line-height:1.6; margin:8px 0 0; }
+.cp-gcard { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.15); border-radius:var(--cp-r); padding:26px;
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  transition:transform .35s var(--cp-ease), background .3s; }
+.cp-gcard:hover { transform:translateY(-4px); background:rgba(255,255,255,.11); }
+.cp-gcard h3 { font-size:1.04rem; font-weight:700; margin:0; color:#fff; }
+.cp-gcard p { font-size:.9rem; color:rgba(255,255,255,.72); line-height:1.6; margin:8px 0 0; }
+
+/* ============================================================
+   ANIMATION PRIMITIVES (Motion drives these)
+   ============================================================ */
+/* Hidden ONLY when JS confirms it can animate. Without JS, or if Motion
+   fails to load, content renders normally instead of staying invisible. */
+html.cp-anim .cp-rise { opacity:0; transform:translateY(26px); }
+html.cp-anim .cp-fade { opacity:0; }
+.cp-line { display:block; overflow:hidden; }
+.cp-line > span { display:block; }
+@media (prefers-reduced-motion: reduce) {
+  .cp-rise, .cp-fade { opacity:1 !important; transform:none !important; }
+  .cp-line > span { transform:none !important; }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1080px) {
+  .cp-split { grid-template-columns:1fr; gap:44px; }
+  .cp-rail { position:static; }
+  .cp-enrol { max-width:420px; }
+  .cp-facts-in { grid-template-columns:repeat(2,1fr); }
+  .cp-fact:nth-child(2) { border-right:0; }
+  .cp-fact:nth-child(-n+2) { border-bottom:1px solid rgba(255,255,255,.10); }
+}
+@media (max-width:960px) {
+  .cp-sec, .cp-chapter { padding:76px 0; }
+  .cp-hero { padding:56px 0 72px; }
+  .cp-hero-grid { grid-template-columns:1fr; gap:44px; }
+  .cp-glass-stage { height:400px; max-width:520px; }
+  .cp-grid-3 { grid-template-columns:1fr; }
+}
+@media (max-width:640px) {
+  .cp-wrap { padding:0 20px; }
+  .cp-sec, .cp-chapter { padding:60px 0; }
+  .cp-hero-actions .cp-btn { width:100%; }
+  .cp-glass-stage { height:360px; }
+  .cp-glass-1 { width:min(240px,72%); }
+  .cp-glass-2 { width:min(240px,74%); top:150px; }
+  .cp-glass-3 { display:none; }
+  .cp-facts-in { grid-template-columns:1fr; }
+  .cp-fact { border-right:0; border-bottom:1px solid rgba(255,255,255,.10); }
+  .cp-fact:last-child { border-bottom:0; }
+  .cp-grid-2 { grid-template-columns:1fr; }
+  .cp-mod { grid-template-columns:44px 1fr; gap:16px; }
+  .cp-mod-n { width:44px; height:44px; font-size:.78rem; }
+  .cp-curr-track { left:21px; }
+  .cp-hero-meta { gap:20px; }
+}
+
+/* Accent text inside gradient chapters: brand red sits on the red end of the
+   ramp and loses contrast, so accents shift to a warm light tint. */
+.cp-chapter h1 span[style*="--red"],
+.cp-chapter h2 span[style*="--red"],
+.cp-chapter h3 span[style*="--red"] { color:#FFCDBC !important; }
+.cp-chapter .eyebrow, .cp-chapter .eyebrow-tag { color:rgba(255,255,255,.72) !important; }
+.cp-chapter .divider-red { background:rgba(255,255,255,.35) !important; }
+/* Checkmarks / bullets keep colour but lift off the ground */
+.cp-chapter li > span[style*="--red"] { color:#FFCDBC !important; }
+</style>
+
+<script>
+  /* Set before paint so .cp-rise can hide without risking a blank page if JS dies. */
+  (function(){
+    var m = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!m) document.documentElement.className += ' cp-anim';
+  })();
+</script>
+
+<style>
+/* ============================================================
+   COURSE PAGE v2 — whitespace-forward sections
+   ============================================================ */
+.cp-sec  { padding: 132px 0; }
+.cp-sec.tight { padding: 96px 0; }
+.cp-chapter { padding: 132px 0; }
+.cp-narrow { max-width: 900px; margin-inline: auto; }
+.cp-mb { margin-bottom: 72px; }
+
+/* ---------- section label row ---------- */
+.cp-label {
+  display: flex; align-items: baseline; gap: 16px;
+  padding-bottom: 20px; margin-bottom: 56px;
+  border-bottom: 1px solid var(--cp-line);
+}
+.cp-label .n {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .7rem; font-weight: 700; letter-spacing: .14em; color: var(--cp-red);
+}
+.cp-label .t { font-size: .74rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--cp-muted); }
+.cp-chapter .cp-label { border-bottom-color: rgba(255,255,255,.16); }
+.cp-chapter .cp-label .t { color: rgba(255,255,255,.6); }
+.cp-chapter .cp-label .n { color: #FFCDBC; }
+
+/* ============================================================
+   OUTCOMES — big airy numbered list, two columns
+   ============================================================ */
+.cp-out { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 72px; }
+.cp-out-item { padding: 34px 0; border-top: 1px solid var(--cp-line); }
+.cp-out-n {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .7rem; font-weight: 700; color: var(--cp-faint); letter-spacing: .1em; margin-bottom: 14px;
+}
+.cp-out-t { font-size: 1.28rem; font-weight: 700; letter-spacing: -.022em; color: var(--cp-ink); line-height: 1.25; }
+.cp-out-d { font-size: .95rem; line-height: 1.68; color: var(--cp-body); margin-top: 12px; max-width: 440px; }
+
+/* ============================================================
+   CURRICULUM — week rail, no accordion
+   ============================================================ */
+.cp-weeks { display: flex; flex-direction: column; gap: 0; }
+.cp-week {
+  display: grid; grid-template-columns: 190px 1fr; gap: 56px;
+  padding: 56px 0; border-top: 1px solid var(--cp-line);
+  position: relative;
+}
+.cp-week:last-child { border-bottom: 1px solid var(--cp-line); }
+.cp-week-side { position: relative; }
+.cp-week-tag {
+  display: inline-flex; align-items: center; height: 26px; padding: 0 11px; border-radius: 7px;
+  background: linear-gradient(135deg, var(--g-red), var(--g-orange)); color: #fff;
+  font-size: .64rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+}
+.cp-week-big {
+  font-size: 4.2rem; font-weight: 800; letter-spacing: -.06em; line-height: .85;
+  color: var(--cp-ink); margin-top: 18px; font-variant-numeric: tabular-nums;
+}
+.cp-week-sub { font-size: .78rem; color: var(--cp-muted); margin-top: 8px; font-weight: 600; }
+.cp-week-t { font-size: 1.42rem; font-weight: 700; letter-spacing: -.026em; color: var(--cp-ink); line-height: 1.2; }
+.cp-week-d { font-size: .97rem; line-height: 1.7; color: var(--cp-body); margin-top: 14px; max-width: 620px; }
+.cp-week-list { list-style: none; padding: 0; margin: 22px 0 0; display: grid; grid-template-columns: repeat(2,1fr); gap: 10px 28px; }
+.cp-week-list li { font-size: .88rem; color: var(--cp-body); line-height: 1.55; display: flex; gap: 10px; align-items: flex-start; }
+.cp-week-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--cp-red); flex-shrink: 0; margin-top: 8px; }
+
+/* ============================================================
+   FIT — who it's for / not for, side by side
+   ============================================================ */
+.cp-fit { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.cp-fit-col { border-radius: var(--cp-r); padding: 40px 38px; }
+.cp-fit-yes { background: #fff; border: 1px solid var(--cp-line); }
+.cp-fit-no  { background: var(--cp-surface); border: 1px solid var(--cp-line); }
+.cp-fit-h { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+.cp-fit-h span { font-size: 1.06rem; font-weight: 700; letter-spacing: -.015em; }
+.cp-fit-ic { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; flex-shrink: 0; }
+.cp-fit-yes .cp-fit-ic { background: rgba(22,163,74,.12); color: var(--cp-green); }
+.cp-fit-no  .cp-fit-ic { background: rgba(255,41,78,.10); color: var(--cp-red); }
+.cp-fit ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 18px; }
+.cp-fit li { font-size: .94rem; line-height: 1.6; color: var(--cp-body); display: flex; gap: 13px; align-items: flex-start; }
+.cp-fit li svg { flex-shrink: 0; margin-top: 3px; }
+.cp-fit li b { color: var(--cp-ink); font-weight: 650; }
+
+/* ============================================================
+   HOW IT WORKS — alternating image rows
+   ============================================================ */
+.cp-step { display: grid; grid-template-columns: repeat(2, 1fr); gap: 80px; align-items: center; padding: 64px 0; }
+.cp-step:nth-child(even) .cp-step-media { order: -1; }
+.cp-step-media { border-radius: var(--cp-r); overflow: hidden; aspect-ratio: 3/2; background: var(--cp-surface); position: relative; }
+.cp-step-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .9s var(--cp-ease); }
+.cp-step:hover .cp-step-media img { transform: scale(1.04); }
+.cp-step-n {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .7rem; font-weight: 700; letter-spacing: .14em; color: var(--cp-red); margin-bottom: 16px;
+}
+.cp-step-t { font-size: 1.55rem; font-weight: 700; letter-spacing: -.028em; color: var(--cp-ink); line-height: 1.18; }
+.cp-step-d { font-size: 1rem; line-height: 1.72; color: var(--cp-body); margin-top: 16px; max-width: 460px; }
+
+/* ============================================================
+   TOOLS — logo tiles
+   ============================================================ */
+.cp-tools { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.cp-tool {
+  aspect-ratio: 3/2; border: 1px solid var(--cp-line); border-radius: 14px; background: #fff;
+  display: grid; place-items: center; padding: 22px;
+  transition: transform .3s var(--cp-ease), box-shadow .3s var(--cp-ease), border-color .3s;
+}
+.cp-tool:hover { transform: translateY(-4px); box-shadow: var(--cp-shadow); border-color: transparent; }
+.cp-tool img { max-width: 100%; max-height: 34px; width: auto; height: auto; display: block;
+  filter: grayscale(1) opacity(.55); transition: filter .3s var(--cp-ease); }
+.cp-tool:hover img { filter: none; }
+.cp-tools-note { font-size: .86rem; color: var(--cp-muted); margin-top: 26px; text-align: center; }
+
+/* ============================================================
+   START DATES
+   ============================================================ */
+.cp-dates { display: flex; flex-direction: column; gap: 12px; }
+.cp-date {
+  display: grid; grid-template-columns: 130px 1fr auto; gap: 32px; align-items: center;
+  background: #fff; border: 1px solid var(--cp-line); border-radius: var(--cp-r); padding: 26px 30px;
+  transition: transform .3s var(--cp-ease), box-shadow .3s var(--cp-ease), border-color .3s;
+}
+.cp-date:hover { transform: translateY(-3px); box-shadow: var(--cp-shadow); border-color: transparent; }
+.cp-date-when b { display: block; font-size: 1.12rem; font-weight: 800; letter-spacing: -.02em; color: var(--cp-ink); }
+.cp-date-when span { display: block; font-size: .78rem; color: var(--cp-muted); margin-top: 4px; font-weight: 600; }
+.cp-date-meta { display: flex; gap: 30px; flex-wrap: wrap; }
+.cp-date-meta div span { display: block; font-size: .64rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--cp-faint); }
+.cp-date-meta div b { display: block; font-size: .9rem; font-weight: 700; color: var(--cp-ink); margin-top: 5px; }
+.cp-date-status { display: inline-flex; align-items: center; gap: 7px; font-size: .72rem; font-weight: 800;
+  letter-spacing: .05em; text-transform: uppercase; color: var(--cp-green); }
+
+/* ============================================================
+   PRICING
+   ============================================================ */
+.cp-price-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 860px; margin-inline: auto; }
+.cp-price {
+  position: relative; border-radius: 22px; padding: 40px 36px; overflow: hidden;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  transition: transform .35s var(--cp-ease), background .3s;
+}
+.cp-price:hover { transform: translateY(-5px); background: rgba(255,255,255,.10); }
+.cp-price.feat { background: rgba(255,255,255,.97); color: var(--cp-ink); border-color: transparent;
+  box-shadow: 0 34px 70px -26px rgba(0,0,0,.55); }
+.cp-price-k { font-size: .68rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+.cp-price.feat .cp-price-k { color: var(--cp-muted); }
+.cp-price-v { font-size: 2.9rem; font-weight: 800; letter-spacing: -.05em; line-height: 1; margin-top: 14px; color: #fff; }
+.cp-price.feat .cp-price-v { color: var(--cp-ink); }
+.cp-price-per { font-size: .82rem; color: rgba(255,255,255,.62); margin-top: 8px; }
+.cp-price.feat .cp-price-per { color: var(--cp-muted); }
+.cp-price ul { list-style: none; padding: 0; margin: 28px 0; display: flex; flex-direction: column; gap: 13px; }
+.cp-price li { font-size: .89rem; line-height: 1.5; color: rgba(255,255,255,.82); display: flex; gap: 11px; align-items: flex-start; }
+.cp-price.feat li { color: var(--cp-body); }
+.cp-price li svg { flex-shrink: 0; margin-top: 2px; color: #7CEFA6; }
+.cp-price.feat li svg { color: var(--cp-green); }
+.cp-price .cp-btn { width: 100%; }
+.cp-price-badge {
+  position: absolute; top: 18px; right: 18px;
+  font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  background: linear-gradient(135deg, var(--g-red), var(--g-orange)); color: #fff;
+  padding: 5px 11px; border-radius: 7px;
+}
+
+/* ============================================================
+   FAQ (matches the landing page system)
+   ============================================================ */
+.cp-faq-wrap { display: grid; grid-template-columns: minmax(0,.78fr) minmax(0,1.22fr); gap: 80px; align-items: start; }
+.cp-faq-head { position: sticky; top: calc(var(--cp-nav-h,63px) + var(--banner-height) + 40px); }
+.cp-faq-list { border-top: 1px solid var(--cp-line); }
+.cp-faq-item { border-bottom: 1px solid var(--cp-line); }
+.cp-faq-q {
+  width: 100%; background: none; border: 0; padding: 24px 4px;
+  display: flex; align-items: center; justify-content: space-between; gap: 28px;
+  font-family: inherit; font-size: 1.02rem; font-weight: 600; letter-spacing: -.015em;
+  color: var(--cp-ink); text-align: left; cursor: pointer; transition: color .2s;
+}
+.cp-faq-q:hover { color: var(--cp-red); }
+.cp-faq-q:focus-visible { outline: 2px solid var(--cp-red); outline-offset: 3px; border-radius: 6px; }
+.cp-faq-chev { flex-shrink: 0; color: var(--cp-muted); transition: transform .38s var(--cp-ease), color .2s; }
+.cp-faq-item.open .cp-faq-chev { transform: rotate(180deg); color: var(--cp-red); }
+.cp-faq-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .38s var(--cp-ease); }
+.cp-faq-item.open .cp-faq-a { grid-template-rows: 1fr; }
+.cp-faq-a > div { overflow: hidden; }
+.cp-faq-a p { font-size: .95rem; line-height: 1.68; color: var(--cp-body); margin: 0 0 24px; padding-right: 40px; max-width: 640px; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1080px) {
+  .cp-tools { grid-template-columns: repeat(3, 1fr); }
+  .cp-out { gap: 4px 44px; }
+  .cp-week { grid-template-columns: 150px 1fr; gap: 36px; }
+  .cp-step { gap: 48px; }
+}
+@media (max-width: 900px) {
+  .cp-sec, .cp-chapter { padding: 88px 0; }
+  .cp-out { grid-template-columns: 1fr; }
+  .cp-fit { grid-template-columns: 1fr; }
+  .cp-faq-wrap { grid-template-columns: 1fr; gap: 40px; }
+  .cp-faq-head { position: static; }
+  .cp-step { grid-template-columns: 1fr; gap: 32px; padding: 44px 0; }
+  .cp-step:nth-child(even) .cp-step-media { order: 0; }
+  .cp-price-grid { grid-template-columns: 1fr; }
+  .cp-date { grid-template-columns: 1fr; gap: 20px; }
+}
+@media (max-width: 640px) {
+  .cp-sec, .cp-chapter { padding: 68px 0; }
+  .cp-label { margin-bottom: 36px; }
+  .cp-mb { margin-bottom: 44px; }
+  .cp-week { grid-template-columns: 1fr; gap: 18px; padding: 40px 0; }
+  .cp-week-big { font-size: 3rem; margin-top: 12px; }
+  .cp-week-list { grid-template-columns: 1fr; }
+  .cp-tools { grid-template-columns: repeat(2, 1fr); }
+  .cp-fit-col { padding: 30px 26px; }
+  .cp-price { padding: 32px 26px; }
+  .cp-out-item { padding: 26px 0; }
+  .cp-date-meta { gap: 20px; }
+}
+</style>
+
+<style>
+/* ============================================================
+   QUIZ — restyled shell (JS hooks untouched)
+   ============================================================ */
+.cp-quiz { max-width: 720px; margin: 0 auto; }
+#qf_cybersecurity_container {
+  background: rgba(2,16,36,.55) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  border-radius: 24px !important;
+  padding: 36px 36px 32px !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+          backdrop-filter: blur(18px) saturate(1.3);
+  box-shadow: 0 40px 90px -34px rgba(0,0,0,.7);
+  max-width: 720px !important;
+}
+
+.qf-progress-bar {
+  height: 3px !important; background: rgba(255,255,255,.13) !important;
+  border-radius: 999px; overflow: hidden; margin-bottom: 28px !important;
+}
+.qf-progress-fill {
+  height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--g-red), var(--g-orange)) !important;
+  transition: width .5s var(--cp-ease);
+}
+.cp-quiz-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.cp-quiz-cat {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: .62rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase;
+  color: #FFCDBC; background: rgba(255,205,188,.12); border: 1px solid rgba(255,205,188,.22);
+  padding: 5px 11px; border-radius: 999px;
+}
+.cp-quiz-count {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .68rem; letter-spacing: .1em; color: rgba(255,255,255,.45); font-weight: 600;
+}
+.cp-quiz-q {
+  font-size: 1.22rem !important; font-weight: 650 !important; color: #fff !important;
+  line-height: 1.4 !important; letter-spacing: -.018em; margin-bottom: 22px !important;
+}
+
+/* options as real choices, not list rows */
+.qf-options { gap: 9px !important; }
+.qf-opt {
+  position: relative;
+  padding: 15px 17px 15px 50px !important;
+  border-radius: 13px !important;
+  border: 1px solid rgba(255,255,255,.13) !important;
+  background: rgba(255,255,255,.04) !important;
+  color: rgba(255,255,255,.80) !important;
+  font-size: .92rem !important;
+  line-height: 1.5 !important;
+  transition: background .22s var(--cp-ease), border-color .22s var(--cp-ease), transform .22s var(--cp-ease), color .22s !important;
+}
+.qf-opt::before {
+  content: ''; position: absolute; left: 17px; top: 50%; transform: translateY(-50%);
+  width: 19px; height: 19px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,.3); background: transparent;
+  transition: border-color .22s, background .22s, box-shadow .22s;
+}
+.qf-opt::after {
+  content: ''; position: absolute; left: 23.5px; top: 50%;
+  width: 6px; height: 6px; border-radius: 50%; background: #fff;
+  transform: translateY(-50%) scale(0); transition: transform .25s var(--cp-ease);
+}
+.qf-opt:hover {
+  border-color: rgba(255,255,255,.30) !important;
+  background: rgba(255,255,255,.08) !important;
+  color: #fff !important;
+  transform: none !important;
+}
+.qf-opt:hover::before { border-color: rgba(255,255,255,.55); }
+.qf-opt.qf-selected {
+  border-color: var(--g-red) !important;
+  background: rgba(255,41,78,.14) !important;
+  color: #fff !important;
+}
+.qf-opt.qf-selected::before { border-color: var(--g-red); background: var(--g-red); box-shadow: 0 0 0 4px rgba(255,41,78,.16); }
+.qf-opt.qf-selected::after { transform: translateY(-50%) scale(1); }
+
+.qf-nav { margin-top: 26px !important; }
+.qf-nav .btn, .qf-nav button {
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, var(--g-red), var(--g-orange)) !important;
+  border: 0 !important; color: #fff !important;
+  height: 46px; padding: 0 26px !important; font-weight: 700 !important;
+  transition: transform .22s var(--cp-ease), box-shadow .22s !important;
+}
+.qf-nav .btn:hover, .qf-nav button:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -10px rgba(255,41,78,.7); }
+
+/* result panel */
+.qf-result { text-align: center; }
+.cp-quiz-score {
+  font-size: 3.4rem; font-weight: 800; letter-spacing: -.05em; line-height: 1;
+  background: linear-gradient(135deg, #fff, #FFCDBC); -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ============================================================
+   MERGED CHAPTER — sprint + practitioner on one ground
+   ============================================================ */
+.cp-timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; margin-top: 12px; }
+.cp-timeline::before {
+  content: ''; position: absolute; left: 0; right: 0; top: 21px; height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,.10), rgba(255,255,255,.32) 20%, rgba(255,255,255,.32) 80%, rgba(255,255,255,.10));
+}
+.cp-tl { position: relative; padding: 0 26px 0 0; }
+.cp-tl-dot {
+  width: 42px; height: 42px; border-radius: 50%; position: relative; z-index: 1;
+  background: rgba(2,16,36,.9); border: 1px solid rgba(255,255,255,.26);
+  display: grid; place-items: center; color: #fff;
+  transition: border-color .35s var(--cp-ease), background .35s, box-shadow .35s;
+}
+.cp-tl.is-on .cp-tl-dot { background: linear-gradient(135deg, var(--g-red), var(--g-orange)); border-color: transparent; box-shadow: 0 0 0 6px rgba(255,41,78,.15); }
+.cp-tl-k { font-size: .62rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; color: #FFCDBC; margin: 20px 0 8px; }
+.cp-tl-t { font-size: 1.02rem; font-weight: 700; color: #fff; letter-spacing: -.015em; }
+.cp-tl-d { font-size: .86rem; color: rgba(255,255,255,.70); line-height: 1.6; margin-top: 8px; padding-right: 6px; }
+
+/* practitioner card on the same ground */
+.cp-prac {
+  display: grid; grid-template-columns: 260px 1fr; gap: 0;
+  background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.14);
+  border-radius: 22px; overflow: hidden;
+  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  box-shadow: 0 40px 80px -34px rgba(0,0,0,.6);
+}
+.cp-prac-photo { position: relative; min-height: 340px; }
+.cp-prac-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.cp-prac-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 60%, rgba(2,16,36,.45)); }
+.cp-prac-body { padding: 38px 40px; }
+.cp-prac-name { font-size: 1.24rem; font-weight: 700; color: #fff; letter-spacing: -.02em; }
+.cp-prac-role { font-size: .86rem; color: rgba(255,255,255,.66); margin-top: 5px; }
+.cp-prac-stat {
+  display: inline-flex; align-items: center; gap: 7px; margin-top: 14px;
+  font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #FFCDBC;
+  background: rgba(255,205,188,.12); border: 1px solid rgba(255,205,188,.2); padding: 5px 12px; border-radius: 999px;
+}
+.cp-prac-bio { font-size: .93rem; color: rgba(255,255,255,.76); line-height: 1.72; margin: 20px 0 24px; }
+.cp-prac-k { font-size: .62rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; color: rgba(255,255,255,.45); margin-bottom: 11px; }
+.cp-prac-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.cp-prac-tags span {
+  font-size: .76rem; font-weight: 600; color: rgba(255,255,255,.84);
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.13);
+  padding: 6px 13px; border-radius: 999px;
+}
+
+/* ============================================================
+   TESTIMONIALS — quote-forward
+   ============================================================ */
+.cp-quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
+.cp-quote {
+  background: #fff; border: 1px solid var(--cp-line); border-radius: var(--cp-r);
+  padding: 34px 32px; display: flex; flex-direction: column; gap: 22px;
+  transition: transform .35s var(--cp-ease), box-shadow .35s var(--cp-ease);
+}
+.cp-quote:nth-child(2) { margin-top: 32px; }
+.cp-quote:hover { transform: translateY(-5px); box-shadow: var(--cp-shadow); }
+.cp-quote-mark { width: 32px; height: 32px; color: var(--cp-red); }
+.cp-quote-t { font-size: 1.02rem; line-height: 1.66; color: var(--cp-ink-2); letter-spacing: -.01em; margin: 0; flex: 1; }
+.cp-quote-f { display: flex; align-items: center; gap: 12px; padding-top: 20px; border-top: 1px solid var(--cp-line-2); }
+.cp-quote-av { width: 40px; height: 40px; border-radius: 50%; background: var(--cp-ink); color: #fff;
+  font-size: .72rem; font-weight: 800; letter-spacing: .04em; display: grid; place-items: center; flex-shrink: 0; }
+.cp-quote-n { font-size: .9rem; font-weight: 700; color: var(--cp-ink); }
+.cp-quote-r { font-size: .78rem; color: var(--cp-muted); margin-top: 2px; }
+.cp-stars { display: flex; gap: 2px; color: #F5A524; }
+
+/* ============================================================
+   ROI — comparison + payoff
+   ============================================================ */
+.cp-roi-stats { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--cp-line); border-radius: var(--cp-r); overflow: hidden; background: #fff; }
+.cp-roi-stat { padding: 36px 32px; border-right: 1px solid var(--cp-line); }
+.cp-roi-stat:last-child { border-right: 0; }
+.cp-roi-n { font-size: 2.7rem; font-weight: 800; letter-spacing: -.05em; line-height: 1; color: var(--cp-ink); font-variant-numeric: tabular-nums; }
+.cp-roi-d { font-size: .9rem; color: var(--cp-body); line-height: 1.55; margin-top: 14px; }
+.cp-roi-src {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .62rem; letter-spacing: .11em; text-transform: uppercase; color: var(--cp-faint); margin-top: 16px;
+}
+.cp-vs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
+.cp-vs-col { border-radius: var(--cp-r); padding: 34px 32px; }
+.cp-vs-us { background: var(--cp-ink); color: #fff; }
+.cp-vs-them { background: #fff; border: 1px solid var(--cp-line); }
+.cp-vs-h { font-size: .68rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; margin-bottom: 22px; }
+.cp-vs-us .cp-vs-h { color: #FFCDBC; }
+.cp-vs-them .cp-vs-h { color: var(--cp-muted); }
+.cp-vs ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 15px; }
+.cp-vs li { font-size: .91rem; line-height: 1.55; display: flex; gap: 12px; align-items: flex-start; }
+.cp-vs-us li { color: rgba(255,255,255,.86); }
+.cp-vs-them li { color: var(--cp-body); }
+.cp-vs li svg { flex-shrink: 0; margin-top: 3px; }
+
+@media (max-width: 1000px) {
+  .cp-timeline { grid-template-columns: repeat(2, 1fr); gap: 36px 20px; }
+  .cp-timeline::before { display: none; }
+  .cp-prac { grid-template-columns: 1fr; }
+  .cp-prac-photo { min-height: 260px; }
+  .cp-quotes { grid-template-columns: 1fr; }
+  .cp-quote:nth-child(2) { margin-top: 0; }
+  .cp-roi-stats { grid-template-columns: 1fr; }
+  .cp-roi-stat { border-right: 0; border-bottom: 1px solid var(--cp-line); }
+  .cp-roi-stat:last-child { border-bottom: 0; }
+  .cp-vs { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .cp-timeline { grid-template-columns: 1fr; gap: 28px; }
+  #qf_cybersecurity_container { padding: 24px 20px 22px !important; }
+  .cp-quiz-q { font-size: 1.06rem !important; }
+  .qf-opt { padding: 14px 15px 14px 46px !important; font-size: .88rem !important; }
+  .cp-prac-body { padding: 28px 24px; }
+  .cp-vs-col, .cp-roi-stat { padding: 26px 24px; }
+}
+</style>
+
+</head>
+<body class="cp">
+
+  <!-- Region Banner -->
 <div class="region-banner" id="region-banner">
   <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Now active in</span>
   <div class="regions">
@@ -98,9 +936,11 @@
     <span class="region-item">🇬🇧 United Kingdom</span>
     <span class="region-item">🇺🇸 United States</span>
     <span class="region-item">🇰🇪 Kenya</span>
-    <span class="region-item">🇬🇭 Ghana</span>
     <span class="region-item">🇿🇦 South Africa</span>
   </div>
+</div>
+
+<!-- ====== NAV ====== -->
 </div>
 <nav class="nav">
   <div class="nav-inner">
@@ -137,71 +977,83 @@
   <a href="programme.html">Programme</a>
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
-  <a href="apply.html?program_id=2" class="btn btn-primary">Apply Now</a>
   <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
+  <a href="apply.html?program_id=2" class="btn btn-primary">Apply Now</a>
 </div>
 
-<!-- ====== FIELD HERO ====== -->
-<section class="section-hero bg-dark" style="padding-top:calc(var(--nav-height) - 20px);padding-bottom:80px">
-  <div class="container">
-    <div class="field-hero-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center">
-      <div class="fade-up">
-        
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-          <span style="background:rgba(255,41,78,0.15);color:var(--red);font-size:0.75rem;font-weight:800;padding:4px 14px;border-radius:50px;letter-spacing:.08em;text-transform:uppercase">Expert Practitioner Programme</span>
-          
+<!-- ====== HERO ====== -->
+<section class="cp-hero cp-grain" id="cp-hero">
+  <div class="cp-wrap">
+    <div class="cp-hero-grid">
+
+      <div>
+        <div class="cp-pill cp-rise"><span class="cp-dot"></span>Cohort 02 · Applications open</div>
+
+        <h1 class="cp-rise">AI in<br/><span class="accent">Cybersecurity</span></h1>
+
+        <p class="cp-lead cp-rise">Attackers already use AI. Four weeks, live, to make sure defenders do it better — threat analysis, detection pipelines, and the judgement to know when a model is wrong.</p>
+
+        <div class="cp-hero-actions cp-rise">
+          <a href="apply.html?program_id=2" class="cp-btn cp-btn-white">
+            Apply now
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#quiz-field" class="cp-btn cp-btn-glass">Validate your skill level</a>
         </div>
-        <h1 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:20px">
-          AI in <span style="color:var(--red)">Cybersecurity</span>
-        </h1>
-        <p style="font-size:1.2rem;color:var(--muted);line-height:1.4;margin-bottom:32px;max-width:530px">Threats move faster than any analyst can track alone. 4 live classes on using AI to detect, investigate, and neutralise threats before they escalate.</p>
-        <!-- Price pill — visible in hero so cost is clear before scrolling -->
-        <!-- <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:24px">
-          <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,41,78,0.08);border:1px solid rgba(255,41,78,0.22);border-radius:50px;padding:8px 18px">
-            <span style="font-size:0.7rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.09em">Self-Enrolment</span>
-            <span style="width:1px;height:14px;background:rgba(255,255,255,0.12);display:inline-block"></span>
-            <span style="font-size:1.05rem;font-weight:900;color:var(--white);line-height:1">
-              <span class="currency-ngn">₦250,000</span><span class="currency-usd">$156</span><span class="currency-gbp">£122</span><span class="currency-ngn" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~$156</span><span class="currency-usd" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span><span class="currency-gbp" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span>
-            </span>
+
+        <div class="cp-hero-meta cp-rise">
+          <div><b>8</b><span>Live classes</span></div>
+          <div><b>4</b><span>Weeks, end to end</span></div>
+          <div><b>1</b><span>Security workflow you ship</span></div>
+          <div><b>Verified</b><span>Field certificate</span></div>
+        </div>
+      </div>
+
+      <div class="cp-glass-stage" aria-hidden="true">
+        <div class="cp-glass cp-glass-1" data-depth="1.3">
+          <div class="cp-glass-k">Week 02 · In session</div>
+          <div class="cp-glass-t">AI-assisted SIEM triage</div>
+          <div class="cp-glass-s">Cutting alert noise without cutting the alert that mattered.</div>
+          <div class="cp-mini-bar"><i data-fill="42"></i></div>
+          <div class="cp-glass-row" style="border-top:0;padding-top:10px;margin-top:10px">
+            <span class="cp-glass-k">Sprint progress</span>
+            <span class="cp-glass-k" style="color:#fff">42%</span>
           </div>
-          <a href="#pricing" style="font-size:0.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--muted)'">All pricing tiers   </a>
-        </div> -->
-        <div class="hero-cta-row" style="display:flex;gap:12px;flex-wrap:wrap">
-          <a href="apply.html?program_id=2" class="btn btn-primary btn-lg">Apply Now</a>
+        </div>
+
+        <div class="cp-glass cp-glass-2" data-depth="0.85">
+          <div class="cp-glass-k">Capstone artefact</div>
+          <div class="cp-glass-t">Live detection pipeline</div>
+          <div class="cp-glass-s">Automated triage, a written playbook, and the false-positive rate to prove it.</div>
+          <div class="cp-glass-row">
+            <span class="cp-glass-k">Shipped by you</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7CEFA6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+
+        <div class="cp-glass cp-glass-3" data-depth="1.1">
+          <div class="cp-glass-k">Cohort size</div>
+          <div class="cp-glass-big">Small</div>
+          <div class="cp-glass-s">Practitioner-led. Everyone gets reviewed.</div>
         </div>
       </div>
-      <div class="fade-in" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:20px;padding:36px 32px">
-        <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:16px">What AI Looks Like in Cybersecurity</div>
-        <p style="font-size:1rem;color:var(--muted);line-height:1.7">When a security team uses AI to correlate signals across millions of events, predict attack vectors before exploitation, and auto-generate containment playbooks in real time — that is AI-native security.</p>
-        <div class="hero-metrics" style="margin-top:28px;padding-top:20px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px;text-align:center">
-          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">4</div><div style="font-size:0.72rem;color:var(--muted)">Week Sprint</div></div>
-          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Live</div><div style="font-size:0.72rem;color:var(--muted)">Cohort Sessions</div></div>
-          <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Field</div><div style="font-size:0.72rem;color:var(--muted)">Verified Certificate</div></div>
-        </div>
-      </div>
+
     </div>
   </div>
 </section>
 
-<!-- ====== COHORT INFO BAR ====== -->
-<div style="background:#0D1C34;border-bottom:1px solid #1A3050">
-  <div class="container">
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0">
-      <!-- <div style="padding:20px 24px;border-right:1px solid #1A3050">
-        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Application Closes</div>
-        <div style="font-size:1rem;font-weight:800;color:#fff">June 5, 2026</div>
-      </div> -->
-      <div style="padding:20px 24px;border-right:1px solid #1A3050">
-        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Programme Duration</div>
-        <div style="font-size:1rem;font-weight:800;color:#fff">4 Weeks</div>
-      </div>
-      <div style="padding:20px 24px">
-        <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Learning Format</div>
-        <div style="font-size:1rem;font-weight:800;color:#fff">Live, Online</div>
-      </div>
-    </div>
+<!-- ====== FACT RAIL ====== -->
+<div class="cp-facts">
+  <div class="cp-wrap">
+    <dl class="cp-facts-in">
+      <div class="cp-fact"><dt>Duration</dt><dd>4 weeks</dd></div>
+      <div class="cp-fact"><dt>Format</dt><dd>Live, online</dd></div>
+      <div class="cp-fact"><dt>Timezone</dt><dd>Africa / Lagos</dd></div>
+      <div class="cp-fact"><dt>Outcome</dt><dd>Expert Practitioner Certificate</dd></div>
+    </dl>
   </div>
 </div>
+
 
 <!-- ====== VALIDATE YOUR SKILL LEVEL (QUIZ) ====== -->
 <section id="quiz-field" class="section-pad" style="background:var(--bg-dark)">
@@ -319,500 +1171,360 @@
   </div>
 </section>
 
+<!-- ====== WHAT YOU'LL LEARN ====== -->
+<section class="cp-sec">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">01</span><span class="t">What you'll walk away with</span></div>
+
+    <div class="cp-head cp-mb cp-rise">
+      <h2 class="cp-h2" data-lines>Six things you'll own<br/>by the final week</h2>
+      <p class="cp-lead cp-gradbar">Not topics you sat through — artefacts and habits you can show a hiring manager or apply to Monday's sprint.</p>
+    </div>
+
+    <div class="cp-out" data-stagger>
+      <div class="cp-out-item">
+        <div class="cp-out-n">01</div>
+        <div class="cp-out-t">A prompting system for threat work</div>
+        <p class="cp-out-d">Structure that gets usable intelligence out of a model instead of confident-sounding noise you then have to disprove.</p>
+      </div>
+      <div class="cp-out-item">
+        <div class="cp-out-n">02</div>
+        <div class="cp-out-t">A triage playbook you can defend</div>
+        <p class="cp-out-d">How to put AI in front of your alert queue without letting it quietly close the one incident that mattered.</p>
+      </div>
+      <div class="cp-out-item">
+        <div class="cp-out-n">03</div>
+        <div class="cp-out-t">A working detection pipeline</div>
+        <p class="cp-out-d">Built, tuned, and measured — with the false-positive rate written down and defended in front of your cohort.</p>
+      </div>
+      <div class="cp-out-item">
+        <div class="cp-out-n">04</div>
+        <div class="cp-out-t">A red-team mental model</div>
+        <p class="cp-out-d">What AI makes cheap for an attacker: phishing at scale, recon, and payloads that read as ordinary traffic.</p>
+      </div>
+      <div class="cp-out-item">
+        <div class="cp-out-n">05</div>
+        <div class="cp-out-t">A policy for AI in the SOC</div>
+        <p class="cp-out-d">What never goes into a model — client data, live IOCs, credentials — and how to stay inside that line under pressure.</p>
+      </div>
+      <div class="cp-out-item">
+        <div class="cp-out-n">06</div>
+        <div class="cp-out-t">A 30-day hardening plan</div>
+        <p class="cp-out-d">The three changes worth making at your own organisation first, written for your stack, not a generic checklist.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ====== CURRICULUM ====== -->
-<style>
-  .curr-wrapper { max-width: 800px; margin: 0 auto; }
-  .curr-control-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #E8E3DE; }
-  .curr-control-label { font-size: 0.82rem; font-weight: 800; color: #021024; text-transform: uppercase; letter-spacing: .08em; }
-  .curr-expand-all { font-size: 0.85rem; font-weight: 700; color: #FF294E; background: none; border: none; cursor: pointer; padding: 0; }
-  .curr-expand-all:hover { text-decoration: underline; }
-  .curr-item { border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 8px; overflow: hidden; background: #fff; }
-  .curr-item summary { padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; list-style: none; cursor: pointer; background: #fff; }
-  .curr-item summary::-webkit-details-marker { display: none; }
-  .curr-item summary:focus { outline: none; }
-  .curr-item-title { display: flex; align-items: center; gap: 12px; }
-  .curr-item-num { font-size: 0.75rem; font-weight: 800; color: #FF294E; white-space: nowrap; flex-shrink: 0; }
-  .curr-item-name { font-size: 0.93rem; font-weight: 700; color: #021024; line-height: 1.3; }
-  .curr-chevron { flex-shrink: 0; color: #9CA3AF; transition: transform 0.2s ease; }
-  .curr-item[open] .curr-chevron { transform: rotate(180deg); }
-  .curr-item-body { padding: 0 20px 16px; border-top: 1px solid #F3F4F6; }
-  .curr-item-body ul { list-style: none; padding: 0; margin: 0; }
-  .curr-item-body li { font-size: 0.87rem; color: #4A5568; padding: 7px 0; display: flex; gap: 12px; align-items: flex-start; line-height: 1.55; }
-  .curr-item-body li::before { content: '—'; color: #9CA3AF; flex-shrink: 0; font-weight: 600; margin-top: 1px; }
-</style>
-<section class="section-pad bg-white">
-  <div class="container">
-    <div class="curr-wrapper fade-up">
-      <div class="eyebrow-tag" style="color:var(--red)">Programme Curriculum</div>
-      <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:10px">4 Weeks. Full AI Security Lifecycle.</h2>
-      <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:28px">Every week builds on the last — from foundations through to a deployed, practitioner-assessed capstone project.</p>
+<section class="cp-sec cp-surface" id="curriculum">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">02</span><span class="t">Curriculum · 8 classes over 4 weeks</span></div>
 
-      <div class="curr-control-bar">
-        <span class="curr-control-label">Content · 4 weeks</span>
-        <button class="curr-expand-all" onclick="bxCurrToggleAll(this)">Expand all</button>
-      </div>
-
-      <details class="curr-item" open>
-        <summary>
-          <span class="curr-item-title"><span class="curr-item-num">Week 1</span><span class="curr-item-name">AI Foundations for Security</span></span>
-          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="curr-item-body"><ul>
-          <li>How LLMs and AI systems operate in security contexts</li>
-          <li>Prompt engineering for threat analysis and intelligence gathering</li>
-          <li>AI-driven threat intelligence platform overview</li>
-          <li>Data security implications of using AI in SOC environments</li>
-        </ul></div>
-      </details>
-
-      <details class="curr-item">
-        <summary>
-          <span class="curr-item-title"><span class="curr-item-num">Week 2</span><span class="curr-item-name">AI-Augmented Attack &amp; Defence</span></span>
-          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="curr-item-body"><ul>
-          <li>AI-assisted penetration testing and SIEM triage</li>
-          <li>Automated vulnerability scanning and incident detection</li>
-          <li>Ethical hacking exercises using AI recon tools</li>
-          <li>Building automated detection pipelines from scratch</li>
-        </ul></div>
-      </details>
-
-      <details class="curr-item">
-        <summary>
-          <span class="curr-item-title"><span class="curr-item-num">Week 3</span><span class="curr-item-name">Operational AI Security Toolkit</span></span>
-          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="curr-item-body"><ul>
-          <li>Designing AI-integrated incident response playbooks</li>
-          <li>Compliance automation dashboards using AI</li>
-          <li>Custom threat detection model prototyping</li>
-          <li>GRC workflow automation with AI assistance</li>
-        </ul></div>
-      </details>
-
-      <details class="curr-item">
-        <summary>
-          <span class="curr-item-title"><span class="curr-item-num">Week 4</span><span class="curr-item-name">Capstone &amp; Certification</span></span>
-          <svg class="curr-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="curr-item-body"><ul>
-          <li>Capstone: build a live AI-powered security workflow</li>
-          <li>Peer assessment and expert practitioner review</li>
-          <li>Portfolio artefact presentation</li>
-          <li>Brixgate Expert Practitioner Certificate — Cybersecurity</li>
-        </ul></div>
-      </details>
-
+    <div class="cp-head cp-mb cp-rise">
+      <h2 class="cp-h2" data-lines>Four weeks.<br/>One lifecycle.</h2>
+      <p class="cp-lead">Each week closes a loop — you finish with something that runs, not notes you'll never reopen.</p>
     </div>
-  </div>
-</section>
-<script>
-function bxCurrToggleAll(btn) {
-  var section = btn.closest('.curr-wrapper');
-  var items   = section.querySelectorAll('.curr-item');
-  var anyOpen = Array.from(items).some(function(d) { return d.hasAttribute('open'); });
-  items.forEach(function(d) { anyOpen ? d.removeAttribute('open') : d.setAttribute('open', ''); });
-  btn.textContent = anyOpen ? 'Expand all' : 'Collapse all';
-}
-</script>
 
-<!-- ====== TOOLS USED ====== -->
-<section class="section-pad bg-white">
-  <div class="container">
-    <div class="fade-up">
-      <div class="eyebrow-tag" style="color:var(--red)">Tools &amp; Platforms</div>
-      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px">Over 13+ AI Tools Used in This Sprint</h2>
-      <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px">You will work hands-on with the tools that practitioners actually use in Cybersecurity. Real stacks, not toy environments.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:10px"><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Splunk</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Metasploit</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Burp Suite</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Ollama</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">ChatGPT</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">CrowdStrike</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Darktrace</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">IBM Security</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">ElasticSecurity</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">AI Threat Intel</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">IR Playbooks</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">GRC Automation</div><div style="padding:10px 16px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2E3A4A;white-space:nowrap">Pakalto Networks</div></div>
+    <div class="cp-weeks">
+      <article class="cp-week cp-rise">
+        <div class="cp-week-side">
+          <span class="cp-week-tag">Week 01</span>
+          <div class="cp-week-big">01</div>
+          <div class="cp-week-sub">Classes 1–2</div>
+        </div>
+        <div>
+          <h3 class="cp-week-t">Foundations, and where AI actually helps in security</h3>
+          <p class="cp-week-d">How these systems behave in a security context, what they are reliably good at, and the data you must never hand them. Ends with prompting that produces intelligence you can act on.</p>
+          <ul class="cp-week-list">
+            <li>How LLMs behave in security contexts</li>
+            <li>Prompting for threat analysis and intel</li>
+            <li>AI-driven threat intelligence platforms</li>
+            <li>Data-security limits of AI in a SOC</li>
+            <li>What to never put in a prompt</li>
+            <li>Reading model output like an analyst</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="cp-week cp-rise">
+        <div class="cp-week-side">
+          <span class="cp-week-tag">Week 02</span>
+          <div class="cp-week-big">02</div>
+          <div class="cp-week-sub">Classes 3–4</div>
+        </div>
+        <div>
+          <h3 class="cp-week-t">Attack and defence, both sides of the same tooling</h3>
+          <p class="cp-week-d">The week the threat model changes. You use the same AI tooling an attacker would, then build the detection that catches it.</p>
+          <ul class="cp-week-list">
+            <li>AI-assisted penetration testing</li>
+            <li>SIEM triage and alert-noise reduction</li>
+            <li>Automated vulnerability scanning</li>
+            <li>Ethical recon with AI tooling</li>
+            <li>Building a detection pipeline</li>
+            <li>Phishing and social engineering at scale</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="cp-week cp-rise">
+        <div class="cp-week-side">
+          <span class="cp-week-tag">Week 03</span>
+          <div class="cp-week-big">03</div>
+          <div class="cp-week-sub">Classes 5–6</div>
+        </div>
+        <div>
+          <h3 class="cp-week-t">Operational toolkit: response, compliance, governance</h3>
+          <p class="cp-week-d">Moving from experiments to things that survive an audit and a 3am incident. Playbooks, automation, and the paper trail that makes them defensible.</p>
+          <ul class="cp-week-list">
+            <li>AI-integrated incident response playbooks</li>
+            <li>Compliance automation dashboards</li>
+            <li>Custom detection model prototyping</li>
+            <li>GRC workflow automation</li>
+            <li>Evidence and audit trails</li>
+            <li>When automation must hand back to a human</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="cp-week cp-rise">
+        <div class="cp-week-side">
+          <span class="cp-week-tag">Week 04</span>
+          <div class="cp-week-big">04</div>
+          <div class="cp-week-sub">Classes 7–8</div>
+        </div>
+        <div>
+          <h3 class="cp-week-t">Capstone build and live defence</h3>
+          <p class="cp-week-d">You ship a working AI-powered security workflow and then justify every decision to a practitioner and your peers. Anyone can wire up a model — few can defend the thresholds they set.</p>
+          <ul class="cp-week-list">
+            <li>Build a live AI security workflow</li>
+            <li>Tune and measure false positives</li>
+            <li>Write the operating playbook</li>
+            <li>Peer assessment round</li>
+            <li>Live defence to your cohort</li>
+            <li>Expert Practitioner Certificate</li>
+          </ul>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ====== PROGRAMME COHORTS ====== -->
-<section class="section-pad bg-white">
-  <div class="container">
-    <div class="fade-up">
-      <div class="eyebrow-tag" style="color:var(--red)">Programme Cohorts</div>
-      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px">Open Cohorts</h2>
-      <p style="font-size:0.88rem;color:#4A5568;margin-bottom:28px">Cohort-based delivery means you learn alongside peers in your field and leave with a network, not just a certificate.</p>
-      <div id="cohort-cards-container" style="display:flex;flex-wrap:wrap;gap:20px">
-        <!-- cohort cards rendered by JS -->
+<!-- ====== HOW IT WORKS ====== -->
+<section class="cp-sec">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">03</span><span class="t">How it works</span></div>
+
+    <div class="cp-head cp-mb cp-rise">
+      <h2 class="cp-h2" data-lines>Live, small,<br/>and hands on the keyboard</h2>
+      <p class="cp-lead">No pre-recorded playlist. You show up, you build, and someone who has done it reviews what you made.</p>
+    </div>
+
+    <div>
+      <div class="cp-step cp-rise">
+        <div>
+          <div class="cp-step-n">STEP 01</div>
+          <h3 class="cp-step-t">Live sessions with a practitioner</h3>
+          <p class="cp-step-d">Small cohorts, taught live by someone who has run detection in production. You can interrupt and argue — that is the point of it being live.</p>
+        </div>
+        <div class="cp-step-media"><img src="assets/course/cyber/present.jpg" alt="Practitioner leading a live Brixgate security session" loading="lazy" /></div>
+      </div>
+
+      <div class="cp-step cp-rise">
+        <div>
+          <div class="cp-step-n">STEP 02</div>
+          <h3 class="cp-step-t">Work real incidents, not toy labs</h3>
+          <p class="cp-step-d">Every class ends with something to build before the next one, against scenarios that behave like the messy alerts you actually get.</p>
+        </div>
+        <div class="cp-step-media"><img src="assets/course/cyber/soc.jpg" alt="Security analyst working in a SOC" loading="lazy" /></div>
+      </div>
+
+      <div class="cp-step cp-rise">
+        <div>
+          <div class="cp-step-n">STEP 03</div>
+          <h3 class="cp-step-t">Get reviewed by peers and a practitioner</h3>
+          <p class="cp-step-d">Your detection logic gets read by people defending similar estates. Reviewing someone else's thresholds teaches as much as setting your own.</p>
+        </div>
+        <div class="cp-step-media"><img src="assets/course/cyber/review.jpg" alt="Two engineers reviewing a threat dashboard" loading="lazy" /></div>
+      </div>
+
+      <div class="cp-step cp-rise">
+        <div>
+          <div class="cp-step-n">STEP 04</div>
+          <h3 class="cp-step-t">Defend it, then take the certificate</h3>
+          <p class="cp-step-d">A live capstone defence in front of your cohort, then a field-verified Expert Practitioner Certificate any employer can check.</p>
+        </div>
+        <div class="cp-step-media"><img src="assets/course/cyber/hands.jpg" alt="Hands working at a laptop with network diagrams" loading="lazy" /></div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ====== TOOLS ====== -->
+<section class="cp-sec cp-surface">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">04</span><span class="t">Tools &amp; platforms</span></div>
 
-<!-- ====== WHO IS THIS FOR ====== -->
-<section class="section-pad bg-white">
-  <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start" class="fade-up">
-      <div>
-        <div class="eyebrow-tag" style="color:var(--red)">Who Is This For</div>
-        <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark);margin-bottom:8px">Built for Cybersecurity Professionals</h2>
-        <p style="font-size:0.88rem;color:#4A5568;line-height:1.7;margin-bottom:28px">This programme is for practitioners, not beginners. If you are already working in Cybersecurity and ready to operate at the level AI makes possible, this sprint is for you.</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div style="padding:14px 20px;background:#EFF6FF;border-radius:10px;font-size:0.88rem;font-weight:700;color:#1D4ED8">Security Analyst</div><div style="padding:14px 20px;background:#FFF7ED;border-radius:10px;font-size:0.88rem;font-weight:700;color:#C2410C">SOC Engineer</div><div style="padding:14px 20px;background:#F0FFF4;border-radius:10px;font-size:0.88rem;font-weight:700;color:#15803D">Penetration Tester</div><div style="padding:14px 20px;background:#FDF4FF;border-radius:10px;font-size:0.88rem;font-weight:700;color:#7E22CE">Incident Responder</div><div style="padding:14px 20px;background:#FFF1F2;border-radius:10px;font-size:0.88rem;font-weight:700;color:#BE123C">Cloud Security Engineer</div><div style="padding:14px 20px;background:#FFFBEB;border-radius:10px;font-size:0.88rem;font-weight:700;color:#B45309">GRC Professional</div></div>
+    <div class="cp-head center cp-mb cp-rise" style="max-width:640px">
+      <h2 class="cp-h2">The stack you'll actually work in</h2>
+      <p class="cp-lead">Model-agnostic by design. You learn to choose, not to depend.</p>
+    </div>
+
+    <div class="cp-tools" data-stagger>
+      <div class="cp-tool"><img src="assets/logos/claude.svg" alt="Claude" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/openai.svg" alt="OpenAI" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/gemini.svg" alt="Gemini" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/copilot.svg" alt="GitHub Copilot" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/cursor.svg" alt="Cursor" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/perplexity.svg" alt="Perplexity" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/n8n.svg" alt="n8n" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/notion.svg" alt="Notion" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/midjourney.svg" alt="Midjourney" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/deepseek.svg" alt="DeepSeek" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/mistral.svg" alt="Mistral" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/ollama.svg" alt="Ollama" loading="lazy" /></div>
+      <div class="cp-tool"><img src="assets/logos/langchain.svg" alt="LangChain" loading="lazy" /></div>
+      <div class="cp-tool" style="border-style:dashed"><span style="font-size:.82rem;font-weight:700;color:var(--cp-muted);text-align:center;line-height:1.4">Your own<br/>stack</span></div>
+    </div>
+
+    <p class="cp-tools-note cp-rise">Tools our practitioners build with. Brixgate is not affiliated with these companies.</p>
+  </div>
+</section>
+
+<!-- ====== WHO IT'S FOR ====== -->
+<section class="cp-sec">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">05</span><span class="t">Fit check</span></div>
+
+    <div class="cp-head cp-mb cp-rise">
+      <h2 class="cp-h2" data-lines>Worth being honest<br/>about who this suits</h2>
+      <p class="cp-lead">We'd rather you self-select out now than sit through four weeks that weren't built for you.</p>
+    </div>
+
+    <div class="cp-fit" data-stagger>
+      <div class="cp-fit-col cp-fit-yes">
+        <div class="cp-fit-h">
+          <span class="cp-fit-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span>This is for you if…</span>
+        </div>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You <b>work in security already</b> — SOC, blue team, GRC, or infrastructure with security on your plate.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You have <b>at least a year</b> of hands-on professional experience.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You've tried AI tools for security work and suspect you're <b>using them shallowly</b>.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You want to <b>cut alert noise</b> without losing the alert that mattered.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You're comfortable having your detection logic <b>reviewed in front of peers</b>.</span></li>
+        </ul>
       </div>
-      <div>
-        <div style="font-size:0.75rem;font-weight:800;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px">Eligibility Criteria</div>
-        <ul style="list-style:none;padding:0;margin:0 0 28px"><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Working cybersecurity professional with 1+ years in the field</li><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Interest in applying AI to real security operations</li><li style="font-size:0.88rem;color:#4A5568;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #E8E3DE"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Problem-solving mindset and readiness for hands-on work</li></ul>
-        <a href="apply.html?program_id=2" class="btn btn-primary btn-lg" style="display:inline-flex">Apply Now</a>
+
+      <div class="cp-fit-col cp-fit-no">
+        <div class="cp-fit-h">
+          <span class="cp-fit-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+          <span>This isn't for you if…</span>
+        </div>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You're <b>new to security</b> — get grounding in fundamentals first.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You want a <b>passive, watch-at-2x</b> course. Nothing here is pre-recorded.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You're looking for an <b>offensive-security certification</b>. This is not an OSCP substitute.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You already <b>build detection models full time</b> — this will be too foundational.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF294E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You can't spare <b>a few hours a week</b> for four weeks.</span></li>
+        </ul>
       </div>
+    </div>
+
+    <div class="cp-rise" style="margin-top:44px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+      <span style="font-size:.92rem;color:var(--cp-body)">Not sure where you land?</span>
+      <a href="#quiz-field" class="cp-btn cp-btn-ghost" style="height:44px;font-size:.88rem">Take the 90-second check</a>
     </div>
   </div>
 </section>
 
-<!-- ====== BEGINNER SECTION 1 ====== -->
-<section class="section-pad" style="background:#F6F4F2">
-  <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center" class="fade-up bx-beginner-grid">
-      <div>
-        <div class="eyebrow-tag" style="color:var(--red)">New to Cybersecurity?</div>
-        <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.2;margin-bottom:16px">You Don't Need Experience.<br/>You Need the Right Start.</h2>
-        <p style="font-size:0.95rem;color:#4A5568;line-height:1.75;margin-bottom:12px">Breaking into cybersecurity doesn't require a degree or years of IT background. What it requires is structure, mentorship, and hands-on exposure to real security workflows — and that's exactly what this track delivers.</p>
-        <p style="font-size:0.95rem;color:#4A5568;line-height:1.75;margin-bottom:28px">Our beginner track takes you from zero familiarity to a foundational understanding of threat landscapes, security tools, and AI-augmented defence — in just 4 weeks.</p>
-        <a href="apply.html?program_id=2" class="btn btn-primary btn-lg">Apply as a Beginner</a>
-      </div>
-      <div style="border-radius:16px;overflow:hidden;aspect-ratio:4/3">
-        <img src="assets/AI READINESS TEMPLATE BEGINNER (1).png" alt="Beginner cybersecurity learner" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy" />
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ====== AI IN THIS FIELD: SKILLS ====== -->
-<section class="section-pad bg-white" style="display:none">
+<section class="cp-sec" style="display:none">
   <div class="container">
     <div style="text-align:center;margin-bottom:48px" class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">What You Will Master</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:var(--bg-dark)">The Three AI Skills That Will Define<br />Your Edge in Cybersecurity</h2>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:var(--bg-dark)">The Three AI Skills That Define<br />an AI-Native Software Engineer</h2>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
-      
-          <div class="card fade-up" style="padding:32px 28px">
-            <div style="font-size:2.4rem;margin-bottom:16px">🛡️</div>
-            <h3 style="font-size:1.05rem;font-weight:800;color:var(--bg-dark);margin-bottom:10px">AI-Powered Threat Detection</h3>
-            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Apply AI to identify anomalous behaviour, correlate threat signals, and surface high-priority incidents from noise.</p>
-          </div>
-          <div class="card fade-up" style="padding:32px 28px">
-            <div style="font-size:2.4rem;margin-bottom:16px">🔍</div>
-            <h3 style="font-size:1.05rem;font-weight:800;color:var(--bg-dark);margin-bottom:10px">Vulnerability Intelligence</h3>
-            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Use AI to accelerate vulnerability assessment, prioritise remediation, and stay ahead of emerging CVEs.</p>
-          </div>
-          <div class="card fade-up" style="padding:32px 28px">
-            <div style="font-size:2.4rem;margin-bottom:16px">⚡</div>
-            <h3 style="font-size:1.05rem;font-weight:800;color:var(--bg-dark);margin-bottom:10px">Automated Incident Response</h3>
-            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Build AI-assisted playbooks that accelerate containment, forensics, and post-incident reporting.</p>
-          </div>
-    </div>
-  </div>
-</section>
-
-<!-- ====== HOW THE SPRINT WORKS ====== -->
-<section class="section-pad bg-dark">
-  <div class="container">
-    <div style="text-align:center;margin-bottom:48px" class="fade-up">
-      <div class="eyebrow-tag">The Sprint</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900">How the Cybersecurity<br />Sprint Works</h2>
-    </div>
-    <div class="sprint-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
-      <div class="card fade-up" style="padding:28px 24px">
-        <div style="font-size:1.8rem;margin-bottom:12px">🎯</div>
-        <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px">Week 0</div>
-        <h3 style="font-size:0.95rem;font-weight:800;color:var(--white);margin-bottom:8px">Field Assessment</h3>
-        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55">Map your current AI maturity and identify the highest-leverage skills for your specific role in Cybersecurity.</p>
+      <div class="card fade-up" style="padding:32px 28px">
+        <div style="width:48px;height:48px;background:rgba(255,41,78,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3 style="font-size:1.05rem;font-weight:800;color:var(--bg-dark);margin-bottom:10px">Structured Prompt Engineering</h3>
+        <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Write prompts that produce accurate, maintainable, production-ready code — not one-shot outputs that need rewriting.</p>
       </div>
-      <div class="card fade-up" style="padding:28px 24px">
-        <div style="font-size:1.8rem;margin-bottom:12px">👥</div>
-        <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px">Week 1</div>
-        <h3 style="font-size:0.95rem;font-weight:800;color:var(--white);margin-bottom:8px">Placed in Your Cohort</h3>
-        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55">You join a small, curated cohort of Cybersecurity professionals — led by a verified Expert Practitioner who has deployed AI in your exact domain.</p>
+      <div class="card fade-up" style="padding:32px 28px">
+        <div style="width:48px;height:48px;background:rgba(255,41,78,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 style="font-size:1.05rem;font-weight:800;color:var(--bg-dark);margin-bottom:10px">Critical AI Code Review</h3>
+        <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Review AI-generated code for security vulnerabilities, hidden coupling, and false coverage — before it reaches production.</p>
       </div>
-      <div class="card fade-up" style="padding:28px 24px">
-        <div style="font-size:1.8rem;margin-bottom:12px">🚀</div>
-        <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px">Weeks 2–4</div>
-        <h3 style="font-size:0.95rem;font-weight:800;color:var(--white);margin-bottom:8px">Structured Sprint</h3>
-        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55">Live sessions, applied projects, and peer accountability. Every session builds directly on your Cybersecurity context — not generic AI theory.</p>
-      </div>
-      <div class="card fade-up" style="padding:28px 24px">
-        <div style="font-size:1.8rem;margin-bottom:12px">🏆</div>
-        <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px">End of Sprint</div>
-        <h3 style="font-size:0.95rem;font-weight:800;color:var(--white);margin-bottom:8px">Certification</h3>
-        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55">Receive your Brixgate Expert Practitioner Certificate — field-verified, practitioner-assessed, and employer-ready in Cybersecurity.</p>
+      <div class="card fade-up" style="padding:32px 28px">
+        <div style="width:48px;height:48px;background:rgba(255,41,78,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h3 style="font-size:1.05rem;font-weight:800;color:var(--bg-dark);margin-bottom:10px">Personal AI Workflow Design</h3>
+        <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Build repeatable, high-leverage AI workflows — across your IDE, CI/CD, and documentation pipeline — that compound over time.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ====== HOW THE SPRINT WORKS - NEW SCROLL ANIMATION (hidden) ====== -->
-<style>
-  #sprint-scroll-outer { position: relative; }
-  #sprint-sticky {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow: hidden;
-    background: #F6F4F2;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .sprint-inner {
-    max-width: 1160px;
-    margin: 0 auto;
-    padding: 0 40px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  .sprint-header {
-    text-align: center;
-    margin-bottom: 36px;
-  }
-  .sprint-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-  .sprint-detail-area {
-    position: relative;
-    min-height: 260px;
-  }
-  .sprint-panel {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.45s ease, transform 0.45s ease;
-    pointer-events: none;
-  }
-  .sprint-panel.sp-active {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-  .sprint-pills {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .sprint-pill {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 18px 22px;
-    border-radius: 12px;
-    border: 1.5px solid #E8E3DE;
-    transition: border-color 0.35s ease, background 0.35s ease;
-  }
-  .sprint-pill.sp-active {
-    border-color: #FF294E;
-    background: rgba(255,41,78,0.07);
-  }
-  .sprint-pill-week {
-    font-size: 0.7rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: .1em;
-    color: #FF294E;
-    white-space: nowrap;
-    flex-shrink: 0;
-    min-width: 64px;
-  }
-  .sprint-pill-name {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #021024;
-    line-height: 1.3;
-  }
-  .sprint-progress-track {
-    width: 100%;
-    height: 2px;
-    background: #E8E3DE;
-    border-radius: 2px;
-    margin-bottom: 36px;
-    overflow: hidden;
-  }
-  .sprint-progress-fill {
-    height: 100%;
-    background: #FF294E;
-    border-radius: 2px;
-    transition: width 0.35s ease;
-    width: 25%;
-  }
-  @media (max-width: 768px) {
-    #sprint-scroll-outer { height: auto !important; }
-    #sprint-sticky { position: relative; height: auto; padding: 60px 0; }
-    .sprint-inner { padding: 0 20px; }
-    .sprint-content { grid-template-columns: 1fr; gap: 36px; }
-    .sprint-detail-area { min-height: 0; position: relative; }
-    .sprint-panel { position: relative; inset: auto; opacity: 0; transform: none; display: none; transition: none; }
-    .sprint-panel.sp-active { opacity: 1; display: block; }
-    .sprint-pills { flex-direction: row; flex-wrap: wrap; gap: 10px; }
-    .sprint-pill { flex: 1 1 calc(50% - 5px); min-width: 140px; }
-  }
-</style>
-<div id="sprint-scroll-outer" style="height:450vh;display:none">
-  <div id="sprint-sticky">
-    <div class="sprint-inner">
-      <div class="sprint-header">
-        <div class="eyebrow-tag" style="color:var(--red)">The Sprint</div>
-        <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:#021024;margin-bottom:0">How the Cybersecurity<br/>Sprint Works</h2>
+<!-- ====== SPRINT + PRACTITIONER (one ground) ====== -->
+<section class="cp-chapter cp-grain">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">09</span><span class="t">The sprint &amp; your practitioner</span></div>
+
+    <div class="cp-head cp-mb cp-rise">
+      <h2 class="cp-h2" data-lines>From assessment<br/>to certificate</h2>
+      <p class="cp-lead">Four moves, one practitioner, no filler in between.</p>
+    </div>
+
+    <div class="cp-timeline" data-tl>
+      <div class="cp-tl">
+        <div class="cp-tl-dot"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg></div>
+        <div class="cp-tl-k">Week 0</div>
+        <div class="cp-tl-t">Field assessment</div>
+        <p class="cp-tl-d">We map where you actually are so the sprint starts at the right altitude, not at the beginning of a syllabus.</p>
       </div>
-      <div class="sprint-progress-track">
-        <div class="sprint-progress-fill" id="sprint-progress-fill"></div>
+      <div class="cp-tl">
+        <div class="cp-tl-dot"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+        <div class="cp-tl-k">Week 1</div>
+        <div class="cp-tl-t">Placed in a cohort</div>
+        <p class="cp-tl-d">A small group of engineers with the same problems, led by a practitioner who has shipped AI-assisted code in production.</p>
       </div>
-      <div class="sprint-content">
-
-        <!-- LEFT: Detail panels -->
-        <div class="sprint-detail-area">
-
-          <div class="sprint-panel sp-active" data-sprint-panel="0">
-            <div style="font-size:2.4rem;margin-bottom:16px">🎯</div>
-            <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#FF294E;margin-bottom:10px">Week 0</div>
-            <h3 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:#021024;margin-bottom:14px;line-height:1.2">Field Assessment</h3>
-            <p style="font-size:0.93rem;color:#4A5568;line-height:1.75">Map your current AI maturity and identify the highest-leverage skills for your specific role in Cybersecurity. Before you sprint, you know exactly where you stand.</p>
-          </div>
-
-          <div class="sprint-panel" data-sprint-panel="1">
-            <div style="font-size:2.4rem;margin-bottom:16px">👥</div>
-            <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#FF294E;margin-bottom:10px">Week 1</div>
-            <h3 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:#021024;margin-bottom:14px;line-height:1.2">Placed in Your Cohort</h3>
-            <p style="font-size:0.93rem;color:#4A5568;line-height:1.75">You join a small, curated cohort of Cybersecurity professionals — led by a verified Expert Practitioner who has deployed AI in your exact domain.</p>
-          </div>
-
-          <div class="sprint-panel" data-sprint-panel="2">
-            <div style="font-size:2.4rem;margin-bottom:16px">🚀</div>
-            <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#FF294E;margin-bottom:10px">Weeks 2–4</div>
-            <h3 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:#021024;margin-bottom:14px;line-height:1.2">Structured Sprint</h3>
-            <p style="font-size:0.93rem;color:#4A5568;line-height:1.75">Live sessions, applied projects, and peer accountability. Every session builds directly on your Cybersecurity context — not generic AI theory.</p>
-          </div>
-
-          <div class="sprint-panel" data-sprint-panel="3">
-            <div style="font-size:2.4rem;margin-bottom:16px">🏆</div>
-            <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#FF294E;margin-bottom:10px">End of Sprint</div>
-            <h3 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:#021024;margin-bottom:14px;line-height:1.2">Certification</h3>
-            <p style="font-size:0.93rem;color:#4A5568;line-height:1.75">Receive your Brixgate Expert Practitioner Certificate — field-verified, practitioner-assessed, and employer-ready in Cybersecurity.</p>
-          </div>
-
-        </div>
-
-        <!-- RIGHT: Pill stack -->
-        <div class="sprint-pills">
-          <div class="sprint-pill sp-active" data-sprint-step="0">
-            <span class="sprint-pill-week">Week 0</span>
-            <span class="sprint-pill-name">Field Assessment &amp; Basics</span>
-          </div>
-          <div class="sprint-pill" data-sprint-step="1">
-            <span class="sprint-pill-week">Week 1</span>
-            <span class="sprint-pill-name">Placed in Your Cohort</span>
-          </div>
-          <div class="sprint-pill" data-sprint-step="2">
-            <span class="sprint-pill-week">Weeks 2–4</span>
-            <span class="sprint-pill-name">Structured Sprint</span>
-          </div>
-          <div class="sprint-pill" data-sprint-step="3">
-            <span class="sprint-pill-week">End of Sprint</span>
-            <span class="sprint-pill-name">Certification</span>
-          </div>
-        </div>
-
+      <div class="cp-tl">
+        <div class="cp-tl-dot"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <div class="cp-tl-k">Weeks 2–4</div>
+        <div class="cp-tl-t">Build every week</div>
+        <p class="cp-tl-d">Live sessions and something to ship between each one. Reviewed by peers and the practitioner, not auto-graded.</p>
+      </div>
+      <div class="cp-tl">
+        <div class="cp-tl-dot"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="cp-tl-k">End of sprint</div>
+        <div class="cp-tl-t">Defend &amp; certify</div>
+        <p class="cp-tl-d">Live capstone defence, then a field-verified certificate any employer can check.</p>
       </div>
     </div>
-  </div>
-</div>
-<script>
-(function () {
-  var outer   = document.getElementById('sprint-scroll-outer');
-  var fill    = document.getElementById('sprint-progress-fill');
-  var pills   = Array.from(document.querySelectorAll('[data-sprint-step]'));
-  var panels  = Array.from(document.querySelectorAll('[data-sprint-panel]'));
-  var steps   = pills.length;
-  var current = -1;
 
-  function setStep(idx) {
-    if (idx === current) return;
-    current = idx;
-    pills.forEach(function (p, i)  { p.classList.toggle('sp-active', i === idx); });
-    panels.forEach(function (p, i) { p.classList.toggle('sp-active', i === idx); });
-    if (fill) fill.style.width = ((idx + 1) / steps * 100) + '%';
-  }
+    <div style="margin-top:88px" class="cp-rise">
+      <div class="cp-label" style="margin-bottom:36px"><span class="n">·</span><span class="t">Who's teaching it</span></div>
 
-  function onScroll() {
-    if (!outer) return;
-    var rect      = outer.getBoundingClientRect();
-    var outerH    = outer.offsetHeight;
-    var vh        = window.innerHeight;
-    var scrolledIn = -rect.top;
-    var totalRange = outerH - vh;
-
-    if (scrolledIn <= 0)           { setStep(0); return; }
-    if (scrolledIn >= totalRange)  { setStep(steps - 1); return; }
-
-    var progress = scrolledIn / totalRange;
-    var step = Math.min(Math.floor(progress * steps), steps - 1);
-    setStep(step);
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-}());
-</script>
-
-<!-- ====== WHAT YOU WILL BUILD ====== -->
-<section class="section-pad bg-white" style="display:none">
-  <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center" class="fade-up">
-      <div>
-        <div class="eyebrow-tag" style="color:var(--red)">Real Deliverables</div>
-        <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:20px">By the End of the Sprint, You Will Have Built Real Things.</h2>
-        <p style="font-size:0.95rem;color:#4A5568;line-height:1.7;margin-bottom:28px">Not slide decks. Not theory. Applied tools, workflows, and frameworks that immediately improve how you work in Cybersecurity.</p>
-        <a href="apply.html?program_id=2" class="btn btn-primary btn-lg">Apply Now</a>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:20px">
-        
-            <div style="display:flex;align-items:flex-start;gap:14px">
-              <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0">✓</span>
-              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5">An AI-assisted threat intelligence workflow integrated with your current SIEM stack</span>
-            </div>
-            <div style="display:flex;align-items:flex-start;gap:14px">
-              <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0">✓</span>
-              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5">A risk framework for evaluating AI tools used within security operations</span>
-            </div>
-            <div style="display:flex;align-items:flex-start;gap:14px">
-              <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0">✓</span>
-              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5">A working AI-generated incident response playbook for a defined attack scenario</span>
-            </div>
-        <div style="margin-top:8px;padding:20px;background:rgba(255,41,78,0.06);border:1.5px solid rgba(255,41,78,0.2);border-radius:12px">
-          <div style="font-size:0.78rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Plus</div>
-          <p style="font-size:0.88rem;color:#2E3A4A;line-height:1.5;margin:0">Brixgate Expert Practitioner Certificate — field-verified in Cybersecurity, practitioner-assessed, and recognised by employers across Africa and internationally.</p>
+      <div class="cp-prac">
+        <div class="cp-prac-photo">
+          <img src="assets/Francis Adedeji.jpeg" alt="Francis Ayomide Adedeji" loading="lazy" />
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ====== OUR PRACTITIONERS ====== -->
-<section class="section-pad bg-dark" style="display:none">
-  <div class="container">
-    <div class="fade-up" style="margin-bottom:36px">
-      <div class="eyebrow-tag" style="color:var(--red)">Your Practitioner</div>
-      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900">Taught by Someone Who Has Done It</h2>
-      <p style="font-size:0.88rem;color:var(--muted);margin-top:8px">Not a generalist trainer. A practitioner who has deployed AI in this exact field and will show you exactly how.</p>
-    </div>
-    <div style="background:#0D1C34;border:1px solid #1A3050;border-radius:16px;overflow:hidden;max-width:860px" class="fade-up">
-      <div style="display:grid;grid-template-columns:220px 1fr;gap:0">
-        <div style="background:#1A3050;padding:40px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
-          <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#FF294E,#FF5748);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:14px">A</div>
-          <div style="font-size:0.92rem;font-weight:800;color:#fff;margin-bottom:4px">Adewale Johnson</div>
-          <div style="font-size:0.72rem;color:#7A94A8;line-height:1.5;margin-bottom:12px">Senior Practitioner, Cybersecurity & Intelligence</div>
-          <div style="font-size:0.72rem;font-weight:700;color:#FF294E">800+ live sessions</div>
-        </div>
-        <div style="padding:36px 40px">
-          <p style="font-size:0.9rem;color:var(--muted);line-height:1.75;margin-bottom:24px">Adewale is an experienced cybersecurity practitioner with over a decade in digital defence, threat monitoring, and operational security. He has supported organisations across West Africa in strengthening their cyber posture, identifying system weaknesses, and responding to evolving digital threats. Over 800 live sessions delivered.</p>
-          <div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Core Expertise</div>
-          <div><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">Threat Intelligence</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">Security Monitoring</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">Vulnerability Management</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">Incident Response</span><span style="display:inline-block;padding:5px 14px;background:#F6F4F2;border:1px solid #E8E3DE;border-radius:50px;font-size:0.78rem;font-weight:700;color:#2E3A4A;margin:4px 4px 4px 0">Cyber Defence Operations</span></div>
+        <div class="cp-prac-body">
+          <div class="cp-prac-name">Francis Ayomide Adedeji</div>
+          <div class="cp-prac-role">AI Engineer &amp; Educator · AI-Native Software Engineer</div>
+          <span class="cp-prac-stat"><span style="width:6px;height:6px;border-radius:50%;background:currentColor"></span>20+ live sessions delivered</span>
+          <p class="cp-prac-bio">Francis has spent years designing, deploying and teaching AI systems across education, fintech and enterprise environments. He works on agentic AI workflows, RAG architectures and developer enablement — building the tools that close the gap between AI research and production engineering.</p>
+          <div class="cp-prac-k">Core expertise</div>
+          <div class="cp-prac-tags">
+            <span>Agentic AI</span><span>RAG Systems</span><span>Python</span><span>n8n</span><span>LangChain</span>
+          </div>
         </div>
       </div>
     </div>
@@ -820,188 +1532,212 @@ function bxCurrToggleAll(btn) {
 </section>
 
 <!-- ====== TESTIMONIALS ====== -->
-<section class="section-pad bg-white">
-  <div class="container">
-    <div style="text-align:center;margin-bottom:36px" class="fade-up">
-      <div class="eyebrow-tag" style="color:var(--red)">Alumni Reviews</div>
-      <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark)">What Practitioners Say</h2>
+<section class="cp-sec">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">10</span><span class="t">Alumni</span></div>
+
+    <div class="cp-head cp-mb cp-rise">
+      <h2 class="cp-h2" data-lines>What changed<br/>for them</h2>
+      <p class="cp-lead">Specific outcomes from engineers who finished the sprint.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px"><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px">"Three weeks in, I had a working penetration testing workflow. My recon time dropped by more than half. The local setup exercises were the most useful — no data leaving our environment."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8">Security Analyst · BrixGate Alumni</div></div><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px">"No hand-holding, no basics I already know. Straight into applying AI to real security problems. I built an IR playbook in Week 3 that my team is actually using right now."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8">SOC Engineer · BrixGate Alumni</div></div><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px">"We went from 400 daily alerts to a manageable queue of 30 that actually need human attention. That is the kind of shift that changes how a team operates."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8">Head of Security Operations · BrixGate Alumni</div></div></div>
+
+    <div class="cp-quotes" data-stagger>
+      <figure class="cp-quote">
+        <svg class="cp-quote-mark" viewBox="0 0 36 36" fill="currentColor" aria-hidden="true"><path d="M10.5 22.5c-2.2 0-4-.8-5.3-2.3C3.9 18.7 3.2 16.8 3.2 14.5c0-2.9.9-5.6 2.7-8.1C7.7 3.9 10.1 2 13.1.6l1.4 2.4c-2 1-3.6 2.3-4.8 3.9-1.2 1.6-1.8 3.2-1.8 4.9 0 .5.1.9.2 1.2.7-.6 1.7-.9 2.9-.9 1.8 0 3.2.6 4.3 1.7 1.1 1.1 1.6 2.5 1.6 4.2 0 1.7-.6 3.1-1.8 4.2-1.2 1-2.7 1.5-4.6 1.5zm17.8 0c-2.2 0-4-.8-5.3-2.3-1.3-1.5-2-3.4-2-5.7 0-2.9.9-5.6 2.7-8.1C25.5 3.9 27.9 2 30.9.6l1.4 2.4c-2 1-3.6 2.3-4.8 3.9-1.2 1.6-1.8 3.2-1.8 4.9 0 .5.1.9.2 1.2.7-.6 1.7-.9 2.9-.9 1.8 0 3.2.6 4.3 1.7 1.1 1.1 1.6 2.5 1.6 4.2 0 1.7-.6 3.1-1.8 4.2-1.2 1-2.7 1.5-4.6 1.5z"/></svg>
+        <blockquote class="cp-quote-t">I cut our triage backlog roughly in half in the first fortnight after the programme — not by automating everything, but by working out which alerts a model should never be allowed to close.</blockquote>
+        <figcaption class="cp-quote-f">
+          <div class="cp-quote-av">SA</div>
+          <div>
+            <div class="cp-quote-n">Security Analyst</div>
+            <div class="cp-quote-r">Brixgate alumnus · Cohort 01</div>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="cp-quote">
+        <svg class="cp-quote-mark" viewBox="0 0 36 36" fill="currentColor" aria-hidden="true"><path d="M10.5 22.5c-2.2 0-4-.8-5.3-2.3C3.9 18.7 3.2 16.8 3.2 14.5c0-2.9.9-5.6 2.7-8.1C7.7 3.9 10.1 2 13.1.6l1.4 2.4c-2 1-3.6 2.3-4.8 3.9-1.2 1.6-1.8 3.2-1.8 4.9 0 .5.1.9.2 1.2.7-.6 1.7-.9 2.9-.9 1.8 0 3.2.6 4.3 1.7 1.1 1.1 1.6 2.5 1.6 4.2 0 1.7-.6 3.1-1.8 4.2-1.2 1-2.7 1.5-4.6 1.5zm17.8 0c-2.2 0-4-.8-5.3-2.3-1.3-1.5-2-3.4-2-5.7 0-2.9.9-5.6 2.7-8.1C25.5 3.9 27.9 2 30.9.6l1.4 2.4c-2 1-3.6 2.3-4.8 3.9-1.2 1.6-1.8 3.2-1.8 4.9 0 .5.1.9.2 1.2.7-.6 1.7-.9 2.9-.9 1.8 0 3.2.6 4.3 1.7 1.1 1.1 1.6 2.5 1.6 4.2 0 1.7-.6 3.1-1.8 4.2-1.2 1-2.7 1.5-4.6 1.5z"/></svg>
+        <blockquote class="cp-quote-t">The attack week genuinely changed how I think. Seeing how cheap convincing phishing has become made me rewrite our whole awareness programme the following month.</blockquote>
+        <figcaption class="cp-quote-f">
+          <div class="cp-quote-av">SE</div>
+          <div>
+            <div class="cp-quote-n">Security Engineer</div>
+            <div class="cp-quote-r">Brixgate alumnus · Cohort 01</div>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="cp-quote">
+        <svg class="cp-quote-mark" viewBox="0 0 36 36" fill="currentColor" aria-hidden="true"><path d="M10.5 22.5c-2.2 0-4-.8-5.3-2.3C3.9 18.7 3.2 16.8 3.2 14.5c0-2.9.9-5.6 2.7-8.1C7.7 3.9 10.1 2 13.1.6l1.4 2.4c-2 1-3.6 2.3-4.8 3.9-1.2 1.6-1.8 3.2-1.8 4.9 0 .5.1.9.2 1.2.7-.6 1.7-.9 2.9-.9 1.8 0 3.2.6 4.3 1.7 1.1 1.1 1.6 2.5 1.6 4.2 0 1.7-.6 3.1-1.8 4.2-1.2 1-2.7 1.5-4.6 1.5zm17.8 0c-2.2 0-4-.8-5.3-2.3-1.3-1.5-2-3.4-2-5.7 0-2.9.9-5.6 2.7-8.1C25.5 3.9 27.9 2 30.9.6l1.4 2.4c-2 1-3.6 2.3-4.8 3.9-1.2 1.6-1.8 3.2-1.8 4.9 0 .5.1.9.2 1.2.7-.6 1.7-.9 2.9-.9 1.8 0 3.2.6 4.3 1.7 1.1 1.1 1.6 2.5 1.6 4.2 0 1.7-.6 3.1-1.8 4.2-1.2 1-2.7 1.5-4.6 1.5z"/></svg>
+        <blockquote class="cp-quote-t">I left with a detection pipeline, a written playbook and a false-positive rate I could actually defend to my head of security. That last part is what got me taken seriously.</blockquote>
+        <figcaption class="cp-quote-f">
+          <div class="cp-quote-av">IR</div>
+          <div>
+            <div class="cp-quote-n">Incident Responder</div>
+            <div class="cp-quote-r">Brixgate alumnus · Cohort 01</div>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
-<!-- ====== FAQ ====== -->
-<section class="section-pad bg-white">
-  <div class="container">
-    <div style="max-width:760px;margin:0 auto" class="fade-up">
-      <div style="text-align:center;margin-bottom:32px">
-        <div class="eyebrow-tag" style="color:var(--red)">FAQ</div>
-        <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark)">Common Questions</h2>
+<!-- ====== ROI ====== -->
+<section class="cp-sec cp-surface">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">11</span><span class="t">Why it pays off</span></div>
+
+    <div class="cp-head cp-mb cp-rise">
+      <h2 class="cp-h2" data-lines>What the fee<br/>actually buys</h2>
+      <p class="cp-lead cp-gradbar">AI-native engineers ship faster, review smarter and negotiate better. You leave with the workflows, the judgement and an artefact that proves both.</p>
+    </div>
+
+    <div class="cp-roi-stats" data-stagger>
+      <div class="cp-roi-stat">
+        <div class="cp-roi-n">1×</div>
+        <p class="cp-roi-d">attacker using AI is enough to change your threat model — most organisations have not adjusted theirs</p>
+        <div class="cp-roi-src">Brixgate practitioner briefing</div>
       </div>
-      <details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024">Do I need to already work in cybersecurity?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0">Yes. This programme is for working professionals, not beginners. You should have at least one year of hands-on experience in a security role.</p></div></details><details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024">What does Live Instructor-Led mean exactly?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0">Every session runs live with your cohort and a verified practitioner. There are no pre-recorded lectures. Sessions are interactive, practical, and directly relevant to your current work.</p></div></details><details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024">Will I need to pay for AI tools on top of the fee?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0">No. All tools used during the sprint are either open-source or covered by Brixgate platform access agreements. Your programme fee is all-inclusive.</p></div></details><details style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:700;font-size:0.92rem;color:#021024">Is the certificate recognised by employers?<span style="font-size:1.1rem;color:#7A94A8;flex-shrink:0;margin-left:12px">+</span></summary><div style="padding:16px 24px 20px;background:#F9F8F7"><p style="font-size:0.88rem;color:#4A5568;line-height:1.75;margin:0">The Brixgate Expert Practitioner Certificate is field-verified and practitioner-assessed. It includes a verifiable digital credential, capstone artefact, and LinkedIn badge.</p></div></details>
+      <div class="cp-roi-stat">
+        <div class="cp-roi-n">4 wks</div>
+        <p class="cp-roi-d">from where you are now to a defended capstone and a verifiable certificate</p>
+        <div class="cp-roi-src">Brixgate programme length</div>
+      </div>
+      <div class="cp-roi-stat">
+        <div class="cp-roi-n"><span data-countup="8" data-suffix="">0</span></div>
+        <p class="cp-roi-d">live classes, every one taught by a practitioner who has run this in production</p>
+        <div class="cp-roi-src">Programme structure</div>
+      </div>
+    </div>
+
+    <div class="cp-vs" data-stagger>
+      <div class="cp-vs-col cp-vs-us">
+        <div class="cp-vs-h">This programme</div>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7CEFA6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Live sessions with a working practitioner</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7CEFA6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Small cohort — your work actually gets reviewed</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7CEFA6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>A deployed capstone you can show in interviews</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7CEFA6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Field-verified certificate, checkable by employers</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7CEFA6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Peers you keep after the four weeks end</span></li>
+        </ul>
+      </div>
+      <div class="cp-vs-col cp-vs-them">
+        <div class="cp-vs-h">A self-paced video course</div>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4CBD6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Pre-recorded, filmed before the last model shipped</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4CBD6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Nobody reads your code or tells you it's wrong</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4CBD6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>A completion badge, not evidence of judgement</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4CBD6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Most people stop around lesson four</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4CBD6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>No one to ask when you're stuck at 11pm</span></li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ====== VALUE / ROI ====== -->
-<section class="section-pad" style="background:#F6F4F2;display:none">
-  <div class="container">
-    <div style="text-align:center;margin-bottom:48px" class="fade-up">
-      <div class="eyebrow-tag" style="color:var(--red)">Why This Investment Pays Off</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:#021024;line-height:1.25">What ₦250,000 Actually Buys You</h2>
-      <p style="font-size:0.95rem;color:#4A5568;max-width:600px;margin:16px auto 0;line-height:1.7">AI-proficient security professionals are the most sought-after hires in the market — commanding salaries 20–35% above standard.</p>
+
+<!-- ====== UPCOMING START DATES ====== -->
+<section class="cp-sec cp-surface" id="start-dates">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">06</span><span class="t">Upcoming start dates</span></div>
+
+    <div class="cp-head cp-mb cp-rise">
+      <h2 class="cp-h2">Pick a cohort</h2>
+      <p class="cp-lead">Groups stay small on purpose. When a cohort fills, it closes.</p>
     </div>
 
-    <!-- Market data row -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1.5px solid #E8E3DE;border-radius:16px;overflow:hidden;margin-bottom:56px" class="fade-up">
-      <div style="padding:32px 28px;text-align:center;border-right:1px solid #E8E3DE">
-        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px">60%</div>
-        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px">Reduction in mean time to detect threats</div>
-        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic">IBM Cost of a Data Breach Report</div>
+    <div class="cp-dates" id="cohort-cards-container">
+      <div class="cp-date" style="opacity:.55">
+        <div class="cp-date-when"><b>Loading…</b><span>Fetching cohorts</span></div>
+        <div class="cp-date-meta"></div>
+        <div></div>
       </div>
-      <div style="padding:32px 28px;text-align:center;border-right:1px solid #E8E3DE">
-        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px">10×</div>
-        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px">More alerts processed per analyst per day</div>
-        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic">Gartner SOC Benchmarks</div>
-      </div>
-      <div style="padding:32px 28px;text-align:center">
-        <div style="font-size:2.4rem;font-weight:900;color:#021024;line-height:1;margin-bottom:8px">$50K+</div>
-        <div style="font-size:0.82rem;color:#4A5568;line-height:1.5;margin-bottom:8px">Avg salary premium for AI-proficient security professionals</div>
-        <div style="font-size:0.7rem;color:#7A94A8;font-style:italic">SANS Institute</div>
-      </div>
-    </div>
-
-    <!-- What's included + Outcomes grid -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start" class="fade-up">
-
-      <!-- What's Included -->
-      <div style="background:#fff;border:1.5px solid #E8E3DE;border-radius:16px;padding:40px 36px">
-        <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:6px">What You Get</div>
-        <h3 style="font-size:1.2rem;font-weight:900;color:#021024;margin-bottom:28px">Everything Included. No Extras.</h3>
-        <div style="display:flex;flex-direction:column;gap:16px">
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><span style="color:#fff;font-size:0.75rem;font-weight:900">✓</span></div>
-            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px">8 Live Practitioner Sessions</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5">2 sessions per week across 4 weeks — interactive, applied, no pre-recorded lectures.</div></div>
-          </div>
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><span style="color:#fff;font-size:0.75rem;font-weight:900">✓</span></div>
-            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px">Field Assessment Before You Start</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5">Know exactly where you are and what matters most for your specific Cybersecurity role.</div></div>
-          </div>
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><span style="color:#fff;font-size:0.75rem;font-weight:900">✓</span></div>
-            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px">All AI Tools &amp; Platform Access</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5">Every tool used in the sprint is provided. No additional subscriptions required.</div></div>
-          </div>
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><span style="color:#fff;font-size:0.75rem;font-weight:900">✓</span></div>
-            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px">Peer Cohort of Cybersecurity Professionals</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5">Learn alongside practitioners solving the same problems you face — a network, not just a cohort.</div></div>
-          </div>
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><span style="color:#fff;font-size:0.75rem;font-weight:900">✓</span></div>
-            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px">Capstone Project &amp; Portfolio Artefact</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5">A real AI-Augmented Security Toolkit — built during the sprint, reviewed by your practitioner, and yours to deploy.</div></div>
-          </div>
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><span style="color:#fff;font-size:0.75rem;font-weight:900">✓</span></div>
-            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px">Brixgate Expert Practitioner Certificate</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5">Verifiable digital credential, LinkedIn badge, and field-verified assessment — employer-ready in Cybersecurity.</div></div>
-          </div>
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="min-width:28px;height:28px;background:#FF294E;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><span style="color:#fff;font-size:0.75rem;font-weight:900">✓</span></div>
-            <div><div style="font-size:0.9rem;font-weight:700;color:#021024;margin-bottom:2px">Lifetime Alumni Network Access</div><div style="font-size:0.82rem;color:#4A5568;line-height:1.5">Post-sprint access to the Brixgate Alumni community across all fields and cohorts.</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Outcomes + Comparison -->
-      <div style="display:flex;flex-direction:column;gap:24px">
-        <div style="background:#021024;border-radius:16px;padding:36px">
-          <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:16px">By the End of Week 4, You Will Have</div>
-          <div style="display:flex;flex-direction:column;gap:14px">
-            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">  </span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Reduce alert fatigue — from 400 daily alerts to 30 that matter</span></div>
-            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">  </span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Cut incident response time from hours to minutes</span></div>
-            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">  </span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Automate 80% of vulnerability assessment triage</span></div>
-          </div>
-        </div>
-
-        <div style="background:#fff;border:1.5px solid #E8E3DE;border-radius:16px;padding:32px">
-          <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:16px">vs. The Alternatives</div>
-          <div style="display:flex;flex-direction:column;gap:12px">
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #F0EDEA">
-              <div><div style="font-size:0.82rem;font-weight:700;color:#021024">YouTube / Free AI Courses</div><div style="font-size:0.75rem;color:#7A94A8;margin-top:2px">Generic. No field context. No practitioner. No accountability.</div></div>
-              <div style="font-size:0.78rem;font-weight:800;color:#7A94A8;white-space:nowrap;margin-left:16px">Free — but valueless for your career</div>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #F0EDEA">
-              <div><div style="font-size:0.82rem;font-weight:700;color:#021024">LinkedIn Learning / Coursera</div><div style="font-size:0.75rem;color:#7A94A8;margin-top:2px">Self-paced. Pre-recorded. No peer cohort. No field practitioner.</div></div>
-              <div style="font-size:0.78rem;font-weight:800;color:#7A94A8;white-space:nowrap;margin-left:16px">$400/yr · No accountability</div>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #F0EDEA">
-              <div><div style="font-size:0.82rem;font-weight:700;color:#021024">2-Day AI Workshop</div><div style="font-size:0.75rem;color:#7A94A8;margin-top:2px">High cost. Generic content. No follow-through. No deliverable.</div></div>
-              <div style="font-size:0.78rem;font-weight:800;color:#7A94A8;white-space:nowrap;margin-left:16px">₦500K–₦2M · No outcomes</div>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0">
-              <div><div style="font-size:0.82rem;font-weight:800;color:#FF294E">Brixgate Expert Practitioner Sprint</div><div style="font-size:0.75rem;color:#4A5568;margin-top:2px">Live. Field-specific. Practitioner-led. Real deliverable. Certified.</div></div>
-              <div style="font-size:0.78rem;font-weight:800;color:#021024;white-space:nowrap;margin-left:16px">₦250,000 · Everything included</div>
-            </div>
-          </div>
-        </div>
-
-        <a href="apply.html?program_id=2" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Apply Now</a>
-      </div>
-
     </div>
   </div>
 </section>
 
 <!-- ====== PRICING ====== -->
-<section id="pricing" class="section-pad bg-dark">
-  <div class="container">
-    <div style="text-align:center;margin-bottom:16px" class="fade-up">
-      <div class="eyebrow-tag">Pricing</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900">Invest in Your AI Advantage</h2>
-      <p style="font-size:0.95rem;color:var(--muted);margin-top:12px;margin-bottom:24px">Cybersecurity Expert Practitioner Programme</p>
-      <div class="currency-toggle-5">
-        <button class="cur-btn" data-cur="ngn">₦ NGN</button>
-        <button class="cur-btn" data-cur="usd">$ USD</button>
+<section class="cp-chapter cp-grain" id="pricing">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">07</span><span class="t">Investment</span></div>
+
+    <div class="cp-head center cp-mb cp-rise" style="max-width:620px">
+      <h2 class="cp-h2">One fee. Everything included.</h2>
+      <p class="cp-lead">No upsells, no locked modules. Scholarship places are applied automatically at checkout.</p>
+    </div>
+
+    <div class="cp-price-grid" id="pricing-cards">
+      <div class="cp-price" style="grid-column:1/-1;text-align:center;opacity:.6">
+        <div class="cp-price-k">Loading pricing…</div>
       </div>
     </div>
-    <div id="pricing-cards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto" class="stagger">
-      <div style="text-align:center;color:var(--muted);padding:40px;grid-column:1/-1">Loading pricing…</div>
+
+    <div class="cp-rise" style="text-align:center;margin-top:34px">
+      <span style="font-size:.84rem;color:rgba(255,255,255,.6)">Paying for a team? <a href="organisations.html" style="color:#FFCDBC;font-weight:700">Talk to us about seats</a></span>
     </div>
   </div>
 </section>
 
-<!-- ====== BEGINNER SECTION 2 ====== -->
-<section class="section-pad" style="background:#F6F4F2">
-  <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center" class="fade-up bx-beginner-grid">
-      <div style="border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:#E8E3DE">
-        <img src="assets/Rectangle 171.png" alt="Cybersecurity learning path" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block" loading="lazy" />
+<!-- ====== FAQ ====== -->
+<section class="cp-sec">
+  <div class="cp-wrap">
+    <div class="cp-faq-wrap">
+      <div class="cp-faq-head cp-rise">
+        <div class="cp-label" style="margin-bottom:28px"><span class="n">08</span><span class="t">FAQ</span></div>
+        <h2 class="cp-h2">Questions people<br/>actually ask</h2>
+        <p class="cp-lead" style="margin-top:18px">Still unsure? <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%20have%20a%20question%20about%20the%20Software%20Engineering%20programme." target="_blank" rel="noopener" style="color:var(--cp-red);font-weight:600">Message us on WhatsApp</a> and a human will answer.</p>
       </div>
-      <div>
-        <div class="eyebrow-tag" style="color:var(--red)">Your Learning Path</div>
-        <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.2;margin-bottom:16px">From Curious to Certified.<br/>In 4 Weeks.</h2>
-        <p style="font-size:0.95rem;color:#4A5568;line-height:1.75;margin-bottom:12px">Every cybersecurity professional started somewhere. Our structured beginner cohort pairs you with a practitioner mentor who walks you through the fundamentals — network security, threat detection, incident response basics, and how AI is reshaping every layer of the field.</p>
-        <p style="font-size:0.95rem;color:#4A5568;line-height:1.75;margin-bottom:28px">You'll finish with a verified certificate, a portfolio project, and the foundation to take your first steps in the industry — or confidently transition from a neighbouring field.</p>
-        <a href="apply.html?program_id=2" class="btn btn-primary btn-lg">Start Your Journey</a>
+
+      <div class="cp-faq-list" id="cp-faq">
+        <div class="cp-faq-item">
+          <button class="cp-faq-q" type="button" aria-expanded="false">Do I need to be a senior security engineer?
+            <svg class="cp-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="cp-faq-a" aria-hidden="true"><div><p>No, but you do need to be working in security or an adjacent role already. This isn't an introduction to security — you should be comfortable with alerts, logs and a SIEM. A year of hands-on experience is about the right floor.</p></div></div>
+        </div>
+        <div class="cp-faq-item">
+          <button class="cp-faq-q" type="button" aria-expanded="false">Is this an offensive or defensive programme?
+            <svg class="cp-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="cp-faq-a" aria-hidden="true"><div><p>Mostly defensive, but week two covers the attack side deliberately. You can't build detection for techniques you've never seen used. It is not a substitute for OSCP or a dedicated red-team certification.</p></div></div>
+        </div>
+        <div class="cp-faq-item">
+          <button class="cp-faq-q" type="button" aria-expanded="false">Which tools and platforms do you use?
+            <svg class="cp-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="cp-faq-a" aria-hidden="true"><div><p>It's platform-agnostic. Examples span common SIEM and EDR tooling, but the prompting, triage and governance principles transfer to whatever your organisation runs. Your capstone can target your own stack.</p></div></div>
+        </div>
+        <div class="cp-faq-item">
+          <button class="cp-faq-q" type="button" aria-expanded="false">Is it safe to put security data into an AI model?
+            <svg class="cp-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="cp-faq-a" aria-hidden="true"><div><p>Often it isn't, which is exactly why a full session goes to it. You leave with a written policy covering what never goes into a prompt — client data, live indicators, credentials — and how to work usefully inside that line.</p></div></div>
+        </div>
+        <div class="cp-faq-item">
+          <button class="cp-faq-q" type="button" aria-expanded="false">Can I use my employer's real environment for the capstone?
+            <svg class="cp-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="cp-faq-a" aria-hidden="true"><div><p>Yes, and we encourage it, provided you follow your organisation's AI and data policies. Plenty of people build against a sanitised copy instead. We cover how to make that call in week three.</p></div></div>
+        </div>
+        <div class="cp-faq-item">
+          <button class="cp-faq-q" type="button" aria-expanded="false">How much time does it take each week?
+            <svg class="cp-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="cp-faq-a" aria-hidden="true"><div><p>Two live sessions plus build time between them — a few hours a week for most people. It's designed to run alongside a full-time job, but not alongside an on-call week you already know will be brutal.</p></div></div>
+        </div>
+        <div class="cp-faq-item">
+          <button class="cp-faq-q" type="button" aria-expanded="false">Is the certificate recognised?
+            <svg class="cp-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="cp-faq-a" aria-hidden="true"><div><p>The certificate is verifiable at <a href="verify.html" style="color:var(--cp-red);font-weight:600">brixgate.com/verify</a>. In practice the capstone matters more — a working pipeline with measured false positives is stronger evidence than any badge.</p></div></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ====== CTA ====== -->
-<section class="section-pad" style="background:var(--red);text-align:center">
-  <div class="container">
-    <div class="fade-up">
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;color:#fff;margin-bottom:16px">Ready to Become an AI-Native<br />Cybersecurity Professional?</h2>
-      <p style="font-size:1rem;color:rgba(255,255,255,0.82);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto">Seats are limited per cohort. Apply in under 2 minutes — no essays, no references required.</p>
-      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-        <a href="apply.html?program_id=2" class="btn btn-lg" style="background:#fff;color:var(--red);font-weight:900">Apply to Become a Brixer</a>
-        <a href="#quiz-field" class="btn btn-lg" style="background:transparent;border:2px solid rgba(255,255,255,0.5);color:#fff">Validate Your Level First</a>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ====== WAITLIST (removed) ====== -->
-<section id="waitlist" style="display:none">
+<!-- ====== WAITLIST ====== -->
+<section id="waitlist" class="cp-chapter cp-grain">
   <div class="container">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center" class="waitlist-grid">
       <div class="fade-up">
@@ -1047,13 +1783,10 @@ function bxCurrToggleAll(btn) {
             <label style="display:block;font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Interested Programme</label>
             <select id="wl-course" required style="width:100%;padding:13px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:var(--white);font-size:0.93rem;outline:none;box-sizing:border-box;appearance:none;-webkit-appearance:none;cursor:pointer;transition:border 0.2s" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
               <option value="" disabled style="background:#021024">Select a programme</option>
+              <option value="Software Engineering" style="background:#021024">Software Engineering</option>
               <option value="Cybersecurity" selected style="background:#021024">Cybersecurity</option>
               <option value="Financial Modelling" style="background:#021024">Financial Modelling</option>
               <option value="Product Marketing" style="background:#021024">Product Marketing</option>
-              <option value="Product Management" style="background:#021024">Product Management</option>
-              <option value="Sales Management" style="background:#021024">Sales Management</option>
-              <option value="Data Science" style="background:#021024">Data Science</option>
-              <option value="Cloud &amp; DevOps" style="background:#021024">Cloud &amp; DevOps</option>
             </select>
           </div>
           <div id="wl-error" style="display:none;font-size:0.83rem;color:var(--red);margin-bottom:14px;text-align:center"></div>
@@ -1088,7 +1821,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     btn.textContent = 'Joining…';
     btn.disabled = true;
-    fetch((window.BX_API_BASE || 'https://api.brixgate.com') + '/api/v1/waitlist', {
+    fetch((window.BX_API_BASE || 'https://dev.api.brixgate.com') + '/api/v1/waitlist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({ name: name, email: email, phone: phone, primary_field: course })
@@ -1115,6 +1848,20 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+
+<!-- ====== CTA ====== -->
+<section class="cp-chapter cp-grain" style="text-align:center">
+  <div class="container">
+    <div class="fade-up">
+      <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;color:#fff;margin-bottom:16px">Ready to Become an AI-Native<br />Software Engineer?</h2>
+      <p style="font-size:1rem;color:rgba(255,255,255,0.82);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto">Cohort 1 opens June 22, 2026. Seats are limited. Apply in under 2 minutes — no essays, no references required.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+        <a href="apply.html?program_id=2" class="btn btn-lg" style="background:#fff;color:var(--red);font-weight:900">Apply Now</a>
+        <a href="#quiz-field" class="btn btn-lg" style="background:transparent;border:2px solid rgba(255,255,255,0.5);color:#fff">Validate Your Level First</a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ====== FOOTER ====== -->
 <footer class="footer">
@@ -1161,7 +1908,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <li><a href="experts.html">Meet Our Experts</a></li>
           <li><a href="experts.html#qualify">Become an Expert</a></li>
           <li><a href="experts.html#criteria">Qualification Criteria</a></li>
-          <li><a href="join-as-expert.html">Join as Expert</a></li>
+          <li><a href="experts.html#apply">Expert Application</a></li>
         </ul>
       </div>
 
@@ -1172,7 +1919,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <li><a href="organisations.html#packages">Packages &amp; Pricing</a></li>
           <li><a href="organisations.html#contact">Request a Demo</a></li>
           <li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li>
-          <li><a href="apply.html?program_id=2">Apply Now</a></li>
+          <li><a href="apply.html">Apply Now</a></li>
           <li><a href="verify.html">Verify a Certificate</a></li>
         </ul>
       </div>
@@ -1180,7 +1927,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 
   <div class="footer-bottom">
-    <p>© <span id="footer-year">2026</span> Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
+    <p>© <span id="footer-year">2025</span> Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
     <div class="footer-bottom-links">
       <a href="privacy-policy.html">Privacy Policy</a>
       <a href="terms.html">Terms of Service</a>
@@ -1188,6 +1935,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 </footer>
+
 
 <a href="#" class="back-to-top" aria-label="Back to top">↑</a>
 
@@ -1340,8 +2088,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 })();
 
-// ====== Pricing ======
+// ====== Pricing — fetch from API ======
 var PROGRAM_ID = 2;
+
 /* ====== Dynamic Cohort Cards ====== */
 (function() {
   var STATUS_CFG = {
@@ -1349,52 +2098,56 @@ var PROGRAM_ID = 2;
     UPCOMING: { label: 'Upcoming', bg: '#F59E0B' },
     CLOSED:   { label: 'Closed',   bg: '#7A94A8' },
   };
+
   function fmtDate(iso) {
     if (!iso) return '—';
     var d = new Date(iso);
     return isNaN(d) ? iso : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
   }
+
   function renderCard(c) {
     var st    = STATUS_CFG[c.status] || { label: c.status || '—', bg: '#7A94A8' };
     var instr = (c.instructors || []).map(function(i) { return i.name || i.full_name || ''; }).filter(Boolean).join(', ');
     var fmt   = (c.learning_format || '').replace(/_/g, ' ').replace(/\b\w/g, function(ch) { return ch.toUpperCase(); });
+
     var details = [
-      { l: 'Start Date', v: fmtDate(c.start_date) },
       { l: 'End Date',   v: fmtDate(c.end_date)   },
     ];
-    if (c.duration) details.push({ l: 'Duration', v: c.duration });
-    if (fmt)        details.push({ l: 'Format',   v: fmt });
-    if (instr)      details.push({ l: 'Lead Practitioner', v: instr });
+    if (c.duration)  details.push({ l: 'Duration', v: c.duration });
+    if (fmt)         details.push({ l: 'Format',   v: fmt });
+    if (instr)       details.push({ l: 'Lead Practitioner', v: instr });
+
     var detailsHtml = details.map(function(d) {
       return '<div><div style="font-size:0.68rem;font-weight:700;color:#7A94A8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">' + d.l + '</div>'
            + '<div style="font-size:0.95rem;font-weight:800;color:#021024">' + d.v + '</div></div>';
     }).join('');
-    var footer = c.status !== 'CLOSED'
-      ? '<div style="padding:16px 24px;background:#fff"><a href="apply.html?program_id=' + PROGRAM_ID + '&cohort_id=' + c.id + '" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Apply Now</a></div>'
-      : '';
-    return '<div style="border:1.5px solid #E8E3DE;border-radius:14px;overflow:hidden;min-width:280px;max-width:380px;flex:0 0 auto">'
-         +   '<div style="background:#021024;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px">'
-         +     '<div style="font-size:0.95rem;font-weight:800;color:#fff">' + (c.title || 'Cohort') + '</div>'
-         +     '<span style="background:' + st.bg + ';color:#fff;font-size:0.7rem;font-weight:800;padding:4px 12px;border-radius:50px;white-space:nowrap">' + st.label + '</span>'
+
+
+    var metaHtml = details.map(function (d) {
+      return '<div><span>' + d.l + '</span><b>' + d.v + '</b></div>';
+    }).join('');
+    var cta = c.status !== 'CLOSED'
+      ? '<a href="apply.html?program_id=' + PROGRAM_ID + '&cohort_id=' + c.id + '" class="cp-btn cp-btn-red" style="height:44px;font-size:.88rem">Apply</a>'
+      : '<span class="cp-date-status" style="color:#98A4B5">Closed</span>';
+    return '<div class="cp-date">'
+         +   '<div class="cp-date-when"><b>' + fmtDate(c.start_date) + '</b><span>' + (c.title || 'Cohort') + '</span></div>'
+         +   '<div class="cp-date-meta">' + metaHtml + '</div>'
+         +   '<div style="display:flex;align-items:center;gap:14px">'
+         +     '<span class="cp-date-status" style="color:' + st.bg + '"><span style="width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block"></span>' + st.label + '</span>'
+         +     cta
          +   '</div>'
-         +   '<div style="padding:24px;background:#F9F8F7;display:grid;grid-template-columns:1fr 1fr;gap:16px">' + detailsHtml + '</div>'
-         +   footer
          + '</div>';
   }
-  var el = document.getElementById('cohort-cards-container');
-  if (!PROGRAM_ID) {
-    if (el) el.innerHTML = '<p style="color:#7A94A8;font-size:0.9rem">Cohort schedule coming soon.</p>';
-    return;
-  }
+
   fetch('https://dev.api.brixgate.com/api/v1/programs/' + PROGRAM_ID + '/cohorts')
     .then(function(r) { return r.json(); })
     .then(function(data) {
       var cohorts = (data && data.data && data.data.cohorts) || [];
       var visible = cohorts.filter(function(c) { return c.status !== 'CLOSED'; });
+      var el = document.getElementById('cohort-cards-container');
       if (!el) return;
       if (!visible.length) {
-        var applyLink = PROGRAM_ID ? 'apply.html?program_id=' + PROGRAM_ID : 'apply.html';
-        el.innerHTML = '<p style="color:#7A94A8;font-size:0.9rem">No upcoming cohorts right now. <a href="' + applyLink + '" style="color:var(--red);font-weight:700">Apply to join the waitlist</a> and we\'ll notify you when the next cohort opens.</p>';
+        el.innerHTML = '<p style="color:#7A94A8;font-size:0.9rem">No upcoming cohorts right now. <a href="apply.html?program_id=' + PROGRAM_ID + '" style="color:var(--red);font-weight:700">Apply to join the waitlist</a> and we\'ll notify you when the next cohort opens.</p>';
         return;
       }
       el.innerHTML = visible.map(renderCard).join('');
@@ -1405,32 +2158,76 @@ var PROGRAM_ID = 2;
 (function() {
   var SYMS = { NGN: '₦', USD: '$', GBP: '£', EUR: '€', CAD: 'C$' };
   var CURRENCIES = ['ngn','usd','gbp','eur','cad'];
-  function priceSpans(bds) {
+
+  function priceSpans(breakdowns) {
     return CURRENCIES.map(function(c) {
       var cur = c.toUpperCase();
-      var b = (bds || []).find(function(x) { return x.currency === cur; });
-      return '<span class="currency-' + c + '">' + (b ? (SYMS[cur]||'') + Number(b.final_price||b.finalPrice||0).toLocaleString() : '—') + '</span>';
+      var b = (breakdowns || []).find(function(x) { return x.currency === cur; });
+      var val = b ? (SYMS[cur] || '') + Number(b.final_price||b.finalPrice||0).toLocaleString() : '—';
+      return '<span class="currency-' + c + '">' + val + '</span>';
     }).join('');
   }
-  function render(plans) {
-    var el = document.getElementById('pricing-cards');
-    if (!el) return;
-    if (!plans || !plans.length) { el.innerHTML = '<div style="text-align:center;color:var(--muted);padding:40px;grid-column:1/-1">Contact us for pricing.</div>'; return; }
+
+  function renderPricingCards(plans) {
+    var container = document.getElementById('pricing-cards');
+    if (!container) return;
+    if (!plans || !plans.length) {
+      container.innerHTML = '<div style="text-align:center;color:var(--muted);padding:40px;grid-column:1/-1">Contact us for pricing information.</div>';
+      return;
+    }
     window._pricingPlans = {};
     plans.forEach(function(p) { window._pricingPlans[p.plan_type] = p; });
-    var ind  = plans.find(function(p) { return p.plan_type === 'INDIVIDUAL'; });
-    var team = plans.find(function(p) { return p.plan_type === 'TEAM'; });
+
+    var indPlan  = plans.find(function(p) { return p.plan_type === 'INDIVIDUAL'; });
+    var teamPlan = plans.find(function(p) { return p.plan_type === 'TEAM'; });
     var html = '';
-    if (ind)  html += '<div class="card fade-up" style="padding:32px 28px"><div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Individual</div><div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px">' + priceSpans(ind.breakdowns) + '</div><div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">Per person / programme</div><ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px"><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Full 4-week sprint</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Field assessment</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Expert-led cohort sessions</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Expert Practitioner Certificate</li></ul><a href="apply.html?program_id=' + PROGRAM_ID + '" class="btn btn-outline" style="width:100%;justify-content:center;display:flex">Join the Waitlist</a></div>';
-    if (team) html += '<div class="card fade-up" style="padding:32px 28px;border-color:var(--red);position:relative"><div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;white-space:nowrap">Most Popular</div><div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Team</div><div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px">' + priceSpans(team.breakdowns) + '</div><div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">Per seat / programme</div><ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px"><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Individual</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Organisation-aligned cohort</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Manager progress reporting</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Invoice billing available</li></ul><a href="apply.html?program_id=' + PROGRAM_ID + '&type=team" class="btn btn-primary" style="width:100%;justify-content:center;display:flex">Join the Waitlist</a></div>';
-    html += '<div class="card fade-up" style="padding:32px 28px"><div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Corporate</div><div style="font-size:1.6rem;font-weight:900;color:var(--red);margin-bottom:4px">Custom Pricing</div><div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">Tailored to your organisation</div><ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px"><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Teams tier</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Dedicated cohort manager</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Custom curriculum design</li><li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Enterprise reporting</li></ul><a href="organisations.html#contact" class="btn btn-outline" style="width:100%;justify-content:center;display:flex">Contact Us</a></div>';
-    el.innerHTML = html;
-    el.querySelectorAll('.fade-up').forEach(function(el) { el.classList.add('visible'); });
+
+    if (indPlan) {
+      html += '<div class="cp-price">' +
+        '<div class="cp-price-k">Individual</div>' +
+        '<div class="cp-price-v">' + priceSpans(indPlan.breakdowns) + '</div>' +
+        '<div class="cp-price-per">Per person · full programme</div>' +
+        '<ul>' + '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Full 4-week sprint</li>' +
+        '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All 8 live classes</li>' +
+        '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Capstone review &amp; live defence</li>' +
+        '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Expert Practitioner Certificate</li>' +
+        '</ul>' +
+        '<a href="apply.html?program_id=' + PROGRAM_ID + '" class="cp-btn cp-btn-white">Apply now</a></div>';
+    }
+    if (teamPlan) {
+      html += '<div class="cp-price feat">' +
+        '<div class="cp-price-badge">Most popular</div>' +
+        '<div class="cp-price-k">Team</div>' +
+        '<div class="cp-price-v">' + priceSpans(teamPlan.breakdowns) + '</div>' +
+        '<div class="cp-price-per">Per seat · full programme</div>' +
+        '<ul>' + '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Everything in Individual</li>' +
+        '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Organisation-aligned cohort</li>' +
+        '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Manager progress reporting</li>' +
+        '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Invoice billing available</li>' +
+        '</ul>' +
+        '<a href="apply.html?program_id=' + PROGRAM_ID + '" class="cp-btn cp-btn-red">Apply now</a></div>';
+    }
+    html += '<div class="card fade-up" style="padding:32px 28px">' +
+      '<div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Corporate</div>' +
+      '<div style="font-size:1.6rem;font-weight:900;color:var(--red);margin-bottom:4px">Custom Pricing</div>' +
+      '<div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">Tailored to your organisation</div>' +
+      '<ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">' +
+      '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Teams tier</li>' +
+      '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Dedicated cohort manager</li>' +
+      '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Custom curriculum design</li>' +
+      '<li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Enterprise reporting</li>' +
+      '</ul>' +
+      '<a href="organisations.html#contact" class="btn btn-outline" style="width:100%;justify-content:center;display:flex">Contact Us</a></div>';
+
+    container.innerHTML = html;
+    /* fade-up cards injected via innerHTML won't be seen by the intersection observer — make them visible immediately */
+    container.querySelectorAll('.fade-up').forEach(function(el) { el.classList.add('visible'); });
   }
+
   fetch('https://dev.api.brixgate.com/api/v1/pricing-plans?program_id=' + PROGRAM_ID)
     .then(function(r) { return r.json(); })
-    .then(function(d) { render((d && d.data && d.data.pricing_plans) || []); })
-    .catch(function() { render([]); });
+    .then(function(data) { renderPricingCards((data && data.data && data.data.pricing_plans) || []); })
+    .catch(function() { renderPricingCards([]); });
 })();
 </script>
 
@@ -1464,5 +2261,310 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 </noscript>
 
 <!-- <script src="popup.js"></script> -->
+<!-- ====== MOTION LAYER ====== -->
+<script src="assets/vendor/motion.js"></script>
+<script>
+(function () {
+  'use strict';
+  var M = window.Motion;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Measure the real nav height so nothing sits under a dead band. */
+  (function () {
+    var nav = document.querySelector('.nav');
+    if (!nav) return;
+    var sync = function () { document.documentElement.style.setProperty('--cp-nav-h', nav.offsetHeight + 'px'); };
+    sync();
+    window.addEventListener('resize', sync, { passive: true });
+    window.addEventListener('load', sync);
+    if (window.ResizeObserver) new ResizeObserver(sync).observe(nav);
+  })();
+
+  /* Failsafe: if anything is still hidden after load (Motion missing, a
+     throttled/background tab, an animation that never fired), show it. */
+  function revealAll() {
+    document.documentElement.classList.remove('cp-anim');
+    /* A running WAAPI animation outranks inline styles, and animations created
+       while the tab is hidden never progress - so finish them first, otherwise
+       elements stay stuck on their opening keyframe (invisible). */
+    if (document.getAnimations) {
+      document.getAnimations().forEach(function (a) {
+        try { a.finish(); } catch (e) { try { a.cancel(); } catch (e2) {} }
+      });
+    }
+    document.querySelectorAll('.cp-rise, .cp-fade').forEach(function (el) {
+      if (el.getAnimations) el.getAnimations().forEach(function (a) { try { a.finish(); } catch (e) {} });
+      el.style.opacity = 1; el.style.transform = 'none';
+    });
+    document.querySelectorAll('[data-stagger] > *').forEach(function (el) { el.style.opacity = 1; });
+    document.querySelectorAll('.cp-line > span').forEach(function (el) { el.style.transform = 'none'; });
+    document.querySelectorAll('.cp-mini-bar > i').forEach(function (i) {
+      if (!i.style.width) i.style.width = (i.dataset.fill || 40) + '%';
+    });
+    /* Settle scroll-triggered states too: IntersectionObserver is suspended in
+       a hidden/background tab, so these would otherwise stay half-finished. */
+    document.querySelectorAll('.cp-tl').forEach(function (el) { el.classList.add('is-on'); });
+    document.querySelectorAll('.cp-out-item, .cp-tl, .cp-vs-col, .cp-quote, .cp-tool, .cp-step-media, .cp-week-big, .cp-week-tag, .cp-fit-col li, .cp-week-list li, .cp-vs-col li')
+      .forEach(function (el) { el.style.opacity = el.style.opacity || 1; el.style.transform = 'none'; });
+  }
+  window.addEventListener('load', function () { setTimeout(revealAll, 2600); });
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) setTimeout(revealAll, 1200);
+  });
+
+  /* No Motion or reduced motion: reveal everything and stop. */
+  if (!M || !M.animate || reduced) {
+    revealAll();
+    return;
+  }
+
+  var animate = M.animate, inView = M.inView, scroll = M.scroll, stagger = M.stagger;
+  var SPRING = { type: 'spring', stiffness: 260, damping: 30 };
+
+  /* ---- Hero: spring in on load, staggered ---- */
+  var heroRise = document.querySelectorAll('.cp-hero .cp-rise');
+  if (heroRise.length) {
+    animate(heroRise, { opacity: [0, 1], y: [26, 0] },
+      { delay: stagger(0.08, { startDelay: 0.05 }), duration: 0.7, easing: [0.2, 0.7, 0.2, 1] });
+  }
+
+  /* ---- Glass panels: settle in with a spring ---- */
+  var glass = document.querySelectorAll('.cp-glass');
+  if (glass.length) {
+    animate(glass, { opacity: [0, 1], y: [40, 0], scale: [0.94, 1] },
+      { delay: stagger(0.12, { startDelay: 0.25 }), duration: 0.9, easing: [0.2, 0.7, 0.2, 1] });
+  }
+
+  /* ---- Progress bars fill when seen ---- */
+  document.querySelectorAll('.cp-mini-bar > i').forEach(function (bar) {
+    inView(bar, function () {
+      animate(bar, { width: ['0%', (bar.dataset.fill || 40) + '%'] },
+        { duration: 1.1, delay: 0.5, easing: [0.2, 0.7, 0.2, 1] });
+    }, { amount: 0.4 });
+  });
+
+  /* ---- Generic reveal: anything .cp-rise / .cp-fade outside the hero ---- */
+  document.querySelectorAll('.cp-rise, .cp-fade').forEach(function (el) {
+    if (el.closest('.cp-hero')) return;
+    inView(el, function () {
+      var isRise = el.classList.contains('cp-rise');
+      animate(el, isRise ? { opacity: [0, 1], y: [26, 0] } : { opacity: [0, 1] },
+        { duration: 0.62, easing: [0.2, 0.7, 0.2, 1] });
+    }, { amount: 0.15, margin: '0px 0px -60px 0px' });
+  });
+
+  /* ---- Staggered groups: children of [data-stagger] ---- */
+  document.querySelectorAll('[data-stagger]').forEach(function (group) {
+    var kids = group.children;
+    if (!kids.length) return;
+    Array.prototype.forEach.call(kids, function (k) { k.style.opacity = 0; });
+    inView(group, function () {
+      animate(kids, { opacity: [0, 1], y: [22, 0] },
+        { delay: stagger(0.07), duration: 0.6, easing: [0.2, 0.7, 0.2, 1] });
+    }, { amount: 0.12, margin: '0px 0px -70px 0px' });
+  });
+
+  /* ---- Headings reveal line by line ---- */
+  document.querySelectorAll('[data-lines]').forEach(function (h) {
+    var raw = h.innerHTML.split(/<br\s*\/?>/i);
+    if (raw.length < 2) return;
+    h.innerHTML = raw.map(function (l) {
+      return '<span class="cp-line"><span>' + l + '</span></span>';
+    }).join('');
+    var inner = h.querySelectorAll('.cp-line > span');
+    inner.forEach(function (s) { s.style.transform = 'translateY(105%)'; });
+    inView(h, function () {
+      animate(inner, { y: ['105%', '0%'] },
+        { delay: stagger(0.08), duration: 0.75, easing: [0.2, 0.7, 0.2, 1] });
+    }, { amount: 0.4 });
+  });
+
+  /* ---- Curriculum: rail fills with scroll, modules light up ---- */
+  var curr = document.querySelector('.cp-curr');
+  if (curr && scroll) {
+    var fill = curr.querySelector('.cp-curr-fill');
+    if (fill) {
+      scroll(function (p) { fill.style.height = (p * 100).toFixed(1) + '%'; }, {
+        target: curr,
+        offset: ['start 68%', 'end 70%']
+      });
+    }
+    curr.querySelectorAll('.cp-mod').forEach(function (m) {
+      inView(m, function () {
+        m.classList.add('is-on');
+        return function () { m.classList.remove('is-on'); };
+      }, { amount: 0.55 });
+    });
+  }
+
+  /* ---- Parallax drift on gradient chapter blocks ---- */
+  if (scroll) {
+    document.querySelectorAll('[data-parallax]').forEach(function (el) {
+      var amt = parseFloat(el.dataset.parallax) || 40;
+      scroll(function (p) { el.style.transform = 'translateY(' + ((p - 0.5) * amt).toFixed(1) + 'px)'; }, {
+        target: el.parentElement || el,
+        offset: ['start end', 'end start']
+      });
+    });
+  }
+
+  /* ---- Hero glass follows the pointer ---- */
+  (function () {
+    if (window.innerWidth < 960) return;
+    var panels = Array.prototype.slice.call(document.querySelectorAll('.cp-glass'));
+    if (!panels.length) return;
+    var tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+    function tick() {
+      cx += (tx - cx) * 0.07; cy += (ty - cy) * 0.07;
+      panels.forEach(function (p) {
+        var d = parseFloat(p.dataset.depth) || 1;
+        p.style.transform = 'translate3d(' + (cx * 15 * d).toFixed(2) + 'px,' + (-cy * 11 * d).toFixed(2) + 'px,0)';
+      });
+      if (Math.abs(tx - cx) > 0.001 || Math.abs(ty - cy) > 0.001) raf = requestAnimationFrame(tick); else raf = 0;
+    }
+    window.addEventListener('mousemove', function (e) {
+      tx = (e.clientX / window.innerWidth) * 2 - 1;
+      ty = -((e.clientY / window.innerHeight) * 2 - 1);
+      if (!raf) raf = requestAnimationFrame(tick);
+    }, { passive: true });
+  })();
+
+
+  /* ---- Timeline: dots light up in sequence as the row enters ---- */
+  document.querySelectorAll('[data-tl]').forEach(function (tl) {
+    var steps = [].slice.call(tl.querySelectorAll('.cp-tl'));
+    if (!steps.length) return;
+    inView(tl, function () {
+      steps.forEach(function (st, i) {
+        setTimeout(function () { st.classList.add('is-on'); }, i * 180);
+      });
+      animate(steps, { opacity: [0, 1], y: [24, 0] },
+        { delay: stagger(0.13), duration: 0.62, easing: [0.2, 0.7, 0.2, 1] });
+    }, { amount: 0.3 });
+  });
+
+  /* ---- Week numerals slide up behind their content ---- */
+  document.querySelectorAll('.cp-week').forEach(function (w) {
+    var big = w.querySelector('.cp-week-big');
+    var tag = w.querySelector('.cp-week-tag');
+    if (!big) return;
+    inView(w, function () {
+      animate(big, { opacity: [0, 1], y: [30, 0] }, { duration: 0.75, easing: [0.2, 0.7, 0.2, 1] });
+      if (tag) animate(tag, { opacity: [0, 1], scale: [0.85, 1] }, { duration: 0.5, delay: 0.08, easing: [0.2, 0.7, 0.2, 1] });
+      animate(w.querySelectorAll('.cp-week-list li'), { opacity: [0, 1], x: [-10, 0] },
+        { delay: stagger(0.045, { start: 0.18 }), duration: 0.45, easing: [0.2, 0.7, 0.2, 1] });
+    }, { amount: 0.25 });
+  });
+
+  /* ---- Outcome rows wipe in from their divider ---- */
+  document.querySelectorAll('.cp-out-item').forEach(function (o, i) {
+    inView(o, function () {
+      animate(o, { opacity: [0, 1], y: [20, 0] },
+        { duration: 0.6, delay: (i % 2) * 0.07, easing: [0.2, 0.7, 0.2, 1] });
+    }, { amount: 0.35 });
+  });
+
+  /* ---- Tool tiles pop in ---- */
+  document.querySelectorAll('.cp-tools').forEach(function (grid) {
+    inView(grid, function () {
+      animate(grid.children, { opacity: [0, 1], scale: [0.9, 1], y: [14, 0] },
+        { delay: stagger(0.04), duration: 0.5, easing: [0.2, 0.7, 0.2, 1] });
+    }, { amount: 0.2 });
+  });
+
+  /* ---- Fit lists tick in one by one ---- */
+  document.querySelectorAll('.cp-fit-col').forEach(function (col) {
+    inView(col, function () {
+      animate(col.querySelectorAll('li'), { opacity: [0, 1], x: [-12, 0] },
+        { delay: stagger(0.07), duration: 0.5, easing: [0.2, 0.7, 0.2, 1] });
+    }, { amount: 0.25 });
+  });
+
+  /* ---- Comparison columns ---- */
+  document.querySelectorAll('.cp-vs-col').forEach(function (col, i) {
+    inView(col, function () {
+      animate(col, { opacity: [0, 1], y: [26, 0] }, { duration: 0.62, delay: i * 0.1, easing: [0.2, 0.7, 0.2, 1] });
+      animate(col.querySelectorAll('li'), { opacity: [0, 1], x: [i ? 12 : -12, 0] },
+        { delay: stagger(0.06, { start: 0.15 }), duration: 0.45, easing: [0.2, 0.7, 0.2, 1] });
+    }, { amount: 0.2 });
+  });
+
+  /* ---- Step media reveals with a slight scale settle ---- */
+  document.querySelectorAll('.cp-step-media').forEach(function (m) {
+    inView(m, function () {
+      animate(m, { opacity: [0, 1], scale: [0.96, 1] }, { duration: 0.8, easing: [0.2, 0.7, 0.2, 1] });
+    }, { amount: 0.25 });
+  });
+
+  /* ---- Practitioner photo drifts on scroll ---- */
+  var pracImg = document.querySelector('.cp-prac-photo img');
+  if (pracImg && scroll) {
+    scroll(function (pr) { pracImg.style.transform = 'translateY(' + ((pr - 0.5) * 26).toFixed(1) + 'px) scale(1.06)'; },
+      { target: pracImg.closest('.cp-prac'), offset: ['start end', 'end start'] });
+  }
+
+  /* ---- Quiz: animate each question in as it becomes active ---- */
+  (function () {
+    var box = document.querySelector('[id^="qf_"][id$="_container"]');
+    if (!box || !window.MutationObserver) return;
+    new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        var el = m.target;
+        if (m.attributeName === 'class' && el.classList && el.classList.contains('qf-active')) {
+          animate(el, { opacity: [0, 1], y: [14, 0] }, { duration: 0.42, easing: [0.2, 0.7, 0.2, 1] });
+          animate(el.querySelectorAll('.qf-opt'), { opacity: [0, 1], y: [10, 0] },
+            { delay: stagger(0.05), duration: 0.38, easing: [0.2, 0.7, 0.2, 1] });
+        }
+      });
+    }).observe(box, { attributes: true, subtree: true, attributeFilter: ['class'] });
+  })();
+
+  /* ---- Counters ---- */
+  document.querySelectorAll('[data-countup]').forEach(function (el) {
+    var target = parseFloat(el.dataset.countup);
+    var suffix = el.dataset.suffix || '';
+    inView(el, function () {
+      animate(0, target, {
+        duration: 1.4, easing: [0.2, 0.7, 0.2, 1],
+        onUpdate: function (v) { el.textContent = Math.round(v).toLocaleString() + suffix; }
+      });
+    }, { amount: 0.6 });
+  });
+})();
+</script>
+
+
+<script>
+/* ---- FAQ accordion (self-contained; script.js's initFaqAccordion is out of scope) ---- */
+(function () {
+  var list = document.getElementById('cp-faq');
+  if (!list) return;
+  var items = [].slice.call(list.querySelectorAll('.cp-faq-item'));
+  items.forEach(function (item) {
+    var btn = item.querySelector('.cp-faq-q');
+    var panel = item.querySelector('.cp-faq-a');
+    if (!btn || !panel) return;
+    btn.addEventListener('click', function () {
+      var isOpen = item.classList.contains('open');
+      items.forEach(function (other) {
+        if (other === item) return;
+        other.classList.remove('open');
+        var ob = other.querySelector('.cp-faq-q'), op = other.querySelector('.cp-faq-a');
+        if (ob) ob.setAttribute('aria-expanded', 'false');
+        if (op) op.setAttribute('aria-hidden', 'true');
+      });
+      item.classList.toggle('open', !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      panel.setAttribute('aria-hidden', String(isOpen));
+    });
+  });
+  var first = items[0];
+  if (first) {
+    first.classList.add('open');
+    first.querySelector('.cp-faq-q').setAttribute('aria-expanded', 'true');
+    first.querySelector('.cp-faq-a').setAttribute('aria-hidden', 'false');
+  }
+})();
+</script>
 </body>
 </html>
