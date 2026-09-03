@@ -925,8 +925,190 @@ html.cp-anim .cp-fade { opacity:0; }
 }
 </style>
 
+<style>
+/* ============================================================
+   FIELD CHARACTER
+   Each course page gets its own weighting of the SAME brand ramp -
+   no new hues, just a different journey through the existing tokens.
+   cyber  : cold, steel-forward, red only at the edge
+   finance: deep and rich, wine-heavy
+   market : warm, orange-forward
+   ============================================================ */
+
+/* ---------- CYBERSECURITY : cold ---------- */
+body.f-cyber .cp-hero {
+  background:
+    radial-gradient(100% 130% at 100% 108%, rgba(255,41,78,.55) 0%, rgba(196,23,58,.28) 32%, transparent 62%),
+    radial-gradient(80% 90% at 78% 4%, rgba(27,58,92,.75) 0%, transparent 60%),
+    radial-gradient(90% 100% at 0% 20%, rgba(13,28,52,.95) 0%, transparent 66%),
+    linear-gradient(124deg, #01060F 0%, #04162B 22%, #0D2743 42%, #1B3A5C 62%, #7A1C33 86%, #C4173A 100%);
+}
+body.f-cyber .cp-chapter {
+  background:
+    radial-gradient(85% 120% at 100% 0%, rgba(255,41,78,.30) 0%, transparent 58%),
+    radial-gradient(80% 100% at 0% 100%, rgba(27,58,92,.70) 0%, transparent 64%),
+    linear-gradient(118deg, #01060F 0%, #06192F 28%, #12304C 52%, #5E1728 82%, #9A2335 100%);
+}
+/* a faint scanline over the hero - reads as a monitor without being kitsch */
+body.f-cyber .cp-hero::before {
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:0; opacity:.10;
+  background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.9) 0 1px, transparent 1px 4px);
+}
+body.f-cyber .cp-week-tag { background:linear-gradient(135deg,#1B3A5C,#C4173A); }
+body.f-cyber .cp-hero h1 .accent { color:#9FC7E8; }
+
+/* ---------- FINANCIAL MODELLING : deep ---------- */
+body.f-finance .cp-hero {
+  background:
+    radial-gradient(105% 130% at 100% 104%, rgba(255,87,72,.70) 0%, rgba(154,35,53,.55) 34%, transparent 66%),
+    radial-gradient(70% 80% at 88% 8%, rgba(196,23,58,.34) 0%, transparent 62%),
+    radial-gradient(80% 90% at 2% 10%, rgba(2,16,36,.92) 0%, transparent 58%),
+    linear-gradient(112deg, #021024 0%, #14243C 18%, #4A1B2E 44%, #7E1C3B 66%, #9A2335 84%, #C4173A 100%);
+}
+body.f-finance .cp-chapter {
+  background:
+    radial-gradient(90% 120% at 100% 0%, rgba(255,87,72,.42) 0%, transparent 60%),
+    radial-gradient(70% 100% at 0% 100%, rgba(2,16,36,.9) 0%, transparent 62%),
+    linear-gradient(116deg, #021024 0%, #26182C 30%, #6B1B33 62%, #9A2335 86%, #C4173A 100%);
+}
+/* ledger rule - a quiet grid, the way a spreadsheet reads */
+body.f-finance .cp-hero::before {
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:0; opacity:.07;
+  background-image:linear-gradient(rgba(255,255,255,.8) 1px, transparent 1px);
+  background-size:100% 34px;
+}
+body.f-finance .cp-hero h1 .accent { color:#FFD9A8; }
+
+/* ---------- PRODUCT MARKETING : warm ---------- */
+body.f-market .cp-hero {
+  background:
+    radial-gradient(110% 130% at 96% 100%, rgba(255,150,96,.92) 0%, rgba(255,87,72,.62) 30%, transparent 64%),
+    radial-gradient(70% 80% at 82% 4%, rgba(255,41,78,.42) 0%, transparent 60%),
+    radial-gradient(80% 90% at 0% 16%, rgba(27,58,92,.55) 0%, transparent 58%),
+    linear-gradient(122deg, #06152B 0%, #1B3A5C 20%, #8A2140 48%, #D8323F 76%, #FF7A4D 100%);
+}
+body.f-market .cp-chapter {
+  background:
+    radial-gradient(90% 120% at 100% 0%, rgba(255,150,96,.55) 0%, transparent 60%),
+    radial-gradient(80% 100% at 0% 100%, rgba(27,58,92,.5) 0%, transparent 62%),
+    linear-gradient(116deg, #061428 0%, #1B3A5C 26%, #9A2335 58%, #D8323F 82%, #FF7A4D 100%);
+}
+body.f-market .cp-hero h1 .accent { color:#FFE0B8; }
+
+/* ============================================================
+   HERO CARD — image variant (small photo inside a glass card)
+   ============================================================ */
+.cp-glass-photo { padding:0 !important; overflow:hidden; }
+.cp-glass-photo > .in { padding:0; }
+.cp-gp-img { position:relative; aspect-ratio:16/9; overflow:hidden; background:rgba(255,255,255,.06); }
+.cp-gp-img img { width:100%; height:100%; object-fit:cover; display:block; }
+.cp-gp-img::after { content:''; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(1,11,30,.05) 0%, transparent 40%, rgba(1,11,30,.62) 100%); }
+.cp-gp-cap { position:absolute; left:13px; right:13px; bottom:10px; z-index:1; }
+.cp-gp-cap b { display:block; font-size:.8rem; font-weight:700; color:#fff; letter-spacing:-.01em; }
+.cp-gp-cap span { display:block; font-size:.68rem; color:rgba(255,255,255,.78); margin-top:1px; }
+.cp-gp-body { padding:14px 16px 15px; }
+
+/* ============================================================
+   HERO CARD — figures (finance)
+   ============================================================ */
+.cp-fig { display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-top:12px; }
+.cp-fig-v { font-size:1.6rem; font-weight:800; letter-spacing:-.04em; color:#fff; line-height:1; }
+.cp-fig-d { font-size:.68rem; font-weight:700; color:#7CEFA6; display:inline-flex; align-items:center; gap:4px; }
+/* tiny inline sparkline, drawn in CSS so there is no asset to load */
+.cp-spark { display:flex; align-items:flex-end; gap:3px; height:26px; margin-top:12px; }
+.cp-spark i { flex:1; border-radius:2px 2px 0 0; background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,.32)); display:block; }
+.cp-ledger { margin-top:13px; padding-top:11px; border-top:1px solid rgba(255,255,255,.18);
+  display:flex; align-items:center; justify-content:space-between; }
+.cp-ledger span { font-size:.7rem; color:rgba(255,255,255,.66); }
+.cp-ledger b { font-size:.8rem; color:#fff; font-weight:700; }
+
+/* ============================================================
+   HERO CARD — alert row (cyber)
+   ============================================================ */
+.cp-alert { display:flex; align-items:center; gap:10px; margin-top:12px; padding:9px 11px;
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.13); border-radius:9px; }
+.cp-alert i { width:7px; height:7px; border-radius:50%; flex-shrink:0; display:block; }
+.cp-alert.hi i { background:#FF6B85; box-shadow:0 0 0 3px rgba(255,107,133,.18); }
+.cp-alert.lo i { background:#7CEFA6; }
+.cp-alert span { font-size:.76rem; color:rgba(255,255,255,.84); }
+.cp-alert b { margin-left:auto; font-size:.68rem; font-weight:800; letter-spacing:.08em;
+  text-transform:uppercase; color:rgba(255,255,255,.55); }
+
+/* ============================================================
+   HOW IT WORKS — cyber runs as an operation timeline, not steps
+   ============================================================ */
+body.f-cyber .cp-step-n { color:#9FC7E8; }
+.cp-opgrid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-top:8px; }
+.cp-op { position:relative; background:#fff; border:1px solid var(--cp-line); border-radius:var(--cp-r);
+  padding:26px 26px 24px; overflow:hidden;
+  transition:transform .35s var(--cp-ease), box-shadow .35s var(--cp-ease), border-color .3s; }
+.cp-op::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+  background:linear-gradient(180deg,var(--g-steel),var(--g-red)); transform:scaleY(0); transform-origin:top;
+  transition:transform .45s var(--cp-ease); }
+.cp-op:hover { transform:translateY(-4px); box-shadow:var(--cp-shadow); border-color:transparent; }
+.cp-op:hover::before { transform:scaleY(1); }
+.cp-op-k { display:flex; align-items:center; gap:9px; margin-bottom:14px; }
+.cp-op-k i { width:26px; height:26px; border-radius:7px; display:grid; place-items:center; flex-shrink:0;
+  background:var(--cp-red-soft); color:var(--cp-red); }
+.cp-op-k span { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.64rem;
+  font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--cp-muted); }
+.cp-op-t { font-size:1.14rem; font-weight:700; letter-spacing:-.02em; color:var(--cp-ink); }
+.cp-op-d { font-size:.92rem; color:var(--cp-body); line-height:1.62; margin-top:9px; }
+.cp-op-media { margin:18px -26px -24px; aspect-ratio:16/7; overflow:hidden; background:var(--cp-surface); }
+.cp-op-media img { width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .8s var(--cp-ease); }
+.cp-op:hover .cp-op-media img { transform:scale(1.05); }
+
+@media (max-width:900px){ .cp-opgrid { grid-template-columns:1fr; } }
+@media (max-width:640px){
+  .cp-op { padding:22px 22px 20px; }
+  .cp-op-media { margin:16px -22px -20px; }
+}
+
+/* ============================================================
+   HERO STAGE — photo variant needs its own geometry
+   The photo card is ~280px tall against ~150px for the text card
+   it replaced, so the inherited positions collided.
+   ============================================================ */
+body.f-cyber .cp-glass-stage,
+body.f-finance .cp-glass-stage,
+body.f-market .cp-glass-stage { height:492px; }
+
+body.f-cyber .cp-glass-1,
+body.f-finance .cp-glass-1,
+body.f-market .cp-glass-1 { top:0; right:0; left:auto; width:292px; }
+
+body.f-cyber .cp-glass-2,
+body.f-finance .cp-glass-2,
+body.f-market .cp-glass-2 { top:206px; left:0; right:auto; width:270px; }
+
+body.f-cyber .cp-glass-3,
+body.f-finance .cp-glass-3,
+body.f-market .cp-glass-3 { top:212px; right:0; left:auto; bottom:auto; width:248px; }
+
+@media (max-width:960px){
+  body.f-cyber .cp-glass-stage,
+  body.f-finance .cp-glass-stage,
+  body.f-market .cp-glass-stage { height:470px; max-width:540px; }
+  body.f-cyber .cp-glass-1, body.f-finance .cp-glass-1, body.f-market .cp-glass-1 { width:270px; }
+  body.f-cyber .cp-glass-2, body.f-finance .cp-glass-2, body.f-market .cp-glass-2 { width:252px; top:196px; }
+  body.f-cyber .cp-glass-3, body.f-finance .cp-glass-3, body.f-market .cp-glass-3 { width:232px; top:204px; }
+}
+@media (max-width:640px){
+  /* Measured at 375px: card 1 is 236px tall, so card 2 has to clear that.
+     Third card is dropped - three will not fit a phone stage. */
+  body.f-cyber .cp-glass-stage,
+  body.f-finance .cp-glass-stage,
+  body.f-market .cp-glass-stage { height:506px; }
+  body.f-cyber .cp-glass-1, body.f-finance .cp-glass-1, body.f-market .cp-glass-1 { width:min(214px,64%); top:0; }
+  body.f-cyber .cp-glass-2, body.f-finance .cp-glass-2, body.f-market .cp-glass-2 { width:min(224px,67%); top:250px; }
+  body.f-cyber .cp-glass-3, body.f-finance .cp-glass-3, body.f-market .cp-glass-3 { display:none; }
+}
+</style>
+
 </head>
-<body class="cp">
+<body class="cp f-finance">
 
   <!-- Region Banner -->
 <div class="region-banner" id="region-banner">
@@ -1021,20 +1203,37 @@ html.cp-anim .cp-fade { opacity:0; }
           </div>
         </div>
 
-        <div class="cp-glass cp-glass-2" data-depth="0.85">
-          <div class="cp-glass-k">Capstone artefact</div>
-          <div class="cp-glass-t">Auditable finance workflow</div>
-          <div class="cp-glass-s">Assumptions documented, sources traced, and a reviewer who signed it off.</div>
-          <div class="cp-glass-row">
-            <span class="cp-glass-k">Shipped by you</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7CEFA6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="cp-glass cp-glass-2 cp-glass-photo" data-depth="0.85">
+          <div class="in">
+            <div class="cp-gp-img">
+              <img src="assets/course/finance/desk.jpg" alt="Financial analyst building a model" loading="lazy" />
+              <div class="cp-gp-cap"><b>Model review</b><span>Cohort 01 · Week 2</span></div>
+            </div>
+            <div class="cp-gp-body">
+              <div class="cp-glass-k">Capstone artefact</div>
+              <div class="cp-glass-t">Auditable finance workflow</div>
+              <div class="cp-glass-s">Assumptions documented, every input traceable.</div>
+            </div>
           </div>
         </div>
 
         <div class="cp-glass cp-glass-3" data-depth="1.1">
-          <div class="cp-glass-k">Cohort size</div>
-          <div class="cp-glass-big">Small</div>
-          <div class="cp-glass-s">Practitioner-led. Everyone gets reviewed.</div>
+          <div class="in">
+            <div class="cp-glass-k">Month-end close</div>
+            <div class="cp-fig">
+              <span class="cp-fig-v">3 days</span>
+              <span class="cp-fig-d">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="19 12 12 19 5 12"/><line x1="12" y1="5" x2="12" y2="19"/></svg>
+                saved
+              </span>
+            </div>
+            <div class="cp-spark" aria-hidden="true">
+              <i style="height:46%"></i><i style="height:62%"></i><i style="height:38%"></i>
+              <i style="height:74%"></i><i style="height:55%"></i><i style="height:88%"></i>
+              <i style="height:68%"></i><i style="height:100%"></i>
+            </div>
+            <div class="cp-ledger"><span>Audit sign-off</span><b>First pass</b></div>
+          </div>
         </div>
       </div>
 
