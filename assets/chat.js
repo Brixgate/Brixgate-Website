@@ -21,6 +21,8 @@
 
   if (window.__bxChatLoaded) return;
   window.__bxChatLoaded = true;
+  /* Hook for anything that needs to know the widget is present. */
+  document.documentElement.classList.add('bx-has-chat');
 
   /* ---------- session ---------- */
   function sessionId() {
@@ -35,7 +37,7 @@
 
   /* ---------- styles ---------- */
   var css = `
-.bxc-btn{position:fixed;right:20px;bottom:96px;z-index:9998;width:56px;height:56px;border:0;border-radius:50%;
+.bxc-btn{position:fixed;right:22px;bottom:136px;z-index:9998;width:56px;height:56px;border:0;border-radius:50%;
  cursor:pointer;display:grid;place-items:center;padding:0;
  background:linear-gradient(135deg,#FF294E,#FF5748);color:#fff;
  box-shadow:0 10px 30px -8px rgba(255,41,78,.65);
@@ -49,7 +51,7 @@
  background:#4ade80;border:2px solid #fff}
 .bxc-btn.open .bxc-dot{display:none}
 
-.bxc-panel{position:fixed;right:20px;bottom:164px;z-index:9999;width:380px;max-width:calc(100vw - 40px);
+.bxc-panel{position:fixed;right:22px;bottom:204px;z-index:9999;width:380px;max-width:calc(100vw - 40px);
  height:min(560px,calc(100vh - 200px));display:flex;flex-direction:column;overflow:hidden;
  background:#fff;border-radius:20px;border:1px solid #E6E8EC;
  box-shadow:0 2px 6px rgba(2,16,36,.06),0 30px 70px -24px rgba(2,16,36,.42);
@@ -106,13 +108,20 @@
  background:linear-gradient(135deg,#FF294E,#FF5748);color:#fff;transition:transform .2s,opacity .2s}
 .bxc-send:hover:not(:disabled){transform:translateY(-1px)}
 .bxc-send:disabled{opacity:.4;cursor:not-allowed}
+.bxc-in:disabled{opacity:.55;cursor:not-allowed;background:#F0F2F5}
+.bxc-retry{align-self:flex-start;margin-top:-4px;font-family:inherit;font-size:.78rem;font-weight:650;
+ color:#FF294E;background:none;border:0;cursor:pointer;padding:2px 4px;text-decoration:underline}
+.bxc-retry:hover{color:#C4173A}
 .bxc-note{font-size:.68rem;color:#98A4B5;text-align:center;margin-top:9px}
 .bxc-note a{color:#6B7A90;text-decoration:underline}
 
+/* The floats stack bottom-up: WhatsApp (28-72), back-to-top (80-124,
+   only once scrolled), chat above both. We move ours rather than
+   overriding shared components' positions from here. */
 @media (max-width:520px){
  .bxc-panel{right:0;left:0;bottom:0;width:100%;max-width:none;height:min(76vh,620px);
   border-radius:20px 20px 0 0;border-left:0;border-right:0;border-bottom:0}
- .bxc-btn{bottom:88px;right:14px}
+ .bxc-btn{bottom:132px;right:16px;width:52px;height:52px}
 }
 @media (prefers-reduced-motion:reduce){
  .bxc-panel,.bxc-btn,.bxc-msg{transition:none!important;animation:none!important}
@@ -232,7 +241,10 @@
     bubble(text, 'bxc-me'); save('me', text);
     input.value = ''; input.style.height = 'auto';
 
-    busy = true; send.disabled = true;
+    busy = true;
+    send.disabled = true;
+    input.disabled = true;
+    input.placeholder = 'Waiting for a reply…';
 
     var typing = document.createElement('div');
     typing.className = 'bxc-typing';
@@ -256,7 +268,10 @@
     function done() {
       clearTimeout(slowTimer); clearTimeout(killer);
       typing.remove(); if (slow) slow.remove();
-      busy = false; send.disabled = false;
+      busy = false;
+      send.disabled = false;
+      input.disabled = false;
+      input.placeholder = 'Ask about programmes, pricing, dates…';
     }
 
     fetch(ENDPOINT, {
@@ -278,9 +293,14 @@
       .catch(function (err) {
         done();
         var msg = (err && err.name === 'AbortError')
-          ? "That took longer than expected. Try again, or message us on WhatsApp and a person will pick it up."
-          : "I couldn't reach the assistant just now. Please message us on WhatsApp at 0807 916 0291 or email we@brixgate.com.";
-        bubble(msg, 'bxc-err');
+          ? "That took longer than expected."
+          : "I couldn't reach the assistant just now.";
+        bubble(msg + ' You can try again, or message us on WhatsApp at 0807 916 0291.', 'bxc-err');
+        var again = document.createElement('button');
+        again.type = 'button'; again.className = 'bxc-retry'; again.textContent = 'Retry';
+        again.addEventListener('click', function () { again.remove(); ask(text); });
+        log.appendChild(again);
+        log.scrollTop = log.scrollHeight;
       });
   }
 
