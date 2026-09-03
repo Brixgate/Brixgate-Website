@@ -788,7 +788,7 @@ body.ap #apply-phone-cc:focus {
 }
 body.ap .form-group select { cursor:pointer; appearance:none; -webkit-appearance:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236B7A90' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") !important;
-  background-repeat:no-repeat !important; background-position:right 14px center !important; padding-right:38px !important;
+  background-repeat:no-repeat !important; background-position:right 14px center !important; background-size:14px 14px !important; padding-right:38px !important;
 }
 .ap-hint { font-size:.78rem; color:var(--ap-muted); margin-top:7px; display:flex; align-items:center; gap:6px; }
 .ap-req { color:var(--ap-red); font-weight:700; }
@@ -1014,6 +1014,7 @@ body.ap .ap-rail { display:none !important; }
 .ap-side {
   grid-column:1; grid-row:1 / span 6;
   position:relative; overflow:hidden; color:#fff;
+  border-radius:26px; margin:18px 0 18px 18px;
   padding:44px 46px 40px;
   display:flex; flex-direction:column;
   background:
@@ -1026,7 +1027,7 @@ body.ap .ap-rail { display:none !important; }
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
 }
 .ap-side > * { position:relative; z-index:1; }
-.ap-side-in { position:sticky; top:44px; display:flex; flex-direction:column; height:calc(100vh - 84px); }
+.ap-side-in { position:sticky; top:62px; display:flex; flex-direction:column; height:calc(100vh - 84px); }
 
 .ap-back {
   display:inline-flex; align-items:center; gap:9px; align-self:flex-start;
@@ -1112,15 +1113,40 @@ body.ap .ap-scholar { margin-bottom:30px; }
    Put .bx-waves on any positioned element.
    ============================================================ */
 .bx-waves::before {
-  content:''; position:absolute; inset:0; pointer-events:none; z-index:0;
+  content:''; position:absolute; inset:-8% -14%; pointer-events:none; z-index:0;
   background-image:url('assets/pattern/waves.svg');
   background-repeat:no-repeat; background-position:center;
   background-size:cover;
-  opacity:.55;
+  opacity:.30;
+  will-change:transform;
+  animation:bxWaveDrift 26s ease-in-out infinite alternate;
+}
+@keyframes bxWaveDrift {
+  0%   { transform:translate3d(0,0,0) scale(1.02); }
+  50%  { transform:translate3d(-2.2%,1.4%,0) scale(1.06); }
+  100% { transform:translate3d(1.8%,-1.2%,0) scale(1.03); }
+}
+/* a second, slower layer so the field reads as moving water, not a sliding image */
+.bx-waves::after {
+  content:''; position:absolute; inset:-10% -16%; pointer-events:none; z-index:0;
+  background-image:url('assets/pattern/waves-dense.svg');
+  background-repeat:no-repeat; background-position:center;
+  background-size:cover;
+  opacity:.14;
+  will-change:transform;
+  animation:bxWaveDrift2 38s ease-in-out infinite alternate;
+}
+@keyframes bxWaveDrift2 {
+  0%   { transform:translate3d(0,0,0) scale(1.05) rotate(.4deg); }
+  100% { transform:translate3d(2.6%,-1.8%,0) scale(1.01) rotate(-.4deg); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .bx-waves::before, .bx-waves::after { animation:none !important; }
 }
 .bx-waves.is-dense::before { background-image:url('assets/pattern/waves-dense.svg'); }
-.bx-waves.on-dark::before { opacity:.34; mix-blend-mode:screen; }
-.bx-waves.on-light::before { opacity:.5; }
+.bx-waves.on-dark::before { opacity:.22; mix-blend-mode:screen; }
+.bx-waves.on-dark::after { opacity:.10; mix-blend-mode:screen; }
+.bx-waves.on-light::before { opacity:.28; }
 .bx-waves > * { position:relative; z-index:1; }
 
 /* ============================================================
@@ -1151,7 +1177,9 @@ body.ap.ap-dark .form-group input,
 body.ap.ap-dark .form-group select,
 body.ap.ap-dark .form-group textarea,
 body.ap.ap-dark #apply-phone-cc {
-  background:#0D1826 !important; border-color:#1E2F45 !important; color:#F2F5F9 !important;
+  /* background-color, never the `background` shorthand: the shorthand resets
+     background-repeat/position and tiles the select chevron across the field */
+  background-color:#0D1826 !important; border-color:#1E2F45 !important; color:#F2F5F9 !important;
 }
 body.ap.ap-dark .form-group input::placeholder { color:#55677C !important; }
 body.ap.ap-dark .form-group input:hover, .ap-dark .form-group select:hover { border-color:#2A3F59 !important; }
@@ -1160,6 +1188,9 @@ body.ap.ap-dark .form-group input:focus, .ap-dark .form-group select:focus, .ap-
 }
 body.ap.ap-dark .form-group select {
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237E8FA3' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") !important;
+  background-repeat:no-repeat !important;
+  background-position:right 14px center !important;
+  background-size:14px 14px !important;
 }
 
 /* choice cards */
@@ -3605,6 +3636,18 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     el.addEventListener('input', function () { if (groupOf(el).classList.contains('invalid')) validate(el, true); });
     el.addEventListener('change', function () { if (groupOf(el).classList.contains('invalid')) validate(el, true); });
   });
+  /* Values set programmatically (applyProgramId, draft restore, cohort load)
+     fire no input/change event, so a previously shown error would stick even
+     once the field is valid. Sweep and clear stale invalid states. */
+  setInterval(function () {
+    watched.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var g = groupOf(el);
+      if (g && g.classList.contains('invalid') && (el.value || '').trim()) validate(el, true);
+    });
+  }, 500);
+
   var form = document.getElementById('apply-form');
   if (form) {
     form.addEventListener('submit', function (e) {
