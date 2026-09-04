@@ -3,632 +3,479 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Readiness Check — Brixgate | Where Do You Stand?</title>
-  <meta name="description" content="Take the free 3-minute Brixgate AI Readiness Check. Find out where you stand professionally and what it means for your career." />
-  <meta property="og:title" content="Are You AI-Ready? Find Out in 3 Minutes." />
-  <meta property="og:description" content="The Brixgate AI Readiness Check — a quick, honest assessment of where you stand as AI reshapes your profession." />
-  <meta property="og:type" content="website" />
+  <title>AI Readiness Check — Brixgate | Where do you actually stand?</title>
+  <meta name="description" content="A short, honest read on how ready you are for AI in your profession. Six workplace scenarios, no technical knowledge needed, an instant result and a shareable badge." />
   <link rel="icon" type="image/png" href="assets/faviii.png" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* Fix nav to top on pages without region-banner */
-    .nav { top: 0 !important; }
-    body.assess-wrap { padding-top: var(--nav-height); }
-  </style>
-  <style>
-    body { background: var(--bg-dark); }
-
-    /* ====== ASSESSMENT SHELL ====== */
-    .assess-wrap {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* ====== HERO INTRO ====== */
-    .assess-hero {
-      padding: 72px 0 56px;
-      text-align: center;
-      border-bottom: 1px solid var(--border-card);
-    }
-
-    .assess-progress-bar {
-      height: 4px;
-      background: var(--border-card);
-      border-radius: 2px;
-      overflow: hidden;
-      max-width: 480px;
-      margin: 0 auto 32px;
-    }
-    .assess-progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--red), var(--orange));
-      border-radius: 2px;
-      transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
-    }
-
-    .assess-step-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 8px;
-    }
-
-    /* ====== QUESTION CARD ====== */
-    .q-card {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    .q-number {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: var(--red);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      margin-bottom: 14px;
-    }
-
-    .q-text {
-      font-size: clamp(1.15rem, 2.5vw, 1.5rem);
-      font-weight: 800;
-      color: var(--white);
-      line-height: 1.35;
-      margin-bottom: 32px;
-    }
-
-    .q-options {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .q-option {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 16px 20px;
-      background: var(--bg-card);
-      border: 1.5px solid var(--border-card);
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      transition: var(--transition);
-      text-align: left;
-    }
-
-    .q-option:hover {
-      border-color: var(--red);
-      background: rgba(255,41,78,0.05);
-    }
-
-    .q-option.selected {
-      border-color: var(--red);
-      background: rgba(255,41,78,0.08);
-    }
-
-    .q-option-letter {
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border-card);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      font-weight: 800;
-      color: var(--muted);
-      flex-shrink: 0;
-      transition: var(--transition);
-    }
-
-    .q-option.selected .q-option-letter {
-      background: var(--red);
-      border-color: var(--red);
-      color: #fff;
-    }
-
-    .q-option-text {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: rgba(255,255,255,0.8);
-      line-height: 1.4;
-    }
-
-    .q-option.selected .q-option-text {
-      color: var(--white);
-    }
-
-    .q-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 680px;
-      margin: 28px auto 0;
-      padding: 0 24px;
-    }
-
-    .q-back-btn {
-      background: none;
-      border: none;
-      color: var(--muted);
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      padding: 8px 0;
-      transition: var(--transition);
-    }
-
-    .q-back-btn:hover { color: var(--white); }
-
-    .q-next-btn {
-      background: var(--red);
-      color: var(--white);
-      border: none;
-      padding: 14px 32px;
-      border-radius: 50px;
-      font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: var(--transition);
-      opacity: 0.4;
-      pointer-events: none;
-    }
-
-    .q-next-btn.enabled {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .q-next-btn.enabled:hover {
-      background: var(--orange);
-      transform: translateY(-2px);
-    }
-
-    /* ====== INTRO SCREEN ====== */
-    #intro-screen {
-      padding: 80px 24px;
-      text-align: center;
-    }
-
-    .intro-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255,41,78,0.1);
-      border: 1px solid rgba(255,41,78,0.25);
-      border-radius: 50px;
-      padding: 8px 18px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--red);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 28px;
-    }
-
-    .intro-tag::before {
-      content: '';
-      width: 7px;
-      height: 7px;
-      background: var(--red);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    .intro-preview {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin: 40px auto;
-      max-width: 660px;
-    }
-
-    .intro-preview-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.82rem;
-      color: var(--muted);
-    }
-
-    .intro-preview-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--red);
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    /* ====== RESULTS SCREEN — LIGHT MODE ====== */
-    #results-screen {
-      display: none;
-      background: #F6F5F5;
-      min-height: 100vh;
-      padding: 60px 24px 80px;
-      position: relative;
-    }
-
-    /* Blur the result content while modal is active */
-    #results-screen.results-blurred .result-wrap {
-      filter: blur(7px);
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .result-wrap {
-      max-width: 720px;
-      margin: 0 auto;
-      transition: filter 0.3s ease;
-    }
-
-    .result-tier-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 22px;
-      border-radius: 50px;
-      font-size: 0.78rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 24px;
-    }
-
-    .result-score-ring {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 5px solid #D1D9E0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      margin: 0 auto 32px;
-      background: #fff;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    }
-
-    .result-score-val {
-      font-size: 2.1rem;
-      font-weight: 900;
-      color: #021024;
-      line-height: 1;
-    }
-
-    .result-score-lbl {
-      font-size: 0.58rem;
-      color: #7A94A8;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .result-headline {
-      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-      font-weight: 900;
-      color: #021024;
-      line-height: 1.15;
-      margin-bottom: 16px;
-    }
-
-    .result-sub {
-      font-size: 0.95rem;
-      color: #4A5568;
-      line-height: 1.8;
-      margin-bottom: 40px;
-    }
-
-    /* Apply CTA text on light bg */
-    #results-screen .btn-primary { }
-    #results-screen p[style*="var(--muted)"] { color: #7A94A8 !important; }
-
-    .result-signals {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 40px;
-    }
-
-    .signal-card {
-      background: #fff;
-      border: 1px solid #E8E3DE;
-      border-radius: var(--radius-md);
-      padding: 22px 18px;
-      text-align: left;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    }
-
-    .signal-icon {
-      font-size: 1.4rem;
-      margin-bottom: 10px;
-    }
-
-    .signal-title {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #021024;
-      margin-bottom: 4px;
-    }
-
-    .signal-desc {
-      font-size: 0.75rem;
-      color: #4A5568;
-      line-height: 1.55;
-    }
-
-    .result-cta-block {
-      background: linear-gradient(135deg, #fff 0%, #FFF5F6 100%);
-      border: 1.5px solid rgba(255,41,78,0.2);
-      border-radius: var(--radius-lg);
-      padding: 40px;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(255,41,78,0.06);
-    }
-
-    /* Override CTA block text for light mode */
-    .result-cta-block h3 { color: #021024 !important; }
-    .result-cta-block p  { color: #4A5568 !important; }
-
-    .result-share-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 24px;
-      flex-wrap: wrap;
-    }
-
-    .share-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      border-radius: 50px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      border: 1px solid #D1D9E0;
-      background: transparent;
-      color: #4A5568;
-      text-decoration: none;
-      transition: var(--transition);
-    }
-
-    .share-btn:hover {
-      border-color: #021024;
-      color: #021024;
-    }
-
-    .share-btn.restart {
-      border-color: rgba(255,41,78,0.35);
-      color: var(--red);
-    }
-
-    .share-btn.restart:hover {
-      background: rgba(255,41,78,0.06);
-    }
-
-    /* Score ring border colours by tier */
-    .ring-low  { border-color: #FF5748; }
-    .ring-mid  { border-color: #F5A623; }
-    .ring-high { border-color: #34C759; }
-    .badge-low  { background: rgba(255,87,72,0.1);  color: #FF5748; border: 1.5px solid rgba(255,87,72,0.3); }
-    .badge-mid  { background: rgba(245,166,35,0.1); color: #D4880A; border: 1.5px solid rgba(245,166,35,0.4); }
-    .badge-high { background: rgba(52,199,89,0.1);  color: #1A8F3C; border: 1.5px solid rgba(52,199,89,0.3); }
-
-    /* Badge canvas card */
-    #badge-canvas-wrap {
-      margin: 0 auto 32px;
-      max-width: 320px;
-      width: 100%;
-      text-align: center;
-    }
-    #badgeCanvas {
-      width: 100%;
-      height: auto;
-      border-radius: 14px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.1);
-      display: block;
-    }
-    #downloadBadgeBtn {
-      margin-top: 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: #021024;
-      color: #fff;
-      border: none;
-      border-radius: 50px;
-      padding: 11px 24px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-      transition: opacity .2s, transform .15s;
-      letter-spacing: -.01em;
-    }
-    #downloadBadgeBtn:hover { opacity: .85; transform: translateY(-1px); }
-
-    /* ====== CAPTURE MODAL OVERLAY ====== */
-    #capture-screen {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 300;
-      background: rgba(2,16,36,0.45);
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    #capture-screen.active {
-      display: flex;
-    }
-
-    .capture-modal-card {
-      background: #fff;
-      border-radius: 20px;
-      padding: 40px 36px;
-      max-width: 440px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.18);
-    }
-
-    .capture-modal-icon {
-      width: 56px;
-      height: 56px;
-      background: rgba(255,41,78,0.08);
-      border: 1.5px solid rgba(255,41,78,0.2);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-    }
-
-    .capture-modal-title {
-      font-size: 1.25rem;
-      font-weight: 900;
-      color: #021024;
-      line-height: 1.25;
-      margin-bottom: 10px;
-    }
-
-    .capture-modal-sub {
-      font-size: 0.88rem;
-      color: #4A5568;
-      line-height: 1.65;
-      margin-bottom: 28px;
-    }
-
-    .capture-modal-sub strong { color: #021024; }
-
-    .capture-modal-input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 1.5px solid #D1D9E0;
-      border-radius: 10px;
-      font-size: 0.95rem;
-      font-family: var(--font-main);
-      color: #021024;
-      background: #F6F5F5;
-      outline: none;
-      transition: border-color 0.2s;
-      box-sizing: border-box;
-      margin-bottom: 6px;
-    }
-
-    .capture-modal-input:focus { border-color: var(--red); background: #fff; }
-    .capture-modal-input::placeholder { color: #7A94A8; }
-
-    .capture-error {
-      font-size: 0.78rem;
-      color: var(--red);
-      margin-bottom: 14px;
-      display: none;
-      text-align: left;
-    }
-
-    .capture-modal-skip {
-      margin-top: 14px;
-      font-size: 0.78rem;
-      color: #7A94A8;
-    }
-
-    .capture-modal-skip a {
-      color: #7A94A8;
-      text-decoration: underline;
-    }
-
-    @media (max-width: 600px) {
-      .result-signals { grid-template-columns: 1fr; }
-      .result-cta-block { padding: 28px 20px; }
-      .intro-preview { flex-direction: column; align-items: center; }
-      .capture-modal-card { padding: 32px 24px; }
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.5; transform: scale(0.85); }
-    }
-
-    /* ====== LEAD CAPTURE GATE ====== */
-    #capture-screen {
-      display: none;
-      padding: 80px 24px;
-      min-height: 70vh;
-    }
-    .capture-wrap {
-      max-width: 520px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .capture-icon {
-      width: 64px;
-      height: 64px;
-      background: rgba(255,41,78,0.12);
-      border: 1.5px solid rgba(255,41,78,0.3);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 24px;
-    }
-    .capture-form {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: 18px;
-      padding: 36px 32px;
-      margin-top: 32px;
-      text-align: left;
-    }
-    .capture-field {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 18px;
-    }
-    .capture-field label {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .06em;
-    }
-    .capture-field input {
-      padding: 13px 16px;
-      background: var(--bg-dark);
-      border: 1.5px solid var(--border-card);
-      border-radius: 10px;
-      color: var(--white);
-      font-size: 0.95rem;
-      font-family: var(--font-main);
-      transition: border-color 0.2s;
-      outline: none;
-    }
-    .capture-field input:focus { border-color: var(--red); }
-    .capture-field input::placeholder { color: var(--muted); opacity: 0.6; }
-    .capture-error {
-      font-size: 0.78rem;
-      color: var(--red);
-      margin-top: 4px;
-      display: none;
-    }
-    @media (max-width: 600px) {
-      .capture-form { padding: 24px 20px; }
-    }
+/* ============================================================
+   AI READINESS CHECK  —  .qz-*
+   Same brand ramp as the rest of the site, weighted cooler:
+   this is a diagnostic, so steel leads and red is the accent.
+   ============================================================ */
+:root{
+  --g-navy:#021024; --g-card:#0D1C34; --g-steel:#1B3A5C;
+  --g-wine:#9A2335; --g-deep:#C4173A; --g-red:#FF294E; --g-orange:#FF5748;
+}
+body.qz{
+  --qz-bg:#040B16;
+  --qz-surface:#08111F;
+  --qz-card:#0C1728;
+  --qz-line:rgba(255,255,255,.10);
+  --qz-line-2:rgba(255,255,255,.17);
+  --qz-body:rgba(255,255,255,.66);
+  --qz-muted:rgba(255,255,255,.44);
+  --qz-r:15px;
+  --qz-r-lg:22px;
+  --qz-ease:cubic-bezier(.22,1,.36,1);
+  --qz-shadow:0 26px 64px -22px rgba(0,0,0,.6);
+  background:var(--qz-bg);
+  padding-top:0;
+  min-height:100vh;
+  display:flex; flex-direction:column;
+  -webkit-font-smoothing:antialiased;
+}
+body.qz ::selection{ background:rgba(255,41,78,.28); color:#fff; }
+.qz-wrap{ width:min(1100px,calc(100% - 48px)); margin-inline:auto; }
+
+/* shared buttons */
+.qz-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:15px 28px; border-radius:12px; border:none; cursor:pointer;
+  font-family:inherit; font-size:.95rem; font-weight:700; letter-spacing:-.01em;
+  text-decoration:none; transition:transform .28s var(--qz-ease), box-shadow .28s var(--qz-ease), background .25s, opacity .25s;
+}
+.qz-btn svg{ transition:transform .3s var(--qz-ease); }
+.qz-btn:hover svg{ transform:translateX(3px); }
+.qz-btn-red{
+  background:linear-gradient(120deg,var(--g-deep),var(--g-red) 55%,var(--g-orange));
+  color:#fff; box-shadow:0 14px 32px -12px rgba(255,41,78,.62);
+}
+.qz-btn-red:hover{ transform:translateY(-2px); box-shadow:0 20px 42px -12px rgba(255,41,78,.75); }
+.qz-btn-ghost{ background:rgba(255,255,255,.07); color:#fff; border:1px solid var(--qz-line-2); }
+.qz-btn-ghost:hover{ background:rgba(255,255,255,.13); transform:translateY(-2px); }
+
+/* ============================================================
+   INTRO
+   ============================================================ */
+#intro-screen{
+  position:relative; overflow:clip; flex:1;
+  padding:calc(var(--nav-height) + 62px) 0 88px;
+  background:
+    radial-gradient(104% 124% at 100% 104%, rgba(255,41,78,.42) 0%, rgba(196,23,58,.20) 34%, transparent 66%),
+    radial-gradient(78% 88% at 82% 0%, rgba(27,58,92,.78) 0%, transparent 62%),
+    radial-gradient(88% 98% at 0% 18%, rgba(13,28,52,.95) 0%, transparent 64%),
+    linear-gradient(124deg,#01060F 0%,#04162B 22%,#0D2743 44%,#1B3A5C 64%,#5E1728 88%,#9A2335 100%);
+}
+.qz-intro-waves{
+  position:absolute; inset:-10% -6%; z-index:0; pointer-events:none; opacity:.22;
+  background-image:url('assets/pattern/waves.svg'); background-size:150% auto; background-repeat:repeat;
+  animation:qzWaveDrift 38s linear infinite;
+}
+@keyframes qzWaveDrift{ from{transform:translate3d(0,0,0);} to{transform:translate3d(-8%,-3%,0);} }
+/* faint scanning grid — reads as "measurement" */
+#intro-screen::before{
+  content:''; position:absolute; inset:0; z-index:0; pointer-events:none; opacity:.05;
+  background-image:linear-gradient(rgba(255,255,255,.85) 1px, transparent 1px),
+                   linear-gradient(90deg, rgba(255,255,255,.85) 1px, transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(70% 60% at 50% 30%, #000 0%, transparent 78%);
+  -webkit-mask-image:radial-gradient(70% 60% at 50% 30%, #000 0%, transparent 78%);
+}
+.qz-intro-grid{
+  position:relative; z-index:2;
+  display:grid; grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);
+  gap:60px; align-items:center;
+}
+.qz-tag{
+  display:inline-flex; align-items:center; gap:9px; padding:7px 15px 7px 11px; border-radius:99px;
+  background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.19);
+  font-size:.74rem; font-weight:650; color:rgba(255,255,255,.9); backdrop-filter:blur(10px);
+}
+.qz-tag i{ width:7px; height:7px; border-radius:50%; background:#4ADE80; box-shadow:0 0 0 3px rgba(74,222,128,.22); display:block; }
+#intro-screen h1{
+  font-size:clamp(2.2rem,4.9vw,3.85rem); font-weight:800; letter-spacing:-.045em; line-height:1.09;
+  color:#fff; margin:22px 0 0;
+}
+#intro-screen h1 .accent{
+  background:linear-gradient(100deg,#FFC9A8,#FF8A6B 46%,#FF5748);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+/* splitText clips each word to the line box; widen the window without moving layout */
+#intro-screen h1 .qz-clip{ padding:.16em 0 .18em; margin:-.16em 0 -.18em; }
+#intro-screen h1 .accent [data-word]{
+  background:linear-gradient(100deg,#FFC9A8,#FF8A6B 46%,#FF5748);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.qz-lead{
+  font-size:1.03rem; line-height:1.7; color:rgba(255,255,255,.74); margin:20px 0 0; max-width:50ch;
+}
+.qz-meta{ display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }
+.qz-meta span{
+  display:inline-flex; align-items:center; gap:8px; padding:9px 14px; border-radius:10px;
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.13);
+  font-size:.79rem; font-weight:600; color:rgba(255,255,255,.85); backdrop-filter:blur(8px);
+}
+.qz-meta svg{ color:#FF8A6B; flex-shrink:0; }
+
+/* ---- the start card ---- */
+.qz-start{
+  position:relative; border-radius:var(--qz-r-lg); padding:30px 30px 26px;
+  background:linear-gradient(160deg, rgba(255,255,255,.15) 0%, rgba(255,255,255,.055) 52%, rgba(255,255,255,.085) 100%);
+  border:1px solid rgba(255,255,255,.20);
+  backdrop-filter:blur(22px) saturate(150%); -webkit-backdrop-filter:blur(22px) saturate(150%);
+  box-shadow:0 30px 70px -24px rgba(1,8,20,.72), inset 0 1px 0 rgba(255,255,255,.26);
+}
+.qz-start::after{
+  content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background:linear-gradient(135deg, rgba(255,255,255,.16) 0%, transparent 34%);
+}
+.qz-start-k{
+  font-size:.67rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+  color:rgba(255,255,255,.58); margin-bottom:7px;
+}
+.qz-start h3{ font-size:1.2rem; font-weight:750; letter-spacing:-.025em; color:#fff; margin:0 0 18px; }
+#field-input-wrap{ position:relative; text-align:left; margin-bottom:16px; }
+#field-input-wrap label{
+  display:block; font-size:.71rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+  color:rgba(255,255,255,.6); margin-bottom:8px;
+}
+#profession-input{
+  width:100%; box-sizing:border-box; padding:15px 16px; border-radius:11px;
+  background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.2);
+  color:#fff; font-family:inherit; font-size:.96rem; outline:none;
+  transition:border-color .22s, background .22s, box-shadow .22s;
+}
+#profession-input::placeholder{ color:rgba(255,255,255,.36); }
+#profession-input:focus{
+  border-color:rgba(255,138,107,.85); background:rgba(255,255,255,.13);
+  box-shadow:0 0 0 3px rgba(255,87,72,.18);
+}
+#profession-dropdown{
+  position:absolute; top:calc(100% + 6px); left:0; right:0; z-index:30; display:none;
+  background:#0C1728; border:1px solid var(--qz-line-2); border-radius:12px;
+  overflow:hidden; max-height:230px; overflow-y:auto;
+  box-shadow:0 18px 44px rgba(0,0,0,.6);
+}
+#profession-dropdown > div:last-child{ border-bottom:none !important; }
+.qz-start .qz-btn{ width:100%; }
+.qz-start-foot{ margin-top:13px; font-size:.73rem; color:rgba(255,255,255,.5); text-align:center; line-height:1.55; }
+
+/* ---- tier ladder: what you are being measured against ---- */
+.qz-scale{ margin-top:26px; padding-top:22px; border-top:1px solid rgba(255,255,255,.14); }
+.qz-scale-k{
+  font-size:.67rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase;
+  color:rgba(255,255,255,.5); margin-bottom:14px;
+}
+.qz-scale-bar{ display:flex; gap:4px; margin-bottom:12px; }
+.qz-scale-bar i{ flex:1; height:5px; border-radius:99px; display:block; transform-origin:left; }
+.qz-scale-bar i:nth-child(1){ background:#2F5B85; }
+.qz-scale-bar i:nth-child(2){ background:#4A6E96; }
+.qz-scale-bar i:nth-child(3){ background:#9A2335; }
+.qz-scale-bar i:nth-child(4){ background:#C4173A; }
+.qz-scale-bar i:nth-child(5){ background:linear-gradient(90deg,#FF294E,#FF5748); }
+.qz-scale-names{ display:flex; justify-content:space-between; gap:6px; }
+.qz-scale-names span{
+  font-size:.63rem; font-weight:700; letter-spacing:.02em; color:rgba(255,255,255,.5);
+  text-align:center; flex:1; line-height:1.3;
+}
+.qz-scale-names span:first-child{ text-align:left; }
+.qz-scale-names span:last-child{ text-align:right; color:#FF8A6B; }
+
+/* ---- share / QR ---- */
+.qz-share{
+  position:relative; z-index:2; margin-top:56px;
+  display:inline-flex; align-items:center; gap:22px; padding:20px 24px;
+  border-radius:var(--qz-r); background:rgba(255,255,255,.05); border:1px solid var(--qz-line);
+  backdrop-filter:blur(10px);
+}
+.qz-share-qr{
+  width:76px; height:76px; flex-shrink:0; border-radius:9px; background:#fff; padding:7px;
+  display:grid; place-items:center;
+}
+.qz-share-qr img{ width:100%; height:100%; display:block; }
+.qz-share b{ display:block; font-size:.84rem; font-weight:700; color:#fff; margin-bottom:4px; }
+.qz-share span{ display:block; font-size:.76rem; color:rgba(255,255,255,.62); line-height:1.55; }
+.qz-share span em{ font-style:normal; color:#FF8A6B; font-weight:700; }
+
+/* ============================================================
+   ASSESSMENT
+   ============================================================ */
+#assess-screen{
+  position:relative; flex:1; overflow:clip;
+  padding:calc(var(--nav-height) + 54px) 0 90px;
+  background:
+    radial-gradient(80% 100% at 100% 0%, rgba(255,41,78,.12) 0%, transparent 58%),
+    radial-gradient(70% 90% at 0% 100%, rgba(27,58,92,.34) 0%, transparent 62%),
+    var(--qz-bg);
+}
+.qz-assess-wrap{ width:min(760px,calc(100% - 44px)); margin-inline:auto; position:relative; z-index:1; }
+.assess-step-label{
+  font-size:.71rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--qz-muted); text-align:center; margin-bottom:14px;
+}
+.assess-progress-bar{
+  position:relative; height:6px; border-radius:99px; background:rgba(255,255,255,.08);
+  overflow:hidden; margin-bottom:8px;
+}
+.assess-progress-fill{
+  height:100%; border-radius:99px; width:10%;
+  background:linear-gradient(90deg,var(--g-steel),var(--g-deep) 60%,var(--g-orange));
+  transition:width .55s var(--qz-ease);
+  box-shadow:0 0 16px rgba(255,41,78,.45);
+}
+/* decorative segment ticks — the fill width still comes from the JS */
+.qz-ticks{ display:flex; gap:4px; margin-bottom:40px; }
+.qz-ticks i{ flex:1; height:2px; border-radius:99px; background:rgba(255,255,255,.07); display:block; }
+
+.q-card{
+  position:relative; border-radius:var(--qz-r-lg); padding:38px 38px 34px;
+  background:var(--qz-card); border:1px solid var(--qz-line);
+  box-shadow:var(--qz-shadow);
+}
+.q-card::before{
+  content:''; position:absolute; left:0; right:0; top:0; height:2px; border-radius:2px 2px 0 0;
+  background:linear-gradient(90deg,var(--g-steel),var(--g-red),var(--g-orange));
+}
+.q-number{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.66rem; font-weight:700;
+  letter-spacing:.13em; text-transform:uppercase; color:#FF8A6B; margin-bottom:14px;
+}
+.q-text{
+  font-size:clamp(1.2rem,2.4vw,1.6rem); font-weight:750; letter-spacing:-.03em; line-height:1.32;
+  color:#fff; margin-bottom:28px;
+}
+.q-options{ display:flex; flex-direction:column; gap:11px; }
+.q-option{
+  display:flex; align-items:flex-start; gap:15px; padding:17px 19px; cursor:pointer;
+  border-radius:13px; background:rgba(255,255,255,.035); border:1.5px solid var(--qz-line);
+  transition:background .25s, border-color .25s, transform .25s var(--qz-ease);
+}
+.q-option:hover{ background:rgba(255,255,255,.07); border-color:var(--qz-line-2); transform:translateX(3px); }
+.q-option.selected{
+  background:linear-gradient(120deg, rgba(255,41,78,.16), rgba(255,87,72,.09));
+  border-color:rgba(255,41,78,.6);
+}
+.q-option-letter{
+  flex-shrink:0; width:30px; height:30px; border-radius:9px; display:grid; place-items:center;
+  font-size:.8rem; font-weight:800; color:var(--qz-muted);
+  background:rgba(255,255,255,.06); border:1px solid var(--qz-line);
+  transition:all .28s var(--qz-ease);
+}
+.q-option.selected .q-option-letter{
+  background:linear-gradient(135deg,var(--g-deep),var(--g-red)); border-color:transparent; color:#fff;
+  box-shadow:0 6px 18px -5px rgba(255,41,78,.7);
+}
+.q-option-text{ font-size:.95rem; line-height:1.6; color:var(--qz-body); padding-top:4px; }
+.q-option.selected .q-option-text{ color:#fff; }
+
+.q-nav{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  width:min(760px,calc(100% - 44px)); margin:26px auto 0; position:relative; z-index:1;
+}
+.q-back-btn{
+  padding:13px 22px; border-radius:11px; cursor:pointer; font-family:inherit;
+  font-size:.9rem; font-weight:650; color:var(--qz-muted);
+  background:transparent; border:1px solid var(--qz-line);
+  transition:color .25s, border-color .25s, background .25s;
+}
+.q-back-btn:hover{ color:#fff; border-color:var(--qz-line-2); background:rgba(255,255,255,.05); }
+.q-next-btn{
+  padding:14px 30px; border-radius:11px; cursor:not-allowed; font-family:inherit;
+  font-size:.94rem; font-weight:700; color:rgba(255,255,255,.35);
+  background:rgba(255,255,255,.06); border:1px solid var(--qz-line);
+  transition:all .3s var(--qz-ease);
+}
+.q-next-btn.enabled{
+  cursor:pointer; color:#fff; border-color:transparent;
+  background:linear-gradient(120deg,var(--g-deep),var(--g-red) 55%,var(--g-orange));
+  box-shadow:0 14px 32px -12px rgba(255,41,78,.62);
+}
+.q-next-btn.enabled:hover{ transform:translateY(-2px); box-shadow:0 20px 42px -12px rgba(255,41,78,.75); }
+
+/* ============================================================
+   CAPTURE MODAL
+   ============================================================ */
+#capture-screen{
+  position:fixed; inset:0; z-index:5000; display:none;
+  align-items:center; justify-content:center; padding:24px;
+  background:rgba(1,7,16,.72); backdrop-filter:blur(10px);
+}
+#capture-screen.active{ display:flex; }
+.capture-modal-card{
+  position:relative; width:min(460px,100%); max-height:90vh; overflow-y:auto;
+  border-radius:var(--qz-r-lg); padding:34px 32px 28px; text-align:center;
+  background:linear-gradient(165deg, rgba(255,255,255,.13) 0%, rgba(255,255,255,.05) 54%, rgba(255,255,255,.08) 100%),
+             #0C1728;
+  border:1px solid rgba(255,255,255,.2);
+  box-shadow:0 40px 90px -26px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,255,255,.24);
+}
+.capture-modal-icon{
+  width:52px; height:52px; border-radius:15px; margin:0 auto 18px; display:grid; place-items:center;
+  background:linear-gradient(140deg, rgba(255,41,78,.22), rgba(27,58,92,.4));
+  border:1px solid rgba(255,255,255,.15);
+}
+.capture-modal-title{
+  font-size:1.32rem; font-weight:780; letter-spacing:-.03em; color:#fff; margin-bottom:9px;
+}
+.capture-modal-sub{
+  font-size:.88rem; line-height:1.65; color:rgba(255,255,255,.66); margin:0 0 22px;
+}
+.capture-modal-sub strong{ color:#FF8A6B; font-weight:700; }
+.capture-modal-input, #capture-phone, #capture-cc{
+  width:100%; box-sizing:border-box; padding:14px 16px; border-radius:11px;
+  background:rgba(255,255,255,.07) !important; border:1px solid rgba(255,255,255,.19) !important;
+  color:#fff !important; font-family:inherit; font-size:.94rem; outline:none;
+  transition:border-color .22s, background .22s, box-shadow .22s;
+}
+.capture-modal-input::placeholder, #capture-phone::placeholder{ color:rgba(255,255,255,.36); }
+.capture-modal-input:focus, #capture-phone:focus, #capture-cc:focus{
+  border-color:rgba(255,138,107,.8) !important; background:rgba(255,255,255,.11) !important;
+  box-shadow:0 0 0 3px rgba(255,87,72,.16);
+}
+#capture-cc{
+  appearance:none; -webkit-appearance:none; cursor:pointer; padding-right:34px !important;
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-opacity='.6' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") !important;
+  background-repeat:no-repeat !important; background-position:right 11px center !important;
+}
+#capture-cc option{ background:#0C1728; color:#fff; }
+.capture-error{
+  display:none; font-size:.8rem; color:#FF8A9C; margin:2px 0 10px; text-align:left;
+}
+.capture-modal-card .btn, .capture-modal-card .qz-btn{ width:100%; }
+.capture-modal-skip{ margin:14px 0 0; font-size:.8rem; }
+.capture-modal-skip a{ color:rgba(255,255,255,.5); text-decoration:underline; text-underline-offset:3px; }
+.capture-modal-skip a:hover{ color:rgba(255,255,255,.8); }
+
+/* ============================================================
+   RESULTS
+   ============================================================ */
+#results-screen{
+  position:relative; display:none; flex:1; overflow:clip;
+  padding:calc(var(--nav-height) + 54px) 0 90px;
+  background:
+    radial-gradient(90% 110% at 100% 0%, rgba(255,41,78,.20) 0%, transparent 58%),
+    radial-gradient(80% 100% at 0% 96%, rgba(27,58,92,.44) 0%, transparent 64%),
+    var(--qz-bg);
+}
+#results-screen.results-blurred{ filter:blur(9px); pointer-events:none; user-select:none; }
+.result-wrap{ width:min(880px,calc(100% - 44px)); margin-inline:auto; position:relative; z-index:1; }
+
+/* score ring — the number was always computed, now it is shown */
+.result-score-ring{
+  --p:0;
+  position:relative; width:132px; height:132px; border-radius:50%;
+  margin:0 auto 26px; display:grid; place-items:center;
+  background:conic-gradient(var(--ring-c,#FF294E) calc(var(--p) * 1%), rgba(255,255,255,.08) 0);
+  transition:--p 1.2s var(--qz-ease);
+}
+.result-score-ring::after{
+  content:''; position:absolute; inset:9px; border-radius:50%; background:var(--qz-bg);
+  border:1px solid var(--qz-line);
+}
+.result-score-ring.ring-high{ --ring-c:#FF294E; }
+.result-score-ring.ring-mid { --ring-c:#FF8A6B; }
+.result-score-ring.ring-low { --ring-c:#4A6E96; }
+#result-score{
+  position:relative; z-index:1; font-size:1.9rem; font-weight:800; letter-spacing:-.045em; color:#fff;
+}
+@property --p{ syntax:'<number>'; inherits:false; initial-value:0; }
+
+#badge-canvas-wrap{
+  position:relative; max-width:430px; margin:0 auto 30px;
+  border-radius:var(--qz-r-lg); overflow:hidden;
+  box-shadow:0 32px 74px -24px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.09);
+}
+#badgeCanvas{ width:100%; height:auto; display:block; }
+#downloadBadgeBtn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%;
+  padding:13px 20px; border:none; cursor:pointer; font-family:inherit;
+  font-size:.85rem; font-weight:700; color:#fff;
+  background:rgba(255,255,255,.09); border-top:1px solid var(--qz-line);
+  transition:background .25s;
+}
+#downloadBadgeBtn:hover{ background:rgba(255,255,255,.17); }
+
+.result-headline{
+  font-size:clamp(1.5rem,3.4vw,2.35rem); font-weight:800; letter-spacing:-.038em; line-height:1.14;
+  color:#fff; margin:0 auto 14px; max-width:20ch;
+}
+.result-sub{
+  font-size:1rem; line-height:1.72; color:var(--qz-body); margin:0 auto; max-width:62ch;
+}
+.result-signals{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:44px; text-align:left;
+}
+.signal-card{
+  padding:24px 22px; border-radius:var(--qz-r);
+  background:var(--qz-card); border:1px solid var(--qz-line);
+  transition:transform .38s var(--qz-ease), border-color .3s, box-shadow .38s var(--qz-ease);
+}
+.signal-card:hover{ transform:translateY(-5px); border-color:var(--qz-line-2); box-shadow:var(--qz-shadow); }
+.signal-icon{
+  width:40px; height:40px; border-radius:11px; display:grid; place-items:center; font-size:1.1rem;
+  background:linear-gradient(140deg, rgba(255,41,78,.18), rgba(27,58,92,.36));
+  border:1px solid rgba(255,255,255,.11); margin-bottom:14px;
+}
+.signal-title{ font-size:.97rem; font-weight:700; letter-spacing:-.02em; color:#fff; margin-bottom:7px; }
+.signal-desc{ font-size:.86rem; line-height:1.62; color:var(--qz-body); }
+
+.result-cta-block{
+  margin-top:44px; padding:40px 36px; border-radius:var(--qz-r-lg); text-align:center;
+  background:
+    radial-gradient(90% 130% at 100% 0%, rgba(255,41,78,.26) 0%, transparent 58%),
+    linear-gradient(122deg,#04162B 0%,#12304C 52%,#7A1C33 100%);
+  border:1px solid rgba(255,255,255,.13);
+}
+/* the CTA block is injected with light-mode colours by the quiz logic,
+   which is untouched — remap those inline values for the dark panel */
+.result-cta-block h3{ color:#fff !important; }
+.result-cta-block p{ color:rgba(255,255,255,.72) !important; }
+
+.result-share-row{
+  display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:32px;
+}
+.share-btn{
+  display:inline-flex; align-items:center; gap:7px; padding:11px 20px; border-radius:10px;
+  cursor:pointer; font-family:inherit; font-size:.85rem; font-weight:650; text-decoration:none;
+  color:var(--qz-body); background:rgba(255,255,255,.05); border:1px solid var(--qz-line);
+  transition:color .25s, background .25s, border-color .25s, transform .25s var(--qz-ease);
+}
+.share-btn:hover{ color:#fff; background:rgba(255,255,255,.1); border-color:var(--qz-line-2); transform:translateY(-2px); }
+
+/* ============================================================
+   MOTION GATE
+   ============================================================ */
+html.qz-anim .qz-rise{ opacity:0; }
+@media (prefers-reduced-motion: reduce){
+  html.qz-anim .qz-rise{ opacity:1 !important; transform:none !important; }
+  .qz-intro-waves{ animation:none !important; }
+  *{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1000px){
+  .qz-intro-grid{ grid-template-columns:1fr; gap:44px; }
+  .result-signals{ grid-template-columns:1fr; }
+}
+@media (max-width:720px){
+  .qz-wrap{ width:calc(100% - 32px); }
+  #intro-screen{ padding:calc(var(--nav-height) + 34px) 0 62px; }
+  #assess-screen, #results-screen{ padding:calc(var(--nav-height) + 32px) 0 66px; }
+  .q-card{ padding:28px 22px 26px; }
+  .q-option{ padding:15px 15px; gap:12px; }
+  .qz-share{ display:flex; width:100%; gap:16px; padding:16px; margin-top:40px; }
+  .result-cta-block{ padding:30px 22px; }
+  .capture-modal-card{ padding:28px 22px 24px; }
+  .q-nav{ gap:10px; }
+  .q-next-btn{ padding:14px 22px; }
+}
   </style>
 <script src="tracking.js"></script>
 </head>
-<body class="assess-wrap">
+<body class="qz">
 
 <div id="scroll-progress"></div>
 
@@ -672,96 +519,107 @@
   <a href="apply.html" class="btn btn-primary">Apply Now</a>
 </div>
 
+
 <!-- ====== INTRO SCREEN ====== -->
 <div id="intro-screen">
-  <div style="max-width:840px;margin:0 auto;text-align:center">
-    <div class="intro-tag">Free · 3 Minutes · No Sign-Up</div>
+  <div class="qz-intro-waves"></div>
+  <div class="qz-wrap">
+    <div class="qz-intro-grid">
 
-    <h1 style="font-size:clamp(2rem,5vw,3.2rem);font-weight:900;line-height:1.1;color:var(--white);margin-bottom:18px">
-      Go beyond the basics and discover your true <span style="color:var(--red)">level of AI readiness.</span>
-    </h1>
-
-    <p style="font-size:1rem;color:var(--muted);line-height:1.75;margin-bottom:12px;max-width:520px;margin-left:auto;margin-right:auto">
-      AI is reshaping every profession faster than most professionals realise. This quick check gives you an honest read on where you stand and what it means for your career.
-    </p>
-
-    <div class="intro-preview">
-      <span class="intro-preview-item"><span class="intro-preview-dot"></span>10 workplace scenarios</span>
-      <span class="intro-preview-item"><span class="intro-preview-dot"></span>No technical knowledge needed</span>
-      <span class="intro-preview-item"><span class="intro-preview-dot"></span>Instant result with guidance</span>
-    </div>
-
-    <!-- Field input with autocomplete -->
-    <div style="max-width:400px;margin:0 auto 24px;position:relative;text-align:left" id="field-input-wrap">
-      <label for="profession-input" style="display:block;font-size:0.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">What's your professional field?</label>
-      <input
-        type="text"
-        id="profession-input"
-        placeholder="Enter your field"
-        autocomplete="off"
-        oninput="handleProfessionInput(this.value)"
-        onfocus="handleProfessionInput(this.value)"
-        onblur="setTimeout(closeProfessionDropdown, 150)"
-        style="width:100%;background:var(--bg-card);border:1.5px solid var(--border-card);border-radius:var(--radius-md);padding:14px 16px;color:var(--white);font-size:0.94rem;font-family:inherit;outline:none;transition:border-color 0.25s"
-      />
-      <div id="profession-dropdown" style="position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);overflow:hidden;display:none;z-index:20;max-height:220px;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.4)"></div>
-    </div>
-
-    <button class="btn btn-primary btn-lg" onclick="startAssessment()" style="min-width:240px">
-      Start the Check
-    </button>
-
-    <p style="font-size:0.75rem;color:var(--muted);margin-top:16px">
-      Takes about 3 minutes. Your answers are not stored.
-    </p>
-
-    <!-- QR section for print/share -->
-    <div style="margin-top:48px;padding:24px;background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);display:inline-flex;align-items:center;gap:24px">
-      <div style="background:#fff;border-radius:8px;padding:6px;width:80px;height:80px;flex-shrink:0;display:flex;align-items:center;justify-content:center">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fbrixgate.com%2Faiquiz&margin=2" alt="QR code" style="width:68px;height:68px" />
+      <div>
+        <div class="qz-tag qz-rise"><i></i>Free · about 2 minutes · no sign-up to start</div>
+        <h1 data-split>Find out where you <span class="accent">actually</span> stand on AI.</h1>
+        <p class="qz-lead qz-rise">Six real workplace situations, no technical knowledge needed. You get an honest read on your level, what it means for your career, and a badge you can share.</p>
+        <div class="qz-meta">
+          <span class="qz-rise"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>6 scenarios</span>
+          <span class="qz-rise"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>About 2 minutes</span>
+          <span class="qz-rise"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Instant result</span>
+        </div>
       </div>
-      <div style="text-align:left">
-        <div style="font-size:0.78rem;font-weight:700;color:var(--white);margin-bottom:4px">Share this check</div>
-        <div style="font-size:0.72rem;color:var(--muted);line-height:1.55">Scan the QR code or share the link<br/><span style="color:var(--red);font-weight:700">brixgate.com/aiquiz</span></div>
+
+      <div class="qz-start qz-rise">
+        <div class="qz-start-k">Begin</div>
+        <h3>Tell us your field first</h3>
+
+        <div id="field-input-wrap">
+          <label for="profession-input">What's your professional field?</label>
+          <input
+            type="text"
+            id="profession-input"
+            placeholder="Start typing — e.g. Finance"
+            autocomplete="off"
+            oninput="handleProfessionInput(this.value)"
+            onfocus="handleProfessionInput(this.value)"
+            onblur="setTimeout(closeProfessionDropdown, 150)"
+          />
+          <div id="profession-dropdown"></div>
+        </div>
+
+        <button class="qz-btn qz-btn-red" onclick="startAssessment()">
+          Start the check
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <div class="qz-start-foot">Your answers are not stored. We ask for your details only at the result.</div>
+
+        <div class="qz-scale">
+          <div class="qz-scale-k">What you're measured against</div>
+          <div class="qz-scale-bar">
+            <i data-s></i><i data-s></i><i data-s></i><i data-s></i><i data-s></i>
+          </div>
+          <div class="qz-scale-names">
+            <span>Beginner</span><span>Ready</span><span>Enthusiast</span><span>Proof</span><span>Undisputed</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="qz-share qz-rise">
+      <div class="qz-share-qr">
+        <img src="assets/qr-aiquiz.svg" alt="QR code linking to brixgate.com/aiquiz" width="76" height="76" />
+      </div>
+      <div>
+        <b>Share this check</b>
+        <span>Scan the code or send the link<br/><em>brixgate.com/aiquiz</em></span>
       </div>
     </div>
   </div>
 </div>
 
+
 <!-- ====== ASSESSMENT SCREEN ====== -->
-<div id="assess-screen" style="display:none;padding:48px 0 80px">
-  <!-- Progress -->
-  <div style="text-align:center;margin-bottom:36px;padding:0 24px">
-    <div class="assess-step-label" id="step-label">Question 1 of 10</div>
+<div id="assess-screen" style="display:none">
+  <div class="qz-assess-wrap">
+    <div class="assess-step-label" id="step-label">Question 1 of 6</div>
     <div class="assess-progress-bar">
-      <div class="assess-progress-fill" id="progress-fill" style="width:10%"></div>
+      <div class="assess-progress-fill" id="progress-fill" style="width:16.6%"></div>
+    </div>
+    <div class="qz-ticks"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+    <div class="q-card" id="q-card">
+      <!-- Injected by JS -->
     </div>
   </div>
 
-  <!-- Question -->
-  <div class="q-card" id="q-card">
-    <!-- Injected by JS -->
-  </div>
-
-  <!-- Navigation -->
   <div class="q-nav">
     <button class="q-back-btn" id="back-btn" onclick="prevQuestion()" style="visibility:hidden">← Back</button>
     <button class="q-next-btn" id="next-btn" onclick="nextQuestion()">Next</button>
   </div>
 </div>
 
+
 <!-- ====== CAPTURE MODAL OVERLAY ====== -->
 <div id="capture-screen">
   <div class="capture-modal-card">
     <div class="capture-modal-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF8A6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
     </div>
-    <div class="capture-modal-title">Your results are ready</div>
-    <p class="capture-modal-sub">Enter your details to unlock your full result. We'll also send you a <strong>registration coupon</strong> when you're ready to enrol — no spam, ever.</p>
+    <div class="capture-modal-title">Your result is ready</div>
+    <p class="capture-modal-sub">Enter your details to unlock it. We'll also send a <strong>registration coupon</strong> when you're ready to enrol — no spam, ever.</p>
     <input type="text" id="capture-name" class="capture-modal-input" placeholder="Your full name" autocomplete="name" style="margin-bottom:10px" />
     <input type="email" id="capture-email" class="capture-modal-input" placeholder="you@example.com" autocomplete="email" style="margin-bottom:10px" />
     <div style="display:flex;gap:8px;margin-bottom:6px;">
-      <select id="capture-cc" style="padding:14px 10px;border:1.5px solid #D1D9E0;border-radius:10px;background:#F6F5F5;color:#021024;font-size:0.88rem;outline:none;cursor:pointer;flex-shrink:0;width:116px;box-sizing:border-box;">
+      <select id="capture-cc" style="flex-shrink:0;width:118px">
         <option value="+234">🇳🇬 +234</option>
         <option value="+233">🇬🇭 +233</option>
         <option value="+254">🇰🇪 +254</option>
@@ -778,53 +636,55 @@
         <option value="+61">🇦🇺 +61</option>
         <option value="+1-CA">🇨🇦 +1</option>
       </select>
-      <input type="tel" id="capture-phone" placeholder="Phone number" autocomplete="tel" style="padding:14px 16px;border:1.5px solid #D1D9E0;border-radius:10px;background:#F6F5F5;color:#021024;font-size:0.95rem;outline:none;box-sizing:border-box;flex:1;min-width:0;transition:border-color 0.2s;" />
+      <input type="tel" id="capture-phone" placeholder="Phone number" autocomplete="tel" style="flex:1;min-width:0" />
     </div>
     <span class="capture-error" id="email-error"></span>
-    <button onclick="submitCapture()" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;margin-top:4px">
-      See My Results
+    <button onclick="submitCapture()" class="qz-btn qz-btn-red" style="margin-top:4px">
+      See my result
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </button>
     <p class="capture-modal-skip">
-      <a href="#" onclick="skipCapture(event)">Skip — show me results without coupon</a>
+      <a href="#" onclick="skipCapture(event)">Skip — show the result without the coupon</a>
     </p>
   </div>
 </div>
+
 
 <!-- ====== RESULTS SCREEN ====== -->
 <div id="results-screen">
   <div class="result-wrap" style="text-align:center">
 
-    <!-- Badge certificate canvas -->
-    <div id="badge-canvas-wrap">
-      <canvas id="badgeCanvas"></canvas>
-      <button id="downloadBadgeBtn" onclick="downloadBadge()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download My Badge
-      </button>
-    </div>
-
-    <div id="result-badge" class="result-tier-badge" style="display:none"></div>
-    <div id="result-ring" style="display:none"><div id="result-score"></div></div>
+    <div id="result-ring"><div id="result-score"></div></div>
 
     <h2 class="result-headline" id="result-headline"></h2>
     <p class="result-sub" id="result-sub"></p>
 
-    <!-- Quick CTA — shown immediately after the review description -->
-    <div style="margin:28px auto 0;max-width:480px">
+    <!-- Badge certificate canvas -->
+    <div id="badge-canvas-wrap" style="margin-top:36px">
+      <canvas id="badgeCanvas"></canvas>
+      <button id="downloadBadgeBtn" onclick="downloadBadge()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download my badge
+      </button>
+    </div>
+
+    <!-- Quick CTA -->
+    <div style="margin:30px auto 0;max-width:480px">
       <div id="quiz-quick-cta" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
-        <a href="programme.html" class="btn btn-primary btn-lg" style="min-width:180px;justify-content:center;font-size:1rem;flex:none">
-          View Programmes →
+        <a href="programme.html" class="qz-btn qz-btn-red" style="min-width:180px;flex:none">
+          View programmes
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
         <!-- "Apply as Practitioner" shown only when score = 100% -->
-        <a id="quiz-expert-btn" href="join-as-expert.html" class="btn btn-outline-dark btn-lg" style="display:none;flex:1;min-width:180px;justify-content:center;font-size:1rem">
-          Apply as Practitioner
+        <a id="quiz-expert-btn" href="join-as-expert.html" class="qz-btn qz-btn-ghost" style="display:none;flex:1;min-width:180px">
+          Apply as practitioner
         </a>
       </div>
-      <p style="font-size:0.76rem;color:#7A94A8;margin-top:10px;text-align:center">4-week sprint · Expert-led · Field-specific</p>
+      <p style="font-size:0.77rem;color:rgba(255,255,255,.44);margin-top:12px;text-align:center">4-week sprint · practitioner-led · field-specific</p>
     </div>
 
     <!-- Signal cards -->
-    <div class="result-signals" id="result-signals" style="margin-top:40px"></div>
+    <div class="result-signals" id="result-signals"></div>
 
     <!-- CTA block -->
     <div class="result-cta-block" id="result-cta">
@@ -832,9 +692,9 @@
     </div>
 
     <div class="result-share-row">
-      <button class="share-btn restart" onclick="restartAssessment()">↺ Retake the Check</button>
-      <a href="programme.html" class="share-btn">Explore Programmes</a>
-      <a id="share-link-btn" href="#" class="share-btn" onclick="copyShareLink(event)">🔗 Copy Link</a>
+      <button class="share-btn restart" onclick="restartAssessment()">↺ Retake the check</button>
+      <a href="programme.html" class="share-btn">Explore programmes</a>
+      <a id="share-link-btn" href="#" class="share-btn" onclick="copyShareLink(event)">🔗 Copy link</a>
     </div>
 
   </div>
@@ -865,44 +725,18 @@
             <img src="assets/gmail.png" alt="Email" width="22" height="22" style="display:block">
           </a>
         </div>
-        </div>
-      <div class="footer-col">
-        <h5>Programme</h5>
-        <ul>
-          <li><a href="programme.html">AI in my Field</a></li>
-          <li><a href="programme.html#fields">All Fields</a></li>
-          <li><a href="programme.html#pricing">Pricing</a></li>
-        </ul>
       </div>
-      <div class="footer-col">
-        <h5>Experts</h5>
-        <ul>
-          <li><a href="experts.html">Meet Our Experts</a></li>
-          <li><a href="join-as-expert.html">Join as Expert</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Organisation</h5>
-        <ul>
-          <li><a href="organisations.html">Corporate Programmes</a></li>
-          <li><a href="organisations.html#contact">Request a Demo</a></li>
-          <li><a href="apply.html">Apply Now</a></li>
-          <li><a href="verify.html">Verify a Certificate</a></li>
-          <li><a href="aiquiz" style="color:var(--red)">AI Readiness Check</a></li>
-        </ul>
-      </div>
+      <div class="footer-col"><h5>Programme</h5><ul><li><a href="programme.html">AI in my Field</a></li><li><a href="programme.html#pricing">Pricing</a></li><li><a href="apply.html">Apply Now</a></li><li><a href="verify.html">Verify a Certificate</a></li></ul></div>
+      <div class="footer-col"><h5>Experts</h5><ul><li><a href="experts.html">Meet Our Experts</a></li><li><a href="experts.html#qualify">Become an Expert</a></li></ul></div>
+      <div class="footer-col"><h5>Organisation</h5><ul><li><a href="organisations.html">For Organisations</a></li><li><a href="organisations.html#contact">Get a Quote</a></li><li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li></ul></div>
     </div>
   </div>
   <div class="footer-bottom">
     <p>© <span id="footer-year">2026</span> Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
-    <div class="footer-bottom-links">
-      <a href="privacy-policy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
-    </div>
+    <div class="footer-bottom-links"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
   </div>
 </footer>
 
-<button class="back-to-top">↑</button>
 <script src="script.js"></script>
 <script>
 // ============================================================
@@ -1487,7 +1321,6 @@ function copyShareLink(e) {
   <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-
 <!-- LinkedIn Insight Tag -->
 <script type="text/javascript">
 _linkedin_partner_id = "9372724";
@@ -1508,5 +1341,172 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 </noscript>
 
 <!-- <script src="popup.js"></script> -->
+
+<!-- motion libraries -->
+<script src="assets/vendor/anime.min.js"></script>
+<script>
+/* ============================================================
+   MOTION LAYER
+   Purely additive. The quiz logic above is untouched: this
+   wraps the render functions rather than editing them, so the
+   scoring, capture and submission paths are exactly as shipped.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var A = window.anime || null;
+
+  if (!reduce && A) document.documentElement.classList.add('qz-anim');
+
+  function revealAll() {
+    document.documentElement.classList.remove('qz-anim');
+    document.querySelectorAll('.qz-rise').forEach(function (el) {
+      try {
+        if (el.getAnimations) el.getAnimations().forEach(function (a) { try { a.finish(); } catch (e) {} });
+      } catch (e) {}
+      el.style.opacity = 1;
+      el.style.transform = 'none';
+    });
+    document.querySelectorAll('#intro-screen h1 [data-word]').forEach(function (w) {
+      w.style.opacity = 1; w.style.transform = 'none';
+    });
+    document.querySelectorAll('.qz-scale-bar i').forEach(function (i) { i.style.transform = 'none'; });
+    /* the ring must never sit at zero next to a non-zero score */
+    var ring = document.getElementById('result-ring');
+    var scEl = document.getElementById('result-score');
+    if (ring && scEl && scEl.textContent) {
+      var pc = parseInt(scEl.textContent, 10);
+      if (!isNaN(pc)) ring.style.setProperty('--p', pc);
+    }
+    var h1 = document.querySelector('#intro-screen h1');
+    if (h1) { h1.style.opacity = 1; h1.style.visibility = 'visible'; }
+  }
+  window.addEventListener('load', function () { setTimeout(revealAll, 3000); });
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) setTimeout(revealAll, 1200);
+  });
+
+  if (reduce || !A) { revealAll(); return; }
+
+  /* ---------- intro entrance ---------- */
+  function introIn() {
+    var h1 = document.querySelector('#intro-screen h1[data-split]');
+    var words = null;
+    if (A.splitText && h1) {
+      try {
+        var s = A.splitText(h1, { words: { wrap: 'clip' }, chars: false });
+        words = s.words;
+        words.forEach(function (w) {
+          if (w.parentElement && w.parentElement !== h1) w.parentElement.classList.add('qz-clip');
+        });
+      } catch (e) { words = null; }
+    }
+    try {
+      if (words && words.length) {
+        A.animate(words, {
+          y: ['110%', '0%'], opacity: [0, 1],
+          duration: 900, delay: A.stagger(46, { start: 110 }), ease: 'out(3)'
+        });
+      } else if (h1) {
+        A.animate(h1, { opacity: [0, 1], y: [20, 0], duration: 740, ease: 'out(3)' });
+      }
+      A.animate('#intro-screen .qz-tag', { opacity: [0, 1], y: [12, 0], duration: 600, ease: 'out(3)' });
+      A.animate('.qz-lead', { opacity: [0, 1], y: [16, 0], duration: 740, delay: 300, ease: 'out(3)' });
+      A.animate('.qz-meta span', {
+        opacity: [0, 1], y: [12, 0], duration: 600, delay: A.stagger(78, { start: 430 }), ease: 'out(3)'
+      });
+      A.animate('.qz-start', {
+        opacity: [0, 1], y: [32, 0], scale: [.976, 1], duration: 980, delay: 250, ease: 'out(3)'
+      });
+      A.animate('.qz-scale-bar i', {
+        scaleX: [0, 1], duration: 620, delay: A.stagger(85, { start: 900 }), ease: 'out(3)'
+      });
+      A.animate('.qz-share', { opacity: [0, 1], y: [18, 0], duration: 700, delay: 800, ease: 'out(3)' });
+    } catch (e) { revealAll(); }
+  }
+
+  /* ---------- question transitions ----------
+     renderQuestion is a global function declaration, so it can be wrapped
+     without touching the original body. */
+  var _render = window.renderQuestion;
+  if (typeof _render === 'function') {
+    window.renderQuestion = function () {
+      _render.apply(this, arguments);
+      try {
+        A.animate('#q-card .q-text', { opacity: [0, 1], y: [14, 0], duration: 520, ease: 'out(3)' });
+        A.animate('#q-card .q-number', { opacity: [0, 1], duration: 420, ease: 'out(2)' });
+        A.animate('#q-card .q-option', {
+          opacity: [0, 1], x: [-14, 0], duration: 520,
+          delay: A.stagger(62, { start: 90 }), ease: 'out(3)'
+        });
+      } catch (e) {}
+    };
+  }
+
+  /* option tap feedback */
+  document.addEventListener('click', function (e) {
+    var opt = e.target.closest && e.target.closest('.q-option');
+    if (!opt) return;
+    try {
+      A.animate(opt.querySelector('.q-option-letter'), {
+        scale: [1, 1.22, 1], duration: 420, ease: 'out(3)'
+      });
+    } catch (err) {}
+  });
+
+  /* ---------- results reveal ----------
+     showResults fills the DOM; wrap it to animate what it just wrote. */
+  var _show = window.showResults;
+  if (typeof _show === 'function') {
+    window.showResults = function () {
+      _show.apply(this, arguments);
+      try {
+        var ring  = document.getElementById('result-ring');
+        var scEl  = document.getElementById('result-score');
+        var pct   = parseInt((scEl && scEl.textContent) || '0', 10) || 0;
+
+        /* The ring sweep is owned by CSS: setting --p once lets the
+           transition on .result-score-ring animate it. That matters because
+           if scripted animation never runs, the ring still ends up showing
+           the real score instead of sitting at zero while the number beside
+           it reads 100% — which is what a JS-driven sweep did. */
+        if (ring) ring.style.setProperty('--p', pct);
+
+        /* the number counts up purely as decoration; showResults has already
+           written the correct value, so a failure here changes nothing */
+        var obj = { v: 0 };
+        A.animate(obj, {
+          v: pct, duration: 1500, delay: 200, ease: 'out(3)',
+          onUpdate: function () {
+            if (scEl) scEl.textContent = Math.round(obj.v) + '%';
+          },
+          onComplete: function () {
+            if (scEl) scEl.textContent = pct + '%';
+          }
+        });
+
+        A.animate('.result-headline', { opacity: [0, 1], y: [18, 0], duration: 760, delay: 200, ease: 'out(3)' });
+        A.animate('.result-sub',      { opacity: [0, 1], y: [14, 0], duration: 720, delay: 340, ease: 'out(3)' });
+        A.animate('#badge-canvas-wrap', {
+          opacity: [0, 1], y: [26, 0], scale: [.97, 1], duration: 900, delay: 460, ease: 'out(3)'
+        });
+        A.animate('.signal-card', {
+          opacity: [0, 1], y: [22, 0], duration: 700,
+          delay: A.stagger(110, { start: 640 }), ease: 'out(3)'
+        });
+        A.animate('.result-cta-block', { opacity: [0, 1], y: [22, 0], duration: 800, delay: 900, ease: 'out(3)' });
+      } catch (e) {}
+    };
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', introIn);
+  } else {
+    introIn();
+  }
+})();
+</script>
+
 </body>
 </html>
