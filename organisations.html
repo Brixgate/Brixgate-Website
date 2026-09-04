@@ -472,11 +472,9 @@ body.og ::selection{ background:rgba(255,41,78,.28); color:#fff; }
 .og-pk-top{ padding:26px 22px 22px; flex:1; }
 .og-pk-n{ font-size:1.05rem; font-weight:750; letter-spacing:-.025em; color:#fff; margin:0 0 3px; }
 .og-pk-seats{ font-size:.76rem; font-weight:600; color:var(--og-muted); }
-.og-pk-p{
-  font-size:1.85rem; font-weight:800; letter-spacing:-.04em; color:#fff; line-height:1; margin:18px 0 3px;
+.og-pk-best{
+  font-size:.92rem; font-weight:650; letter-spacing:-.015em; color:#fff; line-height:1.45; margin:18px 0 0;
 }
-.og-pk-p.sm{ font-size:1.25rem; }
-.og-pk-alt{ font-size:.74rem; color:var(--og-muted); }
 .og-pk-per{
   margin-top:14px; padding-top:14px; border-top:1px solid var(--og-line);
   font-size:.78rem; color:var(--og-body);
@@ -489,6 +487,14 @@ body.og ::selection{ background:rgba(255,41,78,.28); color:#fff; }
 }
 .og-pk-more svg{ transition:transform .3s var(--og-ease); }
 .og-pk:hover .og-pk-more svg{ transform:translateX(3px); }
+/* pricing lives on the call, so the section closes with the ask instead */
+.og-pk-cta{
+  display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  margin-top:22px; padding:24px 28px; border-radius:var(--og-r);
+  background:rgba(255,255,255,.035); border:1px dashed var(--og-line-2);
+}
+.og-pk-cta b{ display:block; font-size:1rem; font-weight:700; color:#fff; letter-spacing:-.02em; }
+.og-pk-cta span{ display:block; font-size:.86rem; color:var(--og-body); margin-top:4px; line-height:1.55; max-width:62ch; }
 
 /* ============================================================
    08 · IMPACT REPORT preview
@@ -1120,11 +1126,21 @@ html.og-anim .og-fade{ opacity:0; }
   <div class="og-wrap">
     <div class="og-label og-rise"><span class="n">06</span><span class="t">Packages</span></div>
     <div class="og-head og-mb og-rise">
-      <h2 class="og-h2">Four tiers. Published prices.</h2>
-      <p class="og-lead">Per-seat cost falls as the cohort grows. Tap a tier for everything included — no “contact us for details” on the things you need to compare.</p>
+      <h2 class="og-h2">Four tiers, and the per-seat rate falls as the cohort grows</h2>
+      <p class="og-lead">Tap a tier for everything it includes. Cost is confirmed on the discovery call once we know the fields and the cohort shape — then it arrives as one written proposal, with no per-seat surprises later.</p>
     </div>
 
     <div class="og-pks" data-stagger id="og-pks"></div>
+
+    <div class="og-pk-cta og-rise">
+      <div>
+        <b>Not sure which tier fits?</b>
+        <span>Most organisations do not know until we have talked through the departments involved. That is the call.</span>
+      </div>
+      <a href="#contact" class="og-btn og-btn-red">Schedule a call
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -1520,10 +1536,13 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     }
   ];
 
+  /* Pricing is deliberately not published on this page — it is confirmed
+     on the discovery call once the fields and cohort shape are known. */
   var PACKAGES = [
     {
       key: 'starter', name: 'Starter', seats: '5 seats', feat: false,
-      ngn: '₦1,000,000', usd: '~$625 USD', per: '₦200,000 per seat',
+      best: 'A single team testing the approach',
+      highlight: 'One cohort, everyone reviewed',
       incl: [
         '5 individual programme seats',
         'Field assessment for all participants',
@@ -1535,7 +1554,8 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     },
     {
       key: 'team', name: 'Team Sprint', seats: '20 seats', feat: true,
-      ngn: '₦3,500,000', usd: '~$2,188 USD', per: '₦175,000 per seat',
+      best: 'A function going all-in at once',
+      highlight: 'Dedicated cohort manager',
       incl: [
         'Everything in Starter, plus:',
         '20 programme seats',
@@ -1549,7 +1569,8 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     },
     {
       key: 'dept', name: 'Department Build', seats: '50 seats', feat: false,
-      ngn: '₦7,500,000', usd: '~$4,688 USD', per: '₦150,000 per seat',
+      best: 'Several departments in parallel',
+      highlight: 'Multi-cohort, staggered starts',
       incl: [
         'Everything in Team Sprint, plus:',
         '50 programme seats',
@@ -1562,7 +1583,8 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     },
     {
       key: 'ent', name: 'Enterprise', seats: '100+ seats', feat: false,
-      ngn: 'Quoted', usd: 'Scoped per engagement', per: 'Volume rate confirmed on the call',
+      best: 'Organisation-wide capability',
+      highlight: 'Custom curriculum, dedicated team',
       incl: [
         'Everything in Department Build, plus:',
         '100+ seats',
@@ -1604,16 +1626,12 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   var pks = document.getElementById('og-pks');
   if (pks) {
     pks.innerHTML = PACKAGES.map(function (p) {
-      var big = p.key === 'ent'
-        ? '<div class="og-pk-p sm">' + esc(p.ngn) + '</div>'
-        : '<div class="og-pk-p">' + esc(p.ngn) + '</div>';
       return '<button type="button" class="og-pk og-rise' + (p.feat ? ' feat' : '') + '" data-pk="' + p.key + '">' +
         '<div class="og-pk-top">' +
           '<div class="og-pk-n">' + esc(p.name) + '</div>' +
           '<div class="og-pk-seats">' + esc(p.seats) + '</div>' +
-          big +
-          '<div class="og-pk-alt">' + esc(p.usd) + '</div>' +
-          '<div class="og-pk-per"><b>' + esc(p.per) + '</b></div>' +
+          '<div class="og-pk-best">' + esc(p.best) + '</div>' +
+          '<div class="og-pk-per"><b>' + esc(p.highlight) + '</b></div>' +
         '</div>' +
         '<div class="og-pk-more"><span>Everything included</span>' + arrow + '</div>' +
       '</button>';
@@ -1690,10 +1708,13 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       var h2 = '<h5>Included</h5><ul class="og-modal-list">' +
         k.incl.map(function (o) { return '<li>' + tick + '<span>' + esc(o) + '</span></li>'; }).join('') +
         '</ul>' +
+        '<p style="font-size:.82rem;line-height:1.6;color:rgba(255,255,255,.5);margin:20px 0 0">' +
+        'Pricing for this tier is confirmed on the discovery call, once the fields and cohort shape are settled. ' +
+        'You get one written proposal with the full cost — no per-seat surprises later.</p>' +
         '<div class="og-modal-foot">' +
-          '<a href="#contact" class="og-btn og-btn-red" data-close>Request this package' + arrow + '</a>' +
+          '<a href="#contact" class="og-btn og-btn-red" data-close>Schedule a call' + arrow + '</a>' +
         '</div>';
-      openModal(k.name + ' · ' + k.seats, k.ngn + ' · ' + k.usd + ' · ' + k.per, h2);
+      openModal(k.name + ' · ' + k.seats, k.best, h2);
       return;
     }
 
