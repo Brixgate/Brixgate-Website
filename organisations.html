@@ -49,6 +49,24 @@ body.og ::selection{ background:rgba(255,41,78,.28); color:#fff; }
 .og-light-sec .og-lead{ color:var(--og-light-body); }
 .og-surface-sec{ background:var(--og-surface); }
 
+/* Flat section colour reads a bit banded once the sections stack, so the
+   two plain-background sections get a wash of the brand red — low enough
+   that it registers as warmth rather than as a gradient. Mirrored corners
+   so the two do not look like the same section repeated. */
+.og-tint-a{
+  background:
+    radial-gradient(64% 82% at 92% -6%, rgba(255,41,78,.13) 0%, rgba(196,23,58,.05) 38%, transparent 66%),
+    radial-gradient(58% 76% at 2% 104%, rgba(27,58,92,.30) 0%, transparent 64%),
+    var(--og-bg);
+}
+.og-tint-b{
+  background:
+    radial-gradient(66% 84% at 6% -4%, rgba(255,87,72,.11) 0%, rgba(154,35,53,.05) 40%, transparent 68%),
+    radial-gradient(60% 78% at 98% 100%, rgba(255,41,78,.12) 0%, transparent 62%),
+    radial-gradient(70% 60% at 50% 50%, rgba(27,58,92,.18) 0%, transparent 70%),
+    var(--og-bg);
+}
+
 /* section label — 01 / Something */
 .og-label{ display:inline-flex; align-items:center; gap:11px; margin-bottom:20px; }
 .og-label .n{
@@ -132,8 +150,15 @@ body.og ::selection{ background:rgba(255,41,78,.28); color:#fff; }
 }
 .og-dot{ width:7px; height:7px; border-radius:50%; background:#4ADE80; box-shadow:0 0 0 3px rgba(74,222,128,.22); }
 .og-hero h1{
-  font-size:clamp(2.3rem,5.1vw,4.05rem); font-weight:800; letter-spacing:-.045em; line-height:1.03;
+  font-size:clamp(2.3rem,5.1vw,4.05rem); font-weight:800; letter-spacing:-.045em; line-height:1.09;
   color:#fff; margin:22px 0 0;
+}
+/* splitText wraps each word in an overflow:clip box sized to the line box.
+   At this line-height the glyphs overrun it and get shaved top and bottom,
+   so the wrapper is padded outward and pulled back by an equal margin —
+   the clip window grows, the layout does not move. */
+.og-hero h1 .og-clip{
+  padding:.16em 0 .18em; margin:-.16em 0 -.18em;
 }
 .og-hero h1 .accent{
   background:linear-gradient(100deg,#FFC9A8,#FF8A6B 46%,#FF5748);
@@ -288,15 +313,40 @@ body.og ::selection{ background:rgba(255,41,78,.28); color:#fff; }
 /* ============================================================
    04 · TIMELINE — six weeks, drawn on scroll
    ============================================================ */
-.og-tl{ position:relative; margin-top:8px; }
-.og-tl-track{ position:relative; padding-left:0; }
-.og-tl-svg{ position:absolute; left:0; top:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+.og-tl{ position:relative; margin-top:8px; padding-left:46px; }
+/* the rail: a full-height track with a fill that follows scroll progress */
+.og-tl-rail{
+  position:absolute; left:13px; top:22px; bottom:22px; width:2px; border-radius:2px;
+  background:rgba(255,255,255,.09); overflow:hidden; pointer-events:none;
+}
+.og-tl-rail i{
+  position:absolute; inset:0; display:block; border-radius:2px; transform-origin:top;
+  transform:scaleY(0);
+  background:linear-gradient(180deg,var(--g-steel) 0%,var(--g-deep) 55%,var(--g-orange) 100%);
+  transition:transform .55s var(--og-ease);
+}
 .og-tl-row{
   position:relative; display:grid; grid-template-columns:132px minmax(0,1fr) auto; gap:26px;
   align-items:start; padding:24px 0;
   border-top:1px solid var(--og-line);
 }
 .og-tl-row:last-child{ border-bottom:1px solid var(--og-line); }
+/* the stage marker, sitting on the rail */
+.og-tl-dot{
+  position:absolute; left:-38px; top:29px; width:12px; height:12px; border-radius:50%;
+  background:var(--og-surface); border:2px solid rgba(255,255,255,.18); z-index:1;
+  transition:border-color .45s var(--og-ease), background .45s var(--og-ease),
+             box-shadow .45s var(--og-ease), transform .45s var(--og-ease);
+}
+.og-tl-row.lit .og-tl-dot{
+  background:linear-gradient(140deg,var(--g-deep),var(--g-orange));
+  border-color:rgba(255,138,107,.5); transform:scale(1.25);
+  box-shadow:0 0 0 5px rgba(255,41,78,.13), 0 6px 18px -4px rgba(255,41,78,.6);
+}
+.og-tl-row .og-tl-when{ transition:color .45s var(--og-ease); color:var(--og-muted); }
+.og-tl-row.lit .og-tl-when{ color:#FF8A6B; }
+.og-tl-row .og-tl-owner{ transition:border-color .45s var(--og-ease), color .45s var(--og-ease); }
+.og-tl-row.lit .og-tl-owner{ color:rgba(255,255,255,.72); border-color:var(--og-line-2); }
 .og-tl-when{
   font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.72rem; font-weight:700;
   letter-spacing:.06em; text-transform:uppercase; color:#FF8A6B; padding-top:3px;
@@ -749,7 +799,10 @@ html.og-anim .og-fade{ opacity:0; }
   .og-cov{ grid-template-columns:1fr; }
   .og-pks{ grid-template-columns:1fr; }
   .og-two{ grid-template-columns:1fr; }
+  .og-tl{ padding-left:30px; }
+  .og-tl-rail{ left:7px; }
   .og-tl-row{ grid-template-columns:1fr; gap:10px; padding:20px 0; }
+  .og-tl-dot{ left:-28px; top:25px; }
   .og-tl-owner{ justify-self:start; }
   .og-weeks{ grid-template-columns:repeat(3,1fr); gap:10px 6px; }
   .og-doc-stats{ grid-template-columns:1fr; }
@@ -988,8 +1041,10 @@ html.og-anim .og-fade{ opacity:0; }
       </div>
     </div>
 
-    <div class="og-tl">
+    <div class="og-tl" id="og-tl">
+      <div class="og-tl-rail" aria-hidden="true"><i id="og-tl-fill"></i></div>
       <div class="og-tl-row og-rise">
+        <span class="og-tl-dot" aria-hidden="true"></span>
         <div class="og-tl-when">Day 0<small>45 minutes</small></div>
         <div class="og-tl-b">
           <h4>Discovery call and scoping</h4>
@@ -998,6 +1053,7 @@ html.og-anim .og-fade{ opacity:0; }
         <span class="og-tl-owner">Us &amp; you</span>
       </div>
       <div class="og-tl-row og-rise">
+        <span class="og-tl-dot" aria-hidden="true"></span>
         <div class="og-tl-when">Day 1–5<small>5 business days</small></div>
         <div class="og-tl-b">
           <h4>Proposal and package confirmation</h4>
@@ -1006,6 +1062,7 @@ html.og-anim .og-fade{ opacity:0; }
         <span class="og-tl-owner">Us</span>
       </div>
       <div class="og-tl-row og-rise">
+        <span class="og-tl-dot" aria-hidden="true"></span>
         <div class="og-tl-when">Week 1–2<small>1–2 weeks</small></div>
         <div class="og-tl-b">
           <h4>Onboarding and field assessments</h4>
@@ -1014,6 +1071,7 @@ html.og-anim .og-fade{ opacity:0; }
         <span class="og-tl-owner">Your team</span>
       </div>
       <div class="og-tl-row og-rise">
+        <span class="og-tl-dot" aria-hidden="true"></span>
         <div class="og-tl-when">Week 3–6<small>4 weeks</small></div>
         <div class="og-tl-b">
           <h4>The sprint</h4>
@@ -1022,6 +1080,7 @@ html.og-anim .og-fade{ opacity:0; }
         <span class="og-tl-owner">Us &amp; your team</span>
       </div>
       <div class="og-tl-row og-rise">
+        <span class="og-tl-dot" aria-hidden="true"></span>
         <div class="og-tl-when">Week 6<small>On completion</small></div>
         <div class="og-tl-b">
           <h4>Certification and impact report</h4>
@@ -1046,7 +1105,7 @@ html.og-anim .og-fade{ opacity:0; }
 <!-- ============================================================
      05 · COVERAGE
      ============================================================ -->
-<section class="og-sec">
+<section class="og-sec og-tint-a">
   <div class="og-wrap">
     <div class="og-label og-rise"><span class="n">04</span><span class="t">Coverage</span></div>
     <div class="og-head og-mb og-rise">
@@ -1122,7 +1181,7 @@ html.og-anim .og-fade{ opacity:0; }
 <!-- ============================================================
      07 · PACKAGES
      ============================================================ -->
-<section class="og-sec" id="packages">
+<section class="og-sec og-tint-b" id="packages">
   <div class="og-wrap">
     <div class="og-label og-rise"><span class="n">06</span><span class="t">Packages</span></div>
     <div class="og-head og-mb og-rise">
@@ -1885,6 +1944,9 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     });
     /* settle the pieces that animate their own properties */
     document.querySelectorAll('.og-week-bar i').forEach(function (i) { i.style.transform = 'scaleX(1)'; });
+    var tlFill = document.getElementById('og-tl-fill');
+    if (tlFill) tlFill.style.transform = 'scaleY(1)';
+    document.querySelectorAll('.og-tl-row').forEach(function (r) { r.classList.add('lit'); });
     document.querySelectorAll('#og-doc-chart i').forEach(function (i) {
       if (!i.style.height || i.style.height === '0px') i.style.height = (i.getAttribute('data-h') || 60) + '%';
     });
@@ -1921,6 +1983,10 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       try {
         var s = A.splitText(h1, { words: { wrap: 'clip' }, chars: false });
         words = s.words;
+        /* tag the generated clip wrappers so CSS can widen the clip window */
+        words.forEach(function (w) {
+          if (w.parentElement && w.parentElement !== h1) w.parentElement.classList.add('og-clip');
+        });
       } catch (e) { words = null; }
     }
 
@@ -2084,6 +2150,66 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   }
 
   /* ------------------------------------------------------------------ */
+  /* 4b · TIMELINE RAIL — fill follows scroll, stages light as passed    */
+  /* ------------------------------------------------------------------ */
+  function timelineRail() {
+    var tl   = document.getElementById('og-tl');
+    var fill = document.getElementById('og-tl-fill');
+    if (!tl || !fill) return;
+    var rows = Array.prototype.slice.call(tl.querySelectorAll('.og-tl-row'));
+    if (!rows.length) return;
+
+    /* Hand-rolled rather than a scroll-linked animation: this has to stay
+       correct when the section is entered from either direction, and after
+       a resize changes every offset. */
+    var ticking = false;
+
+    function update() {
+      ticking = false;
+      var rail = tl.querySelector('.og-tl-rail');
+      if (!rail) return;
+      var r = rail.getBoundingClientRect();
+      if (!r.height) return;
+
+      /* The rail is shorter than most viewports, so a straight
+         scroll-position-to-height mapping finishes before the reader has
+         got through the first stage. Instead each stage lights as its dot
+         crosses the mark and the fill runs to the last one lit — the
+         progress is tied to the content, and a CSS transition smooths the
+         step between stages. */
+      var mark = window.innerHeight * 0.72;
+      var lastLit = -1;
+
+      rows.forEach(function (row, i) {
+        var dot = row.querySelector('.og-tl-dot');
+        if (!dot) return;
+        var d = dot.getBoundingClientRect();
+        var passed = (d.top + d.height / 2) <= mark;
+        row.classList.toggle('lit', passed);
+        if (passed) lastLit = i;
+      });
+
+      var p = 0;
+      if (lastLit >= 0) {
+        var last = rows[lastLit].querySelector('.og-tl-dot').getBoundingClientRect();
+        p = (last.top + last.height / 2 - r.top) / r.height;
+        p = p < 0 ? 0 : (p > 1 ? 1 : p);
+      }
+      fill.style.transform = 'scaleY(' + p.toFixed(4) + ')';
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  }
+
+  /* ------------------------------------------------------------------ */
   /* 5 · IMPACT DOC — counters + chart bars                              */
   /* ------------------------------------------------------------------ */
   function impactDoc() {
@@ -2153,6 +2279,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     try { glassTilt(); }     catch (e) {}
     try { reveals(); }       catch (e) { revealAll(); }
     try { ladderSweep(); }   catch (e) {}
+    try { timelineRail(); }  catch (e) {}
     try { weekBars(); }      catch (e) {}
     try { impactDoc(); }     catch (e) {}
     try { heroParallax(); }  catch (e) {}
