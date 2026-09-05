@@ -704,6 +704,10 @@ body.ap .nav.scrolled { background:rgba(255,255,255,.62); box-shadow:0 10px 34px
 /* kill the old dark sections */
 body.ap .section-pad.bg-dark,
 body.ap .section-pad-sm.bg-dark { background:transparent !important; }
+/* The split is meant to run from the nav to the fold, but it is still wrapped
+   in the old page's section chrome, which carries an inline padding-top of
+   64px. Zero it so the gradient panel meets the nav. */
+body.ap .section-pad { padding-top:0 !important; padding-bottom:0 !important; }
 body.ap .page-header { background:transparent !important; }
 
 /* ---------- header ---------- */
@@ -988,11 +992,18 @@ body.ap .enroll-toggle-btn.is-on[style] {
    Purely structural/visual — no payment id is touched.
    ============================================================ */
 
-/* the page no longer needs top padding: the split owns the viewport */
-body.ap { padding-top:0 !important; }
+/* The nav rides above the split so people can get back out of checkout.
+   The region banner stays hidden — a marketing strip sitting above the
+   programme fee is noise — so the nav pins to the very top instead of
+   offsetting itself by --banner-height. */
+/* --ap-nav-h is measured from the rendered nav at runtime. At desktop the
+   nav has no explicit height and comes out ~63px, while --nav-height is
+   104px, so using the variable alone left ~40px of dead space above the
+   split. The variable stays as the pre-script fallback. */
+body.ap { padding-top:var(--ap-nav-h, var(--nav-height)) !important; }
 body.ap .region-banner { display:none !important; }
-body.ap .nav { display:none !important; }
-body.ap .nav-mobile { display:none !important; }
+body.ap .nav { top:0 !important; }
+body.ap .nav-mobile { top:var(--ap-nav-h, var(--nav-height)) !important; }
 
 /* kill the old stacked header entirely */
 body.ap .ap-head, body.ap .page-header { display:none !important; }
@@ -1005,7 +1016,7 @@ body.ap .apply-wrapper {
   max-width:none !important;
   padding:0 !important;
   align-items:stretch !important;
-  min-height:100vh;
+  min-height:calc(100vh - var(--ap-nav-h, var(--nav-height)));
 }
 body.ap .apply-sidebar-col { display:none !important; }
 body.ap .ap-rail { display:none !important; }
@@ -1027,7 +1038,18 @@ body.ap .ap-rail { display:none !important; }
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
 }
 .ap-side > * { position:relative; z-index:1; }
-.ap-side-in { position:sticky; top:62px; display:flex; flex-direction:column; height:calc(100vh - 84px); }
+/* Sticks below the fixed nav rather than the top of the viewport.
+   Selector is .ap-side > .ap-side-in on purpose: the panel also carries
+   .bx-waves, and `.bx-waves > *` sets position:relative at the same
+   specificity but later in the file, so a bare .ap-side-in loses and the
+   sidebar silently stops sticking. */
+.ap-side > .ap-side-in {
+  position:sticky; top:calc(var(--ap-nav-h, var(--nav-height)) + 26px);
+  display:flex; flex-direction:column;
+  height:calc(100vh - var(--ap-nav-h, var(--nav-height)) - 52px);
+}
+/* the nav carries the wordmark now; a second one 100px below reads as a bug */
+.ap-side-logo { display:none; }
 
 .ap-back {
   display:inline-flex; align-items:center; gap:9px; align-self:flex-start;
@@ -1091,7 +1113,7 @@ body.ap .ap-scholar { margin-bottom:30px; }
 @media (max-width:1000px) {
   body.ap .apply-wrapper { grid-template-columns:1fr !important; min-height:0; }
   .ap-side { grid-column:1; grid-row:auto; padding:26px 24px 30px; }
-  .ap-side-in { position:static; height:auto; }
+  .ap-side > .ap-side-in { position:static; height:auto; }
   .ap-side-logo { margin-top:20px; }
   .ap-side-tag { margin-top:22px; }
   .ap-side-h { font-size:1.55rem; }
@@ -3815,6 +3837,25 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   apply(dark);
   var b = document.getElementById('ap-theme');
   if (b) b.addEventListener('click', function () { apply(!document.body.classList.contains('ap-dark')); });
+})();
+</script>
+
+<script>
+/* The nav has no explicit height at desktop, so its real height is only
+   knowable at runtime. Publish it as --ap-nav-h; the CSS falls back to
+   --nav-height until this runs. */
+(function () {
+  var nav = document.querySelector('.nav');
+  if (!nav) return;
+  function sync() {
+    var h = Math.round(nav.getBoundingClientRect().height);
+    if (h) document.documentElement.style.setProperty('--ap-nav-h', h + 'px');
+  }
+  sync();
+  window.addEventListener('resize', sync);
+  window.addEventListener('load', sync);
+  if (document.readyState === 'loading')
+    document.addEventListener('DOMContentLoaded', sync);
 })();
 </script>
 </body>
