@@ -1272,6 +1272,94 @@ body.ap.ap-dark .apply-form-card [style*="var(--white)"]:not(.btn):not(a):not(bu
 .ap-theme:hover { transform:translateY(-2px); }
 .ap-dark .ap-theme { background:rgba(255,255,255,.92); color:#070E18; border-color:rgba(0,0,0,.1); }
 @media (max-width:700px) { .ap-theme { right:14px; bottom:84px; height:36px; font-size:.75rem; } }
+
+/* ============================================================
+   LIGHT-MODE REPAIRS
+   The split was designed dark-first. Several pieces carry hard
+   coded white text, or colours the payment JS sets inline for a
+   dark ground, and they disappear against the light one.
+   ============================================================ */
+
+/* 1 · The form column becomes a cream panel. On plain white the
+   white inputs had no edge to read against. */
+body.ap:not(.ap-dark) .apply-wrapper { background:#F6F5F5; }
+body.ap:not(.ap-dark) .apply-form-card { background:transparent !important; }
+
+/* 2 · "How are you applying" — icon, text and radio on one line.
+   ap-choice-top becomes display:contents so its two children join
+   the parent grid directly, no markup change needed. */
+body.ap .enroll-toggle-btn {
+  padding:14px 16px !important;
+  display:grid !important;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  grid-template-areas:"ic t radio" "ic d radio";
+  align-items:center; column-gap:13px; row-gap:1px;
+}
+body.ap .ap-choice-top { display:contents !important; }
+body.ap .ap-choice-ic { grid-area:ic; width:32px !important; height:32px !important; border-radius:9px; }
+body.ap .ap-choice-radio { grid-area:radio; }
+body.ap .ap-choice-t { grid-area:t; font-size:.94rem; margin:0; align-self:end; }
+body.ap .ap-choice-d { grid-area:d; font-size:.78rem; margin:0 !important; align-self:start; }
+
+/* 3 · Terms / privacy note was rgba(255,255,255,.3) — white on white. */
+body.ap:not(.ap-dark) .form-note { color:#5A6B80 !important; }
+body.ap:not(.ap-dark) .form-note a { color:var(--ap-red) !important; font-weight:650; text-decoration:underline; }
+
+/* 4 · "Chat with Dee" bar: the inline white has been removed, so the
+   colour now comes from here and follows the theme. */
+.ap-wa { color:#0B7A3B !important; }
+body.ap.ap-dark .ap-wa { color:#EAF6EF !important; }
+.ap-wa span { color:#128C4A !important; }
+body.ap.ap-dark .ap-wa span { color:#25D366 !important; }
+
+/* 5 · "Edit my details" sat left-aligned at 154px under a 528px pay
+   button, 59px below it — it read as a stray fragment rather than the
+   pair's secondary action. The shared button rule forces inline-flex,
+   so margin:auto cannot centre it; flex + width:fit-content can. */
+body.ap #back-to-form {
+  display:flex !important;
+  width:fit-content;
+  margin:12px auto 0 !important;
+  padding:0 24px !important;
+  font-size:.88rem !important;
+  text-decoration:none;
+}
+body.ap #back-to-form:hover { background:#F2F4F7 !important; border-color:#C9D0DA !important; }
+/* Restates the dark palette alongside the light overrides above so the pair
+   stays readable together. Duplicates the earlier dark rule deliberately —
+   the light rules here are later in the sheet, and keeping the dark values
+   next to them stops a future edit from silently leaving dark behind. */
+body.ap.ap-dark #back-to-form {
+  background:#0D1826 !important; color:#F2F5F9 !important; border-color:#1E2F45 !important;
+}
+body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-color:#2A3F59 !important; }
+
+/* 6 · Payment plan pills. The renderer writes their colours inline for
+   a dark panel, so on light the borders and labels vanish. Restyled
+   here rather than in the renderer — no payment code is touched. */
+body.ap:not(.ap-dark) #payment-options-container button {
+  border:1.5px solid #D6DBE3 !important;
+  background:#fff !important;
+  color:#4A5A70 !important;
+}
+body.ap:not(.ap-dark) #payment-options-container button:hover {
+  border-color:#B8C1CE !important; background:#F7F9FB !important;
+}
+/* The renderer marks the active pill with #FF294E in its inline style.
+   That red on its own 8% tint measured 3.04:1 — under AA for text this
+   size — so the label drops to the deeper brand red, which clears it. */
+body.ap:not(.ap-dark) #payment-options-container button[style*="#FF294E"] {
+  border-color:var(--ap-red) !important;
+  background:rgba(255,41,78,.08) !important;
+  color:#A8102C !important;
+}
+/* labels and schedule rows inside the payment block */
+body.ap:not(.ap-dark) #payment-options-container,
+body.ap:not(.ap-dark) #payment-options-container div,
+body.ap:not(.ap-dark) #payment-options-container span {
+  color:#33415C;
+}
+body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#6B7A90; }
 </style>
 
 </head>
@@ -1573,11 +1661,6 @@ body.ap.ap-dark .apply-form-card [style*="var(--white)"]:not(.btn):not(a):not(bu
       </div>
       </div><!-- /apply-sidebar-col -->
 
-      <!-- ====== CHAT WITH DEE BAR ====== -->
-      <a href="https://wa.me/2348079160291?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20My%20Field%20programme" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(90deg,rgba(37,211,102,0.16),rgba(37,211,102,0.08));border:1px solid rgba(37,211,102,0.45);border-radius:12px;padding:12px 16px;margin-top:24px;margin-bottom:20px;text-decoration:none;color:var(--white);font-size:0.88rem;font-weight:600;flex-wrap:wrap;text-align:center">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366" style="flex-shrink:0"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.48 1.34 5L2 22l5.2-1.36c1.46.8 3.1 1.22 4.8 1.22h.01c5.5 0 9.96-4.46 9.96-9.96 0-2.66-1.04-5.16-2.92-7.04A9.9 9.9 0 0 0 12.04 2zm0 18.2h-.01c-1.5 0-2.98-.4-4.26-1.16l-.3-.18-3.09.81.83-3.01-.2-.31a8.17 8.17 0 0 1-1.26-4.39c0-4.53 3.69-8.22 8.23-8.22 2.2 0 4.26.86 5.82 2.42a8.16 8.16 0 0 1 2.4 5.81c0 4.53-3.69 8.23-8.22 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.71-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.36-.77-1.86-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.44.06-.67.31-.23.25-.87.86-.87 2.1 0 1.24.9 2.43 1.02 2.6.12.17 1.78 2.72 4.31 3.81.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
-        Not sure yet? <span style="color:#25D366;font-weight:800;text-decoration:underline">Chat with Dee on WhatsApp</span>
-      </a>
 
       <!-- ====== APPLICATION CARD — multi-step ====== -->
       <div class="apply-form-card" style="opacity:1;transform:none" id="apply-card">
@@ -1915,6 +1998,12 @@ body.ap.ap-dark .apply-form-card [style*="var(--white)"]:not(.btn):not(a):not(bu
         <!-- Payment states handled by callback.html after Paystack redirect -->
 
       </div>
+      <!-- ====== CHAT WITH DEE BAR ====== -->
+      <a class="ap-wa" href="https://wa.me/2348079160291?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20My%20Field%20programme" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(90deg,rgba(37,211,102,0.16),rgba(37,211,102,0.08));border:1px solid rgba(37,211,102,0.45);border-radius:12px;padding:12px 16px;margin-top:20px;text-decoration:none;font-size:0.88rem;font-weight:600;flex-wrap:wrap;text-align:center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366" style="flex-shrink:0"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.48 1.34 5L2 22l5.2-1.36c1.46.8 3.1 1.22 4.8 1.22h.01c5.5 0 9.96-4.46 9.96-9.96 0-2.66-1.04-5.16-2.92-7.04A9.9 9.9 0 0 0 12.04 2zm0 18.2h-.01c-1.5 0-2.98-.4-4.26-1.16l-.3-.18-3.09.81.83-3.01-.2-.31a8.17 8.17 0 0 1-1.26-4.39c0-4.53 3.69-8.22 8.23-8.22 2.2 0 4.26.86 5.82 2.42a8.16 8.16 0 0 1 2.4 5.81c0 4.53-3.69 8.23-8.22 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.71-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.36-.77-1.86-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.44.06-.67.31-.23.25-.87.86-.87 2.1 0 1.24.9 2.43 1.02 2.6.12.17 1.78 2.72 4.31 3.81.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+        Not sure yet? <span style="color:#25D366;font-weight:800;text-decoration:underline">Chat with Dee on WhatsApp</span>
+      </a>
+
 
       <!-- ====== ORDER SUMMARY (sticky) ====== -->
       <aside class="ap-rail ap-rise">
