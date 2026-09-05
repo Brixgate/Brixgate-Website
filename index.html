@@ -932,6 +932,16 @@
        ============================================================ */
     .lp .lp-cta { position: relative; overflow: hidden; background: var(--lp-ink); color: #fff; padding: 150px 0; text-align: center; }
     .lp .lp-cta-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+    /* the same particle web as the hero, but tuned to sit just a shade off
+       the cream so it reads as movement rather than as a graphic */
+    .lp #programmes { position: relative; overflow: hidden; }
+    .lp .lp-prog-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      display: block; pointer-events: none; z-index: 0; opacity: .85;
+      -webkit-mask-image: radial-gradient(78% 66% at 50% 44%, #000 0%, rgba(0,0,0,.55) 58%, transparent 88%);
+      mask-image: radial-gradient(78% 66% at 50% 44%, #000 0%, rgba(0,0,0,.55) 58%, transparent 88%);
+    }
+    .lp #programmes > .lp-container { position: relative; z-index: 1; }
     .lp .lp-cta-glow { position: absolute; left: 50%; top: 50%; width: 900px; height: 900px; transform: translate(-50%, -50%); background: radial-gradient(closest-side, rgba(255,41,78,.28), rgba(255,41,78,0)); pointer-events: none; }
     .lp .lp-cta-in { position: relative; max-width: 800px; margin: 0 auto; }
     .lp .lp-cta .lp-eyebrow { color: rgba(255,255,255,.65); justify-content: center; }
@@ -1320,6 +1330,7 @@
      PROGRAMMES
      ============================================================ -->
 <section class="lp-section lp-surface" id="programmes">
+  <canvas class="lp-prog-canvas" id="lp-web" aria-hidden="true"></canvas>
   <div class="lp-container">
     <div class="lp-prog-head fade-up">
       <div class="lp-head" style="max-width:640px">
@@ -1725,26 +1736,23 @@
 <section class="lp-section">
   <div class="lp-container">
     <div class="lp-head center fade-up">
-      <span class="lp-eyebrow">From our community</span>
-      <h2 class="lp-h2">Hear it in their own words.</h2>
-      <p class="lp-lead">Practitioners and experts on what changed for them.</p>
+      <span class="lp-eyebrow">From our socials</span>
+      <h2 class="lp-h2">AI, without the hype.</h2>
+      <p class="lp-lead">Short clips from our feed on where AI is actually landing in professional work — and what we're building at Brixgate.</p>
     </div>
 
     <div class="lp-videos stagger">
       <div class="lp-video ig-video-card fade-up" data-src="assets/613e33708baf44b09faf7a3914e0225c (1).mp4">
         <video src="assets/613e33708baf44b09faf7a3914e0225c (1).mp4" preload="metadata" muted playsinline></video>
         <div class="lp-video-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="#021024"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
-        <div class="lp-video-cap">Practitioner story</div>
       </div>
       <div class="lp-video ig-video-card fade-up" data-src="assets/Female Video.mp4">
         <video src="assets/Female Video.mp4" preload="metadata" muted playsinline></video>
         <div class="lp-video-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="#021024"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
-        <div class="lp-video-cap">Practitioner story</div>
       </div>
       <div class="lp-video ig-video-card fade-up" data-src="assets/male Video.mp4">
         <video src="assets/male Video.mp4" preload="metadata" muted playsinline></video>
         <div class="lp-video-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="#021024"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
-        <div class="lp-video-cap">Practitioner story</div>
       </div>
     </div>
   </div>
@@ -2279,6 +2287,24 @@
     repel: false
   });
 
+  /* ---- attach: programmes web ----
+     Light section, so the ink is a warm grey barely off the cream rather
+     than the hero's white. A trace of brand red keeps it from reading as
+     dust. Lines carry this one; the points are nearly invisible. */
+  var webCanvas = document.getElementById('lp-web');
+  var web = webCanvas ? createField(webCanvas, {
+    count: isMobile ? 70 : 150,
+    speed: 0.022,
+    depth: 22,
+    inkColor: 0xB9B3A9,
+    accentColor: 0xFF5748,
+    redRatio: 0.07,
+    sizeMin: 1.4, sizeMax: 2.4, sizeRed: 3.0,
+    pointOpacity: 0.42,
+    lines: true, lineOpacity: 0.20, linkRadius: 17,
+    repel: false
+  }) : null;
+
   /* ---- run only while on screen ---- */
   function watch(el, field) {
     if (!('IntersectionObserver' in window)) { field.start(); return; }
@@ -2288,6 +2314,7 @@
   }
   watch(hero, net);
   watch(document.getElementById('lp-cta'), stars);
+  if (web) watch(document.getElementById('programmes'), web);
 
   /* ---- mouse parallax: network + floating cards ---- */
   var cards = Array.prototype.slice.call(document.querySelectorAll('#lp-stage .lp-card'));
@@ -2617,5 +2644,34 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 
 <!-- Chat assistant -->
 <script src="assets/chat.js?v=34b15c74" defer></script>
+
+<script>
+/* ------------------------------------------------------------------
+   Reveal failsafe.
+   .fade-up starts at opacity:0 and only becomes visible when
+   initScrollAnimations() in script.js attaches its IntersectionObserver.
+   That call sits behind several others in the same init(), so anything
+   throwing earlier leaves the whole page invisible with no other symptom.
+   This guarantees content appears regardless.
+   ------------------------------------------------------------------ */
+(function lpRevealFailsafe() {
+  function reveal() {
+    document.querySelectorAll('.fade-up, .fade-in, .slide-left, .slide-right')
+      .forEach(function (el) { el.classList.add('visible'); });
+    document.querySelectorAll('.lp-rise').forEach(function (el) {
+      if (getComputedStyle(el).opacity === '0') {
+        el.style.opacity = 1;
+        el.style.transform = 'none';
+      }
+    });
+  }
+  /* late enough that the real animations play normally first */
+  window.addEventListener('load', function () { setTimeout(reveal, 2800); });
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) setTimeout(reveal, 1200);
+  });
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) reveal();
+})();
+</script>
 </body>
 </html>

@@ -626,7 +626,10 @@ html.cp-anim .cp-fade { opacity:0; }
 /* ============================================================
    PRICING
    ============================================================ */
-.cp-price-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 860px; margin-inline: auto; }
+/* auto-fit so two or three plans stay on a single line; the old
+   fixed 2-column grid pushed a third card onto its own row */
+.cp-price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px; max-width: 1040px; margin-inline: auto; }
 .cp-price {
   position: relative; border-radius: 22px; padding: 40px 36px; overflow: hidden;
   background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
@@ -634,6 +637,16 @@ html.cp-anim .cp-fade { opacity:0; }
   transition: transform .35s var(--cp-ease), background .3s;
 }
 .cp-price:hover { transform: translateY(-5px); background: rgba(255,255,255,.10); }
+/* The Corporate tier is still emitted with the old .card class by the pricing
+   renderer, so it arrived as a solid navy 12px box between two translucent
+   22px ones. Match it to its neighbours without touching the renderer. */
+#pricing-cards > .card {
+  position: relative; border-radius: 22px !important; padding: 40px 36px !important;
+  background: rgba(255,255,255,.06) !important; border: 1px solid rgba(255,255,255,.14) !important;
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  transition: transform .35s var(--cp-ease), background .3s;
+}
+#pricing-cards > .card:hover { transform: translateY(-5px); background: rgba(255,255,255,.10) !important; }
 .cp-price.feat { background: rgba(255,255,255,.97); color: var(--cp-ink); border-color: transparent;
   box-shadow: 0 34px 70px -26px rgba(0,0,0,.55); }
 .cp-price-k { font-size: .68rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; color: rgba(255,255,255,.6); }
@@ -1254,7 +1267,9 @@ body.f-market .cp-glass-3 { top:212px; right:0; left:auto; bottom:auto; width:24
 </div>
 
 
-<!-- ====== VALIDATE YOUR SKILL LEVEL (QUIZ) ====== -->
+<!-- QUIZ REMOVED — uptake was low. Markup kept for easy restore;
+     the JS above bails out on its own while this is commented out.
+<!~~ ====== VALIDATE YOUR SKILL LEVEL (QUIZ) ====== ~~>
 <section id="quiz-field" class="section-pad" style="background:var(--bg-dark)">
   <div class="container">
     <div style="max-width:800px;margin:0 auto">
@@ -1269,12 +1284,12 @@ body.f-market .cp-glass-3 { top:212px; right:0; left:auto; bottom:auto; width:24
       </div>
 
       <div id="qf_finance_container" style="background:var(--bg-card);border:1.5px solid var(--border-card);border-radius:20px;padding:40px 36px;max-width:600px;margin:0 auto">
-        <!-- Progress bar -->
+        <!~~ Progress bar ~~>
         <div class="qf-progress-bar">
           <div class="qf-progress-fill" id="qf_finance_progress" style="width:20%"></div>
         </div>
 
-        <!-- Questions -->
+        <!~~ Questions ~~>
         
           <div class="qf-question" id="qf_finance_q0">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
@@ -1342,12 +1357,12 @@ body.f-market .cp-glass-3 { top:212px; right:0; left:auto; bottom:auto; width:24
             </div>
           </div>
 
-        <!-- Nav button -->
+        <!~~ Nav button ~~>
         <div class="qf-nav">
           <button class="qf-next-btn" id="qf_finance_next" onclick="qfNext('qf_finance')">Next Question</button>
         </div>
 
-        <!-- Result panel -->
+        <!~~ Result panel ~~>
         <div class="qf-result" id="qf_finance_result">
           <div style="text-align:center;margin-bottom:28px">
             <span class="result-badge" id="qf_finance_badge">—</span>
@@ -1369,6 +1384,8 @@ body.f-market .cp-glass-3 { top:212px; right:0; left:auto; bottom:auto; width:24
     </div>
   </div>
 </section>
+
+-->
 
 <!-- ====== WHAT YOU'LL LEARN ====== -->
 <section class="cp-sec">
@@ -1674,7 +1691,7 @@ body.f-market .cp-glass-3 { top:212px; right:0; left:auto; bottom:auto; width:24
 <!-- ====== SPRINT + PRACTITIONER (one ground) ====== -->
 <section class="cp-chapter cp-grain">
   <div class="cp-wrap">
-    <div class="cp-label cp-rise"><span class="n">09</span><span class="t">The sprint &amp; your practitioner</span></div>
+    <div class="cp-label cp-rise"><span class="n">06</span><span class="t">The sprint &amp; your practitioner</span></div>
 
     <div class="cp-head cp-mb cp-rise">
       <h2 class="cp-h2" data-lines>From assessment<br/>to certificate</h2>
@@ -1730,10 +1747,29 @@ body.f-market .cp-glass-3 { top:212px; right:0; left:auto; bottom:auto; width:24
   </div>
 </section>
 
+<!-- ====== UPCOMING START DATES ====== -->
+<section class="cp-sec cp-surface" id="start-dates">
+  <div class="cp-wrap">
+    <div class="cp-label cp-rise"><span class="n">07</span><span class="t">Upcoming start dates</span></div>
+
+    <div class="cp-head cp-mb cp-rise">
+      <h2 class="cp-h2">Pick a cohort</h2>
+      <p class="cp-lead">Groups stay small on purpose. When a cohort fills, it closes.</p>
+    </div>
+
+    <div class="cp-dates" id="cohort-cards-container">
+      <div class="cp-date" style="opacity:.55">
+        <div class="cp-date-when"><b>Loading…</b><span>Fetching cohorts</span></div>
+        <div class="cp-date-meta"></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- ====== TESTIMONIALS ====== -->
 <section class="cp-sec">
   <div class="cp-wrap">
-    <div class="cp-label cp-rise"><span class="n">10</span><span class="t">Alumni</span></div>
+    <div class="cp-label cp-rise"><span class="n">08</span><span class="t">Alumni</span></div>
 
     <div class="cp-head cp-mb cp-rise">
       <h2 class="cp-h2" data-lines>What changed<br/>for them</h2>
@@ -1783,7 +1819,7 @@ body.f-market .cp-glass-3 { top:212px; right:0; left:auto; bottom:auto; width:24
 <!-- ====== ROI ====== -->
 <section class="cp-sec cp-surface">
   <div class="cp-wrap">
-    <div class="cp-label cp-rise"><span class="n">11</span><span class="t">Why it pays off</span></div>
+    <div class="cp-label cp-rise"><span class="n">09</span><span class="t">Why it pays off</span></div>
 
     <div class="cp-head cp-mb cp-rise">
       <h2 class="cp-h2" data-lines>What the fee<br/>actually buys</h2>
@@ -1834,30 +1870,11 @@ body.f-market .cp-glass-3 { top:212px; right:0; left:auto; bottom:auto; width:24
 </section>
 
 
-<!-- ====== UPCOMING START DATES ====== -->
-<section class="cp-sec cp-surface" id="start-dates">
-  <div class="cp-wrap">
-    <div class="cp-label cp-rise"><span class="n">06</span><span class="t">Upcoming start dates</span></div>
-
-    <div class="cp-head cp-mb cp-rise">
-      <h2 class="cp-h2">Pick a cohort</h2>
-      <p class="cp-lead">Groups stay small on purpose. When a cohort fills, it closes.</p>
-    </div>
-
-    <div class="cp-dates" id="cohort-cards-container">
-      <div class="cp-date" style="opacity:.55">
-        <div class="cp-date-when"><b>Loading…</b><span>Fetching cohorts</span></div>
-        <div class="cp-date-meta"></div>
-        <div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ====== PRICING ====== -->
 <section class="cp-chapter cp-grain" id="pricing">
   <div class="cp-wrap">
-    <div class="cp-label cp-rise"><span class="n">07</span><span class="t">Investment</span></div>
+    <div class="cp-label cp-rise"><span class="n">10</span><span class="t">Investment</span></div>
 
     <div class="cp-head center cp-mb cp-rise" style="max-width:620px">
       <h2 class="cp-h2">One fee. Everything included.</h2>
@@ -1881,7 +1898,7 @@ body.f-market .cp-glass-3 { top:212px; right:0; left:auto; bottom:auto; width:24
   <div class="cp-wrap">
     <div class="cp-faq-wrap">
       <div class="cp-faq-head cp-rise">
-        <div class="cp-label" style="margin-bottom:28px"><span class="n">08</span><span class="t">FAQ</span></div>
+        <div class="cp-label" style="margin-bottom:28px"><span class="n">11</span><span class="t">FAQ</span></div>
         <h2 class="cp-h2">Questions people<br/>actually ask</h2>
         <p class="cp-lead" style="margin-top:18px">Still unsure? <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%20have%20a%20question%20about%20the%20Software%20Engineering%20programme." target="_blank" rel="noopener" style="color:var(--cp-red);font-weight:600">Message us on WhatsApp</a> and a human will answer.</p>
       </div>
@@ -2143,6 +2160,10 @@ document.addEventListener('DOMContentLoaded', function() {
 // ====== Field-Specific Quiz (finance) ======
 (function() {
   const ID = 'qf_finance';
+  /* The quiz markup is commented out. Without this the next line
+     calls querySelectorAll on null, which aborts the whole script
+     block — taking the pricing and cohort renderers with it. */
+  if (!document.getElementById(ID + '_container')) return;
   const TIERS = [
       { min: 5, max: 9, label: 'Foundation Level', color: '#FF5748', headline: 'You\'re at the starting line. That\'s exactly where this programme begins.', body: 'Most professionals in your field are in the same position. The Expert Practitioner Programme is built for exactly this moment — structured, practitioner-led, and designed to move you from curiosity to capability in four weeks.', cta: 'Reserve your seat before this cohort fills →' },
       { min: 10, max: 14, label: 'Emerging Practitioner', color: '#FF8C00', headline: 'You have awareness. The programme turns awareness into applied advantage.', body: 'You\'re ahead of most professionals who haven\'t started yet. But awareness without application doesn\'t move the needle. The sprint will give you the structured framework, practitioner guidance, and peer accountability to make your AI knowledge operational.', cta: 'Apply now and close the gap →' },

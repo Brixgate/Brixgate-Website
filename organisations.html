@@ -290,11 +290,17 @@ body.og ::selection{ background:rgba(255,41,78,.28); color:#fff; }
 .og-rung-mark.stop{ background:rgba(255,255,255,.07); color:var(--og-muted); border:1px solid var(--og-line); }
 .og-rung-mark.here{ background:linear-gradient(135deg,var(--g-deep),var(--g-red)); color:#fff; }
 /* the sweep that shows where generic training stops */
+/* Sits behind the first two rungs. It used to start at the card's own 28px
+   padding, so its edge landed exactly on the text and read as a crop. It now
+   insets to 14px, giving the content 14px of breathing room inside the band. */
 .og-ladder-sweep{
-  position:absolute; left:28px; right:28px; border-radius:12px; pointer-events:none;
+  position:absolute; left:14px; right:14px; border-radius:14px; pointer-events:none;
   background:linear-gradient(180deg, rgba(27,58,92,.30), rgba(27,58,92,.05));
   border:1px solid rgba(255,255,255,.09); z-index:0;
 }
+/* the covered rung's dashed divider would otherwise draw a second line just
+   inside the band's bottom edge */
+.og-rung.sweep-end{ border-bottom-color:transparent; }
 .og-gap-photo{
   position:relative; border-radius:var(--og-r-lg); overflow:hidden; aspect-ratio:4/3;
   border:1px solid var(--og-line);
@@ -2100,10 +2106,17 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     function place() {
       var rungs = ladder.querySelectorAll('.og-rung');
       if (rungs.length < 2) return;
+      /* Clearance is deliberately asymmetric. Above rung 1 the band can
+         breathe into the card's own 30px padding, but below rung 2 it only
+         has the 34px gutter shared with rung 3 — 14px there left just 3px
+         before rung 3's numeral. 14 top / 6 bottom keeps roughly even
+         whitespace around the text without crowding the next rung. */
+      var PAD_TOP = 14, PAD_BOTTOM = 6;
       var top = rungs[0].offsetTop;
       var bottom = rungs[1].offsetTop + rungs[1].offsetHeight;
-      sweep.style.top = (top - 6) + 'px';
-      sweep.style.height = (bottom - top + 12) + 'px';
+      sweep.style.top = (top - PAD_TOP) + 'px';
+      sweep.style.height = (bottom - top + PAD_TOP + PAD_BOTTOM) + 'px';
+      rungs[1].classList.add('sweep-end');
     }
     place();
     window.addEventListener('resize', place);
