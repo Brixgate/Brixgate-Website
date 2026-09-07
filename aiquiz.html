@@ -472,7 +472,12 @@ html.qz-anim .qz-rise{ opacity:0; }
   .q-nav{ gap:10px; }
   .q-next-btn{ padding:14px 22px; }
 }
-  </style>
+  
+/* styles.css pins .nav to top:var(--banner-height) because most pages sit
+   under the region banner. This page has no banner, so without this the nav
+   floats 44px down and leaves an empty strip above it. */
+.nav { top: 0 !important; }
+</style>
 <script src="tracking.js"></script>
 </head>
 <body class="qz">

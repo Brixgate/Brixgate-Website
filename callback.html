@@ -210,7 +210,12 @@
       .action-row { flex-direction: column; }
       .action-row .btn { width: 100%; justify-content: center; }
     }
-  </style>
+  
+/* styles.css pins .nav to top:var(--banner-height) because most pages sit
+   under the region banner. This page has no banner, so without this the nav
+   floats 44px down and leaves an empty strip above it. */
+.nav { top: 0 !important; }
+</style>
 <script src="tracking.js"></script>
 
 <style>
