@@ -3,603 +3,214 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Brixer Verification — Brixgate</title>
-  <meta name="description" content="Verify this Brixgate Brixer Certificate. See what this Brixer mastered and read their expert assessment." />
+  <title>Verify a Credential — Brixgate</title>
+  <meta name="description" content="Check whether a Brixgate Expert Practitioner Certificate is authentic. Enter the certificate number and see who issued it, who assessed it, and what was defended." />
+  <meta name="robots" content="noindex" />
   <link rel="icon" type="image/png" href="assets/faviii.png" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* Fix nav to top on pages without region-banner */
-    .nav { top: 0 !important; }
-    body { background: var(--bg-dark); padding-top: var(--nav-height); }
+/* ============================================================
+   VERIFY  —  .vf-*
+   This page answers one question for a stranger: is this real?
+   So it is built as a check with a verdict, not as a profile.
+   The holder's showpiece lives on certificate.html.
+   ============================================================ */
+:root{
+  --g-navy:#021024; --g-card:#0D1C34; --g-steel:#1B3A5C;
+  --g-wine:#9A2335; --g-deep:#C4173A; --g-red:#FF294E; --g-orange:#FF5748;
+}
+body.vf{
+  --vf-bg:#040B16; --vf-card:#0C1728;
+  --vf-line:rgba(255,255,255,.10); --vf-line-2:rgba(255,255,255,.18);
+  --vf-body:rgba(255,255,255,.66); --vf-muted:rgba(255,255,255,.44);
+  --vf-ok:#4ADE80; --vf-ok-deep:#15803D;
+  --vf-r:14px; --vf-r-lg:22px;
+  --vf-ease:cubic-bezier(.22,1,.36,1);
+  background:var(--vf-bg); padding-top:0; min-height:100vh;
+  display:flex; flex-direction:column; -webkit-font-smoothing:antialiased;
+}
+body.vf ::selection{ background:rgba(255,41,78,.28); color:#fff; }
 
-    /* ====== VERIFIED BANNER ====== */
-    .verified-banner {
-      background: linear-gradient(90deg, #0a4a2a 0%, #0d5c33 100%);
-      border-bottom: 1px solid rgba(52,199,89,0.3);
-      padding: 14px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-    }
-    .verified-badge-icon {
-      width: 24px; height: 24px;
-      background: #34C759;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px;
-      color: #fff;
-      font-weight: 900;
-      flex-shrink: 0;
-    }
-    .verified-banner-text {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: rgba(255,255,255,0.9);
-      letter-spacing: 0.01em;
-    }
-    .verified-banner-id {
-      font-size: 0.78rem;
-      color: rgba(52,199,89,0.9);
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-left: 8px;
-      padding: 3px 10px;
-      background: rgba(52,199,89,0.12);
-      border: 1px solid rgba(52,199,89,0.25);
-      border-radius: 20px;
-    }
+.vf-main{
+  position:relative; flex:1; overflow:clip;
+  padding:calc(var(--nav-height) + 64px) 0 92px;
+  background:
+    radial-gradient(90% 110% at 100% 0%, rgba(255,41,78,.14) 0%, transparent 58%),
+    radial-gradient(80% 100% at 0% 96%, rgba(27,58,92,.42) 0%, transparent 62%),
+    var(--vf-bg);
+}
+.vf-waves{
+  position:absolute; inset:-10% -6%; z-index:0; pointer-events:none; opacity:.16;
+  background-image:url('assets/pattern/waves.svg'); background-size:150% auto;
+  animation:vfWave 40s linear infinite;
+}
+@keyframes vfWave{ from{transform:translate3d(0,0,0)} to{transform:translate3d(-8%,-3%,0)} }
+.vf-wrap{ position:relative; z-index:1; width:min(760px,calc(100% - 44px)); margin-inline:auto; }
 
-    /* ====== PROFILE HERO ====== */
-    .profile-hero {
-      background: var(--bg-dark);
-      padding: 64px 0 56px;
-      border-bottom: 1px solid var(--border-card);
-    }
-    .profile-hero-inner {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 48px;
-      align-items: center;
-    }
-    .profile-photo-wrap {
-      position: relative;
-      flex-shrink: 0;
-    }
-    .profile-photo {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid var(--border-card);
-    }
-    .profile-verified-dot {
-      position: absolute;
-      bottom: 6px; right: 6px;
-      width: 32px; height: 32px;
-      background: #34C759;
-      border-radius: 50%;
-      border: 3px solid var(--bg-dark);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px;
-      color: #fff;
-      font-weight: 900;
-    }
-    .profile-name {
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: var(--white);
-      line-height: 1.1;
-      margin-bottom: 8px;
-    }
-    .profile-title {
-      font-size: 1rem;
-      color: var(--red);
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-    .profile-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .meta-chip {
-      font-size: 0.78rem;
-      padding: 5px 14px;
-      border-radius: 20px;
-      border: 1px solid var(--border-card);
-      color: var(--muted);
-      font-weight: 600;
-    }
-    .meta-chip.accent {
-      border-color: rgba(255,41,78,0.3);
-      color: rgba(255,41,78,0.85);
-      background: rgba(255,41,78,0.05);
-    }
+.vf-mark{
+  display:inline-flex; align-items:center; gap:9px; padding:7px 15px 7px 11px; border-radius:99px;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16);
+  font-size:.73rem; font-weight:650; color:rgba(255,255,255,.82);
+}
+.vf-mark svg{ color:#FF8A6B; }
+.vf-h1{
+  font-size:clamp(1.9rem,4.2vw,2.9rem); font-weight:800; letter-spacing:-.04em; line-height:1.1;
+  color:#fff; margin:20px 0 0;
+}
+.vf-sub{ font-size:1rem; line-height:1.7; color:var(--vf-body); margin:16px 0 0; max-width:56ch; }
 
-    /* ====== CERTIFICATE CARD ====== */
-    .cert-card-mini {
-      width: 220px;
-      flex-shrink: 0;
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .cert-card-mini-inner {
-      background: linear-gradient(135deg, #021024 0%, #0D1C34 100%);
-      padding: 20px;
-      position: relative;
-    }
-    .cert-card-mini-inner::before {
-      content: '';
-      position: absolute;
-      inset: 6px;
-      border: 1px solid rgba(255,41,78,0.25);
-      border-radius: 8px;
-      pointer-events: none;
-    }
-    .cert-mini-logo {
-      font-size: 0.6rem;
-      font-weight: 900;
-      color: var(--red);
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      margin-bottom: 12px;
-    }
-    .cert-mini-title {
-      font-size: 0.58rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 6px;
-    }
-    .cert-mini-name {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 4px;
-      line-height: 1.2;
-    }
-    .cert-mini-field {
-      font-size: 0.68rem;
-      color: var(--red);
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-    .cert-mini-footer {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-    }
-    .cert-mini-date {
-      font-size: 0.58rem;
-      color: var(--muted);
-    }
-    .cert-mini-qr {
-      width: 40px;
-      height: 40px;
-      background: #fff;
-      border-radius: 4px;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-    }
-    .cert-mini-qr img { width: 36px; height: 36px; }
-    .cert-card-mini-bottom {
-      padding: 12px 16px;
-      border-top: 1px solid var(--border-card);
-    }
-    .cert-id-label {
-      font-size: 0.62rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .cert-id-val {
-      font-size: 0.72rem;
-      color: var(--white);
-      font-weight: 700;
-      font-family: monospace;
-    }
+/* ---------- lookup ---------- */
+.vf-lookup{
+  margin-top:32px; padding:28px 26px 24px; border-radius:var(--vf-r-lg);
+  background:linear-gradient(160deg, rgba(255,255,255,.13) 0%, rgba(255,255,255,.05) 54%, rgba(255,255,255,.08) 100%);
+  border:1px solid rgba(255,255,255,.2);
+  backdrop-filter:blur(20px) saturate(150%); -webkit-backdrop-filter:blur(20px) saturate(150%);
+  box-shadow:0 28px 66px -24px rgba(1,8,20,.7), inset 0 1px 0 rgba(255,255,255,.24);
+}
+.vf-lookup label{
+  display:block; font-size:.7rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+  color:rgba(255,255,255,.6); margin-bottom:10px;
+}
+.vf-field{ display:flex; gap:10px; flex-wrap:wrap; }
+.vf-field input{
+  flex:1; min-width:200px; box-sizing:border-box; padding:15px 17px; border-radius:11px;
+  background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.2);
+  color:#fff; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:1rem;
+  letter-spacing:.06em; text-transform:uppercase; outline:none;
+  transition:border-color .22s, background .22s, box-shadow .22s;
+}
+.vf-field input::placeholder{ color:rgba(255,255,255,.32); letter-spacing:.04em; }
+.vf-field input:focus{
+  border-color:rgba(255,138,107,.85); background:rgba(255,255,255,.13);
+  box-shadow:0 0 0 3px rgba(255,87,72,.18);
+}
+.vf-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:15px 26px; border-radius:11px; border:none; cursor:pointer; font-family:inherit;
+  font-size:.94rem; font-weight:700; text-decoration:none; white-space:nowrap;
+  transition:transform .26s var(--vf-ease), box-shadow .26s, background .22s;
+}
+.vf-btn-red{ background:linear-gradient(120deg,var(--g-deep),var(--g-red) 55%,var(--g-orange)); color:#fff;
+  box-shadow:0 14px 32px -12px rgba(255,41,78,.6); }
+.vf-btn-red:hover{ transform:translateY(-2px); }
+.vf-btn-ghost{ background:rgba(255,255,255,.08); color:#fff; border:1px solid var(--vf-line-2); }
+.vf-btn-ghost:hover{ background:rgba(255,255,255,.14); transform:translateY(-2px); }
+.vf-hint{ margin-top:13px; font-size:.78rem; color:rgba(255,255,255,.5); line-height:1.55; }
+.vf-err{ margin-top:11px; font-size:.83rem; color:#FF8A9C; display:none; }
 
-    /* ====== STAT ROW ====== */
-    .stat-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      margin: 48px 0;
-    }
-    .stat-cell {
-      padding: 24px 28px;
-      border-right: 1px solid var(--border-card);
-      text-align: center;
-    }
-    .stat-cell:last-child { border-right: none; }
-    .stat-val {
-      font-size: 1.6rem;
-      font-weight: 900;
-      color: var(--white);
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-    .stat-lbl {
-      font-size: 0.72rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
+/* what a check does and does not prove — sets expectations honestly */
+.vf-scope{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:34px; }
+.vf-scope-c{ padding:20px 22px; border-radius:var(--vf-r); background:rgba(255,255,255,.035); border:1px solid var(--vf-line); }
+.vf-scope-c b{ display:flex; align-items:center; gap:8px; font-size:.86rem; font-weight:700; color:#fff; margin-bottom:9px; }
+.vf-scope-c ul{ margin:0; padding:0; list-style:none; }
+.vf-scope-c li{ position:relative; padding-left:17px; font-size:.83rem; line-height:1.62; color:var(--vf-body); margin-bottom:5px; }
+.vf-scope-c li::before{ content:''; position:absolute; left:0; top:.62em; width:5px; height:5px; border-radius:50%; background:var(--vf-muted); }
+.vf-scope-c.yes b svg{ color:var(--vf-ok); }
+.vf-scope-c.no b svg{ color:var(--vf-muted); }
 
-    /* ====== COMPETENCY CARDS ====== */
-    .comp-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-    .comp-card {
-      background: var(--white);
-      border-radius: var(--radius-md);
-      padding: 24px 20px;
-      border: 1px solid rgba(46,58,74,0.08);
-      position: relative;
-    }
-    .comp-check {
-      width: 28px; height: 28px;
-      background: #34C759;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px;
-      color: #fff;
-      font-weight: 900;
-      margin-bottom: 14px;
-    }
-    .comp-title {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--bg-dark);
-      margin-bottom: 6px;
-      line-height: 1.3;
-    }
-    .comp-desc {
-      font-size: 0.78rem;
-      color: rgba(46,58,74,0.6);
-      line-height: 1.6;
-    }
+/* ---------- states ---------- */
+.vf-state{ display:none; }
+.vf-state.on{ display:block; }
 
-    /* ====== EXPERT ASSESSMENT ====== */
-    .expert-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-    .expert-card-header {
-      padding: 32px 40px 24px;
-      border-bottom: 1px solid var(--border-card);
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    .expert-photo {
-      width: 64px; height: 64px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--border-card);
-      flex-shrink: 0;
-    }
-    .expert-name {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 3px;
-    }
-    .expert-role {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-    .expert-verified {
-      margin-left: auto;
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #34C759;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-    .expert-card-body {
-      padding: 32px 40px;
-    }
-    .expert-quote {
-      font-size: 1.08rem;
-      color: rgba(255,255,255,0.85);
-      line-height: 1.85;
-      font-style: italic;
-      position: relative;
-      padding-left: 28px;
-    }
-    .expert-quote::before {
-      content: '"';
-      position: absolute;
-      left: 0; top: -4px;
-      font-size: 3rem;
-      color: var(--red);
-      line-height: 1;
-      font-style: normal;
-      font-weight: 900;
-    }
-    .expert-card-footer {
-      padding: 20px 40px;
-      background: rgba(255,255,255,0.02);
-      border-top: 1px solid var(--border-card);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .expert-footer-note {
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    .expert-footer-note strong { color: rgba(255,255,255,0.6); }
+/* resolving */
+.vf-load{ text-align:center; padding:70px 20px; }
+.vf-spin{
+  width:36px; height:36px; margin:0 auto 20px; border-radius:50%;
+  border:2.5px solid rgba(255,255,255,.14); border-top-color:var(--g-red);
+  animation:vfSpin .9s linear infinite;
+}
+@keyframes vfSpin{ to{ transform:rotate(360deg); } }
+.vf-load p{ font-size:.92rem; color:var(--vf-body); margin:0; }
+.vf-load code{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; color:#FF8A6B; }
 
-    /* ====== PROJECT CARD ====== */
-    .project-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-md);
-      padding: 36px 40px;
-    }
-    .project-label {
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: var(--red);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 10px;
-    }
-    .project-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 12px;
-      line-height: 1.3;
-    }
-    .project-desc {
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.7;
-    }
+/* ---------- verdict ---------- */
+.vf-verdict{
+  position:relative; overflow:hidden; border-radius:var(--vf-r-lg); padding:30px 30px 28px;
+  background:
+    radial-gradient(80% 130% at 100% 0%, rgba(74,222,128,.16) 0%, transparent 62%),
+    linear-gradient(140deg,#062015 0%,#0A2A1B 46%,#0C1728 100%);
+  border:1px solid rgba(74,222,128,.32);
+}
+.vf-verdict-top{ display:flex; align-items:center; gap:15px; }
+.vf-seal{
+  width:52px; height:52px; border-radius:50%; flex-shrink:0; display:grid; place-items:center;
+  background:linear-gradient(140deg, rgba(74,222,128,.28), rgba(21,128,61,.5));
+  border:1.5px solid rgba(74,222,128,.5); color:#8FF0B4;
+}
+.vf-verdict-t b{ display:block; font-size:1.3rem; font-weight:800; letter-spacing:-.03em; color:#fff; }
+.vf-verdict-t span{ display:block; font-size:.86rem; color:rgba(255,255,255,.66); margin-top:3px; }
+.vf-cid{
+  margin-top:22px; padding:13px 16px; border-radius:10px;
+  background:rgba(0,0,0,.28); border:1px solid rgba(255,255,255,.12);
+  display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+}
+.vf-cid span{ font-size:.68rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:rgba(255,255,255,.5); }
+.vf-cid b{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.95rem; color:#fff; letter-spacing:.05em; }
 
-    /* ====== ENTRY VIEW ====== */
-    .entry-hero {
-      padding: 100px 0 72px;
-      text-align: center;
-      border-bottom: 1px solid var(--border-card);
-    }
-    .entry-search-wrap {
-      max-width: 520px;
-      margin: 0 auto 16px;
-    }
-    .entry-search {
-      display: flex;
-      gap: 0;
-    }
-    .entry-input {
-      flex: 1;
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-right: none;
-      border-radius: var(--radius-md) 0 0 var(--radius-md);
-      padding: 16px 22px;
-      color: var(--white);
-      font-size: 1rem;
-      font-family: monospace;
-      outline: none;
-      letter-spacing: 0.05em;
-    }
-    .entry-input::placeholder { color: var(--muted); }
-    .entry-input:focus { border-color: var(--red); }
-    .entry-btn {
-      background: var(--red);
-      color: var(--white);
-      border: none;
-      padding: 16px 28px;
-      border-radius: 0 var(--radius-md) var(--radius-md) 0;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: var(--transition);
-    }
-    .entry-btn:hover { background: var(--orange); }
-    .entry-preview-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 72px;
-    }
-    .entry-preview-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-md);
-      padding: 32px 28px;
-      text-align: left;
-    }
-    .entry-preview-icon {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem;
-      margin-bottom: 18px;
-    }
-    .entry-preview-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 8px;
-    }
-    .entry-preview-desc {
-      font-size: 0.8rem;
-      color: var(--muted);
-      line-height: 1.7;
-    }
+/* the credential summary */
+.vf-cred{
+  margin-top:18px; border-radius:var(--vf-r-lg); overflow:hidden;
+  background:var(--vf-card); border:1px solid var(--vf-line);
+}
+.vf-cred-h{ padding:26px 28px 22px; border-bottom:1px solid var(--vf-line); }
+.vf-cred-k{ font-size:.67rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--vf-muted); }
+.vf-cred-name{ font-size:1.7rem; font-weight:800; letter-spacing:-.035em; color:#fff; margin-top:8px; line-height:1.15; }
+.vf-cred-prog{ font-size:.98rem; color:#FF8A6B; font-weight:650; margin-top:7px; }
+.vf-rows{ padding:8px 28px 22px; }
+.vf-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,.07); }
+.vf-row:last-child{ border-bottom:none; }
+.vf-row .k{ font-size:.85rem; color:var(--vf-muted); flex-shrink:0; }
+.vf-row .v{ font-size:.92rem; font-weight:650; color:#fff; text-align:right; line-height:1.5; }
 
-    /* ====== NOT-FOUND VIEW ====== */
-    .notfound-wrap {
-      padding: 100px 0 80px;
-      text-align: center;
-    }
-    .notfound-icon {
-      width: 72px; height: 72px;
-      border-radius: 50%;
-      background: rgba(255,41,78,0.08);
-      border: 1px solid rgba(255,41,78,0.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2rem;
-      margin: 0 auto 28px;
-    }
+/* what the check actually confirmed — facts drawn from the response */
+.vf-checks{ margin-top:18px; border-radius:var(--vf-r-lg); background:var(--vf-card); border:1px solid var(--vf-line); padding:24px 28px 22px; }
+.vf-checks h4{ font-size:.67rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--vf-muted); margin:0 0 14px; }
+.vf-check{ display:flex; gap:12px; align-items:flex-start; padding:10px 0; font-size:.9rem; line-height:1.6; color:var(--vf-body); }
+.vf-check svg{ flex-shrink:0; margin-top:3px; color:var(--vf-ok); }
+.vf-check b{ color:#fff; font-weight:650; }
+.vf-actions{ display:flex; gap:11px; flex-wrap:wrap; margin-top:24px; }
 
-    @media (max-width: 768px) {
-      .entry-preview-grid { grid-template-columns: 1fr; }
-      .entry-hero { padding: 64px 0 48px; }
-    }
+/* ---------- not found ---------- */
+.vf-nf{
+  border-radius:var(--vf-r-lg); padding:32px 30px 28px;
+  background:var(--vf-card); border:1px solid rgba(255,41,78,.28);
+}
+.vf-nf-top{ display:flex; align-items:center; gap:15px; margin-bottom:18px; }
+.vf-nf-ic{
+  width:48px; height:48px; border-radius:14px; flex-shrink:0; display:grid; place-items:center;
+  background:rgba(255,41,78,.12); border:1px solid rgba(255,41,78,.3); color:#FF8A9C;
+}
+.vf-nf-top b{ display:block; font-size:1.2rem; font-weight:780; letter-spacing:-.03em; color:#fff; }
+.vf-nf-top code{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.85rem; color:#FF8A6B; }
+.vf-nf p{ font-size:.93rem; line-height:1.7; color:var(--vf-body); margin:0 0 16px; }
+.vf-nf ul{ margin:0 0 20px; padding:0; list-style:none; }
+.vf-nf li{ position:relative; padding-left:19px; font-size:.89rem; line-height:1.65; color:var(--vf-body); margin-bottom:7px; }
+.vf-nf li::before{ content:''; position:absolute; left:0; top:.62em; width:5px; height:5px; border-radius:50%; background:var(--g-red); }
+.vf-nf a{ color:#FF8A6B; font-weight:650; }
 
-    /* ====== SHARE / SEARCH ====== */
-    .verify-search {
-      display: flex;
-      gap: 0;
-      max-width: 480px;
-    }
-    .verify-input {
-      flex: 1;
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-right: none;
-      border-radius: var(--radius-md) 0 0 var(--radius-md);
-      padding: 14px 20px;
-      color: var(--white);
-      font-size: 0.9rem;
-      font-family: monospace;
-      outline: none;
-    }
-    .verify-input::placeholder { color: var(--muted); }
-    .verify-input:focus { border-color: var(--red); }
-    .verify-btn {
-      background: var(--red);
-      color: var(--white);
-      border: none;
-      padding: 14px 24px;
-      border-radius: 0 var(--radius-md) var(--radius-md) 0;
-      font-size: 0.88rem;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: var(--transition);
-    }
-    .verify-btn:hover { background: var(--orange); }
-
-    /* Full certificate overlay */
-    .cert-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(2,16,36,0.92);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-    .cert-overlay.open { display: flex; }
-    .cert-full {
-      width: min(820px, 100%);
-      background: #021024;
-      border: 2px solid #FF294E;
-      border-radius: 16px;
-      padding: 56px 64px;
-      position: relative;
-      overflow: hidden;
-    }
-    .cert-full::before {
-      content: 'BRIXGATE';
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%,-50%) rotate(-25deg);
-      font-size: 7rem;
-      font-weight: 900;
-      color: rgba(255,255,255,0.025);
-      letter-spacing: 0.2em;
-      pointer-events: none;
-      white-space: nowrap;
-    }
-    .cert-corner {
-      position: absolute;
-      width: 48px; height: 48px;
-      border-color: var(--red);
-      border-style: solid;
-      opacity: 0.4;
-    }
-    .cert-corner.tl { top: 20px; left: 20px; border-width: 2px 0 0 2px; border-radius: 4px 0 0 0; }
-    .cert-corner.tr { top: 20px; right: 20px; border-width: 2px 2px 0 0; border-radius: 0 4px 0 0; }
-    .cert-corner.bl { bottom: 20px; left: 20px; border-width: 0 0 2px 2px; border-radius: 0 0 0 4px; }
-    .cert-corner.br { bottom: 20px; right: 20px; border-width: 0 2px 2px 0; border-radius: 0 0 4px 0; }
-    .cert-close {
-      position: absolute;
-      top: 20px; right: 20px;
-      background: rgba(255,255,255,0.08);
-      border: none;
-      color: var(--muted);
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      font-size: 1.1rem;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: var(--transition);
-      z-index: 2;
-    }
-    .cert-close:hover { color: var(--white); background: rgba(255,255,255,0.15); }
-
-    @media (max-width: 900px) {
-      .profile-hero-inner { grid-template-columns: 1fr; gap: 32px; }
-      .cert-card-mini { width: 100%; max-width: 300px; }
-      .comp-grid { grid-template-columns: repeat(2, 1fr); }
-      .stat-row { grid-template-columns: repeat(2, 1fr); }
-      .stat-cell:nth-child(2) { border-right: none; }
-      .stat-cell:nth-child(3) { border-top: 1px solid var(--border-card); }
-      .project-card { padding: 28px 24px; }
-      .cert-full { padding: 36px 28px; }
-    }
-    @media (max-width: 600px) {
-      .comp-grid { grid-template-columns: 1fr; }
-      .expert-card-header { flex-wrap: wrap; }
-      .expert-verified { margin-left: 0; }
-      .expert-card-body, .expert-card-footer, .expert-card-header { padding: 20px 24px; }
-    }
+@media (max-width:640px){
+  .vf-main{ padding:calc(var(--nav-height) + 34px) 0 62px; }
+  .vf-scope{ grid-template-columns:1fr; }
+  .vf-lookup{ padding:22px 20px 20px; }
+  .vf-cred-h, .vf-rows, .vf-checks{ padding-inline:20px; }
+  .vf-verdict{ padding:24px 22px 22px; }
+  .vf-row{ flex-direction:column; gap:4px; }
+  .vf-row .v{ text-align:left; }
+}
+@media (prefers-reduced-motion: reduce){
+  .vf-waves{ animation:none !important; }
+  *{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+}
   </style>
 <script src="tracking.js"></script>
 </head>
-<body>
+<body class="vf">
 
 <div id="scroll-progress"></div>
 
-<!-- ====== VERIFIED BANNER (hidden until valid ID confirmed) ====== -->
-<div id="verified-banner" class="verified-banner" style="display:none">
-  <div class="verified-badge-icon">✓</div>
-  <span class="verified-banner-text">This certificate has been authenticated by Brixgate</span>
-  <span class="verified-banner-id" id="banner-cert-id">BX-2026-SE-00142</span>
-</div>
-
-<!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
-    </a>
+    <a href="index.html" class="nav-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
     <div class="nav-links">
       <a href="index.html">Home</a>
       <div class="nav-prog-dropdown">
@@ -615,7 +226,6 @@
       </div>
       <a href="experts.html">Experts</a>
       <a href="organisations.html">For Organisations</a>
-      <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme." target="_blank" rel="noopener">Chat with us</a>
     </div>
     <div class="nav-cta">
       <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
@@ -630,634 +240,270 @@
   <a href="programme.html">Programme</a>
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
-  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
   <a href="apply.html" class="btn btn-primary">Apply Now</a>
 </div>
 
-<!-- ====== LOADING VIEW ====== -->
-<div id="loading-view" style="display:none;padding:120px 0;text-align:center">
-  <div style="display:inline-flex;flex-direction:column;align-items:center;gap:20px">
-    <div style="width:48px;height:48px;border:3px solid rgba(255,41,78,0.2);border-top-color:#FF294E;border-radius:50%;animation:spin 0.8s linear infinite"></div>
-    <div style="font-size:0.88rem;color:var(--muted)">Verifying certificate…</div>
-  </div>
-</div>
 
-<!-- ====== ENTRY VIEW (default: no ?id param) ====== -->
-<div id="entry-view" style="display:none">
-<section class="entry-hero">
-  <div class="container">
-    <div style="margin-bottom:32px" class="fade-in">
-      <span style="font-size:0.78rem;color:var(--muted)">
-        <a href="index.html" style="color:var(--muted)">Brixgate</a>
-        <span style="margin:0 8px">›</span>
-        <span style="color:rgba(255,255,255,0.5)">Verify a Certificate</span>
-      </span>
-    </div>
-    <div class="fade-up" style="max-width:640px;margin:0 auto">
-      <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:14px">Brixer Verification</div>
-      <h1 style="font-size:clamp(2rem,5vw,3rem);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:18px">Verify a Brixgate<br>Brixer Certificate</h1>
-      <p style="font-size:1rem;color:var(--muted);line-height:1.7;margin-bottom:40px">Every Brixgate certificate carries a unique ID. Enter it below — or scan the QR code on the certificate — to view the Brixer's verified profile, competencies, and expert assessment.</p>
+<main class="vf-main">
+  <div class="vf-waves"></div>
+  <div class="vf-wrap">
 
-      <div class="entry-search-wrap fade-up" style="transition-delay:0.1s">
-        <div class="entry-search">
-          <input class="entry-input" type="text" id="entry-id-input" placeholder="e.g. BX-2026-SE-00142" autocomplete="off" />
-          <button class="entry-btn" onclick="goVerify('entry-id-input')">Verify</button>
+    <!-- ===== ENTRY ===== -->
+    <div class="vf-state on" id="vf-entry">
+      <div class="vf-mark">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Credential check
+      </div>
+      <h1 class="vf-h1">Is this certificate real?</h1>
+      <p class="vf-sub">Enter the number printed on a Brixgate Expert Practitioner Certificate. You will see who issued it, who assessed the work, and when — straight from our records.</p>
+
+      <div class="vf-lookup">
+        <label for="vf-id">Certificate number</label>
+        <form class="vf-field" id="vf-form" novalidate>
+          <input type="text" id="vf-id" placeholder="BX-0000-XX-00000" autocomplete="off" spellcheck="false" />
+          <button type="submit" class="vf-btn vf-btn-red">
+            Check it
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </form>
+        <div class="vf-err" id="vf-err"></div>
+        <div class="vf-hint">No account needed, and we do not record who ran the check.</div>
+      </div>
+
+      <div class="vf-scope">
+        <div class="vf-scope-c yes">
+          <b><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>What a check confirms</b>
+          <ul>
+            <li>Brixgate issued this certificate</li>
+            <li>Who it was issued to, and for which programme</li>
+            <li>The practitioner who assessed the work</li>
+            <li>The date it was issued</li>
+          </ul>
         </div>
-        <div style="margin-top:12px;display:flex;align-items:center;gap:16px;justify-content:center">
-          <span style="font-size:0.78rem;color:var(--muted)">or</span>
-          <a href="verify.html?id=BX-2026-SE-00142" style="font-size:0.8rem;color:var(--red);font-weight:700;text-decoration:none">View sample verified profile →</a>
+        <div class="vf-scope-c no">
+          <b><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>What it does not</b>
+          <ul>
+            <li>Confirm the person in front of you is the holder</li>
+            <li>Grade or rank them against other graduates</li>
+            <li>Say anything about work done after the programme</li>
+          </ul>
         </div>
-      </div>
-
-      <div class="fade-up" style="transition-delay:0.18s;margin-top:28px;padding:18px 24px;background:rgba(255,255,255,0.03);border:1px solid var(--border-card);border-radius:var(--radius-md);display:flex;align-items:flex-start;gap:16px;text-align:left;max-width:520px;margin-left:auto;margin-right:auto">
-        <div style="font-size:1.4rem;flex-shrink:0">📱</div>
-        <div>
-          <div style="font-size:0.82rem;font-weight:700;color:var(--white);margin-bottom:4px">Scan the QR code on the certificate</div>
-          <div style="font-size:0.77rem;color:var(--muted);line-height:1.6">Every physical and digital certificate includes a QR code that links directly to this verification page with the certificate ID pre-filled.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="entry-preview-grid fade-up" style="transition-delay:0.25s;max-width:900px;margin-left:auto;margin-right:auto">
-      <div class="entry-preview-card">
-        <div class="entry-preview-icon" style="background:rgba(52,199,89,0.1);color:#34C759">👤</div>
-        <div class="entry-preview-title">Verified Brixer Profile</div>
-        <div class="entry-preview-desc">See the graduate's name, field, cohort, and a live certificate with their unique ID — publicly verified by Brixgate.</div>
-      </div>
-      <div class="entry-preview-card">
-        <div class="entry-preview-icon" style="background:rgba(255,41,78,0.08);color:var(--red)">🎯</div>
-        <div class="entry-preview-title">Field Competencies</div>
-        <div class="entry-preview-desc">Every competency they mastered, each assessed in practice by a verified Expert Practitioner — not a test, real applied work.</div>
-      </div>
-      <div class="entry-preview-card">
-        <div class="entry-preview-icon" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6)">💬</div>
-        <div class="entry-preview-title">Expert Assessment</div>
-        <div class="entry-preview-desc">A written assessment from the Expert Practitioner who worked with them for the full four-week sprint — specific, vouched, and signed.</div>
       </div>
     </div>
-  </div>
-</section>
-</div><!-- /entry-view -->
 
-<!-- ====== NOT FOUND VIEW ====== -->
-<div id="notfound-view" style="display:none">
-<section>
-  <div class="container">
-    <div class="notfound-wrap fade-up">
-      <div class="notfound-icon">🔍</div>
-      <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:12px">Certificate Not Found</div>
-      <h2 style="font-size:1.8rem;font-weight:900;color:var(--white);margin-bottom:14px" id="notfound-id-display">We couldn't find that certificate</h2>
-      <p style="font-size:0.9rem;color:var(--muted);line-height:1.7;max-width:480px;margin:0 auto 36px">This ID isn't in our records yet. Certificates are added as cohorts graduate — if this was recently issued, it may take up to 48 hours to appear. You can also check the ID on the physical certificate for typos.</p>
-      <div class="entry-search-wrap" style="margin:0 auto">
-        <div class="entry-search">
-          <input class="entry-input" type="text" id="retry-id-input" placeholder="Try another ID…" autocomplete="off" />
-          <button class="entry-btn" onclick="goVerify('retry-id-input')">Verify</button>
-        </div>
+    <!-- ===== RESOLVING ===== -->
+    <div class="vf-state" id="vf-loading">
+      <div class="vf-load">
+        <div class="vf-spin"></div>
+        <p>Checking <code id="vf-loading-id">—</code> against our records…</p>
       </div>
-      <p style="font-size:0.78rem;color:var(--muted);margin-top:20px">Need help? Email <a href="mailto:we@brixgate.com" style="color:var(--red);font-weight:700">we@brixgate.com</a></p>
-    </div>
-  </div>
-</section>
-</div><!-- /notfound-view -->
-
-<!-- ====== PROFILE VIEW (shown when valid ?id= present) ====== -->
-<div id="profile-view" style="display:none">
-
-<!-- ====== PROFILE HERO ====== -->
-<section class="profile-hero">
-  <div class="container">
-    <div style="margin-bottom:32px" class="fade-in">
-      <span style="font-size:0.78rem;color:var(--muted)">
-        <a href="index.html" style="color:var(--muted)">Brixgate</a>
-        <span style="margin:0 8px">›</span>
-        <a href="programme.html" style="color:var(--muted)">Programme</a>
-        <span style="margin:0 8px">›</span>
-        <span style="color:rgba(255,255,255,0.5)">Brixer Verification</span>
-      </span>
     </div>
 
-    <div class="profile-hero-inner">
-      <!-- Photo -->
-      <div class="profile-photo-wrap fade-up">
-        <img
-          src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=400&fit=crop&crop=face&auto=format&q=80"
-          alt="Chioma Okonkwo"
-          class="profile-photo"
-        />
-        <div class="profile-verified-dot">✓</div>
-      </div>
-
-      <!-- Name + details -->
-      <div class="fade-up" style="transition-delay:0.05s">
-        <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px">Brixer · Software Engineering</div>
-        <div class="profile-name">Chioma Okonkwo</div>
-        <div class="profile-title">Certified Brixer — AI in Software Engineering</div>
-        <div class="profile-meta">
-          <span class="meta-chip accent">Software Engineering</span>
-          <span class="meta-chip">Nigeria 🇳🇬</span>
-          <span class="meta-chip">Certificate: BX-2026-SE-00142</span>
-        </div>
-        <div style="margin-top:24px;display:flex;gap:10px;flex-wrap:wrap">
-          <button onclick="document.getElementById('cert-overlay').classList.add('open')" class="btn btn-primary btn-sm">View Full Certificate</button>
-          <a href="https://linkedin.com" target="_blank" class="btn btn-outline btn-sm" style="border-color:var(--border-card);color:var(--muted)">Share on LinkedIn</a>
-        </div>
-      </div>
-
-      <!-- Mini certificate -->
-      <div class="cert-card-mini fade-up" style="transition-delay:0.1s">
-        <div class="cert-card-mini-inner">
-          <div class="cert-mini-logo">Brixgate</div>
-          <div class="cert-mini-title">Brixer Certificate</div>
-          <div class="cert-mini-name">Chioma Okonkwo</div>
-          <div class="cert-mini-field">Software Engineering · AI in my Field</div>
-          <div class="cert-mini-footer">
-            <div class="cert-mini-date">Issued: April 2026</div>
-            <div class="cert-mini-qr">
-              <img
-                src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https%3A%2F%2Fbrixgate.com%2Fverify%3Fid%3DBX-2026-SE-00142&margin=2"
-                alt="Verification QR Code"
-              />
-            </div>
+    <!-- ===== VERIFIED ===== -->
+    <div class="vf-state" id="vf-found">
+      <div class="vf-verdict">
+        <div class="vf-verdict-top">
+          <div class="vf-seal">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <div class="vf-verdict-t">
+            <b>Authentic</b>
+            <span>This certificate was issued by Brixgate and is on record.</span>
           </div>
         </div>
-        <div class="cert-card-mini-bottom">
-          <div class="cert-id-label">Certificate ID</div>
-          <div class="cert-id-val">BX-2026-SE-00142</div>
+        <div class="vf-cid">
+          <span>Certificate number</span>
+          <b id="vf-cid">—</b>
+        </div>
+      </div>
+
+      <div class="vf-cred">
+        <div class="vf-cred-h">
+          <div class="vf-cred-k">Issued to</div>
+          <div class="vf-cred-name" id="vf-name">—</div>
+          <div class="vf-cred-prog" id="vf-prog">—</div>
+        </div>
+        <div class="vf-rows" id="vf-rows"></div>
+      </div>
+
+      <div class="vf-checks">
+        <h4>What this check confirmed</h4>
+        <div id="vf-check-list"></div>
+      </div>
+
+      <div class="vf-actions">
+        <a href="#" class="vf-btn vf-btn-red" id="vf-open-cert">
+          View the full certificate
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <button type="button" class="vf-btn vf-btn-ghost" id="vf-again">Check another</button>
+      </div>
+    </div>
+
+    <!-- ===== NOT FOUND ===== -->
+    <div class="vf-state" id="vf-notfound">
+      <div class="vf-nf">
+        <div class="vf-nf-top">
+          <div class="vf-nf-ic">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div>
+            <b>No record for this number</b>
+            <code id="vf-nf-id">—</code>
+          </div>
+        </div>
+        <p>We could not find a certificate with that number. That does not automatically mean it is fake — the most common causes are simple:</p>
+        <ul>
+          <li>A typo, or a character read wrongly from a printed copy — <b style="color:#fff">0</b> and <b style="color:#fff">O</b> are the usual culprits</li>
+          <li>The certificate has not been issued yet — it is created when the capstone is defended, not when the programme starts</li>
+          <li>The number belongs to a different issuer</li>
+        </ul>
+        <p style="margin-bottom:0">Still expecting this to work? <a href="mailto:we@brixgate.com?subject=Certificate%20verification">Email us the number</a> and we will confirm it by hand.</p>
+        <div class="vf-actions">
+          <button type="button" class="vf-btn vf-btn-red" id="vf-nf-again">Try another number</button>
         </div>
       </div>
     </div>
 
-    <!-- Stats row -->
-    <div class="stat-row fade-up" style="transition-delay:0.15s">
-      <div class="stat-cell">
-        <div class="stat-val">28</div>
-        <div class="stat-lbl">Sprint Hours</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-val">8</div>
-        <div class="stat-lbl">Competencies</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-val" style="color:#34C759">✓</div>
-        <div class="stat-lbl">Expert Assessed</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-val" style="color:var(--red)">Live</div>
-        <div class="stat-lbl">Certificate</div>
-      </div>
-    </div>
   </div>
-</section>
-
-<!-- ====== COMPETENCIES ====== -->
-<section class="section-pad bg-light">
-  <div class="container">
-    <div class="section-header fade-up">
-      <span class="eyebrow" style="color:var(--red)">What Chioma Mastered</span>
-      <h2 style="color:var(--bg-dark)">8 Competencies. All Field-Verified.</h2>
-      <div class="divider-red"></div>
-      <p style="color:rgba(46,58,74,0.7)">Each competency below was assessed in practice — not by a test, but by a verified Expert Practitioner reviewing applied work in real professional contexts.</p>
-    </div>
-
-    <div class="comp-grid stagger">
-      <div class="comp-card fade-up">
-        <div class="comp-check">✓</div>
-        <div class="comp-title">AI-Assisted Code Generation &amp; Review</div>
-        <div class="comp-desc">Using LLM-powered tools to generate, review, and refactor code at speed without sacrificing quality or ownership.</div>
-      </div>
-      <div class="comp-card fade-up">
-        <div class="comp-check">✓</div>
-        <div class="comp-title">Intelligent Debugging &amp; Root Cause Analysis</div>
-        <div class="comp-desc">Applying AI tools to diagnose complex bugs, trace errors across distributed systems, and reduce debugging cycles by 60%+.</div>
-      </div>
-      <div class="comp-card fade-up">
-        <div class="comp-check">✓</div>
-        <div class="comp-title">AI-Powered Testing &amp; QA Automation</div>
-        <div class="comp-desc">Generating and maintaining test suites using AI, including edge-case generation, regression detection, and automated QA pipelines.</div>
-      </div>
-      <div class="comp-card fade-up">
-        <div class="comp-check">✓</div>
-        <div class="comp-title">LLM Integration &amp; Prompt Engineering</div>
-        <div class="comp-desc">Building production-ready integrations with large language models — prompt design, context management, output validation, and error handling.</div>
-      </div>
-      <div class="comp-card fade-up">
-        <div class="comp-check">✓</div>
-        <div class="comp-title">AI Architecture Planning &amp; Tool Selection</div>
-        <div class="comp-desc">Evaluating and selecting AI tools for specific engineering contexts — balancing capability, cost, latency, and organisational fit.</div>
-      </div>
-      <div class="comp-card fade-up">
-        <div class="comp-check">✓</div>
-        <div class="comp-title">Ethical AI &amp; Responsible Deployment</div>
-        <div class="comp-desc">Identifying bias, managing AI risk, applying accountability frameworks, and deploying AI responsibly in professional engineering contexts.</div>
-      </div>
-      <div class="comp-card fade-up">
-        <div class="comp-check">✓</div>
-        <div class="comp-title">Workflow Automation with AI Agents</div>
-        <div class="comp-desc">Designing and deploying AI agents to automate repetitive engineering tasks — PR triaging, documentation, deployment checks, and more.</div>
-      </div>
-      <div class="comp-card fade-up">
-        <div class="comp-check">✓</div>
-        <div class="comp-title">AI-Native Development Cadence</div>
-        <div class="comp-desc">Establishing daily habits and team rituals that embed AI into the engineering workflow — so the gains compound over time, not just during the sprint.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ====== EXPERT ASSESSMENT ====== -->
-<section class="section-pad bg-dark">
-  <div class="container">
-    <div class="section-header fade-up">
-      <span class="eyebrow">Expert Assessment</span>
-      <h2>What Chioma's Expert Says</h2>
-      <div class="divider-red"></div>
-      <p>This is not a generic testimonial. This assessment was written specifically for Chioma by her Expert Practitioner following four weeks of direct observation, project review, and cohort leadership.</p>
-    </div>
-
-    <div class="expert-card fade-up">
-      <div class="expert-card-header">
-        <img
-          src="https://images.unsplash.com/photo-1573497019236-17f8177b81e8?w=200&h=200&fit=crop&crop=face&auto=format&q=80"
-          alt="Folasade Adeyemi"
-          class="expert-photo"
-        />
-        <div>
-          <div class="expert-name">Folasade Adeyemi</div>
-          <div class="expert-role">Principal Software Engineer · Paystack &nbsp;|&nbsp; Brixgate Expert Practitioner — Software Engineering</div>
-        </div>
-        <div class="expert-verified">
-          <span style="width:8px;height:8px;background:#34C759;border-radius:50%;display:inline-block"></span>
-          Verified Expert
-        </div>
-      </div>
-      <div class="expert-card-body">
-        <div class="expert-quote">
-          Chioma came into our inaugural cohort with solid foundational skills and an open mind. Over four weeks, she moved from cautious experimentation to confident, intentional AI integration in her engineering practice. What stood out most was not just her technical progression — it was her professional judgment. By week three, she was consistently applying critical evaluation to AI outputs rather than accepting them uncritically, which is the hardest shift to make. Her final project — an AI-assisted code review pipeline for distributed engineering teams — was one of the most practically deployable submissions I've assessed in this inaugural cohort. She built something her team could use the following Monday. That is what this programme is designed to produce, and Chioma delivered it. I vouch for her capability without reservation.
-        </div>
-      </div>
-      <div class="expert-card-footer">
-        <div style="width:20px;height:20px;background:rgba(52,199,89,0.15);border:1px solid rgba(52,199,89,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#34C759;flex-shrink:0">✓</div>
-        <div class="expert-footer-note">
-          <strong>Brixgate verifies</strong> that this assessment was authored by a certified Expert Practitioner and submitted as part of the formal programme evaluation for certificate BX-2026-SE-00142. The expert has been identity-verified and domain-assessed by Brixgate.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ====== FINAL PROJECT ====== -->
-<section class="section-pad bg-dark">
-  <div class="container">
-    <div class="section-header fade-up">
-      <span class="eyebrow">Applied Project</span>
-      <h2>What She Built</h2>
-      <div class="divider-red"></div>
-      <p>Every Brixer completes a final applied project — real work, deployable in their actual professional context. This is how the certificate is earned.</p>
-    </div>
-
-    <div class="project-card fade-up">
-      <div>
-        <div class="project-label">Final Project · Software Engineering</div>
-        <div class="project-title">AI-Assisted Code Review Pipeline for Distributed Engineering Teams</div>
-        <div class="project-desc">A production-ready tool integrating AI-powered code review comments directly into pull request workflows. The pipeline analyses code diffs, flags quality issues, suggests improvements, and auto-generates review summaries for senior reviewers — reducing average review cycle time by 58% in pilot testing across a 12-person distributed team. Built using GitHub Actions, a fine-tuned LLM endpoint, and a custom context management layer to maintain codebase awareness across PRs.</div>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:20px">
-          <span class="tag tag-red">Production-Deployed</span>
-          <span class="tag tag-dark">GitHub Actions</span>
-          <span class="tag tag-dark">LLM Integration</span>
-          <span class="tag tag-dark">58% Faster Reviews</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ====== VERIFY ANOTHER / JOIN ====== -->
-<section class="section-pad bg-dark">
-  <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start" class="fade-up">
-      <!-- Verify search -->
-      <div>
-        <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px">Verify Another Certificate</div>
-        <h3 style="font-size:1.3rem;margin-bottom:12px">Enter a Certificate ID</h3>
-        <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;margin-bottom:24px">Every Brixer Certificate carries a unique ID. Enter it below to view the Brixer's verified profile.</p>
-        <div class="verify-search">
-          <input class="verify-input" type="text" placeholder="e.g. BX-2026-DS-00089" id="cert-id-input" />
-          <button class="verify-btn" onclick="handleVerify()">Verify</button>
-        </div>
-        <div id="verify-msg" style="font-size:0.8rem;color:var(--muted);margin-top:12px;display:none"></div>
-      </div>
-      <!-- Become a Brixer -->
-      <div style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:36px">
-        <div style="font-size:0.7rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px">Want This?</div>
-        <h3 style="font-size:1.3rem;margin-bottom:12px">Become a Brixer</h3>
-        <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;margin-bottom:24px">Join the Expert Practitioner Programme in your field. In four weeks, you'll have an applied project, a public Brixer profile, and a Brixer Certificate your employers can verify in seconds.</p>
-        <a href="programme.html" class="btn btn-primary" style="width:100%;justify-content:center">See the Programme</a>
-        <a href="apply.html" class="btn btn-outline" style="width:100%;justify-content:center;margin-top:10px">Apply Now</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-</div><!-- /profile-view -->
+</main>
 
 <footer class="footer">
   <div class="container">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <a href="index.html" class="nav-logo footer-logo">
-          <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
-        </a>
-        <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
-        <div class="footer-social">
-          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook">
-            <img src="assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block">
-          </a>
-          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram">
-            <img src="assets/social.png" alt="Instagram" width="22" height="22" style="display:block">
-          </a>
-          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X">
-            <img src="assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block">
-          </a>
-          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn" title="LinkedIn">
-            <img src="assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block">
-          </a>
-          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us">
-            <img src="assets/gmail.png" alt="Email" width="22" height="22" style="display:block">
-          </a>
-        </div>
-        </div>
-      <div class="footer-col">
-        <h5>Programme</h5>
-        <ul>
-          <li><a href="programme.html">AI in my Field</a></li>
-          <li><a href="programme.html#fields">All Fields</a></li>
-          <li><a href="programme.html#pricing">Pricing</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Experts</h5>
-        <ul>
-          <li><a href="experts.html">Meet Our Experts</a></li>
-          <li><a href="join-as-expert.html">Join as Expert</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Organisation</h5>
-        <ul>
-          <li><a href="organisations.html">Corporate Programmes</a></li>
-          <li><a href="organisations.html#contact">Request a Demo</a></li>
-          <li><a href="apply.html">Apply Now</a></li>
-          <li><a href="verify.html">Verify a Certificate</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© <span id="footer-year">2026</span> Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
-    <div class="footer-bottom-links">
-      <a href="privacy-policy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
-      <a href="#">Cookie Policy</a>
+    <div class="footer-bottom" style="border-top:none">
+      <p>© <span id="footer-year">2026</span> Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
+      <div class="footer-bottom-links"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
     </div>
   </div>
 </footer>
 
-<!-- ====== FULL CERTIFICATE OVERLAY ====== -->
-<div id="cert-overlay" class="cert-overlay" onclick="if(event.target===this)this.classList.remove('open')">
-  <div class="cert-full">
-    <div class="cert-corner tl"></div>
-    <div class="cert-corner tr"></div>
-    <div class="cert-corner bl"></div>
-    <div class="cert-corner br"></div>
-    <button class="cert-close" onclick="document.getElementById('cert-overlay').classList.remove('open')">✕</button>
-
-    <div style="text-align:center;margin-bottom:32px">
-      <img src="assets/logo-color-nobg.svg" alt="Brixgate" style="height:36px;margin-bottom:16px" />
-      <div style="font-size:0.62rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:6px">Brixer Certificate</div>
-      <div style="width:60px;height:2px;background:var(--red);margin:0 auto"></div>
-    </div>
-
-    <div style="text-align:center;margin-bottom:32px">
-      <div style="font-size:0.78rem;color:var(--muted);margin-bottom:12px;font-style:italic">This certifies that</div>
-      <div style="font-size:2.4rem;font-weight:900;color:var(--white);line-height:1;margin-bottom:8px">Chioma Okonkwo</div>
-      <div style="font-size:0.82rem;color:var(--muted);margin-bottom:20px;font-style:italic">has successfully completed the</div>
-      <div style="font-size:1.1rem;font-weight:800;color:var(--red);letter-spacing:0.03em;margin-bottom:4px">Software Engineering</div>
-      <div style="font-size:0.82rem;color:rgba(255,255,255,0.6);letter-spacing:0.08em;text-transform:uppercase">AI in my Field · Expert Practitioner Programme</div>
-    </div>
-
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-top:40px;padding-top:28px">
-      <div>
-        <div style="width:120px;height:1px;background:rgba(255,255,255,0.2);margin-bottom:8px"></div>
-        <div style="font-size:0.75rem;font-weight:700;color:var(--white)">Folasade Adeyemi</div>
-        <div style="font-size:0.62rem;color:var(--muted)">Expert Practitioner · Software Engineering</div>
-      </div>
-      <div style="text-align:center">
-        <div style="width:70px;height:70px;background:#fff;border-radius:8px;padding:4px;margin:0 auto 8px">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fbrixgate.com%2Fverify%3Fid%3DBX-2026-SE-00142&margin=2" alt="QR" style="width:100%;height:100%" />
-        </div>
-        <div style="font-size:0.55rem;color:var(--muted);font-family:monospace">BX-2026-SE-00142</div>
-      </div>
-      <div style="text-align:right">
-        <div style="width:120px;height:1px;background:rgba(255,255,255,0.2);margin-bottom:8px;margin-left:auto"></div>
-        <div style="font-size:0.75rem;font-weight:700;color:var(--white)">John Sylvester</div>
-        <div style="font-size:0.62rem;color:var(--muted)">Director · Brixgate</div>
-      </div>
-    </div>
-
-    <div style="text-align:center;margin-top:24px">
-      <div style="font-size:0.6rem;color:rgba(255,255,255,0.2);letter-spacing:0.1em;text-transform:uppercase">Issued June 2026 · Cohort 1 · brixgate.com</div>
-    </div>
-  </div>
-</div>
-
-<button class="back-to-top">↑</button>
 <script src="script.js"></script>
 <script>
-  var CERT_API_BASE = (typeof BX_API_BASE !== 'undefined') ? BX_API_BASE : 'https://dev.api.brixgate.com';
+/* ============================================================
+   Verification.
+   The old page fetched the certificate and then redirected to
+   certificate.html, which fetched the same record again — two
+   round trips, a full reload, and ~500 lines of profile markup
+   that never rendered because the redirect fired first. This
+   resolves in place and links to the certificate view instead.
+   ============================================================ */
+(function () {
+  'use strict';
+  var API = 'https://dev.api.brixgate.com';
 
-  function goVerify(inputId) {
-    var val = document.getElementById(inputId).value.trim().toUpperCase();
-    if (val) window.location.href = 'verify.html?id=' + encodeURIComponent(val);
+  var el = function (id) { return document.getElementById(id); };
+  var states = ['vf-entry', 'vf-loading', 'vf-found', 'vf-notfound'];
+  function show(which) {
+    states.forEach(function (s) { el(s).classList.toggle('on', s === which); });
   }
 
-  ['entry-id-input', 'retry-id-input'].forEach(function(id) {
-    var el = document.getElementById(id);
-    if (el) el.addEventListener('keydown', function(e) { if (e.key === 'Enter') goVerify(id); });
-  });
-
-  function handleVerify() {
-    var val = document.getElementById('cert-id-input').value.trim().toUpperCase();
-    if (val) window.location.href = 'verify.html?id=' + encodeURIComponent(val);
-  }
-  var certInput = document.getElementById('cert-id-input');
-  if (certInput) certInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') handleVerify(); });
-
-  function setText(id, val) {
-    var el = document.getElementById(id);
-    if (el && val) el.textContent = val;
-  }
-
-  function showNotFound(id) {
-    document.getElementById('loading-view').style.display = 'none';
-    document.getElementById('notfound-view').style.display = 'block';
-    var display = document.getElementById('notfound-id-display');
-    if (display) display.textContent = 'Certificate "' + id + '" not found';
-    var retry = document.getElementById('retry-id-input');
-    if (retry) retry.value = id;
-  }
-
-  function populateProfile(cert, rawId) {
-    var certId   = cert.certificateNumber || cert.certificate_number || rawId;
-    var name     = cert.holderName || cert.holder_name || cert.name || cert.graduateName || '';
-    var field    = cert.field || cert.primaryField || cert.primary_field || cert.program || cert.programme || '';
-    var issued   = cert.issuedAt || cert.issued_at || cert.issuedDate || cert.completionDate || cert.completion_date || '';
-    var cohort   = cert.cohort || '';
-
-    /* Format issued date if it looks like an ISO date string */
-    if (issued && issued.indexOf('-') !== -1) {
-      try {
-        issued = new Date(issued).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
-      } catch(e) {}
-    }
-
-    /* Banner */
-    setText('banner-cert-id', certId);
-
-    /* Profile hero */
-    if (name) {
-      var nameEl = document.querySelector('.profile-name');
-      if (nameEl) nameEl.textContent = name;
-      var titleEl = document.querySelector('.profile-title');
-      if (titleEl && field) titleEl.textContent = 'Certified Brixer — AI in ' + field;
-      /* Eyebrow above name */
-      var eyebrowEl = document.querySelector('.profile-hero-inner .fade-up [style*="text-transform:uppercase"]');
-      if (eyebrowEl && field) eyebrowEl.textContent = 'Brixer · ' + field;
-    }
-
-    /* Meta chips */
-    var chips = document.querySelectorAll('.profile-meta .meta-chip');
-    chips.forEach(function(chip) {
-      if (chip.classList.contains('accent') && field) chip.textContent = field;
-      if (chip.textContent.indexOf('Certificate:') !== -1) chip.textContent = 'Certificate: ' + certId;
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
     });
-
-    /* Mini certificate card */
-    var miniName = document.querySelector('.cert-mini-name');
-    if (miniName && name) miniName.textContent = name;
-    var miniField = document.querySelector('.cert-mini-field');
-    if (miniField && field) miniField.textContent = field + ' · AI in my Field';
-    var miniDate = document.querySelector('.cert-mini-date');
-    if (miniDate && issued) miniDate.textContent = 'Issued: ' + issued;
-    var certIdVal = document.querySelector('.cert-id-val');
-    if (certIdVal) certIdVal.textContent = certId;
-
-    /* Full certificate overlay */
-    var overlayName = document.querySelector('.cert-full [style*="font-size:2.4rem"]');
-    if (overlayName && name) overlayName.textContent = name;
-    var overlayField = document.querySelector('.cert-full [style*="font-size:1.1rem"][style*="color:var(--red)"]');
-    if (overlayField && field) overlayField.textContent = field;
-    var overlayDate = document.querySelector('.cert-full [style*="opacity:0.2"]');
-    if (overlayDate && issued) overlayDate.textContent = 'Issued ' + issued + (cohort ? ' · ' + cohort : '') + ' · brixgate.com';
-
-    /* Competencies section — update "What {Name} Mastered" heading */
-    if (name) {
-      var compHeading = document.querySelector('.comp-grid')
-        ? document.querySelector('.comp-grid').closest('section').querySelector('h2')
-        : null;
-      if (compHeading) compHeading.textContent = (cert.competencies && cert.competencies.length ? cert.competencies.length : '8') + ' Competencies. All Field-Verified.';
-      var compEyebrow = document.querySelector('.comp-grid')
-        ? document.querySelector('.comp-grid').closest('section').querySelector('.eyebrow')
-        : null;
-      if (compEyebrow) compEyebrow.textContent = 'What ' + name.split(' ')[0] + ' Mastered';
-    }
-
-    /* Expert assessment — populate if API returns assessment data */
-    if (cert.expertName || cert.expert_name) {
-      var eName = cert.expertName || cert.expert_name;
-      var eRole = cert.expertRole || cert.expert_role || '';
-      var eText = cert.expertAssessment || cert.expert_assessment || cert.assessment || '';
-      var expertNameEl = document.querySelector('.expert-name');
-      if (expertNameEl) expertNameEl.textContent = eName;
-      var expertRoleEl = document.querySelector('.expert-role');
-      if (expertRoleEl && eRole) expertRoleEl.textContent = eRole;
-      var expertQuoteEl = document.querySelector('.expert-quote');
-      if (expertQuoteEl && eText) expertQuoteEl.textContent = eText;
-      /* Also update overlay expert signature */
-      var overlaySig = document.querySelector('.cert-full [style*="font-size:0.75rem"][style*="font-weight:700"]');
-      if (overlaySig) overlaySig.textContent = eName;
-    }
-
-    /* Expert assessment heading */
-    if (name) {
-      var assessEyebrow = document.querySelector('.expert-card')
-        ? document.querySelector('.expert-card').closest('section').querySelector('.eyebrow')
-        : null;
-      var assessHeading = document.querySelector('.expert-card')
-        ? document.querySelector('.expert-card').closest('section').querySelector('h2')
-        : null;
-      if (assessHeading) assessHeading.textContent = "What " + name.split(' ')[0] + "'s Expert Says";
-    }
-
-    /* Stats — update competency count if available */
-    if (cert.competencies && cert.competencies.length) {
-      var compStat = document.querySelectorAll('.stat-val')[1];
-      if (compStat) compStat.textContent = cert.competencies.length;
-    }
-
-    /* Project section */
-    if (cert.projectTitle || cert.project_title) {
-      var projTitle = document.querySelector('.project-title');
-      if (projTitle) projTitle.textContent = cert.projectTitle || cert.project_title;
-    }
-    if (cert.projectDescription || cert.project_description) {
-      var projDesc = document.querySelector('.project-desc');
-      if (projDesc) projDesc.textContent = cert.projectDescription || cert.project_description;
-    }
-    if (name) {
-      var projectHeading = document.querySelector('.project-card')
-        ? document.querySelector('.project-card').closest('section').querySelector('h2')
-        : null;
-      if (projectHeading) projectHeading.textContent = 'What ' + name.split(' ')[0] + ' Built';
-    }
+  }
+  function fmtDate(v) {
+    if (!v) return '';
+    var d = new Date(v);
+    if (isNaN(d)) return String(v);
+    return d.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
   }
 
-  (function() {
-    var params = new URLSearchParams(window.location.search);
-    var id = (params.get('id') || '').trim().toUpperCase();
+  var tick = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
 
-    if (!id) {
-      document.getElementById('entry-view').style.display = 'block';
-      return;
-    }
+  function render(cert, rawId) {
+    /* Field names vary across the API, so these fall back in the same
+       order certificate.html already uses — that ordering was tuned
+       against real records and is deliberately copied, not guessed. */
+    var certId  = cert.certificateNumber || cert.certificate_number || rawId;
+    var name    = cert.holderName || cert.holder_name || cert.name || cert.graduateName || '';
+    var field   = cert.field || cert.primaryField || cert.primary_field || cert.program || cert.programme || '';
+    var issued  = cert.issuedAt || cert.issued_at || cert.issuedDate || cert.completionDate || cert.completion_date || '';
+    var expert  = cert.expertName || cert.expert_name || cert.instructorName || cert.instructor_name || '';
+    var expRole = cert.expertRole || cert.expert_role || cert.instructorRole || cert.instructor_role || '';
+    var cohort  = cert.cohort || cert.cohortName || cert.cohort_name || '';
 
-    document.getElementById('loading-view').style.display = 'block';
+    el('vf-cid').textContent  = certId || '—';
+    el('vf-name').textContent = name || 'Certificate holder';
+    el('vf-prog').textContent = field || 'Expert Practitioner Programme';
 
-    fetch(CERT_API_BASE + '/api/v1/certificates/verify/' + encodeURIComponent(id))
-      .then(function(r) {
+    /* Only render rows we actually have — an empty row reads as a defect. */
+    var rows = [];
+    if (issued) rows.push(['Issued', fmtDate(issued)]);
+    if (cohort) rows.push(['Cohort', cohort]);
+    if (expert) rows.push(['Assessed by', expert + (expRole ? ' · ' + expRole : '')]);
+    rows.push(['Issuer', 'Brixgate Ltd']);
+    el('vf-rows').innerHTML = rows.map(function (r) {
+      return '<div class="vf-row"><span class="k">' + esc(r[0]) + '</span><span class="v">' + esc(r[1]) + '</span></div>';
+    }).join('');
+
+    /* Each line below is a fact present in the response. Nothing here is
+       a simulated "check" — if we cannot evidence it, it is not listed. */
+    var checks = [];
+    checks.push('<b>Brixgate issued this certificate</b> and it is present in our records.');
+    if (name)   checks.push('It was issued to <b>' + esc(name) + '</b>.');
+    if (field)  checks.push('For the <b>' + esc(field) + '</b> programme.');
+    if (expert) checks.push('The capstone was assessed by <b>' + esc(expert) + '</b>, a practitioner in that field.');
+    if (issued) checks.push('Issued on <b>' + esc(fmtDate(issued)) + '</b>.');
+    el('vf-check-list').innerHTML = checks.map(function (c) {
+      return '<div class="vf-check">' + tick + '<span>' + c + '</span></div>';
+    }).join('');
+
+    el('vf-open-cert').setAttribute('href', 'certificate.html?id=' + encodeURIComponent(certId || rawId));
+    show('vf-found');
+  }
+
+  function lookup(id) {
+    if (!id) return;
+    el('vf-loading-id').textContent = id;
+    show('vf-loading');
+
+    fetch(API + '/api/v1/certificates/verify/' + encodeURIComponent(id))
+      .then(function (r) {
         if (r.status === 404) throw new Error('NOT_FOUND');
         if (!r.ok) throw new Error('API_ERROR');
         return r.json();
       })
-      .then(function(data) {
+      .then(function (data) {
         var cert = (data && data.data) ? data.data : data;
         if (!cert || data.success === false) throw new Error('NOT_FOUND');
-        window.location.href = 'certificate.html?id=' + encodeURIComponent(id);
+        render(cert, id);
       })
-      .catch(function() {
-        showNotFound(id);
+      .catch(function () {
+        el('vf-nf-id').textContent = id;
+        show('vf-notfound');
       });
-  })();
+  }
+
+  function reset() {
+    show('vf-entry');
+    var i = el('vf-id'); i.value = ''; i.focus();
+    if (history.replaceState) history.replaceState(null, '', location.pathname);
+  }
+
+  el('vf-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = el('vf-id').value.trim().toUpperCase();
+    var err = el('vf-err');
+    if (!v) {
+      err.textContent = 'Enter the certificate number to check.';
+      err.style.display = 'block';
+      el('vf-id').focus();
+      return;
+    }
+    err.style.display = 'none';
+    if (history.replaceState) history.replaceState(null, '', location.pathname + '?id=' + encodeURIComponent(v));
+    lookup(v);
+  });
+  el('vf-id').addEventListener('input', function () { el('vf-err').style.display = 'none'; });
+  el('vf-again').addEventListener('click', reset);
+  el('vf-nf-again').addEventListener('click', reset);
+
+  /* arriving from a QR code or a shared link */
+  var qid = (new URLSearchParams(location.search).get('id') || '').trim().toUpperCase();
+  if (qid) { el('vf-id').value = qid; lookup(qid); }
+})();
 </script>
-
-<!-- ====== WHATSAPP CHAT WIDGET ====== -->
-<a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme."
-   target="_blank" rel="noopener"
-   class="whatsapp-float"
-   aria-label="Chat with us on WhatsApp"
-   title="Chat with us on WhatsApp">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
-
 
 <!-- LinkedIn Insight Tag -->
 <script type="text/javascript">
@@ -1274,10 +520,7 @@ b.type = "text/javascript";b.async = true;
 b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
 s.parentNode.insertBefore(b, s);})(window.lintrk);
 </script>
-<noscript>
-<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9372724&fmt=gif" />
-</noscript>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9372724&fmt=gif" /></noscript>
 
-<!-- <script src="popup.js"></script> -->
 </body>
 </html>
