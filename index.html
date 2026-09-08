@@ -815,6 +815,145 @@
     .lp .lp-region-desc { font-size: .9rem; color: var(--lp-body); line-height: 1.6; margin-top: 8px; }
 
     /* ============================================================
+       GLOBAL REACH — dark band, curved lip, dotted world map
+       The map is decoration: every country it pins is already named
+       in the .lp-country chips beside it, so the whole map layer is
+       aria-hidden and carries no tab stops.
+       ============================================================ */
+    .lp .lp-global {
+      position: relative; overflow: hidden; isolation: isolate;
+      background:
+        radial-gradient(120% 90% at 12% 0%, rgba(27,58,92,.72) 0%, rgba(2,16,36,0) 58%),
+        radial-gradient(80% 70% at 92% 88%, rgba(154,35,53,.40) 0%, rgba(2,16,36,0) 60%),
+        linear-gradient(170deg, #0D1C34 0%, var(--lp-ink) 58%);
+      color: #fff;
+    }
+    /* Specificity is deliberate. The responsive `.lp .lp-section` rule further
+       down the sheet sets `padding` as a shorthand at equal weight, so a bare
+       `.lp .lp-global { padding-top }` loses below 1024px and the lip then
+       covers the eyebrow. */
+    .lp .lp-section.lp-global { padding-top: 168px; }
+    /* the lip: a white ellipse hanging into the top of the band, so the
+       section above appears to curve down into it */
+    .lp .lp-global-lip {
+      position: absolute; top: -1px; left: -8%; width: 116%; height: 116px;
+      background: #fff; border-radius: 0 0 50% 50% / 0 0 100% 100%;
+      pointer-events: none; z-index: 2;
+    }
+
+    .lp .lp-global-grid {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: minmax(0, 0.74fr) minmax(0, 1.26fr);
+      gap: 44px; align-items: center;
+    }
+    /* Let the map run past the container to the viewport edge. Two of our
+       six pins are West African neighbours about ten degrees apart, so
+       every pixel of map width buys separation between them. */
+    @media (min-width: 1025px) {
+      .lp .lp-global-grid { margin-right: calc(-1 * max(0px, (100vw - 1200px) / 2) - 12px); }
+      .lp .lp-global-grid > :first-child { padding-right: 4px; }
+    }
+    .lp .lp-global .lp-eyebrow { color: rgba(255,255,255,.58); }
+    .lp .lp-global .lp-h2 { color: #fff; }
+    .lp .lp-global .lp-lead { color: rgba(255,255,255,.74); margin-top: 18px; }
+    .lp .lp-global .lp-countries { justify-content: flex-start; margin-top: 30px; }
+    .lp .lp-global .lp-country {
+      background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.14);
+      color: rgba(255,255,255,.86); height: 38px; font-size: .84rem;
+      transition: background .3s var(--lp-ease), border-color .3s var(--lp-ease);
+    }
+    .lp .lp-global .lp-country.is-lit {
+      background: rgba(255,41,78,.16); border-color: rgba(255,41,78,.55); color: #fff;
+    }
+    .lp .lp-global .lp-regions { margin-top: 64px; }
+    .lp .lp-global .lp-region {
+      background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.11);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    .lp .lp-global .lp-region:hover {
+      background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.2);
+      box-shadow: 0 20px 46px -22px rgba(0,0,0,.7);
+    }
+    .lp .lp-global .lp-region-icon { background: rgba(255,41,78,.16); color: #FF6B84; }
+    .lp .lp-global .lp-region-title { color: #fff; }
+    .lp .lp-global .lp-region-desc { color: rgba(255,255,255,.66); }
+    .lp .lp-global .lp-btn-ink {
+      background: #fff; color: var(--lp-ink);
+    }
+    .lp .lp-global .lp-btn-ink:hover { background: rgba(255,255,255,.88); }
+
+    /* ---- map ---- */
+    .lp .lp-map {
+      position: relative; width: 100%;
+      container-type: inline-size;
+      aspect-ratio: 1500 / 590;
+    }
+    .lp .lp-map-dots { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .lp .lp-map-dots .land   { fill: rgba(255,255,255,.20); }
+    .lp .lp-map-dots .africa { fill: rgba(255,255,255,.46); }
+
+    .lp .lp-pin {
+      position: absolute; transform: translate(-50%, -50%);
+      width: clamp(18px, 3.3cqw, 30px); height: clamp(18px, 3.3cqw, 30px);
+      border-radius: 50%; background: #fff; cursor: default;
+      display: grid; place-items: center;
+      font-size: clamp(10px, 1.95cqw, 17px); line-height: 1;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.5), 0 6px 16px -6px rgba(0,0,0,.7);
+      transition: transform .3s var(--lp-ease), box-shadow .3s var(--lp-ease);
+      opacity: 0; animation: lpPinIn .5s var(--lp-ease) forwards;
+    }
+    @keyframes lpPinIn { from { opacity: 0; transform: translate(-50%, -30%) scale(.5) } to { opacity: 1; transform: translate(-50%, -50%) scale(1) } }
+    /* the halo reads as reach rather than as a map marker */
+    .lp .lp-pin::before {
+      content: ""; position: absolute; inset: -28%;
+      border-radius: 50%; border: 1px solid rgba(255,41,78,.5);
+      opacity: .9; animation: lpPinPing 3.2s ease-out infinite;
+    }
+    @keyframes lpPinPing {
+      0%   { transform: scale(.7); opacity: .85 }
+      70%  { transform: scale(2.1); opacity: 0 }
+      100% { transform: scale(2.1); opacity: 0 }
+    }
+    .lp .lp-pin:hover, .lp .lp-pin.is-open {
+      transform: translate(-50%, -50%) scale(1.22);
+      box-shadow: 0 0 0 1px #fff, 0 10px 22px -6px rgba(0,0,0,.8);
+      z-index: 4;
+    }
+    .lp .lp-pin-label {
+      position: absolute; bottom: 128%; left: 50%; transform: translateX(-50%);
+      white-space: nowrap; padding: 5px 10px; border-radius: 8px;
+      background: #fff; color: var(--lp-ink);
+      font-size: clamp(9px, 1.25cqw, 12px); font-weight: 700; letter-spacing: -.01em;
+      opacity: 0; pointer-events: none;
+      transition: opacity .22s var(--lp-ease), transform .22s var(--lp-ease);
+    }
+    .lp .lp-pin:hover .lp-pin-label,
+    .lp .lp-pin.is-open .lp-pin-label { opacity: 1; transform: translateX(-50%) translateY(-3px); }
+
+    @media (max-width: 1024px) {
+      .lp .lp-section.lp-global { padding-top: 132px; }
+      .lp .lp-global-lip { height: 88px; }
+      .lp .lp-global-grid { grid-template-columns: 1fr; gap: 40px; }
+      .lp .lp-global .lp-countries { justify-content: center; }
+      .lp .lp-global .lp-head { text-align: center; }
+      .lp .lp-global .lp-head .lp-eyebrow { justify-content: center; }
+      .lp .lp-global .lp-lead { margin-left: auto; margin-right: auto; }
+    }
+    @media (max-width: 640px) {
+      .lp .lp-section.lp-global { padding-top: 104px; }
+      .lp .lp-global-lip { height: 56px; }
+      /* Below this width the flags are smaller than a fingertip and the
+         two West African pins collide, so the map drops to texture and
+         the chip row carries the countries on its own. */
+      .lp .lp-pin { display: none; }
+      .lp .lp-map { opacity: .5; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .lp .lp-pin { animation: none; opacity: 1; }
+      .lp .lp-pin::before { animation: none; opacity: .35 }
+    }
+
+    /* ============================================================
        INSIDE THE COHORT — gradient band + photo mosaic
        ============================================================ */
     .lp .lp-cohort {
@@ -1796,21 +1935,33 @@
 <!-- ============================================================
      GLOBAL
      ============================================================ -->
-<section class="lp-section lp-surface">
+<section class="lp-section lp-global">
+  <div class="lp-global-lip" aria-hidden="true"></div>
   <div class="lp-container">
-    <div class="lp-head center fade-up">
-      <span class="lp-eyebrow">Global reach</span>
-      <h2 class="lp-h2">Rooted in Africa.<br/>Built for the world.</h2>
-      <p class="lp-lead">From Lagos to London. Nairobi to New York. A global AI expertise marketplace with Africa leading in vision and in practice.</p>
-    </div>
 
-    <div class="lp-countries fade-up">
-      <span class="lp-country">🇳🇬 Nigeria</span>
-      <span class="lp-country">🇬🇧 United Kingdom</span>
-      <span class="lp-country">🇺🇸 United States</span>
-      <span class="lp-country">🇰🇪 Kenya</span>
-      <span class="lp-country">🇬🇭 Ghana</span>
-      <span class="lp-country">🇿🇦 South Africa</span>
+    <div class="lp-global-grid">
+      <div>
+        <div class="lp-head fade-up">
+          <span class="lp-eyebrow">Global reach</span>
+          <h2 class="lp-h2">Rooted in Africa.<br/>Built for the world.</h2>
+          <p class="lp-lead">From Lagos to London. Nairobi to New York. A global AI expertise marketplace with Africa leading in vision and in practice.</p>
+        </div>
+
+        <div class="lp-countries fade-up">
+          <span class="lp-country" data-cc="ng">🇳🇬 Nigeria</span>
+          <span class="lp-country" data-cc="gb">🇬🇧 United Kingdom</span>
+          <span class="lp-country" data-cc="us">🇺🇸 United States</span>
+          <span class="lp-country" data-cc="ke">🇰🇪 Kenya</span>
+          <span class="lp-country" data-cc="gh">🇬🇭 Ghana</span>
+          <span class="lp-country" data-cc="za">🇿🇦 South Africa</span>
+        </div>
+      </div>
+
+      <!-- Decorative. Every country pinned here is named in the chips above,
+           so this layer is hidden from assistive tech and holds no tab stops. -->
+      <div class="lp-map fade-up" id="lp-map" aria-hidden="true">
+        <svg class="lp-map-dots" id="lp-map-dots" viewBox="0 0 1500 590" preserveAspectRatio="xMidYMid meet" focusable="false"></svg>
+      </div>
     </div>
 
     <div class="lp-regions stagger">
@@ -2639,6 +2790,117 @@
       list.slice(0, 3).forEach(function (x) { grid.appendChild(card(x)); });
     })
     .catch(function () { grid.remove(); });
+})();
+
+/* ============================================================
+   GLOBAL REACH — dotted world map
+   The land grid is a 150 x 59 equirectangular raster derived from
+   Natural Earth 110m (public domain), run-length encoded: pairs of
+   [char][base36 count], where '.' is sea, '#' is land and 'A' is
+   land in Africa. Rows run north to south from +84 to -57 degrees,
+   so Antarctica is out of frame.
+
+   Pins are placed from real coordinates through the same projection
+   the raster uses, which is why they land on their countries and
+   stay there at every width. The whole layer is decoration: the
+   countries are named in the chips beside it.
+   ============================================================ */
+(function () {
+  var svg = document.getElementById('lp-map-dots');
+  var map = document.getElementById('lp-map');
+  if (!svg || !map) return;
+
+  var COLS = 150, ROWS = 59, LAT_TOP = 84, LAT_BOT = -57;
+  var CELL = 10, DOT = 3;
+
+  var RLE = '.z.6#8.7#a.z.z.z.e#3.3#5.1#l.f#3.8#2.h#3.z.r#1.5#1.4#4.2#m.e#2.1#1.v#1.z.o#5.1#2.1#3.1#2.9#h.w#3.b#a.9#3.z.3#3.7#1.1#2.1#1.1#3.9#d.w#2.a#g.1#2.v#3.e#6.3#2.1#8.6#c.1#1.j#2.a#2.4#2.1#z.9#1.5#m.2#1.3#1.1#2.1#2.3#3.6#a.j#9.2#1.4#5.1#z#b.1#3.1#y.5#5.4#7.5#1.1#2.b#9.3#z#n.3#1.4#t.2#1.5#1.1#1.6#4.l#4.1#z#u.7#u.7#2.a#2.k#5.2#z#l.3#4.d#1.6#j.6#7.s#2.1#2.3#z#e.7#2.f#1.b#i.5#6.o#1.4#4.2#z#d.8#3.q#1.1#k.1#9.k#1.2#1.4#z#i.8#2.u#j.1#9.m#3.1#z#n.5#1.v#1.1#n.4#2.l#z#o.1#1.z.3#p.4#1.l#g.1#5.1#z#1.1#1.z.3#p.q#6.1#6.4#4.1#z#1.2#1.z.3#n.p#5.4#1.2#4.2#1.2#3.2#w.4#1.z.4#l.r#4.8#2.1#a.1#s.2#1.5#1.z.5#j.s#3.a#1.1#a.1#t.2#1.3#2.z.6#i.tA7.b#z.5#3.z.8#f.uAa.2A2.5#z#1.3#1.z.d#a.1#2.uAi#6.1#u.z.g#1.1#5.7#1.sAj.1#5.2#s.z.i#1.1#4.7#1.rAk.1#7.3#1.2#m.z.l#3.6#2.qAm.1#9.4#j.z.n#4.2#2.4#1.oAm.2#7.6#6.3#5.z.s#6.9#1.kAn.1#7.6#5.4#5.6#1.z.p#4.sAo.1#4.9#2.8#4.5#1.z.s#1.sAp#1.c#2.8#5.4#2.z.r#1.4#3.2#1.jAo.1A2.b#1.a#2.z.z#a.kAq.b#2.7#1.9#2.z.u#8.kA5.1Ai.d#1.8#1.5#1.z.y#b.pAg.k#1.1#1.4#2.z.x#c.pAe.n#2.2#4.4#1.z.r#f.nAd.p#1.3#3.1#1.3#2.z.p#i.kAd.q#1.6#1.4#5.3#1.z.h#j.kAb.s#1.d#3.1#1.1#1.z.h#i.kAb.v#1.1#1.7#3.1#1.z.l#h.lAb.z.f#1.z.f#g.lAc.3A1.x#3.2#1.z.o#f.lAc.2A2.v#5.2#2.8#1.z.f#e.lAa.3A3.u#a.z.p#c.mA9.4A2.t#d.6#1.z.h#c.nA9.3A2.r#g.z.n#9.qA8.x#h.z.l#a.qA8.y#g.z.l#9.sA6.z#g.z.l#8.uA4.z.1#4.4#8.z.l#6.z.z.2#1.9#5.z.l#7.z.z.c#4.z.m#5.z.z.t#1.z.a#4.z.z.i#1.9#2.z.b#4.z.z.r#1.z.d#3.z.z.z.z.7#3.z.z.z.z.7#2.4#1.z.z.z.z.3#3.z.z.z.z.z.z.z.8';
+
+  var D = '0123456789abcdefghijklmnopqrstuvwxyz';
+  var land = '', i, n, ch;
+  for (i = 0; i < RLE.length; i += 2) {
+    ch = RLE.charAt(i);
+    n  = D.indexOf(RLE.charAt(i + 1));
+    for (var k = 0; k < n; k++) { land += ch; }
+  }
+  if (land.length !== COLS * ROWS) return;   /* refuse to draw a broken map */
+
+  /* one <path> per layer keeps this at two nodes instead of 2,704 */
+  function dot(cx, cy) {
+    return 'M' + (cx - DOT) + ' ' + cy +
+           'a' + DOT + ' ' + DOT + ' 0 1 0 ' + (DOT * 2) + ' 0' +
+           'a' + DOT + ' ' + DOT + ' 0 1 0 ' + (-DOT * 2) + ' 0';
+  }
+  var dLand = [], dAfr = [], idx = 0;
+  for (var r = 0; r < ROWS; r++) {
+    for (var c = 0; c < COLS; c++) {
+      var v = land.charAt(idx++);
+      if (v === '.') continue;
+      var p = dot(c * CELL + CELL / 2, r * CELL + CELL / 2);
+      (v === 'A' ? dAfr : dLand).push(p);
+    }
+  }
+  svg.innerHTML =
+    '<path class="land" d="'   + dLand.join('') + '"/>' +
+    '<path class="africa" d="' + dAfr.join('')  + '"/>';
+
+  /* ---- pins ---- */
+  /* dx / dy are percentages of the map box, applied after projection.
+     Nigeria and Ghana are only about ten degrees apart, which is narrower
+     than one flag at every width this map is drawn at, so they are eased
+     apart along the coast: Ghana out into the Gulf of Guinea, Nigeria up
+     over its own landmass. Everything else is projected untouched. */
+  var PINS = [
+    { cc: 'ng', flag: '🇳🇬', name: 'Nigeria',        lat:   9.1, lon:   8.7, dx:  0.5, dy: -1.4 },
+    { cc: 'gh', flag: '🇬🇭', name: 'Ghana',          lat:   7.9, lon:  -1.0, dx: -1.3, dy:  2.6 },
+    { cc: 'ke', flag: '🇰🇪', name: 'Kenya',          lat:   0.5, lon:  37.9 },
+    { cc: 'za', flag: '🇿🇦', name: 'South Africa',   lat: -29.0, lon:  24.7 },
+    { cc: 'gb', flag: '🇬🇧', name: 'United Kingdom', lat:  54.0, lon:  -2.5 },
+    { cc: 'us', flag: '🇺🇸', name: 'United States',  lat:  39.5, lon: -98.5 }
+  ];
+
+  var chips = {};
+  document.querySelectorAll('.lp-global .lp-country[data-cc]').forEach(function (el) {
+    chips[el.getAttribute('data-cc')] = el;
+  });
+
+  PINS.forEach(function (p, n2) {
+    var el = document.createElement('div');
+    el.className = 'lp-pin';
+    el.setAttribute('data-cc', p.cc);
+    el.style.left = (((p.lon + 180) / 360 * 100) + (p.dx || 0)) + '%';
+    el.style.top  = (((LAT_TOP - p.lat) / (LAT_TOP - LAT_BOT) * 100) + (p.dy || 0)) + '%';
+    el.style.animationDelay = (0.18 * n2 + 0.25) + 's';
+    el.innerHTML = p.flag + '<span class="lp-pin-label">' + p.name + '</span>';
+
+    function lit(on) {
+      el.classList.toggle('is-open', on);
+      var chip = chips[p.cc];
+      if (chip) chip.classList.toggle('is-lit', on);
+    }
+    el.addEventListener('mouseenter', function () { lit(true); });
+    el.addEventListener('mouseleave', function () { lit(false); });
+    /* touch has no hover, so a tap opens one and closes the rest */
+    el.addEventListener('click', function () {
+      var open = el.classList.contains('is-open');
+      map.querySelectorAll('.lp-pin.is-open').forEach(function (o) {
+        o.classList.remove('is-open');
+        var cc = o.getAttribute('data-cc');
+        if (chips[cc]) chips[cc].classList.remove('is-lit');
+      });
+      lit(!open);
+    });
+
+    map.appendChild(el);
+  });
+
+  /* hovering a chip lights its pin, so the two halves read as one thing */
+  Object.keys(chips).forEach(function (cc) {
+    var chip = chips[cc];
+    var pin  = map.querySelector('.lp-pin[data-cc="' + cc + '"]');
+    if (!pin) return;
+    chip.addEventListener('mouseenter', function () { pin.classList.add('is-open'); chip.classList.add('is-lit'); });
+    chip.addEventListener('mouseleave', function () { pin.classList.remove('is-open'); chip.classList.remove('is-lit'); });
+  });
 })();
 </script>
 
