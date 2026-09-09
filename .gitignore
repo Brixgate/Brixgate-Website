@@ -18,3 +18,6 @@ Thumbs.db
 # Claude Code settings
 .claude/
 .vercel
+
+# Natural Earth source cache for tools/gen-world-dots.py (re-downloads on demand)
+tools/ne110.json
