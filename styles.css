@@ -2169,6 +2169,115 @@ body.show-cad .currency-cad { display: inline !important; }
   min-width: 210px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.12);
 }
+/* ============================================================
+   PROGRAMMES MEGA MENU
+   Built by nav-programmes.js into <div class="nav-mega" data-nav-mega>.
+   Two tiers on the left, the hovered tier's courses on the right.
+   ============================================================ */
+.nav-mega { position: relative; display: inline-flex; align-items: center; }
+.nav-mega-trigger {
+  display: inline-flex; align-items: center;
+  text-decoration: none; padding-right: 2px;
+}
+.nav-mega-chevron {
+  background: none; border: none; padding: 2px 3px; cursor: pointer;
+  color: #4A5568; display: inline-flex; align-items: center; vertical-align: middle;
+  transition: transform 0.2s ease;
+}
+.nav-mega:hover .nav-mega-chevron,
+.nav-mega.open .nav-mega-chevron { transform: rotate(180deg); }
+
+.nav-mega-panel {
+  display: none; position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%); padding-top: 14px; z-index: 250;
+}
+.nav-mega:hover .nav-mega-panel,
+.nav-mega.open .nav-mega-panel { display: block; }
+
+.nav-mega-inner {
+  display: grid; grid-template-columns: 268px minmax(0, 1fr);
+  width: min(860px, calc(100vw - 48px));
+  background: #fff; border: 1px solid #E8E3DE; border-radius: 16px;
+  box-shadow: 0 18px 60px rgba(2, 16, 36, 0.16);
+  overflow: hidden;
+}
+
+/* ---- left rail: the two tiers ---- */
+.nav-mega-tiers {
+  background: #FBF9F6; border-right: 1px solid #F0EDEA;
+  padding: 12px; display: flex; flex-direction: column; gap: 4px;
+}
+.nav-mega-tier {
+  display: grid; grid-template-columns: 1fr auto; align-items: center;
+  gap: 4px 10px; padding: 14px 14px; border-radius: 11px;
+  text-decoration: none; transition: background 0.18s ease;
+}
+.nav-mega-tier.is-on { background: #fff; box-shadow: 0 2px 10px rgba(2, 16, 36, 0.07); }
+.nav-mega-tier-t {
+  font-size: 0.92rem; font-weight: 700; color: #021024; letter-spacing: -0.015em;
+}
+.nav-mega-tier-d {
+  grid-column: 1 / -1; font-size: 0.78rem; line-height: 1.5; color: #6B7A90;
+}
+.nav-mega-tier-go { color: #C4173A; opacity: 0; transform: translateX(-4px); transition: opacity 0.2s ease, transform 0.2s ease; display: inline-flex; }
+.nav-mega-tier.is-on .nav-mega-tier-go { opacity: 1; transform: none; }
+
+/* ---- right: the hovered tier's courses ---- */
+.nav-mega-courses { padding: 18px 20px 16px; min-height: 232px; }
+.nav-mega-pane { display: none; }
+.nav-mega-pane.is-on { display: block; animation: navMegaIn 0.26s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@keyframes navMegaIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+.nav-mega-kicker {
+  font-size: 0.63rem; font-weight: 800; letter-spacing: 0.15em;
+  text-transform: uppercase; color: #98A4B5;
+  padding-bottom: 12px; margin-bottom: 4px; border-bottom: 1px solid #F0EDEA;
+}
+.nav-mega-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 10px; }
+.nav-mega-course {
+  display: block; padding: 11px 12px; border-radius: 9px; text-decoration: none;
+  transition: background 0.15s ease;
+}
+.nav-mega-course:hover { background: #FFF5F6; }
+.nav-mega-course-t {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.89rem; font-weight: 650; color: #021024; letter-spacing: -0.01em;
+}
+.nav-mega-course:hover .nav-mega-course-t { color: #FF294E; }
+.nav-mega-course-d {
+  display: block; margin-top: 3px; font-size: 0.78rem; line-height: 1.45; color: #6B7A90;
+}
+.nav-mega-soon {
+  font-size: 0.58rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 2px 6px; border-radius: 5px; background: #F1EFEC; color: #7B8A9E; white-space: nowrap;
+}
+.nav-mega-empty {
+  margin: 14px 0 0; font-size: 0.85rem; line-height: 1.6; color: #6B7A90; max-width: 46ch;
+}
+.nav-mega-all {
+  display: inline-flex; align-items: center; gap: 7px; margin-top: 14px; padding: 0 12px;
+  font-size: 0.82rem; font-weight: 700; color: #C4173A; text-decoration: none;
+}
+.nav-mega-all svg { transition: transform 0.25s ease; }
+.nav-mega-all:hover svg { transform: translateX(3px); }
+
+@media (max-width: 1100px) {
+  .nav-mega-inner { grid-template-columns: 236px minmax(0, 1fr); width: min(720px, calc(100vw - 40px)); }
+  .nav-mega-grid { grid-template-columns: 1fr; }
+}
+
+/* the two tiers sit under Programmes in the mobile sheet */
+.nav-mobile .nav-mobile-sub {
+  padding-left: 30px !important;
+  font-size: 0.92rem;
+  opacity: 0.82;
+  position: relative;
+}
+.nav-mobile .nav-mobile-sub::before {
+  content: ""; position: absolute; left: 14px; top: 50%;
+  width: 8px; height: 1.5px; background: currentColor; opacity: 0.4;
+}
+
 /* Two tiers now share this menu component, so each one names itself.
    Without the kicker a bare list of fields gives no clue which track
    it belongs to once both dropdowns look alike. */

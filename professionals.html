@@ -140,17 +140,35 @@ body.pg ::selection{ background:rgba(255,41,78,.28); color:#fff; }
   transition:transform .4s var(--pg-ease), box-shadow .4s var(--pg-ease), border-color .3s;
 }
 .pg-field:hover{ transform:translateY(-6px); box-shadow:0 22px 50px -20px rgba(10,20,36,.28); border-color:transparent; }
-.pg-field-art{ aspect-ratio:16/10; overflow:hidden; display:grid; place-items:center; }
-.pg-field-art img{ width:72%; height:72%; object-fit:contain; transition:transform .55s var(--pg-ease); }
-.pg-field:hover .pg-field-art img{ transform:scale(1.06); }
+/* The field art is a full-bleed render, not a transparent illustration,
+   so it fills its frame. It used to sit inset at 72% with object-fit
+   contain, which left a pale border around every card. */
+.pg-field-art{ position:relative; aspect-ratio:4/3; overflow:hidden; background:#0D1C34; }
+.pg-field-art img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .7s var(--pg-ease);
+}
+.pg-field:hover .pg-field-art img{ transform:scale(1.07); }
+/* a floor of ink under the badge so it stays legible whatever the art does */
+.pg-field-art::after{
+  content:""; position:absolute; inset:auto 0 0 0; height:52%;
+  background:linear-gradient(to top, rgba(2,16,36,.62), rgba(2,16,36,0));
+  pointer-events:none;
+}
+.pg-field-art .pg-field-st{
+  position:absolute; left:14px; bottom:12px; z-index:2; margin:0;
+  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+}
 .pg-field-b{ padding:20px 20px 18px; display:flex; flex-direction:column; flex:1; }
 .pg-field-st{
   display:inline-flex; align-items:center; gap:6px; align-self:flex-start;
   font-size:.62rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
   padding:4px 9px; border-radius:6px; margin-bottom:11px;
 }
-.pg-field-st.open{ background:rgba(34,197,94,.12); color:#15803D; border:1px solid rgba(34,197,94,.3); }
-.pg-field-st.soon{ background:#F1EFEC; color:#7B8A9E; border:1px solid var(--pg-ink-line); }
+/* On the dark art these sit over ink, so they carry their own contrast
+   rather than the pale-on-pale treatment they had on a white card. */
+.pg-field-st.open{ background:rgba(22,163,74,.9); color:#fff; border:1px solid rgba(255,255,255,.22); }
+.pg-field-st.soon{ background:rgba(2,16,36,.68); color:rgba(255,255,255,.86); border:1px solid rgba(255,255,255,.2); }
 .pg-field h3{ font-size:1.02rem; font-weight:750; letter-spacing:-.025em; color:var(--pg-ink); margin:0 0 7px; }
 .pg-field p{ font-size:.85rem; line-height:1.58; color:var(--pg-ink-body); margin:0 0 14px; flex:1; }
 .pg-field-go{
@@ -306,27 +324,28 @@ body.pg ::selection{ background:rgba(255,41,78,.28); color:#fff; }
 .pg-price-note{ margin-top:34px; text-align:center; font-size:.84rem; color:rgba(255,255,255,.55); }
 
 /* ---------- 08 FAQ ---------- */
-.pg-faq{ max-width:840px; margin-inline:auto; }
+/* Same accordion as the course pages: a two-column layout with a sticky
+   head, a chevron rather than a plus, and grid-template-rows 0fr to 1fr
+   for the open transition. The previous version animated max-height from
+   JS, which is why this section did not match the rest of the site. */
+.pg-faq-wrap{ display:grid; grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr); gap:80px; align-items:start; }
+.pg-faq-head{ position:sticky; top:calc(var(--nav-height, 63px) + 40px); }
+.pg-faq{ border-top:1px solid var(--pg-ink-line); }
 .pg-faq-item{ border-bottom:1px solid var(--pg-ink-line); }
 .pg-faq-q{
-  width:100%; display:flex; align-items:center; justify-content:space-between; gap:20px;
-  padding:22px 0; background:none; border:none; cursor:pointer; text-align:left; font-family:inherit;
-  font-size:1.02rem; font-weight:700; letter-spacing:-.02em; color:var(--pg-ink);
+  width:100%; background:none; border:0; padding:24px 4px;
+  display:flex; align-items:center; justify-content:space-between; gap:28px;
+  font-family:inherit; font-size:1.02rem; font-weight:600; letter-spacing:-.015em;
+  color:var(--pg-ink); text-align:left; cursor:pointer; transition:color .2s;
 }
-.pg-faq-q i{
-  flex-shrink:0; width:26px; height:26px; border-radius:50%; display:grid; place-items:center;
-  border:1.5px solid var(--pg-ink-line); position:relative; transition:all .3s var(--pg-ease);
-}
-.pg-faq-q i::before, .pg-faq-q i::after{
-  content:''; position:absolute; background:var(--pg-ink); border-radius:2px; transition:transform .3s var(--pg-ease);
-}
-.pg-faq-q i::before{ width:11px; height:1.8px; }
-.pg-faq-q i::after{ width:1.8px; height:11px; }
-.pg-faq-item.open .pg-faq-q i{ background:var(--g-red); border-color:var(--g-red); }
-.pg-faq-item.open .pg-faq-q i::before, .pg-faq-item.open .pg-faq-q i::after{ background:#fff; }
-.pg-faq-item.open .pg-faq-q i::after{ transform:scaleY(0); }
-.pg-faq-a{ max-height:0; overflow:hidden; transition:max-height .42s var(--pg-ease); }
-.pg-faq-a > div{ padding:0 0 22px; font-size:.94rem; line-height:1.72; color:var(--pg-ink-body); max-width:70ch; }
+.pg-faq-q:hover{ color:var(--g-red); }
+.pg-faq-q:focus-visible{ outline:2px solid var(--g-red); outline-offset:3px; border-radius:6px; }
+.pg-faq-chev{ flex-shrink:0; color:var(--pg-ink-muted, #6B7A90); transition:transform .38s var(--pg-ease), color .2s; }
+.pg-faq-item.open .pg-faq-chev{ transform:rotate(180deg); color:var(--g-red); }
+.pg-faq-a{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .38s var(--pg-ease); }
+.pg-faq-item.open .pg-faq-a{ grid-template-rows:1fr; }
+.pg-faq-a > div{ overflow:hidden; }
+.pg-faq-a > div > p{ margin:0 0 24px; padding-right:40px; font-size:.95rem; line-height:1.68; color:var(--pg-ink-body); max-width:640px; }
 .pg-faq-a a{ color:var(--g-red); font-weight:650; }
 
 /* ---------- 09 WAITLIST ---------- */
@@ -375,6 +394,8 @@ html.pg-anim .pg-rise{ opacity:0; }
   .pg-sec{ padding:68px 0; }
   .pg-hero{ padding:calc(var(--banner-height) + var(--nav-height) + 38px) 0 62px; }
   .pg-fields, .pg-weeks{ grid-template-columns:1fr; }
+  .pg-faq-wrap{ grid-template-columns:1fr; gap:40px; }
+  .pg-faq-head{ position:static; }
   .price-card{ padding:30px 24px 28px; }
   .pg-pillar{ padding:26px 22px 24px; }
 }
@@ -402,31 +423,10 @@ html.pg-anim .pg-rise{ opacity:0; }
     <a href="index.html" class="nav-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
     <div class="nav-links">
       <a href="index.html">Home</a>
-      <div class="nav-prog-dropdown">
-        <a href="foundations.html">AI Foundations</a><button class="nav-prog-chevron" type="button" aria-label="Toggle AI Foundations menu"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="nav-prog-menu">
-          <div class="nav-prog-menu-inner">
-            <div class="nav-prog-kicker">Starting from zero</div>
-            <a href="foundations.html">Explore AI Foundations</a>
-            <a href="foundations.html#waitlist">Join the waitlist</a>
-            <p class="nav-prog-note">Twelve weeks, no prior experience assumed. Course pages open with the first cohort.</p>
-          </div>
-        </div>
-      </div>
-      <div class="nav-prog-dropdown">
-        <a href="professionals.html">AI for Professionals</a><button class="nav-prog-chevron" type="button" aria-label="Toggle AI for Professionals menu"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="nav-prog-menu">
-          <div class="nav-prog-menu-inner">
-            <div class="nav-prog-kicker">Already in the field</div>
-            <a href="programme-engineering.html">Software Engineering</a>
-            <a href="programme-cybersecurity.html">Cybersecurity</a>
-            <a href="programme-finance.html">Financial Modelling</a>
-            <a href="professionals.html">All professional programmes</a>
-          </div>
-        </div>
-      </div>
+      <div class="nav-mega" data-nav-mega></div>
       <a href="experts.html">Experts</a>
       <a href="organisations.html">For Organisations</a>
+      <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme." target="_blank" rel="noopener">Chat with us</a>
     </div>
     <div class="nav-cta">
       <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
@@ -438,8 +438,9 @@ html.pg-anim .pg-rise{ opacity:0; }
 
 <div class="nav-mobile">
   <a href="index.html">Home</a>
-  <a href="foundations.html">AI Foundations</a>
-  <a href="professionals.html">AI for Professionals</a>
+  <a href="programme.html">Programmes</a>
+  <a href="foundations.html" class="nav-mobile-sub">AI Foundations</a>
+  <a href="professionals.html" class="nav-mobile-sub">AI for Professionals</a>
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
   <a href="apply.html" class="btn btn-primary">Apply Now</a>
@@ -654,39 +655,42 @@ html.pg-anim .pg-rise{ opacity:0; }
 <!-- ====== 08 FAQ ====== -->
 <section class="pg-sec pg-cream-sec">
   <div class="pg-wrap">
-    <div class="pg-label pg-rise"><span class="n">07</span><span class="t">FAQ</span></div>
-    <div class="pg-head pg-mb pg-rise">
-      <h2 class="pg-h2">Everything you need to know</h2>
-    </div>
+    <div class="pg-faq-wrap">
+      <div class="pg-faq-head pg-rise">
+        <div class="pg-label" style="margin-bottom:28px"><span class="n">07</span><span class="t">FAQ</span></div>
+        <h2 class="pg-h2">Questions people<br/>actually ask</h2>
+        <p class="pg-lead" style="margin-top:18px">Still unsure? <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%20have%20a%20question%20about%20the%20professional%20programmes." target="_blank" rel="noopener" style="color:var(--g-red);font-weight:600">Message us on WhatsApp</a> and a human will answer.</p>
+      </div>
 
-    <div class="pg-faq" id="pg-faq">
+      <div class="pg-faq" id="pg-faq">
       <div class="pg-faq-item pg-rise">
-        <button class="pg-faq-q" type="button" aria-expanded="false">Who is this programme for?<i></i></button>
-        <div class="pg-faq-a" aria-hidden="true"><div>Working professionals with about a year or more of hands-on experience in their field. It is not an introduction to your profession. It assumes you already do the job and want AI to change how you do it. If you are unsure, the <a href="aiquiz.html">free readiness check</a> takes a couple of minutes.</div></div>
+        <button class="pg-faq-q" type="button" aria-expanded="false"><span>Who is this programme for?</span><svg class="pg-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="pg-faq-a" aria-hidden="true"><div><p>Working professionals with about a year or more of hands-on experience in their field. It is not an introduction to your profession. It assumes you already do the job and want AI to change how you do it. If you are unsure, the <a href="aiquiz.html">free readiness check</a> takes a couple of minutes.</p></div></div>
       </div>
       <div class="pg-faq-item pg-rise">
-        <button class="pg-faq-q" type="button" aria-expanded="false">What does "field-specific" actually mean?<i></i></button>
-        <div class="pg-faq-a" aria-hidden="true"><div>It means a separate curriculum per profession, written by someone who works in it. The cybersecurity programme is about triage and detection; the finance programme is about models that survive an audit. They share a structure and nothing else.</div></div>
+        <button class="pg-faq-q" type="button" aria-expanded="false"><span>What does "field-specific" actually mean?</span><svg class="pg-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="pg-faq-a" aria-hidden="true"><div><p>It means a separate curriculum per profession, written by someone who works in it. The cybersecurity programme is about triage and detection; the finance programme is about models that survive an audit. They share a structure and nothing else.</p></div></div>
       </div>
       <div class="pg-faq-item pg-rise">
-        <button class="pg-faq-q" type="button" aria-expanded="false">How much time does it take each week?<i></i></button>
-        <div class="pg-faq-a" aria-hidden="true"><div>Two live sessions plus build time between them: a few hours a week for most people. It is designed to run alongside a full-time job, and the capstone is built against work you are already doing rather than a separate exercise.</div></div>
+        <button class="pg-faq-q" type="button" aria-expanded="false"><span>How much time does it take each week?</span><svg class="pg-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="pg-faq-a" aria-hidden="true"><div><p>Two live sessions plus build time between them: a few hours a week for most people. It is designed to run alongside a full-time job, and the capstone is built against work you are already doing rather than a separate exercise.</p></div></div>
       </div>
       <div class="pg-faq-item pg-rise">
-        <button class="pg-faq-q" type="button" aria-expanded="false">Do I need a technical background?<i></i></button>
-        <div class="pg-faq-a" aria-hidden="true"><div>Depends on the field. Software Engineering and Cybersecurity assume you already work in those roles. Financial Modelling and Product Marketing assume no engineering background at all. Each programme page states its own prerequisites plainly.</div></div>
+        <button class="pg-faq-q" type="button" aria-expanded="false"><span>Do I need a technical background?</span><svg class="pg-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="pg-faq-a" aria-hidden="true"><div><p>Depends on the field. Software Engineering and Cybersecurity assume you already work in those roles. Financial Modelling and Product Marketing assume no engineering background at all. Each programme page states its own prerequisites plainly.</p></div></div>
       </div>
       <div class="pg-faq-item pg-rise">
-        <button class="pg-faq-q" type="button" aria-expanded="false">Is the programme available outside Nigeria?<i></i></button>
-        <div class="pg-faq-a" aria-hidden="true"><div>Yes. It is delivered live online and we currently have participants across Nigeria, the UK, the US, Kenya and South Africa. Pricing is shown in NGN and USD, and cohort times are set to work across those regions.</div></div>
+        <button class="pg-faq-q" type="button" aria-expanded="false"><span>Is the programme available outside Nigeria?</span><svg class="pg-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="pg-faq-a" aria-hidden="true"><div><p>Yes. It is delivered live online and we currently have participants across Nigeria, the UK, the US, Kenya and South Africa. Pricing is shown in NGN and USD, and cohort times are set to work across those regions.</p></div></div>
       </div>
       <div class="pg-faq-item pg-rise">
-        <button class="pg-faq-q" type="button" aria-expanded="false">What is the Expert Practitioner Certificate?<i></i></button>
-        <div class="pg-faq-a" aria-hidden="true"><div>A field-verified credential issued on completion, checkable by anyone at <a href="verify.html">brixgate.com/verify</a>. The public page shows your practitioner's assessment, the competencies covered and the project you built. In practice the project matters more than the badge.</div></div>
+        <button class="pg-faq-q" type="button" aria-expanded="false"><span>What is the Expert Practitioner Certificate?</span><svg class="pg-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="pg-faq-a" aria-hidden="true"><div><p>A field-verified credential issued on completion, checkable by anyone at <a href="verify.html">brixgate.com/verify</a>. The public page shows your practitioner's assessment, the competencies covered and the project you built. In practice the project matters more than the badge.</p></div></div>
       </div>
       <div class="pg-faq-item pg-rise">
-        <button class="pg-faq-q" type="button" aria-expanded="false">Can my organisation enrol several people?<i></i></button>
-        <div class="pg-faq-a" aria-hidden="true"><div>Yes, and the per-seat rate falls as the cohort grows. Teams can be placed in a shared cohort with progress reporting for whoever owns the budget, see <a href="organisations.html">For Organisations</a> for how a deployment is scoped.</div></div>
+        <button class="pg-faq-q" type="button" aria-expanded="false"><span>Can my organisation enrol several people?</span><svg class="pg-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="pg-faq-a" aria-hidden="true"><div><p>Yes, and the per-seat rate falls as the cohort grows. Teams can be placed in a shared cohort with progress reporting for whoever owns the budget, see <a href="organisations.html">For Organisations</a> for how a deployment is scoped.</p></div></div>
+      </div>
       </div>
     </div>
   </div>
@@ -901,45 +905,52 @@ html.pg-anim .pg-rise{ opacity:0; }
   if (host) {
     host.innerHTML = FIELDS.map(function (f) {
       return '<a href="' + f.href + '" class="pg-field pg-rise">' +
-        '<div class="pg-field-art" style="background:' + f.bg + '"><img src="' + f.img + '" alt="" loading="lazy" /></div>' +
-        '<div class="pg-field-b">' +
+        '<div class="pg-field-art">' +
+          '<img src="' + f.img + '" alt="" loading="lazy" />' +
           (f.open ? '<span class="pg-field-st open">Cohorts open</span>'
                   : '<span class="pg-field-st soon">Scheduling</span>') +
+        '</div>' +
+        '<div class="pg-field-b">' +
           '<h3>' + f.name + '</h3><p>' + f.desc + '</p>' +
           '<span class="pg-field-go"><span>' + (f.open ? 'See the programme' : 'See the outline') + '</span>' + arrow + '</span>' +
         '</div></a>';
     }).join('');
   }
 
-  /* FAQ — self-contained. script.js has an initFaqAccordion but it is
-     declared inside a different IIFE from its caller and throws. */
-  document.querySelectorAll('#pg-faq .pg-faq-q').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var item = btn.closest('.pg-faq-item');
+  /* FAQ accordion, same behaviour as the course pages. The open state is
+     a class and the height is a CSS grid-row transition, so there is no
+     scrollHeight measuring to go stale when the copy reflows.
+     (script.js has an initFaqAccordion but it is declared inside a
+     different IIFE from its caller and throws.) */
+  (function () {
+    var list = document.getElementById('pg-faq');
+    if (!list) return;
+    var items = [].slice.call(list.querySelectorAll('.pg-faq-item'));
+    items.forEach(function (item) {
+      var btn = item.querySelector('.pg-faq-q');
       var panel = item.querySelector('.pg-faq-a');
-      var open = item.classList.contains('open');
-      document.querySelectorAll('#pg-faq .pg-faq-item').forEach(function (o) {
-        o.classList.remove('open');
-        o.querySelector('.pg-faq-a').style.maxHeight = null;
-        o.querySelector('.pg-faq-q').setAttribute('aria-expanded', 'false');
-        o.querySelector('.pg-faq-a').setAttribute('aria-hidden', 'true');
+      if (!btn || !panel) return;
+      btn.addEventListener('click', function () {
+        var isOpen = item.classList.contains('open');
+        items.forEach(function (other) {
+          if (other === item) return;
+          other.classList.remove('open');
+          var ob = other.querySelector('.pg-faq-q'), op = other.querySelector('.pg-faq-a');
+          if (ob) ob.setAttribute('aria-expanded', 'false');
+          if (op) op.setAttribute('aria-hidden', 'true');
+        });
+        item.classList.toggle('open', !isOpen);
+        btn.setAttribute('aria-expanded', String(!isOpen));
+        panel.setAttribute('aria-hidden', String(isOpen));
       });
-      if (!open) {
-        item.classList.add('open');
-        panel.style.maxHeight = panel.scrollHeight + 'px';
-        btn.setAttribute('aria-expanded', 'true');
-        panel.setAttribute('aria-hidden', 'false');
-      }
     });
-  });
-  var first = document.querySelector('#pg-faq .pg-faq-item');
-  if (first) {
-    first.classList.add('open');
-    var p = first.querySelector('.pg-faq-a');
-    p.style.maxHeight = p.scrollHeight + 'px';
-    first.querySelector('.pg-faq-q').setAttribute('aria-expanded', 'true');
-    p.setAttribute('aria-hidden', 'false');
-  }
+    var first = items[0];
+    if (first) {
+      first.classList.add('open');
+      first.querySelector('.pg-faq-q').setAttribute('aria-expanded', 'true');
+      first.querySelector('.pg-faq-a').setAttribute('aria-hidden', 'false');
+    }
+  })();
 })();
 </script>
 
@@ -1284,5 +1295,6 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 })();
 </script>
 
+<script src="nav-programmes.js"></script>
 </body>
 </html>
