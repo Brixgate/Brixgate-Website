@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Foundations | Brixgate Twelve Week Beginner Programme</title>
+  <meta name="description" content="Twelve weeks that assume nothing. No degree, no coding background, no prior AI experience. Live teaching from the ground floor up. First cohort forming now." />
+  <link rel="icon" type="image/png" href="assets/faviii.png" />
+  <link rel="stylesheet" href="styles.css" />
+
+<style>
+/* ============================================================
+   AI FOUNDATIONS  ·  .fd-*
+   Phase one: the page exists, states honestly where the programme
+   is, and captures the waitlist. The full build with the arc
+   transitions, the card carousel and Lenis lands in phase two.
+   ============================================================ */
+:root{
+  --fd-ink:#021024; --fd-card:#0D1C34; --fd-steel:#1B3A5C;
+  --fd-body:#4A5568; --fd-muted:#6B7A90; --fd-faint:#98A4B5;
+  --fd-line:#E6E8EC; --fd-surface:#F6F5F5; --fd-cream:#FBF9F6;
+  --fd-red:#FF294E; --fd-deep:#C4173A; --fd-orange:#FF5748; --fd-green:#16A34A;
+  --fd-ease:cubic-bezier(.2,.7,.2,1); --fd-r:20px;
+}
+body.fd{ background:#fff; }
+.fd-wrap{ max-width:1200px; margin:0 auto; padding:0 32px; }
+.fd h1,.fd h2,.fd h3{ letter-spacing:-.032em; line-height:1.1; margin:0; }
+.fd-h1{ font-size:clamp(2.4rem,5vw,4rem); font-weight:800; }
+.fd-h2{ font-size:clamp(1.8rem,3.4vw,2.7rem); font-weight:800; }
+.fd-lead{ font-size:clamp(1rem,1.3vw,1.14rem); line-height:1.7; color:var(--fd-body); }
+.fd-kicker{
+  display:inline-flex; align-items:center; gap:9px;
+  font-size:.68rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--fd-muted);
+}
+.fd-kicker::before{ content:""; width:22px; height:1.5px; background:var(--fd-red); }
+
+/* ---------- hero ---------- */
+.fd-hero{
+  position:relative; overflow:hidden; color:#fff;
+  padding:clamp(120px,14vw,172px) 0 clamp(96px,11vw,132px);
+  background:
+    radial-gradient(120% 88% at 8% 0%, rgba(27,58,92,.8) 0%, rgba(2,16,36,0) 56%),
+    radial-gradient(86% 72% at 96% 94%, rgba(154,35,53,.46) 0%, rgba(2,16,36,0) 60%),
+    linear-gradient(168deg,var(--fd-card) 0%, var(--fd-ink) 62%);
+}
+.fd-hero .fd-kicker{ color:rgba(255,255,255,.55); }
+.fd-hero h1{ margin-top:20px; max-width:17ch; }
+.fd-hero .fd-lead{ margin-top:22px; max-width:54ch; color:rgba(255,255,255,.76); }
+.fd-badge{
+  display:inline-flex; align-items:center; gap:8px; height:32px; padding:0 14px;
+  border-radius:999px; font-size:.76rem; font-weight:700;
+  background:rgba(255,255,255,.09); color:rgba(255,255,255,.84);
+  border:1px solid rgba(255,255,255,.16);
+}
+.fd-badge i{ width:6px; height:6px; border-radius:50%; background:var(--fd-red); }
+.fd-hero-cta{ margin-top:34px; display:flex; gap:11px; flex-wrap:wrap; }
+.fd-hero-facts{ margin-top:44px; display:flex; gap:34px; flex-wrap:wrap; }
+.fd-hero-fact{ display:flex; flex-direction:column; gap:4px; }
+.fd-hero-fact b{ font-size:1.5rem; font-weight:800; letter-spacing:-.03em; }
+.fd-hero-fact span{ font-size:.82rem; color:rgba(255,255,255,.56); }
+
+/* ---------- buttons ---------- */
+.fd-btn{
+  height:52px; padding:0 28px; border-radius:999px; border:0; cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  font-family:inherit; font-size:.94rem; font-weight:700; text-decoration:none;
+  transition:transform .26s var(--fd-ease), box-shadow .26s var(--fd-ease), background .2s, border-color .2s;
+}
+.fd-btn svg{ width:16px; height:16px; flex:none; transition:transform .3s var(--fd-ease); }
+.fd-btn:hover svg{ transform:translateX(3px); }
+.fd-btn-red{ background:linear-gradient(135deg,var(--fd-red),var(--fd-orange)); color:#fff; box-shadow:0 14px 32px -14px rgba(255,41,78,.62); }
+.fd-btn-red:hover{ transform:translateY(-2px); }
+.fd-btn-outline-light{ background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,.28); }
+.fd-btn-outline-light:hover{ border-color:#fff; transform:translateY(-2px); }
+.fd-btn-ghost{ background:#fff; color:var(--fd-ink); border:1.5px solid var(--fd-line); }
+.fd-btn-ghost:hover{ border-color:var(--fd-ink); transform:translateY(-2px); }
+.fd-btn[disabled]{ opacity:.55; cursor:not-allowed; transform:none !important; }
+
+/* ---------- sections ---------- */
+.fd-sec{ padding:clamp(84px,10vw,120px) 0; }
+.fd-sec-cream{ background:var(--fd-cream); }
+.fd-sec-surface{ background:var(--fd-surface); }
+.fd-head{ max-width:62ch; }
+.fd-head h2{ margin-top:18px; color:var(--fd-ink); }
+.fd-head .fd-lead{ margin-top:16px; }
+.fd-head.center{ margin-inline:auto; text-align:center; }
+.fd-head.center .fd-kicker{ justify-content:center; }
+
+/* ---------- who it is for ---------- */
+.fd-who{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; margin-top:44px; }
+.fd-who-c{ background:#fff; border:1px solid var(--fd-line); border-radius:var(--fd-r); padding:30px 32px; }
+.fd-who-c.no{ background:#FCFBFA; border-style:dashed; }
+.fd-who-k{ font-size:.66rem; font-weight:800; letter-spacing:.15em; text-transform:uppercase; }
+.fd-who-c.yes .fd-who-k{ color:var(--fd-green); }
+.fd-who-c.no .fd-who-k{ color:var(--fd-faint); }
+.fd-who-c h3{ margin-top:12px; font-size:1.2rem; font-weight:750; color:var(--fd-ink); }
+.fd-who-c ul{ list-style:none; margin:18px 0 0; padding:0; display:flex; flex-direction:column; gap:13px; }
+.fd-who-c li{ display:flex; gap:11px; align-items:flex-start; font-size:.93rem; line-height:1.55; color:var(--fd-body); }
+.fd-who-c li svg{ width:16px; height:16px; flex:none; margin-top:3px; }
+.fd-who-c.yes li svg{ color:var(--fd-green); }
+.fd-who-c.no li svg{ color:var(--fd-faint); }
+.fd-who-out{
+  grid-column:1 / -1; margin-top:4px; padding:20px 24px; border-radius:var(--fd-r);
+  background:#fff; border:1px solid var(--fd-line);
+  font-size:.92rem; line-height:1.65; color:var(--fd-body);
+}
+.fd-who-out b{ color:var(--fd-ink); font-weight:700; }
+.fd-who-out a{ color:var(--fd-deep); font-weight:650; }
+
+/* ---------- shape ---------- */
+.fd-shape{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; margin-top:44px; }
+.fd-phase{ background:#fff; border:1px solid var(--fd-line); border-radius:var(--fd-r); padding:30px 30px 32px; position:relative; }
+.fd-phase-n{
+  width:38px; height:38px; border-radius:12px; display:grid; place-items:center;
+  background:rgba(255,41,78,.1); color:var(--fd-deep);
+  font-size:.86rem; font-weight:800;
+}
+.fd-phase h3{ margin-top:18px; font-size:1.12rem; font-weight:750; color:var(--fd-ink); }
+.fd-phase-wk{ margin-top:6px; font-size:.78rem; font-weight:700; color:var(--fd-faint); letter-spacing:.02em; }
+.fd-phase p{ margin:12px 0 0; font-size:.92rem; line-height:1.62; color:var(--fd-body); }
+.fd-shape-note{
+  margin-top:22px; padding:18px 22px; border-radius:var(--fd-r);
+  background:#fff; border:1px dashed #D8D3CC;
+  font-size:.89rem; line-height:1.65; color:var(--fd-body);
+}
+.fd-shape-note b{ color:var(--fd-ink); font-weight:700; }
+
+/* ---------- waitlist ---------- */
+.fd-wait{
+  position:relative; overflow:hidden; color:#fff;
+  padding:clamp(84px,10vw,120px) 0;
+  background:
+    radial-gradient(110% 84% at 88% 6%, rgba(27,58,92,.7) 0%, rgba(2,16,36,0) 58%),
+    radial-gradient(80% 68% at 6% 96%, rgba(154,35,53,.42) 0%, rgba(2,16,36,0) 62%),
+    linear-gradient(160deg,var(--fd-card) 0%, var(--fd-ink) 64%);
+}
+.fd-wait-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(36px,5vw,64px); align-items:center; }
+.fd-wait .fd-kicker{ color:rgba(255,255,255,.55); }
+.fd-wait h2{ margin-top:18px; color:#fff; }
+.fd-wait .fd-lead{ margin-top:18px; color:rgba(255,255,255,.76); max-width:46ch; }
+.fd-wait-pts{ margin-top:26px; display:flex; flex-direction:column; gap:12px; }
+.fd-wait-pt{ display:flex; gap:11px; align-items:flex-start; font-size:.93rem; line-height:1.55; color:rgba(255,255,255,.74); }
+.fd-wait-pt svg{ width:16px; height:16px; flex:none; margin-top:3px; color:var(--fd-red); }
+
+.fd-form{
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.13);
+  border-radius:24px; padding:32px 32px 34px;
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+}
+.fd-field{ margin-bottom:16px; }
+.fd-field label{
+  display:block; margin-bottom:7px; font-size:.76rem; font-weight:700;
+  letter-spacing:.06em; text-transform:uppercase; color:rgba(255,255,255,.56);
+}
+.fd-field input, .fd-field select{
+  width:100%; height:50px; padding:0 16px; border-radius:12px;
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.16);
+  color:#fff; font-family:inherit; font-size:.94rem;
+  transition:border-color .2s, background .2s;
+}
+.fd-field select option{ background:#0D1C34; color:#fff; }
+.fd-field input::placeholder{ color:rgba(255,255,255,.34); }
+.fd-field input:focus, .fd-field select:focus{
+  outline:none; border-color:var(--fd-red); background:rgba(255,255,255,.09);
+}
+.fd-form .fd-btn{ width:100%; margin-top:6px; }
+.fd-form-err{
+  display:none; margin-top:14px; padding:12px 15px; border-radius:12px;
+  background:rgba(255,41,78,.12); border:1px solid rgba(255,41,78,.34);
+  font-size:.86rem; line-height:1.5; color:#FFC2CD;
+}
+.fd-form-note{ margin-top:14px; font-size:.78rem; line-height:1.6; color:rgba(255,255,255,.46); }
+.fd-form-ok{ display:none; text-align:center; padding:12px 0 4px; }
+.fd-form-ok .tick{
+  width:60px; height:60px; margin:0 auto 20px; border-radius:50%;
+  display:grid; place-items:center; background:rgba(22,163,74,.14); color:#5FD08A;
+}
+.fd-form-ok .tick svg{ width:28px; height:28px; }
+.fd-form-ok h3{ font-size:1.3rem; font-weight:750; color:#fff; }
+.fd-form-ok p{ margin-top:12px; font-size:.93rem; line-height:1.65; color:rgba(255,255,255,.7); }
+
+/* ---------- cross-link ---------- */
+.fd-x{ padding:clamp(70px,8vw,96px) 0; background:#fff; }
+.fd-x-in{
+  border:1px solid var(--fd-line); border-radius:var(--fd-r);
+  padding:34px 36px; display:grid; gap:10px;
+  background:var(--fd-surface);
+}
+.fd-x-k{ font-size:.66rem; font-weight:800; letter-spacing:.15em; text-transform:uppercase; color:var(--fd-faint); }
+.fd-x-t{ font-size:1.02rem; line-height:1.65; color:var(--fd-body); max-width:66ch; }
+.fd-x-t b{ color:var(--fd-ink); font-weight:700; }
+.fd-x .fd-btn{ margin-top:12px; justify-self:start; }
+
+/* ---------- reveal ---------- */
+.fd-rise{ opacity:0; transform:translateY(18px); transition:opacity .7s var(--fd-ease), transform .7s var(--fd-ease); }
+.fd-rise.in{ opacity:1; transform:none; }
+
+@media (max-width:900px){
+  .fd-wrap{ padding:0 20px; }
+  .fd-who, .fd-shape, .fd-wait-grid{ grid-template-columns:1fr; }
+  .fd-hero-cta .fd-btn, .fd-x .fd-btn{ width:100%; }
+  .fd-hero-facts{ gap:24px; }
+}
+@media (prefers-reduced-motion:reduce){
+  .fd-rise{ opacity:1; transform:none; transition:none; }
+}
+</style>
+</head>
+<body class="fd">
+
+<!-- Region Banner -->
+<div class="region-banner" id="region-banner">
+  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Now active in</span>
+  <div class="regions">
+    <span class="region-item">🇳🇬 Nigeria</span>
+    <span class="region-item">🇬🇧 United Kingdom</span>
+    <span class="region-item">🇺🇸 United States</span>
+    <span class="region-item">🇰🇪 Kenya</span>
+    <span class="region-item">🇿🇦 South Africa</span>
+  </div>
+</div>
+
+<!-- ===== NAV ===== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+    </a>
+
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <div class="nav-prog-dropdown">
+        <a href="foundations.html">AI Foundations</a><button class="nav-prog-chevron" type="button" aria-label="Toggle AI Foundations menu"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-prog-menu">
+          <div class="nav-prog-menu-inner">
+            <div class="nav-prog-kicker">Starting from zero</div>
+            <a href="foundations.html">Explore AI Foundations</a>
+            <a href="foundations.html#waitlist">Join the waitlist</a>
+            <p class="nav-prog-note">Twelve weeks, no prior experience assumed. Course pages open with the first cohort.</p>
+          </div>
+        </div>
+      </div>
+      <div class="nav-prog-dropdown">
+        <a href="professionals.html">AI for Professionals</a><button class="nav-prog-chevron" type="button" aria-label="Toggle AI for Professionals menu"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-prog-menu">
+          <div class="nav-prog-menu-inner">
+            <div class="nav-prog-kicker">Already in the field</div>
+            <a href="programme-engineering.html">Software Engineering</a>
+            <a href="programme-cybersecurity.html">Cybersecurity</a>
+            <a href="programme-finance.html">Financial Modelling</a>
+            <a href="professionals.html">All professional programmes</a>
+          </div>
+        </div>
+      </div>
+      <a href="experts.html">Experts</a>
+      <a href="organisations.html">For Organisations</a>
+    </div>
+
+    <div class="nav-cta">
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
+      <a href="apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+    </div>
+
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="foundations.html">AI Foundations</a>
+  <a href="professionals.html">AI for Professionals</a>
+  <a href="experts.html">Experts</a>
+  <a href="organisations.html">For Organisations</a>
+  <a href="apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<header class="fd-hero">
+  <div class="fd-wrap">
+    <span class="fd-badge fd-rise"><i></i>First cohort forming</span>
+    <h1 class="fd-h1 fd-rise" style="margin-top:22px">Start at the beginning. Finish able to build.</h1>
+    <p class="fd-lead fd-rise">Twelve weeks that assume nothing. No degree, no coding background, no prior exposure to AI. We teach the ground floor properly instead of skipping it, and you leave with work you can show rather than a certificate of attendance.</p>
+
+    <div class="fd-hero-cta fd-rise">
+      <a href="#waitlist" class="fd-btn fd-btn-red">Join the waitlist
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="#shape" class="fd-btn fd-btn-outline-light">See how it works</a>
+    </div>
+
+    <div class="fd-hero-facts fd-rise">
+      <div class="fd-hero-fact"><b>12 weeks</b><span>From zero to a working foundation</span></div>
+      <div class="fd-hero-fact"><b>Live</b><span>Taught in real time, never pre-recorded</span></div>
+      <div class="fd-hero-fact"><b>No prerequisites</b><span>Nothing assumed before week one</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== WHO IT IS FOR ===== -->
+<section class="fd-sec fd-sec-cream">
+  <div class="fd-wrap">
+    <div class="fd-head fd-rise">
+      <span class="fd-kicker">Who this is for</span>
+      <h2 class="fd-h2">Being honest about it saves everyone time.</h2>
+      <p class="fd-lead">Foundations is deliberately slow at the start. If you already work in a field and want AI inside that job, this is the wrong door and you will be bored by week three.</p>
+    </div>
+
+    <div class="fd-who">
+      <div class="fd-who-c yes fd-rise">
+        <div class="fd-who-k">This is you</div>
+        <h3>Foundations fits</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You have used a chatbot but could not explain what it is actually doing.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You are changing careers, or have not started one yet.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You keep starting free tutorials and losing the thread halfway through.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You would rather be taught by a person than left with a video library.</span></li>
+        </ul>
+      </div>
+
+      <div class="fd-who-c no fd-rise">
+        <div class="fd-who-k">This is not you</div>
+        <h3>Look at Professionals instead</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You are already paid to do this work and have been for a while.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You want AI applied to your existing job, not taught from scratch.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You have real work you want to bring into the room in week one.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Four focused weeks suits you better than twelve paced ones.</span></li>
+        </ul>
+      </div>
+
+      <div class="fd-who-out fd-rise">
+        <b>Genuinely unsure?</b> The <a href="aiquiz.html">free readiness check</a> takes about three minutes and tells you which track fits where you actually are. You do not need to give an email to see the result.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SHAPE ===== -->
+<section class="fd-sec" id="shape">
+  <div class="fd-wrap">
+    <div class="fd-head fd-rise">
+      <span class="fd-kicker">The shape of it</span>
+      <h2 class="fd-h2">Three phases across twelve weeks.</h2>
+      <p class="fd-lead">Longer than the professional sprints on purpose. Building the ground floor properly is what makes everything after it hold up.</p>
+    </div>
+
+    <div class="fd-shape">
+      <div class="fd-phase fd-rise">
+        <div class="fd-phase-n">01</div>
+        <h3>Ground floor</h3>
+        <div class="fd-phase-wk">Weeks 1 to 4</div>
+        <p>What these systems are, what they are not, and why they behave the way they do. You finish able to explain the thing you have been using, and to spot when it is wrong.</p>
+      </div>
+      <div class="fd-phase fd-rise">
+        <div class="fd-phase-n">02</div>
+        <h3>Hands on the tools</h3>
+        <div class="fd-phase-wk">Weeks 5 to 8</div>
+        <p>Working properly rather than guessing. Structured practice on real tasks, with the habits that separate someone getting lucky from someone who knows what they are doing.</p>
+      </div>
+      <div class="fd-phase fd-rise">
+        <div class="fd-phase-n">03</div>
+        <h3>Build something real</h3>
+        <div class="fd-phase-wk">Weeks 9 to 12</div>
+        <p>A project taken from nothing to finished, with the reasoning documented. It is the piece you show people afterwards, and the bridge into a professional track.</p>
+      </div>
+    </div>
+
+    <div class="fd-shape-note fd-rise">
+      <b>The detailed curriculum is still being finalised.</b> The three phases above are settled; the week-by-week breakdown lands before the first cohort opens. Join the waitlist and you will get it as soon as it is signed off, along with dates and pricing, before any of it goes public.
+    </div>
+  </div>
+</section>
+
+<!-- ===== WAITLIST ===== -->
+<section class="fd-wait" id="waitlist">
+  <div class="fd-wrap">
+    <div class="fd-wait-grid">
+      <div>
+        <span class="fd-kicker fd-rise">Waitlist</span>
+        <h2 class="fd-h2 fd-rise">Places go to the list first.</h2>
+        <p class="fd-lead fd-rise">The first Foundations cohort is deliberately small so everyone gets real attention. When dates are set, the waitlist hears before the site does.</p>
+        <div class="fd-wait-pts fd-rise">
+          <div class="fd-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Dates, pricing and the full curriculum, sent before they go public.</span></div>
+          <div class="fd-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>First refusal on seats in the opening cohort.</span></div>
+          <div class="fd-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>No commitment, and nothing to pay to hold your place on the list.</span></div>
+        </div>
+      </div>
+
+      <div class="fd-form fd-rise">
+        <form id="fd-waitlist-form" novalidate>
+          <div class="fd-field">
+            <label for="fd-name">Full name</label>
+            <input type="text" id="fd-name" name="name" placeholder="Your name" autocomplete="name" required />
+          </div>
+          <div class="fd-field">
+            <label for="fd-email">Email</label>
+            <input type="email" id="fd-email" name="email" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+          <div class="fd-field">
+            <label for="fd-phone">Phone <span style="text-transform:none;letter-spacing:0;font-weight:600">(optional)</span></label>
+            <input type="tel" id="fd-phone" name="phone" placeholder="+234…" autocomplete="tel" />
+          </div>
+          <div class="fd-field">
+            <label for="fd-interest">Where you want to end up</label>
+            <select id="fd-interest" name="interest" required>
+              <option value="">Choose one</option>
+              <option value="Software Engineering">Software Engineering</option>
+              <option value="Cybersecurity">Cybersecurity</option>
+              <option value="Data &amp; Analytics">Data &amp; Analytics</option>
+              <option value="AI Automation">AI Automation</option>
+              <option value="Financial Modelling">Financial Modelling</option>
+              <option value="Product Marketing">Product Marketing</option>
+              <option value="Not sure yet">Not sure yet</option>
+            </select>
+          </div>
+          <button type="submit" class="fd-btn fd-btn-red" id="fd-wl-btn">Join the waitlist</button>
+          <div class="fd-form-err" id="fd-wl-err"></div>
+          <p class="fd-form-note">We only use this to tell you when Foundations opens. No newsletter, and you can ask us to remove you at any time.</p>
+        </form>
+
+        <div class="fd-form-ok" id="fd-wl-ok">
+          <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>You are on the list.</h3>
+          <p>We will email you the dates, the pricing and the full curriculum as soon as they are signed off, before any of it goes on the site.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CROSS-LINK ===== -->
+<section class="fd-x">
+  <div class="fd-wrap">
+    <div class="fd-x-in fd-rise">
+      <span class="fd-x-k">Already working in your field?</span>
+      <p class="fd-x-t">Foundations starts from zero, which is the wrong pace if you are already doing the work. <b>AI for Professionals</b> is a four-week sprint built for one profession at a time, and cohorts are running now.</p>
+      <a href="professionals.html" class="fd-btn fd-btn-ghost">See AI for Professionals
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo footer-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+        <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook"><img src="assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block"></a>
+          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram"><img src="assets/social.png" alt="Instagram" width="22" height="22" style="display:block"></a>
+          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X"><img src="assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block"></a>
+          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn" title="LinkedIn"><img src="assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block"></a>
+          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us"><img src="assets/gmail.png" alt="Email" width="22" height="22" style="display:block"></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Programmes</h5><ul><li><a href="foundations.html">AI Foundations</a></li><li><a href="professionals.html">AI for Professionals</a></li><li><a href="professionals.html#pricing">Pricing</a></li><li><a href="apply.html">Apply Now</a></li><li><a href="verify.html">Verify a Certificate</a></li></ul></div>
+      <div class="footer-col"><h5>Experts</h5><ul><li><a href="experts.html">Meet Our Experts</a></li><li><a href="experts.html#qualify">Become an Expert</a></li></ul></div>
+      <div class="footer-col"><h5>Organisation</h5><ul><li><a href="organisations.html">For Organisations</a></li><li><a href="organisations.html#contact">Get a Quote</a></li><li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li></ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="footer-year">2026</span> Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
+    <div class="footer-bottom-links"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+  </div>
+</footer>
+
+<button class="back-to-top">↑</button>
+
+<script src="script.js"></script>
+
+<script>
+/* ============================================================
+   Foundations waitlist.
+
+   The endpoint currently accepts { name, email, phone, primary_field }
+   with no notion of tier, so Foundations signups would be
+   indistinguishable from professional ones in the same pile.
+
+   WL_FIELDS below is the single place that changes once the backend
+   accepts tier and programme. Until then `extra` is sent alongside
+   the known-good payload, and `primary_field` is prefixed so the
+   tier survives in the data either way. Sending unknown keys is
+   safe: the API ignores what it does not recognise.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var API = 'https://dev.api.brixgate.com';
+
+  var WL_FIELDS = {
+    tier:      'level',        /* rename to match the backend */
+    programme: 'programme',    /* rename to match the backend */
+    tierValue: 'BEGINNER'
+  };
+
+  var form = document.getElementById('fd-waitlist-form');
+  if (!form) return;
+
+  var errEl = document.getElementById('fd-wl-err');
+  var okEl  = document.getElementById('fd-wl-ok');
+  var btn   = document.getElementById('fd-wl-btn');
+
+  function fail(msg) {
+    errEl.textContent = msg;
+    errEl.style.display = 'block';
+    btn.textContent = 'Join the waitlist';
+    btn.disabled = false;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    errEl.style.display = 'none';
+
+    var name     = document.getElementById('fd-name').value.trim();
+    var email    = document.getElementById('fd-email').value.trim();
+    var phone    = document.getElementById('fd-phone').value.trim();
+    var interest = document.getElementById('fd-interest').value;
+
+    if (!name || !email || !interest) {
+      fail('Please fill in your name, email and where you want to end up.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      fail('That email address does not look right.');
+      return;
+    }
+
+    btn.textContent = 'Joining…';
+    btn.disabled = true;
+
+    var payload = {
+      name: name,
+      email: email,
+      phone: phone,
+      /* prefixed so the tier is recoverable from the existing column
+         even before the backend has a field of its own */
+      primary_field: 'AI Foundations: ' + interest
+    };
+    payload[WL_FIELDS.tier]      = WL_FIELDS.tierValue;
+    payload[WL_FIELDS.programme] = interest;
+
+    fetch(API + '/api/v1/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function (r) { return r.json().catch(function () { return {}; }); })
+    .then(function (data) {
+      if (data.success) {
+        form.style.display = 'none';
+        okEl.style.display = 'block';
+      } else {
+        var msg = (data.errors && Object.values(data.errors)[0]) || data.message || 'Something went wrong. Please try again.';
+        fail(Array.isArray(msg) ? msg[0] : msg);
+      }
+    })
+    .catch(function () {
+      fail('We could not reach the server. Please check your connection and try again.');
+    });
+  });
+})();
+
+/* reveals */
+(function () {
+  'use strict';
+  var rise = [].slice.call(document.querySelectorAll('.fd-rise'));
+  if (!rise.length) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!('IntersectionObserver' in window) || reduce) {
+    rise.forEach(function (el) { el.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var host = e.target;
+      var sibs = [].slice.call(host.parentNode.children).filter(function (n) {
+        return n.classList && n.classList.contains('fd-rise');
+      });
+      host.style.transitionDelay = (Math.max(0, sibs.indexOf(host)) * 0.07) + 's';
+      host.classList.add('in');
+      io.unobserve(host);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  rise.forEach(function (el) { io.observe(el); });
+  setTimeout(function () { rise.forEach(function (el) { el.classList.add('in'); }); }, 2600);
+})();
+</script>
+
+<!-- LinkedIn Insight Tag -->
+<script type="text/javascript">
+_linkedin_partner_id = "9372724";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script><script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9372724&fmt=gif" />
+</noscript>
+
+</body>
+</html>

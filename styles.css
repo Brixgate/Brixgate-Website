@@ -2169,6 +2169,26 @@ body.show-cad .currency-cad { display: inline !important; }
   min-width: 210px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.12);
 }
+/* Two tiers now share this menu component, so each one names itself.
+   Without the kicker a bare list of fields gives no clue which track
+   it belongs to once both dropdowns look alike. */
+.nav-prog-kicker {
+  padding: 8px 12px 6px;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #98A4B5;
+}
+.nav-prog-note {
+  margin: 4px 0 2px;
+  padding: 8px 12px 4px;
+  border-top: 1px solid #F0EDEA;
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: #6B7A90;
+  max-width: 240px;
+}
 .nav-prog-dropdown:hover .nav-prog-menu,
 .nav-prog-dropdown.open .nav-prog-menu {
   display: block;
