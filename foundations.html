@@ -202,6 +202,8 @@ body.fd{ background:#fff; }
 .fd-btn-outline-light{ background:rgba(255,255,255,.06); color:#fff; border:1.5px solid rgba(255,255,255,.3); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
 .fd-btn-outline-light:hover{ border-color:#fff; transform:translateY(-2px); }
 .fd-btn-ghost{ background:#fff; color:var(--fd-ink); border:1.5px solid var(--fd-line); }
+.fd-btn-white{ background:#fff; color:var(--fd-ink); }
+.fd-btn-white:hover{ transform:translateY(-2px); background:rgba(255,255,255,.9); }
 .fd-btn-ghost:hover{ border-color:var(--fd-ink); transform:translateY(-2px); }
 .fd-btn-ink{ background:var(--fd-ink); color:#fff; }
 .fd-btn-ink:hover{ background:#0B1F3F; transform:translateY(-2px); }
@@ -411,10 +413,18 @@ body.fd{ background:#fff; }
 
 /* ---------- cross link ---------- */
 .fd-x{ padding:clamp(74px,8vw,100px) 0; background:#fff; }
-.fd-x-in{ border:1px solid var(--fd-line); border-radius:var(--fd-r); padding:36px 38px; display:grid; gap:10px; background:var(--fd-surface); }
-.fd-x-k{ font-size:.66rem; font-weight:800; letter-spacing:.15em; text-transform:uppercase; color:var(--fd-faint); }
-.fd-x-t{ font-size:1.02rem; line-height:1.65; color:var(--fd-body); max-width:66ch; }
-.fd-x-t b{ color:var(--fd-ink); font-weight:700; }
+.fd-x-in{
+  position:relative; overflow:hidden; border:0; border-radius:var(--fd-r);
+  padding:40px 42px; display:grid; gap:10px; color:#fff;
+  background:
+    radial-gradient(120% 130% at 100% 0%, rgba(255,87,72,.5) 0%, rgba(196,23,58,.3) 34%, rgba(2,16,36,0) 70%),
+    radial-gradient(90% 120% at 0% 100%, rgba(27,58,92,.7) 0%, rgba(2,16,36,0) 62%),
+    linear-gradient(122deg,#01060F 0%,#0D2743 34%,#7A1C33 78%,#C4173A 100%);
+}
+.fd-x-in > *{ position:relative; z-index:1; }
+.fd-x-k{ font-size:.66rem; font-weight:800; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.6); }
+.fd-x-t{ font-size:1.04rem; line-height:1.68; color:rgba(255,255,255,.8); max-width:66ch; }
+.fd-x-t b{ color:#fff; font-weight:700; }
 .fd-x .fd-btn{ margin-top:14px; justify-self:start; }
 
 
@@ -484,18 +494,23 @@ body.fd{ background:#fff; }
 .fd-room .fd-kicker{ color:rgba(255,255,255,.55); }
 .fd-room .fd-lead{ color:rgba(255,255,255,.74); }
 .fd-room-fig{ margin-top:44px; aspect-ratio:16/7; }
-.fd-room-stats{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0; margin-top:40px;
-  border-top:1px solid rgba(255,255,255,.13); padding-top:30px; }
-.fd-room-stat{ padding-right:24px; border-right:1px solid rgba(255,255,255,.11); }
-.fd-room-stat:last-child{ border-right:0; padding-right:0; }
-.fd-room-stat b{ display:block; font-size:1.6rem; font-weight:800; letter-spacing:-.038em; color:#fff; }
-.fd-room-stat span{ display:block; margin-top:6px; font-size:.82rem; line-height:1.5; color:rgba(255,255,255,.58); }
+.fd-room-stats{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0; margin-top:44px;
+  border-top:1px solid rgba(255,255,255,.13); padding-top:34px; }
+/* The divider is a left border with padding on both sides of it, so every
+   column is inset from its own rule. As a right border with no left
+   padding, columns two onward started flush against the line. */
+.fd-room-stat{ padding:0 30px; border-left:1px solid rgba(255,255,255,.11); }
+.fd-room-stat:first-child{ padding-left:0; border-left:0; }
+.fd-room-stat:last-child{ padding-right:0; }
+.fd-room-stat b{ display:block; font-size:1.42rem; font-weight:800; letter-spacing:-.036em; line-height:1.2; color:#fff; }
+.fd-room-stat span{ display:block; margin-top:12px; font-size:.83rem; line-height:1.62; color:rgba(255,255,255,.6); max-width:26ch; }
 
 @media (max-width:900px){
   .fd-start{ grid-template-columns:1fr; }
   .fd-start.flip .fd-start-copy{ order:0; }
-  .fd-room-stats{ grid-template-columns:1fr 1fr; gap:22px 0; }
-  .fd-room-stat:nth-child(2){ border-right:0; }
+  .fd-room-stats{ grid-template-columns:1fr 1fr; gap:26px 0; }
+  .fd-room-stat:nth-child(odd){ padding-left:0; border-left:0; }
+  .fd-room-stat{ padding:0 20px; }
   .fd-room-fig{ aspect-ratio:4/3; }
 }
 @media (prefers-reduced-motion:reduce){
@@ -504,7 +519,7 @@ body.fd{ background:#fff; }
 }
 
 /* ---------- reveal ---------- */
-.fd-rise{ opacity:0; transform:translateY(20px); transition:opacity .75s var(--fd-ease), transform .75s var(--fd-ease); }
+.fd-rise{ opacity:0; transform:translateY(22px); transition:opacity .8s var(--fd-ease), transform .8s var(--fd-ease); }
 .fd-rise.in{ opacity:1; transform:none; }
 
 /* ---------- responsive ---------- */
@@ -901,10 +916,10 @@ body.fd{ background:#fff; }
 <!-- ===== CROSS-LINK ===== -->
 <section class="fd-x">
   <div class="fd-wrap">
-    <div class="fd-x-in fd-rise">
+    <div class="fd-x-in fd-rise cursor-zone" data-cursor="For professionals">
       <span class="fd-x-k">Already working in your field?</span>
       <p class="fd-x-t">Foundations starts from zero, which is the wrong pace if you are already doing the work. <b>AI for Professionals</b> is a four-week sprint built for one profession at a time, and cohorts are running now.</p>
-      <a href="professionals.html" class="fd-btn fd-btn-ghost"><span data-chars>See AI for Professionals</span>
+      <a href="professionals.html" class="fd-btn fd-btn-white"><span data-chars>See AI for Professionals</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
     </div>
@@ -1065,7 +1080,29 @@ body.fd{ background:#fff; }
     el.innerHTML = layer('fd-chars-a') + layer('fd-chars-b');
   });
 
-  /* ---------- reveals + icon draw ---------- */
+  /* ---------- reveals + icon draw ----------
+     Most of the page was never marked, so only a couple of elements per
+     section moved and the rest simply appeared. Rather than tagging every
+     heading and paragraph by hand, the content elements inside each
+     section are collected here and given the same treatment. Anything
+     already marked, or inside a component that animates itself (the
+     cards, the figures), is left alone. */
+  (function autoMark() {
+    var SKIP = '.fd-card, .fd-fig, .fd-stage, .nav, .nav-mobile, .footer, .region-banner';
+    var PICK = 'h2, h3, .fd-lead, .fd-kicker, .fd-badge, .fd-hero-cta, .fd-hero-facts,' +
+               '.fd-who-c, .fd-who-out, .fd-run, .fd-start-copy, .fd-room-stats,' +
+               '.fd-courses-note, .fd-wait-pts, .fd-form, .fd-x-in, .fd-tools';
+    [].slice.call(document.querySelectorAll('section, header')).forEach(function (sec) {
+      [].slice.call(sec.querySelectorAll(PICK)).forEach(function (el) {
+        if (el.classList.contains('fd-rise')) return;
+        if (el.closest(SKIP)) return;
+        /* a marked ancestor already carries this one */
+        if (el.parentElement && el.parentElement.closest('.fd-rise')) return;
+        el.classList.add('fd-rise');
+      });
+    });
+  })();
+
   var rise = [].slice.call(document.querySelectorAll('.fd-rise, [data-run]'));
   function showAll() { rise.forEach(function (el) { el.classList.add('in'); }); }
 
@@ -1086,7 +1123,7 @@ body.fd{ background:#fff; }
     }, { threshold: 0.14, rootMargin: '0px 0px -6% 0px' });
     rise.forEach(function (el) { io.observe(el); });
     /* nothing should ever be left invisible */
-    setTimeout(showAll, 3000);
+    setTimeout(showAll, 4500);
   }
 
   /* Line icons measure their own path so the dash animation is the

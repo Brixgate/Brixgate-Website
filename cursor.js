@@ -22,6 +22,11 @@
     el.className = 'lp-cursor';
     el.id = 'lp-cursor';
     el.setAttribute('aria-hidden', 'true');
+    /* Positioning is set inline as well as in the stylesheet. This element
+       is appended to <body>, so if styles.css is stale or missing it would
+       otherwise sit in normal flow and add a strip of blank page under the
+       footer. Inline, it can never contribute layout. */
+    el.style.cssText = 'position:fixed;top:0;left:0;z-index:900;pointer-events:none;';
     el.innerHTML =
       '<svg class="lp-cursor-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none">' +
         '<path d="M5 2.5 19.5 11 12.6 12.6 10.2 19.2z" fill="#fff" stroke="#021024" stroke-width="1.4" stroke-linejoin="round"/>' +

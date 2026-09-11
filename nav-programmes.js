@@ -25,12 +25,20 @@
     ? 'https://api.brixgate.com'
     : 'https://dev.api.brixgate.com';
 
+  /* One glance should say which tier is which, so each carries an icon:
+     a sprout for starting from nothing, a badge for people already
+     qualified in their field. */
+  var ICON = {
+    foundations: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8"/><path d="M12 13c0-3.3-2.7-6-6-6 0 3.3 2.7 6 6 6z"/><path d="M12 13c0-3.9 3.1-7 7-7 0 3.9-3.1 7-7 7z"/></svg>',
+    professionals: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M8.5 13.2L7 22l5-2.8L17 22l-1.5-8.8"/></svg>'
+  };
+
   var TIERS = [
     {
       key: 'foundations',
       levels: ['BEGINNER'],
       name: 'AI Foundations',
-      desc: 'Start from zero. Twelve weeks, nothing assumed.',
+      desc: 'Start from zero. Six to sixteen weeks, nothing assumed.',
       href: 'foundations.html',
       kicker: 'Live courses for people starting out',
       all: 'See all Foundations courses',
@@ -146,6 +154,7 @@
           '<div class="nav-mega-tiers">' +
             TIERS.map(function (t, i) {
               return '<a class="nav-mega-tier' + (i === 0 ? ' is-on' : '') + '" data-tier="' + t.key + '" href="' + t.href + '">' +
+                       '<span class="nav-mega-tier-ic">' + (ICON[t.key] || '') + '</span>' +
                        '<span class="nav-mega-tier-t">' + esc(t.name) + '</span>' +
                        '<span class="nav-mega-tier-d">' + esc(t.desc) + '</span>' +
                        '<span class="nav-mega-tier-go">' + ARROW + '</span>' +
