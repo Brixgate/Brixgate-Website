@@ -124,9 +124,14 @@
     under.className = 'lp-tier-under';
     under.innerHTML = listHTML(tier, tier.fallback);
 
+    /* The face KEEPS its lp-tier classes. Stripping them looked tidy but
+       every rule that styles the card's contents is written as
+       `.lp .lp-tier h3`, `.lp .lp-tier p` and so on, so removing the class
+       left the heading and copy unstyled and therefore invisible against
+       the dark art. Only the reveal class goes, since the wrapper owns
+       that now. */
     card.classList.remove('fade-up');
-    card.className = card.className.replace(/\blp-tier\b[^ ]*/g, '').trim();
-    card.className = ('lp-tier-face ' + card.className).trim();
+    card.classList.add('lp-tier-face');
 
     wrap.appendChild(under);
     wrap.appendChild(card);

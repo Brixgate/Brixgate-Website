@@ -849,8 +849,12 @@
        ============================================================ */
     .lp .lp-tier[data-tier-card] { padding: 0; display: block; overflow: hidden; }
     .lp .lp-tier[data-tier-card]:hover { transform: none; }
+    .lp .lp-tier-face:hover { transform: none; }
 
     /* the face: the original card, now a lid */
+    /* The face still carries .lp-tier so its contents keep their styling,
+       which means the base card rules apply to it too. These re-state the
+       ones the wrapper has taken over. */
     .lp .lp-tier-face {
       position: relative; z-index: 2; display: flex; flex-direction: column;
       min-height: 340px; padding: 40px 40px 36px; text-decoration: none;
@@ -1587,9 +1591,9 @@
         <div class="lp-tier-art" aria-hidden="true"><img src="assets/fnd/foundations.jpg" alt="" loading="lazy" /></div>
         <span class="lp-tier-badge"><i></i>First cohort forming</span>
         <h3>AI Foundations</h3>
-        <p>Twelve weeks that assume nothing. No degree, no coding background, no prior exposure to AI. The ground floor taught properly instead of skipped.</p>
+        <p>Six courses that assume nothing. No degree, no coding background, no prior exposure to AI. The ground floor taught properly instead of skipped.</p>
         <div class="lp-tier-meta">
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>12 weeks</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>6 to 16 weeks</span>
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>No prerequisites</span>
         </div>
         <span class="lp-tier-go">Explore AI Foundations
