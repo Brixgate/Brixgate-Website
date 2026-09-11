@@ -224,9 +224,34 @@
       .catch(function () { /* fallback is already on screen */ });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
+  /* ============================================================
+     --nav-height is declared 104px in styles.css but the bar renders
+     63px. body padding-top is calc(banner + nav), so every page sat
+     45px lower than its own nav and showed a strip of page background
+     between the two. The same token drives the mobile sheet offset and
+     the sticky FAQ head, so measuring it once fixes all three.
+
+     Measured rather than hard-coded: the bar's height depends on the
+     logo, the font and the viewport, and hard-coding a second wrong
+     number is how the first one happened.
+     ============================================================ */
+  function syncNavHeight() {
+    var nav = document.querySelector('.nav');
+    if (!nav) return;
+    var h = Math.round(nav.getBoundingClientRect().height);
+    if (h > 0) document.documentElement.style.setProperty('--nav-height', h + 'px');
+  }
+
+  function boot() {
+    syncNavHeight();
     init();
+    window.addEventListener('resize', syncNavHeight, { passive: true });
+    window.addEventListener('load', syncNavHeight);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
   }
 })();

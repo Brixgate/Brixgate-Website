@@ -33,40 +33,130 @@ body.fd{ background:#fff; }
 .fd-kicker::before{ content:""; width:22px; height:1.5px; background:var(--fd-red); }
 
 /* split-text reveal, one line at a time */
+/* The clip has to be taller than the glyphs or it shaves descenders off
+   the headline. Padding opens the box, the matching negative margin puts
+   the layout back where it was. */
 .fd-split{ display:block; }
-.fd-split [data-line]{ display:block; overflow:hidden; padding:.1em 0; margin:-.1em 0; }
-.fd-split [data-line] > span{ display:block; }
+.fd-split [data-line]{
+  display:inline-block; vertical-align:top; overflow:hidden;
+  padding:.18em 0 .22em; margin:-.18em 0 -.22em;
+}
+.fd-split [data-line] > span{
+  display:block; transform:translateY(115%);
+  transition:transform .85s var(--fd-ease);
+}
+/* Released by a class, never by a bare requestAnimationFrame: in a
+   background tab rAF is suspended and the headline would stay parked
+   below its own clip. */
+.fd-split.in [data-line] > span{ transform:none; }
 
 /* ============================================================
    ARC  —  one custom property, scroll linked. Holds the dome
    through most of the travel and collapses at the very end, the
    way the reference does.
    ============================================================ */
+/* The arc is used once, on the one edge where it earns its place: the
+   cream panel rising over the dark courses section.
+
+   .fd-arcwrap is painted with the colour of the section ABOVE, and the
+   rounded panel sits inside it. Without that backing the rounded corners
+   expose the page background and the curve reads as two white wedges
+   instead of one section rising over another. */
+.fd-arcwrap{ position:relative; background:var(--fd-ink); }
 .fd-arc{
-  --arc:1;
-  border-radius: calc(var(--arc) * 54vw) calc(var(--arc) * 54vw) 0 0 / calc(var(--arc) * 13vw) calc(var(--arc) * 13vw) 0 0;
-  will-change:border-radius; overflow:hidden; isolation:isolate; position:relative;
+  --arc:1; position:relative;
+  border-radius: calc(var(--arc) * 46vw) calc(var(--arc) * 46vw) 0 0 / calc(var(--arc) * 10vw) calc(var(--arc) * 10vw) 0 0;
+  will-change:border-radius; overflow:hidden; isolation:isolate;
 }
 
 /* ---------- hero ---------- */
 .fd-hero{
   position:relative; overflow:hidden; color:#fff;
-  padding:clamp(128px,15vw,190px) 0 clamp(110px,13vw,160px);
-  background:var(--fd-ink);
-}
-.fd-hero-bg{
-  position:absolute; inset:0; background:url('assets/fnd/hero.jpg') center right/cover no-repeat;
-  opacity:.92;
-}
-.fd-hero-scrim{
-  position:absolute; inset:0;
+  padding:clamp(96px,11vw,132px) 0 clamp(96px,11vw,132px);
   background:
-    linear-gradient(100deg, rgba(2,16,36,.97) 0%, rgba(2,16,36,.86) 34%, rgba(2,16,36,.42) 62%, rgba(2,16,36,.28) 100%),
-    linear-gradient(to top, rgba(2,16,36,.9) 0%, rgba(2,16,36,0) 42%);
+    radial-gradient(120% 88% at 6% 0%, rgba(27,58,92,.82) 0%, rgba(2,16,36,0) 54%),
+    radial-gradient(90% 76% at 96% 96%, rgba(154,35,53,.44) 0%, rgba(2,16,36,0) 58%),
+    linear-gradient(168deg,#0D1C34 0%, var(--fd-ink) 62%);
+}
+.fd-hero-glow{
+  position:absolute; right:-6%; top:8%; width:640px; height:640px; border-radius:50%;
+  background:radial-gradient(closest-side, rgba(255,41,78,.3), rgba(255,41,78,0));
+  filter:blur(24px); pointer-events:none;
 }
 .fd-hero .fd-wrap{ position:relative; z-index:2; }
-.fd-hero h1{ margin-top:22px; max-width:15ch; }
-.fd-hero .fd-lead{ margin-top:24px; max-width:52ch; color:rgba(255,255,255,.8); }
+.fd-hero-grid{
+  display:grid; grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  gap:clamp(32px,4vw,56px); align-items:center;
+}
+.fd-hero h1{ margin-top:22px; max-width:14ch; }
+.fd-hero .fd-lead{ margin-top:22px; max-width:46ch; color:rgba(255,255,255,.78); }
+
+/* ---------- hero card stage ---------- */
+.fd-stage{ position:relative; height:470px; }
+.fd-card-f{
+  position:absolute; border-radius:18px;
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 30px 70px -20px rgba(1,11,30,.6), 0 4px 12px rgba(1,11,30,.18), inset 0 1px 0 rgba(255,255,255,.9);
+  will-change:transform;
+}
+.fd-card-f > .in{ padding:18px 20px; }
+@keyframes fdRise{ from{ opacity:0; transform:translateY(26px) scale(.96) } to{ opacity:1; transform:none } }
+@keyframes fdFloatA{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-9px) } }
+@keyframes fdFloatB{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(7px) } }
+@keyframes fdFloatC{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-6px) } }
+
+/* the session tile, with a real room of people */
+.fd-cardv{ top:0; right:0; width:266px; padding:0; overflow:hidden; animation:fdRise .9s .3s var(--fd-ease) both; }
+.fd-cardv > .in{ padding:10px; animation:fdFloatA 7s ease-in-out infinite; }
+.fd-vid{ position:relative; aspect-ratio:4/3; overflow:hidden; border-radius:12px; background:var(--fd-ink); }
+.fd-vid img{ width:100%; height:100%; object-fit:cover; display:block; }
+.fd-vid::after{ content:''; position:absolute; inset:0; border-radius:inherit;
+  background:linear-gradient(180deg, rgba(2,16,36,.14) 0%, transparent 38%, rgba(2,16,36,.76) 100%); }
+.fd-vid-live{
+  position:absolute; top:10px; left:10px; z-index:2;
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--fd-red); color:#fff;
+  font-size:.6rem; font-weight:800; letter-spacing:.12em; padding:4px 9px; border-radius:6px;
+}
+.fd-vid-live i{ width:5px; height:5px; border-radius:50%; background:#fff; animation:fdBlink 1.4s ease-in-out infinite; }
+@keyframes fdBlink{ 0%,100%{opacity:1} 50%{opacity:.25} }
+.fd-vid-name{ position:absolute; left:12px; bottom:10px; z-index:2; color:#fff; }
+.fd-vid-name b{ display:block; font-size:.78rem; font-weight:700; letter-spacing:-.01em; }
+.fd-vid-name span{ display:block; font-size:.66rem; color:rgba(255,255,255,.82); margin-top:1px; }
+.fd-vid-foot{ padding:11px 6px 3px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.fd-tiles{ display:flex; gap:4px; }
+.fd-tiles img{ width:26px; height:26px; border-radius:7px; object-fit:cover; display:block; }
+
+.fd-ck{ font-size:.64rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--fd-muted); }
+.fd-cbig{ font-size:1.9rem; font-weight:800; letter-spacing:-.04em; line-height:1; color:var(--fd-ink); margin-top:6px; }
+.fd-csub{ font-size:.79rem; color:var(--fd-body); margin-top:6px; font-weight:500; }
+
+/* week-one card */
+.fd-cardw{ top:236px; left:-10px; width:290px; animation:fdRise .9s .46s var(--fd-ease) both; }
+.fd-cardw > .in{ animation:fdFloatB 8.5s ease-in-out infinite; }
+.fd-wk-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.fd-wk-tag{ display:inline-flex; align-items:center; gap:7px; font-size:.64rem; font-weight:800; letter-spacing:.12em; color:var(--fd-deep); }
+.fd-wk-tag i{ width:6px; height:6px; border-radius:50%; background:var(--fd-deep); }
+.fd-wk-title{ font-size:1rem; font-weight:700; color:var(--fd-ink); margin-top:10px; letter-spacing:-.012em; }
+.fd-wk-meta{ font-size:.77rem; color:var(--fd-muted); margin-top:2px; }
+.fd-bar{ height:6px; border-radius:99px; background:#EDEBE8; margin-top:14px; overflow:hidden; }
+.fd-bar i{ display:block; height:100%; width:8.3%; border-radius:99px; background:linear-gradient(90deg,var(--fd-deep),var(--fd-orange)); }
+.fd-bar-label{ display:flex; justify-content:space-between; font-size:.7rem; color:var(--fd-muted); margin-top:7px; }
+
+/* twelve weeks card */
+.fd-card12{ top:248px; right:4px; width:186px; animation:fdRise .9s .62s var(--fd-ease) both; }
+.fd-card12 > .in{ animation:fdFloatA 7s ease-in-out infinite; }
+
+/* no-prerequisites card */
+.fd-cardp{ bottom:0; left:26px; width:288px; animation:fdRise .9s .78s var(--fd-ease) both; }
+.fd-cardp > .in{ animation:fdFloatC 6.5s ease-in-out infinite; display:flex; align-items:center; gap:13px; }
+.fd-cardp-ic{
+  width:40px; height:40px; border-radius:12px; flex:none; display:grid; place-items:center;
+  background:linear-gradient(140deg,var(--fd-deep),var(--fd-orange)); color:#fff;
+}
+.fd-cardp-t{ font-size:.88rem; font-weight:700; color:var(--fd-ink); letter-spacing:-.012em; }
+.fd-cardp-s{ font-size:.74rem; color:var(--fd-muted); margin-top:2px; }
 .fd-badge{
   display:inline-flex; align-items:center; gap:8px; height:33px; padding:0 15px;
   border-radius:999px; font-size:.76rem; font-weight:700;
@@ -433,30 +523,93 @@ body.fd{ background:#fff; }
 
 <!-- ===== HERO ===== -->
 <header class="fd-hero">
-  <div class="fd-hero-bg" aria-hidden="true"></div>
-  <div class="fd-hero-scrim" aria-hidden="true"></div>
+  <div class="fd-hero-glow" aria-hidden="true"></div>
   <div class="fd-wrap">
-    <span class="fd-badge fd-rise"><i></i>First cohort forming</span>
-    <h1 class="fd-h1"><span class="fd-split" data-split>Start at the beginning. Finish able to build.</span></h1>
-    <p class="fd-lead fd-rise">Twelve weeks that assume nothing. No degree, no coding background, no prior exposure to AI. We teach the ground floor properly instead of skipping it, and you leave with work you can show.</p>
+    <div class="fd-hero-grid">
 
-    <div class="fd-hero-cta fd-rise">
-      <a href="#waitlist" class="fd-btn fd-btn-red"><span data-chars>Join the waitlist</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-      <a href="#courses" class="fd-btn fd-btn-outline-light"><span data-chars>See the courses</span></a>
-    </div>
+      <div>
+        <span class="fd-badge fd-rise"><i></i>First cohort forming</span>
+        <h1 class="fd-h1"><span class="fd-split" data-split>Start at the beginning. Finish able to build.</span></h1>
+        <p class="fd-lead fd-rise">Twelve weeks that assume nothing. No degree, no coding background, no prior exposure to AI. We teach the ground floor properly instead of skipping it, and you leave with work you can show.</p>
 
-    <div class="fd-hero-facts fd-rise">
-      <div class="fd-hero-fact"><b>12 weeks</b><span>Zero to a working foundation</span></div>
-      <div class="fd-hero-fact"><b>Live</b><span>Taught in real time, never recorded</span></div>
-      <div class="fd-hero-fact"><b>No prerequisites</b><span>Nothing assumed before week one</span></div>
+        <div class="fd-hero-cta fd-rise">
+          <a href="#waitlist" class="fd-btn fd-btn-red"><span data-chars>Join the waitlist</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#courses" class="fd-btn fd-btn-outline-light"><span data-chars>See the courses</span></a>
+        </div>
+
+        <div class="fd-hero-facts fd-rise">
+          <div class="fd-hero-fact"><b>12 weeks</b><span>Zero to a working foundation</span></div>
+          <div class="fd-hero-fact"><b>Live</b><span>Taught in real time</span></div>
+          <div class="fd-hero-fact"><b>No prerequisites</b><span>Nothing assumed</span></div>
+        </div>
+      </div>
+
+      <!-- Card stage. Same system as the landing page hero, with the
+           content a beginner would actually care about. -->
+      <div class="fd-stage" aria-hidden="true">
+        <div class="fd-card-f fd-cardv">
+          <div class="in">
+            <div class="fd-vid">
+              <span class="fd-vid-live"><i></i>LIVE</span>
+              <img src="assets/people/cohort-table.jpg" alt="" />
+              <div class="fd-vid-name">
+                <b>Foundations, week one</b>
+                <span>Starting from zero · Cohort 01</span>
+              </div>
+            </div>
+            <div class="fd-vid-foot">
+              <span class="fd-ck" style="white-space:nowrap">In session</span>
+              <div class="fd-tiles">
+                <img src="assets/people/avatar-1.jpg" alt="" />
+                <img src="assets/people/avatar-3.jpg" alt="" />
+                <img src="assets/people/avatar-2.jpg" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fd-card-f fd-cardw">
+          <div class="in">
+            <div class="fd-wk-top">
+              <span class="fd-wk-tag"><i></i>WEEK 01</span>
+              <span class="fd-ck">of 12</span>
+            </div>
+            <div class="fd-wk-title">How models actually work</div>
+            <div class="fd-wk-meta">Ground floor · No prior experience</div>
+            <div class="fd-bar"><i></i></div>
+            <div class="fd-bar-label"><span>Programme progress</span><span>Week 1</span></div>
+          </div>
+        </div>
+
+        <div class="fd-card-f fd-card12">
+          <div class="in">
+            <div class="fd-ck">Programme length</div>
+            <div class="fd-cbig">12 weeks</div>
+            <div class="fd-csub">from zero to built</div>
+          </div>
+        </div>
+
+        <div class="fd-card-f fd-cardp">
+          <div class="in">
+            <div class="fd-cardp-ic">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <div class="fd-cardp-t">No prerequisites</div>
+              <div class="fd-cardp-s">No degree, no code, no prior AI</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </header>
 
 <!-- ===== COURSES ===== -->
-<section class="fd-courses fd-arc" id="courses" data-arc>
+<section class="fd-courses" id="courses">
   <div class="fd-wrap">
     <div class="fd-head fd-rise">
       <span class="fd-kicker">The courses</span>
@@ -478,7 +631,8 @@ body.fd{ background:#fff; }
 </section>
 
 <!-- ===== WHO ===== -->
-<section class="fd-sec fd-sec-cream">
+<div class="fd-arcwrap">
+<section class="fd-sec fd-sec-cream fd-arc" data-arc>
   <div class="fd-wrap">
     <div class="fd-head fd-rise">
       <span class="fd-kicker">Who this is for</span>
@@ -515,6 +669,7 @@ body.fd{ background:#fff; }
     </div>
   </div>
 </section>
+</div>
 
 <!-- ===== CURRICULUM ===== -->
 <section class="fd-sec" id="curriculum">
@@ -572,7 +727,7 @@ body.fd{ background:#fff; }
 </section>
 
 <!-- ===== HOW IT RUNS ===== -->
-<section class="fd-sec fd-sec-surface fd-arc" data-arc>
+<section class="fd-sec fd-sec-surface">
   <div class="fd-wrap">
     <div class="fd-head fd-rise">
       <span class="fd-kicker">How it runs</span>
@@ -600,7 +755,7 @@ body.fd{ background:#fff; }
 </section>
 
 <!-- ===== WAITLIST ===== -->
-<section class="fd-wait fd-arc" id="waitlist" data-arc>
+<section class="fd-wait" id="waitlist">
   <div class="fd-wrap">
     <div class="fd-wait-grid">
       <div>
@@ -773,27 +928,24 @@ body.fd{ background:#fff; }
 
   /* ---------- headline split ---------- */
   var splitEl = document.querySelector('[data-split]');
-  if (splitEl && !reduce) {
-    var words = splitEl.textContent.trim().split(/\s+/);
-    splitEl.innerHTML = words.map(function (w, i) {
-      return '<span data-line><span style="transition-delay:' + (0.05 + i * 0.045) + 's">' + w + '</span></span>';
-    }).join(' ');
-    /* lines are block-level so each word gets its own clip; put them back
-       inline so the headline still wraps naturally */
-    [].slice.call(splitEl.querySelectorAll('[data-line]')).forEach(function (l) {
-      l.style.display = 'inline-block';
-      l.style.verticalAlign = 'top';
-      l.firstChild.style.transform = 'translateY(110%)';
-      l.firstChild.style.transition = 'transform .85s cubic-bezier(.2,.7,.2,1)';
-      l.firstChild.style.transitionDelay = l.firstChild.style.transitionDelay;
-    });
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        [].slice.call(splitEl.querySelectorAll('[data-line] > span')).forEach(function (s) {
-          s.style.transform = 'none';
-        });
-      });
-    });
+  if (splitEl) {
+    if (reduce) {
+      splitEl.classList.add('in');
+    } else {
+      var words = splitEl.textContent.trim().split(/\s+/);
+      splitEl.innerHTML = words.map(function (w, i) {
+        return '<span data-line><span style="transition-delay:' + (0.06 + i * 0.05).toFixed(3) + 's">' + w + '</span></span>';
+      }).join(' ');
+      var release = function () { splitEl.classList.add('in'); };
+      if ('IntersectionObserver' in window) {
+        var so = new IntersectionObserver(function (e) {
+          if (e[0].isIntersecting) { release(); so.disconnect(); }
+        }, { threshold: 0.1 });
+        so.observe(splitEl);
+      }
+      /* runs whatever happens, so the headline can never stay hidden */
+      setTimeout(release, 700);
+    }
   }
 
   /* ---------- character stagger on buttons ----------
