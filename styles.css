@@ -2475,27 +2475,36 @@ body.show-cad .currency-cad { display: inline !important; }
    Unscoped on purpose: it used to be .lp-only, which is why it
    existed on the landing page and nowhere else.
    ============================================================ */
+/* Every value here is literal on purpose. This component used to live
+   inside index.html and leaned on --lp-red and --lp-ease, which are
+   declared there and nowhere else. Once it became global those resolved
+   to nothing on every other page, so the label pill lost its background
+   and the cursor read as white text floating on white text. A component
+   that any page can use cannot depend on one page's tokens. */
 .lp-cursor {
   position: fixed; top: 0; left: 0; z-index: 900;
   pointer-events: none;
-  opacity: 0; transform: translate3d(-100px,-100px,0) scale(.6);
-  transition: opacity .22s var(--lp-ease), scale .22s var(--lp-ease);
+  opacity: 0;
+  transition: opacity .22s cubic-bezier(.2,.7,.2,1);
   will-change: transform;
 }
 .lp-cursor.on { opacity: 1; }
 .lp-cursor-arrow {
   display: block;
-  filter: drop-shadow(0 3px 8px rgba(1,11,30,.45));
+  filter: drop-shadow(0 2px 5px rgba(1,11,30,.55)) drop-shadow(0 6px 16px rgba(1,11,30,.35));
 }
 .lp-cursor-label {
-  position: absolute; left: 17px; top: 19px;
+  position: absolute; left: 18px; top: 20px;
   display: inline-block; white-space: nowrap;
-  background: var(--lp-red); color: #fff;
-  font-size: .72rem; font-weight: 700; letter-spacing: -0.005em;
-  padding: 4px 10px; border-radius: 999px;
-  box-shadow: 0 4px 14px -4px rgba(255,41,78,.8);
+  background: #FF294E;
+  color: #fff;
+  font-family: var(--font-main, system-ui, sans-serif);
+  font-size: .72rem; font-weight: 700; letter-spacing: -0.005em; line-height: 1;
+  padding: 6px 11px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.28);
+  box-shadow: 0 6px 18px -4px rgba(255,41,78,.65), 0 2px 6px rgba(1,11,30,.35);
   transform-origin: top left;
-  animation: lpCursorPop .28s var(--lp-ease) both;
+  animation: lpCursorPop .28s cubic-bezier(.2,.7,.2,1) both;
 }
 @keyframes lpCursorPop { from { transform: scale(.5); opacity: 0 } to { transform: scale(1); opacity: 1 } }
 /* Hide the native pointer only where the custom one is shown */
