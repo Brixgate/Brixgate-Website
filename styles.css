@@ -244,6 +244,16 @@ h1, h2, h3, h4, h5, h6 {
   white-space: nowrap;
 }
 
+/* Reads as a continuation of the list rather than another pin: the
+   named five are where we are established, this is the rest. */
+.region-more {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 .region-dot {
   width: 6px;
   height: 6px;
@@ -2444,4 +2454,42 @@ body.show-cad .currency-cad { display: inline !important; }
     scroll-snap-align: start;
   }
   .ig-modal-video { max-width: 95vw; }
+}
+
+
+/* ============================================================
+   CUSTOM CURSOR
+   Shown inside any .cursor-zone, which is how gradient sections
+   announce themselves. Injected and driven by cursor.js.
+   Unscoped on purpose: it used to be .lp-only, which is why it
+   existed on the landing page and nowhere else.
+   ============================================================ */
+.lp-cursor {
+  position: fixed; top: 0; left: 0; z-index: 900;
+  pointer-events: none;
+  opacity: 0; transform: translate3d(-100px,-100px,0) scale(.6);
+  transition: opacity .22s var(--lp-ease), scale .22s var(--lp-ease);
+  will-change: transform;
+}
+.lp-cursor.on { opacity: 1; }
+.lp-cursor-arrow {
+  display: block;
+  filter: drop-shadow(0 3px 8px rgba(1,11,30,.45));
+}
+.lp-cursor-label {
+  position: absolute; left: 17px; top: 19px;
+  display: inline-block; white-space: nowrap;
+  background: var(--lp-red); color: #fff;
+  font-size: .72rem; font-weight: 700; letter-spacing: -0.005em;
+  padding: 4px 10px; border-radius: 999px;
+  box-shadow: 0 4px 14px -4px rgba(255,41,78,.8);
+  transform-origin: top left;
+  animation: lpCursorPop .28s var(--lp-ease) both;
+}
+@keyframes lpCursorPop { from { transform: scale(.5); opacity: 0 } to { transform: scale(1); opacity: 1 } }
+/* Hide the native pointer only where the custom one is shown */
+.cursor-zone, .cursor-zone a, .cursor-zone button { cursor: none; }
+@media (hover: none), (max-width: 960px) {
+  .lp-cursor { display: none; }
+  .cursor-zone, .cursor-zone a, .cursor-zone button { cursor: auto; }
 }

@@ -449,35 +449,6 @@
     /* ============================================================
        COLLAB CURSOR — follows the pointer across gradient surfaces
        ============================================================ */
-    .lp-cursor {
-      position: fixed; top: 0; left: 0; z-index: 900;
-      pointer-events: none;
-      opacity: 0; transform: translate3d(-100px,-100px,0) scale(.6);
-      transition: opacity .22s var(--lp-ease), scale .22s var(--lp-ease);
-      will-change: transform;
-    }
-    .lp-cursor.on { opacity: 1; }
-    .lp-cursor-arrow {
-      display: block;
-      filter: drop-shadow(0 3px 8px rgba(1,11,30,.45));
-    }
-    .lp-cursor-label {
-      position: absolute; left: 17px; top: 19px;
-      display: inline-block; white-space: nowrap;
-      background: var(--lp-red); color: #fff;
-      font-size: .72rem; font-weight: 700; letter-spacing: -0.005em;
-      padding: 4px 10px; border-radius: 999px;
-      box-shadow: 0 4px 14px -4px rgba(255,41,78,.8);
-      transform-origin: top left;
-      animation: lpCursorPop .28s var(--lp-ease) both;
-    }
-    @keyframes lpCursorPop { from { transform: scale(.5); opacity: 0 } to { transform: scale(1); opacity: 1 } }
-    /* Hide the native pointer only where the custom one is shown */
-    .lp .cursor-zone, .lp .cursor-zone a, .lp .cursor-zone button { cursor: none; }
-    @media (hover: none), (max-width: 960px) {
-      .lp-cursor { display: none; }
-      .lp .cursor-zone, .lp .cursor-zone a, .lp .cursor-zone button { cursor: auto; }
-    }
 
     /* ============================================================
        GRADIENT RULE — vertical accent bar on lead paragraphs
@@ -1236,14 +1207,6 @@
 <div id="scroll-progress"></div>
 
 <!-- Collaborative-style cursor, shown over gradient surfaces -->
-<div class="lp-cursor" id="lp-cursor" aria-hidden="true">
-  <svg class="lp-cursor-arrow" width="22" height="24" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2 1.6 18.4 12.2c.9.6.5 2-.6 2l-6.7.2a1.2 1.2 0 0 0-1 .6l-3.3 5.9c-.5 1-2 .7-2.1-.4L2 1.6Z"
-          fill="#FF294E" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/>
-  </svg>
-  <span class="lp-cursor-label" id="lp-cursor-label">You</span>
-</div>
-
 <!-- Region Banner -->
 <div class="region-banner" id="region-banner">
   <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Now active in</span>
@@ -1254,6 +1217,7 @@
     <span class="region-item">🇰🇪 Kenya</span>
     <span class="region-item">🇬🇭 Ghana</span>
     <span class="region-item">🇿🇦 South Africa</span>
+    <span class="region-more">and 99 other countries</span>
   </div>
 </div>
 
@@ -2297,6 +2261,7 @@
      ============================================================ -->
 <script src="assets/vendor/three.min.js"></script>
 <script src="field.js"></script>
+<script src="cursor.js"></script>
 <script>
 (function () {
   'use strict';
@@ -2534,52 +2499,7 @@
 })();
 
 /* ---- Collaborative-style cursor over gradient surfaces ---- */
-(function () {
-  'use strict';
-  var el = document.getElementById('lp-cursor');
-  var label = document.getElementById('lp-cursor-label');
-  if (!el || !label) return;
-  if (window.matchMedia && (window.matchMedia('(hover: none)').matches ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
-      window.matchMedia('(max-width: 960px)').matches)) return;
-
-  var tx = -100, ty = -100, cx = -100, cy = -100, raf = 0, on = false, current = '';
-
-  function frame() {
-    cx += (tx - cx) * 0.30;
-    cy += (ty - cy) * 0.30;
-    el.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0)';
-    if (Math.abs(tx - cx) > 0.2 || Math.abs(ty - cy) > 0.2) raf = requestAnimationFrame(frame);
-    else raf = 0;
-  }
-
-  document.addEventListener('mousemove', function (e) {
-    tx = e.clientX; ty = e.clientY;
-
-    var zone = e.target && e.target.closest ? e.target.closest('.cursor-zone') : null;
-    if (zone) {
-      var text = zone.getAttribute('data-cursor') || 'You';
-      if (!on) { on = true; el.classList.add('on'); }
-      if (text !== current) {
-        current = text;
-        label.textContent = text;
-        // replay the pop so the label change reads as intentional
-        label.style.animation = 'none';
-        void label.offsetWidth;
-        label.style.animation = '';
-      }
-    } else if (on) {
-      on = false; current = '';
-      el.classList.remove('on');
-    }
-
-    if (!raf) raf = requestAnimationFrame(frame);
-  }, { passive: true });
-
-  document.addEventListener('mouseleave', function () {
-    on = false; current = ''; el.classList.remove('on');
-  });
-})();
+/* the cursor moved to cursor.js, shared with the Foundations pages */
 
 (function () {
   'use strict';

@@ -79,7 +79,7 @@ body.fd{ background:#fff; }
 }
 .fd-courses-canvas{
   position:absolute; inset:0; width:100%; height:100%; display:block;
-  pointer-events:none; z-index:0; opacity:.8;
+  pointer-events:none; z-index:0; opacity:.55;
   -webkit-mask-image:radial-gradient(100% 82% at 50% 40%, #000 0%, rgba(0,0,0,.7) 62%, transparent 94%);
           mask-image:radial-gradient(100% 82% at 50% 40%, #000 0%, rgba(0,0,0,.7) 62%, transparent 94%);
 }
@@ -173,13 +173,15 @@ body.fd{ background:#fff; }
 }
 @keyframes fdPing{ 0%{box-shadow:0 0 0 0 rgba(255,41,78,.65)} 70%{box-shadow:0 0 0 9px rgba(255,41,78,0)} 100%{box-shadow:0 0 0 0 rgba(255,41,78,0)} }
 .fd-hero-cta{ margin-top:38px; display:flex; gap:12px; flex-wrap:wrap; }
+/* A grid rather than a wrapping flex row. "No prerequisites" is much
+   longer than the other two labels and was dropping onto its own line. */
 .fd-hero-facts{
-  margin-top:56px; display:flex; gap:0; flex-wrap:wrap;
+  margin-top:56px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
   border-top:1px solid rgba(255,255,255,.13); padding-top:26px;
 }
-.fd-hero-fact{ display:flex; flex-direction:column; gap:5px; padding-right:44px; margin-right:44px; border-right:1px solid rgba(255,255,255,.11); }
-.fd-hero-fact:last-child{ border-right:0; margin-right:0; padding-right:0; }
-.fd-hero-fact b{ font-size:1.7rem; font-weight:800; letter-spacing:-.035em; }
+.fd-hero-fact{ display:flex; flex-direction:column; gap:5px; padding-right:22px; border-right:1px solid rgba(255,255,255,.11); }
+.fd-hero-fact:last-child{ border-right:0; padding-right:0; }
+.fd-hero-fact b{ font-size:1.5rem; font-weight:800; letter-spacing:-.038em; white-space:nowrap; }
 .fd-hero-fact span{ font-size:.82rem; color:rgba(255,255,255,.55); }
 
 /* ============================================================
@@ -233,11 +235,9 @@ body.fd{ background:#fff; }
    COURSE CARDS — roll in on scroll, art morphs into the course
    page where the browser supports cross-document view transitions.
    ============================================================ */
-.fd-courses{ position:relative; overflow:hidden; background:var(--fd-ink); color:#fff; padding:clamp(104px,12vw,150px) 0 clamp(96px,11vw,136px); }
+.fd-courses{ position:relative; overflow:hidden; background:var(--fd-cream); color:var(--fd-ink); padding:clamp(104px,12vw,150px) 0 clamp(96px,11vw,136px); }
 .fd-courses > .fd-wrap{ position:relative; z-index:1; }
-.fd-courses .fd-kicker{ color:rgba(255,255,255,.55); }
-.fd-courses h2{ color:#fff; }
-.fd-courses .fd-lead{ color:rgba(255,255,255,.72); }
+.fd-courses h2{ color:var(--fd-ink); }
 
 .fd-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; margin-top:56px; }
 /* Foundations opens with one or two courses. A lone card stranded in a
@@ -247,7 +247,7 @@ body.fd{ background:#fff; }
 .fd-grid:has(.fd-card:nth-child(2):last-child){ grid-template-columns:repeat(2,minmax(0,380px)); justify-content:center; }
 .fd-card{
   position:relative; display:flex; flex-direction:column; border-radius:22px; overflow:hidden;
-  background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.1);
+  background:#fff; border:1px solid var(--fd-line);
   text-decoration:none; color:inherit;
   transition:transform .5s var(--fd-ease), border-color .4s, background .4s, box-shadow .5s var(--fd-ease);
   /* roll-in start state; the observer clears it */
@@ -255,8 +255,8 @@ body.fd{ background:#fff; }
 }
 .fd-card.in{ opacity:1; transform:none; }
 .fd-card:hover{
-  transform:translateY(-7px); border-color:rgba(255,255,255,.24);
-  background:rgba(255,255,255,.075); box-shadow:0 34px 70px -32px rgba(0,0,0,.85);
+  transform:translateY(-7px); border-color:transparent;
+  box-shadow:0 30px 64px -28px rgba(2,16,36,.32);
 }
 .fd-card-art{ position:relative; aspect-ratio:4/3; overflow:hidden; background:#0A1730; }
 .fd-card-art img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s var(--fd-ease); }
@@ -282,13 +282,13 @@ body.fd{ background:#fff; }
 }
 .fd-card-when{
   display:flex; align-items:center; gap:8px; margin:0 0 15px;
-  font-size:.77rem; font-weight:600; color:rgba(255,255,255,.56);
+  font-size:.77rem; font-weight:600; color:var(--fd-muted);
 }
 .fd-card-when i{
   width:6px; height:6px; border-radius:50%; flex:none;
-  background:rgba(255,255,255,.32);
+  background:var(--fd-line);
 }
-.fd-card-when i.on{ background:#4ADE80; box-shadow:0 0 0 3px rgba(74,222,128,.16); }
+.fd-card-when i.on{ background:#16A34A; box-shadow:0 0 0 3px rgba(22,163,74,.16); }
 /* an accent edge so the six cards are not six identical dark tiles */
 .fd-card::before{
   content:""; position:absolute; left:0; right:0; top:0; height:3px; z-index:3;
@@ -297,27 +297,28 @@ body.fd{ background:#fff; }
 }
 .fd-card:hover::before{ opacity:1; }
 .fd-card-b{ padding:22px 22px 20px; display:flex; flex-direction:column; flex:1; }
-.fd-card-b h3{ font-size:1.06rem; font-weight:750; letter-spacing:-.024em; color:#fff; }
-.fd-card-b p{ margin:11px 0 16px; font-size:.87rem; line-height:1.6; color:rgba(255,255,255,.64); flex:1; }
+.fd-card-b h3{ font-size:1.06rem; font-weight:750; letter-spacing:-.024em; color:var(--fd-ink); }
+.fd-card-b p{ margin:11px 0 16px; font-size:.87rem; line-height:1.6; color:var(--fd-body); flex:1; }
 .fd-card-go{
   display:inline-flex; align-items:center; gap:7px;
-  font-size:.82rem; font-weight:700; color:#fff;
+  font-size:.82rem; font-weight:700; color:var(--fd-ink);
 }
+.fd-card:hover .fd-card-go{ color:var(--accent, var(--fd-red)); }
 .fd-card-go svg{ transition:transform .3s var(--fd-ease); }
 .fd-card:hover .fd-card-go svg{ transform:translateX(4px); }
 
 .fd-courses-note{
   margin-top:26px; padding:20px 24px; border-radius:var(--fd-r);
-  background:rgba(255,255,255,.045); border:1px dashed rgba(255,255,255,.18);
-  font-size:.9rem; line-height:1.65; color:rgba(255,255,255,.7);
+  background:#fff; border:1px dashed #D8D3CC;
+  font-size:.9rem; line-height:1.65; color:var(--fd-body);
 }
-.fd-courses-note b{ color:#fff; font-weight:700; }
-.fd-courses-note a{ color:#FF8095; font-weight:650; }
+.fd-courses-note b{ color:var(--fd-ink); font-weight:700; }
+.fd-courses-note a{ color:var(--fd-deep); font-weight:650; }
 
 /* skeletons while the API answers */
 .fd-card.is-skeleton{ opacity:1; transform:none; pointer-events:none; }
-.fd-card.is-skeleton .fd-card-art{ background:linear-gradient(100deg, rgba(255,255,255,.05) 30%, rgba(255,255,255,.11) 50%, rgba(255,255,255,.05) 70%); background-size:220% 100%; animation:fdShim 1.5s linear infinite; }
-.fd-card.is-skeleton .sk{ height:11px; border-radius:6px; background:rgba(255,255,255,.09); margin-bottom:9px; }
+.fd-card.is-skeleton .fd-card-art{ background:linear-gradient(100deg,#EFEDEA 30%,#F8F7F5 50%,#EFEDEA 70%); background-size:220% 100%; animation:fdShim 1.5s linear infinite; }
+.fd-card.is-skeleton .sk{ height:11px; border-radius:6px; background:#EFEDEA; margin-bottom:9px; }
 @keyframes fdShim{ to{ background-position:-220% 0 } }
 
 /* ---------- who it is for ---------- */
@@ -416,6 +417,92 @@ body.fd{ background:#fff; }
 .fd-x-t b{ color:var(--fd-ink); font-weight:700; }
 .fd-x .fd-btn{ margin-top:14px; justify-self:start; }
 
+
+/* ============================================================
+   IMAGE REVEAL — the section transition, in place of the arc.
+   A figure wipes up from its own bottom edge while the picture
+   inside settles back from a slight scale. Two properties, no
+   library, and it reads as the content arriving rather than a
+   shape sliding past.
+   ============================================================ */
+.fd-fig{
+  position:relative; overflow:hidden; border-radius:var(--fd-r);
+  clip-path:inset(0 0 100% 0);
+  transition:clip-path 1.05s var(--fd-ease);
+}
+.fd-fig.in{ clip-path:inset(0 0 0% 0); }
+.fd-fig img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  transform:scale(1.14); transition:transform 1.25s var(--fd-ease);
+}
+.fd-fig.in img{ transform:scale(1); }
+.fd-fig-cap{
+  position:absolute; left:16px; bottom:14px; z-index:2;
+  display:inline-flex; align-items:center; gap:9px;
+  padding:9px 14px; border-radius:11px;
+  background:rgba(2,16,36,.72); border:1px solid rgba(255,255,255,.2);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  font-size:.77rem; font-weight:650; color:#fff;
+}
+.fd-fig-cap i{ width:7px; height:7px; border-radius:50%; background:var(--fd-red); flex:none; }
+
+/* ============================================================
+   STARTING OUT — what the first month actually looks like
+   ============================================================ */
+.fd-start{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(28px,4vw,56px); align-items:center; margin-top:52px; }
+.fd-start + .fd-start{ margin-top:clamp(44px,6vw,84px); }
+.fd-start.flip .fd-start-copy{ order:2; }
+.fd-start-fig{ aspect-ratio:4/3; }
+.fd-start-k{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:.66rem; font-weight:800; letter-spacing:.15em; text-transform:uppercase; color:var(--fd-deep);
+}
+.fd-start-k b{
+  width:26px; height:26px; border-radius:8px; display:grid; place-items:center;
+  background:rgba(255,41,78,.1); color:var(--fd-deep); font-size:.7rem;
+}
+.fd-start-copy h3{ margin-top:16px; font-size:clamp(1.3rem,2.1vw,1.75rem); font-weight:780; letter-spacing:-.028em; color:var(--fd-ink); line-height:1.18; }
+.fd-start-copy p{ margin-top:13px; font-size:.98rem; line-height:1.72; color:var(--fd-body); max-width:50ch; }
+.fd-start-note{
+  margin-top:18px; padding:15px 18px; border-radius:14px;
+  background:#fff; border:1px solid var(--fd-line);
+  font-size:.87rem; line-height:1.6; color:var(--fd-body);
+}
+.fd-start-note b{ color:var(--fd-ink); font-weight:700; }
+
+/* ============================================================
+   THE ROOM — who you will actually be sitting with
+   ============================================================ */
+.fd-room{ position:relative; overflow:hidden; color:#fff; padding:clamp(88px,10vw,128px) 0;
+  background:
+    radial-gradient(110% 84% at 10% 4%, rgba(27,58,92,.76) 0%, rgba(2,16,36,0) 56%),
+    radial-gradient(84% 70% at 94% 94%, rgba(154,35,53,.46) 0%, rgba(2,16,36,0) 60%),
+    linear-gradient(165deg,var(--fd-card) 0%, var(--fd-ink) 64%);
+}
+.fd-room .fd-wrap{ position:relative; z-index:1; }
+.fd-room h2{ color:#fff; }
+.fd-room .fd-kicker{ color:rgba(255,255,255,.55); }
+.fd-room .fd-lead{ color:rgba(255,255,255,.74); }
+.fd-room-fig{ margin-top:44px; aspect-ratio:16/7; }
+.fd-room-stats{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0; margin-top:40px;
+  border-top:1px solid rgba(255,255,255,.13); padding-top:30px; }
+.fd-room-stat{ padding-right:24px; border-right:1px solid rgba(255,255,255,.11); }
+.fd-room-stat:last-child{ border-right:0; padding-right:0; }
+.fd-room-stat b{ display:block; font-size:1.6rem; font-weight:800; letter-spacing:-.038em; color:#fff; }
+.fd-room-stat span{ display:block; margin-top:6px; font-size:.82rem; line-height:1.5; color:rgba(255,255,255,.58); }
+
+@media (max-width:900px){
+  .fd-start{ grid-template-columns:1fr; }
+  .fd-start.flip .fd-start-copy{ order:0; }
+  .fd-room-stats{ grid-template-columns:1fr 1fr; gap:22px 0; }
+  .fd-room-stat:nth-child(2){ border-right:0; }
+  .fd-room-fig{ aspect-ratio:4/3; }
+}
+@media (prefers-reduced-motion:reduce){
+  .fd-fig{ clip-path:none; transition:none; }
+  .fd-fig img{ transform:none; transition:none; }
+}
+
 /* ---------- reveal ---------- */
 .fd-rise{ opacity:0; transform:translateY(20px); transition:opacity .75s var(--fd-ease), transform .75s var(--fd-ease); }
 .fd-rise.in{ opacity:1; transform:none; }
@@ -472,6 +559,7 @@ body.fd{ background:#fff; }
     <span class="region-item">🇺🇸 United States</span>
     <span class="region-item">🇰🇪 Kenya</span>
     <span class="region-item">🇿🇦 South Africa</span>
+    <span class="region-more">and 99 other countries</span>
   </div>
 </div>
 
@@ -508,7 +596,7 @@ body.fd{ background:#fff; }
 </div>
 
 <!-- ===== HERO ===== -->
-<header class="fd-hero">
+<header class="fd-hero cursor-zone" data-cursor="Start here">
   <canvas class="fd-hero-canvas" id="fd-net" aria-hidden="true"></canvas>
   <div class="fd-hero-glow" aria-hidden="true"></div>
   <div class="fd-wrap">
@@ -618,6 +706,80 @@ body.fd{ background:#fff; }
   </div>
 </section>
 
+
+<!-- ===== STARTING OUT ===== -->
+<section class="fd-sec" id="starting">
+  <div class="fd-wrap">
+    <div class="fd-head fd-rise" style="max-width:58ch">
+      <span class="fd-kicker">Starting out</span>
+      <h2 class="fd-h2">What the first month actually looks like.</h2>
+      <p class="fd-lead">The hardest part of starting is not knowing what you are walking into. So here it is, week by week, before you commit to anything.</p>
+    </div>
+
+    <div class="fd-start">
+      <div class="fd-start-copy">
+        <span class="fd-start-k"><b>01</b>Before it starts</span>
+        <h3>You do not have to prepare anything.</h3>
+        <p>There is no reading list and no setup homework. We send you a joining link, the times, and one short note about what to expect. That is deliberately all, because people who feel behind before week one tend not to make it to week three.</p>
+        <div class="fd-start-note"><b>If you are worried about the tech:</b> the only thing you need is a laptop and a stable enough connection to hold a video call.</div>
+      </div>
+      <figure class="fd-fig fd-start-fig" data-fig style="margin:0">
+        <img src="assets/fnd/people/solo.jpg" alt="A learner working through course material at home" loading="lazy" />
+        <figcaption class="fd-fig-cap"><i></i>No setup homework</figcaption>
+      </figure>
+    </div>
+
+    <div class="fd-start flip">
+      <div class="fd-start-copy">
+        <span class="fd-start-k"><b>02</b>Week one</span>
+        <h3>Everyone in the room is where you are.</h3>
+        <p>The first session is spent making sure nobody is lost, which is slower than a lot of courses and on purpose. You will be asked what you already use and what confuses you, and the answers shape how the next few weeks are taught.</p>
+        <div class="fd-start-note"><b>Nobody is put on the spot.</b> You can stay on mute for the whole of week one if that is what you need.</div>
+      </div>
+      <figure class="fd-fig fd-start-fig" data-fig style="margin:0">
+        <img src="assets/fnd/people/class.jpg" alt="A learner joining a live online session" loading="lazy" />
+        <figcaption class="fd-fig-cap"><i></i>Live, not recorded</figcaption>
+      </figure>
+    </div>
+
+    <div class="fd-start">
+      <div class="fd-start-copy">
+        <span class="fd-start-k"><b>03</b>When you get stuck</span>
+        <h3>Getting stuck is the method, not the failure.</h3>
+        <p>You will hit something that does not make sense. Everyone does. There is a practitioner in the session to ask, a small group who are hitting the same wall, and a channel between sessions that someone actually reads.</p>
+        <div class="fd-start-note"><b>If you miss a session</b> it is recorded, and the next one starts by catching up whoever needs it.</div>
+      </div>
+      <figure class="fd-fig fd-start-fig" data-fig style="margin:0">
+        <img src="assets/fnd/people/hands.jpg" alt="Two people working through a problem together" loading="lazy" />
+        <figcaption class="fd-fig-cap"><i></i>Someone to ask</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===== THE ROOM ===== -->
+<section class="fd-room cursor-zone" data-cursor="Your cohort">
+  <div class="fd-wrap">
+    <div class="fd-head fd-rise" style="max-width:56ch">
+      <span class="fd-kicker">The room</span>
+      <h2 class="fd-h2">You will not be the only one starting from nothing.</h2>
+      <p class="fd-lead">The most common worry we hear is that everyone else will already know this. They will not. Foundations cohorts are built from people who are all at the beginning, which is exactly why the pace works.</p>
+    </div>
+
+    <figure class="fd-fig fd-room-fig" data-fig style="margin:0">
+      <img src="assets/fnd/people/group.jpg" alt="A Foundations cohort working together around a table" loading="lazy" />
+      <figcaption class="fd-fig-cap"><i></i>A Foundations cohort, mid-session</figcaption>
+    </figure>
+
+    <div class="fd-room-stats fd-rise">
+      <div class="fd-room-stat"><b>No experience</b><span>Is the entry requirement, not a disclaimer</span></div>
+      <div class="fd-room-stat"><b>Small groups</b><span>Kept small enough that you get asked how you are doing</span></div>
+      <div class="fd-room-stat"><b>Every background</b><span>Career changers, graduates, people starting over</span></div>
+      <div class="fd-room-stat"><b>One practitioner</b><span>In the room live, every session</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== WHO ===== -->
 <section class="fd-sec fd-sec-cream">
   <div class="fd-wrap">
@@ -686,7 +848,7 @@ body.fd{ background:#fff; }
 </section>
 
 <!-- ===== WAITLIST ===== -->
-<section class="fd-wait" id="waitlist">
+<section class="fd-wait cursor-zone" id="waitlist" data-cursor="Join the list">
   <div class="fd-wrap">
     <div class="fd-wait-grid">
       <div>
@@ -829,9 +991,10 @@ body.fd{ background:#fff; }
     });
     webField = F.create(document.getElementById('fd-web'), {
       count: isNarrow ? 70 : 140, speed: 0.03, depth: 22,
-      inkColor: 0x8FA3BC, accentColor: 0xC4173A, redRatio: 0.07,
+      /* light section now, so the ink is a warm grey just off the cream */
+      inkColor: 0x9AA6B6, accentColor: 0xC4173A, redRatio: 0.06,
       sizeMin: 1.4, sizeMax: 2.6, sizeRed: 3.2,
-      pointOpacity: 0.5, lines: true, lineOpacity: 0.16, linkRadius: 16,
+      pointOpacity: 0.55, lines: true, lineOpacity: 0.3, linkRadius: 16,
       repel: false
     });
     F.watch(document.querySelector('.fd-hero'), heroField);
@@ -926,14 +1089,40 @@ body.fd{ background:#fff; }
     setTimeout(showAll, 3000);
   }
 
-  /* line icons: measure each path so the dash animation is the right
-     length whatever the icon is */
+  /* Line icons measure their own path so the dash animation is the
+     right length whatever the shape is. getTotalLength is missing on
+     <rect> in some engines, so a sensible fallback keeps the draw
+     running instead of leaving the icon invisible at dashoffset. */
   [].slice.call(document.querySelectorAll('.fd-run-ic svg [data-draw]')).forEach(function (p) {
-    try {
-      var len = p.getTotalLength();
-      if (len) p.style.setProperty('--len', Math.ceil(len));
-    } catch (err) { /* getTotalLength is unsupported on some shapes */ }
+    var len = 0;
+    try { len = typeof p.getTotalLength === 'function' ? p.getTotalLength() : 0; } catch (err) { len = 0; }
+    if (!len || !isFinite(len)) {
+      var b = null;
+      try { b = p.getBBox(); } catch (e2) { b = null; }
+      len = b ? (b.width + b.height) * 2.2 : 140;
+    }
+    p.style.setProperty('--len', Math.ceil(len));
   });
+
+  /* ---------- figures: the wipe that replaced the arc ---------- */
+  (function () {
+    var figs = [].slice.call(document.querySelectorAll('[data-fig]'));
+    if (!figs.length) return;
+    if (reduce || !('IntersectionObserver' in window)) {
+      figs.forEach(function (f) { f.classList.add('in'); });
+      return;
+    }
+    var fo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('in');
+        fo.unobserve(e.target);
+      });
+    }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+    figs.forEach(function (f) { fo.observe(f); });
+    /* a figure must never be left clipped to nothing */
+    setTimeout(function () { figs.forEach(function (f) { f.classList.add('in'); }); }, 3200);
+  })();
 
   window.__fdRevealCards = function (cards) {
     if (reduce || !('IntersectionObserver' in window)) {
@@ -1137,6 +1326,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <noscript>
 <img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9372724&fmt=gif" />
 </noscript>
+<script src="cursor.js"></script>
 <script src="nav-programmes.js"></script>
 </body>
 </html>
