@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Foundations | Brixgate Twelve Week Beginner Programme</title>
-  <meta name="description" content="Twelve weeks that assume nothing. No degree, no coding background, no prior AI experience. Live teaching from the ground floor up. First cohort forming now." />
+  <title>AI Foundations | Brixgate Beginner AI Courses</title>
+  <meta name="description" content="Six beginner AI courses that assume nothing. No degree, no coding background, no prior AI experience. Live teaching from the ground floor up." />
   <link rel="icon" type="image/png" href="assets/faviii.png" />
   <link rel="stylesheet" href="styles.css" />
 
@@ -55,19 +55,6 @@ body.fd{ background:#fff; }
    through most of the travel and collapses at the very end, the
    way the reference does.
    ============================================================ */
-/* The arc is used once, on the one edge where it earns its place: the
-   cream panel rising over the dark courses section.
-
-   .fd-arcwrap is painted with the colour of the section ABOVE, and the
-   rounded panel sits inside it. Without that backing the rounded corners
-   expose the page background and the curve reads as two white wedges
-   instead of one section rising over another. */
-.fd-arcwrap{ position:relative; background:var(--fd-ink); }
-.fd-arc{
-  --arc:1; position:relative;
-  border-radius: calc(var(--arc) * 46vw) calc(var(--arc) * 46vw) 0 0 / calc(var(--arc) * 10vw) calc(var(--arc) * 10vw) 0 0;
-  will-change:border-radius; overflow:hidden; isolation:isolate;
-}
 
 /* ---------- hero ---------- */
 .fd-hero{
@@ -80,8 +67,21 @@ body.fd{ background:#fff; }
 }
 .fd-hero-glow{
   position:absolute; right:-6%; top:8%; width:640px; height:640px; border-radius:50%;
-  background:radial-gradient(closest-side, rgba(255,41,78,.3), rgba(255,41,78,0));
-  filter:blur(24px); pointer-events:none;
+  background:radial-gradient(closest-side, rgba(255,41,78,.26), rgba(255,41,78,0));
+  filter:blur(24px); pointer-events:none; z-index:1;
+}
+/* the same particle network as the landing hero, from field.js */
+.fd-hero-canvas{
+  position:absolute; inset:0; width:100%; height:100%; display:block;
+  pointer-events:none; z-index:0; opacity:.9;
+  -webkit-mask-image:radial-gradient(120% 100% at 62% 44%, #000 0%, rgba(0,0,0,.85) 58%, transparent 92%);
+          mask-image:radial-gradient(120% 100% at 62% 44%, #000 0%, rgba(0,0,0,.85) 58%, transparent 92%);
+}
+.fd-courses-canvas{
+  position:absolute; inset:0; width:100%; height:100%; display:block;
+  pointer-events:none; z-index:0; opacity:.8;
+  -webkit-mask-image:radial-gradient(100% 82% at 50% 40%, #000 0%, rgba(0,0,0,.7) 62%, transparent 94%);
+          mask-image:radial-gradient(100% 82% at 50% 40%, #000 0%, rgba(0,0,0,.7) 62%, transparent 94%);
 }
 .fd-hero .fd-wrap{ position:relative; z-index:2; }
 .fd-hero-grid{
@@ -92,7 +92,10 @@ body.fd{ background:#fff; }
 .fd-hero .fd-lead{ margin-top:22px; max-width:46ch; color:rgba(255,255,255,.78); }
 
 /* ---------- hero card stage ---------- */
-.fd-stage{ position:relative; height:470px; }
+/* Two columns inside the stage with a 23px gutter between them and a
+   20px gap down each one, rather than four offsets tuned by eye that
+   ended up overlapping. margin-top lifts it against the headline. */
+.fd-stage{ position:relative; height:400px; margin-top:-40px; }
 .fd-card-f{
   position:absolute; border-radius:18px;
   background:rgba(255,255,255,.96);
@@ -107,7 +110,7 @@ body.fd{ background:#fff; }
 @keyframes fdFloatC{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-6px) } }
 
 /* the session tile, with a real room of people */
-.fd-cardv{ top:0; right:0; width:266px; padding:0; overflow:hidden; animation:fdRise .9s .3s var(--fd-ease) both; }
+.fd-cardv{ top:0; right:0; width:258px; padding:0; overflow:hidden; animation:fdRise .9s .3s var(--fd-ease) both; }
 .fd-cardv > .in{ padding:10px; animation:fdFloatA 7s ease-in-out infinite; }
 .fd-vid{ position:relative; aspect-ratio:4/3; overflow:hidden; border-radius:12px; background:var(--fd-ink); }
 .fd-vid img{ width:100%; height:100%; object-fit:cover; display:block; }
@@ -133,7 +136,7 @@ body.fd{ background:#fff; }
 .fd-csub{ font-size:.79rem; color:var(--fd-body); margin-top:6px; font-weight:500; }
 
 /* week-one card */
-.fd-cardw{ top:236px; left:-10px; width:290px; animation:fdRise .9s .46s var(--fd-ease) both; }
+.fd-cardw{ top:62px; left:0; width:248px; animation:fdRise .9s .46s var(--fd-ease) both; }
 .fd-cardw > .in{ animation:fdFloatB 8.5s ease-in-out infinite; }
 .fd-wk-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
 .fd-wk-tag{ display:inline-flex; align-items:center; gap:7px; font-size:.64rem; font-weight:800; letter-spacing:.12em; color:var(--fd-deep); }
@@ -144,12 +147,12 @@ body.fd{ background:#fff; }
 .fd-bar i{ display:block; height:100%; width:8.3%; border-radius:99px; background:linear-gradient(90deg,var(--fd-deep),var(--fd-orange)); }
 .fd-bar-label{ display:flex; justify-content:space-between; font-size:.7rem; color:var(--fd-muted); margin-top:7px; }
 
-/* twelve weeks card */
-.fd-card12{ top:248px; right:4px; width:186px; animation:fdRise .9s .62s var(--fd-ease) both; }
+/* course length card */
+.fd-card12{ top:259px; right:0; width:184px; animation:fdRise .9s .62s var(--fd-ease) both; }
 .fd-card12 > .in{ animation:fdFloatA 7s ease-in-out infinite; }
 
 /* no-prerequisites card */
-.fd-cardp{ bottom:0; left:26px; width:288px; animation:fdRise .9s .78s var(--fd-ease) both; }
+.fd-cardp{ top:234px; left:0; width:248px; animation:fdRise .9s .78s var(--fd-ease) both; }
 .fd-cardp > .in{ animation:fdFloatC 6.5s ease-in-out infinite; display:flex; align-items:center; gap:13px; }
 .fd-cardp-ic{
   width:40px; height:40px; border-radius:12px; flex:none; display:grid; place-items:center;
@@ -230,7 +233,8 @@ body.fd{ background:#fff; }
    COURSE CARDS — roll in on scroll, art morphs into the course
    page where the browser supports cross-document view transitions.
    ============================================================ */
-.fd-courses{ background:var(--fd-ink); color:#fff; padding:clamp(104px,12vw,150px) 0 clamp(96px,11vw,136px); }
+.fd-courses{ position:relative; overflow:hidden; background:var(--fd-ink); color:#fff; padding:clamp(104px,12vw,150px) 0 clamp(96px,11vw,136px); }
+.fd-courses > .fd-wrap{ position:relative; z-index:1; }
 .fd-courses .fd-kicker{ color:rgba(255,255,255,.55); }
 .fd-courses h2{ color:#fff; }
 .fd-courses .fd-lead{ color:rgba(255,255,255,.72); }
@@ -242,7 +246,7 @@ body.fd{ background:#fff; }
 .fd-grid:has(.fd-card:only-child){ grid-template-columns:minmax(0,420px); justify-content:center; }
 .fd-grid:has(.fd-card:nth-child(2):last-child){ grid-template-columns:repeat(2,minmax(0,380px)); justify-content:center; }
 .fd-card{
-  display:flex; flex-direction:column; border-radius:22px; overflow:hidden;
+  position:relative; display:flex; flex-direction:column; border-radius:22px; overflow:hidden;
   background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.1);
   text-decoration:none; color:inherit;
   transition:transform .5s var(--fd-ease), border-color .4s, background .4s, box-shadow .5s var(--fd-ease);
@@ -261,18 +265,40 @@ body.fd{ background:#fff; }
   content:""; position:absolute; inset:auto 0 0 0; height:56%;
   background:linear-gradient(to top, rgba(2,16,36,.86), rgba(2,16,36,0)); pointer-events:none;
 }
-.fd-card-tag{
+/* the length sits on the art, since it is the first thing a beginner
+   weighs up and it differs from six to sixteen across the set */
+.fd-card-weeks{
   position:absolute; left:15px; bottom:13px; z-index:2;
   display:inline-flex; align-items:center; gap:6px;
-  font-size:.61rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
-  padding:5px 10px; border-radius:7px;
-  background:rgba(2,16,36,.7); color:rgba(255,255,255,.9); border:1px solid rgba(255,255,255,.2);
+  font-size:.66rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
+  padding:6px 11px; border-radius:8px;
+  background:rgba(2,16,36,.72); color:#fff; border:1px solid rgba(255,255,255,.22);
   backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
 }
-.fd-card-tag.open{ background:rgba(22,163,74,.92); border-color:rgba(255,255,255,.25); color:#fff; }
+.fd-card-tag{
+  display:block; margin-top:7px;
+  font-size:.8rem; font-weight:650; color:var(--accent, var(--fd-red));
+  letter-spacing:-.008em;
+}
+.fd-card-when{
+  display:flex; align-items:center; gap:8px; margin:0 0 15px;
+  font-size:.77rem; font-weight:600; color:rgba(255,255,255,.56);
+}
+.fd-card-when i{
+  width:6px; height:6px; border-radius:50%; flex:none;
+  background:rgba(255,255,255,.32);
+}
+.fd-card-when i.on{ background:#4ADE80; box-shadow:0 0 0 3px rgba(74,222,128,.16); }
+/* an accent edge so the six cards are not six identical dark tiles */
+.fd-card::before{
+  content:""; position:absolute; left:0; right:0; top:0; height:3px; z-index:3;
+  background:var(--accent, var(--fd-red)); opacity:0;
+  transition:opacity .4s var(--fd-ease);
+}
+.fd-card:hover::before{ opacity:1; }
 .fd-card-b{ padding:22px 22px 20px; display:flex; flex-direction:column; flex:1; }
 .fd-card-b h3{ font-size:1.06rem; font-weight:750; letter-spacing:-.024em; color:#fff; }
-.fd-card-b p{ margin:9px 0 16px; font-size:.87rem; line-height:1.6; color:rgba(255,255,255,.64); flex:1; }
+.fd-card-b p{ margin:11px 0 16px; font-size:.87rem; line-height:1.6; color:rgba(255,255,255,.64); flex:1; }
 .fd-card-go{
   display:inline-flex; align-items:center; gap:7px;
   font-size:.82rem; font-weight:700; color:#fff;
@@ -314,52 +340,6 @@ body.fd{ background:#fff; }
 }
 .fd-who-out b{ color:var(--fd-ink); font-weight:700; }
 .fd-who-out a{ color:var(--fd-deep); font-weight:650; }
-
-/* ============================================================
-   CURRICULUM — three phases, twelve weeks, with a rail that
-   fills as you pass each week.
-   ============================================================ */
-.fd-curr{ margin-top:56px; position:relative; }
-.fd-curr-rail{
-  position:absolute; left:23px; top:14px; bottom:14px; width:2px;
-  background:var(--fd-line); border-radius:2px; overflow:hidden;
-}
-.fd-curr-rail i{
-  position:absolute; left:0; top:0; width:100%; height:var(--fill,0%);
-  background:linear-gradient(to bottom,var(--fd-deep),var(--fd-orange));
-  transition:height .5s var(--fd-ease);
-}
-.fd-phase{ position:relative; padding-left:68px; padding-bottom:44px; }
-.fd-phase:last-child{ padding-bottom:0; }
-.fd-phase-dot{
-  position:absolute; left:12px; top:8px; width:24px; height:24px; border-radius:50%;
-  background:#fff; border:2px solid var(--fd-line);
-  display:grid; place-items:center; z-index:1;
-  transition:border-color .4s var(--fd-ease), background .4s var(--fd-ease), box-shadow .4s;
-}
-.fd-phase-dot::after{ content:""; width:8px; height:8px; border-radius:50%; background:var(--fd-line); transition:background .4s; }
-.fd-phase.lit .fd-phase-dot{ border-color:var(--fd-deep); box-shadow:0 0 0 5px rgba(196,23,58,.12); }
-.fd-phase.lit .fd-phase-dot::after{ background:var(--fd-deep); }
-.fd-phase-k{
-  display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
-}
-.fd-phase-k b{ font-size:1.24rem; font-weight:780; letter-spacing:-.026em; color:var(--fd-ink); }
-.fd-phase-k span{ font-size:.76rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--fd-faint); }
-.fd-phase > p{ margin:10px 0 0; font-size:.95rem; line-height:1.68; color:var(--fd-body); max-width:64ch; }
-.fd-weeks{ margin-top:18px; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
-.fd-week{
-  background:#fff; border:1px solid var(--fd-line); border-radius:13px; padding:14px 15px;
-  transition:transform .35s var(--fd-ease), border-color .3s, box-shadow .35s var(--fd-ease);
-}
-.fd-week:hover{ transform:translateY(-3px); border-color:#D8D3CC; box-shadow:0 14px 30px -18px rgba(2,16,36,.36); }
-.fd-week b{ display:block; font-size:.64rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--fd-deep); }
-.fd-week span{ display:block; margin-top:6px; font-size:.85rem; line-height:1.45; color:var(--fd-ink); font-weight:600; }
-.fd-curr-note{
-  margin-top:30px; padding:20px 24px; border-radius:var(--fd-r);
-  background:#fff; border:1px dashed #D8D3CC;
-  font-size:.9rem; line-height:1.65; color:var(--fd-body);
-}
-.fd-curr-note b{ color:var(--fd-ink); font-weight:700; }
 
 /* ============================================================
    HOW IT RUNS — animated line icons that draw themselves
@@ -441,6 +421,14 @@ body.fd{ background:#fff; }
 .fd-rise.in{ opacity:1; transform:none; }
 
 /* ---------- responsive ---------- */
+@media (max-width:1120px){
+  /* below this the two stage columns would overlap, so the stage drops
+     to the video tile and the week card only */
+  .fd-stage{ height:330px; }
+  .fd-cardv{ width:224px; }
+  .fd-cardw{ top:196px; width:238px; }
+  .fd-card12, .fd-cardp{ display:none; }
+}
 @media (max-width:1000px){
   .fd-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
   .fd-runs{ grid-template-columns:1fr; }
@@ -451,15 +439,13 @@ body.fd{ background:#fff; }
   .fd-grid{ grid-template-columns:1fr; }
   .fd-who, .fd-wait-grid{ grid-template-columns:1fr; }
   .fd-hero-cta .fd-btn, .fd-x .fd-btn{ width:100%; }
+  .fd-hero-grid{ grid-template-columns:1fr; }
+  .fd-stage{ display:none; }
   .fd-hero-fact{ padding-right:26px; margin-right:26px; }
   .fd-hero-bg{ background-position:center; }
-  .fd-phase{ padding-left:52px; }
-  .fd-curr-rail{ left:15px; }
-  .fd-phase-dot{ left:4px; }
 }
 @media (prefers-reduced-motion:reduce){
   .fd-rise, .fd-card{ opacity:1 !important; transform:none !important; transition:none; }
-  .fd-arc{ --arc:0 !important; }
   .fd-badge i{ animation:none; }
   .fd-run-ic svg [data-draw]{ stroke-dashoffset:0; animation:none; }
   .fd-chars span{ transition:none; }
@@ -523,6 +509,7 @@ body.fd{ background:#fff; }
 
 <!-- ===== HERO ===== -->
 <header class="fd-hero">
+  <canvas class="fd-hero-canvas" id="fd-net" aria-hidden="true"></canvas>
   <div class="fd-hero-glow" aria-hidden="true"></div>
   <div class="fd-wrap">
     <div class="fd-hero-grid">
@@ -530,7 +517,7 @@ body.fd{ background:#fff; }
       <div>
         <span class="fd-badge fd-rise"><i></i>First cohort forming</span>
         <h1 class="fd-h1"><span class="fd-split" data-split>Start at the beginning. Finish able to build.</span></h1>
-        <p class="fd-lead fd-rise">Twelve weeks that assume nothing. No degree, no coding background, no prior exposure to AI. We teach the ground floor properly instead of skipping it, and you leave with work you can show.</p>
+        <p class="fd-lead fd-rise">Six courses that assume nothing. No degree, no coding background, no prior exposure to AI. We teach the ground floor properly instead of skipping it, and you leave with work you can show.</p>
 
         <div class="fd-hero-cta fd-rise">
           <a href="#waitlist" class="fd-btn fd-btn-red"><span data-chars>Join the waitlist</span>
@@ -540,7 +527,7 @@ body.fd{ background:#fff; }
         </div>
 
         <div class="fd-hero-facts fd-rise">
-          <div class="fd-hero-fact"><b>12 weeks</b><span>Zero to a working foundation</span></div>
+          <div class="fd-hero-fact"><b>6 courses</b><span>Six to sixteen weeks each</span></div>
           <div class="fd-hero-fact"><b>Live</b><span>Taught in real time</span></div>
           <div class="fd-hero-fact"><b>No prerequisites</b><span>Nothing assumed</span></div>
         </div>
@@ -549,7 +536,7 @@ body.fd{ background:#fff; }
       <!-- Card stage. Same system as the landing page hero, with the
            content a beginner would actually care about. -->
       <div class="fd-stage" aria-hidden="true">
-        <div class="fd-card-f fd-cardv">
+        <div class="fd-card-f fd-cardv" data-depth="1.35">
           <div class="in">
             <div class="fd-vid">
               <span class="fd-vid-live"><i></i>LIVE</span>
@@ -570,11 +557,11 @@ body.fd{ background:#fff; }
           </div>
         </div>
 
-        <div class="fd-card-f fd-cardw">
+        <div class="fd-card-f fd-cardw" data-depth="0.8">
           <div class="in">
             <div class="fd-wk-top">
               <span class="fd-wk-tag"><i></i>WEEK 01</span>
-              <span class="fd-ck">of 12</span>
+              <span class="fd-ck">Ground floor</span>
             </div>
             <div class="fd-wk-title">How models actually work</div>
             <div class="fd-wk-meta">Ground floor · No prior experience</div>
@@ -583,15 +570,15 @@ body.fd{ background:#fff; }
           </div>
         </div>
 
-        <div class="fd-card-f fd-card12">
+        <div class="fd-card-f fd-card12" data-depth="1.5">
           <div class="in">
-            <div class="fd-ck">Programme length</div>
-            <div class="fd-cbig">12 weeks</div>
-            <div class="fd-csub">from zero to built</div>
+            <div class="fd-ck">Course length</div>
+            <div class="fd-cbig">6 &ndash; 16</div>
+            <div class="fd-csub">weeks, depending on the course</div>
           </div>
         </div>
 
-        <div class="fd-card-f fd-cardp">
+        <div class="fd-card-f fd-cardp" data-depth="1.1">
           <div class="in">
             <div class="fd-cardp-ic">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -610,6 +597,7 @@ body.fd{ background:#fff; }
 
 <!-- ===== COURSES ===== -->
 <section class="fd-courses" id="courses">
+  <canvas class="fd-courses-canvas" id="fd-web" aria-hidden="true"></canvas>
   <div class="fd-wrap">
     <div class="fd-head fd-rise">
       <span class="fd-kicker">The courses</span>
@@ -631,8 +619,7 @@ body.fd{ background:#fff; }
 </section>
 
 <!-- ===== WHO ===== -->
-<div class="fd-arcwrap">
-<section class="fd-sec fd-sec-cream fd-arc" data-arc>
+<section class="fd-sec fd-sec-cream">
   <div class="fd-wrap">
     <div class="fd-head fd-rise">
       <span class="fd-kicker">Who this is for</span>
@@ -666,62 +653,6 @@ body.fd{ background:#fff; }
       <div class="fd-who-out fd-rise">
         <b>Genuinely unsure?</b> The <a href="aiquiz.html">free readiness check</a> takes about three minutes and tells you which track fits where you actually are. You do not need to give an email to see the result.
       </div>
-    </div>
-  </div>
-</section>
-</div>
-
-<!-- ===== CURRICULUM ===== -->
-<section class="fd-sec" id="curriculum">
-  <div class="fd-wrap">
-    <div class="fd-head fd-rise">
-      <span class="fd-kicker">Twelve weeks</span>
-      <h2 class="fd-h2">Three phases, and none of them skipped.</h2>
-      <p class="fd-lead">Longer than the professional sprints on purpose. Building the ground floor properly is what makes everything after it hold up.</p>
-    </div>
-
-    <div class="fd-curr" id="fd-curr">
-      <div class="fd-curr-rail" aria-hidden="true"><i id="fd-curr-fill"></i></div>
-
-      <div class="fd-phase fd-rise" data-phase>
-        <div class="fd-phase-dot" aria-hidden="true"></div>
-        <div class="fd-phase-k"><b>Ground floor</b><span>Weeks 1 to 4</span></div>
-        <p>What these systems are, what they are not, and why they behave the way they do. You finish able to explain the thing you have been using, and to spot when it is wrong.</p>
-        <div class="fd-weeks">
-          <div class="fd-week"><b>Week 01</b><span>How models actually work</span></div>
-          <div class="fd-week"><b>Week 02</b><span>Prompting past the guesswork</span></div>
-          <div class="fd-week"><b>Week 03</b><span>Where it fails, and why</span></div>
-          <div class="fd-week"><b>Week 04</b><span>Judging output like a reviewer</span></div>
-        </div>
-      </div>
-
-      <div class="fd-phase fd-rise" data-phase>
-        <div class="fd-phase-dot" aria-hidden="true"></div>
-        <div class="fd-phase-k"><b>Hands on the tools</b><span>Weeks 5 to 8</span></div>
-        <p>Working properly rather than guessing. Structured practice on real tasks, with the habits that separate someone getting lucky from someone who knows what they are doing.</p>
-        <div class="fd-weeks">
-          <div class="fd-week"><b>Week 05</b><span>Your working toolkit</span></div>
-          <div class="fd-week"><b>Week 06</b><span>Chaining steps together</span></div>
-          <div class="fd-week"><b>Week 07</b><span>Working with your own data</span></div>
-          <div class="fd-week"><b>Week 08</b><span>Checking and correcting</span></div>
-        </div>
-      </div>
-
-      <div class="fd-phase fd-rise" data-phase>
-        <div class="fd-phase-dot" aria-hidden="true"></div>
-        <div class="fd-phase-k"><b>Build something real</b><span>Weeks 9 to 12</span></div>
-        <p>A project taken from nothing to finished, with the reasoning documented. It is the piece you show people afterwards, and the bridge into a professional track.</p>
-        <div class="fd-weeks">
-          <div class="fd-week"><b>Week 09</b><span>Scoping something buildable</span></div>
-          <div class="fd-week"><b>Week 10</b><span>Building the first version</span></div>
-          <div class="fd-week"><b>Week 11</b><span>Testing it against reality</span></div>
-          <div class="fd-week"><b>Week 12</b><span>Presenting and defending it</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="fd-curr-note fd-rise">
-      <b>This outline is indicative while the curriculum is signed off.</b> The three phases and the twelve week length are settled. The week titles above will firm up before the first cohort opens, and everyone on the waitlist gets the final version first.
     </div>
   </div>
 </section>
@@ -846,6 +777,9 @@ body.fd{ background:#fff; }
 <button class="back-to-top">↑</button>
 
 <script src="script.js"></script>
+<script src="assets/vendor/three.min.js"></script>
+<script src="field.js"></script>
+<script src="foundations-courses.js"></script>
 <script src="assets/vendor/lenis.min.js"></script>
 <script src="assets/vendor/anime.min.js"></script>
 
@@ -879,52 +813,55 @@ body.fd{ background:#fff; }
     });
   }
 
-  /* ---------- the arc ---------- */
-  var arcs = [].slice.call(document.querySelectorAll('[data-arc]'));
-  function paintArcs() {
-    if (reduce) return;
-    var vh = window.innerHeight || document.documentElement.clientHeight;
-    for (var i = 0; i < arcs.length; i++) {
-      var p = arcs[i].getBoundingClientRect().top / vh;
-      if (p < 0) p = 0; else if (p > 1) p = 1;
-      /* hold the dome, then collapse it late */
-      p = 1 - Math.pow(1 - p, 3);
-      arcs[i].style.setProperty('--arc', p.toFixed(4));
-    }
-  }
+  /* ---------- particle fields + card parallax ----------
+     Same system as the landing hero, from field.js. Tuned darker and
+     calmer here: this sits behind a headline, not beside one. */
+  var F = window.BXField;
+  var heroField = null, webField = null;
+  if (F && F.supported && !reduce) {
+    var isNarrow = window.matchMedia('(max-width: 820px)').matches;
+    heroField = F.create(document.getElementById('fd-net'), {
+      count: isNarrow ? 90 : 180, speed: 0.05, depth: 30,
+      inkColor: 0xFFFFFF, accentColor: 0xFF294E, redRatio: 0.16,
+      sizeMin: 1.5, sizeMax: 3.1, sizeRed: 4.2,
+      pointOpacity: 0.75, lines: true, lineOpacity: 0.2, linkRadius: 17,
+      repel: true
+    });
+    webField = F.create(document.getElementById('fd-web'), {
+      count: isNarrow ? 70 : 140, speed: 0.03, depth: 22,
+      inkColor: 0x8FA3BC, accentColor: 0xC4173A, redRatio: 0.07,
+      sizeMin: 1.4, sizeMax: 2.6, sizeRed: 3.2,
+      pointOpacity: 0.5, lines: true, lineOpacity: 0.16, linkRadius: 16,
+      repel: false
+    });
+    F.watch(document.querySelector('.fd-hero'), heroField);
+    F.watch(document.getElementById('courses'), webField);
 
-  /* ---------- curriculum rail ---------- */
-  var phases = [].slice.call(document.querySelectorAll('[data-phase]'));
-  var fill = document.getElementById('fd-curr-fill');
-  var curr = document.getElementById('fd-curr');
-  function paintRail() {
-    if (!fill || !curr || !phases.length) return;
-    var vh = window.innerHeight || document.documentElement.clientHeight;
-    var mark = vh * 0.62;              /* the line a phase must cross to light */
-    var box = curr.getBoundingClientRect();
-    var lastLit = -1;
-    for (var i = 0; i < phases.length; i++) {
-      var lit = phases[i].getBoundingClientRect().top < mark;
-      phases[i].classList.toggle('lit', lit);
-      if (lit) lastLit = i;
-    }
-    /* the fill runs to the last lit dot rather than to scroll position,
-       so it can never finish before the content does */
-    if (lastLit < 0) { fill.style.setProperty('--fill', '0%'); return; }
-    var dot = phases[lastLit].querySelector('.fd-phase-dot').getBoundingClientRect();
-    var pct = ((dot.top + dot.height / 2) - box.top - 14) / Math.max(1, box.height - 28) * 100;
-    fill.style.setProperty('--fill', Math.max(0, Math.min(100, pct)).toFixed(2) + '%');
+    /* the stage cards drift against the pointer, the field follows it */
+    var stageCards = [].slice.call(document.querySelectorAll('.fd-stage [data-depth]'));
+    var mx = 0, my = 0, tx = 0, ty = 0;
+    window.addEventListener('mousemove', function (e) {
+      tx = (e.clientX / window.innerWidth) * 2 - 1;
+      ty = -((e.clientY / window.innerHeight) * 2 - 1);
+    }, { passive: true });
+    (function par() {
+      mx += (tx - mx) * 0.06; my += (ty - my) * 0.06;
+      if (heroField) heroField.setMouse(mx, my);
+      for (var i = 0; i < stageCards.length; i++) {
+        var d = parseFloat(stageCards[i].getAttribute('data-depth')) || 1;
+        stageCards[i].style.transform = 'translate3d(' + (mx * -7 * d).toFixed(2) + 'px,' + (my * 7 * d).toFixed(2) + 'px,0)';
+      }
+      requestAnimationFrame(par);
+    })();
   }
 
   /* ---------- one rAF loop drives everything ---------- */
   function frame(time) {
     if (lenis) lenis.raf(time);
-    paintArcs();
-    paintRail();
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
-  window.addEventListener('resize', function () { paintArcs(); paintRail(); }, { passive: true });
+
 
   /* ---------- headline split ---------- */
   var splitEl = document.querySelector('[data-split]');
@@ -1021,121 +958,69 @@ body.fd{ background:#fff; }
 
 <script>
 /* ============================================================
-   FOUNDATIONS — courses from the API
+   FOUNDATIONS — the course grid
 
-   Everything at level BEGINNER, rendered as cards. A course with
-   no page of its own yet points at the waitlist rather than a
-   dead link, and says so, so adding a programme on the backend
-   never produces a 404 here.
+   Cards come from the register in foundations-courses.js, so the six
+   courses show whether or not the backend has a record for them yet.
+   Each card then asks the API for that course's cohorts and shows the
+   next start date if there is one. The card links to the course page;
+   the waitlist lives there, not here.
    ============================================================ */
 (function () {
   'use strict';
+  var grid = document.getElementById('fd-grid');
+  var select = document.getElementById('fd-interest');
+  if (!grid || !window.FND) return;
 
-  var API = (location.hostname === 'brixgate.com' || location.hostname === 'www.brixgate.com')
-    ? 'https://api.brixgate.com'
-    : 'https://dev.api.brixgate.com';
-
-  /* art and copy are matched on a keyword, because slugs differ
-     between environments and new courses arrive without either */
-  var ART = [
-    { any: ['automation'],            img: 'assets/fnd/automations.jpg' },
-    { any: ['data', 'analytic'],      img: 'assets/fnd/data.jpg' },
-    { any: ['cyber', 'security'],     img: 'assets/fnd/security.jpg' },
-    { any: ['engineer', 'software'],  img: 'assets/Software Engineering.png' },
-    { any: ['market', 'product'],     img: 'assets/Product Marketing.png' },
-    { any: ['financ'],                img: 'assets/Financial Modelling.png' }
-  ];
-  var BLURB = [
-    { any: ['automation'],           text: 'Build the automations that take the repetitive work off your desk, start to finish.' },
-    { any: ['data', 'analytic'],     text: 'Turn messy data into answers people act on, and know when the answer is wrong.' },
-    { any: ['cyber', 'security'],    text: 'The groundwork of defending systems, with AI in the loop from the beginning.' },
-    { any: ['engineer', 'software'], text: 'From no code at all to shipping something small and real that works.' }
-  ];
-  var PAGES = [];   /* no Foundations course pages exist yet */
-
-  function match(list, p, key) {
-    var hay = ((p.slug || '') + ' ' + (p.title || '')).toLowerCase();
-    for (var i = 0; i < list.length; i++) {
-      for (var j = 0; j < list[i].any.length; j++) {
-        if (hay.indexOf(list[i].any[j]) !== -1) return list[i][key];
-      }
-    }
-    return null;
-  }
-  function esc(s) {
-    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+  var ARROW = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+  function esc(v) {
+    return String(v == null ? '' : v).replace(/[&<>"]/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
     });
   }
 
-  var ARROW = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
-
-  var grid = document.getElementById('fd-grid');
-  var select = document.getElementById('fd-interest');
-  if (!grid) return;
-
-  function cardHTML(p, i) {
-    var img = match(ART, p, 'img') || 'assets/fnd/foundations.jpg';
-    var text = match(BLURB, p, 'text') ||
-      (p.subtitle ? String(p.subtitle).split(/(?<=\.)\s/)[0] :
-        'Twelve weeks from the ground floor up, taught live and finished with something you built.');
-    var page = match(PAGES, p, 'page');
-    var href = page || '#waitlist';
-    var open = String(p.status || '').toUpperCase() === 'PUBLISHED' && page;
-    /* the art carries a transition name so it can morph into the
-       course page hero once those pages exist */
-    var vt = 'view-transition-name:fd-art-' + (p.id != null ? p.id : i) + ';';
-    return '<a class="fd-card" href="' + href + '">' +
-             '<div class="fd-card-art" style="' + vt + '">' +
-               '<img src="' + img + '" alt="" loading="lazy" />' +
-               '<span class="fd-card-tag' + (open ? ' open' : '') + '">' + (open ? 'Enrolling' : 'Waitlist open') + '</span>' +
+  grid.innerHTML = FND.COURSES.map(function (c) {
+    return '<a class="fd-card" href="' + c.page + '" data-slug="' + c.slug + '" style="--accent:' + c.accent + '">' +
+             '<div class="fd-card-art">' +
+               '<img src="' + c.art + '" alt="" loading="lazy" />' +
+               '<span class="fd-card-weeks">' + c.weeks + ' weeks</span>' +
              '</div>' +
              '<div class="fd-card-b">' +
-               '<h3>' + esc(p.title) + '</h3>' +
-               '<p>' + esc(text) + '</p>' +
-               '<span class="fd-card-go"><span>' + (page ? 'See the course' : 'Join the waitlist') + '</span>' + ARROW + '</span>' +
+               '<h3>' + esc(c.title) + '</h3>' +
+               '<span class="fd-card-tag">' + esc(c.tagline) + '</span>' +
+               '<p>' + esc(c.blurb) + '</p>' +
+               '<span class="fd-card-when" data-when>Checking dates…</span>' +
+               '<span class="fd-card-go"><span>Read the full course</span>' + ARROW + '</span>' +
              '</div>' +
            '</a>';
-  }
+  }).join('');
 
-  function empty() {
-    grid.innerHTML =
-      '<div class="fd-card in" style="grid-column:1 / -1;cursor:default">' +
-        '<div class="fd-card-b" style="padding:34px 34px 36px">' +
-          '<h3>The first courses are being scheduled</h3>' +
-          '<p style="margin-bottom:0">Foundations opens with a small number of courses and grows from there. ' +
-          'Join the waitlist and you will get the list, the dates and the pricing before any of it goes public.</p>' +
-        '</div>' +
-      '</div>';
-  }
+  var cards = [].slice.call(grid.querySelectorAll('.fd-card'));
+  if (window.__fdRevealCards) window.__fdRevealCards(cards);
 
-  function fillSelect(items) {
-    if (!select) return;
-    var keep = select.value;
+  if (select) {
     select.innerHTML = '<option value="">Choose one</option>' +
-      items.map(function (p) { return '<option value="' + esc(p.title) + '">' + esc(p.title) + '</option>'; }).join('') +
+      FND.COURSES.map(function (c) { return '<option value="' + esc(c.title) + '">' + esc(c.title) + '</option>'; }).join('') +
       '<option value="Not sure yet">Not sure yet</option>';
-    if (keep) select.value = keep;
   }
 
-  fetch(API + '/api/v1/programs?level=BEGINNER')
-    .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (json) {
-      var list = (json && json.data && json.data.programs) || [];
-      list = list.filter(function (p) { return String(p.status || '').toUpperCase() === 'PUBLISHED'; });
-      if (!list.length) { empty(); fillSelect([]); return; }
-      grid.innerHTML = list.map(cardHTML).join('');
-      fillSelect(list);
-      if (window.__fdRevealCards) {
-        window.__fdRevealCards([].slice.call(grid.querySelectorAll('.fd-card')));
+  /* one /programs call shared by all six, then one cohort call each */
+  FND.COURSES.forEach(function (c) {
+    var el = grid.querySelector('[data-slug="' + c.slug + '"] [data-when]');
+    if (!el) return;
+    FND.fetchCohorts(c).then(function (res) {
+      var next = res.cohorts
+        .filter(function (x) { return x.start_date; })
+        .sort(function (a, b) { return new Date(a.start_date) - new Date(b.start_date); })[0];
+      if (next) {
+        el.innerHTML = '<i class="on"></i>Next cohort ' + esc(FND.fmtDate(next.start_date));
+      } else if (res.programme) {
+        el.innerHTML = '<i></i>Dates being scheduled';
+      } else {
+        el.innerHTML = '<i></i>Waitlist open';
       }
-      var note = document.getElementById('fd-courses-note');
-      if (note && list.length === 1) {
-        note.innerHTML = '<b>More Foundations courses are on the way.</b> This is the first one open for registration; ' +
-          'the rest follow through 2026. Join the <a href="#waitlist">waitlist</a> and you will hear before places go public.';
-      }
-    })
-    .catch(function () { empty(); fillSelect([]); });
+    });
+  });
 })();
 </script>
 
