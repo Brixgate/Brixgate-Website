@@ -807,11 +807,13 @@
     .lp .lp-tier-f .lp-tier-art::after {
       background: linear-gradient(160deg, rgba(2,16,36,.94) 0%, rgba(13,28,52,.82) 44%, rgba(154,35,53,.5) 100%);
     }
-    /* The :not() is load bearing. `.lp .lp-tier > *` and `.lp .lp-tier-art`
-       have identical specificity, and this rule comes later, so without the
-       exclusion it drags the absolutely positioned art back to relative and
-       the card renders as a picture with the copy stacked underneath. */
-    .lp .lp-tier > *:not(.lp-tier-art) { position: relative; z-index: 1; }
+    /* The :not() list is load bearing. This rule comes after the rules that
+       position the art and the underlay, and at equal specificity it would
+       drag both back to relative: the art would stack above the copy
+       instead of behind it, and the underlay would push the face down the
+       card instead of sitting under it. Anything absolutely positioned
+       inside a tier card has to be excluded here. */
+    .lp .lp-tier > *:not(.lp-tier-art):not(.lp-tier-under) { position: relative; z-index: 1; }
     .lp .lp-tier-badge {
       display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
       height: 30px; padding: 0 13px; border-radius: 999px;
@@ -835,6 +837,100 @@
     @media (max-width: 860px) {
       .lp .lp-tier-grid { grid-template-columns: 1fr; }
       .lp .lp-tier { padding: 32px 28px 30px; min-height: 0; }
+    }
+
+
+    /* ============================================================
+       TIER UNDERLAY NAV  (experiment)
+       A list of courses sits under each tier card; on hover the face
+       slides aside and scales back to reveal it. Built at runtime by
+       tier-underlay.js. Removing that script tag and this block puts
+       the cards back to plain links with nothing else to undo.
+       ============================================================ */
+    .lp .lp-tier[data-tier-card] { padding: 0; display: block; overflow: hidden; }
+    .lp .lp-tier[data-tier-card]:hover { transform: none; }
+
+    /* the face: the original card, now a lid */
+    .lp .lp-tier-face {
+      position: relative; z-index: 2; display: flex; flex-direction: column;
+      min-height: 340px; padding: 40px 40px 36px; text-decoration: none;
+      border-radius: var(--lp-r-lg); overflow: hidden;
+      transform-origin: left center;
+      transition: transform .62s var(--lp-ease), box-shadow .62s var(--lp-ease), border-radius .62s var(--lp-ease);
+      will-change: transform;
+    }
+    /* Scale only, from the left edge, with a small inset for the margin.
+       Translating it as well pushed the face off the left of the card and
+       the overflow clip ate the badge. Shrinking in place is also what the
+       original does: the lid gets smaller, it does not slide away. */
+    .lp .lp-tier[data-tier-card]:hover .lp-tier-face,
+    .lp .lp-tier[data-tier-card]:focus-within .lp-tier-face {
+      transform: translate(3%, 0) scale(.58);
+      box-shadow: 0 40px 80px -34px rgba(1, 11, 30, .85);
+    }
+
+    /* the underlay, revealed on the right */
+    .lp .lp-tier-under {
+      position: absolute; inset: 0; z-index: 1;
+      display: flex; flex-direction: column; justify-content: center;
+      align-items: flex-end; text-align: right;
+      /* Left inset clears the shrunken face, so nothing in the list ever
+         sits behind it. Without it the full-width "Explore all" row ran
+         under the face and lost its first few words. */
+      padding: 30px 28px 30px 63%; gap: 2px;
+      background: linear-gradient(120deg, #06101F 0%, #0D1C34 62%, #14243F 100%);
+    }
+    .lp .lp-tier-f .lp-tier-under {
+      background: linear-gradient(120deg, #06101F 0%, #14203A 54%, #3A1522 100%);
+    }
+    .lp .lp-tier-under-k {
+      font-size: .6rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(255,255,255,.34); margin-bottom: 12px; padding-right: 2px;
+    }
+    .lp .lp-tier-link {
+      display: inline-flex; align-items: center; justify-content: flex-end; gap: 9px;
+      padding: 9px 2px; text-decoration: none;
+      font-size: .94rem; font-weight: 650; letter-spacing: -.018em;
+      color: rgba(255,255,255,.56);
+      transition: color .24s var(--lp-ease), transform .24s var(--lp-ease);
+      /* each row arrives a beat after the one above it */
+      opacity: 0; transform: translateX(14px);
+    }
+    .lp .lp-tier[data-tier-card]:hover .lp-tier-link,
+    .lp .lp-tier[data-tier-card]:focus-within .lp-tier-link {
+      opacity: 1; transform: none;
+      transition: opacity .45s var(--lp-ease) calc(var(--i) * .05s + .1s),
+                  transform .45s var(--lp-ease) calc(var(--i) * .05s + .1s),
+                  color .2s var(--lp-ease);
+    }
+    .lp .lp-tier-link:hover { color: #fff; transform: translateX(-3px); }
+    .lp .lp-tier-link em {
+      font-style: normal; font-size: .56rem; font-weight: 800; letter-spacing: .1em;
+      text-transform: uppercase; padding: 3px 6px; border-radius: 4px;
+      background: rgba(255,255,255,.1); color: rgba(255,255,255,.5);
+    }
+    .lp .lp-tier-link.is-all {
+      margin-top: 13px; padding-top: 14px; font-size: .83rem; font-weight: 700;
+      color: #fff; border-top: 1px solid rgba(255,255,255,.14);
+      align-self: stretch; justify-content: flex-end;
+    }
+    .lp .lp-tier-link.is-all svg { width: 15px; height: 15px; transition: transform .28s var(--lp-ease); }
+    .lp .lp-tier-link.is-all:hover svg { transform: translateX(4px); }
+
+    /* No hover to perform here, so the list sits under the face as an
+       ordinary block and nothing is hidden behind a gesture. */
+    @media (hover: none), (max-width: 900px) {
+      .lp .lp-tier[data-tier-card] { overflow: visible; }
+      .lp .lp-tier-face { transform: none !important; box-shadow: none; }
+      .lp .lp-tier-under {
+        position: static; inset: auto; align-items: stretch; text-align: left;
+        padding: 22px 26px 24px !important; border-radius: 0 0 var(--lp-r-lg) var(--lp-r-lg);
+      }
+      .lp .lp-tier-link { opacity: 1; transform: none; justify-content: space-between; font-size: .95rem; }
+      .lp .lp-tier-link.is-all { justify-content: flex-start; gap: 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .lp .lp-tier-face, .lp .lp-tier-link { transition: none !important; }
     }
 
     /* ============================================================
@@ -1501,7 +1597,7 @@
         </span>
       </a>
 
-      <a href="professionals.html" class="lp-tier fade-up">
+      <a href="professionals.html" class="lp-tier lp-tier-p fade-up">
         <div class="lp-tier-art" aria-hidden="true"><img src="assets/Software Engineering.png" alt="" loading="lazy" /></div>
         <span class="lp-tier-badge live"><i></i>Cohorts running now</span>
         <h3>AI for Professionals</h3>
@@ -2262,6 +2358,8 @@
 <script src="assets/vendor/three.min.js"></script>
 <script src="field.js"></script>
 <script src="cursor.js"></script>
+<script src="foundations-courses.js"></script>
+<script src="tier-underlay.js"></script>
 <script>
 (function () {
   'use strict';
