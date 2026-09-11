@@ -73,9 +73,10 @@ body.fd{ background:#fff; }
 /* the same particle network as the landing hero, from field.js */
 .fd-hero-canvas{
   position:absolute; inset:0; width:100%; height:100%; display:block;
-  pointer-events:none; z-index:0; opacity:.9;
-  -webkit-mask-image:radial-gradient(120% 100% at 62% 44%, #000 0%, rgba(0,0,0,.85) 58%, transparent 92%);
-          mask-image:radial-gradient(120% 100% at 62% 44%, #000 0%, rgba(0,0,0,.85) 58%, transparent 92%);
+  pointer-events:none; z-index:0; opacity:.72;
+  /* weighted to the right, so the field is thinnest under the headline */
+  -webkit-mask-image:radial-gradient(105% 95% at 74% 46%, #000 0%, rgba(0,0,0,.6) 52%, transparent 88%);
+          mask-image:radial-gradient(105% 95% at 74% 46%, #000 0%, rgba(0,0,0,.6) 52%, transparent 88%);
 }
 .fd-courses-canvas{
   position:absolute; inset:0; width:100%; height:100%; display:block;
@@ -997,11 +998,15 @@ body.fd{ background:#fff; }
   var heroField = null, webField = null;
   if (F && F.supported && !reduce) {
     var isNarrow = window.matchMedia('(max-width: 820px)').matches;
+    /* Dialled back from 180 points at 0.2 line opacity: behind a headline
+       the web was competing with the words rather than sitting under
+       them. Fewer points and a shorter link radius means far fewer lines
+       drawn, and the ones that remain are half as bright. */
     heroField = F.create(document.getElementById('fd-net'), {
-      count: isNarrow ? 90 : 180, speed: 0.05, depth: 30,
-      inkColor: 0xFFFFFF, accentColor: 0xFF294E, redRatio: 0.16,
-      sizeMin: 1.5, sizeMax: 3.1, sizeRed: 4.2,
-      pointOpacity: 0.75, lines: true, lineOpacity: 0.2, linkRadius: 17,
+      count: isNarrow ? 60 : 120, speed: 0.045, depth: 30,
+      inkColor: 0xFFFFFF, accentColor: 0xFF294E, redRatio: 0.14,
+      sizeMin: 1.4, sizeMax: 2.8, sizeRed: 3.8,
+      pointOpacity: 0.6, lines: true, lineOpacity: 0.09, linkRadius: 13,
       repel: true
     });
     webField = F.create(document.getElementById('fd-web'), {

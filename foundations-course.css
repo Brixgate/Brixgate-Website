@@ -18,7 +18,11 @@
   --fc-accent:#FF294E; --fc-accent-2:#FF5748;
   --fc-ease:cubic-bezier(.2,.7,.2,1); --fc-r:20px;
 }
-body.fc{ background:#fff; }
+/* styles.css sets `body { color: var(--white) }` for the dark original
+   site. Without overriding it here, any element with no colour of its
+   own renders white on white: the FAQ heading sits in .fc-faq-head
+   rather than .fc-head, so it had no rule and was invisible. */
+body.fc{ background:#fff; color:var(--fc-ink); }
 .fc-wrap{ max-width:1200px; margin:0 auto; padding:0 32px; }
 .fc h1,.fc h2,.fc h3{ letter-spacing:-.032em; line-height:1.1; margin:0; }
 .fc-h1{ font-size:clamp(2.3rem,4.6vw,3.7rem); font-weight:800; }
@@ -175,16 +179,41 @@ body.fc{ background:#fff; }
 .fc-out-c h3{ font-size:1.08rem; font-weight:750; color:#fff; }
 .fc-out-c p{ margin:10px 0 0; font-size:.91rem; line-height:1.65; color:rgba(255,255,255,.66); }
 
-/* ---------- tools ---------- */
+/* ---------- tools ----------
+   Real marks where we have the file, a wordmark where we do not. The
+   img carries an onerror that flips the tile, so a missing or renamed
+   logo degrades to type instead of a broken image icon. Greyscale at
+   rest and full colour on hover, matching the landing page marquee. */
 .fc-tools{ display:flex; flex-wrap:wrap; gap:10px; margin-top:34px; }
 .fc-tool{
-  display:inline-flex; align-items:center; gap:9px; height:42px; padding:0 16px;
-  border-radius:11px; background:#fff; border:1px solid var(--fc-line);
-  font-size:.88rem; font-weight:650; color:var(--fc-ink);
-  transition:border-color .25s, transform .25s var(--fc-ease);
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  height:52px; padding:0 20px; border-radius:12px;
+  background:#fff; border:1px solid var(--fc-line);
+  transition:border-color .25s, transform .25s var(--fc-ease), box-shadow .25s var(--fc-ease);
 }
-.fc-tool:hover{ border-color:var(--fc-accent); transform:translateY(-2px); }
-.fc-tool i{ width:7px; height:7px; border-radius:2px; background:var(--fc-accent); }
+.fc-tool:hover{ border-color:var(--fc-accent); transform:translateY(-2px); box-shadow:0 12px 26px -16px rgba(2,16,36,.34); }
+.fc-tool img{
+  height:22px; width:auto; display:block;
+  filter:grayscale(1) opacity(.62);
+  transition:filter .28s var(--fc-ease);
+}
+.fc-tool:hover img{ filter:none; }
+.fc-tool b{ display:none; font-size:.9rem; font-weight:700; color:var(--fc-ink); letter-spacing:-.015em; }
+.fc-tool.no-logo img{ display:none; }
+.fc-tool.no-logo b{ display:block; }
+.fc-sec-ink .fc-tool{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.14); }
+.fc-sec-ink .fc-tool:hover{ background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3); }
+/* These are horizontal lockups drawn in dark ink for light backgrounds,
+   so on the dark band they have to be knocked out to white rather than
+   greyscaled. Colour-on-hover is a light-section idea only; here the
+   hover just brings them up to full strength. */
+.fc-sec-ink .fc-tool img{ filter:brightness(0) invert(1) opacity(.62); }
+.fc-sec-ink .fc-tool:hover img{ filter:brightness(0) invert(1) opacity(1); }
+.fc-sec-ink .fc-tool b{ color:#fff; }
+.fc-tools-note{
+  margin-top:18px; font-size:.82rem; line-height:1.6; color:var(--fc-muted);
+}
+.fc-sec-ink .fc-tools-note{ color:rgba(255,255,255,.5); }
 
 /* ---------- cohorts (from the API) ---------- */
 .fc-cohorts{ margin-top:40px; display:grid; gap:14px; }
