@@ -980,7 +980,10 @@ body.fd{ background:#fff; }
   }
 
   grid.innerHTML = FND.COURSES.map(function (c) {
-    return '<a class="fd-card" href="' + c.page + '" data-slug="' + c.slug + '" style="--accent:' + c.accent + '">' +
+    /* a course whose page is not built yet points at the waitlist, so
+       the grid can list the full set without any card 404ing */
+    var href = c.ready ? c.page : '#waitlist';
+    return '<a class="fd-card' + (c.ready ? '' : ' is-soon') + '" href="' + href + '" data-slug="' + c.slug + '" style="--accent:' + c.accent + '">' +
              '<div class="fd-card-art">' +
                '<img src="' + c.art + '" alt="" loading="lazy" />' +
                '<span class="fd-card-weeks">' + c.weeks + ' weeks</span>' +
@@ -990,7 +993,7 @@ body.fd{ background:#fff; }
                '<span class="fd-card-tag">' + esc(c.tagline) + '</span>' +
                '<p>' + esc(c.blurb) + '</p>' +
                '<span class="fd-card-when" data-when>Checking dates…</span>' +
-               '<span class="fd-card-go"><span>Read the full course</span>' + ARROW + '</span>' +
+               '<span class="fd-card-go"><span>' + (c.ready ? 'Read the full course' : 'Join the waitlist') + '</span>' + ARROW + '</span>' +
              '</div>' +
            '</a>';
   }).join('');
@@ -1017,7 +1020,7 @@ body.fd{ background:#fff; }
       } else if (res.programme) {
         el.innerHTML = '<i></i>Dates being scheduled';
       } else {
-        el.innerHTML = '<i></i>Waitlist open';
+        el.innerHTML = '<i></i>' + (c.ready ? 'Waitlist open' : 'Course page coming');
       }
     });
   });

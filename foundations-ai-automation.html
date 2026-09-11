@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Automation | Brixgate AI Foundations</title>
+  <meta name="description" content="Six weeks from zero to automations that run on their own. No coding background assumed. Live teaching, small cohort, built around your own repetitive work." />
+  <link rel="icon" type="image/png" href="assets/faviii.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="foundations-course.css" />
+
+<style>
+/* ============================================================
+   AI AUTOMATION  ·  six weeks
+   The shortest course in the set, so the curriculum is shown as a
+   single run of six steps with a flow line through them rather than
+   split into phases. Warm orange accent.
+   ============================================================ */
+:root{ --fc-accent:#FF5748; --fc-accent-2:#FFA23D; }
+
+/* ---------- the six week flow ---------- */
+.au-flow{ margin-top:48px; position:relative; }
+.au-flow::before{
+  content:""; position:absolute; left:0; right:0; top:31px; height:2px;
+  background:linear-gradient(90deg, var(--fc-accent) 0%, rgba(255,87,72,.18) 100%);
+  border-radius:2px;
+}
+.au-steps{ display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:16px; position:relative; }
+.au-step{ position:relative; }
+.au-step-n{
+  width:62px; height:62px; border-radius:18px; display:grid; place-items:center;
+  background:#fff; border:2px solid var(--fc-line);
+  font-size:.98rem; font-weight:800; color:var(--fc-muted);
+  transition:border-color .4s var(--fc-ease), color .4s, transform .4s var(--fc-ease), box-shadow .4s;
+  position:relative; z-index:1;
+}
+.au-step:hover .au-step-n,
+.au-step.on .au-step-n{
+  border-color:var(--fc-accent); color:var(--fc-accent); transform:translateY(-3px);
+  box-shadow:0 14px 28px -14px rgba(255,87,72,.6);
+}
+.au-step h3{ margin-top:18px; font-size:1rem; font-weight:750; color:var(--fc-ink); line-height:1.25; }
+.au-step p{ margin-top:9px; font-size:.86rem; line-height:1.58; color:var(--fc-body); }
+.au-step-k{ display:block; margin-top:10px; font-size:.66rem; font-weight:800; letter-spacing:.11em; text-transform:uppercase; color:var(--fc-accent); }
+
+/* ---------- what you automate ---------- */
+.au-cases{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; margin-top:44px; }
+.au-case{
+  display:grid; grid-template-columns:auto minmax(0,1fr); gap:18px; align-items:flex-start;
+  background:#fff; border:1px solid var(--fc-line); border-radius:var(--fc-r); padding:26px 28px;
+  transition:transform .4s var(--fc-ease), border-color .3s, box-shadow .4s var(--fc-ease);
+}
+.au-case:hover{ transform:translateY(-4px); border-color:#D8D3CC; box-shadow:0 20px 44px -26px rgba(2,16,36,.36); }
+.au-case-ic{
+  width:44px; height:44px; border-radius:13px; display:grid; place-items:center; flex:none;
+  background:linear-gradient(140deg, rgba(255,87,72,.16), rgba(255,162,61,.08));
+  color:var(--fc-accent);
+}
+.au-case-ic svg{ width:21px; height:21px; }
+.au-case h3{ font-size:1.04rem; font-weight:750; color:var(--fc-ink); }
+.au-case p{ margin-top:8px; font-size:.9rem; line-height:1.62; color:var(--fc-body); }
+
+/* ---------- before / after strip ---------- */
+.au-ba{ display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); gap:24px; align-items:center; margin-top:44px; }
+.au-ba-c{ border-radius:var(--fc-r); padding:28px 30px; }
+.au-ba-c.before{ background:#FCFBFA; border:1px dashed #D8D3CC; }
+.au-ba-c.after{ background:linear-gradient(150deg,#0D1C34,#021024); border:1px solid rgba(255,255,255,.12); color:#fff; }
+.au-ba-k{ font-size:.65rem; font-weight:800; letter-spacing:.15em; text-transform:uppercase; }
+.au-ba-c.before .au-ba-k{ color:var(--fc-faint); }
+.au-ba-c.after .au-ba-k{ color:var(--fc-accent); }
+.au-ba-c ul{ list-style:none; margin:16px 0 0; padding:0; display:flex; flex-direction:column; gap:11px; }
+.au-ba-c li{ font-size:.91rem; line-height:1.55; display:flex; gap:10px; align-items:flex-start; }
+.au-ba-c.before li{ color:var(--fc-body); }
+.au-ba-c.after li{ color:rgba(255,255,255,.8); }
+.au-ba-c li svg{ width:15px; height:15px; flex:none; margin-top:3px; }
+.au-ba-c.before li svg{ color:var(--fc-faint); }
+.au-ba-c.after li svg{ color:var(--fc-accent); }
+.au-ba-arrow{ color:var(--fc-accent); display:grid; place-items:center; }
+.au-ba-arrow svg{ width:34px; height:34px; }
+
+@media (max-width:1040px){
+  .au-steps{ grid-template-columns:repeat(3,minmax(0,1fr)); gap:26px 16px; }
+  .au-flow::before{ display:none; }
+}
+@media (max-width:760px){
+  .au-steps{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .au-cases{ grid-template-columns:1fr; }
+  .au-ba{ grid-template-columns:1fr; }
+  .au-ba-arrow{ transform:rotate(90deg); }
+}
+</style>
+</head>
+<body class="fc" data-course="ai-automation">
+
+<!-- Region Banner -->
+<div class="region-banner" id="region-banner">
+  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Now active in</span>
+  <div class="regions">
+    <span class="region-item">🇳🇬 Nigeria</span>
+    <span class="region-item">🇬🇧 United Kingdom</span>
+    <span class="region-item">🇺🇸 United States</span>
+    <span class="region-item">🇰🇪 Kenya</span>
+    <span class="region-item">🇿🇦 South Africa</span>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <div class="nav-mega" data-nav-mega></div>
+      <a href="experts.html">Experts</a>
+      <a href="organisations.html">For Organisations</a>
+      <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20Automation%20course." target="_blank" rel="noopener">Chat with us</a>
+    </div>
+    <div class="nav-cta">
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
+      <a href="apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="programme.html">Programmes</a>
+  <a href="foundations.html" class="nav-mobile-sub">AI Foundations</a>
+  <a href="professionals.html" class="nav-mobile-sub">AI for Professionals</a>
+  <a href="experts.html">Experts</a>
+  <a href="organisations.html">For Organisations</a>
+  <a href="apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<header class="fc-hero">
+  <div class="fc-wrap">
+    <div class="fc-hero-grid">
+      <div>
+        <div class="fc-crumb fc-rise">
+          <a href="foundations.html">AI Foundations</a>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>AI Automation</span>
+        </div>
+        <span class="fc-pill fc-rise"><i></i>6 weeks · no coding background needed</span>
+        <h1 class="fc-h1 fc-rise">Make the repetitive work run itself.</h1>
+        <p class="fc-lead fc-rise">Six weeks from never having built anything to automations that run without you. You bring the tasks that eat your week; we build them into something that does the job on its own.</p>
+
+        <div class="fc-hero-cta fc-rise">
+          <a href="#waitlist" class="fc-btn fc-btn-accent"><span data-chars>Join the waitlist</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#curriculum" class="fc-btn fc-btn-outline-light"><span data-chars>See the six weeks</span></a>
+        </div>
+
+        <div class="fc-stats fc-rise">
+          <div class="fc-stat"><b>6 weeks</b><span>Shortest Foundations course</span></div>
+          <div class="fc-stat"><b>Live</b><span>Small cohort, taught in real time</span></div>
+          <div class="fc-stat"><b>Zero</b><span>Prior experience assumed</span></div>
+        </div>
+      </div>
+
+      <div class="fc-hero-art fc-rise">
+        <img src="assets/fnd/automations.jpg" alt="" />
+        <span class="fc-hero-badge"><i></i>Build it in week one, refine it for five</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== WHO ===== -->
+<section class="fc-sec fc-sec-cream">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">01</span><span class="t">Who it is for</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">If your week has a task you dread repeating, this is for you.</h2>
+      <p class="fc-lead">It does not matter what you do for a living. What matters is that something in your week is manual, repetitive and predictable, because that is exactly what an automation replaces.</p>
+    </div>
+
+    <div class="fc-who">
+      <div class="fc-who-c yes fc-rise">
+        <div class="fc-who-k">This is you</div>
+        <h3>Six weeks will suit you</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You copy things between spreadsheets, inboxes or tools by hand every week.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You have never written code and would rather not start by learning a language.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You want something working quickly rather than a long theoretical grounding.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You can find about four hours a week for six weeks.</span></li>
+        </ul>
+      </div>
+
+      <div class="fc-who-c no fc-rise">
+        <div class="fc-who-k">This is not you</div>
+        <h3>Look elsewhere in Foundations</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You want the deep theory behind the models. <a href="foundations-data-science.html" style="color:var(--fc-accent);font-weight:650">Data Science</a> runs sixteen weeks for that.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You are already automating things at work and want to go further.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You need a credential for a specific profession rather than a working skill.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BEFORE / AFTER ===== -->
+<section class="fc-sec">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">02</span><span class="t">What changes</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">The same week, six weeks later.</h2>
+    </div>
+
+    <div class="au-ba">
+      <div class="au-ba-c before fc-rise">
+        <div class="au-ba-k">Before</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Monday morning spent pulling the same numbers into the same report.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Replies written from scratch that are ninety percent the same each time.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Things missed because nobody remembered to check.</span></li>
+        </ul>
+      </div>
+
+      <div class="au-ba-arrow fc-rise" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+
+      <div class="au-ba-c after fc-rise">
+        <div class="au-ba-k">After</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>The report is in your inbox before you open your laptop.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Drafts written for you, in your own voice, waiting for a yes or a fix.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>The check runs whether or not anyone remembers it.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CURRICULUM ===== -->
+<section class="fc-sec fc-sec-cream" id="curriculum">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">03</span><span class="t">The six weeks</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">One automation, built and improved across six weeks.</h2>
+      <p class="fc-lead">You pick a real task in week one and it stays with you to the end. Every week it gets a little more capable, which is a far better way to learn than six disconnected exercises.</p>
+    </div>
+
+    <div class="au-flow">
+      <div class="au-steps">
+        <div class="au-step fc-rise on">
+          <div class="au-step-n">01</div>
+          <h3>Find the task</h3>
+          <p>What makes something worth automating, and how to spot the ones that quietly waste the most time.</p>
+          <span class="au-step-k">Pick yours</span>
+        </div>
+        <div class="au-step fc-rise">
+          <div class="au-step-n">02</div>
+          <h3>Map the steps</h3>
+          <p>Break it into triggers, decisions and actions. This is the part most people skip and then get stuck on.</p>
+          <span class="au-step-k">On paper first</span>
+        </div>
+        <div class="au-step fc-rise">
+          <div class="au-step-n">03</div>
+          <h3>Build version one</h3>
+          <p>Your first working automation, end to end. Ugly and functional beats elegant and theoretical.</p>
+          <span class="au-step-k">It runs</span>
+        </div>
+        <div class="au-step fc-rise">
+          <div class="au-step-n">04</div>
+          <h3>Add judgement</h3>
+          <p>Where a model decides rather than a rule, and how to keep it from confidently doing the wrong thing.</p>
+          <span class="au-step-k">AI in the loop</span>
+        </div>
+        <div class="au-step fc-rise">
+          <div class="au-step-n">05</div>
+          <h3>Make it safe</h3>
+          <p>Failure handling, limits and the checks that mean you can leave it running unattended.</p>
+          <span class="au-step-k">Trust it</span>
+        </div>
+        <div class="au-step fc-rise">
+          <div class="au-step-n">06</div>
+          <h3>Hand it over</h3>
+          <p>Document it so a colleague can run it, then present what you built and what it saves.</p>
+          <span class="au-step-k">Show it</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHAT YOU AUTOMATE ===== -->
+<section class="fc-sec">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">04</span><span class="t">Worked examples</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">The kinds of things people build here.</h2>
+      <p class="fc-lead">You build your own, but these are the shapes that come up again and again, and we work through each of them together.</p>
+    </div>
+
+    <div class="au-cases">
+      <div class="au-case fc-rise">
+        <div class="au-case-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div><h3>Inbox triage</h3><p>Sort what arrives, draft the reply that is nearly always the same, and flag the one that genuinely needs you.</p></div>
+      </div>
+      <div class="au-case fc-rise">
+        <div class="au-case-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><polyline points="7 14 11 10 15 13 21 6"/></svg></div>
+        <div><h3>The weekly report</h3><p>Pull the numbers, write the summary, send it to the people who need it, on a schedule you set once.</p></div>
+      </div>
+      <div class="au-case fc-rise">
+        <div class="au-case-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
+        <div><h3>Document handling</h3><p>Read what comes in, pull out the fields that matter, file it where it belongs and tell someone it arrived.</p></div>
+      </div>
+      <div class="au-case fc-rise">
+        <div class="au-case-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg></div>
+        <div><h3>The thing nobody remembers</h3><p>The weekly check, the follow-up, the renewal. Automations are at their best on work that is easy to forget.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OUTCOMES ===== -->
+<section class="fc-sec fc-sec-ink">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">05</span><span class="t">What you leave with</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">Something running, not a certificate of attendance.</h2>
+    </div>
+
+    <div class="fc-out">
+      <div class="fc-out-c fc-rise">
+        <div class="fc-out-n">01</div>
+        <h3>A working automation</h3>
+        <p>Built by you, running against your own task, with the failure handling to leave it unattended.</p>
+      </div>
+      <div class="fc-out-c fc-rise">
+        <div class="fc-out-n">02</div>
+        <h3>A method you can repeat</h3>
+        <p>The way of breaking a task into triggers, decisions and actions works on the next one too, and the one after.</p>
+      </div>
+      <div class="fc-out-c fc-rise">
+        <div class="fc-out-n">03</div>
+        <h3>Judgement about limits</h3>
+        <p>Knowing which tasks should never be automated is as valuable as knowing how to automate the rest.</p>
+      </div>
+    </div>
+
+    <div class="fc-tools" style="margin-top:44px">
+      <span class="fc-tool"><i></i>Claude</span>
+      <span class="fc-tool"><i></i>ChatGPT</span>
+      <span class="fc-tool"><i></i>Zapier</span>
+      <span class="fc-tool"><i></i>Make</span>
+      <span class="fc-tool"><i></i>n8n</span>
+      <span class="fc-tool"><i></i>Google Sheets</span>
+      <span class="fc-tool"><i></i>Airtable</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COHORTS ===== -->
+<section class="fc-sec fc-sec-surface">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">06</span><span class="t">Cohorts</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">When the next one runs.</h2>
+      <p class="fc-lead">Cohorts are kept small on purpose. Dates below come straight from our scheduling system, so what you see here is what is actually open.</p>
+    </div>
+    <div class="fc-cohorts" id="fc-cohorts">
+      <div class="fc-cohort-skel"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="fc-sec">
+  <div class="fc-wrap">
+    <div class="fc-faq-wrap">
+      <div class="fc-faq-head fc-rise">
+        <div class="fc-label"><span class="n">07</span><span class="t">FAQ</span></div>
+        <h2 class="fc-h2">Questions people<br/>actually ask</h2>
+        <p class="fc-lead" style="margin-top:18px">Still unsure? <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%20have%20a%20question%20about%20the%20AI%20Automation%20course." target="_blank" rel="noopener" style="color:var(--fc-accent);font-weight:600">Message us on WhatsApp</a> and a human will answer.</p>
+      </div>
+
+      <div class="fc-faq" id="fc-faq">
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>Do I need to know how to code?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>No. The tools we use are built for people who do not write code, and nothing in the six weeks assumes you have. If you do already code, you will simply move faster and can take the same ideas further.</p></div></div>
+        </div>
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>How much time does it take each week?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>Around four hours: the live session plus the build time between sessions. Because you are working on your own real task rather than an exercise, most people find the build time pays for itself.</p></div></div>
+        </div>
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>What if I do not have a task to automate?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>Week one exists partly to find one. Almost everybody has something; it is usually so habitual that it has stopped registering as work. If you genuinely have nothing, we will give you a realistic task to build against instead.</p></div></div>
+        </div>
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>Do the tools cost extra?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>The course is built so it can be completed on free tiers. Paid plans give you more room and faster runs, but nothing in the six weeks requires one.</p></div></div>
+        </div>
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>How is this different from the professional programmes?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>Foundations assumes nothing and teaches from the ground floor. <a href="professionals.html">AI for Professionals</a> assumes you already work in a specific field and applies AI inside that job over four intensive weeks. Different starting points, not different difficulties.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WAITLIST ===== -->
+<section class="fc-wait" id="waitlist">
+  <div class="fc-wrap">
+    <div class="fc-wait-grid">
+      <div>
+        <span class="fc-kicker fc-rise">Waitlist</span>
+        <h2 class="fc-h2 fc-rise" style="margin-top:18px">Places go to the list first.</h2>
+        <p class="fc-lead fc-rise">Cohorts are small on purpose. When the next AI Automation intake opens, the waitlist hears before the site does.</p>
+        <div class="fc-wait-pts fc-rise">
+          <div class="fc-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Dates, timetable and pricing sent before they go public.</span></div>
+          <div class="fc-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>First refusal on seats in the next cohort.</span></div>
+          <div class="fc-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>No commitment, and nothing to pay to hold your place.</span></div>
+        </div>
+      </div>
+
+      <div class="fc-form fc-rise">
+        <form id="fc-waitlist-form" novalidate>
+          <div class="fc-field">
+            <label for="fc-name">Full name</label>
+            <input type="text" id="fc-name" placeholder="Your name" autocomplete="name" required />
+          </div>
+          <div class="fc-field">
+            <label for="fc-email">Email</label>
+            <input type="email" id="fc-email" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+          <div class="fc-field">
+            <label for="fc-phone">Phone <span style="text-transform:none;letter-spacing:0;font-weight:600">(optional)</span></label>
+            <input type="tel" id="fc-phone" placeholder="+234…" autocomplete="tel" />
+          </div>
+          <button type="submit" class="fc-btn fc-btn-accent" id="fc-wl-btn"><span data-chars>Join the waitlist</span></button>
+          <div class="fc-form-err" id="fc-wl-err"></div>
+          <p class="fc-form-note">We only use this to tell you when AI Automation opens. No newsletter, and you can ask us to remove you at any time.</p>
+        </form>
+
+        <div class="fc-form-ok" id="fc-wl-ok">
+          <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>You are on the list.</h3>
+          <p>We will email you the dates, the timetable and the pricing for the next AI Automation cohort before any of it goes on the site.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MORE COURSES ===== -->
+<section class="fc-sec">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">08</span><span class="t">The rest of Foundations</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">Six weeks is the short one.</h2>
+      <p class="fc-lead">If you want something deeper, or a different destination, the other Foundations courses run from eight to sixteen weeks.</p>
+    </div>
+    <div class="fc-more" id="fc-more"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo footer-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+        <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook"><img src="assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block"></a>
+          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram"><img src="assets/social.png" alt="Instagram" width="22" height="22" style="display:block"></a>
+          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X"><img src="assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block"></a>
+          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn" title="LinkedIn"><img src="assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block"></a>
+          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us"><img src="assets/gmail.png" alt="Email" width="22" height="22" style="display:block"></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Programmes</h5><ul><li><a href="foundations.html">AI Foundations</a></li><li><a href="professionals.html">AI for Professionals</a></li><li><a href="professionals.html#pricing">Pricing</a></li><li><a href="apply.html">Apply Now</a></li><li><a href="verify.html">Verify a Certificate</a></li></ul></div>
+      <div class="footer-col"><h5>Experts</h5><ul><li><a href="experts.html">Meet Our Experts</a></li><li><a href="experts.html#qualify">Become an Expert</a></li></ul></div>
+      <div class="footer-col"><h5>Organisation</h5><ul><li><a href="organisations.html">For Organisations</a></li><li><a href="organisations.html#contact">Get a Quote</a></li><li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li></ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="footer-year">2026</span> Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
+    <div class="footer-bottom-links"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+  </div>
+</footer>
+
+<button class="back-to-top">↑</button>
+
+<script src="script.js"></script>
+<script src="foundations-courses.js"></script>
+<script src="foundations-course.js"></script>
+<script src="nav-programmes.js"></script>
+
+<!-- LinkedIn Insight Tag -->
+<script type="text/javascript">
+_linkedin_partner_id = "9372724";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script><script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9372724&fmt=gif" />
+</noscript>
+</body>
+</html>

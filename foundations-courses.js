@@ -14,6 +14,10 @@
    id, which is what the cohort endpoint needs. A course with no
    backend record yet still renders; it just has no cohorts.
 
+   `ready` says whether the course page itself has been built. A course
+   without one still shows as a card, but points at the waitlist and
+   says so rather than linking to a URL that 404s.
+
    window.FND = { COURSES, api, findProgramme, fetchCohorts, fmtDate }
    ============================================================ */
 (function () {
@@ -23,6 +27,7 @@
     {
       slug: 'ai-automation',
       page: 'foundations-ai-automation.html',
+      ready: true,
       title: 'AI Automation',
       weeks: 6,
       art: 'assets/fnd/automations.jpg',
@@ -47,6 +52,7 @@
     {
       slug: 'data-science',
       page: 'foundations-data-science.html',
+      ready: true,
       title: 'Data Science',
       weeks: 16,
       art: 'assets/fnd/datascience.jpg',
