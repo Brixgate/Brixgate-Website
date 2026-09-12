@@ -5,14 +5,6 @@ on:
     branches:
       - main
 
-env:
-  # Migrated from AWS EC2 to a DigitalOcean droplet. Kept here rather than
-  # inline so the host only appears once; the key lives in repository
-  # secrets as DEPLOY_SSH_KEY.
-  DEPLOY_HOST: 209.97.128.205
-  DEPLOY_USER: deploy
-  DEPLOY_PATH: /var/www/html
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -21,44 +13,60 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Production must talk to the production API. Every page ships with
+      # the dev host hardcoded so local work needs no setup, and this is
+      # the one place it gets swapped. Losing this step is silent: the site
+      # deploys fine and quietly reads and writes dev data.
       - name: Swap API URL for production
-        run: find . -name "*.html" -o -name "*.js" | xargs sed -i "s|https://dev.api.brixgate.com|https://api.brixgate.com|g"
-
-      - name: Create deploy archive
         run: |
-          zip -r brixgate-prod.zip . \
-            -x "*.git*" -x ".DS_Store" -x "*/.DS_Store" \
-            -x ".vercel/*" -x "dist/*" -x "node_modules/*" \
-            -x "assets/Paralucent*.zip" -x ".claude/*" -q
+          find . -name "*.html" -o -name "*.js" \
+            | xargs sed -i "s|https://dev.api.brixgate.com|https://api.brixgate.com|g"
+          echo "Remaining dev API references (should be 0):"
+          grep -rl "dev\.api\.brixgate\.com" --include="*.html" --include="*.js" . | wc -l
 
-      - name: Setup SSH key
+      - name: Set up SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Copy archive to the server
+      - name: Add server to known_hosts
         run: |
-          scp -o StrictHostKeyChecking=no \
-            brixgate-prod.zip \
-            ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:~
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
-      # No sudo: the deploy user owns the web root, which is one less thing
-      # that can fail silently. If this errors with permission denied, run
-      # `sudo chown -R deploy:www-data /var/www/html` on the server once.
-      - name: Deploy
+      # rsync --delete keeps the server an exact mirror, which also means
+      # anything excluded here is REMOVED from the web root on the next
+      # run. The list is deliberately long: without it this pushes build
+      # scripts, the .claude directory, the dist folder, font archives and
+      # the local zip artefact straight into a public directory.
+      - name: Deploy via rsync
         run: |
-          ssh -o StrictHostKeyChecking=no \
-            ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }} \
-            "set -e && \
-             rm -rf ~/brixgate-prod-tmp && \
-             unzip -q -o ~/brixgate-prod.zip -d ~/brixgate-prod-tmp && \
-             cp -r ~/brixgate-prod-tmp/. ${{ env.DEPLOY_PATH }}/ && \
-             rm -rf ~/brixgate-prod-tmp ~/brixgate-prod.zip"
+          rsync -avz --delete \
+            --exclude='.git' \
+            --exclude='.git*' \
+            --exclude='.github' \
+            --exclude='.claude' \
+            --exclude='.vercel' \
+            --exclude='.DS_Store' \
+            --exclude='dist/' \
+            --exclude='node_modules/' \
+            --exclude='tools/' \
+            --exclude='build.sh' \
+            --exclude='*.zip' \
+            --exclude='*.pem' \
+            --exclude='README*' \
+            -e "ssh -p ${{ secrets.SSH_PORT }}" \
+            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/html/
 
-      # A deploy that connects, copies nothing and reports success is the
-      # failure mode worth guarding against, so prove the site answers.
+      # A deploy that connects, transfers nothing and reports success is
+      # the failure worth guarding against, so prove the site answers and
+      # that it is actually the build we just pushed.
       - name: Verify the site is serving
         run: |
-          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 https://brixgate.com/)
+          code=$(curl -s -o /tmp/live.html -w '%{http_code}' --max-time 25 https://brixgate.com/)
           echo "brixgate.com returned $code"
           test "$code" = "200"
+          if grep -q "dev\.api\.brixgate\.com" /tmp/live.html; then
+            echo "::error::Live site is pointing at the dev API"
+            exit 1
+          fi
