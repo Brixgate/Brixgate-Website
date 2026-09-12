@@ -5,6 +5,14 @@ on:
     branches:
       - main
 
+env:
+  # Migrated from AWS EC2 to a DigitalOcean droplet. Kept here rather than
+  # inline so the host only appears once; the key lives in repository
+  # secrets as DEPLOY_SSH_KEY.
+  DEPLOY_HOST: 209.97.128.205
+  DEPLOY_USER: deploy
+  DEPLOY_PATH: /var/www/html
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -26,19 +34,31 @@ jobs:
       - name: Setup SSH key
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
 
-      - name: Copy archive to EC2
+      - name: Copy archive to the server
         run: |
           scp -o StrictHostKeyChecking=no \
             brixgate-prod.zip \
-            ec2-user@ec2-13-60-15-83.eu-north-1.compute.amazonaws.com:~
+            ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:~
 
-      - name: Deploy on EC2
+      # No sudo: the deploy user owns the web root, which is one less thing
+      # that can fail silently. If this errors with permission denied, run
+      # `sudo chown -R deploy:www-data /var/www/html` on the server once.
+      - name: Deploy
         run: |
           ssh -o StrictHostKeyChecking=no \
-            ec2-user@ec2-13-60-15-83.eu-north-1.compute.amazonaws.com \
-            "sudo unzip -o ~/brixgate-prod.zip -d /var/www/html/brixgate-prod-tmp && \
-             sudo cp -r /var/www/html/brixgate-prod-tmp/. /var/www/html/ && \
-             sudo rm -rf /var/www/html/brixgate-prod-tmp && \
-             rm ~/brixgate-prod.zip"
+            ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }} \
+            "set -e && \
+             rm -rf ~/brixgate-prod-tmp && \
+             unzip -q -o ~/brixgate-prod.zip -d ~/brixgate-prod-tmp && \
+             cp -r ~/brixgate-prod-tmp/. ${{ env.DEPLOY_PATH }}/ && \
+             rm -rf ~/brixgate-prod-tmp ~/brixgate-prod.zip"
+
+      # A deploy that connects, copies nothing and reports success is the
+      # failure mode worth guarding against, so prove the site answers.
+      - name: Verify the site is serving
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 https://brixgate.com/)
+          echo "brixgate.com returned $code"
+          test "$code" = "200"
