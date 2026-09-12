@@ -5,6 +5,14 @@ on:
     branches:
       - main
 
+# Only the key is a secret. The address is in public DNS, the user and
+# port are not sensitive either, and every extra secret is another thing
+# that can be set wrong in a place you cannot read back.
+env:
+  SSH_HOST: 209.97.128.205
+  SSH_USER: deploy
+  SSH_PORT: '22'
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -27,12 +35,12 @@ jobs:
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
 
       - name: Add server to known_hosts
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+          ssh-keyscan -p "${{ env.SSH_PORT }}" "${{ env.SSH_HOST }}" >> ~/.ssh/known_hosts
 
       # rsync --delete keeps the server an exact mirror, which also means
       # anything excluded here is REMOVED from the web root on the next
@@ -55,8 +63,8 @@ jobs:
             --exclude='*.zip' \
             --exclude='*.pem' \
             --exclude='README*' \
-            -e "ssh -p ${{ secrets.SSH_PORT }}" \
-            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/html/
+            -e "ssh -p ${{ env.SSH_PORT }}" \
+            ./ ${{ env.SSH_USER }}@${{ env.SSH_HOST }}:/var/www/html/
 
       # A deploy that connects, transfers nothing and reports success is
       # the failure worth guarding against, so prove the site answers and
