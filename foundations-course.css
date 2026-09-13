@@ -194,11 +194,19 @@ body.fc{ background:#fff; color:var(--fc-ink); }
 .fc-tool:hover{ border-color:var(--fc-accent); transform:translateY(-2px); box-shadow:0 12px 26px -16px rgba(2,16,36,.34); }
 .fc-tool img{
   height:22px; width:auto; display:block;
-  filter:grayscale(1) opacity(.62);
+  /* Real marks and wordmarks share a row, so they have to carry similar
+     weight. At .62 the logos read as washed out next to solid type; the
+     wordmarks are muted to meet them in the middle, and both come up to
+     full strength together on hover. */
+  filter:grayscale(1) opacity(.8);
   transition:filter .28s var(--fc-ease);
 }
 .fc-tool:hover img{ filter:none; }
-.fc-tool b{ display:none; font-size:.9rem; font-weight:700; color:var(--fc-ink); letter-spacing:-.015em; }
+.fc-tool b{
+  display:none; font-size:.9rem; font-weight:700; letter-spacing:-.015em;
+  color:var(--fc-muted); transition:color .28s var(--fc-ease);
+}
+.fc-tool:hover b{ color:var(--fc-ink); }
 .fc-tool.no-logo img{ display:none; }
 .fc-tool.no-logo b{ display:block; }
 .fc-sec-ink .fc-tool{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.14); }

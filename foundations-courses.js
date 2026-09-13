@@ -40,6 +40,7 @@
     {
       slug: 'data-analytics',
       page: 'foundations-data-analytics.html',
+      ready: true,
       title: 'Data Analytics',
       weeks: 8,
       art: 'assets/fnd/data.jpg',
