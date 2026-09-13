@@ -42,14 +42,19 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -p "${{ env.SSH_PORT }}" "${{ env.SSH_HOST }}" >> ~/.ssh/known_hosts
 
-      # rsync --delete keeps the server an exact mirror, which also means
-      # anything excluded here is REMOVED from the web root on the next
-      # run. The list is deliberately long: without it this pushes build
-      # scripts, the .claude directory, the dist folder, font archives and
-      # the local zip artefact straight into a public directory.
+      # --delete is deliberately NOT set. It would keep the web root an
+      # exact mirror, which is the better long-term behaviour, but it also
+      # removes everything on the server that is not in this repo. Nobody
+      # has yet confirmed what else lives under /var/www/html on the new
+      # droplet, and the API is on the same machine. Turn it on once the
+      # answer is in writing, not before.
+      #
+      # The excludes still matter without it: they are what keeps build
+      # scripts, the .claude directory, dist and font archives from being
+      # copied into a public directory in the first place.
       - name: Deploy via rsync
         run: |
-          rsync -avz --delete \
+          rsync -avz \
             --exclude='.git' \
             --exclude='.git*' \
             --exclude='.github' \
