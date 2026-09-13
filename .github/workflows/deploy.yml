@@ -4,6 +4,15 @@ on:
   push:
     branches:
       - main
+  # Lets a deploy be run by hand from the Actions tab. With dry_run left
+  # on it changes nothing and only reports, which is how the --delete
+  # list gets reviewed before it is ever allowed to run for real.
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Report only. Show what a deploy would change, write nothing.'
+        type: boolean
+        default: true
 
 # Only the key is a secret. The address is in public DNS, the user and
 # port are not sensitive either, and every extra secret is another thing
@@ -57,7 +66,26 @@ jobs:
       # linger on the server. The old zip-and-copy pipeline behaved the
       # same way, so this is no worse than the status quo, and it cannot
       # remove anything nobody remembered was there.
+      # Shows exactly which paths on the server are not in this repo and
+      # would therefore be removed if --delete were enabled. Reports only,
+      # never writes, and never fails the run. Read this list before
+      # turning --delete on: it is the inventory that the aiquiz directory
+      # would otherwise have been lost to.
+      - name: What would --delete remove?
+        continue-on-error: true
+        run: |
+          echo "Paths present on the server but absent from this repo:"
+          rsync -az --dry-run --delete --itemize-changes \
+            --exclude='.git' --exclude='.git*' --exclude='.github' \
+            --exclude='.claude' --exclude='.vercel' --exclude='.DS_Store' \
+            --exclude='dist/' --exclude='node_modules/' --exclude='tools/' \
+            --exclude='build.sh' --exclude='*.zip' --exclude='*.pem' --exclude='README*' \
+            -e "ssh -p ${{ env.SSH_PORT }}" \
+            ./ ${{ env.SSH_USER }}@${{ env.SSH_HOST }}:/var/www/html/ \
+            | grep '^\*deleting' || echo "  (nothing - the server matches the repo)"
+
       - name: Deploy via rsync
+        if: ${{ github.event.inputs.dry_run != 'true' }}
         run: |
           rsync -avz \
             --exclude='.git' \
@@ -80,6 +108,7 @@ jobs:
       # the failure worth guarding against, so prove the site answers and
       # that it is actually the build we just pushed.
       - name: Verify the site is serving
+        if: ${{ github.event.inputs.dry_run != 'true' }}
         run: |
           code=$(curl -s -o /tmp/live.html -w '%{http_code}' --max-time 25 https://brixgate.com/)
           echo "brixgate.com returned $code"
