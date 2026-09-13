@@ -187,44 +187,52 @@ body.fc{ background:#fff; color:var(--fc-ink); }
 .fc-out-c p{ margin:10px 0 0; font-size:.91rem; line-height:1.65; color:rgba(255,255,255,.66); }
 
 /* ---------- tools ----------
-   Real marks where we have the file, a wordmark where we do not. The
-   img carries an onerror that flips the tile, so a missing or renamed
-   logo degrades to type instead of a broken image icon. Greyscale at
-   rest and full colour on hover, matching the landing page marquee. */
+   Every tool renders the same way: a monochrome glyph plus its name.
+   Earlier this was "logo image, or a wordmark if we have no file", which
+   put full-colour horizontal lockups next to plain type in the same row
+   and the two never sat together.
+
+   Glyphs are drawn with mask-image rather than <img> so they inherit a
+   colour: muted at rest, the brand's own hex on hover, and knocked out
+   to white on the dark sections. An <img> cannot be recoloured by CSS,
+   which is what forced the invert hack the lockups needed.
+
+   Icons are simple-icons, which is CC0, so there is no licence question
+   about shipping them. --brand is set per tile; tiles without one fall
+   back to the page accent. */
 .fc-tools{ display:flex; flex-wrap:wrap; gap:10px; margin-top:34px; }
 .fc-tool{
-  display:inline-flex; align-items:center; justify-content:center; gap:9px;
-  height:52px; padding:0 20px; border-radius:12px;
+  display:inline-flex; align-items:center; gap:10px;
+  height:48px; padding:0 18px; border-radius:12px;
   background:#fff; border:1px solid var(--fc-line);
   transition:border-color .25s, transform .25s var(--fc-ease), box-shadow .25s var(--fc-ease);
 }
-.fc-tool:hover{ border-color:var(--fc-accent); transform:translateY(-2px); box-shadow:0 12px 26px -16px rgba(2,16,36,.34); }
-.fc-tool img{
-  height:22px; width:auto; display:block;
-  /* Real marks and wordmarks share a row, so they have to carry similar
-     weight. At .62 the logos read as washed out next to solid type; the
-     wordmarks are muted to meet them in the middle, and both come up to
-     full strength together on hover. */
-  filter:grayscale(1) opacity(.8);
-  transition:filter .28s var(--fc-ease);
+.fc-tool:hover{
+  transform:translateY(-2px); border-color:#D8D3CC;
+  box-shadow:0 12px 26px -16px rgba(2,16,36,.34);
 }
-.fc-tool:hover img{ filter:none; }
+.fc-tool i{
+  width:19px; height:19px; flex:none; display:block;
+  background:var(--fc-faint);
+  -webkit-mask:var(--icon) no-repeat center/contain;
+          mask:var(--icon) no-repeat center/contain;
+  transition:background .28s var(--fc-ease);
+}
+.fc-tool:hover i{ background:var(--brand, var(--fc-accent)); }
 .fc-tool b{
-  display:none; font-size:.9rem; font-weight:700; letter-spacing:-.015em;
+  font-size:.89rem; font-weight:700; letter-spacing:-.015em;
   color:var(--fc-muted); transition:color .28s var(--fc-ease);
 }
 .fc-tool:hover b{ color:var(--fc-ink); }
-.fc-tool.no-logo img{ display:none; }
-.fc-tool.no-logo b{ display:block; }
+/* no glyph for this one, so the name carries the tile on its own */
+.fc-tool.no-logo i{ display:none; }
+
 .fc-sec-ink .fc-tool{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.14); }
 .fc-sec-ink .fc-tool:hover{ background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3); }
-/* These are horizontal lockups drawn in dark ink for light backgrounds,
-   so on the dark band they have to be knocked out to white rather than
-   greyscaled. Colour-on-hover is a light-section idea only; here the
-   hover just brings them up to full strength. */
-.fc-sec-ink .fc-tool img{ filter:brightness(0) invert(1) opacity(.62); }
-.fc-sec-ink .fc-tool:hover img{ filter:brightness(0) invert(1) opacity(1); }
-.fc-sec-ink .fc-tool b{ color:#fff; }
+.fc-sec-ink .fc-tool i{ background:rgba(255,255,255,.62); }
+.fc-sec-ink .fc-tool:hover i{ background:#fff; }
+.fc-sec-ink .fc-tool b{ color:rgba(255,255,255,.72); }
+.fc-sec-ink .fc-tool:hover b{ color:#fff; }
 .fc-tools-note{
   margin-top:18px; font-size:.82rem; line-height:1.6; color:var(--fc-muted);
 }
