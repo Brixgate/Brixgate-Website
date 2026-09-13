@@ -51,43 +51,23 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -p "${{ env.SSH_PORT }}" "${{ env.SSH_HOST }}" >> ~/.ssh/known_hosts
 
-      # --delete is OFF, and should stay off without a full inventory of
-      # the web root.
+      # --omit-dir-times is required, not cosmetic. The web root and its
+      # subdirectories are owned by www-data and the deploy user reaches
+      # them through the group via the setgid bit. A group member may
+      # write files into a directory but may not change that directory's
+      # own mtime, so rsync -a (which preserves times) is refused on every
+      # directory and exits 23 after transferring everything successfully.
+      # A job that always fails is a job whose failures nobody reads.
       #
-      # It was briefly enabled on the strength of "only the website is
-      # there". That is true of the API, but the directory also holds
-      # /var/www/html/aiquiz/, which is not in this repo and is a live
-      # entry point: assets/qr-aiquiz.svg and the share button in
-      # aiquiz.html both publish https://brixgate.com/aiquiz, which nginx
-      # 301s to /aiquiz/ and that directory serves. Deleting it would have
-      # broken a printed QR code.
-      #
-      # The cost of leaving it off is that files removed from the repo
-      # linger on the server. The old zip-and-copy pipeline behaved the
-      # same way, so this is no worse than the status quo, and it cannot
-      # remove anything nobody remembered was there.
-      # Shows exactly which paths on the server are not in this repo and
-      # would therefore be removed if --delete were enabled. Reports only,
-      # never writes, and never fails the run. Read this list before
-      # turning --delete on: it is the inventory that the aiquiz directory
-      # would otherwise have been lost to.
-      - name: What would --delete remove?
-        continue-on-error: true
-        run: |
-          echo "Paths present on the server but absent from this repo:"
-          rsync -az --dry-run --delete --itemize-changes \
-            --exclude='.git' --exclude='.git*' --exclude='.github' \
-            --exclude='.claude' --exclude='.vercel' --exclude='.DS_Store' \
-            --exclude='dist/' --exclude='node_modules/' --exclude='tools/' \
-            --exclude='build.sh' --exclude='*.zip' --exclude='*.pem' --exclude='README*' \
-            -e "ssh -p ${{ env.SSH_PORT }}" \
-            ./ ${{ env.SSH_USER }}@${{ env.SSH_HOST }}:/var/www/html/ \
-            | grep '^\*deleting' || echo "  (nothing - the server matches the repo)"
-
+      # --delete is on. The inventory it was waiting for came back with a
+      # single entry, index.nginx-debian.html, the stock nginx placeholder.
+      # /var/www/html/aiquiz/ is no longer at risk because it is tracked in
+      # the repo now. The step below still prints the list on every run, so
+      # anything new appearing gets seen before it is removed.
       - name: Deploy via rsync
         if: ${{ github.event.inputs.dry_run != 'true' }}
         run: |
-          rsync -avz \
+          rsync -avz --omit-dir-times --delete \
             --exclude='.git' \
             --exclude='.git*' \
             --exclude='.github' \
