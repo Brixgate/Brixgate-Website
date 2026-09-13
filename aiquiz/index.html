@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Readiness Check | Brixgate</title>
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://brixgate.com/aiquiz.html" />
+  <meta http-equiv="refresh" content="0; url=/aiquiz.html" />
+  <script>window.location.replace('/aiquiz.html');</script>
+</head>
+<body>
+  <!--
+    brixgate.com/aiquiz is the URL printed on assets/qr-aiquiz.svg and
+    published by the share button in aiquiz.html. nginx 301s it to
+    /aiquiz/, which until now was served by an untracked directory
+    holding a May copy of the quiz. That copy had drifted 10KB behind
+    the real page and no deploy ever updated it.
+
+    This replaces it with a redirect, so there is one quiz to maintain,
+    the QR code keeps working, and the path is tracked: a deploy can no
+    longer leave it stale, and rsync --delete can no longer remove it.
+  -->
+  <p>Redirecting to the AI Readiness Check. <a href="/aiquiz.html">Continue</a>.</p>
+</body>
+</html>

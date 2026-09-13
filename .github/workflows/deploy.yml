@@ -4,6 +4,23 @@ on:
   push:
     branches:
       - main
+  # Lets a deploy be run by hand from the Actions tab. With dry_run left
+  # on it changes nothing and only reports, which is how the --delete
+  # list gets reviewed before it is ever allowed to run for real.
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Report only. Show what a deploy would change, write nothing.'
+        type: boolean
+        default: true
+
+# Only the key is a secret. The address is in public DNS, the user and
+# port are not sensitive either, and every extra secret is another thing
+# that can be set wrong in a place you cannot read back.
+env:
+  SSH_HOST: 209.97.128.205
+  SSH_USER: deploy
+  SSH_PORT: '22'
 
 jobs:
   deploy:
@@ -13,32 +30,90 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Production must talk to the production API. Every page ships with
+      # the dev host hardcoded so local work needs no setup, and this is
+      # the one place it gets swapped. Losing this step is silent: the site
+      # deploys fine and quietly reads and writes dev data.
       - name: Swap API URL for production
-        run: find . -name "*.html" -o -name "*.js" | xargs sed -i "s|https://dev.api.brixgate.com|https://api.brixgate.com|g"
-
-      - name: Create deploy archive
         run: |
-          zip -r brixgate-prod.zip . \
-            -x "*.git*" -x ".DS_Store" -x "*/.DS_Store" \
-            -x ".vercel/*" -x "dist/*" -x "node_modules/*" \
-            -x "assets/Paralucent*.zip" -x ".claude/*" -q
+          find . -name "*.html" -o -name "*.js" \
+            | xargs sed -i "s|https://dev.api.brixgate.com|https://api.brixgate.com|g"
+          echo "Remaining dev API references (should be 0):"
+          grep -rl "dev\.api\.brixgate\.com" --include="*.html" --include="*.js" . | wc -l
 
-      - name: Setup SSH key
+      - name: Set up SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
 
-      - name: Copy archive to EC2
+      - name: Add server to known_hosts
         run: |
-          scp -o StrictHostKeyChecking=no \
-            brixgate-prod.zip \
-            ec2-user@ec2-13-60-15-83.eu-north-1.compute.amazonaws.com:~
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "${{ env.SSH_PORT }}" "${{ env.SSH_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Deploy on EC2
+      # --delete is OFF, and should stay off without a full inventory of
+      # the web root.
+      #
+      # It was briefly enabled on the strength of "only the website is
+      # there". That is true of the API, but the directory also holds
+      # /var/www/html/aiquiz/, which is not in this repo and is a live
+      # entry point: assets/qr-aiquiz.svg and the share button in
+      # aiquiz.html both publish https://brixgate.com/aiquiz, which nginx
+      # 301s to /aiquiz/ and that directory serves. Deleting it would have
+      # broken a printed QR code.
+      #
+      # The cost of leaving it off is that files removed from the repo
+      # linger on the server. The old zip-and-copy pipeline behaved the
+      # same way, so this is no worse than the status quo, and it cannot
+      # remove anything nobody remembered was there.
+      # Shows exactly which paths on the server are not in this repo and
+      # would therefore be removed if --delete were enabled. Reports only,
+      # never writes, and never fails the run. Read this list before
+      # turning --delete on: it is the inventory that the aiquiz directory
+      # would otherwise have been lost to.
+      - name: What would --delete remove?
+        continue-on-error: true
         run: |
-          ssh -o StrictHostKeyChecking=no \
-            ec2-user@ec2-13-60-15-83.eu-north-1.compute.amazonaws.com \
-            "sudo unzip -o ~/brixgate-prod.zip -d /var/www/html/brixgate-prod-tmp && \
-             sudo cp -r /var/www/html/brixgate-prod-tmp/. /var/www/html/ && \
-             sudo rm -rf /var/www/html/brixgate-prod-tmp && \
-             rm ~/brixgate-prod.zip"
+          echo "Paths present on the server but absent from this repo:"
+          rsync -az --dry-run --delete --itemize-changes \
+            --exclude='.git' --exclude='.git*' --exclude='.github' \
+            --exclude='.claude' --exclude='.vercel' --exclude='.DS_Store' \
+            --exclude='dist/' --exclude='node_modules/' --exclude='tools/' \
+            --exclude='build.sh' --exclude='*.zip' --exclude='*.pem' --exclude='README*' \
+            -e "ssh -p ${{ env.SSH_PORT }}" \
+            ./ ${{ env.SSH_USER }}@${{ env.SSH_HOST }}:/var/www/html/ \
+            | grep '^\*deleting' || echo "  (nothing - the server matches the repo)"
+
+      - name: Deploy via rsync
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          rsync -avz \
+            --exclude='.git' \
+            --exclude='.git*' \
+            --exclude='.github' \
+            --exclude='.claude' \
+            --exclude='.vercel' \
+            --exclude='.DS_Store' \
+            --exclude='dist/' \
+            --exclude='node_modules/' \
+            --exclude='tools/' \
+            --exclude='build.sh' \
+            --exclude='*.zip' \
+            --exclude='*.pem' \
+            --exclude='README*' \
+            -e "ssh -p ${{ env.SSH_PORT }}" \
+            ./ ${{ env.SSH_USER }}@${{ env.SSH_HOST }}:/var/www/html/
+
+      # A deploy that connects, transfers nothing and reports success is
+      # the failure worth guarding against, so prove the site answers and
+      # that it is actually the build we just pushed.
+      - name: Verify the site is serving
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          code=$(curl -s -o /tmp/live.html -w '%{http_code}' --max-time 25 https://brixgate.com/)
+          echo "brixgate.com returned $code"
+          test "$code" = "200"
+          if grep -q "dev\.api\.brixgate\.com" /tmp/live.html; then
+            echo "::error::Live site is pointing at the dev API"
+            exit 1
+          fi
