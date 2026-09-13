@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cyber Security | Brixgate AI Foundations</title>
+  <meta name="description" content="Sixteen weeks from no security background to reading an incident and saying what you would do next. Live teaching, small cohort, real attack patterns." />
+  <link rel="icon" type="image/png" href="assets/faviii.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="foundations-course.css" />
+
+<style>
+/* ============================================================
+   CYBER SECURITY  ·  sixteen weeks
+   The longest course alongside Data Science, and the only one whose
+   subject is adversarial. The signature block is therefore an attack
+   told as a timeline, with the points where it could have been caught
+   marked on it, because that is how the job is actually thought about.
+   Deep wine accent.
+   ============================================================ */
+:root{ --fc-accent:#C4173A; --fc-accent-2:#9A2335; }
+
+/* ---------- the attack timeline ---------- */
+.cy-tl{
+  margin-top:48px; border-radius:var(--fc-r); overflow:hidden;
+  background:linear-gradient(158deg,#0D1C34,#021024);
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 40px 90px -50px rgba(2,16,36,.9);
+}
+.cy-tl-head{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  padding:22px 28px; border-bottom:1px solid rgba(255,255,255,.09);
+}
+.cy-tl-head b{ font-size:.95rem; font-weight:700; color:#fff; letter-spacing:-.015em; }
+.cy-tl-tag{
+  display:inline-flex; align-items:center; gap:7px; margin-left:auto;
+  font-size:.62rem; font-weight:800; letter-spacing:.11em; text-transform:uppercase;
+  color:var(--fc-accent); background:rgba(196,23,58,.14);
+  border:1px solid rgba(196,23,58,.4); border-radius:7px; padding:5px 10px;
+}
+.cy-tl-tag i{ width:5px; height:5px; border-radius:50%; background:var(--fc-accent); }
+.cy-rows{ padding:8px 28px 26px; }
+.cy-row{
+  display:grid; grid-template-columns:86px 26px minmax(0,1fr); gap:18px;
+  align-items:flex-start; padding:19px 0; position:relative;
+}
+.cy-row + .cy-row{ border-top:1px solid rgba(255,255,255,.07); }
+.cy-time{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.78rem; color:rgba(255,255,255,.44); padding-top:2px; letter-spacing:-.02em;
+}
+.cy-node{ position:relative; display:grid; place-items:center; padding-top:3px; }
+.cy-node i{
+  width:12px; height:12px; border-radius:50%;
+  background:rgba(255,255,255,.14); border:2px solid rgba(255,255,255,.28);
+  position:relative; z-index:1;
+}
+.cy-row.is-catch .cy-node i{
+  background:#4ADE80; border-color:#4ADE80; box-shadow:0 0 0 5px rgba(74,222,128,.16);
+}
+.cy-row:not(:last-child) .cy-node::after{
+  content:""; position:absolute; top:17px; bottom:-24px; width:2px;
+  background:rgba(255,255,255,.1);
+}
+.cy-body h4{ font-size:.98rem; font-weight:700; color:#fff; letter-spacing:-.015em; }
+.cy-body p{ margin-top:7px; font-size:.87rem; line-height:1.6; color:rgba(255,255,255,.66); }
+.cy-catch{
+  display:inline-flex; align-items:flex-start; gap:8px; margin-top:11px;
+  background:rgba(74,222,128,.09); border:1px solid rgba(74,222,128,.26);
+  border-radius:9px; padding:8px 12px;
+  font-size:.8rem; line-height:1.5; color:#8FF0B4;
+}
+.cy-catch svg{ width:14px; height:14px; flex:none; margin-top:2px; }
+.cy-tl-foot{
+  padding:20px 28px 24px; border-top:1px solid rgba(255,255,255,.09);
+  font-size:.83rem; line-height:1.62; color:rgba(255,255,255,.5);
+}
+
+/* ---------- four phases ---------- */
+.cy-phases{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; margin-top:48px; }
+.cy-phase{
+  border:1px solid var(--fc-line); border-radius:var(--fc-r); background:#fff;
+  padding:26px 24px 24px; position:relative; overflow:hidden;
+  transition:transform .4s var(--fc-ease), border-color .3s, box-shadow .4s var(--fc-ease);
+}
+.cy-phase:hover{ transform:translateY(-5px); border-color:#D8D3CC; box-shadow:0 24px 50px -28px rgba(2,16,36,.36); }
+.cy-phase::before{
+  content:""; position:absolute; inset:0 0 auto 0; height:3px;
+  background:linear-gradient(90deg,var(--fc-accent),var(--fc-accent-2));
+  transform:scaleX(var(--p,1)); transform-origin:left;
+}
+.cy-phase-n{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.68rem; font-weight:700; letter-spacing:.06em; color:var(--fc-accent);
+}
+.cy-phase h3{ margin-top:12px; font-size:1.1rem; font-weight:760; letter-spacing:-.024em; color:var(--fc-ink); line-height:1.22; }
+.cy-phase > p{ margin-top:9px; font-size:.86rem; line-height:1.58; color:var(--fc-body); }
+.cy-phase ul{ list-style:none; margin:16px 0 0; padding:0; display:flex; flex-direction:column; gap:8px; }
+.cy-phase li{
+  font-size:.81rem; line-height:1.5; color:var(--fc-muted);
+  padding-left:15px; position:relative;
+}
+.cy-phase li::before{
+  content:""; position:absolute; left:0; top:8px; width:5px; height:5px;
+  border-radius:50%; background:var(--fc-accent); opacity:.55;
+}
+
+@media (max-width:1040px){
+  .cy-phases{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:680px){
+  .cy-phases{ grid-template-columns:1fr; }
+  .cy-row{ grid-template-columns:64px 22px minmax(0,1fr); gap:12px; }
+  .cy-rows{ padding:8px 20px 22px; }
+  .cy-tl-head{ padding:18px 20px; }
+}
+</style>
+</head>
+<body class="fc" data-course="cyber-security">
+<!-- Region Banner -->
+<div class="region-banner" id="region-banner">
+  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Now active in</span>
+  <div class="regions">
+    <span class="region-item">🇳🇬 Nigeria</span>
+    <span class="region-item">🇬🇧 United Kingdom</span>
+    <span class="region-item">🇺🇸 United States</span>
+    <span class="region-item">🇰🇪 Kenya</span>
+    <span class="region-item">🇿🇦 South Africa</span>
+    <span class="region-more">and 99 other countries</span>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <div class="nav-mega" data-nav-mega></div>
+      <a href="experts.html">Experts</a>
+      <a href="organisations.html">For Organisations</a>
+      <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20Cyber%20Security%20course." target="_blank" rel="noopener">Chat with us</a>
+    </div>
+    <div class="nav-cta">
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
+      <a href="apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="programme.html">Programmes</a>
+  <a href="foundations.html" class="nav-mobile-sub">AI Foundations</a>
+  <a href="professionals.html" class="nav-mobile-sub">AI for Professionals</a>
+  <a href="experts.html">Experts</a>
+  <a href="organisations.html">For Organisations</a>
+  <a href="apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
+</div>
+
+
+<!-- ===== HERO ===== -->
+<header class="fc-hero">
+  <div class="fc-wrap">
+    <div class="fc-hero-grid">
+      <div>
+        <div class="fc-crumb fc-rise">
+          <a href="foundations.html">AI Foundations</a>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>Cyber Security</span>
+        </div>
+        <span class="fc-pill fc-rise"><i></i>16 weeks · no security background needed</span>
+        <h1 class="fc-h1 fc-rise">Learn to defend before you specialise.</h1>
+        <p class="fc-lead fc-rise">Sixteen weeks on how attacks actually work, how defences are built around them, and where AI helps or quietly makes things worse. You finish able to read an incident and say what you would do next.</p>
+
+        <div class="fc-hero-cta fc-rise">
+          <a href="#waitlist" class="fc-btn fc-btn-accent"><span data-chars>Join the waitlist</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#curriculum" class="fc-btn fc-btn-outline-light"><span data-chars>See the sixteen weeks</span></a>
+        </div>
+
+        <div class="fc-stats fc-rise">
+          <div class="fc-stat"><b>16 weeks</b><span>Four phases, attacker to defender</span></div>
+          <div class="fc-stat"><b>Live</b><span>Small cohort, taught in real time</span></div>
+          <div class="fc-stat"><b>Zero</b><span>Security background assumed</span></div>
+        </div>
+      </div>
+
+      <div class="fc-hero-art fc-rise">
+        <img src="assets/fnd/security.jpg" alt="" />
+        <div class="fc-art-card fc-art-tl">
+          <div class="fc-art-k">Global shortfall</div>
+          <div class="fc-art-v">4.8M</div>
+          <div class="fc-art-s">unfilled security roles</div>
+        </div>
+        <div class="fc-art-card fc-art-br">
+          <div class="fc-art-k">Cohort size</div>
+          <div class="fc-art-v">Small</div>
+          <div class="fc-art-s">so you get asked questions</div>
+        </div>
+        <div class="fc-art-people">
+          <div class="fc-art-faces">
+            <img src="assets/people/avatar-2.jpg" alt="" />
+            <img src="assets/people/avatar-4.jpg" alt="" />
+            <img src="assets/people/avatar-1.jpg" alt="" />
+          </div>
+          <span>Taught live, never recorded</span>
+        </div>
+        <span class="fc-hero-badge"><i></i>Read an incident by week sixteen</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== WHY THIS FIELD ===== -->
+<section class="fc-sec fc-sec-cream">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">01</span><span class="t">Why this field</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">The gap between attackers and defenders keeps widening.</h2>
+      <p class="fc-lead">Security is one of the few fields where demand has outrun supply for a decade and shows no sign of correcting. These are public industry figures, not ours, and each one is sourced.</p>
+    </div>
+
+    <div class="fc-why">
+      <div>
+        <div class="fc-why-figs">
+          <div class="fc-why-fig fc-rise">
+            <b>4.8M</b>
+            <strong>Roles nobody can fill</strong>
+            <span>The global security workforce gap, which has grown almost every year it has been measured.</span>
+            <cite>ISC2 Cybersecurity Workforce Study</cite>
+          </div>
+          <div class="fc-why-fig fc-rise">
+            <b>67%</b>
+            <strong>Teams say they are short staffed</strong>
+            <span>Most security teams report not having enough people to cover what they are responsible for.</span>
+            <cite>ISC2 Cybersecurity Workforce Study</cite>
+          </div>
+          <div class="fc-why-fig fc-rise">
+            <b>Top 10</b>
+            <strong>Fastest growing job families</strong>
+            <span>Security specialists sit among the roles employers expect to grow most this decade.</span>
+            <cite>World Economic Forum, Future of Jobs</cite>
+          </div>
+          <div class="fc-why-fig fc-rise">
+            <b>No degree</b>
+            <strong>Required by most employers</strong>
+            <span>Security hires increasingly on demonstrated skill, which is unusual and works in your favour starting out.</span>
+            <cite>ISC2 hiring research</cite>
+          </div>
+        </div>
+        <p class="fc-why-note">Figures describe the industry, not Brixgate outcomes. We are a new programme and we do not have placement statistics to quote yet. When we do, they will appear here with the same sourcing.</p>
+      </div>
+
+      <div class="fc-why-art fc-rise">
+        <img src="assets/fnd/people/class.jpg" alt="Learners working through a session together" />
+        <div class="fc-why-cap">
+          <b>Nobody here started knowing this</b>
+          <span>Cohorts are deliberately mixed: career changers, graduates and people moving across from other fields.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== THE ATTACK TIMELINE  (signature block) ===== -->
+<section class="fc-sec">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">02</span><span class="t">What the work looks like</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">An attack is a sequence, and every step is a chance to catch it.</h2>
+      <p class="fc-lead">This is the shape of a common intrusion. Defenders do not think in tools, they think in timelines like this one, and by week sixteen you will read one the same way.</p>
+    </div>
+
+    <div class="cy-tl fc-rise">
+      <div class="cy-tl-head">
+        <b>Credential theft to data loss</b>
+        <span class="cy-tl-tag"><i></i>Teaching example</span>
+      </div>
+
+      <div class="cy-rows">
+        <div class="cy-row">
+          <div class="cy-time">09:14</div>
+          <div class="cy-node"><i></i></div>
+          <div class="cy-body">
+            <h4>A convincing email arrives</h4>
+            <p>Addressed correctly, referencing a real project, sent from a domain one character different from a supplier's.</p>
+          </div>
+        </div>
+
+        <div class="cy-row is-catch">
+          <div class="cy-time">09:16</div>
+          <div class="cy-node"><i></i></div>
+          <div class="cy-body">
+            <h4>Someone signs in on the fake page</h4>
+            <p>The password is now in somebody else's hands. No alarm has gone off anywhere.</p>
+            <div class="cy-catch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Catchable here: a second factor makes the stolen password almost worthless.</span></div>
+          </div>
+        </div>
+
+        <div class="cy-row is-catch">
+          <div class="cy-time">11:02</div>
+          <div class="cy-node"><i></i></div>
+          <div class="cy-body">
+            <h4>A login from an unusual place</h4>
+            <p>Same account, a country nobody on the team is in, at a time that does not match their working pattern.</p>
+            <div class="cy-catch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Catchable here: this is the signal most teams already collect and never look at.</span></div>
+          </div>
+        </div>
+
+        <div class="cy-row">
+          <div class="cy-time">11:40</div>
+          <div class="cy-node"><i></i></div>
+          <div class="cy-body">
+            <h4>Quiet looking around</h4>
+            <p>Reading mail, finding out who approves payments, learning the shape of the organisation. Nothing is broken yet.</p>
+          </div>
+        </div>
+
+        <div class="cy-row is-catch">
+          <div class="cy-time">14:25</div>
+          <div class="cy-node"><i></i></div>
+          <div class="cy-body">
+            <h4>A mailbox rule is created</h4>
+            <p>Replies from finance get moved out of sight, so the real owner never sees the conversation happening in their name.</p>
+            <div class="cy-catch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Catchable here: new hiding rules are a reliable tell, and easy to alert on.</span></div>
+          </div>
+        </div>
+
+        <div class="cy-row">
+          <div class="cy-time">16:58</div>
+          <div class="cy-node"><i></i></div>
+          <div class="cy-body">
+            <h4>The actual damage</h4>
+            <p>An invoice redirected, or a folder of client data copied out. This is the first moment anybody notices, and it is far too late.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="cy-tl-foot">Three of those six steps were catchable with things most organisations already own. Security work is mostly noticing, and noticing is a skill that can be taught from zero.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHO ===== -->
+<section class="fc-sec fc-sec-cream">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">03</span><span class="t">Who it is for</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">Sixteen weeks is a real commitment. Make sure it is the right one.</h2>
+    </div>
+
+    <div class="fc-who">
+      <div class="fc-who-c yes fc-rise">
+        <div class="fc-who-k">This is you</div>
+        <h3>Sixteen weeks will suit you</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You want a change of field rather than a skill to bolt onto your current job.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You are curious about how things break, and patient enough to understand why.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You have never worked in security and would rather not start with a certification syllabus.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You can find six hours a week for four months and finish what you start.</span></li>
+        </ul>
+      </div>
+
+      <div class="fc-who-c no fc-rise">
+        <div class="fc-who-k">This is not you</div>
+        <h3>Look elsewhere in Foundations</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You already work in security. <a href="programme-cybersecurity.html" style="color:var(--fc-accent);font-weight:650">AI in Cyber Security</a> is the four week professional sprint.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You want something working in weeks rather than months. <a href="foundations-ai-automation.html" style="color:var(--fc-accent);font-weight:650">AI Automation</a> runs six.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You are chasing a specific certification exam. We teach the understanding underneath them, not the exam itself.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CURRICULUM: FOUR PHASES ===== -->
+<section class="fc-sec" id="curriculum">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">04</span><span class="t">The sixteen weeks</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">Four phases. Attacker first, because defence makes no sense otherwise.</h2>
+      <p class="fc-lead">Most beginner courses start with policies and firewalls. We start with how things actually get broken into, because every defence worth building is a response to something specific.</p>
+    </div>
+
+    <div class="cy-phases">
+      <div class="cy-phase fc-rise">
+        <div class="cy-phase-n">WEEKS 01 — 04</div>
+        <h3>How things work</h3>
+        <p>You cannot defend a system you cannot describe. The unglamorous grounding, done properly.</p>
+        <ul>
+          <li>Networks, without the certification jargon</li>
+          <li>How identity and access really work</li>
+          <li>The command line, enough to be useful</li>
+          <li>Where data sits and who can touch it</li>
+        </ul>
+      </div>
+      <div class="cy-phase fc-rise">
+        <div class="cy-phase-n">WEEKS 05 — 08</div>
+        <h3>How things break</h3>
+        <p>The attacker's view. Taught so you recognise it, in a closed environment built for it.</p>
+        <ul>
+          <li>Phishing and why it keeps working</li>
+          <li>Weak configuration over clever exploits</li>
+          <li>Moving through a network once inside</li>
+          <li>What ransomware actually does</li>
+        </ul>
+      </div>
+      <div class="cy-phase fc-rise">
+        <div class="cy-phase-n">WEEKS 09 — 12</div>
+        <h3>How to notice</h3>
+        <p>The core of the job. Logs, signals and the judgement to tell a real event from noise.</p>
+        <ul>
+          <li>Reading logs without drowning</li>
+          <li>What normal looks like, so odd stands out</li>
+          <li>Building an alert that is worth having</li>
+          <li>Writing up an incident clearly</li>
+        </ul>
+      </div>
+      <div class="cy-phase fc-rise">
+        <div class="cy-phase-n">WEEKS 13 — 16</div>
+        <h3>Where AI fits</h3>
+        <p>Honestly. It is genuinely useful in some places and actively dangerous in others.</p>
+        <ul>
+          <li>Triage and summarising at volume</li>
+          <li>Attacks that use AI, and what changes</li>
+          <li>Why a confident wrong answer is worse here</li>
+          <li>Your final incident, investigated and defended</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OUTCOMES ===== -->
+<section class="fc-sec fc-sec-ink">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">05</span><span class="t">What you leave with</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">Judgement, which is the part that does not come from a tool.</h2>
+    </div>
+
+    <div class="fc-out">
+      <div class="fc-out-c fc-rise">
+        <div class="fc-out-n">01</div>
+        <h3>An incident you investigated</h3>
+        <p>Worked end to end and written up the way a real team would need to read it, including what you could not determine.</p>
+      </div>
+      <div class="fc-out-c fc-rise">
+        <div class="fc-out-n">02</div>
+        <h3>A defender's instinct</h3>
+        <p>Knowing what normal looks like so that unusual announces itself. This is the thing that takes sixteen weeks rather than six.</p>
+      </div>
+      <div class="fc-out-c fc-rise">
+        <div class="fc-out-n">03</div>
+        <h3>A clear view of AI's limits</h3>
+        <p>Where it genuinely speeds up security work, and where trusting it confidently gets people hurt.</p>
+      </div>
+    </div>
+
+    <div class="fc-tools" style="margin-top:44px">
+      <span class="fc-tool no-logo"><b>Wireshark</b></span>
+      <span class="fc-tool no-logo"><b>Linux</b></span>
+      <span class="fc-tool no-logo"><b>Splunk</b></span>
+      <span class="fc-tool no-logo"><b>Burp Suite</b></span>
+      <span class="fc-tool no-logo"><b>Nmap</b></span>
+      <span class="fc-tool"><img src="assets/logos/claude.svg" alt="Claude" loading="lazy" onerror="this.closest('.fc-tool').classList.add('no-logo')"><b>Claude</b></span>
+    </div>
+    <p class="fc-tools-note">Everything runs in a lab environment we provide. Nothing here is ever pointed at a system you do not own.</p>
+  </div>
+</section>
+
+<!-- ===== COHORTS ===== -->
+<section class="fc-sec fc-sec-surface">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">06</span><span class="t">Cohorts</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">When the next one runs.</h2>
+      <p class="fc-lead">Cohorts are kept small on purpose. Dates below come straight from our scheduling system, so what you see here is what is actually open.</p>
+    </div>
+    <div class="fc-cohorts" id="fc-cohorts">
+      <div class="fc-cohort-skel"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="fc-sec">
+  <div class="fc-wrap">
+    <div class="fc-faq-wrap">
+      <div class="fc-faq-head fc-rise">
+        <div class="fc-label"><span class="n">07</span><span class="t">FAQ</span></div>
+        <h2 class="fc-h2">Questions people<br/>actually ask</h2>
+        <p class="fc-lead" style="margin-top:18px">Still unsure? <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%20have%20a%20question%20about%20the%20Cyber%20Security%20course." target="_blank" rel="noopener" style="color:var(--fc-accent);font-weight:600">Message us on WhatsApp</a> and a human will answer.</p>
+      </div>
+
+      <div class="fc-faq" id="fc-faq">
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>Do I need to know how to code?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>No. You will use a command line and read scripts other people wrote, both of which we teach from nothing. Plenty of strong security people are not programmers; the job rewards careful reading far more than it rewards writing software.</p></div></div>
+        </div>
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>Will this get me a security job?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>We will not promise that, and you should be wary of anyone who does. What sixteen weeks gives you is a genuine grounding and an incident investigation you can walk somebody through. The field hires on demonstrated ability more than most, which is why that matters.</p></div></div>
+        </div>
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>Is teaching attacks not dangerous?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>Everything happens inside a lab we provide, against systems built to be broken. You cannot defend against something you have never seen work, which is why every serious security course teaches it this way.</p></div></div>
+        </div>
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>Does this prepare me for a certification?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>Not directly. We teach the understanding those exams test rather than the exams themselves, so you will be in a far better position to sit one afterwards, but this is not a cram course and does not pretend to be.</p></div></div>
+        </div>
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>How is this different from the professional programme?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p><a href="programme-cybersecurity.html">AI in Cyber Security</a> is four weeks and assumes you already work in the field, applying AI to work you are already doing. This is sixteen weeks and assumes nothing at all. Same subject, opposite starting points.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WAITLIST ===== -->
+<section class="fc-wait" id="waitlist">
+  <div class="fc-wrap">
+    <div class="fc-wait-grid">
+      <div>
+        <span class="fc-kicker fc-rise">Waitlist</span>
+        <h2 class="fc-h2 fc-rise" style="margin-top:18px">Places go to the list first.</h2>
+        <p class="fc-lead fc-rise">Cohorts are small on purpose. When the next Cyber Security intake opens, the waitlist hears before the site does.</p>
+        <div class="fc-wait-pts fc-rise">
+          <div class="fc-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Dates, timetable and pricing sent before they go public.</span></div>
+          <div class="fc-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>First refusal on seats in the next cohort.</span></div>
+          <div class="fc-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>No commitment, and nothing to pay to hold your place.</span></div>
+        </div>
+      </div>
+
+      <div class="fc-form fc-rise">
+        <form id="fc-waitlist-form" novalidate>
+          <div class="fc-field">
+            <label for="fc-name">Full name</label>
+            <input type="text" id="fc-name" placeholder="Your name" autocomplete="name" required />
+          </div>
+          <div class="fc-field">
+            <label for="fc-email">Email</label>
+            <input type="email" id="fc-email" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+          <div class="fc-field">
+            <label for="fc-phone">Phone <span style="text-transform:none;letter-spacing:0;font-weight:600">(optional)</span></label>
+            <input type="tel" id="fc-phone" placeholder="+234…" autocomplete="tel" />
+          </div>
+          <button type="submit" class="fc-btn fc-btn-accent" id="fc-wl-btn"><span data-chars>Join the waitlist</span></button>
+          <div class="fc-form-err" id="fc-wl-err"></div>
+          <p class="fc-form-note">We only use this to tell you when Cyber Security opens. No newsletter, and you can ask us to remove you at any time.</p>
+        </form>
+
+        <div class="fc-form-ok" id="fc-wl-ok">
+          <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>You are on the list.</h3>
+          <p>We will email you the dates, the timetable and the pricing for the next Cyber Security cohort before any of it goes on the site.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MORE COURSES ===== -->
+<section class="fc-sec">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">08</span><span class="t">The rest of Foundations</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">Sixteen weeks is the long road.</h2>
+      <p class="fc-lead">If four months is more than you want to commit to right now, the shorter courses get you somewhere useful faster.</p>
+    </div>
+    <div class="fc-more" id="fc-more"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo footer-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+        <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook"><img src="assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block"></a>
+          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram"><img src="assets/social.png" alt="Instagram" width="22" height="22" style="display:block"></a>
+          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X"><img src="assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block"></a>
+          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn" title="LinkedIn"><img src="assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block"></a>
+          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us"><img src="assets/gmail.png" alt="Email" width="22" height="22" style="display:block"></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Programmes</h5><ul><li><a href="foundations.html">AI Foundations</a></li><li><a href="professionals.html">AI for Professionals</a></li><li><a href="professionals.html#pricing">Pricing</a></li><li><a href="apply.html">Apply Now</a></li><li><a href="verify.html">Verify a Certificate</a></li></ul></div>
+      <div class="footer-col"><h5>Experts</h5><ul><li><a href="experts.html">Meet Our Experts</a></li><li><a href="experts.html#qualify">Become an Expert</a></li></ul></div>
+      <div class="footer-col"><h5>Organisation</h5><ul><li><a href="organisations.html">For Organisations</a></li><li><a href="organisations.html#contact">Get a Quote</a></li><li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li></ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="footer-year">2026</span> Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
+    <div class="footer-bottom-links"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+  </div>
+</footer>
+
+<button class="back-to-top">↑</button>
+
+<script src="script.js"></script>
+<script src="foundations-courses.js"></script>
+<script src="foundations-course.js"></script>
+<script src="nav-programmes.js"></script>
+
+<!-- LinkedIn Insight Tag -->
+<script type="text/javascript">
+_linkedin_partner_id = "9372724";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script><script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9372724&fmt=gif" />
+</noscript>
+</body>
+</html>

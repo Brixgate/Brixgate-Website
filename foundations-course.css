@@ -115,18 +115,25 @@ body.fc{ background:#fff; color:var(--fc-ink); }
 .fc-stat span{ font-size:.78rem; line-height:1.45; color:rgba(255,255,255,.55); }
 
 /* hero art panel */
-.fc-hero-art{
-  position:relative; border-radius:22px; overflow:hidden; aspect-ratio:4/3;
+/* The clip lives on the image rather than the container, because the
+   metric cards are meant to overhang the frame and overflow:hidden here
+   sliced them off at the edge. */
+.fc-hero-art{ position:relative; aspect-ratio:4/3; }
+.fc-hero-art img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  box-sizing:border-box; border-radius:22px;
   border:1px solid rgba(255,255,255,.14);
   box-shadow:0 40px 90px -40px rgba(0,0,0,.9);
 }
-.fc-hero-art img{ width:100%; height:100%; object-fit:cover; display:block; }
 .fc-hero-art::after{
-  content:""; position:absolute; inset:0;
+  content:""; position:absolute; inset:0; border-radius:22px;
   background:linear-gradient(to top, rgba(2,16,36,.6), rgba(2,16,36,0) 55%);
+  pointer-events:none;
 }
+/* Bottom-left belongs to the faces pill now, so the badge moved up.
+   Two things sharing a corner is how they ended up on top of each other. */
 .fc-hero-badge{
-  position:absolute; left:18px; bottom:16px; z-index:2;
+  position:absolute; left:18px; top:18px; z-index:2; max-width:62%;
   display:inline-flex; align-items:center; gap:9px;
   padding:9px 14px; border-radius:11px;
   background:rgba(2,16,36,.74); border:1px solid rgba(255,255,255,.2);
@@ -347,4 +354,94 @@ body.fc{ background:#fff; color:var(--fc-ink); }
 @media (prefers-reduced-motion:reduce){
   .fc-rise{ opacity:1; transform:none; transition:none; }
   .fc-chars span{ transition:none; }
+}
+
+/* ============================================================
+   HERO ART METRICS
+   The hero image alone says nothing. These float a couple of real
+   figures over it so the first screen carries a fact, not just a
+   photograph.
+   ============================================================ */
+.fc-hero-art{ position:relative; }
+.fc-art-card{
+  position:absolute; z-index:2;
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(255,255,255,.7); border-radius:15px;
+  padding:13px 16px; min-width:132px;
+  box-shadow:0 26px 56px -22px rgba(1,11,30,.66), 0 3px 10px rgba(1,11,30,.16);
+  animation:fcArtIn .7s var(--fc-ease) both;
+}
+@keyframes fcArtIn{ from{ opacity:0; transform:translateY(16px) scale(.95) } to{ opacity:1; transform:none } }
+.fc-art-k{ font-size:.58rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--fc-faint); }
+.fc-art-v{ margin-top:5px; font-size:1.42rem; font-weight:800; letter-spacing:-.038em; color:var(--fc-ink); line-height:1; }
+.fc-art-s{ margin-top:4px; font-size:.7rem; line-height:1.4; color:var(--fc-muted); }
+.fc-art-tl{ top:74px; left:-24px; animation-delay:.42s; }
+.fc-art-br{ bottom:64px; right:-20px; animation-delay:.58s; }
+.fc-art-people{
+  position:absolute; left:-24px; bottom:16px; z-index:2;
+  display:flex; align-items:center; gap:9px;
+  background:rgba(255,255,255,.96); border-radius:999px; padding:7px 14px 7px 8px;
+  box-shadow:0 20px 44px -20px rgba(1,11,30,.6);
+  animation:fcArtIn .7s var(--fc-ease) both .72s;
+}
+.fc-art-faces{ display:flex; }
+.fc-art-faces img{
+  width:27px; height:27px; border-radius:50%; object-fit:cover; display:block;
+  border:2px solid #fff; margin-left:-9px;
+}
+.fc-art-faces img:first-child{ margin-left:0; }
+.fc-art-people span{ font-size:.72rem; font-weight:650; color:var(--fc-ink); white-space:nowrap; }
+
+/* ============================================================
+   WHY THIS FIELD
+   Industry figures, attributed, next to a real room of people. These
+   are public workforce numbers and are labelled as such: none of them
+   is a Brixgate metric and none should ever be presented as one.
+   ============================================================ */
+.fc-why{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:56px; align-items:center; margin-top:48px; }
+.fc-why-figs{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+.fc-why-fig{
+  background:#fff; border:1px solid var(--fc-line); border-radius:var(--fc-r);
+  padding:24px 24px 22px;
+  transition:transform .4s var(--fc-ease), border-color .3s, box-shadow .4s var(--fc-ease);
+}
+.fc-why-fig:hover{ transform:translateY(-4px); border-color:#D8D3CC; box-shadow:0 22px 46px -26px rgba(2,16,36,.34); }
+.fc-why-fig b{
+  display:block; font-size:2.1rem; font-weight:800; letter-spacing:-.045em;
+  line-height:1; color:var(--fc-accent);
+}
+.fc-why-fig strong{ display:block; margin-top:11px; font-size:.93rem; font-weight:700; color:var(--fc-ink); letter-spacing:-.015em; }
+.fc-why-fig span{ display:block; margin-top:6px; font-size:.82rem; line-height:1.55; color:var(--fc-body); }
+.fc-why-fig cite{
+  display:block; margin-top:11px; font-size:.68rem; font-style:normal;
+  color:var(--fc-faint); letter-spacing:.02em;
+}
+.fc-why-art{ position:relative; border-radius:var(--fc-r); overflow:hidden; aspect-ratio:4/3.4; }
+.fc-why-art img{ width:100%; height:100%; object-fit:cover; display:block; }
+.fc-why-art::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(2,16,36,0) 42%, rgba(2,16,36,.82) 100%);
+}
+.fc-why-cap{
+  position:absolute; left:24px; right:24px; bottom:22px; z-index:2; color:#fff;
+}
+.fc-why-cap b{ display:block; font-size:1.02rem; font-weight:750; letter-spacing:-.018em; }
+.fc-why-cap span{ display:block; margin-top:5px; font-size:.82rem; line-height:1.5; color:rgba(255,255,255,.76); }
+.fc-why-note{
+  margin-top:26px; font-size:.79rem; line-height:1.6; color:var(--fc-faint);
+  border-top:1px solid var(--fc-line); padding-top:16px;
+}
+
+@media (max-width:1040px){
+  .fc-why{ grid-template-columns:1fr; gap:36px; }
+  .fc-art-tl{ left:8px; }
+  .fc-art-br{ right:8px; }
+  .fc-art-people{ left:8px; }
+}
+@media (max-width:600px){
+  .fc-why-figs{ grid-template-columns:1fr; }
+  .fc-art-br{ display:none; }
+}
+@media (prefers-reduced-motion:reduce){
+  .fc-art-card, .fc-art-people{ animation:none; }
 }

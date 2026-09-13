@@ -64,17 +64,52 @@
      ai-in-product-marketing on prod and ai-in-product-technology on
      dev. Keying off "marketing" or "product" survives that. */
   var PAGE_RULES = [
-    { any: ['software-engineering', 'engineering'], page: 'programme-engineering.html' },
-    { any: ['cyber'],                               page: 'programme-cybersecurity.html' },
-    { any: ['financial', 'finance'],                page: 'programme-finance.html' },
-    { any: ['marketing', 'product-technology'],     page: 'programme-marketing.html' }
+    /* Tier-scoped, because the two tiers collide. "Cyber Security" exists
+       in both, and a beginner clicking it from the Foundations column must
+       not land on the four-week professional sprint. A rule with no tier
+       matches either. */
+    { tier: 'professionals', any: ['software-engineering', 'engineering'], page: 'programme-engineering.html' },
+    { tier: 'professionals', any: ['cyber'],                               page: 'programme-cybersecurity.html' },
+    { tier: 'professionals', any: ['financial', 'finance'],                page: 'programme-finance.html' },
+    { tier: 'professionals', any: ['marketing', 'product-technology'],     page: 'programme-marketing.html' },
+
+    { tier: 'foundations',   any: ['automation'],        page: 'foundations-ai-automation.html' },
+    { tier: 'foundations',   any: ['data-analytic', 'analytic'], page: 'foundations-data-analytics.html' },
+    { tier: 'foundations',   any: ['data-science'],      page: 'foundations-data-science.html' },
+    { tier: 'foundations',   any: ['cyber', 'security'], page: 'foundations-cyber-security.html' },
+    { tier: 'foundations',   any: ['business-analysis'], page: 'foundations-business-analysis.html' },
+    { tier: 'foundations',   any: ['project-management'],page: 'foundations-project-management.html' }
   ];
 
-  function pageFor(p) {
+  /* The Foundations register is the better source when the page has it:
+     it is the same list the course pages are generated from, so it cannot
+     disagree with what actually exists on disk. */
+  function fromRegister(p) {
+    if (!window.FND || !window.FND.COURSES) return null;
+    var hay = ((p.slug || '') + ' ' + (p.title || '')).toLowerCase();
+    for (var i = 0; i < window.FND.COURSES.length; i++) {
+      var c = window.FND.COURSES[i];
+      var keys = c.match || [c.slug];
+      for (var j = 0; j < keys.length; j++) {
+        if (hay.indexOf(String(keys[j]).toLowerCase()) !== -1) {
+          return c.ready ? c.page : null;
+        }
+      }
+    }
+    return null;
+  }
+
+  function pageFor(p, tierKey) {
+    if (tierKey === 'foundations') {
+      var reg = fromRegister(p);
+      if (reg) return reg;
+    }
     var hay = ((p.slug || '') + ' ' + (p.title || '')).toLowerCase().replace(/[\s_]+/g, '-');
     for (var i = 0; i < PAGE_RULES.length; i++) {
-      for (var j = 0; j < PAGE_RULES[i].any.length; j++) {
-        if (hay.indexOf(PAGE_RULES[i].any[j]) !== -1) return PAGE_RULES[i].page;
+      var r = PAGE_RULES[i];
+      if (r.tier && tierKey && r.tier !== tierKey) continue;
+      for (var j = 0; j < r.any.length; j++) {
+        if (hay.indexOf(r.any[j]) !== -1) return r.page;
       }
     }
     return null;
@@ -91,6 +126,17 @@
     { any: ['automation'],                          text: 'Build the automations that do the repetitive work' },
     { any: ['data', 'analytics'],                   text: 'Turn messy data into answers people act on' }
   ];
+
+  /* Foundations is seeded from the register rather than hardcoded here.
+     The register is what the course pages are generated from, so the menu
+     cannot advertise a course whose page does not exist, and a new course
+     appears in the nav the moment its page is marked ready. The API
+     overrides this when it returns BEGINNER programmes of its own. */
+  function foundationsSeed() {
+    if (!window.FND || !window.FND.COURSES) return [];
+    return window.FND.COURSES.filter(function (c) { return c.ready; })
+      .map(function (c) { return { title: c.title, slug: c.slug, subtitle: c.blurb || '' }; });
+  }
 
   var FALLBACK = {
     foundations: [],
@@ -126,7 +172,7 @@
   }
 
   function courseHTML(p, tier) {
-    var page = pageFor(p);
+    var page = pageFor(p, tier.key);
     var href = page || tier.href;
     var b = blurb(p);
     var soon = page ? '' : '<span class="nav-mega-soon">Page coming</span>';
@@ -216,6 +262,7 @@
 
     /* draw immediately from the fallback so the nav is never empty,
        then redraw once the API answers */
+    FALLBACK.foundations = foundationsSeed();
     render(FALLBACK);
 
     fetch(API + '/api/v1/programs')
@@ -228,6 +275,21 @@
         TIERS.forEach(function (t) {
           byTier[t.key] = live.filter(function (p) { return t.levels.indexOf(p.level) !== -1; });
         });
+
+        /* Foundations merges rather than replaces. The backend currently
+           carries one BEGINNER programme while six course pages exist, so
+           replacing would shrink the menu to one the moment the fetch
+           resolved. The register leads, and anything the API knows about
+           that the register does not gets appended. */
+        var seed = foundationsSeed();
+        if (seed.length) {
+          var known = seed.map(function (c) { return (c.title + ' ' + c.slug).toLowerCase(); }).join(' | ');
+          var extra = (byTier.foundations || []).filter(function (p) {
+            var t = String(p.title || '').toLowerCase();
+            return t && known.indexOf(t) === -1 && !fromRegister(p);
+          });
+          byTier.foundations = seed.concat(extra);
+        }
         render(byTier);
       })
       .catch(function () { /* fallback is already on screen */ });

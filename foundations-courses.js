@@ -66,6 +66,7 @@
     {
       slug: 'cyber-security',
       page: 'foundations-cyber-security.html',
+      ready: true,
       title: 'Cyber Security',
       weeks: 16,
       art: 'assets/fnd/security.jpg',
@@ -78,6 +79,7 @@
     {
       slug: 'business-analysis',
       page: 'foundations-business-analysis.html',
+      ready: true,
       title: 'Business Analysis',
       weeks: 12,
       art: 'assets/fnd/business.jpg',
@@ -90,6 +92,7 @@
     {
       slug: 'project-management',
       page: 'foundations-project-management.html',
+      ready: true,
       title: 'Project Management',
       weeks: 12,
       art: 'assets/fnd/project.jpg',
