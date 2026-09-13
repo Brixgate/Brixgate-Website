@@ -42,21 +42,24 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -p "${{ env.SSH_PORT }}" "${{ env.SSH_HOST }}" >> ~/.ssh/known_hosts
 
-      # --delete keeps the web root an exact mirror, so a file removed from
-      # the repo is removed from the server instead of lingering forever,
-      # which is what the old zip-and-copy pipeline did.
+      # --delete is OFF, and should stay off without a full inventory of
+      # the web root.
       #
-      # Safe here because the dev lead confirmed /var/www/html holds only
-      # this site: the API is reverse proxied to a port rather than served
-      # from a directory, so rsync cannot reach it. If anything else is
-      # ever given a document root under this path, take --delete back off
-      # before that lands.
+      # It was briefly enabled on the strength of "only the website is
+      # there". That is true of the API, but the directory also holds
+      # /var/www/html/aiquiz/, which is not in this repo and is a live
+      # entry point: assets/qr-aiquiz.svg and the share button in
+      # aiquiz.html both publish https://brixgate.com/aiquiz, which nginx
+      # 301s to /aiquiz/ and that directory serves. Deleting it would have
+      # broken a printed QR code.
       #
-      # The excludes are what keep build scripts, the .claude directory,
-      # dist and font archives out of a public directory to begin with.
+      # The cost of leaving it off is that files removed from the repo
+      # linger on the server. The old zip-and-copy pipeline behaved the
+      # same way, so this is no worse than the status quo, and it cannot
+      # remove anything nobody remembered was there.
       - name: Deploy via rsync
         run: |
-          rsync -avz --delete \
+          rsync -avz \
             --exclude='.git' \
             --exclude='.git*' \
             --exclude='.github' \
