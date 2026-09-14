@@ -923,15 +923,19 @@
 
     /* No hover to perform here, so the list sits under the face as an
        ordinary block and nothing is hidden behind a gesture. */
+    /* Without hover there is nothing to trigger the reveal, and a lid
+       that slides on tap fights the tap that should be opening the page.
+       So on touch the card is just a card: the underlay is gone and the
+       face keeps its own href, which is the tier page the list was only
+       ever a shortcut into. */
     @media (hover: none), (max-width: 900px) {
-      .lp .lp-tier[data-tier-card] { overflow: visible; }
-      .lp .lp-tier-face { transform: none !important; box-shadow: none; }
-      .lp .lp-tier-under {
-        position: static; inset: auto; align-items: stretch; text-align: left;
-        padding: 22px 26px 24px !important; border-radius: 0 0 var(--lp-r-lg) var(--lp-r-lg);
+      .lp .lp-tier[data-tier-card] { overflow: hidden; }
+      .lp .lp-tier-under { display: none; }
+      .lp .lp-tier-face {
+        transform: none !important;
+        border-radius: var(--lp-r-lg) !important;
+        box-shadow: none;
       }
-      .lp .lp-tier-link { opacity: 1; transform: none; justify-content: space-between; font-size: .95rem; }
-      .lp .lp-tier-link.is-all { justify-content: flex-start; gap: 8px; }
     }
     @media (prefers-reduced-motion: reduce) {
       .lp .lp-tier-face, .lp .lp-tier-link { transition: none !important; }
@@ -1259,10 +1263,15 @@
       .lp .lp-hero-proof { flex-direction: column; align-items: flex-start; }
       /* Four floating cards don't fit a ~335px stage — show the two that
          carry the most weight; the other two facts appear further down. */
-      .lp .lp-stage { height: 384px; }
-      .lp .lp-card-video { width: min(206px, 62%); top: 0; right: 0; }
-      .lp .lp-card-b { width: min(256px, 78%); top: 212px; left: 0; }
-      .lp .lp-card-a, .lp .lp-card-c { display: none; }
+      /* The stage is off below this width. The four cards are a desktop
+         composition: beside the copy they reinforce it, but stacked
+         underneath they are 384px of decoration between the headline and
+         the first real section, and two of the four were already hidden.
+         Nothing on them is content: every claim also appears in the copy
+         or in the sections below. */
+      .lp .lp-stage { display: none; }
+      .lp .lp-hero-grid { grid-template-columns: 1fr; gap: 0; }
+      .lp .lp-hero { padding-bottom: 64px; }
       .lp .lp-mosaic { grid-auto-rows: 62px; gap: 10px; }
       .lp .lp-cohort-stats { gap: 22px; margin: 28px 0 26px; }
       .lp .lp-cohort-stat b { font-size: 1.85rem; }
