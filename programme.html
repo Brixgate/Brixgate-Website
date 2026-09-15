@@ -129,6 +129,29 @@
 body.tc{ color:var(--tc-ink); }
 
 .tc-door{ position:relative; overflow:hidden; isolation:isolate; }
+
+/* ---------- hero and the first door share one ground ----------
+   Both carried their own near-identical gradient, so each restarted at
+   the boundary and the join read as a seam. The gradient lives on the
+   wrapper now and the two sections are transparent, so it runs unbroken
+   from the top of the page to the end of door one. */
+.tc-top{
+  position:relative;
+  background:
+    radial-gradient(110% 52% at 8% 0%, rgba(27,58,92,.82) 0%, rgba(2,16,36,0) 46%),
+    radial-gradient(80% 42% at 96% 78%, rgba(154,35,53,.46) 0%, rgba(2,16,36,0) 54%),
+    linear-gradient(172deg,#0D1C34 0%, var(--tc-ink) 52%, #0A1A30 100%);
+}
+.tc-top .tc-hero,
+.tc-top .tc-door-f{ background:none; }
+
+/* The lead button is transparent too, just brighter. A solid ink button
+   on ink ground was the darkest thing on the page. */
+.tc-hero .tc-btn-ghost.is-lead{
+  border-color:rgba(255,255,255,.72); color:#fff; font-weight:750;
+}
+.tc-hero .tc-btn-ghost.is-lead:hover{ background:rgba(255,255,255,.14); border-color:#fff; }
+
 .tc-door-in{ padding:clamp(96px,11vw,140px) 0 clamp(88px,10vw,124px); }
 
 /* ---------- door art ----------
@@ -726,6 +749,7 @@ body.tc{ color:var(--tc-ink); }
 </div>
 
 <!-- ===== HERO ===== -->
+<div class="tc-top">
 <header class="tc-hero">
   <div class="tc-hero-glow" aria-hidden="true"></div>
   <div class="tc-wrap">
@@ -735,12 +759,8 @@ body.tc{ color:var(--tc-ink); }
     <h1 class="tc-h1 tc-rise">Two ways in. One question.</h1>
     <p class="tc-lead tc-rise">Are you already doing the work, or are you starting from the beginning? Everything else follows from that. Pick the door that describes you and the rest of the site will make sense.</p>
     <div class="tc-hero-jump tc-rise">
-      <a href="#foundations" class="tc-btn tc-btn-ink">I am starting from zero
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-      <a href="#professionals" class="tc-btn tc-btn-ghost">I already work in my field
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
+      <a href="#foundations" class="tc-btn tc-btn-ghost is-lead">I am starting from zero</a>
+      <a href="#professionals" class="tc-btn tc-btn-ghost">I already work in my field</a>
     </div>
     </div>
 
@@ -812,6 +832,8 @@ body.tc{ color:var(--tc-ink); }
     </div>
   </div>
 </section>
+
+</div>
 
 <!-- ===== DOOR 2: PROFESSIONALS ===== -->
 <section class="tc-door tc-door-p" id="professionals">
