@@ -2240,8 +2240,6 @@ body.show-cad .currency-cad { display: inline !important; }
 .nav-mega-tier-d {
   grid-column: 2 / -1; font-size: 0.78rem; line-height: 1.5; color: #6B7A90;
 }
-.nav-mega-tier-go { color: #C4173A; opacity: 0; transform: translateX(-4px); transition: opacity 0.2s ease, transform 0.2s ease; display: inline-flex; }
-.nav-mega-tier.is-on .nav-mega-tier-go { opacity: 1; transform: none; }
 
 /* ---- right: the hovered tier's courses ---- */
 .nav-mega-courses { padding: 18px 20px 16px; min-height: 232px; }

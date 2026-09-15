@@ -37,7 +37,10 @@
     {
       key: 'foundations',
       levels: ['BEGINNER'],
-      name: 'AI Foundations',
+      /* The tier is called AI Foundations on its own pages. Here it is
+         doing the job of a call to action, so it says what the reader
+         gets rather than what we named it. */
+      name: 'Start your tech career',
       desc: 'Start from zero. Six to sixteen weeks, nothing assumed.',
       href: 'foundations.html',
       kicker: 'Live courses for people starting out',
@@ -203,7 +206,6 @@
                        '<span class="nav-mega-tier-ic">' + (ICON[t.key] || '') + '</span>' +
                        '<span class="nav-mega-tier-t">' + esc(t.name) + '</span>' +
                        '<span class="nav-mega-tier-d">' + esc(t.desc) + '</span>' +
-                       '<span class="nav-mega-tier-go">' + ARROW + '</span>' +
                      '</a>';
             }).join('') +
           '</div>' +
