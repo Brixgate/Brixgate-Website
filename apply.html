@@ -2596,6 +2596,74 @@ body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#
     });
   }
 
+  /* Every published programme, kept so switching tier does not go back
+     to the network. */
+  var _allProgrammes = [];
+
+  /* "Professional" covers both levels above beginner. The backend has an
+     ADVANCED level, and nothing in this form should quietly hide a
+     programme that starts using it. */
+  function levelsForTier(tier) {
+    return String(tier).toLowerCase() === 'beginner'
+      ? ['BEGINNER']
+      : ['INTERMEDIATE', 'ADVANCED'];
+  }
+
+  function currentTier() {
+    var sel = document.getElementById('applicant-level');
+    return sel ? sel.value : 'Professional';
+  }
+
+  function programmesForTier(tier) {
+    var want = levelsForTier(tier);
+    var out = _allProgrammes.filter(function (p) {
+      return want.indexOf(String(p.level || '').toUpperCase()) !== -1;
+    });
+    /* A programme with no level set is not hidden from everybody: it
+       falls to Professional, which is where the existing catalogue sits
+       and what this form defaults to. */
+    if (String(tier).toLowerCase() !== 'beginner') {
+      out = out.concat(_allProgrammes.filter(function (p) { return !p.level; }));
+    }
+    return out;
+  }
+
+  function applyTierFilter() {
+    var sel = document.getElementById('field');
+    var previous = sel ? sel.value : '';
+    populateProgrammes(programmesForTier(currentTier()));
+    if (!sel) return;
+
+    /* Keep the choice if this tier still offers it, otherwise clear and
+       fire change so the existing handler resets pricing, cohort and
+       everything else hanging off the programme. */
+    var stillThere = [].slice.call(sel.options).some(function (o) { return o.value === previous; });
+    if (previous && stillThere) {
+      sel.value = previous;
+    } else if (previous) {
+      sel.value = '';
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    /* An empty tier must say so. Silently showing "Select your
+       programme" over nothing looks like a page that failed to load. */
+    var real = [].slice.call(sel.options).filter(function (o) { return o.value; }).length;
+    if (!real) {
+      sel.innerHTML = '<option value="" disabled selected>No ' +
+        (currentTier().toLowerCase() === 'beginner' ? 'beginner' : 'professional') +
+        ' programmes are open yet</option>';
+    }
+  }
+
+  /* Switching tier rebuilds the list from what was already fetched.
+
+     Delegated from document rather than bound to the select directly:
+     this script runs before the form markup exists, so binding here by
+     id finds nothing and silently attaches to nothing. */
+  document.addEventListener('change', function (e) {
+    if (e.target && e.target.id === 'applicant-level') applyTierFilter();
+  });
+
   function fetchProgrammes() {
     return fetch(API_BASE + '/programs')
       .then(function(r) { return r.json(); })
@@ -2606,12 +2674,14 @@ body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#
           return p.status && p.status.toUpperCase() === 'PUBLISHED';
         });
         if (!published.length) throw new Error('empty');
-        populateProgrammes(published);
+        _allProgrammes = published;
+        applyTierFilter();
       })
       .catch(function() {
         /* Fallback to static list so form never breaks */
         console.warn('[Brixgate] /programs fetch failed — using static fallback');
-        populateProgrammes(PROGRAMS_FALLBACK);
+        _allProgrammes = PROGRAMS_FALLBACK;
+        applyTierFilter();
       });
   }
 
@@ -3692,6 +3762,21 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     if (!pid || !sel || !lock) return;
 
     function tryLock() {
+      // The tier filter may have removed this programme from the list, so
+      // move the tier to whichever one holds it first. Without this a
+      // beginner course linked from its own page could never be locked
+      // while the form defaults to Professional.
+      try {
+        if (typeof _allProgrammes !== 'undefined' && _allProgrammes.length) {
+          var match = _allProgrammes.filter(function (p) { return String(p.id) === String(pid); })[0];
+          var lvlSel = document.getElementById('applicant-level');
+          if (match && lvlSel) {
+            var want = String(match.level || '').toUpperCase() === 'BEGINNER' ? 'Beginner' : 'Professional';
+            if (lvlSel.value !== want) { lvlSel.value = want; applyTierFilter(); }
+          }
+        }
+      } catch (e) { /* locking is a convenience; never block the form */ }
+
       // The page's own applyProgramId() selects the option for us; option
       // values are display names, and the numeric id lives on data-program-id.
       var opt = [].slice.call(sel.options).find(function (o) {
@@ -3927,12 +4012,16 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   <span id="ap-theme-label">Dark</span>
 </button>
 <script>
-/* Theme is a comparison aid: ?theme=dark or the toggle, remembered locally. */
+/* Dark is the default for this page. The toggle stays, and a choice made
+   with it is remembered, but a first visit opens dark rather than light.
+   ?theme= still wins over both, for comparing the two side by side. */
 (function () {
   var KEY = 'bxApplyTheme';
   var qp = new URLSearchParams(location.search).get('theme');
   var saved = null; try { saved = localStorage.getItem(KEY); } catch (e) {}
-  var dark = qp ? qp === 'dark' : saved === 'dark';
+  /* saved === 'light' is an explicit choice and is honoured; no saved
+     value at all means this is a first visit, which opens dark. */
+  var dark = qp ? qp === 'dark' : (saved ? saved === 'dark' : true);
   function apply(d) {
     document.body.classList.toggle('ap-dark', d);
     var l = document.getElementById('ap-theme-label');
