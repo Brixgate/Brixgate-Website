@@ -237,6 +237,38 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
 }
 
+/* ---- next cohort countdown ----
+   Set apart from the country list with a divider, and a touch brighter,
+   because it is the part of this strip that asks for an action. On
+   narrow screens the countries are what gets dropped: the countdown is
+   the half worth keeping. */
+.region-cohort {
+  position: relative;
+  padding-left: 14px;
+  margin-left: 6px;
+  color: rgba(255,255,255,0.92);
+  font-weight: 650;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.region-cohort::before {
+  content: '';
+  position: absolute; left: 0; top: 50%;
+  width: 1px; height: 11px; margin-top: -5.5px;
+  background: rgba(255,255,255,0.26);
+}
+@media (max-width: 760px) {
+  /* the country chips scroll or truncate here; the countdown must not */
+  /* the label goes too: "Now active in" followed only by a countdown
+     reads as a broken sentence */
+  .region-banner .region-item,
+  .region-banner .region-more,
+  .region-banner .region-label { display: none; }
+  .region-cohort { padding-left: 0; margin-left: 0; }
+  .region-cohort::before { display: none; }
+}
+
+
 .region-item {
   display: flex;
   align-items: center;
