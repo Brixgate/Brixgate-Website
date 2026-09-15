@@ -1479,7 +1479,7 @@ body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#
             <div class="ap-side-by">Software Engineer · Cohort 01</div>
             <div class="ap-side-secure">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              Payments secured by Paystack
+              Payments secured by <span data-gateway-name>Paystack</span>
             </div>
           </div>
         </div>
@@ -1539,8 +1539,8 @@ body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#
           <div class="trust-point">
             <div class="trust-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
             <div class="trust-text">
-              <h5>Secure Payment via Paystack</h5>
-              <p>Card, bank transfer, or USSD. Protected by Paystack's PCI-DSS Level 1 certified infrastructure.</p>
+              <h5>Secure Payment via <span data-gateway-name>Paystack</span></h5>
+              <p data-gateway-blurb>Card, bank transfer, or USSD. Protected by Paystack's PCI-DSS Level 1 certified infrastructure.</p>
             </div>
           </div>
           <div class="trust-point">
@@ -1995,12 +1995,12 @@ body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#
           <button id="pay-btn" class="btn btn-primary pay-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span id="pay-btn-label">Pay Securely via Paystack</span>
           </button>
-            <p class="ap-handoff">You will be taken to Paystack to complete payment, then returned here.</p>
+            <p class="ap-handoff">You will be taken to <span data-gateway-name>Paystack</span> to complete payment, then returned here.</p>
 
           <a class="back-link" id="back-to-form"> Edit my details</a>
 
           <div class="paystack-badge">
-            Secured by Paystack · PCI-DSS Level 1 Certified
+            Secured by <span data-gateway-name>Paystack</span> · PCI-DSS Level 1 Certified
           </div>
         </div>
 
@@ -2031,7 +2031,7 @@ body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#
             <div class="ap-line"><span class="k">Duration</span><span class="v">4 weeks</span></div>
             <div class="ap-trust">
               <div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>No charge until you confirm on the next step</div>
-              <div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Card payments secured by Paystack</div>
+              <div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Card payments secured by <span data-gateway-name>Paystack</span></div>
               <div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>We respond to every application within 48 hours</div>
               <div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Scholarship applied automatically, no code needed</div>
             </div>
@@ -2664,6 +2664,13 @@ body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#
     if (e.target && e.target.id === 'applicant-level') applyTierFilter();
   });
 
+  /* The gateway shown to the user must track the one actually used, so
+     both read the same place. bxGateway() lives in currency.js and is
+     derived from the active currency. */
+  function gatewayName() {
+    return (window.bxGateway && window.bxGateway() === 'STRIPE') ? 'Stripe' : 'Paystack';
+  }
+
   function fetchProgrammes() {
     return fetch(API_BASE + '/programs')
       .then(function(r) { return r.json(); })
@@ -3170,7 +3177,7 @@ body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#
     if (rvItem)       rvItem.textContent       = origStr;
     if (rvTotal)      rvTotal.textContent      = payStr;
     if (rvTotalLabel) rvTotalLabel.textContent = totalLabelStr;
-    if (rvBtn)        rvBtn.textContent        = 'Pay ' + payStr + ' via Paystack';
+    if (rvBtn)        rvBtn.textContent        = 'Pay ' + payStr + ' via ' + gatewayName();
     if (rvEnroll)     rvEnroll.textContent     = isTeam && size >= 2
       ? 'Team Enrolment (' + size + ' people)'
       : 'Individual Enrolment';
@@ -3569,7 +3576,7 @@ body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#
 
     if (!token) {
       payBtn.disabled = false;
-      document.getElementById('pay-btn-label').textContent = 'Pay Securely via Paystack';
+      document.getElementById('pay-btn-label').textContent = 'Pay Securely via ' + gatewayName();
       showReviewError('Session Expired', 'Your session has expired. Please go back and re-enter your details.');
       return;
     }
@@ -3651,16 +3658,16 @@ body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#
         if (/already paid|already enrolled|already registered|cohort|existing.*payment|payment.*found/i.test(errMsg)) {
           errTitle = 'Already enrolled';
           errMsg   = 'Our records show you\'ve already paid for this cohort. To enrol in a different programme, click "← Edit my details" below and update your selection.';
-          document.getElementById('pay-btn-label').textContent = 'Pay Securely via Paystack';
+          document.getElementById('pay-btn-label').textContent = 'Pay Securely via ' + gatewayName();
         } else if (/coupon|discount|code/i.test(errMsg)) {
           errTitle = 'Coupon not accepted';
-          document.getElementById('pay-btn-label').textContent = 'Pay ' + (getPriceDisplay()[getActiveCurrency()] || '') + ' via Paystack';
+          document.getElementById('pay-btn-label').textContent = 'Pay ' + (getPriceDisplay()[getActiveCurrency()] || '') + ' via ' + gatewayName();
         } else if (/unauthorized|401/i.test(errMsg)) {
           errTitle = 'Session expired';
           errMsg   = 'Your session has expired. Click "← Edit my details" below to go back and re-enter your information.';
-          document.getElementById('pay-btn-label').textContent = 'Pay Securely via Paystack';
+          document.getElementById('pay-btn-label').textContent = 'Pay Securely via ' + gatewayName();
         } else {
-          document.getElementById('pay-btn-label').textContent = 'Pay ' + (getPriceDisplay()[getActiveCurrency()] || '') + ' via Paystack';
+          document.getElementById('pay-btn-label').textContent = 'Pay ' + (getPriceDisplay()[getActiveCurrency()] || '') + ' via ' + gatewayName();
         }
         /* Always show errors on the review panel — never on the hidden form panel */
         showReviewError(errTitle, errMsg);
@@ -4054,5 +4061,41 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 </script>
 <script src="nav-programmes.js"></script>
 <script src="cohort-countdown.js"></script>
+
+<script>
+/* Every visible mention of the gateway follows the one that will
+   actually be used. currency.js decides that from the country, and can
+   resolve after this page has rendered, so this listens for the event
+   it fires as well as running once on load. */
+(function () {
+  'use strict';
+  var NGN_BLURB = "Card, bank transfer, or USSD. Protected by Paystack's PCI-DSS Level 1 certified infrastructure.";
+  var USD_BLURB = "Card and wallet payments, protected by Stripe's PCI-DSS Level 1 certified infrastructure.";
+
+  function sync() {
+    var stripe = window.bxGateway && window.bxGateway() === 'STRIPE';
+    var name = stripe ? 'Stripe' : 'Paystack';
+    document.querySelectorAll('[data-gateway-name]').forEach(function (el) {
+      el.textContent = name;
+    });
+    var blurb = document.querySelector('[data-gateway-blurb]');
+    /* USSD and bank transfer are Paystack rails; saying so under Stripe
+       would promise a payment method that is not on the next screen. */
+    if (blurb) blurb.textContent = stripe ? USD_BLURB : NGN_BLURB;
+
+    /* The pay button ships with a gateway name baked into the markup and
+       is only rewritten once the review step runs, so it would sit on
+       the wrong name until then. Swap whichever name it currently holds
+       rather than assuming the default, so this stays correct if the
+       markup changes. */
+    var payBtn = document.getElementById('pay-btn-label');
+    if (payBtn) payBtn.textContent = payBtn.textContent.replace(/Paystack|Stripe/g, name);
+  }
+
+  document.addEventListener('bx:currency', sync);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', sync);
+  else sync();
+})();
+</script>
 </body>
 </html>
