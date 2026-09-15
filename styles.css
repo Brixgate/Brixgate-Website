@@ -2543,3 +2543,20 @@ body.show-cad .currency-cad { display: inline !important; }
   .lp-cursor { display: none; }
   .cursor-zone, .cursor-zone a, .cursor-zone button { cursor: auto; }
 }
+
+
+/* ---- currency toggle removed ----
+   Currency follows the visitor's country and is not theirs to change:
+   NGN in Nigeria, USD everywhere else, decided in currency.js.
+
+   Hidden rather than deleted from the markup on purpose. script.js's
+   initCurrencyToggle queries .cur-btn and the currency labels, and
+   removing them would change the behaviour of a function that also
+   sets body.show-usd, which every price on the site depends on.
+   Hiding leaves that path intact and makes this one line to undo if
+   the toggle is ever wanted back. */
+.cur-btn,
+.currency-toggle-5,
+.ap-cur,
+.label-usd,
+.label-ngn { display: none !important; }

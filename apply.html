@@ -2079,6 +2079,7 @@ body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#
 
 <button class="back-to-top">↑</button>
 
+<script src="currency.js"></script>
 <script src="script.js"></script>
 <script>
   /* ============================================================
@@ -3526,7 +3527,13 @@ body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#
       contact_person_name:   (firstName2 + ' ' + lastName2).trim(),
       contact_person_email:  email2,
       billing_email:         email2,
-      payment_method:        'PAYSTACK'
+      /* Derived from the currency actually active at this moment, never
+         from the detected country, so the two cannot disagree: NGN pays
+         through Paystack, USD through Stripe. The literal is the
+         fallback for the case where currency.js failed to load at all,
+         and it matches the fallback currency. See currency.js. */
+      payment_method:        (window.bxGateway ? window.bxGateway() : 'PAYSTACK'),
+      buyer_is_participant:  !isTeamPay
     };
     if (isTeamPay && teamNamePay) initiatePayload.team_name = teamNamePay;
 
