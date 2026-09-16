@@ -80,8 +80,14 @@
     { tier: 'foundations',   any: ['data-analytic', 'analytic'], page: 'foundations-data-analytics.html' },
     { tier: 'foundations',   any: ['data-science'],      page: 'foundations-data-science.html' },
     { tier: 'foundations',   any: ['cyber', 'security'], page: 'foundations-cyber-security.html' },
-    { tier: 'foundations',   any: ['business-analysis'], page: 'foundations-business-analysis.html' },
-    { tier: 'foundations',   any: ['project-management'],page: 'foundations-project-management.html' }
+    /* BAPM matches either half: the backend may name the programme after
+       one discipline or the other, and both belong to the merged page. */
+    { tier: 'foundations',   any: ['bapm', 'business-analysis', 'business analysis'], page: 'foundations-bapm.html' },
+    { tier: 'foundations',   any: ['product-management', 'product management'],       page: 'foundations-product-management.html' },
+    /* Project management now resolves to BAPM, so an old backend record
+       does not dead-end. Listed after product management so
+       "product management" is never caught by it. */
+    { tier: 'foundations',   any: ['project-management', 'project management'],       page: 'foundations-bapm.html' }
   ];
 
   /* The Foundations register is the better source when the page has it:

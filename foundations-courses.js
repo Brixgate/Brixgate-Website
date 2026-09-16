@@ -87,7 +87,7 @@
       weeks: 12,
       art: 'assets/fnd/business.jpg',
       accent: '#FF294E',
-      match: ['business analysis', 'business-analysis'],
+      match: ['bapm', 'business analysis', 'business-analysis', 'project management', 'project-management'],
       tagline: 'Find the real problem before anyone builds.',
       blurb: 'Work out what actually needs building, write it so nobody has to guess, then plan and deliver it with a record that holds up afterwards.',
       outcome: 'You leave with a full requirements pack for a real problem, written the way a delivery team can use.'
@@ -100,7 +100,7 @@
       weeks: 12,
       art: 'assets/fnd/business.jpg',
       accent: '#FF5748',
-      match: ['project management', 'project-management'],
+      match: ['product management', 'product-management'],
       tagline: 'Ship things on time, with the receipts.',
       blurb: 'Decide what is worth building and find out whether it worked. Talk to users, read the evidence, and choose what not to build.',
       outcome: 'You leave having planned and run a project end to end, with the artefacts to show for it.'

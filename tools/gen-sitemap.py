@@ -22,8 +22,10 @@ SITE = 'https://brixgate.com'
 SKIP = {
     'apply.html', 'callback.html', 'certificate.html', 'brixer-certificate.html',
     'certificate-template.html', 'verify.html',
-    'ai-readiness.html',   # redirect to /aiquiz
-    'aiquiz.html',         # redirect to /aiquiz
+    'ai-readiness.html',                    # redirect to /aiquiz
+    'aiquiz.html',                          # redirect to /aiquiz
+    'foundations-business-analysis.html',   # redirect to BAPM
+    'foundations-project-management.html',  # redirect to BAPM
 }
 
 # Placeholder programme pages with no backend record behind them. Listing
