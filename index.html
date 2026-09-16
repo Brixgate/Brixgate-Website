@@ -604,6 +604,92 @@
     }
     .lp .lp-seg .cur-btn.active { background: var(--lp-ink); color: #fff; }
     .lp .lp-prog-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    /* ============================================================
+       PROGRAMME CARD
+
+       The image owns the top of the card: flush to both sides and the
+       top edge, no padding, no tinted panel around it. Everything
+       written sits in a padded body underneath.
+
+       The old version inset each illustration inside a coloured panel,
+       which put four different background tints across one row and left
+       the artwork fighting the card instead of filling it. Same images,
+       used properly.
+
+       THE OLD VERSION IS KEPT, commented out at the end of this block.
+       To go back: comment this block out and uncomment that one. The
+       markup supports both, so nothing else needs touching.
+       ============================================================ */
+    .lp .lp-prog {
+      position: relative;
+      display: flex; flex-direction: column;
+      background: #fff;
+      border: 1px solid var(--lp-line);
+      border-radius: var(--lp-r-lg);
+      padding: 0;                      /* the art runs to the edges */
+      overflow: hidden;
+      transition: transform .35s var(--lp-ease), box-shadow .35s var(--lp-ease), border-color .3s;
+    }
+    .lp .lp-prog:hover { transform: translateY(-6px); box-shadow: var(--lp-shadow-md); border-color: transparent; }
+
+    /* ---- the art, edge to edge ---- */
+    .lp .lp-prog-art {
+      position: relative; margin: 0; border-radius: 0;
+      aspect-ratio: 16 / 10; overflow: hidden;
+      background: var(--lp-surface);   /* only ever seen while loading */
+    }
+    .lp .lp-prog-art img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform .8s var(--lp-ease);
+    }
+    .lp .lp-prog:hover .lp-prog-art img { transform: scale(1.05); }
+
+    /* status and duration ride on the image so the body stays copy only */
+    .lp .lp-prog-top {
+      position: absolute; inset: 12px 12px auto 12px; z-index: 2;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .lp .lp-prog-status {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.94); color: var(--lp-ink);
+      font-size: .64rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+      padding: 5px 10px; border-radius: 999px;
+      box-shadow: 0 2px 8px rgba(1,11,30,.18);
+    }
+    .lp .lp-prog-dur {
+      background: rgba(2,16,36,.74); color: #fff;
+      font-size: .64rem; font-weight: 700;
+      padding: 5px 10px; border-radius: 999px;
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    }
+
+    /* Which door this course is behind, stated on every card. */
+    .lp .lp-prog-tag {
+      position: absolute; left: 12px; bottom: 12px; z-index: 2;
+      display: inline-flex; align-items: center; gap: 6px; color: #fff;
+      font-size: .62rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      padding: 5px 11px; border-radius: 999px;
+    }
+    .lp .lp-prog-tag i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+    .lp .lp-prog-tag.is-pro { background: rgba(196,23,58,.94); }
+    .lp .lp-prog-tag.is-beg { background: rgba(13,110,84,.94); }
+
+    /* ---- the body: this is where the padding lives ---- */
+    .lp .lp-prog-b { padding: 20px 20px 22px; display: flex; flex-direction: column; flex: 1; }
+    .lp .lp-prog-name { font-size: 1.16rem; font-weight: 800; letter-spacing: -0.025em; color: var(--lp-ink); line-height: 1.15; }
+    .lp .lp-prog-desc { font-size: .85rem; color: var(--lp-body); line-height: 1.55; margin-top: 8px; flex: 1; }
+    .lp .lp-prog-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--lp-line-2); }
+    .lp .lp-prog-price { font-size: .76rem; color: var(--lp-muted); font-weight: 600; line-height: 1.2; }
+    .lp .lp-prog-price b { display: block; font-size: 1.02rem; color: var(--lp-ink); font-weight: 800; letter-spacing: -0.02em; margin-top: 2px; }
+    .lp .lp-prog-price[hidden] { display: none; }
+    .lp .lp-prog-go { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--lp-line); display: grid; place-items: center; color: var(--lp-ink); transition: background .25s, color .25s, border-color .25s, transform .25s var(--lp-ease); flex-shrink: 0; }
+    .lp .lp-prog:hover .lp-prog-go { background: var(--lp-ink); color: #fff; border-color: var(--lp-ink); }
+    .lp .lp-prog:hover .lp-prog-go svg { transform: translate(1px, -1px); }
+
+    /* ------------------------------------------------------------
+       PREVIOUS PROGRAMME CARD, kept on purpose.
+       Restore by commenting out the block above and uncommenting this.
+
     .lp .lp-prog {
       position: relative;
       display: flex; flex-direction: column;
@@ -625,8 +711,8 @@
     .lp .lp-prog-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .lp .lp-prog-status { display: inline-flex; align-items: center; gap: 7px; font-size: .7rem; font-weight: 700; color: var(--lp-ink); letter-spacing: .04em; text-transform: uppercase; }
     .lp .lp-prog-dur { font-size: .72rem; font-weight: 700; color: var(--lp-muted); }
-    /* Art fills the whole frame edge to edge; the portrait source is cropped
-       from the top so the subject at the base of the illustration is kept. */
+    (* Art fills the whole frame edge to edge; the portrait source is cropped
+       from the top so the subject at the base of the illustration is kept. *)
     .lp .lp-prog-art { margin: 14px 0 0; border-radius: 14px; aspect-ratio: 16 / 11; overflow: hidden; }
     .lp .lp-prog-art img {
       width: 100%; height: 100%; max-width: none; max-height: none;
@@ -644,6 +730,8 @@
     .lp .lp-prog:hover .lp-prog-go { background: var(--lp-ink); color: #fff; border-color: var(--lp-ink); }
     .lp .lp-prog-go svg { transition: transform .25s var(--lp-ease); }
     .lp .lp-prog:hover .lp-prog-go svg { transform: translate(1px, -1px); }
+
+       ------------------------------------------------------------ */
     .lp .lp-upcoming { margin-top: 28px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
     .lp .lp-upcoming-label { font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--lp-muted); margin-right: 6px; }
     .lp .lp-upcoming .lp-chip { background: #fff; color: var(--lp-muted); }
@@ -1660,66 +1748,78 @@
     <div class="lp-prog-grid stagger">
 
       <a href="programme-engineering.html" class="lp-prog fade-up">
-        <div class="lp-prog-top">
+        <div class="lp-prog-art">
+          <div class="lp-prog-top">
           <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
           <span class="lp-prog-dur">4-week sprint</span>
         </div>
-        <div class="lp-prog-art" style="background:#D4E9F7">
           <img src="assets/Software Engineering.png" alt="" loading="lazy" />
+          <span class="lp-prog-tag is-pro"><i></i>Professional</span>
         </div>
-        <div class="lp-prog-name">Software Engineering</div>
+        <div class="lp-prog-b">
+          <div class="lp-prog-name">Software Engineering</div>
         <div class="lp-prog-desc">Write code that ships. Debug like it's production, because it is.</div>
         <div class="lp-prog-foot">
           <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
           <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
         </div>
+        </div>
       </a>
 
       <a href="programme-cybersecurity.html" class="lp-prog fade-up">
-        <div class="lp-prog-top">
+        <div class="lp-prog-art">
+          <div class="lp-prog-top">
           <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
           <span class="lp-prog-dur">4-week sprint</span>
         </div>
-        <div class="lp-prog-art" style="background:#F0EAD8">
           <img src="assets/Cybersecurity.png" alt="" loading="lazy" />
+          <span class="lp-prog-tag is-pro"><i></i>Professional</span>
         </div>
-        <div class="lp-prog-name">Cybersecurity</div>
+        <div class="lp-prog-b">
+          <div class="lp-prog-name">Cybersecurity</div>
         <div class="lp-prog-desc">Chase intrusions, patch the holes, think like the attacker before they do.</div>
         <div class="lp-prog-foot">
           <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
           <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
         </div>
+        </div>
       </a>
 
       <a href="programme-finance.html" class="lp-prog fade-up">
-        <div class="lp-prog-top">
+        <div class="lp-prog-art">
+          <div class="lp-prog-top">
           <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
           <span class="lp-prog-dur">4-week sprint</span>
         </div>
-        <div class="lp-prog-art" style="background:#E8E0F5">
           <img src="assets/Financial Modelling.png" alt="" loading="lazy" />
+          <span class="lp-prog-tag is-pro"><i></i>Professional</span>
         </div>
-        <div class="lp-prog-name">Financial Modelling</div>
+        <div class="lp-prog-b">
+          <div class="lp-prog-name">Financial Modelling</div>
         <div class="lp-prog-desc">Turn spreadsheets into decisions. Stress-test the numbers until they can't lie.</div>
         <div class="lp-prog-foot">
           <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
           <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
         </div>
+        </div>
       </a>
 
       <a href="programme-marketing.html" class="lp-prog fade-up">
-        <div class="lp-prog-top">
+        <div class="lp-prog-art">
+          <div class="lp-prog-top">
           <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
           <span class="lp-prog-dur">4-week sprint</span>
         </div>
-        <div class="lp-prog-art" style="background:#D6F5EF">
           <img src="assets/Product Marketing.png" alt="" loading="lazy" />
+          <span class="lp-prog-tag is-pro"><i></i>Professional</span>
         </div>
-        <div class="lp-prog-name">Product Marketing</div>
+        <div class="lp-prog-b">
+          <div class="lp-prog-name">Product Marketing</div>
         <div class="lp-prog-desc">Position products people actually want, then prove it with numbers that hold up.</div>
         <div class="lp-prog-foot">
           <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
           <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+        </div>
         </div>
       </a>
 
