@@ -605,6 +605,62 @@
     .lp .lp-seg .cur-btn.active { background: var(--lp-ink); color: #fff; }
     .lp .lp-prog-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
     /* ============================================================
+       STARTING FROM NOTHING  +  BEGINNER PROGRAMMES
+
+       The page had one tier moment, the two doors, and then ran
+       professional all the way down: four-week sprints, "from
+       professional to Expert Practitioner", the cohort band. A beginner
+       reading that concludes the site is not for them. These two
+       sections are the counterweight, and they sit directly after the
+       professional grid so the pairing is obvious.
+       ============================================================ */
+    .lp .lp-zero {
+      position: relative; overflow: hidden; color: #fff;
+      background:
+        radial-gradient(120% 86% at 8% 0%, rgba(27,58,92,.78) 0%, rgba(2,16,36,0) 54%),
+        radial-gradient(90% 74% at 96% 96%, rgba(13,110,84,.34) 0%, rgba(2,16,36,0) 58%),
+        linear-gradient(168deg, #0D1C34 0%, var(--lp-ink) 62%);
+    }
+    .lp .lp-zero-grid {
+      display: grid; grid-template-columns: minmax(0,1.02fr) minmax(0,.98fr);
+      gap: clamp(36px,4.6vw,68px); align-items: center;
+    }
+    .lp .lp-zero h2 { color: #fff; }
+    .lp .lp-zero .lp-eyebrow { color: rgba(255,255,255,.55); }
+    .lp .lp-zero .lp-lead { color: rgba(255,255,255,.76); margin-top: 18px; max-width: 46ch; }
+
+    /* the reassurances, which are the whole point of the section */
+    .lp .lp-zero-list { margin-top: 30px; display: flex; flex-direction: column; gap: 14px; }
+    .lp .lp-zero-item { display: flex; gap: 13px; align-items: flex-start; }
+    .lp .lp-zero-ic {
+      width: 30px; height: 30px; border-radius: 9px; flex: none; display: grid; place-items: center;
+      background: rgba(13,110,84,.24); color: #5FD9A8;
+    }
+    .lp .lp-zero-item b { display: block; font-size: .95rem; font-weight: 700; color: #fff; letter-spacing: -.012em; }
+    .lp .lp-zero-item span { display: block; font-size: .86rem; line-height: 1.55; color: rgba(255,255,255,.66); margin-top: 3px; }
+
+    /* photographs of people who look like the reader, which is the
+       argument this section is actually making */
+    .lp .lp-zero-art { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .lp .lp-zero-ph { position: relative; border-radius: 16px; overflow: hidden; }
+    .lp .lp-zero-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .lp .lp-zero-ph.tall { grid-row: span 2; }
+    .lp .lp-zero-cap {
+      position: absolute; left: 12px; right: 12px; bottom: 11px;
+      font-size: .72rem; font-weight: 700; color: #fff;
+      text-shadow: 0 1px 6px rgba(0,0,0,.6);
+    }
+
+    @media (max-width: 960px) {
+      .lp .lp-zero-grid { grid-template-columns: 1fr; gap: 34px; }
+    }
+
+    /* ---- the beginner grid ---- */
+    .lp .lp-beg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    @media (max-width: 1040px) { .lp .lp-beg-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 620px)  { .lp .lp-beg-grid { grid-template-columns: 1fr; } }
+
+    /* ============================================================
        PROGRAMME CARD
 
        The image owns the top of the card: flush to both sides and the
@@ -1843,6 +1899,185 @@
 <!-- ============================================================
      AI STACK — tools marquee, model-agnostic note, featured quote
      ============================================================ -->
+<!-- ============================================================
+     STARTING FROM NOTHING
+     ============================================================ -->
+<section class="lp-section lp-zero">
+  <div class="lp-container">
+    <div class="lp-zero-grid">
+      <div class="fade-up">
+        <span class="lp-eyebrow">Starting from zero</span>
+        <h2 class="lp-h2">No degree. No code. No prior exposure to any of this.</h2>
+        <p class="lp-lead">Most people who want to work in tech never start, because every course they find assumes something they do not have yet. Foundations assumes nothing, and says so on purpose.</p>
+
+        <div class="lp-zero-list">
+          <div class="lp-zero-item">
+            <span class="lp-zero-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <div><b>The entry requirement is that you turn up</b><span>No degree, no portfolio, no technical background. Week one starts at the ground floor and builds from there.</span></div>
+          </div>
+          <div class="lp-zero-item">
+            <span class="lp-zero-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <div><b>Taught live, so you can say you are lost</b><span>Never a recorded library you work through alone at midnight. A real person, in a small room, who notices when you go quiet.</span></div>
+          </div>
+          <div class="lp-zero-item">
+            <span class="lp-zero-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <div><b>Six to sixteen weeks, paced for a real life</b><span>Built for people holding down a job or a degree at the same time, not for people who can study full time.</span></div>
+          </div>
+          <div class="lp-zero-item">
+            <span class="lp-zero-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <div><b>You leave with work, not a certificate of attendance</b><span>Something built, defended in front of the cohort, and worth showing to somebody hiring.</span></div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:34px">
+          <a href="foundations.html" class="lp-btn lp-btn-white">Start your tech career</a>
+          <a href="/aiquiz" class="lp-btn lp-btn-outline-light">Not sure? Take the free check</a>
+        </div>
+      </div>
+
+      <div class="lp-zero-art fade-up" aria-hidden="true">
+        <div class="lp-zero-ph tall">
+          <img src="assets/fnd/people/class.jpg" alt="" loading="lazy" />
+          <span class="lp-zero-cap">Foundations, week one</span>
+        </div>
+        <div class="lp-zero-ph">
+          <img src="assets/fnd/people/group.jpg" alt="" loading="lazy" />
+        </div>
+        <div class="lp-zero-ph">
+          <img src="assets/fnd/people/solo.jpg" alt="" loading="lazy" />
+          <span class="lp-zero-cap">Nothing assumed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BEGINNER PROGRAMMES
+     ============================================================ -->
+<section class="lp-section lp-surface" id="beginner-programmes">
+  <div class="lp-container">
+    <div class="lp-prog-head fade-up">
+      <div>
+        <span class="lp-eyebrow">AI Foundations</span>
+        <h2 class="lp-h2">Six ways to start.<br/>None of them assume anything.</h2>
+      </div>
+      <a href="foundations.html" class="lp-link-arrow">Browse all <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+
+    <div class="lp-beg-grid stagger">
+        <a href="foundations-ai-automation.html" class="lp-prog fade-up">
+          <div class="lp-prog-art">
+            <div class="lp-prog-top">
+              <span class="lp-prog-status"><span class="lp-dot"></span>Waitlist</span>
+              <span class="lp-prog-dur">6 weeks</span>
+            </div>
+            <img src="assets/fnd/automations.jpg" alt="" loading="lazy" />
+            <span class="lp-prog-tag is-beg"><i></i>Beginner</span>
+          </div>
+          <div class="lp-prog-b">
+            <div class="lp-prog-name">AI Automation</div>
+            <div class="lp-prog-desc">Build the automations that take repetitive work off your desk, from the first trigger to something running on its own.</div>
+            <div class="lp-prog-foot">
+              <div class="lp-prog-price">No prerequisites</div>
+              <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+            </div>
+          </div>
+        </a>
+        <a href="foundations-data-analytics.html" class="lp-prog fade-up">
+          <div class="lp-prog-art">
+            <div class="lp-prog-top">
+              <span class="lp-prog-status"><span class="lp-dot"></span>Waitlist</span>
+              <span class="lp-prog-dur">8 weeks</span>
+            </div>
+            <img src="assets/fnd/data.jpg" alt="" loading="lazy" />
+            <span class="lp-prog-tag is-beg"><i></i>Beginner</span>
+          </div>
+          <div class="lp-prog-b">
+            <div class="lp-prog-name">Data Analytics</div>
+            <div class="lp-prog-desc">Read data properly, question it, and turn it into something a room will act on rather than argue with.</div>
+            <div class="lp-prog-foot">
+              <div class="lp-prog-price">No prerequisites</div>
+              <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+            </div>
+          </div>
+        </a>
+        <a href="foundations-bapm.html" class="lp-prog fade-up">
+          <div class="lp-prog-art">
+            <div class="lp-prog-top">
+              <span class="lp-prog-status"><span class="lp-dot"></span>Waitlist</span>
+              <span class="lp-prog-dur">12 weeks</span>
+            </div>
+            <img src="assets/fnd/business.jpg" alt="" loading="lazy" />
+            <span class="lp-prog-tag is-beg"><i></i>Beginner</span>
+          </div>
+          <div class="lp-prog-b">
+            <div class="lp-prog-name">Business Analysis &amp; Project Management</div>
+            <div class="lp-prog-desc">Work out what actually needs building, then plan and deliver it with a record that holds up afterwards.</div>
+            <div class="lp-prog-foot">
+              <div class="lp-prog-price">No prerequisites</div>
+              <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+            </div>
+          </div>
+        </a>
+        <a href="foundations-product-management.html" class="lp-prog fade-up">
+          <div class="lp-prog-art">
+            <div class="lp-prog-top">
+              <span class="lp-prog-status"><span class="lp-dot"></span>Waitlist</span>
+              <span class="lp-prog-dur">12 weeks</span>
+            </div>
+            <img src="assets/fnd/foundations.jpg" alt="" loading="lazy" />
+            <span class="lp-prog-tag is-beg"><i></i>Beginner</span>
+          </div>
+          <div class="lp-prog-b">
+            <div class="lp-prog-name">Product Management</div>
+            <div class="lp-prog-desc">Decide what is worth building and find out whether it worked. Talk to users, read the evidence, choose what not to build.</div>
+            <div class="lp-prog-foot">
+              <div class="lp-prog-price">No prerequisites</div>
+              <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+            </div>
+          </div>
+        </a>
+        <a href="foundations-data-science.html" class="lp-prog fade-up">
+          <div class="lp-prog-art">
+            <div class="lp-prog-top">
+              <span class="lp-prog-status"><span class="lp-dot"></span>Waitlist</span>
+              <span class="lp-prog-dur">16 weeks</span>
+            </div>
+            <img src="assets/fnd/datascience.jpg" alt="" loading="lazy" />
+            <span class="lp-prog-tag is-beg"><i></i>Beginner</span>
+          </div>
+          <div class="lp-prog-b">
+            <div class="lp-prog-name">Data Science</div>
+            <div class="lp-prog-desc">The deepest course we run. Statistics, modelling and machine learning from the ground floor.</div>
+            <div class="lp-prog-foot">
+              <div class="lp-prog-price">No prerequisites</div>
+              <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+            </div>
+          </div>
+        </a>
+        <a href="foundations-cyber-security.html" class="lp-prog fade-up">
+          <div class="lp-prog-art">
+            <div class="lp-prog-top">
+              <span class="lp-prog-status"><span class="lp-dot"></span>Waitlist</span>
+              <span class="lp-prog-dur">16 weeks</span>
+            </div>
+            <img src="assets/fnd/security.jpg" alt="" loading="lazy" />
+            <span class="lp-prog-tag is-beg"><i></i>Beginner</span>
+          </div>
+          <div class="lp-prog-b">
+            <div class="lp-prog-name">Cyber Security</div>
+            <div class="lp-prog-desc">How attacks actually work, how defences are built, and where AI helps or quietly makes things worse.</div>
+            <div class="lp-prog-foot">
+              <div class="lp-prog-price">No prerequisites</div>
+              <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+            </div>
+          </div>
+        </a>
+    </div>
+  </div>
+</section>
+
 <section class="lp-section" id="ai-stack">
   <div class="lp-container">
     <div class="lp-stack-label fade-up">The AI stack our practitioners build with</div>

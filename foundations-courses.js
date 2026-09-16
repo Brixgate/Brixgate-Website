@@ -77,29 +77,32 @@
       outcome: 'You leave able to read an incident, reason about it, and say what you would do next.'
     },
     {
-      slug: 'business-analysis',
-      page: 'foundations-business-analysis.html',
+      slug: 'bapm',
+      page: 'foundations-bapm.html',
       ready: true,
-      title: 'Business Analysis',
+      /* Long name for the page, short one for chips and cards where the
+         full title wraps. */
+      title: 'Business Analysis & Project Management',
+      short: 'BAPM',
       weeks: 12,
       art: 'assets/fnd/business.jpg',
       accent: '#FF294E',
       match: ['business analysis', 'business-analysis'],
       tagline: 'Find the real problem before anyone builds.',
-      blurb: 'Gather what people actually need rather than what they first ask for, write it down so it survives contact with a delivery team, and use AI to do it faster.',
+      blurb: 'Work out what actually needs building, write it so nobody has to guess, then plan and deliver it with a record that holds up afterwards.',
       outcome: 'You leave with a full requirements pack for a real problem, written the way a delivery team can use.'
     },
     {
-      slug: 'project-management',
-      page: 'foundations-project-management.html',
+      slug: 'product-management',
+      page: 'foundations-product-management.html',
       ready: true,
-      title: 'Project Management',
+      title: 'Product Management',
       weeks: 12,
-      art: 'assets/fnd/project.jpg',
+      art: 'assets/fnd/business.jpg',
       accent: '#FF5748',
       match: ['project management', 'project-management'],
       tagline: 'Ship things on time, with the receipts.',
-      blurb: 'Plan work that survives reality, keep it moving when it slips, and use AI for the reporting and tracking that usually eats the week.',
+      blurb: 'Decide what is worth building and find out whether it worked. Talk to users, read the evidence, and choose what not to build.',
       outcome: 'You leave having planned and run a project end to end, with the artefacts to show for it.'
     }
   ];
