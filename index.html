@@ -621,7 +621,11 @@
       position: relative; color: #fff;
       background:
         radial-gradient(120% 86% at 8% 0%, rgba(27,58,92,.78) 0%, rgba(2,16,36,0) 54%),
-        radial-gradient(74% 54% at 94% 58%, rgba(13,110,84,.34) 0%, rgba(2,16,36,0) 62%),
+        /* Low in the section but finishing inside it. The centre sits at
+           80% of the height and the ramp is transparent by 55% of a 36%
+           radius, so the glow runs out at about 99.8% and never reaches
+           the edge the curve below has to match. */
+        radial-gradient(70% 36% at 93% 80%, rgba(13,110,84,.38) 0%, rgba(2,16,36,0) 55%),
         linear-gradient(168deg, #0D1C34 0%, var(--lp-ink) 62%);
     }
     .lp .lp-zero-grid {
