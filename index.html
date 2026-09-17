@@ -621,7 +621,7 @@
       position: relative; color: #fff;
       background:
         radial-gradient(120% 86% at 8% 0%, rgba(27,58,92,.78) 0%, rgba(2,16,36,0) 54%),
-        radial-gradient(90% 74% at 96% 96%, rgba(13,110,84,.34) 0%, rgba(2,16,36,0) 58%),
+        radial-gradient(74% 54% at 94% 58%, rgba(13,110,84,.34) 0%, rgba(2,16,36,0) 62%),
         linear-gradient(168deg, #0D1C34 0%, var(--lp-ink) 62%);
     }
     .lp .lp-zero-grid {
@@ -685,16 +685,17 @@
        needs to sit inside it, and pointer-events are off so it cannot
        eat a click meant for the cards underneath. */
     .lp .lp-zero { padding-bottom: clamp(88px, 10vw, 128px); }
-    /* The curve is on the section itself, not a shape hung underneath it.
-       A pseudo-element cannot inherit the parent's gradient without
-       restarting it in its own box, so it had to be painted a flat
-       colour, and the section's green radial then stopped dead in a
-       straight line where the two met. Rounding the section's own bottom
-       corners lets the gradient paint into the curve, so there is no
-       seam to match in the first place. */
-    .lp .lp-zero {
-      border-bottom-left-radius: 50% 74px;
-      border-bottom-right-radius: 50% 74px;
+    .lp .lp-zero::after {
+      content: '';
+      position: absolute; left: -6%; right: -6%; bottom: -74px; height: 76px;
+      /* Flat ink, matching what the section's own gradient resolves to at
+         its bottom edge. The green radial above is positioned to finish
+         well before that edge, so the two meet on the same colour and
+         there is nothing to see at the join. */
+      background: var(--lp-ink);
+      border-radius: 0 0 50% 50% / 0 0 100% 100%;
+      pointer-events: none;
+      z-index: 1;
     }
     /* the section below has to make room for the bulge */
     .lp #beginner-programmes { padding-top: clamp(96px, 11vw, 136px); }
@@ -702,7 +703,7 @@
     @media (max-width: 960px) {
       .lp .lp-zero-grid { grid-template-columns: 1fr; gap: 34px; }
       .lp .lp-zero-art { grid-template-rows: repeat(2, 186px); }
-      .lp .lp-zero { border-bottom-left-radius: 50% 42px; border-bottom-right-radius: 50% 42px; }
+      .lp .lp-zero::after { bottom: -44px; height: 46px; }
       .lp #beginner-programmes { padding-top: clamp(72px, 12vw, 96px); }
     }
 
@@ -1403,7 +1404,7 @@
          competing with them rather than sitting under them, and the mask
          now falls away sooner so the middle of the section, where the
          reading happens, is its quietest part. */
-      opacity: .42;
+      opacity: .65;
       -webkit-mask-image: radial-gradient(86% 76% at 50% 46%, rgba(0,0,0,.72) 0%, rgba(0,0,0,.4) 54%, transparent 88%);
       mask-image: radial-gradient(86% 76% at 50% 46%, rgba(0,0,0,.72) 0%, rgba(0,0,0,.4) 54%, transparent 88%);
     }
