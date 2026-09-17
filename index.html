@@ -614,8 +614,11 @@
        sections are the counterweight, and they sit directly after the
        professional grid so the pairing is obvious.
        ============================================================ */
+    /* No overflow:hidden here. The bulge below the section is a
+       pseudo-element hanging past the bottom edge, and clipping would
+       remove the very thing it is for. Nothing inside needs clipping. */
     .lp .lp-zero {
-      position: relative; overflow: hidden; color: #fff;
+      position: relative; color: #fff;
       background:
         radial-gradient(120% 86% at 8% 0%, rgba(27,58,92,.78) 0%, rgba(2,16,36,0) 54%),
         radial-gradient(90% 74% at 96% 96%, rgba(13,110,84,.34) 0%, rgba(2,16,36,0) 58%),
@@ -630,19 +633,41 @@
     .lp .lp-zero .lp-lead { color: rgba(255,255,255,.76); margin-top: 18px; max-width: 46ch; }
 
     /* the reassurances, which are the whole point of the section */
-    .lp .lp-zero-list { margin-top: 30px; display: flex; flex-direction: column; gap: 14px; }
+    .lp .lp-zero-list { margin-top: 30px; display: flex; flex-direction: column; gap: 16px; }
     .lp .lp-zero-item { display: flex; gap: 13px; align-items: flex-start; }
+    /* The tick sat 7px below the centre of the line it belongs to,
+       because a 30px box top-aligned against a 22.8px line box hangs
+       low. Matching the icon to the line height lines the two up
+       without a magic offset that breaks if the type changes. */
     .lp .lp-zero-ic {
-      width: 30px; height: 30px; border-radius: 9px; flex: none; display: grid; place-items: center;
+      width: 24px; height: 24px; border-radius: 7px; flex: none;
+      display: grid; place-items: center;
       background: rgba(13,110,84,.24); color: #5FD9A8;
+      /* No offset needed now the description rule no longer captures
+         this element; a 24px box against a 22.8px line box sits level. */
+      margin-top: -1px;
     }
+    .lp .lp-zero-ic svg { width: 13px; height: 13px; }
     .lp .lp-zero-item b { display: block; font-size: .95rem; font-weight: 700; color: #fff; letter-spacing: -.012em; }
-    .lp .lp-zero-item span { display: block; font-size: .86rem; line-height: 1.55; color: rgba(255,255,255,.66); margin-top: 3px; }
+    /* Scoped to the description. Unscoped, this also matched the icon,
+   which is a span too, and at one class more specific than
+   .lp-zero-ic it won: the tick was being given display block, a
+   body font size and a 3px top margin, which is what knocked it
+   out of line with its own heading. */
+    .lp .lp-zero-item > div > span { display: block; font-size: .86rem; line-height: 1.55; color: rgba(255,255,255,.66); margin-top: 3px; }
 
     /* photographs of people who look like the reader, which is the
        argument this section is actually making */
-    .lp .lp-zero-art { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .lp .lp-zero-ph { position: relative; border-radius: 16px; overflow: hidden; }
+    /* Explicit row heights, not auto. The photographs are lazy loaded, so
+       with auto rows the panels have no height at all until they enter
+       the viewport and the whole section jumps as you scroll into it.
+       Fixed rows reserve the space from the first paint. */
+    .lp .lp-zero-art {
+      display: grid; grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(2, 246px);
+      gap: 16px;
+    }
+    .lp .lp-zero-ph { position: relative; border-radius: 18px; overflow: hidden; background: rgba(255,255,255,.05); }
     .lp .lp-zero-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .lp .lp-zero-ph.tall { grid-row: span 2; }
     .lp .lp-zero-cap {
@@ -651,8 +676,35 @@
       text-shadow: 0 1px 6px rgba(0,0,0,.6);
     }
 
+    /* The bottom bulges outward into the section below, the opposite of
+       the lip on the global band, which hangs inward. Same trick, sign
+       reversed: a block painted in this section's own colour, sitting
+       below it and rounded on its bottom corners.
+
+       It is a pseudo-element rather than a wrapper because nothing
+       needs to sit inside it, and pointer-events are off so it cannot
+       eat a click meant for the cards underneath. */
+    .lp .lp-zero { padding-bottom: clamp(88px, 10vw, 128px); }
+    .lp .lp-zero::after {
+      content: '';
+      position: absolute; left: -6%; right: -6%; bottom: -74px; height: 76px;
+      /* A flat colour, not `inherit`. Inheriting the section's gradient
+         restarts it inside this box, so the bulge would be a different
+         shade from the edge it is supposed to continue. This is the
+         colour the gradient has actually resolved to by the bottom. */
+      background: var(--lp-ink);
+      border-radius: 0 0 50% 50% / 0 0 100% 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    /* the section below has to make room for the bulge */
+    .lp #beginner-programmes { padding-top: clamp(108px, 12vw, 152px); }
+
     @media (max-width: 960px) {
       .lp .lp-zero-grid { grid-template-columns: 1fr; gap: 34px; }
+      .lp .lp-zero-art { grid-template-rows: repeat(2, 186px); }
+      .lp .lp-zero::after { bottom: -46px; height: 48px; }
+      .lp #beginner-programmes { padding-top: clamp(84px, 14vw, 110px); }
     }
 
     /* ---- the beginner grid ---- */
@@ -1969,7 +2021,7 @@
         <a href="foundations-ai-automation.html" class="lp-prog fade-up">
           <div class="lp-prog-art">
             <div class="lp-prog-top">
-              <span class="lp-prog-status"><span class="lp-dot"></span>Waitlist</span>
+              <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
               <span class="lp-prog-dur">6 weeks</span>
             </div>
             <img src="assets/fnd/automations.jpg" alt="" loading="lazy" />
@@ -1979,7 +2031,7 @@
             <div class="lp-prog-name">AI Automation</div>
             <div class="lp-prog-desc">Build the automations that take repetitive work off your desk, from the first trigger to something running on its own.</div>
             <div class="lp-prog-foot">
-              <div class="lp-prog-price">No prerequisites</div>
+              <div class="lp-prog-price">No prerequisites needed</div>
               <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
             </div>
           </div>
@@ -1987,7 +2039,7 @@
         <a href="foundations-data-analytics.html" class="lp-prog fade-up">
           <div class="lp-prog-art">
             <div class="lp-prog-top">
-              <span class="lp-prog-status"><span class="lp-dot"></span>Waitlist</span>
+              <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
               <span class="lp-prog-dur">8 weeks</span>
             </div>
             <img src="assets/fnd/data.jpg" alt="" loading="lazy" />
@@ -1997,7 +2049,7 @@
             <div class="lp-prog-name">Data Analytics</div>
             <div class="lp-prog-desc">Read data properly, question it, and turn it into something a room will act on rather than argue with.</div>
             <div class="lp-prog-foot">
-              <div class="lp-prog-price">No prerequisites</div>
+              <div class="lp-prog-price">No prerequisites needed</div>
               <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
             </div>
           </div>
@@ -2005,7 +2057,7 @@
         <a href="foundations-bapm.html" class="lp-prog fade-up">
           <div class="lp-prog-art">
             <div class="lp-prog-top">
-              <span class="lp-prog-status"><span class="lp-dot"></span>Waitlist</span>
+              <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
               <span class="lp-prog-dur">12 weeks</span>
             </div>
             <img src="assets/fnd/business.jpg" alt="" loading="lazy" />
@@ -2015,7 +2067,7 @@
             <div class="lp-prog-name">Business Analysis &amp; Project Management</div>
             <div class="lp-prog-desc">Work out what actually needs building, then plan and deliver it with a record that holds up afterwards.</div>
             <div class="lp-prog-foot">
-              <div class="lp-prog-price">No prerequisites</div>
+              <div class="lp-prog-price">No prerequisites needed</div>
               <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
             </div>
           </div>
@@ -2023,7 +2075,7 @@
         <a href="foundations-product-management.html" class="lp-prog fade-up">
           <div class="lp-prog-art">
             <div class="lp-prog-top">
-              <span class="lp-prog-status"><span class="lp-dot"></span>Waitlist</span>
+              <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
               <span class="lp-prog-dur">12 weeks</span>
             </div>
             <img src="assets/fnd/foundations.jpg" alt="" loading="lazy" />
@@ -2033,7 +2085,7 @@
             <div class="lp-prog-name">Product Management</div>
             <div class="lp-prog-desc">Decide what is worth building and find out whether it worked. Talk to users, read the evidence, choose what not to build.</div>
             <div class="lp-prog-foot">
-              <div class="lp-prog-price">No prerequisites</div>
+              <div class="lp-prog-price">No prerequisites needed</div>
               <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
             </div>
           </div>
@@ -2041,7 +2093,7 @@
         <a href="foundations-data-science.html" class="lp-prog fade-up">
           <div class="lp-prog-art">
             <div class="lp-prog-top">
-              <span class="lp-prog-status"><span class="lp-dot"></span>Waitlist</span>
+              <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
               <span class="lp-prog-dur">16 weeks</span>
             </div>
             <img src="assets/fnd/datascience.jpg" alt="" loading="lazy" />
@@ -2051,7 +2103,7 @@
             <div class="lp-prog-name">Data Science</div>
             <div class="lp-prog-desc">The deepest course we run. Statistics, modelling and machine learning from the ground floor.</div>
             <div class="lp-prog-foot">
-              <div class="lp-prog-price">No prerequisites</div>
+              <div class="lp-prog-price">No prerequisites needed</div>
               <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
             </div>
           </div>
@@ -2059,7 +2111,7 @@
         <a href="foundations-cyber-security.html" class="lp-prog fade-up">
           <div class="lp-prog-art">
             <div class="lp-prog-top">
-              <span class="lp-prog-status"><span class="lp-dot"></span>Waitlist</span>
+              <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
               <span class="lp-prog-dur">16 weeks</span>
             </div>
             <img src="assets/fnd/security.jpg" alt="" loading="lazy" />
@@ -2069,7 +2121,7 @@
             <div class="lp-prog-name">Cyber Security</div>
             <div class="lp-prog-desc">How attacks actually work, how defences are built, and where AI helps or quietly makes things worse.</div>
             <div class="lp-prog-foot">
-              <div class="lp-prog-price">No prerequisites</div>
+              <div class="lp-prog-price">No prerequisites needed</div>
               <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
             </div>
           </div>
