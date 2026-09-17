@@ -302,17 +302,26 @@
     .lp .lp-hero-grid {
       position: relative;
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+      grid-template-columns: minmax(0, 1.14fr) minmax(0, .86fr);
       gap: 48px;
       align-items: center;
     }
-    .lp .lp-hero-copy { max-width: 600px; }
+    /* Wider, and the display a step smaller only inside the hero: the
+       headline changed from three short lines to "The next generation of
+       AI practitioners", and at the old size its longest line needed
+       650px in a 571px column, so it broke across five lines. */
+    .lp .lp-hero-copy { max-width: 660px; }
+    .lp .lp-hero .lp-display { font-size: clamp(2.5rem, 5.2vw, 4.1rem); }
     .lp .lp-rise { animation: lpRise .9s var(--lp-ease) both; }
     .lp .lp-hero-pill { margin-bottom: 28px; }
     .lp .lp-hero-pill .sep { width: 1px; height: 14px; background: var(--lp-line); }
     .lp .lp-hero-pill .brand { color: var(--lp-red); font-weight: 700; }
     .lp .lp-display .period { color: var(--lp-red); }
-    .lp .lp-hero-sub { margin: 28px 0 36px; max-width: 520px; }
+    /* Wider and a touch tighter than before: the sub now carries the whole
+       two-track explanation rather than one sentence, and at 520px that ran
+       to six lines against the card stage beside it. */
+    .lp .lp-hero-sub { margin: 26px 0 34px; max-width: 580px; font-size: .97rem; line-height: 1.68; }
+    .lp .lp-hero-sub b { color: #fff; font-weight: 700; }
     .lp .lp-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
     .lp .lp-hero-proof {
       display: flex; align-items: center; gap: 14px;
@@ -1600,12 +1609,18 @@
           <span class="brand">AI in my Field</span>
         </div>
 
+        <!-- No count and no duration in the headline. "In four weeks" was
+             true of the professional sprints only, and read as a closed
+             door to anybody starting out. Practitioner is the word the rest
+             of the site already uses, so it also names the ladder:
+             Foundations is how you become one, the sprints are how you go
+             further as one. -->
         <h1 class="lp-display lp-rise" style="animation-delay:.08s">
-          Master AI<br/>in your field.<br/>In four weeks<span class="period">.</span>
+          The next generation<br/>of AI practitioners<br/>starts here<span class="period">.</span>
         </h1>
 
         <p class="lp-lead lp-hero-sub lp-rise" style="animation-delay:.16s">
-          Field-specific sprints that turn working professionals into certified Expert Practitioners, taught live by people who have already done it in your profession.
+          Two ways in, both taught live by people who do the work. <b>AI Foundations</b> takes you from no degree, no code and no prior exposure to something you can show, over six to sixteen weeks. <b>AI for Professionals</b> is a four-week sprint in the field you already work in, ending in a certificate an employer can verify.
         </p>
 
         <div class="lp-hero-actions lp-rise" style="animation-delay:.24s">
