@@ -685,26 +685,25 @@
        needs to sit inside it, and pointer-events are off so it cannot
        eat a click meant for the cards underneath. */
     .lp .lp-zero { padding-bottom: clamp(88px, 10vw, 128px); }
-    .lp .lp-zero::after {
-      content: '';
-      position: absolute; left: -6%; right: -6%; bottom: -74px; height: 76px;
-      /* A flat colour, not `inherit`. Inheriting the section's gradient
-         restarts it inside this box, so the bulge would be a different
-         shade from the edge it is supposed to continue. This is the
-         colour the gradient has actually resolved to by the bottom. */
-      background: var(--lp-ink);
-      border-radius: 0 0 50% 50% / 0 0 100% 100%;
-      pointer-events: none;
-      z-index: 1;
+    /* The curve is on the section itself, not a shape hung underneath it.
+       A pseudo-element cannot inherit the parent's gradient without
+       restarting it in its own box, so it had to be painted a flat
+       colour, and the section's green radial then stopped dead in a
+       straight line where the two met. Rounding the section's own bottom
+       corners lets the gradient paint into the curve, so there is no
+       seam to match in the first place. */
+    .lp .lp-zero {
+      border-bottom-left-radius: 50% 74px;
+      border-bottom-right-radius: 50% 74px;
     }
     /* the section below has to make room for the bulge */
-    .lp #beginner-programmes { padding-top: clamp(108px, 12vw, 152px); }
+    .lp #beginner-programmes { padding-top: clamp(96px, 11vw, 136px); }
 
     @media (max-width: 960px) {
       .lp .lp-zero-grid { grid-template-columns: 1fr; gap: 34px; }
       .lp .lp-zero-art { grid-template-rows: repeat(2, 186px); }
-      .lp .lp-zero::after { bottom: -46px; height: 48px; }
-      .lp #beginner-programmes { padding-top: clamp(84px, 14vw, 110px); }
+      .lp .lp-zero { border-bottom-left-radius: 50% 42px; border-bottom-right-radius: 50% 42px; }
+      .lp #beginner-programmes { padding-top: clamp(72px, 12vw, 96px); }
     }
 
     /* ---- the beginner grid ---- */
@@ -1399,9 +1398,14 @@
     .lp #programmes { position: relative; overflow: hidden; }
     .lp .lp-prog-canvas {
       position: absolute; inset: 0; width: 100%; height: 100%;
-      display: block; pointer-events: none; z-index: 0; opacity: 1;
-      -webkit-mask-image: radial-gradient(92% 82% at 50% 46%, #000 0%, rgba(0,0,0,.78) 62%, transparent 96%);
-      mask-image: radial-gradient(92% 82% at 50% 46%, #000 0%, rgba(0,0,0,.78) 62%, transparent 96%);
+      display: block; pointer-events: none; z-index: 0;
+      /* Dialled back. Behind a headline and a row of cards the web was
+         competing with them rather than sitting under them, and the mask
+         now falls away sooner so the middle of the section, where the
+         reading happens, is its quietest part. */
+      opacity: .42;
+      -webkit-mask-image: radial-gradient(86% 76% at 50% 46%, rgba(0,0,0,.72) 0%, rgba(0,0,0,.4) 54%, transparent 88%);
+      mask-image: radial-gradient(86% 76% at 50% 46%, rgba(0,0,0,.72) 0%, rgba(0,0,0,.4) 54%, transparent 88%);
     }
     .lp #programmes > .lp-container { position: relative; z-index: 1; }
     .lp .lp-cta-glow { position: absolute; left: 50%; top: 50%; width: 900px; height: 900px; transform: translate(-50%, -50%); background: radial-gradient(closest-side, rgba(255,41,78,.28), rgba(255,41,78,0)); pointer-events: none; }
@@ -1840,7 +1844,10 @@
     <div class="lp-prog-head fade-up">
       <div class="lp-head" style="max-width:640px">
         <span class="lp-eyebrow">AI for Professionals</span>
-        <h2 class="lp-h2">Four fields open now.<br/>More unlocking through 2026.</h2>
+        <!-- No count in this headline on purpose. "Four fields" was
+             accurate until a fifth was added, and a number in a
+             headline is a number somebody has to remember to update. -->
+        <h2 class="lp-h2">Sprints for the field you<br/>already work in.</h2>
       </div>
       <div class="lp-prog-tools">
         <div class="lp-seg" role="group" aria-label="Currency">
@@ -2834,8 +2841,8 @@
     accentColor: 0xC4173A,
     redRatio: 0.05,
     sizeMin: 1.8, sizeMax: 3.0, sizeRed: 3.6,
-    pointOpacity: 0.78,
-    lines: true, lineOpacity: 0.46, linkRadius: 19,
+    pointOpacity: 0.55,
+    lines: true, lineOpacity: 0.26, linkRadius: 16,
     repel: true
   }) : null;
 
