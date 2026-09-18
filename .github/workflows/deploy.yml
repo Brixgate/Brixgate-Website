@@ -64,10 +64,24 @@ jobs:
       # /var/www/html/aiquiz/ is no longer at risk because it is tracked in
       # the repo now. The step below still prints the list on every run, so
       # anything new appearing gets seen before it is removed.
+      # --omit-dir-times was half the fix. -a also implies -p and -g, and
+      # the deploy user cannot set permissions or group on files owned by
+      # www-data either, so rsync still transferred everything and still
+      # exited 23. Dropping -a for its parts minus the attribute flags
+      # leaves the web root's existing ownership alone, which is what we
+      # want: nginx owns the files, we only replace their contents.
+      #
+      # Exit 23 is still tolerated rather than ignored. It means "partial
+      # transfer due to error", and an attribute error we cannot avoid
+      # reads the same as a file that genuinely failed to copy, so the
+      # errors are printed either way and Verify below is what actually
+      # decides whether the deploy was good. Any other non-zero code
+      # still fails the job outright.
       - name: Deploy via rsync
         if: ${{ github.event.inputs.dry_run != 'true' }}
         run: |
-          rsync -avz --omit-dir-times --delete \
+          set +e
+          rsync -rlvz --no-perms --no-owner --no-group --omit-dir-times --delete \
             --exclude='.git' \
             --exclude='.git*' \
             --exclude='.github' \
@@ -83,6 +97,15 @@ jobs:
             --exclude='README*' \
             -e "ssh -p ${{ env.SSH_PORT }}" \
             ./ ${{ env.SSH_USER }}@${{ env.SSH_HOST }}:/var/www/html/
+          code=$?
+          set -e
+          echo "rsync exited $code"
+          if [ "$code" -eq 0 ]; then exit 0; fi
+          if [ "$code" -eq 23 ]; then
+            echo "::warning::rsync exited 23: files were sent, see the errors above. Verify decides the outcome."
+            exit 0
+          fi
+          exit "$code"
 
       # A deploy that connects, transfers nothing and reports success is
       # the failure worth guarding against, so prove the site answers and
