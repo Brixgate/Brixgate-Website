@@ -158,7 +158,12 @@
 
       function cta(c) {
         if (canApply(c, res.programme)) {
-          var href = 'apply.html?program_id=' + encodeURIComponent(res.programme.id);
+          /* level= as well as program_id: the tier resolved from the
+             programme needs the programme list to load first, and until
+             it does the apply form shows the wrong tier or none. This
+             page already knows it is a Foundations course. */
+          var href = 'apply.html?program_id=' + encodeURIComponent(res.programme.id) +
+                     '&level=BEGINNER';
           if (!applyHref) applyHref = href;
           return '<a class="fc-btn fc-btn-accent" href="' + href + '">' +
                    '<span data-chars-late>Apply now</span></a>';

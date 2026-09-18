@@ -30,6 +30,7 @@
   'use strict';
 
   var CACHE_KEY = 'bxGeoCurrency';
+  var CC_KEY    = 'bxGeoCountry';
   var HOME      = 'NG';
   var TIMEOUT   = 3500;
 
@@ -81,6 +82,14 @@
       .then(function (j) {
         if (timer) clearTimeout(timer);
         var code = j && typeof j.country === 'string' ? j.country.toUpperCase() : '';
+        /* Kept separately from the currency it implies: the apply form
+           uses it to preselect a phone dialling code, which is a finer
+           question than NGN-or-USD. */
+        if (code) {
+          W.bxActiveCountry = code;
+          try { sessionStorage.setItem(CC_KEY, code); } catch (e) {}
+          document.dispatchEvent(new CustomEvent('bx:country', { detail: { country: code } }));
+        }
         /* An unrecognised or empty code is treated as home, not as
            abroad: guessing USD for someone we cannot place is the more
            expensive mistake. */
@@ -96,6 +105,18 @@
   /* ---------- boot ---------- */
 
   function start() {
+    /* A country already known from an earlier page in this visit is
+       republished so listeners that mount later still hear it. */
+    try {
+      var cc = sessionStorage.getItem(CC_KEY);
+      if (cc) {
+        W.bxActiveCountry = cc;
+        setTimeout(function () {
+          document.dispatchEvent(new CustomEvent('bx:country', { detail: { country: cc } }));
+        }, 0);
+      }
+    } catch (e) {}
+
     var hit = cached();
     if (hit) { apply(hit); return; }
 
@@ -123,6 +144,10 @@
   W.bxGateway = function () {
     var cur = String(W.bxActiveCurrency || 'ngn').toLowerCase();
     return cur === 'usd' ? 'STRIPE' : 'PAYSTACK';
+  };
+
+  W.bxCountry = function () {
+    return String(W.bxActiveCountry || '').toUpperCase();
   };
 
   W.bxCurrency = function () {

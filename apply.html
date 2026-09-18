@@ -831,10 +831,15 @@ body.ap .enroll-toggle-btn.is-on .ap-choice-radio::after { transform:translate(-
   display:flex; align-items:center; gap:14px;
   background:var(--ap-surface); border:1px solid var(--ap-line);
   border-radius:13px; padding:15px 17px;
+  /* It sat flush against "I am applying as a" underneath it. */
+  margin-bottom:22px;
 }
 .ap-locked-ic { width:38px; height:38px; border-radius:10px; background:#fff; border:1px solid var(--ap-line); display:grid; place-items:center; color:var(--ap-red); flex-shrink:0; }
-.ap-locked-t { font-size:.94rem; font-weight:700; color:var(--ap-ink); }
-.ap-locked-s { font-size:.78rem; color:var(--ap-muted); margin-top:2px; }
+/* Both were inline, so the name and the note ran together as
+   "AI AutomationSelected from the programme page". The margin-top on
+   the note was already written for a block. */
+.ap-locked-t { display:block; font-size:.94rem; font-weight:700; color:var(--ap-ink); }
+.ap-locked-s { display:block; font-size:.78rem; color:var(--ap-muted); margin-top:2px; }
 .ap-locked button { margin-left:auto; background:none; border:0; cursor:pointer; font-family:inherit;
   font-size:.8rem; font-weight:700; color:var(--ap-red); padding:6px 2px; }
 .ap-locked button:hover { text-decoration:underline; }
@@ -1738,7 +1743,7 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
               <label for="apply-phone-num">Phone Number <span style="color:var(--red);font-size:0.85em">*</span></label>
               <div style="display:flex;gap:8px">
                 <select id="apply-phone-cc" autocomplete="tel-country-code" style="padding:13px 10px;border-radius:8px;border:1.5px solid var(--border-card);background:rgba(255,255,255,0.05);color:var(--white);font-family:inherit;font-size:0.88rem;outline:none;cursor:pointer;flex-shrink:0;width:130px;box-sizing:border-box;transition:border-color .2s">
-                  <option value="+234-NG">🇳🇬 +234</option>
+                  <option value="+234-NG" selected>🇳🇬 +234</option>
                   <option value="+1-US">🇺🇸 +1</option>
                   <option value="+44-GB">🇬🇧 +44</option>
                   <option value="+254-KE">🇰🇪 +254</option>
@@ -3782,15 +3787,48 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     if (tn) new MutationObserver(syncChoice).observe(tn, { attributes: true, attributeFilter: ['style', 'class'] });
   }
 
+  /* ---- dialling code follows the visitor ----
+     Nigeria is the marked default in the markup, so the field is never
+     empty while this waits on a lookup that may never answer. If the
+     lookup does answer and we carry that country's code, it wins.
+     currency.js does the detection; this only reads the result. */
+  (function () {
+    function apply(cc) {
+      var sel = document.getElementById('apply-phone-cc');
+      if (!sel || !cc) return;
+      /* Option values are "+234-NG": the dialling code alone is not
+         unique, several countries share +1. */
+      var want = [].slice.call(sel.options).filter(function (o) {
+        return o.value.split('-')[1] === cc;
+      })[0];
+      /* Touched it themselves? Leave it alone. */
+      if (want && !sel.dataset.userSet) sel.value = want.value;
+    }
+    document.addEventListener('bx:country', function (e) {
+      apply(e.detail && e.detail.country);
+    });
+    document.addEventListener('change', function (e) {
+      if (e.target && e.target.id === 'apply-phone-cc') e.target.dataset.userSet = '1';
+    });
+    if (window.bxCountry) apply(window.bxCountry());
+  })();
+
   /* ---- preselect the tier from ?level= ----
      A link from the Foundations hub knows the visitor is a beginner but
      not which of six courses they want, so it cannot use ?program_id=.
      Without this the form would open on Professional and show them the
-     wrong six programmes. ?program_id= still wins where both are given,
-     since it resolves the tier from the programme itself. */
+     wrong six programmes.
+
+     It also runs alongside ?program_id=, which is the case that matters
+     most. Resolving the tier from a programme means waiting for the
+     programme list to arrive, and until it does the field sits on
+     whatever it was — a beginner arriving from a Foundations page saw
+     the wrong answer, or none, for as long as that took. The link
+     already knows the tier, so the field is right on the first paint.
+     The programme lookup still runs and still corrects it if the two
+     ever disagree; it is the authority, this is the head start. */
   (function () {
     var q = new URLSearchParams(location.search);
-    if (q.get('program_id')) return;
     var want = String(q.get('level') || '').toLowerCase();
     if (want !== 'beginner' && want !== 'professional') return;
     var value = want === 'beginner' ? 'Beginner' : 'Professional';
