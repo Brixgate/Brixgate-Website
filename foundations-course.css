@@ -1,0 +1,459 @@
+/* ============================================================
+   AI FOUNDATIONS — course page skeleton  ·  .fc-*
+
+   Shared by every Foundations course page. The section order and the
+   components are common; each page sets --fc-accent and brings its
+   own curriculum treatment, so a six week course and a sixteen week
+   one do not have to be shown the same way.
+
+   Every page sets:
+     --fc-accent      the course colour
+     --fc-accent-2    its lighter partner, for gradients
+   ============================================================ */
+:root{
+  --fc-ink:#021024; --fc-card:#0D1C34; --fc-steel:#1B3A5C;
+  --fc-body:#4A5568; --fc-muted:#6B7A90; --fc-faint:#98A4B5;
+  --fc-line:#E6E8EC; --fc-surface:#F6F5F5; --fc-cream:#FBF9F6;
+  --fc-red:#FF294E; --fc-deep:#C4173A; --fc-orange:#FF5748; --fc-green:#16A34A;
+  --fc-accent:#FF294E; --fc-accent-2:#FF5748;
+  --fc-ease:cubic-bezier(.2,.7,.2,1); --fc-r:20px;
+}
+/* styles.css sets `body { color: var(--white) }` for the dark original
+   site. Without overriding it here, any element with no colour of its
+   own renders white on white: the FAQ heading sits in .fc-faq-head
+   rather than .fc-head, so it had no rule and was invisible. */
+body.fc{ background:#fff; color:var(--fc-ink); }
+.fc-wrap{ max-width:1200px; margin:0 auto; padding:0 32px; }
+.fc h1,.fc h2,.fc h3{ letter-spacing:-.032em; line-height:1.1; margin:0; }
+.fc-h1{ font-size:clamp(2.3rem,4.6vw,3.7rem); font-weight:800; }
+.fc-h2{ font-size:clamp(1.8rem,3.2vw,2.6rem); font-weight:800; }
+.fc-lead{ font-size:clamp(1rem,1.25vw,1.12rem); line-height:1.7; color:var(--fc-body); }
+.fc-kicker{
+  display:inline-flex; align-items:center; gap:9px;
+  font-size:.68rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--fc-muted);
+}
+.fc-kicker::before{ content:""; width:22px; height:1.5px; background:var(--fc-accent); }
+
+/* numbered section label, so a long page stays navigable */
+.fc-label{ display:flex; align-items:center; gap:14px; margin-bottom:22px; }
+.fc-label .n{
+  width:30px; height:30px; border-radius:9px; display:grid; place-items:center;
+  background:var(--fc-accent); color:#fff; font-size:.72rem; font-weight:800;
+}
+.fc-label .t{ font-size:.68rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--fc-muted); }
+
+/* ---------- buttons ---------- */
+.fc-btn{
+  position:relative; height:54px; padding:0 30px; border-radius:999px; border:0; cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center; gap:10px; overflow:hidden;
+  font-family:inherit; font-size:.94rem; font-weight:700; text-decoration:none;
+  transition:transform .26s var(--fc-ease), box-shadow .26s var(--fc-ease), background .2s, border-color .2s;
+}
+.fc-btn > svg{ width:16px; height:16px; flex:none; transition:transform .3s var(--fc-ease); }
+.fc-btn:hover > svg{ transform:translateX(4px); }
+.fc-btn-accent{
+  background:linear-gradient(135deg,var(--fc-accent),var(--fc-accent-2)); color:#fff;
+  box-shadow:0 14px 34px -14px color-mix(in srgb, var(--fc-accent) 62%, transparent);
+}
+.fc-btn-accent:hover{ transform:translateY(-2px); }
+.fc-btn-outline-light{ background:rgba(255,255,255,.06); color:#fff; border:1.5px solid rgba(255,255,255,.3); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+.fc-btn-outline-light:hover{ border-color:#fff; transform:translateY(-2px); }
+.fc-btn-ghost{ background:#fff; color:var(--fc-ink); border:1.5px solid var(--fc-line); }
+.fc-btn-ghost:hover{ border-color:var(--fc-ink); transform:translateY(-2px); }
+.fc-btn[disabled]{ opacity:.55; cursor:not-allowed; transform:none !important; }
+
+/* per-character stagger, same component as the Foundations hub */
+.fc-chars{ display:inline-block; position:relative; overflow:hidden; vertical-align:middle; }
+.fc-chars span{ display:inline-block; white-space:pre; transition:transform .42s var(--fc-ease); transition-delay:var(--d,0s); }
+.fc-chars .fc-chars-b{ position:absolute; left:0; top:0; display:inline-block; white-space:nowrap; }
+.fc-chars .fc-chars-b span{ transform:translateY(100%); }
+.fc-btn:hover .fc-chars .fc-chars-a span{ transform:translateY(-105%); }
+.fc-btn:hover .fc-chars .fc-chars-b span{ transform:translateY(0); }
+
+/* ---------- hero ---------- */
+.fc-hero{
+  position:relative; overflow:hidden; color:#fff;
+  padding:clamp(76px,9vw,110px) 0 clamp(84px,10vw,120px);
+  background:
+    radial-gradient(120% 88% at 4% 0%, rgba(27,58,92,.8) 0%, rgba(2,16,36,0) 54%),
+    linear-gradient(168deg,#0D1C34 0%, var(--fc-ink) 62%);
+}
+.fc-hero::after{
+  content:""; position:absolute; right:-8%; bottom:-30%;
+  width:760px; height:760px; border-radius:50%; pointer-events:none;
+  background:radial-gradient(closest-side, color-mix(in srgb, var(--fc-accent) 34%, transparent), transparent);
+  filter:blur(10px);
+}
+.fc-hero .fc-wrap{ position:relative; z-index:2; }
+.fc-hero-grid{ display:grid; grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr); gap:clamp(32px,4.5vw,64px); align-items:center; }
+.fc-crumb{ display:flex; align-items:center; gap:9px; font-size:.8rem; color:rgba(255,255,255,.55); margin-bottom:22px; }
+.fc-crumb a{ color:rgba(255,255,255,.78); font-weight:600; }
+.fc-crumb a:hover{ color:#fff; }
+.fc-crumb svg{ width:13px; height:13px; opacity:.5; }
+.fc-hero h1{ margin-top:16px; max-width:15ch; }
+.fc-hero .fc-lead{ margin-top:20px; max-width:48ch; color:rgba(255,255,255,.78); }
+.fc-pill{
+  display:inline-flex; align-items:center; gap:8px; height:33px; padding:0 15px;
+  border-radius:999px; font-size:.76rem; font-weight:700;
+  background:rgba(255,255,255,.09); color:rgba(255,255,255,.88);
+  border:1px solid rgba(255,255,255,.18);
+}
+.fc-pill i{ width:7px; height:7px; border-radius:50%; background:var(--fc-accent); }
+.fc-hero-cta{ margin-top:32px; display:flex; gap:12px; flex-wrap:wrap; }
+
+/* hero stat strip */
+/* A grid, not a wrapping flex row: three stats of uneven label length
+   were dropping the third onto its own line at the hero column width. */
+.fc-stats{
+  margin-top:44px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+  border-top:1px solid rgba(255,255,255,.13); padding-top:24px;
+}
+.fc-stat{ display:flex; flex-direction:column; gap:5px; padding-right:20px; border-right:1px solid rgba(255,255,255,.11); }
+.fc-stat:last-child{ border-right:0; padding-right:0; }
+.fc-stat b{ font-size:1.45rem; font-weight:800; letter-spacing:-.035em; }
+.fc-stat span{ font-size:.78rem; line-height:1.45; color:rgba(255,255,255,.55); }
+
+/* hero art panel */
+/* The clip lives on the image rather than the container, because the
+   metric cards are meant to overhang the frame and overflow:hidden here
+   sliced them off at the edge. */
+.fc-hero-art{ position:relative; aspect-ratio:4/3; margin-bottom:62px; }
+.fc-hero-art img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  box-sizing:border-box; border-radius:22px;
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 40px 90px -40px rgba(0,0,0,.9);
+}
+.fc-hero-art::after{
+  content:""; position:absolute; inset:0; border-radius:22px;
+  background:linear-gradient(to top, rgba(2,16,36,.6), rgba(2,16,36,0) 55%);
+  pointer-events:none;
+}
+/* Bottom-left belongs to the faces pill now, so the badge moved up.
+   Two things sharing a corner is how they ended up on top of each other. */
+.fc-hero-badge{
+  position:absolute; left:18px; top:18px; z-index:2; max-width:62%;
+  display:inline-flex; align-items:center; gap:9px;
+  padding:9px 14px; border-radius:11px;
+  background:rgba(2,16,36,.74); border:1px solid rgba(255,255,255,.2);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  font-size:.78rem; font-weight:700; color:#fff;
+}
+.fc-hero-badge i{ width:7px; height:7px; border-radius:50%; background:var(--fc-accent); }
+
+/* ---------- sections ---------- */
+.fc-sec{ padding:clamp(80px,9vw,116px) 0; }
+.fc-sec-cream{ background:var(--fc-cream); }
+.fc-sec-surface{ background:var(--fc-surface); }
+.fc-sec-ink{ background:var(--fc-ink); color:#fff; }
+.fc-sec-ink .fc-kicker{ color:rgba(255,255,255,.55); }
+.fc-sec-ink h2{ color:#fff; }
+.fc-sec-ink .fc-lead{ color:rgba(255,255,255,.72); }
+.fc-sec-ink .fc-label .t{ color:rgba(255,255,255,.5); }
+.fc-head{ max-width:64ch; }
+.fc-head h2{ color:var(--fc-ink); }
+.fc-head .fc-lead{ margin-top:16px; }
+.fc-sec-ink .fc-head h2{ color:#fff; }
+
+/* ---------- who it is for ---------- */
+.fc-who{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; margin-top:44px; }
+.fc-who-c{ background:#fff; border:1px solid var(--fc-line); border-radius:var(--fc-r); padding:30px 32px; }
+.fc-who-c.no{ background:#FCFBFA; border-style:dashed; }
+.fc-who-k{ font-size:.66rem; font-weight:800; letter-spacing:.15em; text-transform:uppercase; }
+.fc-who-c.yes .fc-who-k{ color:var(--fc-green); }
+.fc-who-c.no .fc-who-k{ color:var(--fc-faint); }
+.fc-who-c h3{ margin-top:12px; font-size:1.16rem; font-weight:750; color:var(--fc-ink); }
+.fc-who-c ul{ list-style:none; margin:18px 0 0; padding:0; display:flex; flex-direction:column; gap:13px; }
+.fc-who-c li{ display:flex; gap:11px; align-items:flex-start; font-size:.93rem; line-height:1.58; color:var(--fc-body); }
+.fc-who-c li svg{ width:16px; height:16px; flex:none; margin-top:3px; }
+.fc-who-c.yes li svg{ color:var(--fc-green); }
+.fc-who-c.no li svg{ color:var(--fc-faint); }
+
+/* ---------- outcomes ---------- */
+.fc-out{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; margin-top:44px; }
+.fc-out-c{
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.11);
+  border-radius:var(--fc-r); padding:30px 30px 32px;
+  transition:transform .4s var(--fc-ease), border-color .3s, background .3s;
+}
+.fc-out-c:hover{ transform:translateY(-5px); border-color:rgba(255,255,255,.22); background:rgba(255,255,255,.08); }
+.fc-out-n{
+  width:38px; height:38px; border-radius:11px; display:grid; place-items:center;
+  background:color-mix(in srgb, var(--fc-accent) 20%, transparent);
+  color:#fff; font-size:.78rem; font-weight:800; margin-bottom:18px;
+}
+.fc-out-c h3{ font-size:1.08rem; font-weight:750; color:#fff; }
+.fc-out-c p{ margin:10px 0 0; font-size:.91rem; line-height:1.65; color:rgba(255,255,255,.66); }
+
+/* ---------- tools ----------
+   Every tool renders the same way: a monochrome glyph plus its name.
+   Earlier this was "logo image, or a wordmark if we have no file", which
+   put full-colour horizontal lockups next to plain type in the same row
+   and the two never sat together.
+
+   Glyphs are drawn with mask-image rather than <img> so they inherit a
+   colour: muted at rest, the brand's own hex on hover, and knocked out
+   to white on the dark sections. An <img> cannot be recoloured by CSS,
+   which is what forced the invert hack the lockups needed.
+
+   Icons are simple-icons, which is CC0, so there is no licence question
+   about shipping them. --brand is set per tile; tiles without one fall
+   back to the page accent. */
+.fc-tools{ display:flex; flex-wrap:wrap; gap:10px; margin-top:34px; }
+.fc-tool{
+  display:inline-flex; align-items:center; gap:10px;
+  height:48px; padding:0 18px; border-radius:12px;
+  background:#fff; border:1px solid var(--fc-line);
+  transition:border-color .25s, transform .25s var(--fc-ease), box-shadow .25s var(--fc-ease);
+}
+.fc-tool:hover{
+  transform:translateY(-2px); border-color:#D8D3CC;
+  box-shadow:0 12px 26px -16px rgba(2,16,36,.34);
+}
+.fc-tool i{
+  width:19px; height:19px; flex:none; display:block;
+  background:var(--fc-faint);
+  -webkit-mask:var(--icon) no-repeat center/contain;
+          mask:var(--icon) no-repeat center/contain;
+  transition:background .28s var(--fc-ease);
+}
+.fc-tool:hover i{ background:var(--brand, var(--fc-accent)); }
+.fc-tool b{
+  font-size:.89rem; font-weight:700; letter-spacing:-.015em;
+  color:var(--fc-muted); transition:color .28s var(--fc-ease);
+}
+.fc-tool:hover b{ color:var(--fc-ink); }
+/* no glyph for this one, so the name carries the tile on its own */
+.fc-tool.no-logo i{ display:none; }
+
+.fc-sec-ink .fc-tool{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.14); }
+.fc-sec-ink .fc-tool:hover{ background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3); }
+.fc-sec-ink .fc-tool i{ background:rgba(255,255,255,.62); }
+.fc-sec-ink .fc-tool:hover i{ background:#fff; }
+.fc-sec-ink .fc-tool b{ color:rgba(255,255,255,.72); }
+.fc-sec-ink .fc-tool:hover b{ color:#fff; }
+.fc-tools-note{
+  margin-top:18px; font-size:.82rem; line-height:1.6; color:var(--fc-muted);
+}
+.fc-sec-ink .fc-tools-note{ color:rgba(255,255,255,.5); }
+
+/* ---------- cohorts (from the API) ---------- */
+.fc-cohorts{ margin-top:40px; display:grid; gap:14px; }
+.fc-cohort{
+  display:grid; grid-template-columns:minmax(0,1fr) auto; gap:20px; align-items:center;
+  background:#fff; border:1px solid var(--fc-line); border-radius:var(--fc-r); padding:24px 26px;
+  transition:border-color .3s, box-shadow .35s var(--fc-ease);
+}
+.fc-cohort:hover{ border-color:#D8D3CC; box-shadow:0 18px 40px -24px rgba(2,16,36,.35); }
+.fc-cohort-k{ display:flex; align-items:center; gap:9px; font-size:.66rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--fc-accent); }
+.fc-cohort-k i{ width:6px; height:6px; border-radius:50%; background:currentColor; }
+.fc-cohort h3{ margin-top:9px; font-size:1.14rem; font-weight:750; color:var(--fc-ink); }
+.fc-cohort-meta{ margin-top:10px; display:flex; flex-wrap:wrap; gap:8px 22px; }
+.fc-cohort-meta span{ display:flex; align-items:center; gap:7px; font-size:.85rem; color:var(--fc-body); }
+.fc-cohort-meta svg{ width:14px; height:14px; color:var(--fc-muted); flex:none; }
+.fc-cohort-seats{ font-size:.8rem; color:var(--fc-muted); margin-top:8px; }
+.fc-cohort-empty{
+  background:#fff; border:1px dashed #D8D3CC; border-radius:var(--fc-r);
+  padding:28px 30px; font-size:.95rem; line-height:1.68; color:var(--fc-body);
+}
+.fc-cohort-empty b{ color:var(--fc-ink); font-weight:700; }
+.fc-cohort-skel{ height:112px; border-radius:var(--fc-r); background:linear-gradient(100deg,#F3F1EF 30%,#FAF9F8 50%,#F3F1EF 70%); background-size:220% 100%; animation:fcShim 1.5s linear infinite; }
+@keyframes fcShim{ to{ background-position:-220% 0 } }
+
+/* ---------- FAQ (the component the rest of the site uses) ---------- */
+.fc-faq-wrap{ display:grid; grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr); gap:80px; align-items:start; }
+.fc-faq-head{ position:sticky; top:calc(var(--nav-height,63px) + 40px); }
+.fc-faq{ border-top:1px solid var(--fc-line); }
+.fc-faq-item{ border-bottom:1px solid var(--fc-line); }
+.fc-faq-q{
+  width:100%; background:none; border:0; padding:24px 4px;
+  display:flex; align-items:center; justify-content:space-between; gap:28px;
+  font-family:inherit; font-size:1.02rem; font-weight:600; letter-spacing:-.015em;
+  color:var(--fc-ink); text-align:left; cursor:pointer; transition:color .2s;
+}
+.fc-faq-q:hover{ color:var(--fc-accent); }
+.fc-faq-q:focus-visible{ outline:2px solid var(--fc-accent); outline-offset:3px; border-radius:6px; }
+.fc-faq-chev{ flex-shrink:0; color:var(--fc-muted); transition:transform .38s var(--fc-ease), color .2s; }
+.fc-faq-item.open .fc-faq-chev{ transform:rotate(180deg); color:var(--fc-accent); }
+.fc-faq-a{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .38s var(--fc-ease); }
+.fc-faq-item.open .fc-faq-a{ grid-template-rows:1fr; }
+.fc-faq-a > div{ overflow:hidden; }
+.fc-faq-a p{ margin:0 0 24px; padding-right:40px; font-size:.95rem; line-height:1.68; color:var(--fc-body); max-width:640px; }
+.fc-faq-a a{ color:var(--fc-accent); font-weight:650; }
+
+/* ---------- waitlist ---------- */
+.fc-wait{
+  position:relative; overflow:hidden; color:#fff; padding:clamp(88px,10vw,126px) 0;
+  background:
+    radial-gradient(110% 84% at 88% 6%, rgba(27,58,92,.72) 0%, rgba(2,16,36,0) 58%),
+    linear-gradient(160deg,var(--fc-card) 0%, var(--fc-ink) 64%);
+}
+.fc-wait::after{
+  content:""; position:absolute; left:-6%; bottom:-40%;
+  width:720px; height:720px; border-radius:50%; pointer-events:none;
+  background:radial-gradient(closest-side, color-mix(in srgb, var(--fc-accent) 32%, transparent), transparent);
+}
+.fc-wait .fc-wrap{ position:relative; z-index:1; }
+.fc-wait-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.9fr); gap:clamp(36px,5vw,66px); align-items:center; }
+.fc-wait h2{ color:#fff; }
+.fc-wait .fc-kicker{ color:rgba(255,255,255,.55); }
+.fc-wait .fc-lead{ margin-top:18px; color:rgba(255,255,255,.76); max-width:46ch; }
+.fc-wait-pts{ margin-top:26px; display:flex; flex-direction:column; gap:12px; }
+.fc-wait-pt{ display:flex; gap:12px; align-items:flex-start; font-size:.93rem; line-height:1.58; color:rgba(255,255,255,.74); }
+.fc-wait-pt svg{ width:16px; height:16px; flex:none; margin-top:3px; color:var(--fc-accent); }
+
+.fc-form{
+  background:rgba(255,255,255,.055); border:1px solid rgba(255,255,255,.14);
+  border-radius:24px; padding:32px 32px 34px;
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+}
+.fc-field{ margin-bottom:16px; }
+.fc-field label{ display:block; margin-bottom:7px; font-size:.74rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:rgba(255,255,255,.56); }
+.fc-field input{
+  width:100%; height:50px; padding:0 16px; border-radius:12px; box-sizing:border-box;
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.16);
+  color:#fff; font-family:inherit; font-size:.94rem; transition:border-color .2s, background .2s;
+}
+.fc-field input::placeholder{ color:rgba(255,255,255,.34); }
+.fc-field input:focus{ outline:none; border-color:var(--fc-accent); background:rgba(255,255,255,.09); }
+.fc-form .fc-btn{ width:100%; margin-top:8px; }
+.fc-form-err{ display:none; margin-top:14px; padding:12px 15px; border-radius:12px; background:rgba(255,41,78,.13); border:1px solid rgba(255,41,78,.36); font-size:.86rem; line-height:1.5; color:#FFC2CD; }
+.fc-form-note{ margin-top:14px; font-size:.78rem; line-height:1.6; color:rgba(255,255,255,.46); }
+.fc-form-ok{ display:none; text-align:center; padding:12px 0 4px; }
+.fc-form-ok .tick{ width:60px; height:60px; margin:0 auto 18px; border-radius:50%; display:grid; place-items:center; background:rgba(22,163,74,.15); color:#5FD08A; }
+.fc-form-ok .tick svg{ width:28px; height:28px; }
+.fc-form-ok h3{ font-size:1.28rem; font-weight:750; color:#fff; }
+.fc-form-ok p{ margin-top:12px; font-size:.93rem; line-height:1.65; color:rgba(255,255,255,.7); }
+
+/* ---------- sibling courses ---------- */
+.fc-more{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:40px; }
+.fc-more-c{
+  display:block; border-radius:16px; overflow:hidden; text-decoration:none;
+  background:#fff; border:1px solid var(--fc-line);
+  transition:transform .4s var(--fc-ease), box-shadow .4s var(--fc-ease), border-color .3s;
+}
+.fc-more-c:hover{ transform:translateY(-5px); border-color:#D8D3CC; box-shadow:0 22px 46px -26px rgba(2,16,36,.4); }
+.fc-more-art{ aspect-ratio:16/9; overflow:hidden; background:#0A1730; }
+.fc-more-art img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .7s var(--fc-ease); }
+.fc-more-c:hover .fc-more-art img{ transform:scale(1.06); }
+.fc-more-b{ padding:18px 20px 20px; }
+.fc-more-b b{ display:block; font-size:.98rem; font-weight:750; color:var(--fc-ink); letter-spacing:-.02em; }
+.fc-more-b span{ display:block; margin-top:5px; font-size:.8rem; color:var(--fc-muted); }
+
+/* ---------- reveal ---------- */
+.fc-rise{ opacity:0; transform:translateY(20px); transition:opacity .75s var(--fc-ease), transform .75s var(--fc-ease); }
+.fc-rise.in{ opacity:1; transform:none; }
+
+/* ---------- responsive ---------- */
+@media (max-width:1000px){
+  .fc-out, .fc-more{ grid-template-columns:1fr; }
+  .fc-faq-wrap{ grid-template-columns:1fr; gap:40px; }
+  .fc-faq-head{ position:static; }
+}
+@media (max-width:840px){
+  .fc-wrap{ padding:0 20px; }
+  .fc-hero-grid, .fc-who, .fc-wait-grid{ grid-template-columns:1fr; }
+  .fc-hero-cta .fc-btn{ width:100%; }
+  .fc-cohort{ grid-template-columns:1fr; }
+  .fc-stats{ grid-template-columns:1fr 1fr; gap:18px 0; }
+  .fc-stat:nth-child(2){ border-right:0; }
+}
+@media (prefers-reduced-motion:reduce){
+  .fc-rise{ opacity:1; transform:none; transition:none; }
+  .fc-chars span{ transition:none; }
+}
+
+/* ============================================================
+   HERO ART METRICS
+   The hero image alone says nothing. These float a couple of real
+   figures over it so the first screen carries a fact, not just a
+   photograph.
+   ============================================================ */
+.fc-hero-art{ position:relative; }
+.fc-art-card{
+  position:absolute; z-index:2;
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(255,255,255,.7); border-radius:15px;
+  padding:13px 16px; min-width:132px;
+  box-shadow:0 26px 56px -22px rgba(1,11,30,.66), 0 3px 10px rgba(1,11,30,.16);
+  animation:fcArtIn .7s var(--fc-ease) both;
+}
+@keyframes fcArtIn{ from{ opacity:0; transform:translateY(16px) scale(.95) } to{ opacity:1; transform:none } }
+.fc-art-k{ font-size:.58rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--fc-faint); }
+.fc-art-v{ margin-top:5px; font-size:1.42rem; font-weight:800; letter-spacing:-.038em; color:var(--fc-ink); line-height:1; }
+.fc-art-s{ margin-top:4px; font-size:.7rem; line-height:1.4; color:var(--fc-muted); }
+.fc-art-tl{ top:74px; left:-24px; animation-delay:.42s; }
+.fc-art-br{ bottom:24px; right:-20px; animation-delay:.58s; }
+/* Sits fully below the image rather than straddling its bottom-left
+   corner, where it read as a misplaced element rather than a caption.
+   top:100% anchors it to the image's bottom edge whatever height the
+   aspect ratio resolves to; the container reserves the space. */
+.fc-art-people{
+  position:absolute; left:0; top:100%; margin-top:14px; z-index:2;
+  display:inline-flex; align-items:center; gap:9px;
+  background:rgba(255,255,255,.96); border-radius:999px; padding:7px 14px 7px 8px;
+  box-shadow:0 20px 44px -20px rgba(1,11,30,.6);
+  animation:fcArtIn .7s var(--fc-ease) both .72s;
+}
+.fc-art-faces{ display:flex; }
+.fc-art-faces img{
+  width:27px; height:27px; border-radius:50%; object-fit:cover; display:block;
+  border:2px solid #fff; margin-left:-9px;
+}
+.fc-art-faces img:first-child{ margin-left:0; }
+.fc-art-people span{ font-size:.72rem; font-weight:650; color:var(--fc-ink); white-space:nowrap; }
+
+/* ============================================================
+   WHY THIS FIELD
+   Industry figures, attributed, next to a real room of people. These
+   are public workforce numbers and are labelled as such: none of them
+   is a Brixgate metric and none should ever be presented as one.
+   ============================================================ */
+.fc-why{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:56px; align-items:center; margin-top:48px; }
+.fc-why-figs{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+.fc-why-fig{
+  background:#fff; border:1px solid var(--fc-line); border-radius:var(--fc-r);
+  padding:24px 24px 22px;
+  transition:transform .4s var(--fc-ease), border-color .3s, box-shadow .4s var(--fc-ease);
+}
+.fc-why-fig:hover{ transform:translateY(-4px); border-color:#D8D3CC; box-shadow:0 22px 46px -26px rgba(2,16,36,.34); }
+.fc-why-fig b{
+  display:block; font-size:2.1rem; font-weight:800; letter-spacing:-.045em;
+  line-height:1; color:var(--fc-accent);
+}
+.fc-why-fig strong{ display:block; margin-top:11px; font-size:.93rem; font-weight:700; color:var(--fc-ink); letter-spacing:-.015em; }
+.fc-why-fig span{ display:block; margin-top:6px; font-size:.82rem; line-height:1.55; color:var(--fc-body); }
+.fc-why-fig cite{
+  display:block; margin-top:11px; font-size:.68rem; font-style:normal;
+  color:var(--fc-faint); letter-spacing:.02em;
+}
+.fc-why-art{ position:relative; border-radius:var(--fc-r); overflow:hidden; aspect-ratio:4/3.4; }
+.fc-why-art img{ width:100%; height:100%; object-fit:cover; display:block; }
+.fc-why-art::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(2,16,36,0) 42%, rgba(2,16,36,.82) 100%);
+}
+.fc-why-cap{
+  position:absolute; left:24px; right:24px; bottom:22px; z-index:2; color:#fff;
+}
+.fc-why-cap b{ display:block; font-size:1.02rem; font-weight:750; letter-spacing:-.018em; }
+.fc-why-cap span{ display:block; margin-top:5px; font-size:.82rem; line-height:1.5; color:rgba(255,255,255,.76); }
+.fc-why-note{
+  margin-top:26px; font-size:.79rem; line-height:1.6; color:var(--fc-faint);
+  border-top:1px solid var(--fc-line); padding-top:16px;
+}
+
+@media (max-width:1040px){
+  .fc-why{ grid-template-columns:1fr; gap:36px; }
+  .fc-art-tl{ left:8px; }
+  .fc-art-br{ right:8px; }
+  .fc-art-people{ left:0; }
+}
+@media (max-width:600px){
+  .fc-why-figs{ grid-template-columns:1fr; }
+  .fc-art-br{ display:none; }
+}
+@media (prefers-reduced-motion:reduce){
+  .fc-art-card, .fc-art-people{ animation:none; }
+}

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Science | Brixgate AI Foundations</title>
+  <meta name="description" content="Sixteen weeks from no maths and no code to a trained model you can defend. The deepest course in AI Foundations, taught live and paced for people starting from zero." />
+  <link rel="icon" type="image/png" href="assets/faviii.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="foundations-course.css" />
+
+<style>
+/* ============================================================
+   DATA SCIENCE  ·  sixteen weeks
+   The longest course we run, so the curriculum is four phases of
+   four weeks on a vertical rail rather than a flat run of steps:
+   sixteen boxes in a row is unreadable, and the phases are the
+   thing a beginner is actually deciding between. Deep wine accent.
+   ============================================================ */
+:root{ --fc-accent:#C4173A; --fc-accent-2:#FF294E; }
+
+/* ---------- the sixteen week rail ---------- */
+.ds-curr{ margin-top:52px; position:relative; }
+.ds-rail{
+  position:absolute; left:25px; top:16px; bottom:16px; width:2px;
+  background:var(--fc-line); border-radius:2px; overflow:hidden;
+}
+.ds-rail i{
+  position:absolute; left:0; top:0; width:100%; height:var(--fill,0%);
+  background:linear-gradient(to bottom,var(--fc-accent),var(--fc-accent-2));
+  transition:height .55s var(--fc-ease);
+}
+.ds-phase{ position:relative; padding-left:76px; padding-bottom:48px; }
+.ds-phase:last-child{ padding-bottom:0; }
+.ds-dot{
+  position:absolute; left:13px; top:6px; width:26px; height:26px; border-radius:50%;
+  background:#fff; border:2px solid var(--fc-line); display:grid; place-items:center; z-index:1;
+  transition:border-color .45s var(--fc-ease), box-shadow .45s;
+}
+.ds-dot::after{ content:""; width:9px; height:9px; border-radius:50%; background:var(--fc-line); transition:background .45s; }
+.ds-phase.lit .ds-dot{ border-color:var(--fc-accent); box-shadow:0 0 0 6px rgba(196,23,58,.11); }
+.ds-phase.lit .ds-dot::after{ background:var(--fc-accent); }
+.ds-phase-k{ display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; }
+.ds-phase-k b{ font-size:1.3rem; font-weight:780; letter-spacing:-.028em; color:var(--fc-ink); }
+.ds-phase-k span{
+  font-size:.68rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--fc-accent); padding:4px 10px; border-radius:6px;
+  background:rgba(196,23,58,.09);
+}
+.ds-phase > p{ margin:12px 0 0; font-size:.96rem; line-height:1.7; color:var(--fc-body); max-width:62ch; }
+.ds-weeks{ margin-top:20px; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:11px; }
+.ds-week{
+  background:#fff; border:1px solid var(--fc-line); border-radius:13px; padding:15px 16px;
+  transition:transform .35s var(--fc-ease), border-color .3s, box-shadow .35s var(--fc-ease);
+}
+.ds-week:hover{ transform:translateY(-3px); border-color:var(--fc-accent); box-shadow:0 16px 32px -20px rgba(196,23,58,.42); }
+.ds-week b{ display:block; font-size:.63rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--fc-accent); }
+.ds-week span{ display:block; margin-top:6px; font-size:.85rem; line-height:1.45; color:var(--fc-ink); font-weight:600; }
+
+/* ---------- the maths question ---------- */
+.ds-maths{
+  display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+  gap:clamp(32px,4.5vw,60px); align-items:center; margin-top:46px;
+}
+.ds-maths-art{ position:relative; border-radius:22px; overflow:hidden; aspect-ratio:4/3; }
+.ds-maths-art img{ width:100%; height:100%; object-fit:cover; display:block; }
+.ds-maths-list{ display:flex; flex-direction:column; gap:16px; }
+.ds-maths-row{
+  display:grid; grid-template-columns:auto minmax(0,1fr); gap:16px; align-items:flex-start;
+  padding-bottom:16px; border-bottom:1px solid var(--fc-line);
+}
+.ds-maths-row:last-child{ border-bottom:0; padding-bottom:0; }
+.ds-maths-tag{
+  font-size:.6rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+  padding:5px 9px; border-radius:6px; white-space:nowrap;
+}
+.ds-maths-tag.yes{ background:rgba(22,163,74,.1); color:#15803D; }
+.ds-maths-tag.no{ background:#F1EFEC; color:#7B8A9E; }
+.ds-maths-row b{ display:block; font-size:.96rem; font-weight:700; color:var(--fc-ink); }
+.ds-maths-row p{ margin-top:5px; font-size:.89rem; line-height:1.6; color:var(--fc-body); }
+
+/* ---------- the ladder ---------- */
+.ds-ladder{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0; margin-top:46px; }
+.ds-rung{
+  padding:30px 26px; border-right:1px solid rgba(255,255,255,.11);
+  position:relative;
+}
+.ds-rung:last-child{ border-right:0; }
+.ds-rung-n{ font-size:.64rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.4); }
+.ds-rung h3{ margin-top:12px; font-size:1.06rem; font-weight:750; color:#fff; }
+.ds-rung p{ margin-top:9px; font-size:.88rem; line-height:1.6; color:rgba(255,255,255,.62); }
+.ds-rung-bar{ height:3px; border-radius:2px; margin-top:20px; background:rgba(255,255,255,.12); overflow:hidden; }
+.ds-rung-bar i{ display:block; height:100%; border-radius:2px; background:linear-gradient(90deg,var(--fc-accent),var(--fc-accent-2)); width:var(--w,25%); }
+
+@media (max-width:1040px){
+  .ds-weeks{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .ds-ladder{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .ds-rung:nth-child(2){ border-right:0; }
+  .ds-rung{ border-bottom:1px solid rgba(255,255,255,.11); }
+}
+@media (max-width:840px){
+  .ds-maths{ grid-template-columns:1fr; }
+  .ds-ladder{ grid-template-columns:1fr; }
+  .ds-rung{ border-right:0; }
+  .ds-phase{ padding-left:56px; }
+  .ds-rail{ left:15px; }
+  .ds-dot{ left:3px; }
+}
+</style>
+  <link rel="canonical" href="https://brixgate.com/foundations-data-science.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Brixgate" />
+  <meta property="og:url" content="https://brixgate.com/foundations-data-science.html" />
+  <meta property="og:title" content="Data Science | Brixgate AI Foundations" />
+  <meta property="og:description" content="Sixteen weeks from no maths and no code to a trained model you can defend. The deepest course in AI Foundations, taught live and paced for people starting from zero." />
+  <meta property="og:image" content="https://brixgate.com/assets/og-brixgate.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Data Science | Brixgate AI Foundations" />
+  <meta name="twitter:description" content="Sixteen weeks from no maths and no code to a trained model you can defend. The deepest course in AI Foundations, taught live and paced for people starting from zero." />
+  <meta name="twitter:image" content="https://brixgate.com/assets/og-brixgate.jpg" />
+</head>
+<body class="fc" data-course="data-science">
+
+<!-- Region Banner -->
+<div class="region-banner" id="region-banner">
+  <span class="region-label" style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Now active in</span>
+  <div class="regions">
+    <span class="region-item">🇳🇬 Nigeria</span>
+    <span class="region-item">🇬🇧 United Kingdom</span>
+    <span class="region-item">🇺🇸 United States</span>
+    <span class="region-item">🇰🇪 Kenya</span>
+    <span class="region-item">🇿🇦 South Africa</span>
+    <span class="region-more">and 99 other countries</span>
+    <span class="region-cohort" data-cohort-countdown hidden></span>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <div class="nav-mega" data-nav-mega></div>
+      <a href="experts.html">Experts</a>
+      <a href="organisations.html">For Organisations</a>
+      <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20Data%20Science%20course." target="_blank" rel="noopener">Chat with us</a>
+    </div>
+    <div class="nav-cta">
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
+      <a href="apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="programme.html">Programmes</a>
+  <a href="foundations.html" class="nav-mobile-sub">AI Foundations</a>
+  <a href="professionals.html" class="nav-mobile-sub">AI for Professionals</a>
+  <a href="experts.html">Experts</a>
+  <a href="organisations.html">For Organisations</a>
+  <a href="apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<header class="fc-hero">
+  <div class="fc-wrap">
+    <div class="fc-hero-grid">
+      <div>
+        <div class="fc-crumb fc-rise">
+          <a href="foundations.html">AI Foundations</a>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>Data Science</span>
+        </div>
+        <span class="fc-pill fc-rise"><i></i>16 weeks · the deepest course we run</span>
+        <h1 class="fc-h1 fc-rise">The long road, walked properly.</h1>
+        <p class="fc-lead fc-rise">Sixteen weeks from no maths and no code to a trained model you can explain and defend. It is the longest course in Foundations because this is the one that genuinely cannot be rushed.</p>
+
+        <div class="fc-hero-cta fc-rise">
+          <a href="#waitlist" class="fc-btn fc-btn-accent"><span data-chars>Join the waitlist</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#curriculum" class="fc-btn fc-btn-outline-light"><span data-chars>See all sixteen weeks</span></a>
+        </div>
+
+        <div class="fc-stats fc-rise">
+          <div class="fc-stat"><b>16 weeks</b><span>Four phases of four</span></div>
+          <div class="fc-stat"><b>No maths</b><span>Entry requirement</span></div>
+          <div class="fc-stat"><b>1 model</b><span>Trained and defended</span></div>
+        </div>
+      </div>
+
+      <div class="fc-hero-art fc-rise">
+        <img src="assets/fnd/datascience.jpg" alt="" />
+        <div class="fc-art-card fc-art-tl"><div class="fc-art-k">Longest course</div><div class="fc-art-v">16 wks</div><div class="fc-art-s">zero to a model you built</div></div>
+        <div class="fc-art-card fc-art-br"><div class="fc-art-k">You finish with</div><div class="fc-art-v">1 model</div><div class="fc-art-s">and its honest limits</div></div>
+        <div class="fc-art-people"><div class="fc-art-faces"><img src="assets/people/avatar-2.jpg" alt="" /><img src="assets/people/avatar-1.jpg" alt="" /><img src="assets/people/avatar-3.jpg" alt="" /></div><span>Taught live, never recorded</span></div>
+        <span class="fc-hero-badge"><i></i>Week 1 starts at what a number is</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== THE MATHS QUESTION ===== -->
+<section class="fc-sec fc-sec-cream">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">01</span><span class="t">The question everyone asks</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">"Do I need to be good at maths?"</h2>
+      <p class="fc-lead">No, and we would rather answer it here than have you talk yourself out of the course. Here is exactly what is and is not expected of you.</p>
+    </div>
+
+    <div class="ds-maths">
+      <div class="ds-maths-art fc-rise">
+        <img src="assets/people/peer-review.jpg" alt="Learners working through a problem together" loading="lazy" />
+      </div>
+
+      <div class="ds-maths-list fc-rise">
+        <div class="ds-maths-row">
+          <span class="ds-maths-tag yes">Needed</span>
+          <div><b>Comfort with a spreadsheet</b><p>If you can build a formula that adds a column and works out an average, you have enough to start week one.</p></div>
+        </div>
+        <div class="ds-maths-row">
+          <span class="ds-maths-tag yes">Needed</span>
+          <div><b>Willingness to be wrong in public</b><p>Sixteen weeks of getting things wrong in a small room with someone who explains why is the actual method.</p></div>
+        </div>
+        <div class="ds-maths-row">
+          <span class="ds-maths-tag no">Not needed</span>
+          <div><b>A maths or statistics degree</b><p>We teach the statistics you need, when you need it, in the context of a problem rather than as a syllabus.</p></div>
+        </div>
+        <div class="ds-maths-row">
+          <span class="ds-maths-tag no">Not needed</span>
+          <div><b>Any programming at all</b><p>Week five is where code starts, and it starts at the beginning. Nobody is expected to arrive knowing Python.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CURRICULUM ===== -->
+<section class="fc-sec" id="curriculum">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">02</span><span class="t">Sixteen weeks</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">Four phases, four weeks each.</h2>
+      <p class="fc-lead">Each phase ends with something finished before the next one starts, so you always know whether the last four weeks actually landed.</p>
+    </div>
+
+    <div class="ds-curr" id="ds-curr">
+      <div class="ds-rail" aria-hidden="true"><i id="ds-fill"></i></div>
+
+      <div class="ds-phase fc-rise" data-phase>
+        <div class="ds-dot" aria-hidden="true"></div>
+        <div class="ds-phase-k"><b>Reading data honestly</b><span>Weeks 1 to 4</span></div>
+        <p>Before any modelling, the ability to look at a table and know what it is and is not telling you. Most bad data science is a reading failure, not a maths failure.</p>
+        <div class="ds-weeks">
+          <div class="ds-week"><b>Week 01</b><span>What a dataset actually is</span></div>
+          <div class="ds-week"><b>Week 02</b><span>Distributions without the formulas</span></div>
+          <div class="ds-week"><b>Week 03</b><span>Correlation, cause and traps</span></div>
+          <div class="ds-week"><b>Week 04</b><span>Telling the story truthfully</span></div>
+        </div>
+      </div>
+
+      <div class="ds-phase fc-rise" data-phase>
+        <div class="ds-dot" aria-hidden="true"></div>
+        <div class="ds-phase-k"><b>Making the machine work</b><span>Weeks 5 to 8</span></div>
+        <p>Python from the first line, taught as a tool for handling data rather than as computer science. By week eight you can load, clean and reshape a real dataset on your own.</p>
+        <div class="ds-weeks">
+          <div class="ds-week"><b>Week 05</b><span>Python from nothing</span></div>
+          <div class="ds-week"><b>Week 06</b><span>Tables in code, not in Excel</span></div>
+          <div class="ds-week"><b>Week 07</b><span>Cleaning the mess</span></div>
+          <div class="ds-week"><b>Week 08</b><span>Charts that argue a point</span></div>
+        </div>
+      </div>
+
+      <div class="ds-phase fc-rise" data-phase>
+        <div class="ds-dot" aria-hidden="true"></div>
+        <div class="ds-phase-k"><b>Models that predict</b><span>Weeks 9 to 12</span></div>
+        <p>The first real models, and more importantly the discipline around them: splitting data properly, measuring honestly, and noticing when a result is too good to be true.</p>
+        <div class="ds-weeks">
+          <div class="ds-week"><b>Week 09</b><span>Your first prediction</span></div>
+          <div class="ds-week"><b>Week 10</b><span>Measuring whether it works</span></div>
+          <div class="ds-week"><b>Week 11</b><span>Overfitting and how it lies</span></div>
+          <div class="ds-week"><b>Week 12</b><span>Choosing between models</span></div>
+        </div>
+      </div>
+
+      <div class="ds-phase fc-rise" data-phase>
+        <div class="ds-dot" aria-hidden="true"></div>
+        <div class="ds-phase-k"><b>A project you defend</b><span>Weeks 13 to 16</span></div>
+        <p>One problem, taken from a raw dataset to a trained model and a written argument, then presented to people who will push back on it.</p>
+        <div class="ds-weeks">
+          <div class="ds-week"><b>Week 13</b><span>Choosing a real problem</span></div>
+          <div class="ds-week"><b>Week 14</b><span>Building the thing</span></div>
+          <div class="ds-week"><b>Week 15</b><span>Writing the argument</span></div>
+          <div class="ds-week"><b>Week 16</b><span>Defending it out loud</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== THE LADDER ===== -->
+<section class="fc-sec fc-sec-ink">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">03</span><span class="t">Where you get to</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">Sixteen weeks, measured honestly.</h2>
+      <p class="fc-lead">Nobody becomes a senior data scientist in four months and we are not going to pretend otherwise. This is where the course genuinely takes you.</p>
+    </div>
+
+    <div class="ds-ladder">
+      <div class="ds-rung fc-rise">
+        <div class="ds-rung-n">Week 4</div>
+        <h3>Reads data honestly</h3>
+        <p>You can look at a table and say what it supports, what it does not, and what is missing.</p>
+        <div class="ds-rung-bar"><i style="--w:25%"></i></div>
+      </div>
+      <div class="ds-rung fc-rise">
+        <div class="ds-rung-n">Week 8</div>
+        <h3>Handles it in code</h3>
+        <p>Loading, cleaning and reshaping real data in Python without needing a template to copy.</p>
+        <div class="ds-rung-bar"><i style="--w:50%"></i></div>
+      </div>
+      <div class="ds-rung fc-rise">
+        <div class="ds-rung-n">Week 12</div>
+        <h3>Builds and checks models</h3>
+        <p>Training a model is the easy half. You will know how to tell whether the result means anything.</p>
+        <div class="ds-rung-bar"><i style="--w:75%"></i></div>
+      </div>
+      <div class="ds-rung fc-rise">
+        <div class="ds-rung-n">Week 16</div>
+        <h3>Defends a piece of work</h3>
+        <p>A finished project, the reasoning written down, and the ability to hold it up under questioning.</p>
+        <div class="ds-rung-bar"><i style="--w:100%"></i></div>
+      </div>
+    </div>
+
+    <div class="fc-tools" style="margin-top:48px">
+      <span class="fc-tool" style="--icon:url(assets/logos/icons/python.svg);--brand:#3776AB;"><i aria-hidden="true"></i><b>Python</b></span>
+      <span class="fc-tool" style="--icon:url(assets/logos/icons/pandas.svg);--brand:#150458;"><i aria-hidden="true"></i><b>pandas</b></span>
+      <span class="fc-tool" style="--icon:url(assets/logos/icons/numpy.svg);--brand:#013243;"><i aria-hidden="true"></i><b>NumPy</b></span>
+      <span class="fc-tool" style="--icon:url(assets/logos/icons/scikitlearn.svg);--brand:#F7931E;"><i aria-hidden="true"></i><b>scikit-learn</b></span>
+      <span class="fc-tool" style="--icon:url(assets/logos/icons/jupyter.svg);--brand:#F37626;"><i aria-hidden="true"></i><b>Jupyter</b></span>
+      <span class="fc-tool" style="--icon:url(assets/logos/icons/claude.svg);--brand:#D97757;"><i aria-hidden="true"></i><b>Claude</b></span>
+      <span class="fc-tool" style="--icon:url(assets/logos/icons/cursor.svg);--brand:#000000;"><i aria-hidden="true"></i><b>Cursor</b></span>
+      <span class="fc-tool" style="--icon:url(assets/logos/icons/googlecolab.svg);--brand:#F9AB00;"><i aria-hidden="true"></i><b>Google Colab</b></span>
+    </div>
+    <p class="fc-tools-note">All of it runs in the browser, so nothing depends on the machine you own.</p>
+  </div>
+</section>
+
+<!-- ===== WHO ===== -->
+<section class="fc-sec fc-sec-cream">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">04</span><span class="t">Who it is for</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">Sixteen weeks is a real commitment.</h2>
+      <p class="fc-lead">It is the right course for a smaller group of people than the shorter ones, and we would rather you knew that before you start than after week six.</p>
+    </div>
+
+    <div class="fc-who">
+      <div class="fc-who-c yes fc-rise">
+        <div class="fc-who-k">This is you</div>
+        <h3>Data Science fits</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You are changing career and want the depth, not a taster.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You can protect six to eight hours a week for four months.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You want to understand why a model works, not just run one.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>You have tried to self-teach this and stalled somewhere around statistics.</span></li>
+        </ul>
+      </div>
+
+      <div class="fc-who-c no fc-rise">
+        <div class="fc-who-k">This is not you</div>
+        <h3>Start somewhere shorter</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You want something working in weeks. <a href="foundations-ai-automation.html" style="color:var(--fc-accent);font-weight:650">AI Automation</a> is six.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You mainly want to read and present data rather than model it. That is Data Analytics.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Four months is more than you can commit to right now. It will run again.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COHORTS ===== -->
+<section class="fc-sec fc-sec-surface">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">05</span><span class="t">Cohorts</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">When the next one runs.</h2>
+      <p class="fc-lead">Sixteen weeks means fewer intakes a year and a small room each time. Dates below come straight from our scheduling system.</p>
+    </div>
+    <div class="fc-cohorts" id="fc-cohorts">
+      <div class="fc-cohort-skel"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="fc-sec">
+  <div class="fc-wrap">
+    <div class="fc-faq-wrap">
+      <div class="fc-faq-head fc-rise">
+        <div class="fc-label"><span class="n">06</span><span class="t">FAQ</span></div>
+        <h2 class="fc-h2">Questions people<br/>actually ask</h2>
+        <p class="fc-lead" style="margin-top:18px">Still unsure? <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%20have%20a%20question%20about%20the%20Data%20Science%20course." target="_blank" rel="noopener" style="color:var(--fc-accent);font-weight:600">Message us on WhatsApp</a> and a human will answer.</p>
+      </div>
+
+      <div class="fc-faq" id="fc-faq">
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>Sixteen weeks is long. Can I do it alongside a job?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>Most people do, on six to eight hours a week. It is genuinely a commitment though, and the people who struggle are almost always the ones who assumed they could catch up later. The phases exist partly so you can tell early whether the pace is working.</p></div></div>
+        </div>
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>Will this get me a job as a data scientist?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>On its own, no, and anyone promising that is selling you something. What sixteen weeks gives you is a real foundation and one defended project, which is what gets you into the conversation. Where people go from there varies enormously.</p></div></div>
+        </div>
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>What if I fall behind?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>Sessions are recorded for catch-up even though they are taught live, and the cohort is small enough that someone will notice you have gone quiet. If life makes the timing impossible, we would rather move you to the next intake than have you finish on paper only.</p></div></div>
+        </div>
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>Is this the same as Data Analytics?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>No. Data Analytics is eight weeks and is about reading data and making a case from it. Data Science goes further into building models that predict, which is why it takes twice as long. Analytics is the better starting point if you are unsure.</p></div></div>
+        </div>
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>Do I need a powerful computer?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>No. Most of the work runs in the browser through Google Colab, which does the heavy lifting on their machines rather than yours. Anything that can run a browser reliably will do.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WAITLIST ===== -->
+<section class="fc-wait" id="waitlist">
+  <div class="fc-wrap">
+    <div class="fc-wait-grid">
+      <div>
+        <span class="fc-kicker fc-rise">Waitlist</span>
+        <h2 class="fc-h2 fc-rise" style="margin-top:18px">Fewer intakes, smaller rooms.</h2>
+        <p class="fc-lead fc-rise">A sixteen week course runs less often than a six week one, so the list matters more here. When the next Data Science intake opens, it hears first.</p>
+        <div class="fc-wait-pts fc-rise">
+          <div class="fc-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Dates, timetable and pricing sent before they go public.</span></div>
+          <div class="fc-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>First refusal on seats in the next cohort.</span></div>
+          <div class="fc-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>No commitment, and nothing to pay to hold your place.</span></div>
+        </div>
+      </div>
+
+      <div class="fc-form fc-rise">
+        <form id="fc-waitlist-form" novalidate>
+          <div class="fc-field">
+            <label for="fc-name">Full name</label>
+            <input type="text" id="fc-name" placeholder="Your name" autocomplete="name" required />
+          </div>
+          <div class="fc-field">
+            <label for="fc-email">Email</label>
+            <input type="email" id="fc-email" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+          <div class="fc-field">
+            <label for="fc-phone">Phone <span style="text-transform:none;letter-spacing:0;font-weight:600">(optional)</span></label>
+            <input type="tel" id="fc-phone" placeholder="+234…" autocomplete="tel" />
+          </div>
+          <button type="submit" class="fc-btn fc-btn-accent" id="fc-wl-btn"><span data-chars>Join the waitlist</span></button>
+          <div class="fc-form-err" id="fc-wl-err"></div>
+          <p class="fc-form-note">We only use this to tell you when Data Science opens. No newsletter, and you can ask us to remove you at any time.</p>
+        </form>
+
+        <div class="fc-form-ok" id="fc-wl-ok">
+          <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>You are on the list.</h3>
+          <p>We will email you the dates, the timetable and the pricing for the next Data Science cohort before any of it goes on the site.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MORE COURSES ===== -->
+<section class="fc-sec">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">07</span><span class="t">The rest of Foundations</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">Not sure this is the one?</h2>
+      <p class="fc-lead">The other Foundations courses run from six to sixteen weeks and start from exactly the same place: nothing assumed.</p>
+    </div>
+    <div class="fc-more" id="fc-more"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo footer-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+        <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook"><img src="assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block"></a>
+          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram"><img src="assets/social.png" alt="Instagram" width="22" height="22" style="display:block"></a>
+          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X"><img src="assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block"></a>
+          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn" title="LinkedIn"><img src="assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block"></a>
+          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us"><img src="assets/gmail.png" alt="Email" width="22" height="22" style="display:block"></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Programmes</h5><ul><li><a href="foundations.html">AI Foundations</a></li><li><a href="professionals.html">AI for Professionals</a></li><li><a href="professionals.html#pricing">Pricing</a></li><li><a href="apply.html">Apply Now</a></li><li><a href="verify.html">Verify a Certificate</a></li></ul></div>
+      <div class="footer-col"><h5>Experts</h5><ul><li><a href="experts.html">Meet Our Experts</a></li><li><a href="experts.html#qualify">Become an Expert</a></li></ul></div>
+      <div class="footer-col"><h5>Organisation</h5><ul><li><a href="organisations.html">For Organisations</a></li><li><a href="organisations.html#contact">Get a Quote</a></li><li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li></ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="footer-year">2026</span> Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
+    <div class="footer-bottom-links"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+  </div>
+</footer>
+
+<button class="back-to-top">↑</button>
+
+<script src="script.js"></script>
+<script src="foundations-courses.js"></script>
+<script src="foundations-course.js"></script>
+<script src="nav-programmes.js"></script>
+<script src="cohort-countdown.js"></script>
+
+<script>
+/* The sixteen week rail fills as each phase crosses the mark. It is
+   anchored to the last lit dot rather than to scroll position, so the
+   fill can never run ahead of the content on a short viewport. */
+(function () {
+  var curr = document.getElementById('ds-curr');
+  var fill = document.getElementById('ds-fill');
+  var phases = [].slice.call(document.querySelectorAll('[data-phase]'));
+  if (!curr || !fill || !phases.length) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    phases.forEach(function (p) { p.classList.add('lit'); });
+    fill.style.setProperty('--fill', '100%');
+    return;
+  }
+  var ticking = false;
+  function paint() {
+    ticking = false;
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var mark = vh * 0.62, box = curr.getBoundingClientRect(), last = -1;
+    for (var i = 0; i < phases.length; i++) {
+      var lit = phases[i].getBoundingClientRect().top < mark;
+      phases[i].classList.toggle('lit', lit);
+      if (lit) last = i;
+    }
+    if (last < 0) { fill.style.setProperty('--fill', '0%'); return; }
+    var dot = phases[last].querySelector('.ds-dot').getBoundingClientRect();
+    var pct = ((dot.top + dot.height / 2) - box.top - 16) / Math.max(1, box.height - 32) * 100;
+    fill.style.setProperty('--fill', Math.max(0, Math.min(100, pct)).toFixed(2) + '%');
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(paint); } }
+  paint();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+})();
+</script>
+
+<!-- LinkedIn Insight Tag -->
+<script type="text/javascript">
+_linkedin_partner_id = "9372724";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script><script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9372724&fmt=gif" />
+</noscript>
+</body>
+</html>

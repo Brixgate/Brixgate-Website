@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Apply — Brixgate | AI in my Field</title>
+  <title>Apply | Brixgate AI in my Field</title>
   <meta name="description" content="Apply for the Brixgate AI in my Field programme. A 4-week intensive sprint with a verified expert practitioner in your specific profession." />
   <link rel="icon" type="image/png" href="assets/faviii.png" />
   <link rel="stylesheet" href="styles.css" />
@@ -675,14 +675,717 @@
     }
   </style>
 <script src="tracking.js"></script>
+<style>
+/* ============================================================
+   APPLY PAGE — light, roomy. Scoped to body.ap.
+   Only visual: every id/hook the payment JS uses is untouched.
+   ============================================================ */
+:root {
+  --ap-ink:#021024; --ap-ink2:#1B2A41; --ap-body:#4A5568; --ap-muted:#6B7A90;
+  --ap-faint:#98A4B5; --ap-line:#E6E8EC; --ap-line2:#EEF0F3; --ap-surface:#F7F8FA;
+  --ap-red:#FF294E; --ap-green:#16A34A;
+  --ap-ease:cubic-bezier(.2,.7,.2,1); --ap-r:16px;
+  --ap-sh:0 1px 2px rgba(2,16,36,.04), 0 14px 34px -16px rgba(2,16,36,.16);
+  --g-navy:#021024; --g-card:#0D1C34; --g-steel:#1B3A5C;
+  --g-wine:#9A2335; --g-deep:#C4173A; --g-red:#FF294E; --g-orange:#FF5748;
+}
+body.ap {
+  background:#fff !important; color:var(--ap-ink);
+  padding-top: calc(var(--banner-height) + var(--ap-nav-h, 63px));
+  -webkit-font-smoothing:antialiased;
+}
+body.ap .nav {
+  background:rgba(255,255,255,.85);
+  -webkit-backdrop-filter:blur(16px) saturate(1.7); backdrop-filter:blur(16px) saturate(1.7);
+  border-bottom:1px solid rgba(2,16,36,.07); box-shadow:none;
+}
+body.ap .nav.scrolled { background:rgba(255,255,255,.62); box-shadow:0 10px 34px -18px rgba(2,16,36,.3); }
+
+/* kill the old dark sections */
+body.ap .section-pad.bg-dark,
+body.ap .section-pad-sm.bg-dark { background:transparent !important; }
+/* The split is meant to run from the nav to the fold, but it is still wrapped
+   in the old page's section chrome, which carries an inline padding-top of
+   64px. Zero it so the gradient panel meets the nav. */
+body.ap .section-pad { padding-top:0 !important; padding-bottom:0 !important; }
+body.ap .page-header { background:transparent !important; }
+
+/* ---------- header ---------- */
+.ap-head { padding:64px 0 44px; text-align:center; }
+.ap-crumb { font-size:.78rem; color:var(--ap-muted); margin-bottom:20px; }
+.ap-crumb a { color:var(--ap-muted); } .ap-crumb a:hover { color:var(--ap-red); }
+.ap-tag {
+  display:inline-flex; align-items:center; gap:8px; height:30px; padding:0 14px;
+  border-radius:999px; background:rgba(255,41,78,.07); border:1px solid rgba(255,41,78,.18);
+  color:var(--ap-red); font-size:.7rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+  margin-bottom:22px;
+}
+.ap-dot { width:7px; height:7px; border-radius:50%; background:var(--ap-red); position:relative; }
+.ap-dot::after { content:''; position:absolute; inset:-3px; border-radius:50%; background:var(--ap-red); opacity:.35; animation:apPulse 1.8s ease-out infinite; }
+@keyframes apPulse { 0%{transform:scale(.6);opacity:.5} 100%{transform:scale(2);opacity:0} }
+.ap-h1 { font-size:clamp(2rem,3.8vw,2.9rem); font-weight:800; letter-spacing:-.032em; line-height:1.1; margin:0 auto; max-width:680px; color:var(--ap-ink); }
+.ap-sub { font-size:1.02rem; color:var(--ap-body); line-height:1.62; margin:18px auto 0; max-width:520px; }
+
+/* ---------- layout ---------- */
+.ap-wrap { max-width:1140px; margin:0 auto; padding:0 32px; }
+.ap-grid { display:grid !important; grid-template-columns:minmax(0,1fr) 372px !important; gap:56px !important; align-items:start; padding-bottom:104px; }
+
+/* ---------- form card ---------- */
+body.ap .apply-form-card {
+  background:#fff !important; border:1px solid var(--ap-line) !important;
+  border-radius:22px !important; padding:44px 46px !important; box-shadow:var(--ap-sh) !important;
+}
+body.ap .apply-form-card h3 { font-size:1.5rem !important; font-weight:750 !important; letter-spacing:-.026em; color:var(--ap-ink) !important; margin:0 0 8px !important; }
+body.ap .form-subtitle { font-size:.94rem !important; color:var(--ap-body) !important; margin:0 0 8px !important; }
+
+/* two honest steps */
+body.ap .step-indicator { display:flex !important; align-items:center; gap:0; margin:0 0 34px !important; }
+body.ap .step-item { display:flex; align-items:center; gap:10px; }
+body.ap .step-dot {
+  width:26px !important; height:26px !important; border-radius:50% !important;
+  display:grid !important; place-items:center; font-size:.74rem !important; font-weight:800 !important;
+  background:#fff !important; border:1.5px solid var(--ap-line) !important; color:var(--ap-faint) !important;
+  transition:all .3s var(--ap-ease);
+}
+body.ap .step-dot.active { background:var(--ap-ink) !important; border-color:var(--ap-ink) !important; color:#fff !important; }
+body.ap .step-dot.done { background:var(--ap-green) !important; border-color:var(--ap-green) !important; color:#fff !important; }
+body.ap .step-label { font-size:.82rem !important; font-weight:650 !important; color:var(--ap-faint) !important; }
+body.ap .step-label.active { color:var(--ap-ink) !important; }
+body.ap .step-label.done { color:var(--ap-green) !important; }
+body.ap .step-line { flex:1; height:1.5px !important; background:var(--ap-line) !important; margin:0 16px !important; border-radius:2px; }
+body.ap .step-line.done { background:var(--ap-green) !important; }
+
+/* ---------- field groups ---------- */
+.ap-fieldset { border:0; padding:0; margin:0 0 38px; }
+.ap-legend {
+  display:flex; align-items:baseline; gap:12px; width:100%;
+  padding:0 0 14px; margin:0 0 22px; border-bottom:1px solid var(--ap-line2);
+}
+.ap-legend .n {
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.66rem; font-weight:700; letter-spacing:.13em; color:var(--ap-red);
+}
+.ap-legend .t { font-size:.72rem; font-weight:750; letter-spacing:.13em; text-transform:uppercase; color:var(--ap-muted); }
+
+body.ap .form-group { margin-bottom:20px !important; }
+body.ap .form-row { display:grid !important; grid-template-columns:1fr 1fr; gap:16px !important; }
+body.ap .form-group label {
+  display:block; font-size:.84rem !important; font-weight:650 !important;
+  color:var(--ap-ink) !important; margin-bottom:8px !important; letter-spacing:-.005em;
+}
+body.ap .form-group input,
+body.ap .form-group select,
+body.ap .form-group textarea,
+body.ap #apply-phone-cc {
+  width:100%; height:48px; padding:0 14px !important;
+  background:#fff !important; border:1.5px solid var(--ap-line) !important;
+  border-radius:11px !important; color:var(--ap-ink) !important;
+  font-family:inherit; font-size:.94rem !important; outline:none;
+  transition:border-color .2s, box-shadow .2s, background .2s;
+}
+body.ap .form-group input::placeholder { color:#A9B4C2 !important; }
+body.ap .form-group input:hover, body.ap .form-group select:hover { border-color:#D3D9E1 !important; }
+body.ap .form-group input:focus,
+body.ap .form-group select:focus,
+body.ap #apply-phone-cc:focus {
+  border-color:var(--ap-red) !important; box-shadow:0 0 0 4px rgba(255,41,78,.10) !important;
+}
+body.ap .form-group select { cursor:pointer; appearance:none; -webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236B7A90' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") !important;
+  background-repeat:no-repeat !important; background-position:right 14px center !important; background-size:14px 14px !important; padding-right:38px !important;
+}
+.ap-hint { font-size:.78rem; color:var(--ap-muted); margin-top:7px; display:flex; align-items:center; gap:6px; }
+.ap-req { color:var(--ap-red); font-weight:700; }
+
+/* inline validation */
+body.ap .form-group.invalid input,
+body.ap .form-group.invalid select { border-color:var(--ap-red) !important; background:rgba(255,41,78,.03) !important; }
+.ap-err { display:none; font-size:.78rem; color:var(--ap-red); margin-top:7px; font-weight:600; align-items:center; gap:6px; }
+body.ap .form-group.invalid .ap-err { display:flex; }
+
+/* ---------- enrolment choice cards ---------- */
+.ap-choice { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+body.ap .enroll-toggle-btn {
+  all:unset; box-sizing:border-box; cursor:pointer; display:block !important;
+  padding:20px 22px !important; border-radius:14px !important;
+  border:1.5px solid var(--ap-line) !important; background:#fff !important;
+  transition:border-color .22s var(--ap-ease), box-shadow .22s var(--ap-ease), transform .22s var(--ap-ease) !important;
+  position:relative;
+}
+body.ap .enroll-toggle-btn:hover { border-color:#C9D0DA !important; transform:translateY(-2px); }
+body.ap .enroll-toggle-btn.is-on {
+  border-color:var(--ap-red) !important;
+  box-shadow:0 0 0 4px rgba(255,41,78,.09) !important;
+}
+.ap-choice-top { display:flex !important; align-items:center; justify-content:space-between; gap:10px; }
+.ap-choice-ic { width:36px; height:36px; border-radius:10px; background:var(--ap-surface); color:var(--ap-ink); display:grid; place-items:center; }
+body.ap .enroll-toggle-btn.is-on .ap-choice-ic { background:rgba(255,41,78,.09); color:var(--ap-red); }
+.ap-choice-radio { width:19px; height:19px; border-radius:50%; border:1.5px solid var(--ap-line); position:relative; flex-shrink:0; transition:border-color .2s, background .2s; }
+body.ap .enroll-toggle-btn.is-on .ap-choice-radio { border-color:var(--ap-red); background:var(--ap-red); }
+.ap-choice-radio::after { content:''; position:absolute; left:50%; top:50%; width:6px; height:6px; border-radius:50%; background:#fff; transform:translate(-50%,-50%) scale(0); transition:transform .22s var(--ap-ease); }
+body.ap .enroll-toggle-btn.is-on .ap-choice-radio::after { transform:translate(-50%,-50%) scale(1); }
+.ap-choice-t { display:block; font-size:1rem; font-weight:700; color:var(--ap-ink); margin-top:14px; letter-spacing:-.015em; }
+.ap-choice-d { display:block; font-size:.83rem; color:var(--ap-body); line-height:1.5; margin-top:5px; }
+
+/* ---------- preselected programme chip ---------- */
+.ap-locked {
+  display:flex; align-items:center; gap:14px;
+  background:var(--ap-surface); border:1px solid var(--ap-line);
+  border-radius:13px; padding:15px 17px;
+}
+.ap-locked-ic { width:38px; height:38px; border-radius:10px; background:#fff; border:1px solid var(--ap-line); display:grid; place-items:center; color:var(--ap-red); flex-shrink:0; }
+.ap-locked-t { font-size:.94rem; font-weight:700; color:var(--ap-ink); }
+.ap-locked-s { font-size:.78rem; color:var(--ap-muted); margin-top:2px; }
+.ap-locked button { margin-left:auto; background:none; border:0; cursor:pointer; font-family:inherit;
+  font-size:.8rem; font-weight:700; color:var(--ap-red); padding:6px 2px; }
+.ap-locked button:hover { text-decoration:underline; }
+
+/* ---------- scholarship strip ---------- */
+.ap-scholar {
+  position:relative; overflow:hidden; border-radius:13px; padding:14px 18px; margin-bottom:26px;
+  display:flex; align-items:center; gap:13px; flex-wrap:wrap;
+  background:linear-gradient(110deg, rgba(255,41,78,.06), rgba(255,87,72,.03));
+  border:1px solid rgba(255,41,78,.18);
+}
+.ap-scholar .pill { display:inline-flex; align-items:center; gap:6px; background:var(--ap-red); color:#fff;
+  font-size:.63rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; padding:5px 11px; border-radius:999px; white-space:nowrap; }
+.ap-scholar p { font-size:.85rem; color:var(--ap-body); line-height:1.5; margin:0; }
+.ap-scholar b { color:var(--ap-ink); }
+
+/* ---------- order summary (sticky) ---------- */
+.ap-rail { position:sticky; top:calc(var(--ap-nav-h,63px) + var(--banner-height) + 24px); }
+.ap-sum { background:#fff; border:1px solid var(--ap-line); border-radius:20px; overflow:hidden; box-shadow:var(--ap-sh); }
+.ap-sum-h {
+  padding:20px 24px; border-bottom:1px solid var(--ap-line2);
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.ap-sum-h span { font-size:.7rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--ap-muted); }
+.ap-sum-b { padding:22px 24px; }
+.ap-line { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:11px 0; font-size:.89rem; }
+.ap-line .k { color:var(--ap-body); }
+.ap-line .v { color:var(--ap-ink); font-weight:650; text-align:right; }
+.ap-line.total { border-top:1px solid var(--ap-line); margin-top:10px; padding-top:18px; }
+.ap-line.total .k { font-size:.95rem; font-weight:700; color:var(--ap-ink); }
+.ap-line.total .v { font-size:1.5rem; font-weight:800; letter-spacing:-.03em; }
+.ap-line.disc .v { color:var(--ap-green); }
+.ap-sum-f { padding:0 24px 24px; }
+.ap-trust { display:flex; flex-direction:column; gap:9px; margin-top:18px; padding-top:18px; border-top:1px solid var(--ap-line2); }
+.ap-trust div { display:flex; align-items:center; gap:9px; font-size:.79rem; color:var(--ap-muted); }
+.ap-trust svg { flex-shrink:0; color:var(--ap-green); }
+
+/* currency toggle */
+body.ap .currency-toggle-5, .ap-cur { display:inline-flex; padding:3px; border-radius:999px; background:var(--ap-surface); border:1px solid var(--ap-line); }
+body.ap .cur-btn {
+  height:28px; padding:0 13px; border-radius:999px; border:0; background:transparent;
+  font-family:inherit; font-size:.75rem; font-weight:700; color:var(--ap-muted); cursor:pointer;
+  transition:background .2s, color .2s;
+}
+body.ap .cur-btn.active { background:var(--ap-ink); color:#fff; }
+
+/* ---------- buttons ---------- */
+body.ap .apply-form-card .btn,
+body.ap #pay-btn, body.ap #back-to-form {
+  height:52px !important; border-radius:999px !important; font-size:.95rem !important; font-weight:700 !important;
+  display:inline-flex !important; align-items:center; justify-content:center; gap:9px;
+  transition:transform .24s var(--ap-ease), box-shadow .24s, background .2s, border-color .2s !important;
+}
+body.ap .btn-primary, body.ap #pay-btn {
+  background:linear-gradient(135deg, var(--g-red), var(--g-orange)) !important; border:0 !important; color:#fff !important;
+  box-shadow:0 12px 30px -12px rgba(255,41,78,.6) !important;
+}
+body.ap .btn-primary:hover, body.ap #pay-btn:hover { transform:translateY(-2px); box-shadow:0 18px 40px -14px rgba(255,41,78,.7) !important; }
+body.ap #back-to-form { background:#fff !important; color:var(--ap-ink) !important; border:1.5px solid var(--ap-line) !important; }
+body.ap #back-to-form:hover { border-color:var(--ap-ink) !important; }
+
+/* ---------- review rows ---------- */
+body.ap .price-row, body.ap .price-row-label, body.ap .price-row-value { color:inherit !important; }
+body.ap .price-row { display:flex; justify-content:space-between; gap:16px; padding:12px 0; border-bottom:1px solid var(--ap-line2); font-size:.89rem; }
+body.ap .price-row-label { color:var(--ap-body) !important; }
+body.ap .price-row-value { color:var(--ap-ink) !important; font-weight:650; text-align:right; }
+
+/* error banners */
+body.ap #form-error-banner, body.ap #review-error-banner {
+  background:rgba(255,41,78,.05) !important; border:1px solid rgba(255,41,78,.25) !important;
+  border-radius:12px !important; color:var(--ap-ink) !important;
+}
+
+/* draft-restored note */
+.ap-draft {
+  display:none; align-items:center; gap:10px; margin-bottom:22px;
+  background:rgba(22,163,74,.06); border:1px solid rgba(22,163,74,.22);
+  border-radius:11px; padding:11px 15px; font-size:.83rem; color:#15803D;
+}
+.ap-draft.show { display:flex; }
+.ap-draft button { margin-left:auto; background:none; border:0; cursor:pointer; font-family:inherit; font-size:.78rem; font-weight:700; color:#15803D; text-decoration:underline; }
+
+/* paystack handoff note */
+.ap-handoff { font-size:.79rem; color:var(--ap-muted); text-align:center; margin-top:14px; line-height:1.5; }
+
+/* motion primitives */
+html.ap-anim .ap-rise { opacity:0; transform:translateY(20px); }
+@media (prefers-reduced-motion:reduce) { .ap-rise { opacity:1 !important; transform:none !important; } }
+
+@media (max-width:1000px) {
+  .ap-grid { grid-template-columns:1fr !important; gap:36px !important; }
+  .ap-rail { position:static; }
+  .ap-sum { max-width:520px; }
+}
+@media (max-width:640px) {
+  .ap-wrap { padding:0 20px; }
+  .ap-head { padding:44px 0 32px; }
+  body.ap .apply-form-card { padding:30px 24px !important; border-radius:18px !important; }
+  body.ap .form-row { grid-template-columns:1fr; }
+  .ap-choice { grid-template-columns:1fr; }
+  .ap-grid { padding-bottom:64px; }
+  body.ap .step-label { display:none !important; }
+  body.ap .step-line { margin:0 10px !important; }
+}
+
+/* ---------- layout: card + sticky summary ---------- */
+body.ap .apply-wrapper {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) 372px !important;
+  gap:56px !important; align-items:start !important;
+  max-width:1140px; margin:0 auto; padding:0 32px 104px;
+}
+/* the old pricing table sidebar is replaced by the summary rail */
+body.ap .apply-sidebar-col { display:none !important; }
+/* the WhatsApp link was a stray grid child - span it under the card */
+body.ap .apply-wrapper > a { grid-column:1 / 2; }
+
+/* ---------- team fields: only for team applicants ----------
+   updateEnrollmentUI() toggles a .visible class on these groups, but no
+   stylesheet ever defined it, so they were always shown - including to
+   people applying as an individual. */
+body.ap #team-name-group,
+body.ap #team-size-group { display:none !important; }
+body.ap #team-name-group.visible,
+body.ap #team-size-group.visible { display:block !important; }
+
+/* neutralise the inline colours updateEnrollmentUI writes onto the
+   choice cards, so the new card styling wins */
+body.ap .enroll-toggle-btn[style] {
+  border-color:var(--ap-line) !important;
+  background:#fff !important;
+  color:var(--ap-ink) !important;
+}
+body.ap .enroll-toggle-btn.is-on[style] {
+  border-color:var(--ap-red) !important;
+  background:#fff !important;
+}
+
+@media (max-width:1000px) {
+  body.ap .apply-wrapper { grid-template-columns:1fr !important; gap:36px !important; }
+  body.ap .apply-wrapper > a { grid-column:auto; }
+}
+@media (max-width:640px) {
+  body.ap .apply-wrapper { padding:0 20px 64px; }
+}
+</style>
+
+<script>(function(){var m=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;if(!m)document.documentElement.className+=" ap-anim";})();</script>
+<style>
+/* ============================================================
+   APPLY v2 — full-height split.
+   Left: fixed gradient identity panel (the "why").
+   Right: white scrolling form (the "what").
+   Purely structural/visual — no payment id is touched.
+   ============================================================ */
+
+/* The nav rides above the split so people can get back out of checkout.
+   The region banner stays hidden — a marketing strip sitting above the
+   programme fee is noise — so the nav pins to the very top instead of
+   offsetting itself by --banner-height. */
+/* --ap-nav-h is measured from the rendered nav at runtime. At desktop the
+   nav has no explicit height and comes out ~63px, while --nav-height is
+   104px, so using the variable alone left ~40px of dead space above the
+   split. The variable stays as the pre-script fallback. */
+body.ap { padding-top:var(--ap-nav-h, var(--nav-height)) !important; }
+body.ap .region-banner { display:none !important; }
+body.ap .nav { top:0 !important; }
+body.ap .nav-mobile { top:var(--ap-nav-h, var(--nav-height)) !important; }
+
+/* kill the old stacked header entirely */
+body.ap .ap-head, body.ap .page-header { display:none !important; }
+
+/* ---------- the split ---------- */
+body.ap .apply-wrapper {
+  display:grid !important;
+  grid-template-columns:clamp(360px, 34vw, 480px) minmax(0,1fr) !important;
+  gap:0 !important;
+  max-width:none !important;
+  padding:0 !important;
+  align-items:stretch !important;
+  min-height:calc(100vh - var(--ap-nav-h, var(--nav-height)));
+}
+body.ap .apply-sidebar-col { display:none !important; }
+body.ap .ap-rail { display:none !important; }
+
+/* ---------- LEFT: gradient identity panel ---------- */
+.ap-side {
+  grid-column:1; grid-row:1 / span 6;
+  position:relative; overflow:hidden; color:#fff;
+  border-radius:26px; margin:18px 0 18px 18px;
+  padding:44px 46px 40px;
+  display:flex; flex-direction:column;
+  background:
+    radial-gradient(90% 120% at 100% 100%, rgba(255,87,72,.72) 0%, rgba(255,41,78,.34) 34%, transparent 66%),
+    radial-gradient(70% 80% at 0% 0%, rgba(27,58,92,.75) 0%, transparent 60%),
+    linear-gradient(158deg, var(--g-navy) 0%, var(--g-card) 22%, var(--g-steel) 44%, var(--g-wine) 72%, var(--g-deep) 100%);
+}
+.ap-side::after {
+  content:''; position:absolute; inset:0; pointer-events:none; opacity:.26; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+.ap-side > * { position:relative; z-index:1; }
+/* Sticks below the fixed nav rather than the top of the viewport.
+   Selector is .ap-side > .ap-side-in on purpose: the panel also carries
+   .bx-waves, and `.bx-waves > *` sets position:relative at the same
+   specificity but later in the file, so a bare .ap-side-in loses and the
+   sidebar silently stops sticking. */
+.ap-side > .ap-side-in {
+  position:sticky; top:calc(var(--ap-nav-h, var(--nav-height)) + 26px);
+  display:flex; flex-direction:column;
+  height:calc(100vh - var(--ap-nav-h, var(--nav-height)) - 52px);
+}
+/* the nav carries the wordmark now; a second one 100px below reads as a bug */
+.ap-side-logo { display:none; }
+
+.ap-back {
+  display:inline-flex; align-items:center; gap:9px; align-self:flex-start;
+  font-size:.84rem; font-weight:650; color:rgba(255,255,255,.78);
+  padding:8px 14px 8px 10px; border-radius:999px;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14);
+  transition:background .22s, color .22s, transform .22s var(--ap-ease);
+}
+.ap-back:hover { background:rgba(255,255,255,.15); color:#fff; transform:translateX(-2px); }
+.ap-side-logo { height:30px; width:auto; margin:34px 0 0; opacity:.95; }
+
+.ap-side-tag {
+  display:inline-flex; align-items:center; gap:8px; align-self:flex-start; margin-top:auto;
+  height:28px; padding:0 13px; border-radius:999px;
+  background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.2);
+  font-size:.66rem; font-weight:800; letter-spacing:.11em; text-transform:uppercase; color:#fff;
+}
+.ap-side-h {
+  font-size:clamp(1.7rem, 2.3vw, 2.2rem); font-weight:800; letter-spacing:-.032em;
+  line-height:1.1; margin:18px 0 0; color:#fff;
+}
+.ap-side-sub { font-size:.94rem; color:rgba(255,255,255,.74); line-height:1.6; margin:14px 0 0; max-width:330px; }
+
+.ap-price-box {
+  margin:28px 0 0; padding:20px 22px; border-radius:16px;
+  background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.16);
+  -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+}
+.ap-price-k { font-size:.63rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:rgba(255,255,255,.6); }
+.ap-price-v { font-size:2.1rem; font-weight:800; letter-spacing:-.045em; line-height:1; margin-top:8px; color:#fff; }
+.ap-price-meta { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+.ap-price-meta span {
+  font-size:.72rem; font-weight:650; color:rgba(255,255,255,.86);
+  background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.14);
+  padding:5px 11px; border-radius:999px;
+}
+
+.ap-incl { list-style:none; padding:0; margin:26px 0 0; display:flex; flex-direction:column; gap:12px; }
+.ap-incl li { display:flex; gap:11px; align-items:flex-start; font-size:.88rem; color:rgba(255,255,255,.84); line-height:1.5; }
+.ap-incl svg { flex-shrink:0; margin-top:2px; color:#7CEFA6; }
+
+.ap-side-foot { margin-top:auto; padding-top:26px; border-top:1px solid rgba(255,255,255,.16); }
+.ap-side-quote { font-size:.87rem; color:rgba(255,255,255,.80); line-height:1.62; font-style:italic; }
+.ap-side-by { font-size:.75rem; color:rgba(255,255,255,.55); margin-top:10px; }
+.ap-side-secure { display:flex; align-items:center; gap:9px; margin-top:20px; font-size:.75rem; color:rgba(255,255,255,.6); }
+
+/* ---------- RIGHT: form column ---------- */
+body.ap .apply-form-card {
+  grid-column:2 !important;
+  background:transparent !important; border:0 !important; box-shadow:none !important;
+  border-radius:0 !important;
+  padding:56px clamp(32px, 5vw, 84px) 40px !important;
+  max-width:720px; width:100%;
+}
+/* stretch, not start. The margins already inset this to the same gutter
+   as the form card's padding, so stretching makes its two edges line up
+   with the form above it; justify-self:start left it sized by its own
+   text and ending short of the form's right edge. */
+body.ap .apply-wrapper > a { grid-column:2 !important; justify-self:stretch; margin:0 clamp(32px,5vw,84px) 64px; }
+
+/* scholarship strip sits inside the form column now */
+body.ap .ap-scholar { margin-bottom:30px; }
+
+/* ---------- responsive: stack, panel becomes a compact header ---------- */
+@media (max-width:1000px) {
+  body.ap .apply-wrapper { grid-template-columns:1fr !important; min-height:0; }
+  .ap-side { grid-column:1; grid-row:auto; padding:26px 24px 30px; }
+  .ap-side > .ap-side-in { position:static; height:auto; }
+  .ap-side-logo { margin-top:20px; }
+  .ap-side-tag { margin-top:22px; }
+  .ap-side-h { font-size:1.55rem; }
+  .ap-side-sub { max-width:none; }
+  .ap-incl { display:grid; grid-template-columns:1fr 1fr; gap:10px 18px; }
+  .ap-side-foot { display:none; }
+  body.ap .apply-form-card { grid-column:1 !important; padding:36px 24px 32px !important; max-width:none; }
+  body.ap .apply-wrapper > a { grid-column:1 !important; margin:0 24px 48px; }
+}
+@media (max-width:600px) {
+  .ap-incl { grid-template-columns:1fr; }
+  .ap-price-v { font-size:1.8rem; }
+}
+</style>
+
+<style>
+/* ============================================================
+   BRAND WAVE PATTERN — reusable across the site.
+   Put .bx-waves on any positioned element.
+   ============================================================ */
+.bx-waves::before {
+  content:''; position:absolute; inset:-8% -14%; pointer-events:none; z-index:0;
+  background-image:url('assets/pattern/waves.svg');
+  background-repeat:no-repeat; background-position:center;
+  background-size:cover;
+  opacity:.30;
+  will-change:transform;
+  animation:bxWaveDrift 26s ease-in-out infinite alternate;
+}
+@keyframes bxWaveDrift {
+  0%   { transform:translate3d(0,0,0) scale(1.02); }
+  50%  { transform:translate3d(-2.2%,1.4%,0) scale(1.06); }
+  100% { transform:translate3d(1.8%,-1.2%,0) scale(1.03); }
+}
+/* a second, slower layer so the field reads as moving water, not a sliding image */
+.bx-waves::after {
+  content:''; position:absolute; inset:-10% -16%; pointer-events:none; z-index:0;
+  background-image:url('assets/pattern/waves-dense.svg');
+  background-repeat:no-repeat; background-position:center;
+  background-size:cover;
+  opacity:.14;
+  will-change:transform;
+  animation:bxWaveDrift2 38s ease-in-out infinite alternate;
+}
+@keyframes bxWaveDrift2 {
+  0%   { transform:translate3d(0,0,0) scale(1.05) rotate(.4deg); }
+  100% { transform:translate3d(2.6%,-1.8%,0) scale(1.01) rotate(-.4deg); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .bx-waves::before, .bx-waves::after { animation:none !important; }
+}
+.bx-waves.is-dense::before { background-image:url('assets/pattern/waves-dense.svg'); }
+.bx-waves.on-dark::before { opacity:.22; mix-blend-mode:screen; }
+.bx-waves.on-dark::after { opacity:.10; mix-blend-mode:screen; }
+.bx-waves.on-light::before { opacity:.28; }
+.bx-waves > * { position:relative; z-index:1; }
+
+/* ============================================================
+   APPLY — DARK VARIANT  (body.ap.ap-dark, via ?theme=dark)
+   ============================================================ */
+body.ap.ap-dark {
+  --ap-ink:#F2F5F9; --ap-ink2:#DCE3EC; --ap-body:#9FB0C4; --ap-muted:#7E8FA3;
+  --ap-faint:#5C6B7E; --ap-line:#1E2F45; --ap-line2:#182437; --ap-surface:#0E1928;
+  background:#070E18 !important; color:#F2F5F9;
+}
+body.ap.ap-dark .ap-side {
+  background:
+    radial-gradient(90% 120% at 100% 100%, rgba(255,87,72,.50) 0%, rgba(255,41,78,.22) 34%, transparent 66%),
+    radial-gradient(70% 80% at 0% 0%, rgba(27,58,92,.85) 0%, transparent 62%),
+    linear-gradient(158deg, #01060F 0%, #061426 24%, #12304C 48%, #6E1A2C 76%, #A81733 100%);
+}
+/* form column sits on near-black */
+body.ap.ap-dark .apply-form-card { background:transparent !important; }
+body.ap.ap-dark .apply-wrapper { background:#070E18; }
+
+body.ap.ap-dark .ap-legend { border-bottom-color:#1B2A3D !important; }
+body.ap.ap-dark .ap-legend .t { color:#7E8FA3 !important; }
+body.ap.ap-dark .apply-form-card h3 { color:#F2F5F9 !important; }
+body.ap.ap-dark .form-subtitle { color:#9FB0C4 !important; }
+body.ap.ap-dark .form-group label { color:#DCE3EC !important; }
+
+body.ap.ap-dark .form-group input,
+body.ap.ap-dark .form-group select,
+body.ap.ap-dark .form-group textarea,
+body.ap.ap-dark #apply-phone-cc {
+  /* background-color, never the `background` shorthand: the shorthand resets
+     background-repeat/position and tiles the select chevron across the field */
+  background-color:#0D1826 !important; border-color:#1E2F45 !important; color:#F2F5F9 !important;
+}
+body.ap.ap-dark .form-group input::placeholder { color:#55677C !important; }
+body.ap.ap-dark .form-group input:hover, .ap-dark .form-group select:hover { border-color:#2A3F59 !important; }
+body.ap.ap-dark .form-group input:focus, .ap-dark .form-group select:focus, .ap-dark #apply-phone-cc:focus {
+  border-color:var(--g-red) !important; box-shadow:0 0 0 4px rgba(255,41,78,.16) !important; background:#101E2F !important;
+}
+body.ap.ap-dark .form-group select {
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237E8FA3' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") !important;
+  background-repeat:no-repeat !important;
+  background-position:right 14px center !important;
+  background-size:14px 14px !important;
+}
+
+/* choice cards */
+body.ap.ap-dark .enroll-toggle-btn,
+body.ap.ap-dark .enroll-toggle-btn[style] {
+  background:#0D1826 !important; border-color:#1E2F45 !important; color:#F2F5F9 !important;
+}
+body.ap.ap-dark .enroll-toggle-btn:hover { border-color:#2A3F59 !important; }
+body.ap.ap-dark .enroll-toggle-btn.is-on,
+body.ap.ap-dark .enroll-toggle-btn.is-on[style] {
+  background:rgba(255,41,78,.09) !important; border-color:var(--g-red) !important;
+  box-shadow:0 0 0 4px rgba(255,41,78,.12) !important;
+}
+body.ap.ap-dark .ap-choice-ic { background:#132030; color:#DCE3EC; }
+body.ap.ap-dark .enroll-toggle-btn.is-on .ap-choice-ic { background:rgba(255,41,78,.14); color:#FF6B85; }
+body.ap.ap-dark .ap-choice-radio { border-color:#2A3F59; }
+body.ap.ap-dark .ap-choice-t { color:#F2F5F9; }
+body.ap.ap-dark .ap-choice-d { color:#9FB0C4; }
+
+/* steps */
+body.ap.ap-dark .step-dot { background:#0D1826 !important; border-color:#1E2F45 !important; color:#5C6B7E !important; }
+body.ap.ap-dark .step-dot.active { background:#fff !important; border-color:#fff !important; color:#070E18 !important; }
+body.ap.ap-dark .step-line { background:#1E2F45 !important; }
+body.ap.ap-dark .step-label { color:#5C6B7E !important; }
+body.ap.ap-dark .step-label.active { color:#F2F5F9 !important; }
+
+/* misc surfaces */
+body.ap.ap-dark .ap-locked { background:#0D1826; border-color:#1E2F45; }
+body.ap.ap-dark .ap-locked-ic { background:#132030; border-color:#1E2F45; }
+body.ap.ap-dark .ap-locked-t { color:#F2F5F9; }
+body.ap.ap-dark .ap-scholar { background:linear-gradient(110deg, rgba(255,41,78,.13), rgba(255,87,72,.06)); border-color:rgba(255,41,78,.3); }
+body.ap.ap-dark .ap-scholar p { color:#C3D0DE; }
+body.ap.ap-dark .ap-scholar b { color:#fff; }
+body.ap.ap-dark .ap-draft { background:rgba(22,163,74,.10); border-color:rgba(22,163,74,.28); color:#6EE7A0; }
+body.ap.ap-dark .ap-draft button { color:#6EE7A0; }
+body.ap.ap-dark .ap-hint, .ap-dark .ap-handoff { color:#7E8FA3; }
+body.ap.ap-dark .price-row { border-bottom-color:#182437; }
+body.ap.ap-dark .price-row-label { color:#9FB0C4 !important; }
+body.ap.ap-dark .price-row-value { color:#F2F5F9 !important; }
+body.ap.ap-dark #back-to-form { background:#0D1826 !important; color:#F2F5F9 !important; border-color:#1E2F45 !important; }
+body.ap.ap-dark #back-to-form:hover { border-color:#F2F5F9 !important; }
+body.ap.ap-dark #form-error-banner, .ap-dark #review-error-banner { background:rgba(255,41,78,.10) !important; }
+/* legacy inline colours meant for a dark card are correct again here */
+body.ap.ap-dark .apply-form-card [style*="var(--white)"]:not(.btn):not(a):not(button) { color:#F2F5F9 !important; }
+
+/* ---------- theme switch (comparison aid) ---------- */
+.ap-theme {
+  position:fixed; right:20px; bottom:88px; z-index:60;
+  display:inline-flex; align-items:center; gap:8px;
+  height:40px; padding:0 15px; border-radius:999px; cursor:pointer;
+  font-family:inherit; font-size:.8rem; font-weight:700;
+  background:rgba(2,16,36,.9); color:#fff; border:1px solid rgba(255,255,255,.16);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  box-shadow:0 10px 30px -12px rgba(0,0,0,.5);
+  transition:transform .22s var(--ap-ease), background .2s;
+}
+.ap-theme:hover { transform:translateY(-2px); }
+.ap-dark .ap-theme { background:rgba(255,255,255,.92); color:#070E18; border-color:rgba(0,0,0,.1); }
+@media (max-width:700px) { .ap-theme { right:14px; bottom:84px; height:36px; font-size:.75rem; } }
+
+/* ============================================================
+   LIGHT-MODE REPAIRS
+   The split was designed dark-first. Several pieces carry hard
+   coded white text, or colours the payment JS sets inline for a
+   dark ground, and they disappear against the light one.
+   ============================================================ */
+
+/* 1 · The form column becomes a cream panel. On plain white the
+   white inputs had no edge to read against. */
+body.ap:not(.ap-dark) .apply-wrapper { background:#F6F5F5; }
+body.ap:not(.ap-dark) .apply-form-card { background:transparent !important; }
+
+/* 2 · "How are you applying" — icon, text and radio on one line.
+   ap-choice-top becomes display:contents so its two children join
+   the parent grid directly, no markup change needed. */
+body.ap .enroll-toggle-btn {
+  padding:14px 16px !important;
+  display:grid !important;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  grid-template-areas:"ic t radio" "ic d radio";
+  align-items:center; column-gap:13px; row-gap:1px;
+}
+body.ap .ap-choice-top { display:contents !important; }
+body.ap .ap-choice-ic { grid-area:ic; width:32px !important; height:32px !important; border-radius:9px; }
+body.ap .ap-choice-radio { grid-area:radio; }
+body.ap .ap-choice-t { grid-area:t; font-size:.94rem; margin:0; align-self:end; }
+body.ap .ap-choice-d { grid-area:d; font-size:.78rem; margin:0 !important; align-self:start; }
+
+/* 3 · Terms / privacy note was rgba(255,255,255,.3) — white on white. */
+body.ap:not(.ap-dark) .form-note { color:#5A6B80 !important; }
+body.ap:not(.ap-dark) .form-note a { color:var(--ap-red) !important; font-weight:650; text-decoration:underline; }
+
+/* 4 · "Chat with Dee" bar: the inline white has been removed, so the
+   colour now comes from here and follows the theme. */
+.ap-wa { color:#0B7A3B !important; }
+body.ap.ap-dark .ap-wa { color:#EAF6EF !important; }
+.ap-wa span { color:#128C4A !important; }
+body.ap.ap-dark .ap-wa span { color:#25D366 !important; }
+
+/* 5 · "Edit my details" sat left-aligned at 154px under a 528px pay
+   button, 59px below it — it read as a stray fragment rather than the
+   pair's secondary action. The shared button rule forces inline-flex,
+   so margin:auto cannot centre it; flex + width:fit-content can. */
+body.ap #back-to-form {
+  display:flex !important;
+  width:fit-content;
+  margin:12px auto 0 !important;
+  padding:0 24px !important;
+  font-size:.88rem !important;
+  text-decoration:none;
+}
+body.ap #back-to-form:hover { background:#F2F4F7 !important; border-color:#C9D0DA !important; }
+/* Restates the dark palette alongside the light overrides above so the pair
+   stays readable together. Duplicates the earlier dark rule deliberately —
+   the light rules here are later in the sheet, and keeping the dark values
+   next to them stops a future edit from silently leaving dark behind. */
+body.ap.ap-dark #back-to-form {
+  background:#0D1826 !important; color:#F2F5F9 !important; border-color:#1E2F45 !important;
+}
+body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-color:#2A3F59 !important; }
+
+/* 6 · Payment plan pills. The renderer writes their colours inline for
+   a dark panel, so on light the borders and labels vanish. Restyled
+   here rather than in the renderer — no payment code is touched. */
+body.ap:not(.ap-dark) #payment-options-container button {
+  border:1.5px solid #D6DBE3 !important;
+  background:#fff !important;
+  color:#4A5A70 !important;
+}
+body.ap:not(.ap-dark) #payment-options-container button:hover {
+  border-color:#B8C1CE !important; background:#F7F9FB !important;
+}
+/* The renderer marks the active pill with #FF294E in its inline style.
+   That red on its own 8% tint measured 3.04:1 — under AA for text this
+   size — so the label drops to the deeper brand red, which clears it. */
+body.ap:not(.ap-dark) #payment-options-container button[style*="#FF294E"] {
+  border-color:var(--ap-red) !important;
+  background:rgba(255,41,78,.08) !important;
+  color:#A8102C !important;
+}
+/* labels and schedule rows inside the payment block */
+body.ap:not(.ap-dark) #payment-options-container,
+body.ap:not(.ap-dark) #payment-options-container div,
+body.ap:not(.ap-dark) #payment-options-container span {
+  color:#33415C;
+}
+body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#6B7A90; }
+</style>
+
+  <link rel="canonical" href="https://brixgate.com/apply.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Brixgate" />
+  <meta property="og:url" content="https://brixgate.com/apply.html" />
+  <meta property="og:title" content="Apply | Brixgate AI in my Field" />
+  <meta property="og:description" content="Apply for the Brixgate AI in my Field programme. A 4-week intensive sprint with a verified expert practitioner in your specific profession." />
+  <meta property="og:image" content="https://brixgate.com/assets/og-brixgate.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Apply | Brixgate AI in my Field" />
+  <meta name="twitter:description" content="Apply for the Brixgate AI in my Field programme. A 4-week intensive sprint with a verified expert practitioner in your specific profession." />
+  <meta name="twitter:image" content="https://brixgate.com/assets/og-brixgate.jpg" />
+  <meta name="robots" content="noindex, follow" />
 </head>
-<body>
+<body class="ap">
 
 <div id="scroll-progress"></div>
 
 <!-- Region Banner -->
 <div class="region-banner" id="region-banner">
-  <span style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Now active in</span>
+  <span class="region-label" style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Now active in</span>
   <div class="regions">
     <span class="region-item">🇳🇬 Nigeria</span>
     <span class="region-item">🇬🇧 United Kingdom</span>
@@ -690,6 +1393,8 @@
     <span class="region-item">🇰🇪 Kenya</span>
     <span class="region-item">🇬🇭 Ghana</span>
     <span class="region-item">🇿🇦 South Africa</span>
+    <span class="region-more">and 99 other countries</span>
+    <span class="region-cohort" data-cohort-countdown hidden></span>
   </div>
 
 </div>
@@ -701,17 +1406,7 @@
     </a>
     <div class="nav-links">
       <a href="index.html">Home</a>
-      <div class="nav-prog-dropdown">
-        <a href="programme.html">Programme</a><button class="nav-prog-chevron" type="button" aria-label="Toggle programmes menu"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="nav-prog-menu">
-          <div class="nav-prog-menu-inner">
-            <a href="programme-engineering.html">Software Engineering</a>
-            <a href="programme-cybersecurity.html">Cybersecurity</a>
-            <a href="programme-finance.html">Financial Modelling</a>
-            <a href="programme-marketing.html">Product Marketing</a>
-          </div>
-        </div>
-      </div>
+      <div class="nav-mega" data-nav-mega></div>
       <a href="experts.html">Experts</a>
       <a href="organisations.html">For Organisations</a>
       <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20my%20Field%20programme." target="_blank" rel="noopener">Chat with us</a>
@@ -726,11 +1421,13 @@
 
 <div class="nav-mobile">
   <a href="index.html">Home</a>
-  <a href="programme.html">Programme</a>
+  <a href="programme.html">Programmes</a>
+  <a href="foundations.html" class="nav-mobile-sub">AI Foundations</a>
+  <a href="professionals.html" class="nav-mobile-sub">AI for Professionals</a>
   <a href="experts.html">Experts</a>
   <a href="organisations.html">For Organisations</a>
-  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
   <a href="apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
 </div>
 
 <!-- ====== PAGE HEADER ====== -->
@@ -748,16 +1445,51 @@
   <div class="container">
 
     <!-- Scholarship promo banner — full-width, above the two-column grid -->
-    <div style="position:relative;overflow:hidden;border-radius:12px;padding:12px 16px;margin-bottom:28px;background:linear-gradient(120deg,rgba(255,41,78,0.18),rgba(255,87,72,0.08));border:1px solid rgba(255,87,72,0.4);display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-      <div style="position:absolute;top:-40%;left:-10%;width:60%;height:220%;background:rgba(255,255,255,0.04);transform:rotate(20deg);animation:scholarshipSheen 5s ease-in-out infinite;pointer-events:none"></div>
-      <span style="display:inline-flex;align-items:center;gap:6px;background:#FF294E;color:#fff;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;white-space:nowrap;flex-shrink:0;position:relative;z-index:1">
-        <span style="width:6px;height:6px;border-radius:50%;background:#fff;animation:scholarshipPulse 1.6s infinite;display:inline-block"></span>
-        Scholarship Ongoing
-      </span>
-      <div style="font-size:13px;color:#C7CDE0;line-height:1.5;position:relative;z-index:1">A limited number of scholarship slots are open right now. <strong style="color:#fff">Your fee is automatically reduced</strong> at checkout. No code needed.</div>
-    </div>
+    
 
     <div class="apply-wrapper">
+      <!-- ====== LEFT: gradient identity panel ====== -->
+      <aside class="ap-side bx-waves on-dark">
+        <div class="ap-side-in">
+          <a href="programme.html" class="ap-back">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Back to programmes
+          </a>
+          <a href="index.html"><img src="assets/logo-white.svg" alt="Brixgate" class="ap-side-logo" onerror="this.src='assets/logo-light.svg'" /></a>
+
+          <span class="ap-side-tag"><span class="ap-dot" style="background:#4ade80"></span>Applications open</span>
+          <h1 class="ap-side-h" id="ap-side-prog">AI in my Field</h1>
+          <p class="ap-side-sub">Four weeks, live, with a practitioner who has already done it in your field.</p>
+
+          <div class="ap-price-box">
+            <div class="ap-price-k">Programme fee</div>
+            <div class="ap-price-v" id="ap-side-price">—</div>
+            <div class="ap-price-meta">
+              <span id="ap-side-type">Individual</span>
+              <span id="ap-side-cohort">Next cohort</span>
+              <span>4 weeks</span>
+            </div>
+          </div>
+
+          <ul class="ap-incl">
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>8 live classes, never pre-recorded</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>A capstone you build and defend</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Field-verified certificate</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Scholarship applied automatically</li>
+          </ul>
+
+          <div class="ap-side-foot">
+            <p class="ap-side-quote">"I finished with a working service, a test suite I understand, and a prompt log showing how I built it. That artefact got me noticed in my next interview."</p>
+            <div class="ap-side-by">Software Engineer · Cohort 01</div>
+            <div class="ap-side-secure">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Payments secured by <span data-gateway-name>Paystack</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+
 
       <!-- ====== PRICING TABLE ====== -->
       <div class="apply-sidebar-col">
@@ -797,7 +1529,7 @@
           </div>
 
           <div style="margin-top:16px;padding-top:14px;display:flex;align-items:center;justify-content:flex-end">
-            <a href="programme.html#pricing" style="font-size:0.75rem;color:var(--red);font-weight:700;text-decoration:none">Full pricing   </a>
+            <a href="professionals.html#pricing" style="font-size:0.75rem;color:var(--red);font-weight:700;text-decoration:none">Full pricing   </a>
           </div>
         </div>
       </div>
@@ -811,8 +1543,8 @@
           <div class="trust-point">
             <div class="trust-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
             <div class="trust-text">
-              <h5>Secure Payment via Paystack</h5>
-              <p>Card, bank transfer, or USSD. Protected by Paystack's PCI-DSS Level 1 certified infrastructure.</p>
+              <h5>Secure Payment via <span data-gateway-name>Paystack</span></h5>
+              <p data-gateway-blurb>Card, bank transfer, or USSD. Protected by Paystack's PCI-DSS Level 1 certified infrastructure.</p>
             </div>
           </div>
           <div class="trust-point">
@@ -826,14 +1558,14 @@
             <div class="trust-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
             <div class="trust-text">
               <h5>Expert Matching</h5>
-              <p>Matched to a verified practitioner in your exact field — not a generic AI trainer.</p>
+              <p>Matched to a verified practitioner in your exact field, not a generic AI trainer.</p>
             </div>
           </div>
           <div class="trust-point">
             <div class="trust-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
             <div class="trust-text">
               <h5>Brixer Certificate</h5>
-              <p>Complete the sprint and earn your Brixer Certificate — a credential that signals real applied capability.</p>
+              <p>Complete the sprint and earn your Brixer Certificate: a credential that signals real applied capability.</p>
             </div>
           </div>
         </div>
@@ -928,7 +1660,7 @@
           </div>
 
           <div style="margin-top:16px;display:flex;align-items:center;gap:8px">
-            <a href="programme.html#pricing" style="font-size:0.78rem;color:var(--red);font-weight:700;text-decoration:none;white-space:nowrap;margin-left:auto">Full pricing   </a>
+            <a href="professionals.html#pricing" style="font-size:0.78rem;color:var(--red);font-weight:700;text-decoration:none;white-space:nowrap;margin-left:auto">Full pricing   </a>
           </div>
         </div>
 
@@ -939,11 +1671,6 @@
       </div>
       </div><!-- /apply-sidebar-col -->
 
-      <!-- ====== CHAT WITH DEE BAR ====== -->
-      <a href="https://wa.me/2348079160291?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20My%20Field%20programme" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(90deg,rgba(37,211,102,0.16),rgba(37,211,102,0.08));border:1px solid rgba(37,211,102,0.45);border-radius:12px;padding:12px 16px;margin-top:24px;margin-bottom:20px;text-decoration:none;color:var(--white);font-size:0.88rem;font-weight:600;flex-wrap:wrap;text-align:center">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366" style="flex-shrink:0"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.48 1.34 5L2 22l5.2-1.36c1.46.8 3.1 1.22 4.8 1.22h.01c5.5 0 9.96-4.46 9.96-9.96 0-2.66-1.04-5.16-2.92-7.04A9.9 9.9 0 0 0 12.04 2zm0 18.2h-.01c-1.5 0-2.98-.4-4.26-1.16l-.3-.18-3.09.81.83-3.01-.2-.31a8.17 8.17 0 0 1-1.26-4.39c0-4.53 3.69-8.22 8.23-8.22 2.2 0 4.26.86 5.82 2.42a8.16 8.16 0 0 1 2.4 5.81c0 4.53-3.69 8.23-8.22 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.71-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.36-.77-1.86-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.44.06-.67.31-.23.25-.87.86-.87 2.1 0 1.24.9 2.43 1.02 2.6.12.17 1.78 2.72 4.31 3.81.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
-        Not sure yet? <span style="color:#25D366;font-weight:800;text-decoration:underline">Chat with Dee on WhatsApp</span>
-      </a>
 
       <!-- ====== APPLICATION CARD — multi-step ====== -->
       <div class="apply-form-card" style="opacity:1;transform:none" id="apply-card">
@@ -959,13 +1686,19 @@
             <div class="step-line"></div>
             <div class="step-item">
               <div class="step-dot">2</div>
-              <div class="step-label">Review</div>
+              <div class="step-label">Review &amp; pay</div>
             </div>
-            <div class="step-line"></div>
-            <div class="step-item">
-              <div class="step-dot">3</div>
-              <div class="step-label">Payment</div>
-            </div>
+          </div>
+
+          <div class="ap-draft" id="ap-draft">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>We restored what you filled in last time.</span>
+            <button type="button">Start over</button>
+          </div>
+
+          <div class="ap-scholar">
+            <span class="pill"><span style="width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block"></span>Scholarship ongoing</span>
+            <p>A limited number of scholarship places are open. <b>Your fee is reduced automatically</b> at checkout, no code needed.</p>
           </div>
 
           <h3>Apply for the Programme</h3>
@@ -974,22 +1707,32 @@
           <form id="apply-form" novalidate>
 
             <!-- ── Enrollment type — first choice in the form ── -->
-            <div class="form-group" style="margin-bottom:28px">
-              <label style="margin-bottom:10px;display:block">I am applying as</label>
-              <div style="display:flex;gap:10px;flex-wrap:wrap">
-                <span class="enroll-toggle-btn" id="enroll-btn-individual" onclick="selectEnrollBadge('Individual')" style="cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:22px;font-size:0.82rem;font-weight:700;border:2px solid #FF294E;background:rgba(255,41,78,0.13);color:#FF294E;user-select:none;transition:all .2s">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
-                  Individual
+            <div class="ap-fieldset">
+              <div class="ap-legend"><span class="n">01</span><span class="t">How are you applying?</span></div>
+              <div class="ap-choice">
+                <span class="enroll-toggle-btn is-on" id="enroll-btn-individual" onclick="selectEnrollBadge('Individual')" role="radio" tabindex="0">
+                  <span class="ap-choice-top">
+                    <span class="ap-choice-ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></span>
+                    <span class="ap-choice-radio"></span>
+                  </span>
+                  <span class="ap-choice-t">Just me</span>
+                  <span class="ap-choice-d">One seat, paid by you.</span>
                 </span>
-                <span class="enroll-toggle-btn" id="enroll-btn-team" onclick="selectEnrollBadge('Team')" style="cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:22px;font-size:0.82rem;font-weight:700;border:2px solid var(--border-card);background:rgba(255,255,255,0.04);color:var(--muted);user-select:none;transition:all .2s">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.85"/></svg>
-                  Team / Organisation
+                <span class="enroll-toggle-btn" id="enroll-btn-team" onclick="selectEnrollBadge('Team')" role="radio" tabindex="0">
+                  <span class="ap-choice-top">
+                    <span class="ap-choice-ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.85"/></svg></span>
+                    <span class="ap-choice-radio"></span>
+                  </span>
+                  <span class="ap-choice-t">My team</span>
+                  <span class="ap-choice-d">Multiple seats, invoice available.</span>
                 </span>
               </div>
-              <!-- legacy badge elements kept hidden — used by updateEnrollmentUI for state display elsewhere -->
               <span id="badge-individual" style="display:none"></span>
               <span id="badge-team" style="display:none"></span>
             </div>
+
+            <div class="ap-fieldset">
+              <div class="ap-legend"><span class="n">02</span><span class="t">About you</span></div>
 
             <div class="form-row">
               <div class="form-group">
@@ -1008,7 +1751,7 @@
             </div>
 
             <div class="form-group">
-              <label for="apply-phone-num">Phone Number</label>
+              <label for="apply-phone-num">Phone Number <span style="color:var(--red);font-size:0.85em">*</span></label>
               <div style="display:flex;gap:8px">
                 <select id="apply-phone-cc" autocomplete="tel-country-code" style="padding:13px 10px;border-radius:8px;border:1.5px solid var(--border-card);background:rgba(255,255,255,0.05);color:var(--white);font-family:inherit;font-size:0.88rem;outline:none;cursor:pointer;flex-shrink:0;width:130px;box-sizing:border-box;transition:border-color .2s">
                   <option value="+234-NG">🇳🇬 +234</option>
@@ -1029,9 +1772,33 @@
                 </select>
                 <input type="tel" id="apply-phone-num" name="phone" placeholder="080 0000 0000" autocomplete="tel-national" required style="flex:1;min-width:0" />
               </div>
+              <p style="margin:6px 0 0;font-size:0.78rem;color:var(--muted);display:flex;align-items:center;gap:5px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.72 12.72 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.534 5.857L.057 23.885a.5.5 0 0 0 .611.61l6.088-1.55A11.943 11.943 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.83 9.83 0 0 1-5.02-1.374l-.36-.214-3.733.951.99-3.638-.234-.373A9.818 9.818 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+                We'll contact you on WhatsApp at this number
+              </p>
             </div>
 
-            <div class="form-group">
+            </div>
+
+            <div class="ap-fieldset">
+              <div class="ap-legend"><span class="n">03</span><span class="t">Your programme</span></div>
+              <div class="ap-locked" id="ap-locked" style="display:none">
+                <span class="ap-locked-ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                <span><span class="ap-locked-t" id="ap-locked-name">—</span><span class="ap-locked-s">Selected from the programme page</span></span>
+                <button type="button" id="ap-locked-change">Change</button>
+              </div>
+              <!-- Above Programme on purpose: the tier decides which
+                   programmes belong in the list below it, so it has to be
+                   answered first. -->
+              <div class="form-group">
+                <label for="applicant-level">I am applying as a</label>
+                <select id="applicant-level" name="applicant_level">
+                  <option value="Professional" selected>Professional</option>
+                  <option value="Beginner">Beginner</option>
+                </select>
+              </div>
+
+              <div class="form-group">
               <label for="field">Programme</label>
               <select id="field" name="field" required>
                 <option value="" disabled selected>Loading programmes…</option>
@@ -1063,14 +1830,6 @@
                   <div style="font-size:0.8rem;font-weight:700" id="cohort-info-status">—</div>
                 </div>
               </div>
-            </div>
-
-            <div class="form-group">
-              <label for="applicant-level">I am applying as a</label>
-              <select id="applicant-level" name="applicant_level">
-                <option value="Professional" selected>Professional</option>
-                <option value="Beginner">Beginner</option>
-              </select>
             </div>
 
             <div class="form-group">
@@ -1123,7 +1882,9 @@
                   <input type="text" id="coupon-code" name="coupon_code" placeholder="e.g. BRIX20" autocomplete="off" style="background:rgba(255,255,255,0.05);border:1px solid var(--border-card);border-radius:8px;padding:13px 16px;color:var(--white);font-family:inherit;font-size:0.92rem;outline:none;flex:1;box-sizing:border-box;transition:border-color .2s;text-transform:uppercase;letter-spacing:.05em" oninput="this.value=this.value.toUpperCase()" />
                   <button type="button" onclick="applyCoupon()" style="padding:13px 22px;background:var(--red);border:none;border-radius:8px;color:#fff;font-size:0.85rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s;line-height:1" onmouseover="this.style.background='var(--orange)'" onmouseout="this.style.background='var(--red)'">Apply</button>
                 </div>
-                <div id="coupon-feedback" style="margin-top:6px;font-size:0.78rem;display:none"></div>
+                </div>
+
+            <div id="coupon-feedback" style="margin-top:6px;font-size:0.78rem;display:none"></div>
               </div>
             </div>
 
@@ -1156,12 +1917,7 @@
             <div class="step-line done"></div>
             <div class="step-item">
               <div class="step-dot active">2</div>
-              <div class="step-label active">Review</div>
-            </div>
-            <div class="step-line"></div>
-            <div class="step-item">
-              <div class="step-dot">3</div>
-              <div class="step-label">Payment</div>
+              <div class="step-label active">Review &amp; pay</div>
             </div>
           </div>
 
@@ -1243,47 +1999,55 @@
           <button id="pay-btn" class="btn btn-primary pay-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span id="pay-btn-label">Pay Securely via Paystack</span>
           </button>
+            <p class="ap-handoff">You will be taken to <span data-gateway-name>Paystack</span> to complete payment, then returned here.</p>
 
           <a class="back-link" id="back-to-form"> Edit my details</a>
 
           <div class="paystack-badge">
-            Secured by Paystack · PCI-DSS Level 1 Certified
+            Secured by <span data-gateway-name>Paystack</span> · PCI-DSS Level 1 Certified
           </div>
         </div>
 
         <!-- Payment states handled by callback.html after Paystack redirect -->
 
-      </div><!-- /apply-form-card -->
+      </div>
+      <!-- ====== CHAT WITH DEE BAR ====== -->
+      <a class="ap-wa" href="https://wa.me/2348079160291?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20in%20My%20Field%20programme" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(90deg,rgba(37,211,102,0.16),rgba(37,211,102,0.08));border:1px solid rgba(37,211,102,0.45);border-radius:12px;padding:12px 16px;margin-top:20px;text-decoration:none;font-size:0.88rem;font-weight:600;flex-wrap:wrap;text-align:center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366" style="flex-shrink:0"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.48 1.34 5L2 22l5.2-1.36c1.46.8 3.1 1.22 4.8 1.22h.01c5.5 0 9.96-4.46 9.96-9.96 0-2.66-1.04-5.16-2.92-7.04A9.9 9.9 0 0 0 12.04 2zm0 18.2h-.01c-1.5 0-2.98-.4-4.26-1.16l-.3-.18-3.09.81.83-3.01-.2-.31a8.17 8.17 0 0 1-1.26-4.39c0-4.53 3.69-8.22 8.23-8.22 2.2 0 4.26.86 5.82 2.42a8.16 8.16 0 0 1 2.4 5.81c0 4.53-3.69 8.23-8.22 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.71-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.36-.77-1.86-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.44.06-.67.31-.23.25-.87.86-.87 2.1 0 1.24.9 2.43 1.02 2.6.12.17 1.78 2.72 4.31 3.81.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+        Not sure yet? <span style="color:#25D366;font-weight:800;text-decoration:underline">Chat with Dee on WhatsApp</span>
+      </a>
+
+
+      <!-- ====== ORDER SUMMARY (sticky) ====== -->
+      <aside class="ap-rail ap-rise">
+        <div class="ap-sum">
+          <div class="ap-sum-h">
+            <span>Your application</span>
+            <div class="ap-cur" role="group" aria-label="Currency">
+              <button type="button" class="cur-btn active" data-cur="ngn">NGN</button>
+              <button type="button" class="cur-btn" data-cur="usd">USD</button>
+            </div>
+          </div>
+          <div class="ap-sum-b">
+            <div class="ap-line"><span class="k">Programme</span><span class="v" id="ap-sum-prog">Not selected yet</span></div>
+            <div class="ap-line"><span class="k">Applying as</span><span class="v" id="ap-sum-type">Individual</span></div>
+            <div class="ap-line"><span class="k">Cohort</span><span class="v" id="ap-sum-cohort">Next available</span></div>
+            <div class="ap-line"><span class="k">Duration</span><span class="v">4 weeks</span></div>
+            <div class="ap-trust">
+              <div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>No charge until you confirm on the next step</div>
+              <div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Card payments secured by <span data-gateway-name>Paystack</span></div>
+              <div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>We respond to every application within 48 hours</div>
+              <div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Scholarship applied automatically, no code needed</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+<!-- /apply-form-card -->
     </div>
   </div>
 </section>
 
-<!-- ====== SOCIAL PROOF ====== -->
-<section class="section-pad-sm bg-dark">
-  <div class="container">
-    <div class="stats-bar stagger" style="display:flex;flex-wrap:wrap;justify-content:space-around;align-items:center;gap:20px;padding:24px 0">
-      <div class="stat-item fade-up">
-        <div class="stat-num" data-count="12" data-suffix="+">12+</div>
-        <div class="stat-label">Fields Covered</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item fade-up">
-        <div class="stat-num" data-count="6">6</div>
-        <div class="stat-label">Active Countries</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item fade-up">
-        <div class="stat-num" data-count="4" data-suffix=" Weeks">4 Weeks</div>
-        <div class="stat-label">Sprint Duration</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item fade-up">
-        <div class="stat-num" data-count="100" data-suffix="%">100%</div>
-        <div class="stat-label">Practitioner-Led</div>
-      </div>
-    </div>
-  </div>
-</section>
+
 
 <footer class="footer">
   <div class="container">
@@ -1309,7 +2073,7 @@
           </a>
         </div>
         </div>
-      <div class="footer-col"><h5>Programme</h5><ul><li><a href="programme.html">AI in my Field</a></li><li><a href="programme.html#journey">The Journey</a></li><li><a href="programme.html#pricing">Pricing</a></li><li><a href="verify.html">Verify a Certificate</a></li></ul></div>
+      <div class="footer-col"><h5>Programmes</h5><ul><li><a href="foundations.html">AI Foundations</a></li><li><a href="professionals.html">AI for Professionals</a></li><li><a href="professionals.html#pricing">Pricing</a></li><li><a href="apply.html">Apply Now</a></li><li><a href="verify.html">Verify a Certificate</a></li></ul></div>
       <div class="footer-col"><h5>Experts</h5><ul><li><a href="experts.html">Meet Our Experts</a></li><li><a href="join-as-expert.html">Join as an Expert</a></li></ul></div>
       <div class="footer-col"><h5>Organisation</h5><ul><li><a href="organisations.html">Corporate Programmes</a></li><li><a href="organisations.html#contact">Get a Demo</a></li></ul></div>
     </div>
@@ -1322,6 +2086,7 @@
 
 <button class="back-to-top">↑</button>
 
+<script src="currency.js"></script>
 <script src="script.js"></script>
 <script>
   /* ============================================================
@@ -1835,6 +2600,81 @@
     });
   }
 
+  /* Every published programme, kept so switching tier does not go back
+     to the network. */
+  var _allProgrammes = [];
+
+  /* "Professional" covers both levels above beginner. The backend has an
+     ADVANCED level, and nothing in this form should quietly hide a
+     programme that starts using it. */
+  function levelsForTier(tier) {
+    return String(tier).toLowerCase() === 'beginner'
+      ? ['BEGINNER']
+      : ['INTERMEDIATE', 'ADVANCED'];
+  }
+
+  function currentTier() {
+    var sel = document.getElementById('applicant-level');
+    return sel ? sel.value : 'Professional';
+  }
+
+  function programmesForTier(tier) {
+    var want = levelsForTier(tier);
+    var out = _allProgrammes.filter(function (p) {
+      return want.indexOf(String(p.level || '').toUpperCase()) !== -1;
+    });
+    /* A programme with no level set is not hidden from everybody: it
+       falls to Professional, which is where the existing catalogue sits
+       and what this form defaults to. */
+    if (String(tier).toLowerCase() !== 'beginner') {
+      out = out.concat(_allProgrammes.filter(function (p) { return !p.level; }));
+    }
+    return out;
+  }
+
+  function applyTierFilter() {
+    var sel = document.getElementById('field');
+    var previous = sel ? sel.value : '';
+    populateProgrammes(programmesForTier(currentTier()));
+    if (!sel) return;
+
+    /* Keep the choice if this tier still offers it, otherwise clear and
+       fire change so the existing handler resets pricing, cohort and
+       everything else hanging off the programme. */
+    var stillThere = [].slice.call(sel.options).some(function (o) { return o.value === previous; });
+    if (previous && stillThere) {
+      sel.value = previous;
+    } else if (previous) {
+      sel.value = '';
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    /* An empty tier must say so. Silently showing "Select your
+       programme" over nothing looks like a page that failed to load. */
+    var real = [].slice.call(sel.options).filter(function (o) { return o.value; }).length;
+    if (!real) {
+      sel.innerHTML = '<option value="" disabled selected>No ' +
+        (currentTier().toLowerCase() === 'beginner' ? 'beginner' : 'professional') +
+        ' programmes are open yet</option>';
+    }
+  }
+
+  /* Switching tier rebuilds the list from what was already fetched.
+
+     Delegated from document rather than bound to the select directly:
+     this script runs before the form markup exists, so binding here by
+     id finds nothing and silently attaches to nothing. */
+  document.addEventListener('change', function (e) {
+    if (e.target && e.target.id === 'applicant-level') applyTierFilter();
+  });
+
+  /* The gateway shown to the user must track the one actually used, so
+     both read the same place. bxGateway() lives in currency.js and is
+     derived from the active currency. */
+  function gatewayName() {
+    return (window.bxGateway && window.bxGateway() === 'STRIPE') ? 'Stripe' : 'Paystack';
+  }
+
   function fetchProgrammes() {
     return fetch(API_BASE + '/programs')
       .then(function(r) { return r.json(); })
@@ -1845,12 +2685,14 @@
           return p.status && p.status.toUpperCase() === 'PUBLISHED';
         });
         if (!published.length) throw new Error('empty');
-        populateProgrammes(published);
+        _allProgrammes = published;
+        applyTierFilter();
       })
       .catch(function() {
         /* Fallback to static list so form never breaks */
         console.warn('[Brixgate] /programs fetch failed — using static fallback');
-        populateProgrammes(PROGRAMS_FALLBACK);
+        _allProgrammes = PROGRAMS_FALLBACK;
+        applyTierFilter();
       });
   }
 
@@ -2339,7 +3181,7 @@
     if (rvItem)       rvItem.textContent       = origStr;
     if (rvTotal)      rvTotal.textContent      = payStr;
     if (rvTotalLabel) rvTotalLabel.textContent = totalLabelStr;
-    if (rvBtn)        rvBtn.textContent        = 'Pay ' + payStr + ' via Paystack';
+    if (rvBtn)        rvBtn.textContent        = 'Pay ' + payStr + ' via ' + gatewayName();
     if (rvEnroll)     rvEnroll.textContent     = isTeam && size >= 2
       ? 'Team Enrolment (' + size + ' people)'
       : 'Individual Enrolment';
@@ -2738,7 +3580,7 @@
 
     if (!token) {
       payBtn.disabled = false;
-      document.getElementById('pay-btn-label').textContent = 'Pay Securely via Paystack';
+      document.getElementById('pay-btn-label').textContent = 'Pay Securely via ' + gatewayName();
       showReviewError('Session Expired', 'Your session has expired. Please go back and re-enter your details.');
       return;
     }
@@ -2769,7 +3611,13 @@
       contact_person_name:   (firstName2 + ' ' + lastName2).trim(),
       contact_person_email:  email2,
       billing_email:         email2,
-      payment_method:        'PAYSTACK'
+      /* Derived from the currency actually active at this moment, never
+         from the detected country, so the two cannot disagree: NGN pays
+         through Paystack, USD through Stripe. The literal is the
+         fallback for the case where currency.js failed to load at all,
+         and it matches the fallback currency. See currency.js. */
+      payment_method:        (window.bxGateway ? window.bxGateway() : 'PAYSTACK'),
+      buyer_is_participant:  !isTeamPay
     };
     if (isTeamPay && teamNamePay) initiatePayload.team_name = teamNamePay;
 
@@ -2814,16 +3662,16 @@
         if (/already paid|already enrolled|already registered|cohort|existing.*payment|payment.*found/i.test(errMsg)) {
           errTitle = 'Already enrolled';
           errMsg   = 'Our records show you\'ve already paid for this cohort. To enrol in a different programme, click "← Edit my details" below and update your selection.';
-          document.getElementById('pay-btn-label').textContent = 'Pay Securely via Paystack';
+          document.getElementById('pay-btn-label').textContent = 'Pay Securely via ' + gatewayName();
         } else if (/coupon|discount|code/i.test(errMsg)) {
           errTitle = 'Coupon not accepted';
-          document.getElementById('pay-btn-label').textContent = 'Pay ' + (getPriceDisplay()[getActiveCurrency()] || '') + ' via Paystack';
+          document.getElementById('pay-btn-label').textContent = 'Pay ' + (getPriceDisplay()[getActiveCurrency()] || '') + ' via ' + gatewayName();
         } else if (/unauthorized|401/i.test(errMsg)) {
           errTitle = 'Session expired';
           errMsg   = 'Your session has expired. Click "← Edit my details" below to go back and re-enter your information.';
-          document.getElementById('pay-btn-label').textContent = 'Pay Securely via Paystack';
+          document.getElementById('pay-btn-label').textContent = 'Pay Securely via ' + gatewayName();
         } else {
-          document.getElementById('pay-btn-label').textContent = 'Pay ' + (getPriceDisplay()[getActiveCurrency()] || '') + ' via Paystack';
+          document.getElementById('pay-btn-label').textContent = 'Pay ' + (getPriceDisplay()[getActiveCurrency()] || '') + ' via ' + gatewayName();
         }
         /* Always show errors on the review panel — never on the hidden form panel */
         showReviewError(errTitle, errMsg);
@@ -2862,5 +3710,396 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 </noscript>
 
 <!-- <script src="popup.js"></script> -->
+<script src="assets/vendor/motion.js"></script>
+<script>
+/* ============================================================
+   APPLY PAGE — UX layer.
+   Additive only: reads/decorates existing controls, never replaces
+   the payment logic or its element ids.
+   ============================================================ */
+(function () {
+  'use strict';
+  var M = window.Motion;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- real nav height ---- */
+  (function () {
+    var nav = document.querySelector('.nav'); if (!nav) return;
+    var sync = function () { document.documentElement.style.setProperty('--ap-nav-h', nav.offsetHeight + 'px'); };
+    sync(); window.addEventListener('resize', sync, { passive: true }); window.addEventListener('load', sync);
+    if (window.ResizeObserver) new ResizeObserver(sync).observe(nav);
+  })();
+
+  /* ---- reveal (fail-safe: never leave content invisible) ---- */
+  function revealAll() {
+    document.documentElement.classList.remove('ap-anim');
+    if (document.getAnimations) document.getAnimations().forEach(function (a) { try { a.finish(); } catch (e) {} });
+    document.querySelectorAll('.ap-rise').forEach(function (el) { el.style.opacity = 1; el.style.transform = 'none'; });
+  }
+  window.addEventListener('load', function () { setTimeout(revealAll, 2400); });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) setTimeout(revealAll, 1000); });
+
+  if (M && M.animate && !reduced) {
+    M.animate(document.querySelectorAll('.ap-rise'),
+      { opacity: [0, 1], y: [20, 0] },
+      { delay: M.stagger(0.07, { start: 0.05 }), duration: 0.6, easing: [0.2, 0.7, 0.2, 1] });
+  } else {
+    revealAll();
+  }
+
+  /* ---- enrolment choice cards mirror the existing badge state ---- */
+  var btnInd = document.getElementById('enroll-btn-individual');
+  var btnTeam = document.getElementById('enroll-btn-team');
+  function syncChoice() {
+    var type = (document.getElementById('enrollment-type') || {}).value || 'Individual';
+    var isTeam = /team/i.test(type);
+    if (btnInd) btnInd.classList.toggle('is-on', !isTeam);
+    if (btnTeam) btnTeam.classList.toggle('is-on', isTeam);
+  }
+  syncChoice();
+  [btnInd, btnTeam].forEach(function (b) { if (b) b.addEventListener('click', function () { setTimeout(syncChoice, 0); }); });
+  var etSel = document.getElementById('enrollment-type');
+  if (etSel) etSel.addEventListener('change', syncChoice);
+  if (window.MutationObserver) {
+    var tn = document.getElementById('team-name-group');
+    if (tn) new MutationObserver(syncChoice).observe(tn, { attributes: true, attributeFilter: ['style', 'class'] });
+  }
+
+  /* ---- preselect programme from ?program_id= and collapse the picker ---- */
+  (function () {
+    var pid = new URLSearchParams(location.search).get('program_id');
+    var sel = document.getElementById('field');
+    var lock = document.getElementById('ap-locked');
+    if (!pid || !sel || !lock) return;
+
+    function tryLock() {
+      // The tier filter may have removed this programme from the list, so
+      // move the tier to whichever one holds it first. Without this a
+      // beginner course linked from its own page could never be locked
+      // while the form defaults to Professional.
+      try {
+        if (typeof _allProgrammes !== 'undefined' && _allProgrammes.length) {
+          var match = _allProgrammes.filter(function (p) { return String(p.id) === String(pid); })[0];
+          var lvlSel = document.getElementById('applicant-level');
+          if (match && lvlSel) {
+            var want = String(match.level || '').toUpperCase() === 'BEGINNER' ? 'Beginner' : 'Professional';
+            if (lvlSel.value !== want) { lvlSel.value = want; applyTierFilter(); }
+          }
+        }
+      } catch (e) { /* locking is a convenience; never block the form */ }
+
+      // The page's own applyProgramId() selects the option for us; option
+      // values are display names, and the numeric id lives on data-program-id.
+      var opt = [].slice.call(sel.options).find(function (o) {
+        return String(o.getAttribute('data-program-id')) === String(pid);
+      });
+      if (!opt) return false;
+      if (sel.value !== opt.value) sel.value = opt.value;
+      document.getElementById('ap-locked-name').textContent = opt.textContent.trim();
+      lock.style.display = 'flex';
+      var grp = sel.closest('.form-group');
+      if (grp) grp.style.display = 'none';
+      return true;
+    }
+    // the programme list is fetched, so wait for it to populate
+    if (!tryLock()) {
+      var tries = 0;
+      var iv = setInterval(function () {
+        if (tryLock() || ++tries > 40) clearInterval(iv);
+      }, 250);
+    }
+    var change = document.getElementById('ap-locked-change');
+    if (change) change.addEventListener('click', function () {
+      lock.style.display = 'none';
+      var grp = sel.closest('.form-group');
+      if (grp) grp.style.display = '';
+      sel.focus();
+    });
+  })();
+
+  /* ---- inline validation with real messages ---- */
+  var MSG = {
+    'first-name': 'Enter your first name.',
+    'last-name': 'Enter your last name.',
+    'email': 'Enter a valid email address.',
+    'apply-phone-num': 'Enter your phone number.',
+    'field': 'Choose a programme.',
+    'role': 'Select your current role.'
+  };
+  function groupOf(el) { return el.closest('.form-group'); }
+  function errNode(g) {
+    var e = g.querySelector('.ap-err');
+    if (!e) {
+      e = document.createElement('div'); e.className = 'ap-err';
+      e.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span>';
+      g.appendChild(e);
+    }
+    return e;
+  }
+  function validate(el, showIt) {
+    var g = groupOf(el); if (!g) return true;
+    var v = (el.value || '').trim();
+    var ok = true;
+    if (el.required && !v) ok = false;
+    if (ok && el.type === 'email' && v) ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    if (ok && el.id === 'apply-phone-num' && v) ok = v.replace(/\D/g, '').length >= 7;
+    if (showIt) {
+      g.classList.toggle('invalid', !ok);
+      if (!ok) errNode(g).querySelector('span').textContent =
+        (el.type === 'email' && v) ? 'That email address does not look right.' : (MSG[el.id] || 'This field is required.');
+    } else if (ok) {
+      g.classList.remove('invalid');
+    }
+    return ok;
+  }
+  var watched = ['first-name', 'last-name', 'email', 'apply-phone-num', 'field', 'role'];
+  watched.forEach(function (id) {
+    var el = document.getElementById(id); if (!el) return;
+    el.addEventListener('blur', function () { validate(el, true); });
+    el.addEventListener('input', function () { if (groupOf(el).classList.contains('invalid')) validate(el, true); });
+    el.addEventListener('change', function () { if (groupOf(el).classList.contains('invalid')) validate(el, true); });
+  });
+  /* Values set programmatically (applyProgramId, draft restore, cohort load)
+     fire no input/change event, so a previously shown error would stick even
+     once the field is valid. Sweep and clear stale invalid states. */
+  setInterval(function () {
+    watched.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var g = groupOf(el);
+      if (g && g.classList.contains('invalid') && (el.value || '').trim()) validate(el, true);
+    });
+  }, 500);
+
+  var form = document.getElementById('apply-form');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      var firstBad = null;
+      watched.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (!el || el.offsetParent === null) return;
+        if (!validate(el, true) && !firstBad) firstBad = el;
+      });
+      if (firstBad) {
+        e.preventDefault(); e.stopImmediatePropagation();
+        firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(function () { firstBad.focus({ preventScroll: true }); }, 300);
+      }
+    }, true); // capture: run before the payment handler
+  }
+
+  /* ---- draft save / restore ---- */
+  var KEY = 'bxApplyDraft';
+  var DRAFT_IDS = ['first-name', 'last-name', 'email', 'apply-phone-cc', 'apply-phone-num',
+                   'field', 'applicant-level', 'role', 'team-name', 'team-size'];
+  function saveDraft() {
+    try {
+      var d = {};
+      DRAFT_IDS.forEach(function (id) { var el = document.getElementById(id); if (el && el.value) d[id] = el.value; });
+      var et = document.getElementById('enrollment-type'); if (et) d._type = et.value;
+      if (Object.keys(d).length) localStorage.setItem(KEY, JSON.stringify({ t: Date.now(), d: d }));
+    } catch (e) {}
+  }
+  function clearDraft() { try { localStorage.removeItem(KEY); } catch (e) {} }
+  window.bxClearApplyDraft = clearDraft;
+
+  (function restore() {
+    var raw; try { raw = localStorage.getItem(KEY); } catch (e) { return; }
+    if (!raw) return;
+    var parsed; try { parsed = JSON.parse(raw); } catch (e) { return; }
+    // drop drafts older than 7 days
+    if (!parsed || !parsed.d || (Date.now() - (parsed.t || 0)) > 6048e5) { clearDraft(); return; }
+    var note = document.getElementById('ap-draft');
+    var filled = 0;
+    Object.keys(parsed.d).forEach(function (id) {
+      if (id === '_type') return;
+      var el = document.getElementById(id);
+      if (el && !el.value) { el.value = parsed.d[id]; filled++; }
+    });
+    // programme list loads async — re-apply once it exists
+    if (parsed.d['field']) {
+      var sel = document.getElementById('field'), tries = 0;
+      var iv = setInterval(function () {
+        if (!sel) return clearInterval(iv);
+        if ([].slice.call(sel.options).some(function (o) { return o.value === parsed.d['field']; })) {
+          if (!sel.value) { sel.value = parsed.d['field']; sel.dispatchEvent(new Event('change', { bubbles: true })); }
+          clearInterval(iv);
+        } else if (++tries > 40) clearInterval(iv);
+      }, 250);
+    }
+    if (filled && note) {
+      note.classList.add('show');
+      var btn = note.querySelector('button');
+      if (btn) btn.addEventListener('click', function () {
+        clearDraft();
+        DRAFT_IDS.forEach(function (id) { var el = document.getElementById(id); if (el) el.value = ''; });
+        note.classList.remove('show');
+      });
+    }
+  })();
+
+  DRAFT_IDS.forEach(function (id) {
+    var el = document.getElementById(id); if (!el) return;
+    el.addEventListener('change', saveDraft);
+    el.addEventListener('blur', saveDraft);
+  });
+  window.addEventListener('beforeunload', saveDraft);
+
+  /* ---- mirror the fee panel into the sticky summary ---- */
+  function textOf(id) { var e = document.getElementById(id); return e ? e.textContent.trim() : ''; }
+  function syncSummary() {
+    var map = {
+      'ap-sum-prog': function () {
+        var lock = document.getElementById('ap-locked-name');
+        if (lock && lock.textContent.trim()) return lock.textContent.trim();
+        var sel = document.getElementById('field');
+        return (sel && sel.selectedIndex > -1 && sel.value) ? sel.options[sel.selectedIndex].textContent.trim() : 'Not selected yet';
+      },
+      'ap-sum-type': function () { return (document.getElementById('enrollment-type') || {}).value || 'Individual'; },
+      'ap-sum-cohort': function () { return textOf('cohort-info-start') || 'Next available'; }
+    };
+    Object.keys(map).forEach(function (id) {
+      var el = document.getElementById(id); if (el) el.textContent = map[id]();
+    });
+  }
+  syncSummary();
+  ['field', 'cohort-select', 'enrollment-type', 'team-size'].forEach(function (id) {
+    var el = document.getElementById(id); if (el) el.addEventListener('change', function () { setTimeout(syncSummary, 60); });
+  });
+  setInterval(syncSummary, 1200);
+})();
+
+/* ---- mirror live state into the gradient panel ---- */
+(function () {
+  'use strict';
+  function txt(id) { var e = document.getElementById(id); return e ? e.textContent.trim() : ''; }
+  function set(id, v) { var e = document.getElementById(id); if (e && v && e.textContent !== v) e.textContent = v; }
+
+  function progName() {
+    var lock = document.getElementById('ap-locked-name');
+    if (lock && lock.textContent.trim() && lock.textContent.trim() !== '\u2014') return lock.textContent.trim();
+    var sel = document.getElementById('field');
+    if (sel && sel.value && sel.selectedIndex > -1) return sel.options[sel.selectedIndex].textContent.trim();
+    return 'AI in my Field';
+  }
+
+  /* The fee panel already renders the correct, currency-aware figure.
+     Read whichever currency span is actually visible so the panel can
+     never disagree with what the payment step will charge. */
+  function livePrice() {
+    // review-total is what the payment step will actually charge, already
+    // currency-resolved. Never derive a second figure that could disagree.
+    var t = txt('review-total');
+    if (t && t !== '\u2014') return t;
+    var host = document.getElementById('review-price-item');
+    if (host) {
+      var v = host.textContent.trim();
+      if (v && v !== '\u2014') return v;
+    }
+    return '';
+  }
+
+  function sync() {
+    set('ap-side-prog', progName());
+    set('ap-side-type', (document.getElementById('enrollment-type') || {}).value || 'Individual');
+    var c = txt('cohort-info-start');
+    set('ap-side-cohort', c || 'Next cohort');
+    var pr = livePrice();
+    var el = document.getElementById('ap-side-price');
+    if (el) el.textContent = pr || '\u2014';
+  }
+
+  sync();
+  ['field', 'cohort-select', 'enrollment-type', 'team-size'].forEach(function (id) {
+    var e = document.getElementById(id); if (e) e.addEventListener('change', function () { setTimeout(sync, 80); });
+  });
+  document.querySelectorAll('.cur-btn').forEach(function (b) { b.addEventListener('click', function () { setTimeout(sync, 80); }); });
+  setInterval(sync, 900);
+})();
+</script>
+
+<button class="ap-theme" id="ap-theme" type="button" aria-label="Toggle colour theme">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <span id="ap-theme-label">Dark</span>
+</button>
+<script>
+/* Dark is the default for this page. The toggle stays, and a choice made
+   with it is remembered, but a first visit opens dark rather than light.
+   ?theme= still wins over both, for comparing the two side by side. */
+(function () {
+  var KEY = 'bxApplyTheme';
+  var qp = new URLSearchParams(location.search).get('theme');
+  var saved = null; try { saved = localStorage.getItem(KEY); } catch (e) {}
+  /* saved === 'light' is an explicit choice and is honoured; no saved
+     value at all means this is a first visit, which opens dark. */
+  var dark = qp ? qp === 'dark' : (saved ? saved === 'dark' : true);
+  function apply(d) {
+    document.body.classList.toggle('ap-dark', d);
+    var l = document.getElementById('ap-theme-label');
+    if (l) l.textContent = d ? 'Light' : 'Dark';
+    try { localStorage.setItem(KEY, d ? 'dark' : 'light'); } catch (e) {}
+  }
+  apply(dark);
+  var b = document.getElementById('ap-theme');
+  if (b) b.addEventListener('click', function () { apply(!document.body.classList.contains('ap-dark')); });
+})();
+</script>
+
+<script>
+/* The nav has no explicit height at desktop, so its real height is only
+   knowable at runtime. Publish it as --ap-nav-h; the CSS falls back to
+   --nav-height until this runs. */
+(function () {
+  var nav = document.querySelector('.nav');
+  if (!nav) return;
+  function sync() {
+    var h = Math.round(nav.getBoundingClientRect().height);
+    if (h) document.documentElement.style.setProperty('--ap-nav-h', h + 'px');
+  }
+  sync();
+  window.addEventListener('resize', sync);
+  window.addEventListener('load', sync);
+  if (document.readyState === 'loading')
+    document.addEventListener('DOMContentLoaded', sync);
+})();
+</script>
+<script src="nav-programmes.js"></script>
+<script src="cohort-countdown.js"></script>
+
+<script>
+/* Every visible mention of the gateway follows the one that will
+   actually be used. currency.js decides that from the country, and can
+   resolve after this page has rendered, so this listens for the event
+   it fires as well as running once on load. */
+(function () {
+  'use strict';
+  var NGN_BLURB = "Card, bank transfer, or USSD. Protected by Paystack's PCI-DSS Level 1 certified infrastructure.";
+  var USD_BLURB = "Card and wallet payments, protected by Stripe's PCI-DSS Level 1 certified infrastructure.";
+
+  function sync() {
+    var stripe = window.bxGateway && window.bxGateway() === 'STRIPE';
+    var name = stripe ? 'Stripe' : 'Paystack';
+    document.querySelectorAll('[data-gateway-name]').forEach(function (el) {
+      el.textContent = name;
+    });
+    var blurb = document.querySelector('[data-gateway-blurb]');
+    /* USSD and bank transfer are Paystack rails; saying so under Stripe
+       would promise a payment method that is not on the next screen. */
+    if (blurb) blurb.textContent = stripe ? USD_BLURB : NGN_BLURB;
+
+    /* The pay button ships with a gateway name baked into the markup and
+       is only rewritten once the review step runs, so it would sit on
+       the wrong name until then. Swap whichever name it currently holds
+       rather than assuming the default, so this stays correct if the
+       markup changes. */
+    var payBtn = document.getElementById('pay-btn-label');
+    if (payBtn) payBtn.textContent = payBtn.textContent.replace(/Paystack|Stripe/g, name);
+  }
+
+  document.addEventListener('bx:currency', sync);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', sync);
+  else sync();
+})();
+</script>
 </body>
 </html>

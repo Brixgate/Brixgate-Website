@@ -1,0 +1,18 @@
+# Brixgate — https://brixgate.com
+#
+# Crawling is open. The disallowed paths are application flows and
+# one-off documents: they are useless as search results, and some carry
+# a payment reference or a certificate number in the URL.
+
+User-agent: *
+Allow: /
+
+Disallow: /apply.html
+Disallow: /callback.html
+Disallow: /payments/
+Disallow: /certificate.html
+Disallow: /brixer-certificate.html
+Disallow: /certificate-template.html
+Disallow: /verify.html
+
+Sitemap: https://brixgate.com/sitemap.xml

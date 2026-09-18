@@ -237,11 +237,53 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
 }
 
+/* ---- next cohort countdown ----
+   Set apart from the country list with a divider, and a touch brighter,
+   because it is the part of this strip that asks for an action. On
+   narrow screens the countries are what gets dropped: the countdown is
+   the half worth keeping. */
+.region-cohort {
+  position: relative;
+  padding-left: 14px;
+  margin-left: 6px;
+  color: rgba(255,255,255,0.92);
+  font-weight: 650;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.region-cohort::before {
+  content: '';
+  position: absolute; left: 0; top: 50%;
+  width: 1px; height: 11px; margin-top: -5.5px;
+  background: rgba(255,255,255,0.26);
+}
+@media (max-width: 760px) {
+  /* the country chips scroll or truncate here; the countdown must not */
+  /* the label goes too: "Now active in" followed only by a countdown
+     reads as a broken sentence */
+  .region-banner .region-item,
+  .region-banner .region-more,
+  .region-banner .region-label { display: none; }
+  .region-cohort { padding-left: 0; margin-left: 0; }
+  .region-cohort::before { display: none; }
+}
+
+
 .region-item {
   display: flex;
   align-items: center;
   gap: 5px;
   white-space: nowrap;
+}
+
+/* Reads as a continuation of the list rather than another pin: the
+   named five are where we are established, this is the rest. */
+.region-more {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .region-dot {
@@ -2169,6 +2211,144 @@ body.show-cad .currency-cad { display: inline !important; }
   min-width: 210px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.12);
 }
+/* ============================================================
+   PROGRAMMES MEGA MENU
+   Built by nav-programmes.js into <div class="nav-mega" data-nav-mega>.
+   Two tiers on the left, the hovered tier's courses on the right.
+   ============================================================ */
+.nav-mega { position: relative; display: inline-flex; align-items: center; }
+.nav-mega-trigger {
+  display: inline-flex; align-items: center;
+  text-decoration: none; padding-right: 2px;
+}
+.nav-mega-chevron {
+  background: none; border: none; padding: 2px 3px; cursor: pointer;
+  color: #4A5568; display: inline-flex; align-items: center; vertical-align: middle;
+  transition: transform 0.2s ease;
+}
+.nav-mega:hover .nav-mega-chevron,
+.nav-mega.open .nav-mega-chevron { transform: rotate(180deg); }
+
+.nav-mega-panel {
+  display: none; position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%); padding-top: 14px; z-index: 250;
+}
+.nav-mega:hover .nav-mega-panel,
+.nav-mega.open .nav-mega-panel { display: block; }
+
+.nav-mega-inner {
+  display: grid; grid-template-columns: 286px minmax(0, 1fr);
+  width: min(860px, calc(100vw - 48px));
+  background: #fff; border: 1px solid #E4E6EA; border-radius: 10px;
+  box-shadow: 0 18px 60px rgba(2, 16, 36, 0.16);
+  overflow: hidden;
+}
+
+/* ---- left rail: the two tiers ----
+   A neutral grey rather than the warm paper the rest of the site uses,
+   so the rail reads as chrome rather than as a cream content panel. */
+.nav-mega-tiers {
+  background: #F5F6F8; border-right: 1px solid #E9EBEF;
+  padding: 10px; display: flex; flex-direction: column; gap: 4px;
+}
+.nav-mega-tier {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center;
+  gap: 4px 12px; padding: 14px 14px; border-radius: 8px;
+  text-decoration: none; transition: background 0.18s ease, box-shadow 0.18s ease;
+}
+.nav-mega-tier.is-on { background: #fff; box-shadow: 0 2px 10px rgba(2, 16, 36, 0.08); }
+/* the icon is what separates the two tiers at a glance */
+.nav-mega-tier-ic {
+  grid-row: 1 / 3; width: 36px; height: 36px; border-radius: 9px;
+  display: grid; place-items: center; flex: none;
+  background: #E9EBEF; color: #6B7A90;
+  transition: background 0.22s ease, color 0.22s ease;
+}
+.nav-mega-tier-ic svg { width: 18px; height: 18px; }
+.nav-mega-tier.is-on .nav-mega-tier-ic { background: rgba(255, 41, 78, 0.1); color: #C4173A; }
+.nav-mega-tier-t {
+  font-size: 0.92rem; font-weight: 700; color: #021024; letter-spacing: -0.015em;
+}
+.nav-mega-tier-d {
+  grid-column: 2 / -1; font-size: 0.78rem; line-height: 1.5; color: #6B7A90;
+}
+
+/* ---- right: the hovered tier's courses ---- */
+.nav-mega-courses { padding: 18px 20px 16px; min-height: 232px; }
+.nav-mega-pane { display: none; }
+.nav-mega-pane.is-on { display: block; animation: navMegaIn 0.26s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@keyframes navMegaIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+.nav-mega-kicker {
+  font-size: 0.63rem; font-weight: 800; letter-spacing: 0.15em;
+  text-transform: uppercase; color: #98A4B5;
+  padding-bottom: 12px; margin-bottom: 4px; border-bottom: 1px solid #E9EBEF;
+}
+.nav-mega-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 10px; }
+.nav-mega-course {
+  display: block; padding: 11px 12px; border-radius: 7px; text-decoration: none;
+  transition: background 0.15s ease;
+}
+.nav-mega-course:hover { background: #FFF5F6; }
+.nav-mega-course-t {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.89rem; font-weight: 650; color: #021024; letter-spacing: -0.01em;
+}
+.nav-mega-course:hover .nav-mega-course-t { color: #FF294E; }
+.nav-mega-course-d {
+  display: block; margin-top: 3px; font-size: 0.78rem; line-height: 1.45; color: #6B7A90;
+}
+.nav-mega-soon {
+  font-size: 0.58rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 2px 6px; border-radius: 4px; background: #EDEFF3; color: #7B8A9E; white-space: nowrap;
+}
+.nav-mega-empty {
+  margin: 14px 0 0; font-size: 0.85rem; line-height: 1.6; color: #6B7A90; max-width: 46ch;
+}
+.nav-mega-all {
+  display: inline-flex; align-items: center; gap: 7px; margin-top: 14px; padding: 0 12px;
+  font-size: 0.82rem; font-weight: 700; color: #C4173A; text-decoration: none;
+}
+.nav-mega-all svg { transition: transform 0.25s ease; }
+.nav-mega-all:hover svg { transform: translateX(3px); }
+
+@media (max-width: 1100px) {
+  .nav-mega-inner { grid-template-columns: 252px minmax(0, 1fr); width: min(720px, calc(100vw - 40px)); }
+  .nav-mega-grid { grid-template-columns: 1fr; }
+}
+
+/* the two tiers sit under Programmes in the mobile sheet */
+.nav-mobile .nav-mobile-sub {
+  padding-left: 30px !important;
+  font-size: 0.92rem;
+  opacity: 0.82;
+  position: relative;
+}
+.nav-mobile .nav-mobile-sub::before {
+  content: ""; position: absolute; left: 14px; top: 50%;
+  width: 8px; height: 1.5px; background: currentColor; opacity: 0.4;
+}
+
+/* Two tiers now share this menu component, so each one names itself.
+   Without the kicker a bare list of fields gives no clue which track
+   it belongs to once both dropdowns look alike. */
+.nav-prog-kicker {
+  padding: 8px 12px 6px;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #98A4B5;
+}
+.nav-prog-note {
+  margin: 4px 0 2px;
+  padding: 8px 12px 4px;
+  border-top: 1px solid #F0EDEA;
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: #6B7A90;
+  max-width: 240px;
+}
 .nav-prog-dropdown:hover .nav-prog-menu,
 .nav-prog-dropdown.open .nav-prog-menu {
   display: block;
@@ -2316,3 +2496,67 @@ body.show-cad .currency-cad { display: inline !important; }
   }
   .ig-modal-video { max-width: 95vw; }
 }
+
+
+/* ============================================================
+   CUSTOM CURSOR
+   Shown inside any .cursor-zone, which is how gradient sections
+   announce themselves. Injected and driven by cursor.js.
+   Unscoped on purpose: it used to be .lp-only, which is why it
+   existed on the landing page and nowhere else.
+   ============================================================ */
+/* Every value here is literal on purpose. This component used to live
+   inside index.html and leaned on --lp-red and --lp-ease, which are
+   declared there and nowhere else. Once it became global those resolved
+   to nothing on every other page, so the label pill lost its background
+   and the cursor read as white text floating on white text. A component
+   that any page can use cannot depend on one page's tokens. */
+.lp-cursor {
+  position: fixed; top: 0; left: 0; z-index: 900;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .22s cubic-bezier(.2,.7,.2,1);
+  will-change: transform;
+}
+.lp-cursor.on { opacity: 1; }
+.lp-cursor-arrow {
+  display: block;
+  filter: drop-shadow(0 2px 5px rgba(1,11,30,.55)) drop-shadow(0 6px 16px rgba(1,11,30,.35));
+}
+.lp-cursor-label {
+  position: absolute; left: 18px; top: 20px;
+  display: inline-block; white-space: nowrap;
+  background: #FF294E;
+  color: #fff;
+  font-family: var(--font-main, system-ui, sans-serif);
+  font-size: .72rem; font-weight: 700; letter-spacing: -0.005em; line-height: 1;
+  padding: 6px 11px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.28);
+  box-shadow: 0 6px 18px -4px rgba(255,41,78,.65), 0 2px 6px rgba(1,11,30,.35);
+  transform-origin: top left;
+  animation: lpCursorPop .28s cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes lpCursorPop { from { transform: scale(.5); opacity: 0 } to { transform: scale(1); opacity: 1 } }
+/* Hide the native pointer only where the custom one is shown */
+.cursor-zone, .cursor-zone a, .cursor-zone button { cursor: none; }
+@media (hover: none), (max-width: 960px) {
+  .lp-cursor { display: none; }
+  .cursor-zone, .cursor-zone a, .cursor-zone button { cursor: auto; }
+}
+
+
+/* ---- currency toggle removed ----
+   Currency follows the visitor's country and is not theirs to change:
+   NGN in Nigeria, USD everywhere else, decided in currency.js.
+
+   Hidden rather than deleted from the markup on purpose. script.js's
+   initCurrencyToggle queries .cur-btn and the currency labels, and
+   removing them would change the behaviour of a function that also
+   sets body.show-usd, which every price on the site depends on.
+   Hiding leaves that path intact and makes this one line to undo if
+   the toggle is ever wanted back. */
+.cur-btn,
+.currency-toggle-5,
+.ap-cur,
+.label-usd,
+.label-ngn { display: none !important; }
