@@ -302,7 +302,12 @@
     .lp .lp-hero-grid {
       position: relative;
       display: grid;
-      grid-template-columns: minmax(0, 1.14fr) minmax(0, .86fr);
+      /* 1.14/.86 was set to fit the longer headline, but the headline also
+         got a smaller font in the same change, so it no longer needs that
+         much: its longest line wants about 480px against a 540px column.
+         The 45px it was taking came out of the card stage, which is what
+         pushed the sprint-length card into the cohort card. */
+      grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);
       gap: 48px;
       align-items: center;
     }
@@ -312,6 +317,7 @@
        650px in a 571px column, so it broke across five lines. */
     .lp .lp-hero-copy { max-width: 660px; }
     .lp .lp-hero .lp-display { font-size: clamp(2.5rem, 5.2vw, 4.1rem); }
+
     .lp .lp-rise { animation: lpRise .9s var(--lp-ease) both; }
     .lp .lp-hero-pill { margin-bottom: 28px; }
     .lp .lp-hero-pill .sep { width: 1px; height: 14px; background: var(--lp-line); }
@@ -1436,6 +1442,22 @@
     /* ============================================================
        RESPONSIVE
        ============================================================ */
+
+    /* The stage cards are fixed widths inside a fluid column, so below a
+       certain width they always collide. Handling existed at 960px and
+       under; between there and about 1140 there was nothing, and the
+       sprint-length card ran into the cohort card.
+
+       It has to live down here rather than beside the hero rules: a
+       media query adds no specificity, so an earlier one loses to the
+       plain .lp-card-* rules further down the file. */
+    @media (max-width: 1140px) {
+      .lp .lp-card-video { width: 228px; }
+      .lp .lp-card-b { width: 248px; left: -24px; }
+      .lp .lp-card-a { width: 168px; }
+      .lp .lp-card-c { width: 252px; }
+    }
+
     @media (max-width: 1100px) {
       .lp .lp-prog-grid { grid-template-columns: repeat(2, 1fr); }
       .lp .lp-stats { grid-template-columns: repeat(2, 1fr); }
