@@ -3782,6 +3782,33 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     if (tn) new MutationObserver(syncChoice).observe(tn, { attributes: true, attributeFilter: ['style', 'class'] });
   }
 
+  /* ---- preselect the tier from ?level= ----
+     A link from the Foundations hub knows the visitor is a beginner but
+     not which of six courses they want, so it cannot use ?program_id=.
+     Without this the form would open on Professional and show them the
+     wrong six programmes. ?program_id= still wins where both are given,
+     since it resolves the tier from the programme itself. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    if (q.get('program_id')) return;
+    var want = String(q.get('level') || '').toLowerCase();
+    if (want !== 'beginner' && want !== 'professional') return;
+    var value = want === 'beginner' ? 'Beginner' : 'Professional';
+
+    function set() {
+      var sel = document.getElementById('applicant-level');
+      if (!sel || sel.value === value) return;
+      sel.value = value;
+      if (typeof applyTierFilter === 'function') applyTierFilter();
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', set);
+    else set();
+    /* The programme list arrives from the API after this runs, and
+       populating it re-reads the tier, so set it once more on the next
+       turn of the loop for the case where the list won that race. */
+    setTimeout(set, 1200);
+  })();
+
   /* ---- preselect programme from ?program_id= and collapse the picker ---- */
   (function () {
     var pid = new URLSearchParams(location.search).get('program_id');

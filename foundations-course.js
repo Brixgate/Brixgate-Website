@@ -119,7 +119,54 @@
     var CLK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>';
     var CAM = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="12" height="12" rx="2"/><path d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14"/></svg>';
 
+    /* Re-lays a button's label as the two stacked character layers the
+       hero animation uses. Shared by the cohort buttons, which are drawn
+       after the page's stagger pass has already run, and by the hero
+       button when its label turns out to be wrong. */
+    function charify(el, text) {
+      text = text || el.textContent;
+      var step = 0.014;
+      function layer(cls) {
+        return '<span class="' + cls + '">' + [].map.call(text, function (ch, i) {
+          return '<span style="--d:' + (i * step).toFixed(3) + 's">' + (ch === ' ' ? '&nbsp;' : ch) + '</span>';
+        }).join('') + '</span>';
+      }
+      el.classList.add('fc-chars');
+      el.setAttribute('aria-label', text);
+      el.innerHTML = layer('fc-chars-a') + layer('fc-chars-b');
+    }
+
+    /* Whether a given cohort can actually be applied to.
+
+       Every cohort used to get a waitlist button regardless, so a course
+       with a scheduled cohort, an open admission window and thirty free
+       seats still told people the only thing they could do was wait.
+
+       Full or closed still means the waitlist, because that is the
+       honest thing to offer — and so does a missing programme id, since
+       the apply form needs one to preselect the course. */
+    function canApply(c, programme) {
+      if (!programme || programme.id == null) return false;
+      var st = String(c.status || '').toUpperCase();
+      if (st === 'CLOSED' || st === 'COMPLETED' || st === 'CANCELLED') return false;
+      if (c.max_students && (c.max_students - (c.enrolled_students_count || 0)) <= 0) return false;
+      return true;
+    }
+
     FND.fetchCohorts(COURSE).then(function (res) {
+      var applyHref = null;
+
+      function cta(c) {
+        if (canApply(c, res.programme)) {
+          var href = 'apply.html?program_id=' + encodeURIComponent(res.programme.id);
+          if (!applyHref) applyHref = href;
+          return '<a class="fc-btn fc-btn-accent" href="' + href + '">' +
+                   '<span data-chars-late>Apply now</span></a>';
+        }
+        return '<a class="fc-btn fc-btn-accent" href="#waitlist">' +
+                 '<span data-chars-late>Join the waitlist</span></a>';
+      }
+
       var live = res.cohorts.filter(function (c) {
         return String(c.status || '').toUpperCase() !== 'COMPLETED';
       }).sort(function (a, b) { return new Date(a.start_date || 0) - new Date(b.start_date || 0); });
@@ -155,22 +202,26 @@
                    '<div class="fc-cohort-meta">' + meta.join('') + '</div>' +
                    seats +
                  '</div>' +
-                 '<a class="fc-btn fc-btn-accent" href="#waitlist"><span data-chars-late>Join the waitlist</span></a>' +
+                 cta(c) +
                '</div>';
       }).join('');
 
       /* buttons drawn after the stagger pass ran need their own */
-      [].slice.call(host.querySelectorAll('[data-chars-late]')).forEach(function (el) {
-        var text = el.textContent, step = 0.014;
-        function layer(cls) {
-          return '<span class="' + cls + '">' + [].map.call(text, function (ch, i) {
-            return '<span style="--d:' + (i * step).toFixed(3) + 's">' + (ch === ' ' ? '&nbsp;' : ch) + '</span>';
-          }).join('') + '</span>';
+      [].slice.call(host.querySelectorAll('[data-chars-late]')).forEach(function (el) { charify(el); });
+
+      /* The hero button is written into the page as "Join the waitlist"
+         because the page cannot know, before this call returns, whether
+         there is anything to apply to. Now that we do know, it is
+         corrected — a course with an open cohort should not be sending
+         people to a waitlist from the top of its own page. */
+      if (applyHref) {
+        var hero = document.querySelector('.fc-hero-cta a.fc-btn-accent');
+        if (hero) {
+          hero.href = applyHref;
+          var label = hero.querySelector('[data-chars], .fc-chars');
+          if (label) charify(label, 'Apply now');
         }
-        el.classList.add('fc-chars');
-        el.setAttribute('aria-label', text);
-        el.innerHTML = layer('fc-chars-a') + layer('fc-chars-b');
-      });
+      }
     });
   })();
 

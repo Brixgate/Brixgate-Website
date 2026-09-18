@@ -1383,5 +1383,54 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <script src="cursor.js"></script>
 <script src="nav-programmes.js"></script>
 <script src="cohort-countdown.js"></script>
+
+<script>
+/* ── Hero CTA: apply when there is something to apply to ──
+   The button is written into the page as "Join the waitlist" because
+   the page cannot know, before the API answers, whether any course is
+   open. Once it does, a hub advertising six open cohorts should not be
+   offering a waitlist as its primary action.
+
+   No ?program_id= here — the hub knows the tier but not which of the
+   six the visitor wants, so it hands over ?level=BEGINNER and lets
+   them pick on the form. */
+(function () {
+  if (!window.FND || !FND.COURSES) return;
+  var btn = document.querySelector('.fd-hero-cta a.fd-btn-red');
+  if (!btn) return;
+
+  var ready = FND.COURSES.filter(function (c) { return c.ready; });
+  if (!ready.length) return;
+
+  Promise.all(ready.map(function (c) {
+    return FND.fetchCohorts(c).catch(function () { return { cohorts: [] }; });
+  })).then(function (results) {
+    var open = results.some(function (r) {
+      return (r.cohorts || []).some(function (c) {
+        var st = String(c.status || '').toUpperCase();
+        if (st === 'CLOSED' || st === 'COMPLETED' || st === 'CANCELLED') return false;
+        if (c.max_students && (c.max_students - (c.enrolled_students_count || 0)) <= 0) return false;
+        return true;
+      });
+    });
+    if (!open) return;
+
+    btn.href = 'apply.html?level=BEGINNER';
+    var label = btn.querySelector('[data-chars], .fd-chars');
+    if (!label) return;
+
+    /* Match the treatment the page's own stagger pass applied. */
+    var text = 'Apply now', step = 0.014;
+    function layer(cls) {
+      return '<span class="' + cls + '">' + [].map.call(text, function (ch, i) {
+        return '<span style="--d:' + (i * step).toFixed(3) + 's">' + (ch === ' ' ? '&nbsp;' : ch) + '</span>';
+      }).join('') + '</span>';
+    }
+    label.classList.add('fd-chars');
+    label.setAttribute('aria-label', text);
+    label.innerHTML = layer('fd-chars-a') + layer('fd-chars-b');
+  });
+})();
+</script>
 </body>
 </html>
