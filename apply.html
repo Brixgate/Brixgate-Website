@@ -1104,7 +1104,11 @@ body.ap .apply-form-card {
   padding:56px clamp(32px, 5vw, 84px) 40px !important;
   max-width:720px; width:100%;
 }
-body.ap .apply-wrapper > a { grid-column:2 !important; justify-self:start; margin:0 clamp(32px,5vw,84px) 64px; }
+/* stretch, not start. The margins already inset this to the same gutter
+   as the form card's padding, so stretching makes its two edges line up
+   with the form above it; justify-self:start left it sized by its own
+   text and ending short of the form's right edge. */
+body.ap .apply-wrapper > a { grid-column:2 !important; justify-self:stretch; margin:0 clamp(32px,5vw,84px) 64px; }
 
 /* scholarship strip sits inside the form column now */
 body.ap .ap-scholar { margin-bottom:30px; }
