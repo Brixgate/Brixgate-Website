@@ -502,10 +502,66 @@ body.tc{ color:var(--tc-ink); }
 .lp .lp-prog-tools{ display: flex; align-items: center; gap: 18px; }
 .lp .lp-prog-grid{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 
-/* Foundations runs six across three columns rather than four. */
-.lp .lp-beg-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-@media (max-width: 1040px){ .lp .lp-beg-grid{ grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 620px) { .lp .lp-beg-grid{ grid-template-columns: 1fr; } }
+/* ------------------------------------------------------------
+   FOUNDATIONS MARQUEE
+
+   Two rows of three cost most of a screen on a page whose job is to
+   let people scan, so Foundations runs as one line that drifts left.
+
+   The loop is seamless because the script at the foot of this page
+   clones the set once and the track travels exactly -50%. That is
+   only exact if every card carries its own trailing margin — with a
+   flex `gap` the track has one fewer gap than cards and the halves
+   do not line up, so the spacing is margin-right here, not gap.
+
+   It pauses on hover and on focus-within, so it never slides a card
+   out from under a pointer or a keyboard user part-way through.
+
+   Where the animation is off — reduced motion, or a narrow screen
+   with no hover to pause with — the clones are hidden and the row
+   becomes an ordinary swipeable scroller instead.
+   ------------------------------------------------------------ */
+/* Full bleed. Inside the container the row was sliced off mid-card at
+   the gutter, which reads as a clipping bug rather than a ribbon that
+   carries on past the edge. Safe here because body already carries
+   overflow-x: hidden, so 100vw cannot open a sideways scrollbar. */
+.lp .lp-marquee{
+  position: relative; overflow: hidden;
+  width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);
+}
+.lp .lp-marquee-track{ display: flex; width: max-content; animation: lpMarquee 72s linear infinite; }
+.lp .lp-marquee-track > .lp-prog{ flex: 0 0 300px; width: 300px; margin-right: 20px; min-height: 0; }
+.lp .lp-marquee:hover .lp-marquee-track,
+.lp .lp-marquee:focus-within .lp-marquee-track{ animation-play-state: paused; }
+@keyframes lpMarquee{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
+
+/* Fades so cards enter and leave rather than being cut off. The colour
+   has to be the section's own ground, which here is the page white
+   rather than --lp-surface; it is a variable so moving this block onto
+   a tinted section is a one-line change. */
+.lp .lp-marquee{ --lp-fade: #fff; }
+.lp .lp-marquee::before,
+.lp .lp-marquee::after{
+  content: ''; position: absolute; top: 0; bottom: 0; width: 110px; z-index: 2; pointer-events: none;
+}
+.lp .lp-marquee::before{ left: 0;  background: linear-gradient(to right, var(--lp-fade), rgba(255,255,255,0)); }
+.lp .lp-marquee::after { right: 0; background: linear-gradient(to left,  var(--lp-fade), rgba(255,255,255,0)); }
+
+.lp .lp-marquee-static{ overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.lp .lp-marquee-static::-webkit-scrollbar{ display: none; }
+.lp .lp-marquee-static .lp-marquee-track{ animation: none; }
+.lp .lp-marquee-static .lp-prog.is-clone{ display: none; }
+.lp .lp-marquee-static .lp-prog{ scroll-snap-align: start; }
+.lp .lp-marquee-static .lp-marquee-track{ padding: 0 20px; }
+.lp .lp-marquee-static::before,
+.lp .lp-marquee-static::after{ display: none; }
+
+@media (prefers-reduced-motion: reduce){
+  .lp .lp-marquee{ overflow-x: auto; }
+  .lp .lp-marquee-track{ animation: none; }
+  .lp .lp-marquee .lp-prog.is-clone{ display: none; }
+  .lp .lp-marquee::before, .lp .lp-marquee::after{ display: none; }
+}
 
 .lp .lp-link-arrow{
   display: inline-flex; align-items: center; gap: 8px;
@@ -868,7 +924,7 @@ body.tc{ color:var(--tc-ink); }
           </div>
 
           <div class="tc-courses">
-            <div class="tc-courses-k">Six courses to choose from</div>
+            <div class="tc-courses-k">Courses to choose from</div>
             <div class="tc-chips">
               <a class="tc-chip" href="foundations-ai-automation.html"><b>AI Automation</b><span>6 wks</span></a>
               <a class="tc-chip" href="foundations-data-analytics.html"><b>Data Analytics</b><span>8 wks</span></a>
@@ -928,7 +984,7 @@ body.tc{ color:var(--tc-ink); }
           </div>
 
           <div class="tc-courses">
-            <div class="tc-courses-k">Four fields open</div>
+            <div class="tc-courses-k">Fields open now</div>
             <div class="tc-chips">
               <a class="tc-chip" href="programme-engineering.html"><b>Software Engineering</b><span>4 wks</span></a>
               <a class="tc-chip" href="programme-cybersecurity.html"><b>Cyber Security</b><span>4 wks</span></a>
@@ -965,7 +1021,7 @@ body.tc{ color:var(--tc-ink); }
     <div class="lp-prog-head fade-up">
       <div>
         <span class="lp-eyebrow">AI for Professionals</span>
-        <h2 class="lp-h2">Four fields open now.</h2>
+        <h2 class="lp-h2">Sprints for the field you<br/>already work in.</h2>
       </div>
       <a href="professionals.html" class="lp-link-arrow">Browse all <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
     </div>
@@ -1052,12 +1108,16 @@ body.tc{ color:var(--tc-ink); }
     <div class="lp-prog-head lp-progs-split fade-up">
       <div>
         <span class="lp-eyebrow">AI Foundations</span>
-        <h2 class="lp-h2">Six ways to start.<br/>None of them assume anything.</h2>
+        <h2 class="lp-h2">Pick where you start.<br/>None of them assume anything.</h2>
       </div>
       <a href="foundations.html" class="lp-link-arrow">Browse all <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
     </div>
 
-    <div class="lp-beg-grid stagger">
+    <!-- One line rather than two rows of three. The clones that make
+         the loop seamless are added by the script at the foot of this
+         page, not written out here. -->
+    <div class="lp-marquee fade-up" id="beg-marquee">
+      <div class="lp-marquee-track">
       <a href="foundations-ai-automation.html" class="lp-prog fade-up" data-prog-match="automation" data-prog-tier="beg">
         <div class="lp-prog-art">
           <div class="lp-prog-top">
@@ -1166,6 +1226,7 @@ body.tc{ color:var(--tc-ink); }
           </div>
         </div>
       </a>
+      </div>
     </div>
 
   </div>
@@ -1545,6 +1606,37 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
    one currency, keeps its price hidden rather than showing somebody
    else's number or an empty "From".
    ============================================================ */
+/* ── Foundations marquee ──
+   Clones the set once so the -50% travel loops seamlessly, and drops
+   to a plain swipe scroller where there is no pointer to pause with.
+   Runs before the price fetch below on purpose: the clones have to be
+   in the DOM by the time prices are stamped, or half the row would
+   show none. */
+(function () {
+  var mq = document.getElementById('beg-marquee');
+  if (!mq) return;
+  var track = mq.querySelector('.lp-marquee-track');
+  if (!track) return;
+
+  [].slice.call(track.children).forEach(function (card) {
+    var copy = card.cloneNode(true);
+    copy.classList.add('is-clone');
+    /* A duplicate of a link is noise to a screen reader and a second
+       stop on the tab route to nowhere new. */
+    copy.setAttribute('aria-hidden', 'true');
+    copy.setAttribute('tabindex', '-1');
+    track.appendChild(copy);
+  });
+
+  function sync() {
+    var noHover = (window.matchMedia && window.matchMedia('(hover: none)').matches)
+                  || window.innerWidth <= 720;
+    mq.classList.toggle('lp-marquee-static', noHover);
+  }
+  sync();
+  window.addEventListener('resize', sync);
+})();
+
 (function () {
   var API = 'https://dev.api.brixgate.com/api/v1';
 
