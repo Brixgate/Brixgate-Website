@@ -1664,9 +1664,12 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 
 (function () {
   'use strict';
-  /* The class is `visible`, matching styles.css. script.js would normally
-     attach this observer, but its init() throws on initFaqAccordion before
-     it gets there, so on this page nothing would ever reveal. */
+  /* The class is `visible`, matching styles.css. script.js attaches its
+     own observer over the same selectors, so this is belt and braces —
+     it guarantees the .lp sections reveal on this page regardless of
+     what happens earlier in that file's init(). (The initFaqAccordion
+     ReferenceError this comment used to blame is gone, and it was never
+     the cause: that call came last in init(), after the observer.) */
   var els = [].slice.call(document.querySelectorAll('.lp .fade-up, .lp .fade-in'));
   if (!els.length) return;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;

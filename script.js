@@ -17,7 +17,6 @@
     initCurrencyToggle();
     initCounters();
     setActiveNavLink();
-    initFaqAccordion();
   }
 
   /* ---------- Banner scroll-away + Sticky Nav ---------- */
@@ -267,6 +266,8 @@
     });
   });
 
+
+
 })();
 
 /* ============================================================
@@ -417,27 +418,6 @@ window.tierLabelToRatingLevel = function(label) {
     document.getElementById('bx-quiz-capture').style.display = 'none';
     if (_captureCallback) { var cb = _captureCallback; _captureCallback = null; cb(); }
   };
-  /* ── FAQ Accordion ── */
-  function initFaqAccordion() {
-    document.querySelectorAll('.faq-question').forEach(function (btn) {
-      /* Skip buttons already inside a container with id="faq-list" —
-         those have their own inline handler in programme.html */
-      if (btn.closest('#faq-list')) return;
-
-      btn.addEventListener('click', function () {
-        var item = this.closest('.faq-item');
-        var isOpen = item.classList.contains('open');
-        // Close all siblings first
-        var list = item.closest('.faq-list');
-        if (list) {
-          list.querySelectorAll('.faq-item.open').forEach(function (el) {
-            el.classList.remove('open');
-          });
-        }
-        if (!isOpen) item.classList.add('open');
-      });
-    });
-  }
 
 }());
 

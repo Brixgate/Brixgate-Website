@@ -783,7 +783,6 @@ body.ap #apply-phone-cc {
   font-family:inherit; font-size:.94rem !important; outline:none;
   transition:border-color .2s, box-shadow .2s, background .2s;
 }
-body.ap .form-group input::placeholder { color:#A9B4C2 !important; }
 body.ap .form-group input:hover, body.ap .form-group select:hover { border-color:#D3D9E1 !important; }
 body.ap .form-group input:focus,
 body.ap .form-group select:focus,
@@ -1191,7 +1190,7 @@ body.ap .ap-scholar { margin-bottom:30px; }
 #coupon-code:focus { border-color:#2A3F59; }
 /* The placeholder rule below is scoped to .form-group, and this field
    sits outside one, so it was picking up the browser's own grey. */
-#coupon-code::placeholder { color:#55677C; }
+#coupon-code::placeholder { color:#78889C; }
 
 /* ============================================================
    APPLY — DARK  (body.ap.ap-dark, set in the markup)
@@ -1230,7 +1229,13 @@ body.ap.ap-dark #apply-phone-cc {
      background-repeat/position and tiles the select chevron across the field */
   background-color:#0D1826 !important; border-color:#1E2F45 !important; color:#F2F5F9 !important;
 }
-body.ap.ap-dark .form-group input::placeholder { color:#55677C !important; }
+/* #55677C measured 3.08:1 against the #0D1826 field — legible enough
+   to glance at, under AA for text. #78889C clears it at 4.93:1 and is
+   still far dimmer than a filled value (#F2F5F9, 16.33:1), so a hint
+   never reads as an answer. Textareas get it too; they were on
+   rgba(255,255,255,.25), dimmer still. */
+body.ap.ap-dark .form-group input::placeholder,
+body.ap.ap-dark .form-group textarea::placeholder { color:#78889C !important; }
 body.ap.ap-dark .form-group input:hover, .ap-dark .form-group select:hover { border-color:#2A3F59 !important; }
 body.ap.ap-dark .form-group input:focus, .ap-dark .form-group select:focus, .ap-dark #apply-phone-cc:focus {
   border-color:var(--g-red) !important; box-shadow:0 0 0 4px rgba(255,41,78,.16) !important; background:#101E2F !important;
