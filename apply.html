@@ -1189,6 +1189,9 @@ body.ap .ap-scholar { margin-bottom:30px; }
    ============================================================ */
 #coupon-code { border:1px solid var(--border-card); }
 #coupon-code:focus { border-color:#2A3F59; }
+/* The placeholder rule below is scoped to .form-group, and this field
+   sits outside one, so it was picking up the browser's own grey. */
+#coupon-code::placeholder { color:#55677C; }
 
 /* ============================================================
    APPLY — DARK  (body.ap.ap-dark, set in the markup)
