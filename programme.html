@@ -372,6 +372,7 @@ body.tc{ color:var(--tc-ink); }
   --lp-muted:    #6B7A90;
   --lp-faint:    #98A4B5;
   --lp-line:     #E6E8EC;
+  --lp-line-2:   #EEF0F3;
   --lp-surface:  #F6F5F5;
   --lp-red:      #FF294E;
   --lp-green:    #16A34A;
@@ -480,51 +481,111 @@ body.tc{ color:var(--tc-ink); }
     }
 .lp .lp-quote-feature > *{ position: relative; z-index: 1; }
 /* ============================================================
-       PROGRAMMES
-       ============================================================ */
-    .lp .lp-prog-head{ display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 44px; flex-wrap: wrap; }
+   PROGRAMME CARDS
+
+   The same cards the landing page uses, copied rather than rewritten
+   so the two do not drift apart. This page previously carried the
+   PREVIOUS version of these rules — the one that inset each
+   illustration inside a padded panel — left behind when the landing
+   page card was redesigned. Replaced here with the current one: the
+   art owns the top of the card, flush to both sides, and everything
+   written sits in a padded body underneath.
+
+   The responsive rules for .lp-prog-grid already live further down
+   this file, in the media blocks copied over with the rest. They are
+   deliberately NOT repeated here: a media query adds no specificity,
+   so a plain rule written after them would beat them and take the
+   mobile carousel with it.
+   ============================================================ */
+/* Title on the left, "browse all" on the right. */
+.lp .lp-prog-head{ display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 44px; flex-wrap: wrap; }
 .lp .lp-prog-tools{ display: flex; align-items: center; gap: 18px; }
 .lp .lp-prog-grid{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-.lp .lp-prog{
-      position: relative;
-      display: flex; flex-direction: column;
-      background: #fff;
-      border: 1px solid var(--lp-line);
-      border-radius: var(--lp-r-lg);
-      padding: 18px 20px 20px;
-      transition: transform .35s var(--lp-ease), box-shadow .35s var(--lp-ease), border-color .3s;
-      overflow: hidden;
-      min-height: 0;
-    }
-.lp .lp-prog::after{
-      content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3px;
-      background: var(--lp-red); transform: scaleX(0); transform-origin: left;
-      transition: transform .4s var(--lp-ease);
-    }
-.lp .lp-prog:hover{ transform: translateY(-6px); box-shadow: var(--lp-shadow-md); border-color: transparent; }
-.lp .lp-prog:hover::after{ transform: scaleX(1); }
-.lp .lp-prog-top{ display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.lp .lp-prog-status{ display: inline-flex; align-items: center; gap: 7px; font-size: .7rem; font-weight: 700; color: var(--lp-ink); letter-spacing: .04em; text-transform: uppercase; }
-.lp .lp-prog-dur{ font-size: .72rem; font-weight: 700; color: var(--lp-muted); }
-/* Art fills the whole frame edge to edge; the portrait source is cropped
-       from the top so the subject at the base of the illustration is kept. */
-    .lp .lp-prog-art{ margin: 14px 0 0; border-radius: 14px; aspect-ratio: 16 / 11; overflow: hidden; }
-.lp .lp-prog-art img{
-      width: 100%; height: 100%; max-width: none; max-height: none;
-      object-fit: cover; object-position: center 62%;
-      transition: transform .55s var(--lp-ease);
-    }
-.lp .lp-prog:hover .lp-prog-art img{ transform: scale(1.06); }
-.lp .lp-prog-name{ font-size: 1.2rem; font-weight: 800; letter-spacing: -0.025em; color: var(--lp-ink); margin-top: 16px; line-height: 1.15; }
-.lp .lp-prog-desc{ font-size: .85rem; color: var(--lp-body); line-height: 1.5; margin-top: 7px; flex: 1; }
-.lp .lp-prog-foot{ display: flex; align-items: center; justify-content: space-between; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--lp-line-2); }
-.lp .lp-prog-price{ font-size: .78rem; color: var(--lp-muted); font-weight: 600; line-height: 1.2; }
-.lp .lp-prog-price b{ display: block; font-size: 1.02rem; color: var(--lp-ink); font-weight: 800; letter-spacing: -0.02em; margin-top: 2px; }
-.lp .lp-prog-price[hidden]{ display: none; }
-.lp .lp-prog-go{ width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--lp-line); display: grid; place-items: center; color: var(--lp-ink); transition: background .25s, color .25s, border-color .25s, transform .25s var(--lp-ease); flex-shrink: 0; }
-.lp .lp-prog:hover .lp-prog-go{ background: var(--lp-ink); color: #fff; border-color: var(--lp-ink); }
-.lp .lp-prog-go svg{ transition: transform .25s var(--lp-ease); }
-.lp .lp-prog:hover .lp-prog-go svg{ transform: translate(1px, -1px); }
+
+/* Foundations runs six across three columns rather than four. */
+.lp .lp-beg-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 1040px){ .lp .lp-beg-grid{ grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .lp .lp-beg-grid{ grid-template-columns: 1fr; } }
+
+.lp .lp-link-arrow{
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: .9rem; font-weight: 700; color: var(--lp-ink);
+  text-decoration: none; white-space: nowrap;
+  transition: gap .25s var(--lp-ease), color .25s;
+}
+.lp .lp-link-arrow:hover{ gap: 13px; color: var(--lp-red); }
+
+/* Second card block on the same page: air above it, but not a whole
+   section's worth. */
+.lp .lp-progs-split{ margin-top: 104px; }
+@media (max-width: 760px){ .lp .lp-progs-split{ margin-top: 68px; } }
+
+.lp .lp-prog {
+  position: relative;
+  display: flex; flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--lp-line);
+  border-radius: var(--lp-r-lg);
+  padding: 0;                      /* the art runs to the edges */
+  overflow: hidden;
+  transition: transform .35s var(--lp-ease), box-shadow .35s var(--lp-ease), border-color .3s;
+}
+.lp .lp-prog:hover { transform: translateY(-6px); box-shadow: var(--lp-shadow-md); border-color: transparent; }
+
+/* ---- the art, edge to edge ---- */
+.lp .lp-prog-art {
+  position: relative; margin: 0; border-radius: 0;
+  aspect-ratio: 16 / 10; overflow: hidden;
+  background: var(--lp-surface);   /* only ever seen while loading */
+}
+.lp .lp-prog-art img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform .8s var(--lp-ease);
+}
+.lp .lp-prog:hover .lp-prog-art img { transform: scale(1.05); }
+
+/* status and duration ride on the image so the body stays copy only */
+.lp .lp-prog-top {
+  position: absolute; inset: 12px 12px auto 12px; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+.lp .lp-prog-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,.94); color: var(--lp-ink);
+  font-size: .64rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+  padding: 5px 10px; border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(1,11,30,.18);
+}
+.lp .lp-prog-dur {
+  background: rgba(2,16,36,.74); color: #fff;
+  font-size: .64rem; font-weight: 700;
+  padding: 5px 10px; border-radius: 999px;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+
+/* Which door this course is behind, stated on every card. */
+.lp .lp-prog-tag {
+  position: absolute; left: 12px; bottom: 12px; z-index: 2;
+  display: inline-flex; align-items: center; gap: 6px; color: #fff;
+  font-size: .62rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  padding: 5px 11px; border-radius: 999px;
+}
+.lp .lp-prog-tag i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.lp .lp-prog-tag.is-pro { background: rgba(196,23,58,.94); }
+.lp .lp-prog-tag.is-beg { background: rgba(13,110,84,.94); }
+
+/* ---- the body: this is where the padding lives ---- */
+.lp .lp-prog-b { padding: 20px 20px 22px; display: flex; flex-direction: column; flex: 1; }
+.lp .lp-prog-name { font-size: 1.16rem; font-weight: 800; letter-spacing: -0.025em; color: var(--lp-ink); line-height: 1.15; }
+.lp .lp-prog-desc { font-size: .85rem; color: var(--lp-body); line-height: 1.55; margin-top: 8px; flex: 1; }
+.lp .lp-prog-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--lp-line-2); }
+.lp .lp-prog-price { font-size: .76rem; color: var(--lp-muted); font-weight: 600; line-height: 1.2; }
+.lp .lp-prog-price b { display: block; font-size: 1.02rem; color: var(--lp-ink); font-weight: 800; letter-spacing: -0.02em; margin-top: 2px; }
+.lp .lp-prog-price[hidden] { display: none; }
+.lp .lp-prog-go { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--lp-line); display: grid; place-items: center; color: var(--lp-ink); transition: background .25s, color .25s, border-color .25s, transform .25s var(--lp-ease); flex-shrink: 0; }
+.lp .lp-prog:hover .lp-prog-go { background: var(--lp-ink); color: #fff; border-color: var(--lp-ink); }
+.lp .lp-prog:hover .lp-prog-go svg { transform: translate(1px, -1px); }
+
 .lp .lp-upcoming .lp-chip{ background: #fff; color: var(--lp-muted); }
 .lp .lp-why-left .lp-lead{ margin: 18px 0 32px; }
 /* ============================================================
@@ -891,6 +952,226 @@ body.tc{ color:var(--tc-ink); }
   </div>
 </section>
 
+
+<!-- ===== EVERY PROGRAMME, AS CARDS =====
+     The two doors above explain the choice; this is the choice itself.
+     Same cards as the landing page, both tiers on one page because this
+     is the page people arrive at when they want to browse rather than
+     be persuaded. Prices come from the API, per programme. -->
+<div class="lp">
+<section class="lp-section" id="all-programmes">
+  <div class="lp-container">
+
+    <div class="lp-prog-head fade-up">
+      <div>
+        <span class="lp-eyebrow">AI for Professionals</span>
+        <h2 class="lp-h2">Four fields open now.</h2>
+      </div>
+      <a href="professionals.html" class="lp-link-arrow">Browse all <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+
+    <div class="lp-prog-grid stagger">
+
+      <a href="programme-engineering.html" class="lp-prog fade-up" data-prog-match="engineering" data-prog-tier="pro">
+        <div class="lp-prog-art">
+          <div class="lp-prog-top">
+          <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
+          <span class="lp-prog-dur">4-week sprint</span>
+        </div>
+          <img src="assets/Software Engineering.png" alt="" loading="lazy" />
+          <span class="lp-prog-tag is-pro"><i></i>Professional</span>
+        </div>
+        <div class="lp-prog-b">
+          <div class="lp-prog-name">Software Engineering</div>
+        <div class="lp-prog-desc">Write code that ships. Debug like it's production, because it is.</div>
+        <div class="lp-prog-foot">
+          <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
+          <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+        </div>
+        </div>
+      </a>
+
+      <a href="programme-cybersecurity.html" class="lp-prog fade-up" data-prog-match="cyber" data-prog-tier="pro">
+        <div class="lp-prog-art">
+          <div class="lp-prog-top">
+          <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
+          <span class="lp-prog-dur">4-week sprint</span>
+        </div>
+          <img src="assets/Cybersecurity.png" alt="" loading="lazy" />
+          <span class="lp-prog-tag is-pro"><i></i>Professional</span>
+        </div>
+        <div class="lp-prog-b">
+          <div class="lp-prog-name">Cybersecurity</div>
+        <div class="lp-prog-desc">Chase intrusions, patch the holes, think like the attacker before they do.</div>
+        <div class="lp-prog-foot">
+          <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
+          <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+        </div>
+        </div>
+      </a>
+
+      <a href="programme-finance.html" class="lp-prog fade-up" data-prog-match="financial" data-prog-tier="pro">
+        <div class="lp-prog-art">
+          <div class="lp-prog-top">
+          <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
+          <span class="lp-prog-dur">4-week sprint</span>
+        </div>
+          <img src="assets/Financial Modelling.png" alt="" loading="lazy" />
+          <span class="lp-prog-tag is-pro"><i></i>Professional</span>
+        </div>
+        <div class="lp-prog-b">
+          <div class="lp-prog-name">Financial Modelling</div>
+        <div class="lp-prog-desc">Turn spreadsheets into decisions. Stress-test the numbers until they can't lie.</div>
+        <div class="lp-prog-foot">
+          <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
+          <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+        </div>
+        </div>
+      </a>
+
+      <a href="programme-marketing.html" class="lp-prog fade-up" data-prog-match="marketing" data-prog-tier="pro">
+        <div class="lp-prog-art">
+          <div class="lp-prog-top">
+          <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
+          <span class="lp-prog-dur">4-week sprint</span>
+        </div>
+          <img src="assets/Product Marketing.png" alt="" loading="lazy" />
+          <span class="lp-prog-tag is-pro"><i></i>Professional</span>
+        </div>
+        <div class="lp-prog-b">
+          <div class="lp-prog-name">Product Marketing</div>
+        <div class="lp-prog-desc">Position products people actually want, then prove it with numbers that hold up.</div>
+        <div class="lp-prog-foot">
+          <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
+          <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+        </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="lp-prog-head lp-progs-split fade-up">
+      <div>
+        <span class="lp-eyebrow">AI Foundations</span>
+        <h2 class="lp-h2">Six ways to start.<br/>None of them assume anything.</h2>
+      </div>
+      <a href="foundations.html" class="lp-link-arrow">Browse all <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+
+    <div class="lp-beg-grid stagger">
+      <a href="foundations-ai-automation.html" class="lp-prog fade-up" data-prog-match="automation" data-prog-tier="beg">
+        <div class="lp-prog-art">
+          <div class="lp-prog-top">
+            <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
+            <span class="lp-prog-dur">6 weeks</span>
+          </div>
+          <img src="assets/fnd/automations.jpg" alt="" loading="lazy" />
+          <span class="lp-prog-tag is-beg"><i></i>Beginner</span>
+        </div>
+        <div class="lp-prog-b">
+          <div class="lp-prog-name">AI Automation</div>
+          <div class="lp-prog-desc">Build the automations that take repetitive work off your desk, from the first trigger to something running on its own.</div>
+          <div class="lp-prog-foot">
+            <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
+            <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+          </div>
+        </div>
+      </a>
+      <a href="foundations-data-analytics.html" class="lp-prog fade-up" data-prog-match="analytic" data-prog-tier="beg">
+        <div class="lp-prog-art">
+          <div class="lp-prog-top">
+            <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
+            <span class="lp-prog-dur">8 weeks</span>
+          </div>
+          <img src="assets/fnd/data.jpg" alt="" loading="lazy" />
+          <span class="lp-prog-tag is-beg"><i></i>Beginner</span>
+        </div>
+        <div class="lp-prog-b">
+          <div class="lp-prog-name">Data Analytics</div>
+          <div class="lp-prog-desc">Read data properly, question it, and turn it into something a room will act on rather than argue with.</div>
+          <div class="lp-prog-foot">
+            <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
+            <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+          </div>
+        </div>
+      </a>
+      <a href="foundations-bapm.html" class="lp-prog fade-up" data-prog-match="bapm|business analysis|project management" data-prog-tier="beg">
+        <div class="lp-prog-art">
+          <div class="lp-prog-top">
+            <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
+            <span class="lp-prog-dur">12 weeks</span>
+          </div>
+          <img src="assets/fnd/business.jpg" alt="" loading="lazy" />
+          <span class="lp-prog-tag is-beg"><i></i>Beginner</span>
+        </div>
+        <div class="lp-prog-b">
+          <div class="lp-prog-name">Business Analysis &amp; Project Management</div>
+          <div class="lp-prog-desc">Work out what actually needs building, then plan and deliver it with a record that holds up afterwards.</div>
+          <div class="lp-prog-foot">
+            <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
+            <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+          </div>
+        </div>
+      </a>
+      <a href="foundations-product-management.html" class="lp-prog fade-up" data-prog-match="product management" data-prog-tier="beg">
+        <div class="lp-prog-art">
+          <div class="lp-prog-top">
+            <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
+            <span class="lp-prog-dur">12 weeks</span>
+          </div>
+          <img src="assets/fnd/foundations.jpg" alt="" loading="lazy" />
+          <span class="lp-prog-tag is-beg"><i></i>Beginner</span>
+        </div>
+        <div class="lp-prog-b">
+          <div class="lp-prog-name">Product Management</div>
+          <div class="lp-prog-desc">Decide what is worth building and find out whether it worked. Talk to users, read the evidence, choose what not to build.</div>
+          <div class="lp-prog-foot">
+            <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
+            <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+          </div>
+        </div>
+      </a>
+      <a href="foundations-data-science.html" class="lp-prog fade-up" data-prog-match="data science" data-prog-tier="beg">
+        <div class="lp-prog-art">
+          <div class="lp-prog-top">
+            <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
+            <span class="lp-prog-dur">16 weeks</span>
+          </div>
+          <img src="assets/fnd/datascience.jpg" alt="" loading="lazy" />
+          <span class="lp-prog-tag is-beg"><i></i>Beginner</span>
+        </div>
+        <div class="lp-prog-b">
+          <div class="lp-prog-name">Data Science</div>
+          <div class="lp-prog-desc">The deepest course we run. Statistics, modelling and machine learning from the ground floor.</div>
+          <div class="lp-prog-foot">
+            <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
+            <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+          </div>
+        </div>
+      </a>
+      <a href="foundations-cyber-security.html" class="lp-prog fade-up" data-prog-match="cyber" data-prog-tier="beg">
+        <div class="lp-prog-art">
+          <div class="lp-prog-top">
+            <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
+            <span class="lp-prog-dur">16 weeks</span>
+          </div>
+          <img src="assets/fnd/security.jpg" alt="" loading="lazy" />
+          <span class="lp-prog-tag is-beg"><i></i>Beginner</span>
+        </div>
+        <div class="lp-prog-b">
+          <div class="lp-prog-name">Cyber Security</div>
+          <div class="lp-prog-desc">How attacks actually work, how defences are built, and where AI helps or quietly makes things worse.</div>
+          <div class="lp-prog-foot">
+            <div class="lp-prog-price" data-price hidden>From <b><span class="currency-ngn" data-ngn></span><span class="currency-usd" data-usd></span></b></div>
+            <span class="lp-prog-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</section>
+</div>
+
 <!-- ===== COMPARISON ===== -->
 <!-- ===== WHAT BOTH TRACKS SHARE ===== -->
 <section class="tc-shared">
@@ -1248,6 +1529,94 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 
 <script src="nav-programmes.js"></script>
 <script src="cohort-countdown.js"></script>
+<!-- Prices on the cards below are shown in the visitor's currency; this is
+     what decides which of the two is visible. -->
+<script src="currency.js"></script>
+<script>
+/* ============================================================
+   PROGRAMME CARD PRICES
+
+   Same two lookups as the landing page: resolve each card to a
+   programme within its own tier, then take that programme's cheapest
+   INDIVIDUAL plan. Tier is part of the match because Cyber Security
+   exists at both levels and the two are priced differently.
+
+   A card that resolves to nothing, or to a programme priced in only
+   one currency, keeps its price hidden rather than showing somebody
+   else's number or an empty "From".
+   ============================================================ */
+(function () {
+  var API = 'https://dev.api.brixgate.com/api/v1';
+
+  function collectPlans(json) {
+    var d = json && json.data, out = [];
+    if (!d) return out;
+    if (Array.isArray(d.pricing_plans)) return d.pricing_plans;
+    if (Array.isArray(d)) return d;
+    if (typeof d === 'object') {
+      Object.keys(d).forEach(function (k) {
+        var v = d[k];
+        if (Array.isArray(v)) out = out.concat(v);
+        else if (v && Array.isArray(v.pricing_plans)) out = out.concat(v.pricing_plans);
+      });
+    }
+    return out;
+  }
+
+  function fmt(cur, n) {
+    var s = Math.round(n).toLocaleString('en-US');
+    return cur === 'NGN' ? '\u20a6' + s : cur === 'USD' ? '$' + s : s;
+  }
+
+  Promise.all([
+    fetch(API + '/programs').then(function (r) { return r.ok ? r.json() : null; }),
+    fetch(API + '/pricing-plans').then(function (r) { return r.ok ? r.json() : null; })
+  ]).then(function (res) {
+    var programs = (res[0] && res[0].data && res[0].data.programs) || [];
+    var plans = collectPlans(res[1] || {});
+    if (!programs.length || !plans.length) return;
+
+    var byProgramme = {};
+    plans.forEach(function (p) {
+      var type = String(p.plan_type || p.planType || '').toUpperCase();
+      if (type && type !== 'INDIVIDUAL') return;
+      var pid = p.program_id != null ? p.program_id : p.programId;
+      if (pid == null) return;
+      (p.breakdowns || []).forEach(function (b) {
+        var cur = String(b.currency || '').toUpperCase();
+        var v = Number(b.final_price != null ? b.final_price : b.finalPrice);
+        if (!cur || !isFinite(v) || v <= 0) return;
+        var slot = byProgramme[pid] || (byProgramme[pid] = {});
+        if (slot[cur] == null || v < slot[cur]) slot[cur] = v;
+      });
+    });
+
+    var TIER_LEVELS = { beg: ['BEGINNER'], pro: ['INTERMEDIATE', 'ADVANCED'] };
+
+    document.querySelectorAll('.lp-prog[data-prog-match]').forEach(function (card) {
+      var keys = String(card.getAttribute('data-prog-match') || '').split('|');
+      var want = TIER_LEVELS[card.getAttribute('data-prog-tier')] || [];
+      var prog = programs.filter(function (p) {
+        if (want.indexOf(String(p.level || '').toUpperCase()) === -1) return false;
+        var hay = ((p.title || '') + ' ' + (p.slug || '')).toLowerCase().replace(/[-_]+/g, ' ');
+        return keys.some(function (k) { return k && hay.indexOf(k) !== -1; });
+      })[0];
+      if (!prog) return;
+
+      var price = byProgramme[prog.id];
+      if (!price || price.NGN == null || price.USD == null) return;
+
+      var el = card.querySelector('[data-price]');
+      if (!el) return;
+      var n = el.querySelector('[data-ngn]'), u = el.querySelector('[data-usd]');
+      if (n) n.textContent = fmt('NGN', price.NGN);
+      if (u) u.textContent = fmt('USD', price.USD);
+      el.hidden = false;
+    });
+  }).catch(function () { /* keep prices hidden rather than show a wrong one */ });
+})();
+</script>
+
 
 <script>
 /* ============================================================

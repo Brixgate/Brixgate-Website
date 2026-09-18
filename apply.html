@@ -1176,7 +1176,27 @@ body.ap .ap-scholar { margin-bottom:30px; }
 .bx-waves > * { position:relative; z-index:1; }
 
 /* ============================================================
-   APPLY — DARK VARIANT  (body.ap.ap-dark, via ?theme=dark)
+   COUPON FIELD BORDER
+
+   This lived in the element's own style attribute as
+   `border:1px solid var(--border-card)`. The coupon JS clears the
+   field by setting style.borderColor = '', and clearing one longhand
+   of a shorthand that contains a var() drops the whole declaration —
+   so after any reset the field fell back to the browser's default
+   grey instead of the panel colour. As a rule it cannot be wiped that
+   way: setting borderColor still overrides it, clearing it lands back
+   here.
+   ============================================================ */
+#coupon-code { border:1px solid var(--border-card); }
+#coupon-code:focus { border-color:#2A3F59; }
+
+/* ============================================================
+   APPLY — DARK  (body.ap.ap-dark, set in the markup)
+
+   The only theme this page has. ap-dark is hard-coded on <body>
+   rather than folded into .ap so the selectors below stay as they
+   were written, and so a diff against the old two-theme version
+   still reads.
    ============================================================ */
 body.ap.ap-dark {
   --ap-ink:#F2F5F9; --ap-ink2:#DCE3EC; --ap-body:#9FB0C4; --ap-muted:#7E8FA3;
@@ -1262,34 +1282,20 @@ body.ap.ap-dark #form-error-banner, .ap-dark #review-error-banner { background:r
 /* legacy inline colours meant for a dark card are correct again here */
 body.ap.ap-dark .apply-form-card [style*="var(--white)"]:not(.btn):not(a):not(button) { color:#F2F5F9 !important; }
 
-/* ---------- theme switch (comparison aid) ---------- */
-.ap-theme {
-  position:fixed; right:20px; bottom:88px; z-index:60;
-  display:inline-flex; align-items:center; gap:8px;
-  height:40px; padding:0 15px; border-radius:999px; cursor:pointer;
-  font-family:inherit; font-size:.8rem; font-weight:700;
-  background:rgba(2,16,36,.9); color:#fff; border:1px solid rgba(255,255,255,.16);
-  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
-  box-shadow:0 10px 30px -12px rgba(0,0,0,.5);
-  transition:transform .22s var(--ap-ease), background .2s;
-}
-.ap-theme:hover { transform:translateY(-2px); }
-.ap-dark .ap-theme { background:rgba(255,255,255,.92); color:#070E18; border-color:rgba(0,0,0,.1); }
-@media (max-width:700px) { .ap-theme { right:14px; bottom:84px; height:36px; font-size:.75rem; } }
 
 /* ============================================================
-   LIGHT-MODE REPAIRS
-   The split was designed dark-first. Several pieces carry hard
-   coded white text, or colours the payment JS sets inline for a
-   dark ground, and they disappear against the light one.
+   APPLY LAYOUT FIXES
+
+   This page is dark only. It was built dark-first, and the light
+   variant existed behind a toggle so the two could be compared; the
+   coupon field was the proof it never really worked — white text in a
+   5%-white box, invisible on a light ground. The toggle and the
+   light-mode repairs that propped it up are both gone.
+
+   What is left here is layout, not theme.
    ============================================================ */
 
-/* 1 · The form column becomes a cream panel. On plain white the
-   white inputs had no edge to read against. */
-body.ap:not(.ap-dark) .apply-wrapper { background:#F6F5F5; }
-body.ap:not(.ap-dark) .apply-form-card { background:transparent !important; }
-
-/* 2 · "How are you applying" — icon, text and radio on one line.
+/* 1 · "How are you applying" — icon, text and radio on one line.
    ap-choice-top becomes display:contents so its two children join
    the parent grid directly, no markup change needed. */
 body.ap .enroll-toggle-btn {
@@ -1304,10 +1310,6 @@ body.ap .ap-choice-ic { grid-area:ic; width:32px !important; height:32px !import
 body.ap .ap-choice-radio { grid-area:radio; }
 body.ap .ap-choice-t { grid-area:t; font-size:.94rem; margin:0; align-self:end; }
 body.ap .ap-choice-d { grid-area:d; font-size:.78rem; margin:0 !important; align-self:start; }
-
-/* 3 · Terms / privacy note was rgba(255,255,255,.3) — white on white. */
-body.ap:not(.ap-dark) .form-note { color:#5A6B80 !important; }
-body.ap:not(.ap-dark) .form-note a { color:var(--ap-red) !important; font-weight:650; text-decoration:underline; }
 
 /* 4 · "Chat with Dee" bar: the inline white has been removed, so the
    colour now comes from here and follows the theme. */
@@ -1338,32 +1340,6 @@ body.ap.ap-dark #back-to-form {
 }
 body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-color:#2A3F59 !important; }
 
-/* 6 · Payment plan pills. The renderer writes their colours inline for
-   a dark panel, so on light the borders and labels vanish. Restyled
-   here rather than in the renderer — no payment code is touched. */
-body.ap:not(.ap-dark) #payment-options-container button {
-  border:1.5px solid #D6DBE3 !important;
-  background:#fff !important;
-  color:#4A5A70 !important;
-}
-body.ap:not(.ap-dark) #payment-options-container button:hover {
-  border-color:#B8C1CE !important; background:#F7F9FB !important;
-}
-/* The renderer marks the active pill with #FF294E in its inline style.
-   That red on its own 8% tint measured 3.04:1 — under AA for text this
-   size — so the label drops to the deeper brand red, which clears it. */
-body.ap:not(.ap-dark) #payment-options-container button[style*="#FF294E"] {
-  border-color:var(--ap-red) !important;
-  background:rgba(255,41,78,.08) !important;
-  color:#A8102C !important;
-}
-/* labels and schedule rows inside the payment block */
-body.ap:not(.ap-dark) #payment-options-container,
-body.ap:not(.ap-dark) #payment-options-container div,
-body.ap:not(.ap-dark) #payment-options-container span {
-  color:#33415C;
-}
-body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#6B7A90; }
 </style>
 
   <link rel="canonical" href="https://brixgate.com/apply.html" />
@@ -1379,7 +1355,7 @@ body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#
   <meta name="twitter:image" content="https://brixgate.com/assets/og-brixgate.jpg" />
   <meta name="robots" content="noindex, follow" />
 </head>
-<body class="ap">
+<body class="ap ap-dark">
 
 <div id="scroll-progress"></div>
 
@@ -1879,7 +1855,7 @@ body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#
               <div id="coupon-input-row" style="display:none">
                 <label for="coupon-code" style="font-size:0.8rem;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:7px">Coupon Code</label>
                 <div style="display:flex;gap:8px;align-items:stretch">
-                  <input type="text" id="coupon-code" name="coupon_code" placeholder="e.g. BRIX20" autocomplete="off" style="background:rgba(255,255,255,0.05);border:1px solid var(--border-card);border-radius:8px;padding:13px 16px;color:var(--white);font-family:inherit;font-size:0.92rem;outline:none;flex:1;box-sizing:border-box;transition:border-color .2s;text-transform:uppercase;letter-spacing:.05em" oninput="this.value=this.value.toUpperCase()" />
+                  <input type="text" id="coupon-code" name="coupon_code" placeholder="e.g. BRIX20" autocomplete="off" style="background:rgba(255,255,255,0.05);border-radius:8px;padding:13px 16px;color:var(--white);font-family:inherit;font-size:0.92rem;outline:none;flex:1;box-sizing:border-box;transition:border-color .2s;text-transform:uppercase;letter-spacing:.05em" oninput="this.value=this.value.toUpperCase()" />
                   <button type="button" onclick="applyCoupon()" style="padding:13px 22px;background:var(--red);border:none;border-radius:8px;color:#fff;font-size:0.85rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s;line-height:1" onmouseover="this.style.background='var(--orange)'" onmouseout="this.style.background='var(--red)'">Apply</button>
                 </div>
                 </div>
@@ -3114,16 +3090,39 @@ body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#
 
       if (Object.keys(newPricing).length > 0) _validatedPricing = newPricing;
 
-      /* Coupon application state */
+      /* Coupon application state.
+
+         This used to be results.some(...) — a coupon counted as applied
+         if it discounted ANY currency. A coupon configured in Naira
+         alone therefore passed on the NGN result and lit up the whole
+         panel as applied, while a visitor paying in dollars watched the
+         price not move. The check now asks the only question that
+         matters: does this coupon discount the currency this visitor is
+         actually paying in? */
+      var discountedIn = {};
+      results.forEach(function(r) { if (r.success && r.couponValue > 0) discountedIn[r.currency] = true; });
+
+      var activeCur       = getActiveCurrency();
+      var discountsActive = !!discountedIn[activeCur];
+      /* True when the code is real and does discount something, just not
+         what this visitor is paying in — worth saying plainly rather
+         than calling a valid coupon expired. */
+      var wrongCurrency   = !!couponCode && !discountsActive &&
+                            Object.keys(discountedIn).length > 0;
+
       if (couponCode) {
-        var hasDiscount = results.some(function(r) { return r.success && r.couponValue > 0; });
-        _appliedCoupon = hasDiscount ? couponCode : null;
+        _appliedCoupon = discountsActive ? couponCode : null;
       } else {
         _appliedCoupon = null;
       }
 
       _refreshEnrollmentUI();
-      return { pricing: newPricing, appliedCoupon: _appliedCoupon };
+      return {
+        pricing:       newPricing,
+        appliedCoupon: _appliedCoupon,
+        wrongCurrency: wrongCurrency,
+        activeCurrency: activeCur
+      };
     });
   }
 
@@ -3328,8 +3327,18 @@ body.ap:not(.ap-dark) #payment-options-container .review-section-label { color:#
           feedback.style.color = '#22c55e';
           /* Update review panel if it is already visible */
           _updateReviewPanelPrices();
+        } else if (result.wrongCurrency) {
+          /* A real coupon that simply does not cover this currency.
+             Saying "expired" here would send someone to support over a
+             code that works perfectly well for somebody paying in the
+             other one. */
+          input.readOnly = false;
+          input.style.borderColor = 'rgba(255,41,78,0.5)';
+          feedback.textContent = 'Coupon "' + code + '" does not apply to '
+            + String(result.activeCurrency || '').toUpperCase() + ' payments.';
+          feedback.style.color = 'var(--red)';
         } else {
-          /* success:true but coupon_value = 0 for all currencies */
+          /* success:true but coupon_value = 0 for every currency */
           input.readOnly = false;
           input.style.borderColor = 'rgba(255,41,78,0.5)';
           feedback.textContent = 'Coupon "' + code + '" is invalid or expired.';
@@ -4018,32 +4027,6 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 })();
 </script>
 
-<button class="ap-theme" id="ap-theme" type="button" aria-label="Toggle colour theme">
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-  <span id="ap-theme-label">Dark</span>
-</button>
-<script>
-/* Dark is the default for this page. The toggle stays, and a choice made
-   with it is remembered, but a first visit opens dark rather than light.
-   ?theme= still wins over both, for comparing the two side by side. */
-(function () {
-  var KEY = 'bxApplyTheme';
-  var qp = new URLSearchParams(location.search).get('theme');
-  var saved = null; try { saved = localStorage.getItem(KEY); } catch (e) {}
-  /* saved === 'light' is an explicit choice and is honoured; no saved
-     value at all means this is a first visit, which opens dark. */
-  var dark = qp ? qp === 'dark' : (saved ? saved === 'dark' : true);
-  function apply(d) {
-    document.body.classList.toggle('ap-dark', d);
-    var l = document.getElementById('ap-theme-label');
-    if (l) l.textContent = d ? 'Light' : 'Dark';
-    try { localStorage.setItem(KEY, d ? 'dark' : 'light'); } catch (e) {}
-  }
-  apply(dark);
-  var b = document.getElementById('ap-theme');
-  if (b) b.addEventListener('click', function () { apply(!document.body.classList.contains('ap-dark')); });
-})();
-</script>
 
 <script>
 /* The nav has no explicit height at desktop, so its real height is only
