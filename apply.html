@@ -2248,6 +2248,29 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
 
      installment_calculation_type says which it is. Everything here is
      wording only; amounts come from the backend either way. */
+  /* What one instalment row costs.
+
+     calculated_amount is the answer when the backend sends it. It does
+     not always: a FIXED_AMOUNT option on production comes back with
+     calculated_amount null and the money in amount_value instead.
+
+     So amount_value is used only when amount_type says it is money. On
+     a PERCENTAGE row it is a percentage — 70.00 meaning seventy per
+     cent — and reading that as currency is exactly the bug that showed
+     $70 against a $350 charge. With no usable figure the row shows an
+     em dash rather than a number nobody computed. */
+  function instalmentAmount(inst) {
+    if (!inst) return null;
+    var calc = Number(inst.calculated_amount);
+    if (inst.calculated_amount != null && isFinite(calc)) return calc;
+    var type = String(inst.amount_type || '').toUpperCase();
+    if (type === 'FIXED_AMOUNT' || type === 'FIXED' || type === 'AMOUNT') {
+      var v = Number(inst.amount_value);
+      if (isFinite(v)) return v;
+    }
+    return null;
+  }
+
   function isEqualSplit(opt) {
     return String(opt && opt.installment_calculation_type || '').toUpperCase() === 'EQUAL';
   }
@@ -2318,7 +2341,7 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
           (isEqualSplit(selected) ? 'Equal Split Schedule' : 'Instalment Schedule') + '</div>';
 
         schedule.forEach(function(inst, i) {
-          var instAmt  = Number(inst.calculated_amount);
+          var instAmt  = instalmentAmount(inst);
           var offset   = inst.due_offset_days != null ? inst.due_offset_days : inst.due_days;
           var dueLabel = (i === 0 || offset === 0) ? 'Due today'
                        : offset != null            ? 'Due in ' + offset + ' days'
@@ -2326,7 +2349,7 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
           var isLast2  = i === schedule.length - 1;
           html += '<div style="display:flex;justify-content:space-between;padding:5px 0;' + (!isLast2 ? 'border-bottom:1px solid rgba(255,255,255,0.07)' : '') + '">' +
             '<span style="color:var(--muted)">Payment ' + (inst.installment_number || (i + 1)) + ' \u2014 ' + dueLabel + '</span>' +
-            '<span style="font-weight:600">' + (isFinite(instAmt) ? sym + instAmt.toLocaleString() : '\u2014') + '</span>' +
+            '<span style="font-weight:600">' + (instAmt != null ? sym + instAmt.toLocaleString() : '\u2014') + '</span>' +
             '</div>';
         });
         html += '</div>';
@@ -3110,8 +3133,15 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
     var plan = _pricingPlans[isTeam ? 'TEAM' : 'INDIVIDUAL'];
     if (!plan || !plan.id) return Promise.resolve(null);
 
-    /* Only NGN + USD are currently active in the UI */
-    var ACTIVE_CURRENCIES = ['ngn', 'usd'];
+    /* Both currencies are quoted up front so a geo flip has an answer
+       ready. A payment option, though, belongs to one currency's
+       breakdown — option 10 on production is on the NGN price and is
+       rejected outright for USD — so once one is selected only the
+       currency actually being paid in is worth asking about. The pills
+       themselves are fetched per currency, so the pair always agree. */
+    var ACTIVE_CURRENCIES = _selectedPaymentOptionId
+      ? [getActiveCurrency()]
+      : ['ngn', 'usd'];
 
     /* The gateway follows the currency, so each quote is asked in the
        terms it would actually be paid in. Same rule as bxGateway(). */
@@ -3273,6 +3303,15 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
       if (rvRow) rvRow.style.display = 'none';
     }
   }
+
+  /* The currency is part of the question — it picks the breakdown and
+     the gateway, and once a payment option is selected only that
+     currency is quoted at all. currency.js can settle it after the
+     first quote has already gone out, so ask again when it moves. */
+  document.addEventListener('bx:currency', function () {
+    if (!_programId) return;
+    callValidateForPricing(_appliedCoupon || null);
+  });
 
   /* Called when team size dropdown changes */
   window.onTeamSizeChange = function() {
