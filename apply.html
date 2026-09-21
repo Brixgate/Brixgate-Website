@@ -3128,6 +3128,15 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
     var teamSize   = parseInt((document.getElementById('team-size') || {}).value) || 0;
 
     if (!_programId) return Promise.resolve(null);
+    /* entity_id is a cohort. The old `_cohortId || _programId` fallback
+       could only ever 404 — "Cohort not found" — and because the
+       cohort list arrives after the first quote goes out, that failed
+       call sometimes landed last and left the panel showing an em dash
+       over a price the server had already answered correctly.
+
+       There is nothing to enrol in without a cohort, so there is
+       nothing to quote. The cohort resolving fires its own quote. */
+    if (!_cohortId) return Promise.resolve(null);
     if (isTeam && teamSize < 2) return Promise.resolve(null);
 
     var plan = _pricingPlans[isTeam ? 'TEAM' : 'INDIVIDUAL'];
@@ -3150,7 +3159,7 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
     var calls = ACTIVE_CURRENCIES.map(function(c) {
       var payload = {
         payment_type:      'ENROLLMENT',
-        entity_id:         _cohortId || _programId,
+        entity_id:         _cohortId,
         pricing_plan_id:   plan.id,
         payment_option_id: _selectedPaymentOptionId || null,
         currency:          c.toUpperCase(),
