@@ -2192,6 +2192,16 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
         /* Fetch installment options using the INDIVIDUAL plan (applies to both types) */
         var indPlan = _pricingPlans['INDIVIDUAL'] || plans[0];
         if (indPlan && indPlan.id) fetchPaymentOptions(indPlan.id, getActiveCurrency());
+
+        /* Quote as soon as there is a plan to quote.
+
+           An individual with no coupon used to reach payment without
+           the server ever having been asked what this costs — the page
+           showed the catalogue final_price and trusted it to match what
+           /payments/initiate would charge. That is the commonest
+           application there is, and it was the one path with no
+           authority behind its number. */
+        callValidateForPricing(_appliedCoupon || null);
       })
       .catch(function(err) {
         console.warn('[Brixgate] Pricing unavailable:', err.message);
@@ -2287,42 +2297,39 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
     }
     html += '</div>';
 
-    /* Instalment schedule breakdown when a plan is chosen */
+    /* Instalment schedule breakdown when a plan is chosen.
+
+       Every figure here is the backend's calculated_amount. Nothing is
+       derived: the old version fell back to Math.round(total / n) when
+       the payment option carried no amounts, and read amount_value as
+       money when it did — but amount_value is 70.00 meaning seventy
+       PERCENT on a 70/30 plan, so it showed $70 against a $350 charge.
+
+       No quote, no schedule. A number nobody computed is worse than no
+       number at all. */
     if (_selectedPaymentOptionId) {
       var selected = _paymentOptions.find(function(o) { return o.id === _selectedPaymentOptionId; });
-      if (selected) {
-        /* Use explicit installments array if available, else synthesise equal splits */
-        var schedule = selected.installments && selected.installments.length ? selected.installments : null;
-        var n2       = selected.number_of_installments || (schedule && schedule.length) || 0;
+      var q        = _validatedPricing[cur];
+      var schedule = (q && q.installments && q.installments.length) ? q.installments : null;
 
-        /* Get the full price for this currency to calculate equal splits */
-        var fullAmt = (function() {
-          var vp3 = _validatedPricing[cur];
-          if (vp3) return Number(vp3.payableAmount);
-          var et3  = (document.getElementById('enrollment-type') || {}).value || '';
-          var brk3 = getPlanBreakdown(et3 === 'Team' ? 'TEAM' : 'INDIVIDUAL', cur);
-          return brk3 ? Number(brk3.final_price) : 0;
-        })();
+      if (selected && schedule) {
+        html += '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:0.82rem">';
+        html += '<div style="font-weight:600;margin-bottom:8px;color:rgba(255,255,255,0.85)">' +
+          (isEqualSplit(selected) ? 'Equal Split Schedule' : 'Instalment Schedule') + '</div>';
 
-        if (n2 > 0) {
-          html += '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:0.82rem">';
-          html += '<div style="font-weight:600;margin-bottom:8px;color:rgba(255,255,255,0.85)">' +
-            (isEqualSplit(selected) ? 'Equal Split Schedule' : 'Instalment Schedule') + '</div>';
-          for (var i = 0; i < n2; i++) {
-            var inst     = schedule ? schedule[i] : null;
-            var instAmt  = inst ? Number(inst.amount_value || inst.amount || 0)
-                                : Math.round(fullAmt / n2);
-            var dueLabel = i === 0 ? 'Due today'
-                         : inst    ? 'Due in ' + (inst.due_offset_days || inst.due_days || (i * 30)) + ' days'
-                         : 'Due at instalment ' + (i + 1);
-            var isLast2  = i === n2 - 1;
-            html += '<div style="display:flex;justify-content:space-between;padding:5px 0;' + (!isLast2 ? 'border-bottom:1px solid rgba(255,255,255,0.07)' : '') + '">' +
-              '<span style="color:var(--muted)">Payment ' + (i + 1) + ' — ' + dueLabel + '</span>' +
-              '<span style="font-weight:600">' + sym + instAmt.toLocaleString() + '</span>' +
-              '</div>';
-          }
-          html += '</div>';
-        }
+        schedule.forEach(function(inst, i) {
+          var instAmt  = Number(inst.calculated_amount);
+          var offset   = inst.due_offset_days != null ? inst.due_offset_days : inst.due_days;
+          var dueLabel = (i === 0 || offset === 0) ? 'Due today'
+                       : offset != null            ? 'Due in ' + offset + ' days'
+                       : 'Payment ' + (i + 1);
+          var isLast2  = i === schedule.length - 1;
+          html += '<div style="display:flex;justify-content:space-between;padding:5px 0;' + (!isLast2 ? 'border-bottom:1px solid rgba(255,255,255,0.07)' : '') + '">' +
+            '<span style="color:var(--muted)">Payment ' + (inst.installment_number || (i + 1)) + ' \u2014 ' + dueLabel + '</span>' +
+            '<span style="font-weight:600">' + (isFinite(instAmt) ? sym + instAmt.toLocaleString() : '\u2014') + '</span>' +
+            '</div>';
+        });
+        html += '</div>';
       }
     }
 
@@ -2332,20 +2339,16 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
     var totalLabel = document.getElementById('review-total-label');
     var totalVal   = document.getElementById('review-total');
     if (_selectedPaymentOptionId) {
-      var sel2    = _paymentOptions.find(function(o) { return o.id === _selectedPaymentOptionId; });
-      var n3      = sel2 && (sel2.number_of_installments || (sel2.installments && sel2.installments.length));
-      var fullAmt2 = (function() {
-        var vp4 = _validatedPricing[cur];
-        if (vp4) return Number(vp4.payableAmount);
-        var et4  = (document.getElementById('enrollment-type') || {}).value || '';
-        var brk4 = getPlanBreakdown(et4 === 'Team' ? 'TEAM' : 'INDIVIDUAL', cur);
-        return brk4 ? Number(brk4.final_price) : 0;
-      })();
-      var firstInstAmt = (sel2 && sel2.installments && sel2.installments.length)
-        ? Number(sel2.installments[0].amount_value || sel2.installments[0].amount || 0) || (n3 ? Math.round(fullAmt2 / n3) : fullAmt2)
-        : (n3 ? Math.round(fullAmt2 / n3) : fullAmt2);
-      if (totalLabel) totalLabel.textContent = 'Due Today (1st of ' + (n3 || 1) + ')';
-      if (totalVal)   totalVal.textContent   = sym + firstInstAmt.toLocaleString();
+      /* amount_due_now, straight from the quote. The instalment count
+         comes from the quote's own schedule so the label and the figure
+         can never describe different plans. */
+      var q2  = _validatedPricing[cur];
+      var n3  = (q2 && q2.installments && q2.installments.length) || 0;
+      var due = q2 && q2.amountDueNow != null ? Number(q2.amountDueNow) : null;
+      if (totalLabel) totalLabel.textContent = n3 ? 'Due Today (1st of ' + n3 + ')' : 'Due Today';
+      if (totalVal)   totalVal.textContent   = (due != null && isFinite(due))
+        ? sym + due.toLocaleString()
+        : '\u2014';
     } else {
       if (totalLabel) totalLabel.textContent = 'Total Due Today';
       if (totalVal) {
@@ -2364,8 +2367,15 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
   /* Called by inline onclick on payment plan pills */
   function selectPaymentPlan(optId) {
     _selectedPaymentOptionId = optId || null;
+    /* The option is part of the question, so changing it means asking
+       again. Painting first keeps the pill responsive; the figures fill
+       in when the quote lands. */
     renderPaymentOptions();
     _updateReviewPanelPrices();
+    callValidateForPricing(_appliedCoupon || null).then(function() {
+      renderPaymentOptions();
+      _updateReviewPanelPrices();
+    });
   }
 
   function updateFeesDisplay() {
@@ -2561,6 +2571,11 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
 
     var teamSize = (document.getElementById('team-size') || {}).value || '';
     updateEnrollmentUI(type, teamSize);
+
+    /* Individual and team are different plans at different prices, so
+       switching is a new question. A team with no size yet is caught by
+       the guard inside and simply does not ask. */
+    callValidateForPricing(null);
   };
 
   window.selectLevelBadge = function(level) {
@@ -2724,8 +2739,12 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
           return c.status && /open|active|current/i.test(c.status);
         }) || cohorts[0];
         if (active && active.id) {
+          var changed = _cohortId !== active.id;
           _cohortId = active.id;
           PROGRAM_ID_TO_COHORT_ID[programId] = _cohortId;
+          /* Any quote taken before this resolved was keyed to the
+             programme id, which is the fallback, not the answer. */
+          if (changed) callValidateForPricing(_appliedCoupon || null);
         }
         return _cohortId;
       })
@@ -2894,6 +2913,10 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
         }
         if (_programId) PROGRAM_ID_TO_COHORT_ID[_programId] = _cohortId;
         updateCohortUI();
+        /* entity_id is the cohort, so a different cohort is a different
+           question. Quotes taken before the cohort list resolved were
+           keyed to the programme id fallback. */
+        callValidateForPricing(_appliedCoupon || null);
       });
     }
 
@@ -3051,25 +3074,38 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
   var _couponSavings    = {};
 
   /* ─── Backend pricing oracle ─────────────────────────────────────────────
-     Calls /payments/coupons/validate for NGN + USD in parallel.
-     Stores results in _validatedPricing and refreshes the fee panels.
-     Returns a Promise resolving to { pricing, appliedCoupon } or { error }.
+     POST /payments/quote, for NGN and USD in parallel.
 
-     Guards — returns null without calling the API when:
-       • Programme not selected, or pricing plans not loaded
-       • Email not filled in (required by the endpoint)
-       • Team enrollment but team size not yet chosen
-       • Individual enrollment with no coupon (pricing-plans price is correct as-is)
+     This is the only thing on the page allowed to decide what a number
+     costs. It replaced /payments/coupons/validate, which could not see
+     a payment option and so could only ever answer with the full price
+     — leaving the browser to divide it up and hope that matched what
+     the backend would charge. It did not always: a 70/30 plan carries
+     amount_value 70 meaning seventy PERCENT, and read as money that
+     showed $70 where Stripe then charged $350.
+
+     Quote takes payment_option_id and answers with amount_due_now and
+     a calculated_amount per instalment, computed by the same code that
+     will charge the card. No arithmetic on money happens in this file
+     any more.
+
+     It also validates the coupon, with the same errors.coupon_code
+     shape the old endpoint used, so one call now answers both
+     questions. It needs no billing_email, which means the case that
+     never used to reach the server at all — an individual with no
+     coupon, the commonest application there is — now gets a real
+     quote rather than the catalogue price.
+
+     Returns a Promise resolving to { pricing, appliedCoupon } or
+     { error: 'coupon' }, or null when there is not yet enough to ask.
   ────────────────────────────────────────────────────────────────────────── */
   function callValidateForPricing(couponCode) {
-    var email      = ((document.getElementById('email') || {}).value || '').trim();
     var enrollType = (document.getElementById('enrollment-type') || {}).value || '';
     var isTeam     = enrollType === 'Team';
     var teamSize   = parseInt((document.getElementById('team-size') || {}).value) || 0;
 
-    if (!email || !_programId) return Promise.resolve(null);
+    if (!_programId) return Promise.resolve(null);
     if (isTeam && teamSize < 2) return Promise.resolve(null);
-    if (!isTeam && !couponCode) return Promise.resolve(null);
 
     var plan = _pricingPlans[isTeam ? 'TEAM' : 'INDIVIDUAL'];
     if (!plan || !plan.id) return Promise.resolve(null);
@@ -3077,29 +3113,41 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
     /* Only NGN + USD are currently active in the UI */
     var ACTIVE_CURRENCIES = ['ngn', 'usd'];
 
+    /* The gateway follows the currency, so each quote is asked in the
+       terms it would actually be paid in. Same rule as bxGateway(). */
+    function methodFor(c) { return c === 'usd' ? 'STRIPE' : 'PAYSTACK'; }
+
     var calls = ACTIVE_CURRENCIES.map(function(c) {
       var payload = {
-        payment_type:    'ENROLLMENT',
-        entity_id:       _cohortId || _programId,
-        pricing_plan_id: plan.id,
-        currency:        c.toUpperCase(),
-        enrollment_type: isTeam ? 'TEAM' : 'INDIVIDUAL',
-        user_size:       isTeam ? teamSize : 1,
-        billing_email:   email
+        payment_type:      'ENROLLMENT',
+        entity_id:         _cohortId || _programId,
+        pricing_plan_id:   plan.id,
+        payment_option_id: _selectedPaymentOptionId || null,
+        currency:          c.toUpperCase(),
+        enrollment_type:   isTeam ? 'TEAM' : 'INDIVIDUAL',
+        user_size:         isTeam ? teamSize : 1,
+        coupon_code:       couponCode || null,
+        payment_method:    methodFor(c)
       };
-      if (couponCode) payload.coupon_code = couponCode;
 
-      return apiPost('/payments/coupons/validate', payload)
+      return apiPost('/payments/quote', payload)
         .then(function(data) {
           if (!data.success) return { currency: c, success: false, errData: data };
           var d = data.data;
           return {
             currency:       c,
             success:        true,
-            totalAmount:    d.total_amount,
+            /* Names kept from the old shape so the panels that read
+               them did not all have to change at once. */
+            totalAmount:    d.original_amount != null ? d.original_amount : d.payable_amount,
             payableAmount:  d.payable_amount,
-            couponValue:    d.coupon_value || 0,
-            perPersonPrice: d.program_final_price
+            couponValue:    d.discount_amount || 0,
+            perPersonPrice: d.program_final_price,
+            /* The new answers, and the reason for the change. */
+            amountDueNow:   d.amount_due_now != null ? d.amount_due_now : d.payable_amount,
+            installments:   d.installments || [],
+            paymentMode:    d.payment_mode,
+            calcType:       d.installment_calculation_type
           };
         })
         .catch(function() { return { currency: c, success: false, network: true }; });
@@ -3186,16 +3234,15 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
       origStr = brk ? sym + fullAmt.toLocaleString() : '—';
     }
 
-    /* If an instalment plan is selected, show first instalment for total + button */
+    /* With an instalment plan chosen, the button and the total show
+       what is actually taken today — the quote's amount_due_now, never
+       a share of the total worked out here. */
     var payStr, totalLabelStr;
     if (_selectedPaymentOptionId) {
-      var selOpt = (_paymentOptions || []).find(function(o) { return o.id === _selectedPaymentOptionId; });
-      var nInst  = selOpt && (selOpt.number_of_installments || (selOpt.installments && selOpt.installments.length));
-      var due    = (selOpt && selOpt.installments && selOpt.installments.length)
-        ? Number(selOpt.installments[0].amount_value || selOpt.installments[0].amount || 0) || (nInst ? Math.round(fullAmt / nInst) : fullAmt)
-        : (nInst ? Math.round(fullAmt / nInst) : fullAmt);
-      payStr        = sym + due.toLocaleString();
-      totalLabelStr = 'Due Today (1st of ' + (nInst || 1) + ')';
+      var nInst = (vp && vp.installments && vp.installments.length) || 0;
+      var due   = vp && vp.amountDueNow != null ? Number(vp.amountDueNow) : null;
+      payStr        = (due != null && isFinite(due)) ? sym + due.toLocaleString() : '\u2014';
+      totalLabelStr = nInst ? 'Due Today (1st of ' + nInst + ')' : 'Due Today';
     } else {
       payStr        = sym + fullAmt.toLocaleString();
       totalLabelStr = 'Total Due Today';
@@ -3246,13 +3293,9 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
       if (elPP)   elPP.textContent   = '—';
     });
 
-    var email = ((document.getElementById('email') || {}).value || '').trim();
-    if (!email) {
-      /* Email not yet entered — nothing more to do; user will trigger validate via email listener */
-      _validatedPricing = {};
-      _refreshEnrollmentUI();
-      return;
-    }
+    /* The old oracle required billing_email, so this waited for one.
+       Quote does not, and making a team of four wait until they type an
+       address before seeing what four costs was never the intent. */
 
     /* Clear stale pricing and fire the oracle call */
     _validatedPricing = {};
