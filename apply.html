@@ -2261,8 +2261,20 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
      em dash rather than a number nobody computed. */
   function instalmentAmount(inst) {
     if (!inst) return null;
-    var calc = Number(inst.calculated_amount);
-    if (inst.calculated_amount != null && isFinite(calc)) return calc;
+    /* The same figure has two names. /pricing-plans/{id}/payment-options
+       calls it calculated_amount; /payments/quote calls it amount_due.
+       Reading only the first is why a 70/30 schedule rendered as two em
+       dashes while the panel above it showed the right total. */
+    var named = ['calculated_amount', 'amount_due', 'calculatedAmount', 'amountDue'];
+    for (var i = 0; i < named.length; i++) {
+      var raw = inst[named[i]];
+      if (raw == null) continue;
+      var n = Number(raw);
+      if (isFinite(n)) return n;
+    }
+    /* amount_value is money only when amount_type says so. On a
+       PERCENTAGE row it is 70.00 meaning seventy per cent, and showing
+       that as currency is the fault this whole path exists to avoid. */
     var type = String(inst.amount_type || '').toUpperCase();
     if (type === 'FIXED_AMOUNT' || type === 'FIXED' || type === 'AMOUNT') {
       var v = Number(inst.amount_value);
