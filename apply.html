@@ -2231,6 +2231,27 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
       });
   }
 
+  /* An equal split and an instalment plan are different offers, and a
+     plan can have both — a 2-way even split alongside a 70/30. Called
+     both "Pay in 2 Instalments" they were indistinguishable, and the
+     visitor had to open each to tell which was which.
+
+     installment_calculation_type says which it is. Everything here is
+     wording only; amounts come from the backend either way. */
+  function isEqualSplit(opt) {
+    return String(opt && opt.installment_calculation_type || '').toUpperCase() === 'EQUAL';
+  }
+  function planCount(opt) {
+    return opt && (opt.number_of_installments || (opt.installments && opt.installments.length));
+  }
+  function planLabel(opt) {
+    var n = planCount(opt);
+    if (!n) return opt.title || opt.name || opt.label || 'Instalment Plan';
+    return isEqualSplit(opt)
+      ? 'Pay in ' + n + ' equal splits'
+      : 'Pay in ' + n + ' instalments';
+  }
+
   /* Renders the payment plan selector into #payment-options-container.
      Hidden when no installment options are available. */
   function renderPaymentOptions() {
@@ -2256,9 +2277,7 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
     if (hasInstallments) {
       _paymentOptions.forEach(function(opt) {
         var isActive = _selectedPaymentOptionId === opt.id;
-        /* Build a user-friendly label: prefer number_of_installments, fall back to title */
-        var n     = opt.number_of_installments || (opt.installments && opt.installments.length);
-        var label = n ? ('Pay in ' + n + ' Instalments') : (opt.title || opt.name || opt.label || 'Instalment Plan');
+        var label = planLabel(opt);
         html += '<button type="button" onclick="selectPaymentPlan(' + opt.id + ')" style="padding:7px 14px;border-radius:20px;border:1.5px solid ' +
           (isActive ? '#FF294E' : 'rgba(255,255,255,0.18)') +
           ';background:' + (isActive ? 'rgba(255,41,78,0.13)' : 'rgba(255,255,255,0.04)') +
@@ -2287,7 +2306,8 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
 
         if (n2 > 0) {
           html += '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:0.82rem">';
-          html += '<div style="font-weight:600;margin-bottom:8px;color:rgba(255,255,255,0.85)">Instalment Schedule</div>';
+          html += '<div style="font-weight:600;margin-bottom:8px;color:rgba(255,255,255,0.85)">' +
+            (isEqualSplit(selected) ? 'Equal Split Schedule' : 'Instalment Schedule') + '</div>';
           for (var i = 0; i < n2; i++) {
             var inst     = schedule ? schedule[i] : null;
             var instAmt  = inst ? Number(inst.amount_value || inst.amount || 0)
