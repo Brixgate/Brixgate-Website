@@ -605,9 +605,53 @@
     'product marketing':   { title: 'AI in Product Marketing — Expert Practitioner Programme', desc: 'A four-week sprint building AI fluency across the full marketing and sales lifecycle — content, campaigns, customer intelligence, and strategy. Assessed through a deployed applied project reviewed by a verified Expert Practitioner in the field.' },
   };
 
+  /* The verify endpoint nests its answer: the holder is under user, the
+     programme under program, the dates under certificate. Both pages
+     used to read those straight off the top level, so cert.program was
+     the whole object and rendered as "[object Object]" — and on
+     certificate.html it reached getBlurb(), which called toLowerCase()
+     on an object, threw, and was caught by the same handler that
+     reports a missing certificate. A render bug reported itself as
+     "not found".
+
+     This flattens the response once, before anything reads it. Flat
+     keys are still honoured so an older or different shape keeps
+     working. */
+  function flattenCert(d) {
+    if (!d || typeof d !== 'object') return {};
+    var c = d.certificate || {};
+    var u = d.user || {};
+    var p = d.program || d.programme || {};
+    var co = d.cohort || {};
+    function pick() {
+      for (var i = 0; i < arguments.length; i++) {
+        var v = arguments[i];
+        if (v == null) continue;
+        if (typeof v === 'object') continue;   /* never let an object through */
+        if (String(v).trim() === '') continue;
+        return v;
+      }
+      return '';
+    }
+    return {
+      certificate_number: pick(c.certificate_number, c.certificateNumber, d.certificate_number, d.certificateNumber),
+      name:               pick(u.name, u.full_name, u.fullName, d.holderName, d.holder_name, d.name, d.graduateName),
+      field:              pick(p.title, p.name, d.field, d.primaryField, d.primary_field),
+      cohort:             pick(co.title, co.name, d.cohortName, d.cohort_name, typeof d.cohort === 'string' ? d.cohort : null),
+      issued:             pick(c.issued_at, c.issuedAt, d.issuedAt, d.issued_at, d.issuedDate, d.completionDate, d.completion_date),
+      status:             pick(c.status, d.status),
+      expertName:         pick(d.expertName, d.expert_name, d.instructorName, d.instructor_name),
+      expertRole:         pick(d.expertRole, d.expert_role, d.instructorRole, d.instructor_role),
+      metadata:           (d.metadata && typeof d.metadata === 'object') ? d.metadata : {}
+    };
+  }
+
   function getBlurb(field) {
     if (!field) return null;
-    var key = field.toLowerCase();
+    /* String() because this used to be handed the programme object and
+       threw on toLowerCase, which the fetch handler then reported as a
+       missing certificate. */
+    var key = String(field).toLowerCase();
     for (var k in FIELD_BLURBS) {
       if (key.indexOf(k) !== -1 || k.indexOf(key) !== -1) return FIELD_BLURBS[k];
     }
@@ -638,14 +682,15 @@
     if (r && id) r.value = id;
   }
 
-  function populateCert(cert, rawId) {
-    var certId  = cert.certificateNumber || cert.certificate_number || rawId;
-    var name    = cert.holderName || cert.holder_name || cert.name || cert.graduateName || '';
-    var field   = cert.field || cert.primaryField || cert.primary_field || cert.program || cert.programme || '';
-    var issued  = cert.issuedAt || cert.issued_at || cert.issuedDate || cert.completionDate || cert.completion_date || '';
-    var cohort  = cert.cohort || '';
-    var expertName = cert.expertName || cert.expert_name || '';
-    var expertRole = cert.expertRole || cert.expert_role || '';
+  function populateCert(raw, rawId) {
+    var cert    = flattenCert(raw);
+    var certId  = cert.certificate_number || rawId;
+    var name    = cert.name;
+    var field   = cert.field;
+    var issued  = cert.issued;
+    var cohort  = cert.cohort;
+    var expertName = cert.expertName;
+    var expertRole = cert.expertRole;
 
     if (issued && issued.indexOf('-') !== -1) {
       try { issued = new Date(issued).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }); } catch(e) {}
@@ -723,7 +768,13 @@
         var cert = (data && data.data) ? data.data : data;
         if (!cert || data.success === false) throw new Error('NOT_FOUND');
         document.getElementById('view-loading').style.display = 'none';
-        populateCert(cert, id);
+        try {
+          populateCert(cert, id);
+        } catch (e) {
+          /* The certificate exists — we failed to draw it. Saying "not
+             found" here is what sent a real certificate away as fake. */
+          console.error('[Brixgate] certificate render failed:', e);
+        }
         document.getElementById('view-cert').style.display = 'block';
       })
       .catch(function() {
