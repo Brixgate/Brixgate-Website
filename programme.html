@@ -1661,7 +1661,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   }
 
   Promise.all([
-    fetch(API + '/programs').then(function (r) { return r.ok ? r.json() : null; }),
+    fetch(API + '/programs?size=100').then(function (r) { return r.ok ? r.json() : null; }),
     fetch(API + '/pricing-plans').then(function (r) { return r.ok ? r.json() : null; })
   ]).then(function (res) {
     var programs = (res[0] && res[0].data && res[0].data.programs) || [];

@@ -3100,7 +3100,7 @@
      plan. A card that cannot be resolved keeps its price hidden rather
      than borrowing somebody else's. */
   Promise.all([
-    fetch(LP_API + '/programs').then(function (r) { return r.ok ? r.json() : null; }),
+    fetch(LP_API + '/programs?size=100').then(function (r) { return r.ok ? r.json() : null; }),
     fetch(LP_API + '/pricing-plans').then(function (r) { return r.ok ? r.json() : null; })
   ]).then(function (res) {
     var programs = (res[0] && res[0].data && res[0].data.programs) || [];

@@ -114,7 +114,7 @@
   var programmesPromise = null;
   function programmes() {
     if (!programmesPromise) {
-      programmesPromise = fetch(api + '/api/v1/programs?level=BEGINNER')
+      programmesPromise = fetch(api + '/api/v1/programs?level=BEGINNER&size=100')
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (j) { return (j && j.data && j.data.programs) || []; })
         .catch(function () { return []; });

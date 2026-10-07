@@ -167,3 +167,103 @@ Prices come from pricing plans, per programme and per currency. Every
 programme needs both an NGN and a USD breakdown: the site picks currency
 from the visitor's country, so a programme priced only in NGN shows a
 blank price to everybody outside Nigeria.
+
+---
+
+# AI in Software Engineering — three programmes, one page
+
+## Create three records. Not four.
+
+"AI in Software Engineering" at beginner level is **a page, not a
+programme**. It exists only on the front end, as a heading and a nav
+row, and has no backend record, no id, no cohort and no price of its
+own. Do not create it.
+
+The three tracks below are the real courses: separate records,
+separate lengths, separate prices, separate cohorts. The page is only
+the thing that shows them together, because the audience cannot yet
+tell frontend from backend. One nav row, one landing card, three
+Enrol buttons each carrying its own programme id.
+
+Each track gets its own dedicated page later, when the curricula
+exist. Nothing about these records changes when that happens.
+
+This is the opposite of the professional sprint, which IS a backend
+record: `AI in Software Engineering`, program 1, INTERMEDIATE. The two
+share a name and never collide, because one is an API programme and
+the other is a page — and because everything the API returns here is
+**BEGINNER**, which is what routes these three under "Start your tech
+career" instead of into the professional column.
+
+## The titles must contain these words
+
+The page finds each programme by searching its title and slug, so the
+keyword is not cosmetic. A title missing it resolves to nothing and
+that track shows no price, no cohort and a dead Enrol button —
+everything else on the page still works, which is what makes it easy
+to miss.
+
+| Programme | Title must contain | Level |
+|---|---|---|
+| AI Frontend Development | `frontend` | BEGINNER |
+| AI Backend Development | `backend` | BEGINNER |
+| AI Fullstack Development | `fullstack` | BEGINNER |
+
+**Write Fullstack as one word.** "Full Stack" and "Full-Stack" do not
+contain `fullstack`, and the matcher joins hyphens to spaces but cannot
+join two words. Pick one spelling and keep it.
+
+None of the three collide with the professional sprint: "AI in Software
+Engineering" contains none of those keywords.
+
+---
+
+### AI Frontend Development
+**BEGINNER** · title must contain `frontend`
+
+> The part of the product people actually touch. You start from nothing
+> — no degree, no prior code — and finish able to build an interface
+> that works on a real phone, for real people, with AI helping you move
+> faster than you could alone. Along the way you learn to tell the
+> difference between code that works and code that only looks like it
+> does, which is the judgement the job is really paid for.
+
+### AI Backend Development
+**BEGINNER** · title must contain `backend`
+
+> Everything behind the screen: where the data lives, how it moves, and
+> what happens when ten thousand people arrive at once. You build the
+> parts nobody sees and everybody depends on, with AI in the loop for
+> the repetitive work and your own judgement for the decisions that
+> matter. You leave able to design something that holds up under load
+> rather than only on your laptop.
+
+### AI Fullstack Development
+**BEGINNER** · title must contain `fullstack`
+
+> Both ends, and the seam between them — which is where most of the
+> interesting problems live. The longest of the three on purpose: you
+> build a complete product, screen to database, and own every layer of
+> it. Choose this if you do not yet know which half you prefer, or if
+> you want to be the person who can carry a thing from idea to shipped
+> on their own.
+
+---
+
+## Before the page can be built
+
+Each of the three needs, exactly as the other Foundations courses do:
+
+- a **cohort**, or that section shows no dates
+- an **NGN and a USD** pricing breakdown, or the price is blank for
+  half the world
+- a **duration**, since the page states each track's length beside its
+  Enrol button
+
+The landing card prices itself **"From ₦X"** — the cheapest of the
+three in the visitor's currency — so it stays correct whatever the
+three are priced at individually.
+
+One copy note: the nav's Foundations blurb currently reads *"Six to
+sixteen weeks, nothing assumed."* If any of these three runs longer
+than sixteen weeks, that line needs to stop naming a range.

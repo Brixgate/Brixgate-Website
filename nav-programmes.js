@@ -273,7 +273,7 @@
     FALLBACK.foundations = foundationsSeed();
     render(FALLBACK);
 
-    fetch(API + '/api/v1/programs')
+    fetch(API + '/api/v1/programs?size=100')
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (json) {
         var list = json && json.data && json.data.programs;

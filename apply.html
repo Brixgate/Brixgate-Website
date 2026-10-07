@@ -2735,7 +2735,7 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
   }
 
   function fetchProgrammes() {
-    return fetch(API_BASE + '/programs')
+    return fetch(API_BASE + '/programs?size=100')
       .then(function(r) { return r.json(); })
       .then(function(data) {
         var programs = (data && data.data && data.data.programs) || [];

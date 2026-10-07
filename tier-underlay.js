@@ -153,7 +153,7 @@
     });
 
     /* then refresh whichever lists the API can improve */
-    fetch(API + '/api/v1/programs')
+    fetch(API + '/api/v1/programs?size=100')
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (json) {
         var all = (json && json.data && json.data.programs) || [];
