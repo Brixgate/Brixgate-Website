@@ -25,6 +25,23 @@
 
   var COURSES = [
     {
+      /* Not a programme. Three are — AI Frontend, AI Backend and AI
+         Fullstack Development — and this entry is the page that shows
+         them together, which is why match carries all three keywords
+         and why the nav renders one row rather than three. */
+      slug: 'software-engineering',
+      page: 'foundations-software-engineering.html',
+      ready: true,
+      title: 'AI in Software Engineering',
+      weeks: 0,
+      art: 'assets/course/pair.jpg',
+      accent: '#2F6BFF',
+      match: ['frontend', 'front end', 'backend', 'back end', 'fullstack', 'full stack'],
+      tagline: 'Build software, with AI in the loop.',
+      blurb: 'Three ways in \u2014 frontend, backend, or both. Start from nothing and finish having shipped something real.',
+      outcome: 'You leave having built and shipped working software you can demonstrate.'
+    },
+    {
       slug: 'ai-automation',
       page: 'foundations-ai-automation.html',
       ready: true,

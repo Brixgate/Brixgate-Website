@@ -76,6 +76,10 @@
     { tier: 'professionals', any: ['financial', 'finance'],                page: 'programme-finance.html' },
     { tier: 'professionals', any: ['marketing', 'product-technology'],     page: 'programme-marketing.html' },
 
+    /* Three BEGINNER programmes, one page. Listed first so a title
+       containing both a track word and another course's keyword still
+       lands here. */
+    { tier: 'foundations',   any: ['frontend', 'front-end', 'backend', 'back-end', 'fullstack', 'full-stack'], page: 'foundations-software-engineering.html' },
     { tier: 'foundations',   any: ['automation'],        page: 'foundations-ai-automation.html' },
     { tier: 'foundations',   any: ['data-analytic', 'analytic'], page: 'foundations-data-analytics.html' },
     { tier: 'foundations',   any: ['data-science'],      page: 'foundations-data-science.html' },

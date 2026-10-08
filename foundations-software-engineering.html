@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI in Software Engineering | Brixgate AI Foundations</title>
+  <meta name="description" content="Learn to build software with AI in the loop, from nothing. Three ways in: frontend, backend, or both. Live teaching, small cohorts, no degree or prior code assumed." />
+  <link rel="icon" type="image/png" href="assets/faviii.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="foundations-course.css" />
+
+<style>
+/* ============================================================
+   AI IN SOFTWARE ENGINEERING  ·  three tracks, one page
+
+   Unlike every other Foundations page, this one is not a course. It
+   is three courses — AI Frontend, AI Backend and AI Fullstack
+   Development — that share an explanation, because a beginner cannot
+   yet tell frontend from backend and should not have to choose before
+   anything has explained the difference.
+
+   There is no backend record for "AI in Software Engineering". The
+   three tracks are the real programmes; this page is the thing that
+   shows them together. Each track therefore carries its own id, its
+   own cohort, its own price and its own Enrol button.
+
+   Each track graduates to a dedicated page once its curriculum is
+   written. Nothing here changes when that happens.
+   ============================================================ */
+:root{ --fc-accent:#2F6BFF; --fc-accent-2:#5AA9FF; }
+
+/* ---------- the fork: which of the three ---------- */
+.se-fork{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:46px; }
+@media (max-width:900px){ .se-fork{ grid-template-columns:1fr; } }
+.se-fork-c{
+  background:#fff; border:1px solid var(--fc-line); border-radius:18px; padding:24px 22px;
+  display:flex; flex-direction:column; transition:border-color .3s, transform .3s var(--fc-ease), box-shadow .3s;
+}
+.se-fork-c:hover{ border-color:var(--fc-accent); transform:translateY(-4px); box-shadow:0 20px 44px -26px rgba(47,107,255,.5); }
+.se-fork-k{ font-size:.66rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--fc-accent); }
+.se-fork-t{ font-size:1.18rem; font-weight:800; letter-spacing:-.02em; color:var(--fc-ink); margin-top:10px; }
+.se-fork-d{ font-size:.9rem; color:var(--fc-body); line-height:1.6; margin-top:8px; flex:1; }
+.se-fork-for{ font-size:.82rem; color:var(--fc-muted); margin-top:14px; padding-top:13px; border-top:1px solid var(--fc-line); }
+.se-fork-for b{ color:var(--fc-ink); font-weight:700; }
+
+/* ---------- a track block ---------- */
+.se-track{ border-top:1px solid var(--fc-line); padding-top:54px; margin-top:54px; }
+.se-track:first-of-type{ border-top:0; padding-top:0; margin-top:0; }
+.se-track-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:28px; flex-wrap:wrap; }
+.se-track-n{
+  font-size:.68rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--fc-accent); display:flex; align-items:center; gap:9px;
+}
+.se-track-n i{ width:22px; height:1px; background:var(--fc-accent); display:block; }
+.se-track-t{ font-size:clamp(1.6rem,3vw,2.2rem); font-weight:800; letter-spacing:-.03em; color:var(--fc-ink); margin-top:12px; line-height:1.1; }
+.se-track-l{ font-size:1rem; color:var(--fc-body); line-height:1.7; margin-top:12px; max-width:56ch; }
+
+/* the live facts: duration, price, next cohort. All from the API. */
+.se-facts{ display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+.se-fact{
+  background:var(--fc-surface); border:1px solid var(--fc-line); border-radius:11px;
+  padding:9px 14px; font-size:.82rem; color:var(--fc-body);
+}
+.se-fact b{ color:var(--fc-ink); font-weight:800; }
+.se-fact[hidden]{ display:none; }
+
+.se-track-cta{ margin-top:24px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.se-note{ font-size:.82rem; color:var(--fc-muted); }
+.se-note[hidden]{ display:none; }
+
+.se-track-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:start; }
+@media (max-width:900px){ .se-track-grid{ grid-template-columns:1fr; gap:26px; } }
+.se-track-art{ border-radius:18px; overflow:hidden; aspect-ratio:4/3; background:var(--fc-surface); }
+.se-track-art img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+.se-learn{ margin-top:22px; }
+.se-learn-k{ font-size:.68rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--fc-muted); }
+.se-learn ul{ list-style:none; margin:12px 0 0; padding:0; display:grid; gap:9px; }
+.se-learn li{ display:flex; gap:11px; font-size:.9rem; color:var(--fc-body); line-height:1.55; }
+.se-learn li svg{ width:17px; height:17px; flex-shrink:0; margin-top:3px; color:var(--fc-accent); }
+</style>
+</head>
+<body class="fc">
+
+
+<!-- Region Banner -->
+<div class="region-banner" id="region-banner">
+  <span class="region-label" style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Learners from</span>
+  <div class="regions">
+    <span class="region-item">🇳🇬 Nigeria</span>
+    <span class="region-item">🇬🇧 United Kingdom</span>
+    <span class="region-item">🇺🇸 United States</span>
+    <span class="region-item">🇰🇪 Kenya</span>
+    <span class="region-item">🇿🇦 South Africa</span>
+    <span class="region-more">Headquartered in Lagos</span>
+    <span class="region-cohort" data-cohort-countdown hidden></span>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <div class="nav-mega" data-nav-mega></div>
+      <a href="experts.html">Experts</a>
+      <a href="organisations.html">For Organisations</a>
+      <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20Automation%20course." target="_blank" rel="noopener">Chat with us</a>
+    </div>
+    <div class="nav-cta">
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
+      <a href="apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="programme.html">Programmes</a>
+  <a href="foundations.html" class="nav-mobile-sub">AI Foundations</a>
+  <a href="professionals.html" class="nav-mobile-sub">AI for Professionals</a>
+  <a href="experts.html">Experts</a>
+  <a href="organisations.html">For Organisations</a>
+  <a href="apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<header class="fc-hero">
+  <div class="fc-wrap">
+    <div class="fc-hero-grid">
+      <div>
+        <div class="fc-crumb fc-rise">
+          <a href="foundations.html">AI Foundations</a>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>AI in Software Engineering</span>
+        </div>
+        <span class="fc-pill fc-rise"><i></i>Three ways in · no degree or prior code needed</span>
+        <h1 class="fc-h1 fc-rise">Learn to build software, with AI in the loop from day one.</h1>
+        <p class="fc-lead fc-rise">Not a course about AI. A course in building real software, taught the way the job is actually done now — with AI helping you write, review and ship, and with the judgement to know when it is wrong. It runs as three separate courses, and the only thing you have to decide is which part of the product you want to own.</p>
+
+        <div class="fc-hero-cta fc-rise">
+          <a href="#tracks" class="fc-btn fc-btn-accent"><span data-chars>See the three tracks</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#which" class="fc-btn fc-btn-outline-light"><span data-chars>Help me choose</span></a>
+        </div>
+
+        <div class="fc-stats fc-rise">
+          <div class="fc-stat"><b>Three</b><span>Frontend, backend, or both</span></div>
+          <div class="fc-stat"><b>Live</b><span>Small cohort, taught in real time</span></div>
+          <div class="fc-stat"><b>Zero</b><span>Prior experience assumed</span></div>
+        </div>
+      </div>
+
+      <div class="fc-hero-art fc-rise">
+        <img src="assets/course/pair.jpg" alt="Two people working through code together at a laptop" />
+        <div class="fc-art-card fc-art-tl"><div class="fc-art-k">Three tracks</div><div class="fc-art-v">One page</div><div class="fc-art-s">pick after you understand them</div></div>
+        <div class="fc-art-card fc-art-br"><div class="fc-art-k">You finish with</div><div class="fc-art-v">Shipped</div><div class="fc-art-s">software, not a tutorial folder</div></div>
+        <span class="fc-hero-badge"><i></i>Taught live by people who build for a living</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== WHICH ONE ===== -->
+<section class="fc-sec fc-sec-cream" id="which">
+  <div class="fc-wrap">
+    <div class="fc-head fc-rise">
+      <span class="fc-kicker">Before you choose</span>
+      <h2 class="fc-h2">Nobody starts out knowing the difference.</h2>
+      <p class="fc-lead">So here it is, plainly. Every product has a part people see and touch, and a part that stores the data and does the work. You can learn either one, or both. None of the three assumes you have written code before.</p>
+    </div>
+
+    <div class="se-fork fc-rise">
+      <a class="se-fork-c" href="#frontend">
+        <span class="se-fork-k">Track one</span>
+        <span class="se-fork-t">Frontend</span>
+        <span class="se-fork-d">The part people actually touch. Screens, buttons, the thing that has to work on a phone on a bad connection.</span>
+        <span class="se-fork-for">Pick this if you are <b>visual</b>, and you want to see what you built the moment you build it.</span>
+      </a>
+      <a class="se-fork-c" href="#backend">
+        <span class="se-fork-k">Track two</span>
+        <span class="se-fork-t">Backend</span>
+        <span class="se-fork-d">Everything behind the screen. Where the data lives, how it moves, and what happens when ten thousand people arrive at once.</span>
+        <span class="se-fork-for">Pick this if you like <b>systems and logic</b>, and the problems nobody sees.</span>
+      </a>
+      <a class="se-fork-c" href="#fullstack">
+        <span class="se-fork-t">Fullstack</span>
+        <span class="se-fork-k">Track three</span>
+        <span class="se-fork-d">Both ends, and the seam between them — which is where most of the interesting problems live. The longest of the three, on purpose.</span>
+        <span class="se-fork-for">Pick this if you want to carry a product <b>from idea to shipped</b> on your own.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== THE THREE TRACKS =====
+     Each block carries its own programme id. Duration, price and the
+     next cohort are written by the script at the foot of this page,
+     from the API, per track. Nothing about money is hardcoded here. -->
+<section class="fc-sec" id="tracks">
+  <div class="fc-wrap">
+    <div class="fc-head fc-rise">
+      <span class="fc-kicker">The three courses</span>
+      <h2 class="fc-h2">Three separate courses. Pick one.</h2>
+      <p class="fc-lead">Each has its own length, its own price and its own cohort. Enrolling takes you straight to that course with it already selected.</p>
+    </div>
+
+    <div class="se-track fc-rise" id="frontend" data-track="frontend">
+      <div class="se-track-grid">
+        <div>
+          <div class="se-track-n"><i></i>Track one</div>
+          <h3 class="se-track-t">AI Frontend Development</h3>
+          <p class="se-track-l">The part of the product people actually touch. You start from nothing — no degree, no prior code — and finish able to build an interface that works on a real phone, for real people, with AI helping you move faster than you could alone.</p>
+
+          <div class="se-facts">
+            <span class="se-fact" data-duration hidden>Runs for <b></b></span>
+            <span class="se-fact" data-price hidden>From <b></b></span>
+            <span class="se-fact" data-cohort hidden>Next cohort <b></b></span>
+          </div>
+
+          <div class="se-track-cta">
+            <a class="fc-btn fc-btn-accent" data-enrol href="apply.html?level=BEGINNER"><span data-chars>Enrol now</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <span class="se-note" data-note hidden></span>
+          </div>
+
+          <div class="se-learn">
+            <div class="se-learn-k">What you leave able to do</div>
+            <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Build screens that work on a phone, not only on your laptop</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Use AI to write and review your code, and spot when it is confidently wrong</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Turn a design into something people can actually use</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Ship it somewhere real, with a link you can send to anyone</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="se-track-art"><img src="assets/course/desk.jpg" alt="A developer building an interface on screen" loading="lazy" /></div>
+      </div>
+    </div>
+
+    <div class="se-track fc-rise" id="backend" data-track="backend">
+      <div class="se-track-grid">
+        <div>
+          <div class="se-track-n"><i></i>Track two</div>
+          <h3 class="se-track-t">AI Backend Development</h3>
+          <p class="se-track-l">Everything behind the screen: where the data lives, how it moves, and what happens when ten thousand people arrive at once. You build the parts nobody sees and everybody depends on.</p>
+
+          <div class="se-facts">
+            <span class="se-fact" data-duration hidden>Runs for <b></b></span>
+            <span class="se-fact" data-price hidden>From <b></b></span>
+            <span class="se-fact" data-cohort hidden>Next cohort <b></b></span>
+          </div>
+
+          <div class="se-track-cta">
+            <a class="fc-btn fc-btn-accent" data-enrol href="apply.html?level=BEGINNER"><span data-chars>Enrol now</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <span class="se-note" data-note hidden></span>
+          </div>
+
+          <div class="se-learn">
+            <div class="se-learn-k">What you leave able to do</div>
+            <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Design where data lives and how it is kept safe</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Build the interfaces other software talks to</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Use AI for the repetitive work, and your own judgement for the decisions that matter</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Make something that holds up under load, not only on your laptop</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="se-track-art"><img src="assets/course/review.jpg" alt="Engineers reviewing system behaviour together" loading="lazy" /></div>
+      </div>
+    </div>
+
+    <div class="se-track fc-rise" id="fullstack" data-track="fullstack">
+      <div class="se-track-grid">
+        <div>
+          <div class="se-track-n"><i></i>Track three</div>
+          <h3 class="se-track-t">AI Fullstack Development</h3>
+          <p class="se-track-l">Both ends, and the seam between them — which is where most of the interesting problems live. The longest of the three on purpose: you build a complete product, screen to database, and own every layer of it.</p>
+
+          <div class="se-facts">
+            <span class="se-fact" data-duration hidden>Runs for <b></b></span>
+            <span class="se-fact" data-price hidden>From <b></b></span>
+            <span class="se-fact" data-cohort hidden>Next cohort <b></b></span>
+          </div>
+
+          <div class="se-track-cta">
+            <a class="fc-btn fc-btn-accent" data-enrol href="apply.html?level=BEGINNER"><span data-chars>Enrol now</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <span class="se-note" data-note hidden></span>
+          </div>
+
+          <div class="se-learn">
+            <div class="se-learn-k">What you leave able to do</div>
+            <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Everything in the frontend and backend tracks, carried through one product</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Join the two halves together and keep them honest with each other</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Decide what to build yourself and what to let AI draft</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Finish with a complete product you can demonstrate end to end</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="se-track-art"><img src="assets/course/present.jpg" alt="A team presenting a working product" loading="lazy" /></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT IS TAUGHT ===== -->
+<section class="fc-sec fc-sec-ink">
+  <div class="fc-wrap">
+    <div class="fc-head fc-rise">
+      <span class="fc-kicker">Whichever you pick</span>
+      <h2 class="fc-h2">This part does not change.</h2>
+    </div>
+    <div class="fc-out-grid fc-rise">
+      <div class="fc-out"><div class="fc-out-n">01</div><h3>Taught live, never recorded</h3><p>Small cohorts in real time. You can ask the question the moment you are stuck, which is the only moment it helps.</p></div>
+      <div class="fc-out"><div class="fc-out-n">02</div><h3>Nothing assumed</h3><p>No degree, no prior code, no computer science. The ground floor is taught properly rather than skipped.</p></div>
+      <div class="fc-out"><div class="fc-out-n">03</div><h3>You finish with something built</h3><p>Working software you can open, demonstrate and talk through — not a folder of exercises.</p></div>
+      <div class="fc-out"><div class="fc-out-n">04</div><h3>A certificate anyone can verify</h3><p>Issued when the work is defended, and checkable by anyone you send it to.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="fc-sec">
+  <div class="fc-wrap">
+    <div class="fc-head fc-rise">
+      <span class="fc-kicker">Before you ask</span>
+      <h2 class="fc-h2">The questions people actually send us.</h2>
+    </div>
+    <div class="fc-faq fc-rise" id="se-faq">
+      <div class="fc-faq-item">
+        <button class="fc-faq-q" aria-expanded="false">I still do not know which track to pick.<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="fc-faq-a" aria-hidden="true"><div><p>Pick frontend if you want to see what you built straight away, backend if you prefer systems and logic, fullstack if you cannot choose or want to build whole products alone. If you are still unsure, start with frontend — it gives you something visible fastest, and nothing you learn there is wasted if you move across later.</p></div></div>
+      </div>
+      <div class="fc-faq-item">
+        <button class="fc-faq-q" aria-expanded="false">Do I need to know how to code already?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="fc-faq-a" aria-hidden="true"><div><p>No. All three start from nothing. No degree, no prior code, no computer science background. If you can use a laptop and turn up each week, you can do this.</p></div></div>
+      </div>
+      <div class="fc-faq-item">
+        <button class="fc-faq-q" aria-expanded="false">If AI writes the code, what am I learning?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="fc-faq-a" aria-hidden="true"><div><p>Judgement. AI will write code that looks right and is wrong, and the difference between someone who ships and someone who does not is whether they can tell. You learn to read it, test it, and know when to throw it away — which is what the job is now.</p></div></div>
+      </div>
+      <div class="fc-faq-item">
+        <button class="fc-faq-q" aria-expanded="false">Can I take more than one?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="fc-faq-a" aria-hidden="true"><div><p>Yes, though fullstack already covers both ends in one course and is the cheaper route to the same place. Taking frontend and backend separately makes sense if you want to space them out.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo footer-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+        <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook"><img src="assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block"></a>
+          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram"><img src="assets/social.png" alt="Instagram" width="22" height="22" style="display:block"></a>
+          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X"><img src="assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block"></a>
+          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn" title="LinkedIn"><img src="assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block"></a>
+          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us"><img src="assets/gmail.png" alt="Email" width="22" height="22" style="display:block"></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Programmes</h5><ul><li><a href="foundations.html">AI Foundations</a></li><li><a href="professionals.html">AI for Professionals</a></li><li><a href="professionals.html#pricing">Pricing</a></li><li><a href="apply.html">Apply Now</a></li><li><a href="verify.html">Verify a Certificate</a></li></ul></div>
+      <div class="footer-col"><h5>Experts</h5><ul><li><a href="experts.html">Meet Our Experts</a></li><li><a href="experts.html#qualify">Become an Expert</a></li></ul></div>
+      <div class="footer-col"><h5>Organisation</h5><ul><li><a href="organisations.html">For Organisations</a></li><li><a href="organisations.html#contact">Get a Quote</a></li><li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li></ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="footer-year">2026</span> Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
+    <div class="footer-bottom-links"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+  </div>
+</footer>
+
+<button class="back-to-top">↑</button>
+
+<script src="script.js"></script>
+<script src="foundations-courses.js"></script>
+<script src="foundations-course.js"></script>
+<script src="nav-programmes.js"></script>
+<script src="cohort-countdown.js"></script>
+
+<!-- LinkedIn Insight Tag -->
+<script type="text/javascript">
+_linkedin_partner_id = "9372724";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script><script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9372724&fmt=gif" />
+</noscript>
+</body>
+</html>
+
+<script src="script.js"></script>
+<script src="foundations-courses.js"></script>
+<script src="nav-programmes.js"></script>
+<script src="cohort-countdown.js"></script>
+<script src="currency.js"></script>
+<script>
+/* ============================================================
+   THE THREE TRACKS, FROM THE API
+
+   Each block declares only which programme it is (data-track). The
+   duration, the price and the next cohort are all read from the
+   backend, because this page must never assert a number of its own —
+   a page that hardcodes a price is a page that will one day disagree
+   with what the card is charged.
+
+   A track resolves by keyword within BEGINNER, the same rule the rest
+   of the site uses. Nothing renders for a figure we did not get.
+   ============================================================ */
+(function () {
+  'use strict';
+  var API = 'https://dev.api.brixgate.com/api/v1';
+  var KEYS = { frontend: ['frontend', 'front end'], backend: ['backend', 'back end'], fullstack: ['fullstack', 'full stack'] };
+
+  function sym(cur) { return cur === 'usd' ? '$' : '\u20a6'; }
+  function money(cur, n) { return sym(cur) + Math.round(n).toLocaleString('en-US'); }
+  function cur() { return (window.bxCurrency ? window.bxCurrency() : 'ngn'); }
+
+  function fmtDate(iso) {
+    if (!iso) return '';
+    var d = new Date(iso);
+    if (isNaN(d)) return String(iso);
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  function set(block, sel, text) {
+    var el = block.querySelector(sel);
+    if (!el) return;
+    var b = el.querySelector('b');
+    if (b) b.textContent = text; else el.textContent = text;
+    el.hidden = false;
+  }
+
+  Promise.all([
+    fetch(API + '/programs?size=100').then(function (r) { return r.ok ? r.json() : null; }),
+    fetch(API + '/pricing-plans').then(function (r) { return r.ok ? r.json() : null; })
+  ]).then(function (res) {
+    var programs = (res[0] && res[0].data && res[0].data.programs) || [];
+    var plansRoot = (res[1] && res[1].data) || {};
+    var plans = plansRoot.pricing_plans || (Array.isArray(plansRoot) ? plansRoot : []);
+
+    /* cheapest INDIVIDUAL plan per programme, per currency */
+    var price = {};
+    plans.forEach(function (p) {
+      var type = String(p.plan_type || '').toUpperCase();
+      if (type && type !== 'INDIVIDUAL') return;
+      var pid = p.program_id;
+      if (pid == null) return;
+      (p.breakdowns || []).forEach(function (b) {
+        var c = String(b.currency || '').toLowerCase();
+        var v = Number(b.final_price);
+        if (!c || !isFinite(v) || v <= 0) return;
+        var slot = price[pid] || (price[pid] = {});
+        if (slot[c] == null || v < slot[c]) slot[c] = v;
+      });
+    });
+
+    document.querySelectorAll('[data-track]').forEach(function (block) {
+      var keys = KEYS[block.getAttribute('data-track')] || [];
+      var prog = programs.filter(function (p) {
+        if (String(p.level || '').toUpperCase() !== 'BEGINNER') return false;
+        var hay = ((p.title || '') + ' ' + (p.slug || '')).toLowerCase().replace(/[-_]+/g, ' ');
+        return keys.some(function (k) { return hay.indexOf(k) !== -1; });
+      })[0];
+
+      if (!prog) {
+        /* No record yet. Say so rather than offering a button that
+           cannot complete. */
+        set(block, '[data-note]', 'Opening soon \u2014 dates and pricing are being finalised.');
+        var cta0 = block.querySelector('[data-enrol]');
+        if (cta0) cta0.style.display = 'none';
+        return;
+      }
+
+      /* enrol goes straight to this track, tier already settled */
+      var cta = block.querySelector('[data-enrol]');
+      if (cta) cta.href = 'apply.html?program_id=' + encodeURIComponent(prog.id) + '&level=BEGINNER';
+
+      var pr = price[prog.id];
+      if (pr && pr[cur()] != null) set(block, '[data-price]', money(cur(), pr[cur()]));
+
+      fetch(API + '/programs/' + prog.id + '/cohorts')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) {
+          var d = (j && j.data) || {};
+          var cs = d.cohorts || (Array.isArray(d) ? d : []);
+          var today = new Date().toISOString().slice(0, 10);
+          var next = cs.filter(function (c) {
+            var st = String(c.status || '').toUpperCase();
+            return String(c.start_date || '') >= today && st !== 'CLOSED' && st !== 'COMPLETED' && st !== 'CANCELLED';
+          }).sort(function (a, b) { return a.start_date < b.start_date ? -1 : 1; })[0];
+
+          if (next) {
+            set(block, '[data-cohort]', fmtDate(next.start_date));
+            if (next.duration) set(block, '[data-duration]', next.duration);
+          } else {
+            /* Applying needs a cohort to apply to, so offering Enrol
+               here would send someone into a form that cannot finish. */
+            set(block, '[data-note]', 'Dates for the next cohort are being scheduled.');
+            if (cta) cta.style.display = 'none';
+          }
+        })
+        .catch(function () {});
+    });
+  }).catch(function () { /* leave the page as written rather than show a wrong figure */ });
+
+  /* FAQ accordion, local to this page */
+  var faq = document.getElementById('se-faq');
+  if (faq) {
+    faq.addEventListener('click', function (e) {
+      var q = e.target.closest('.fc-faq-q');
+      if (!q) return;
+      var item = q.closest('.fc-faq-item');
+      var open = q.getAttribute('aria-expanded') === 'true';
+      faq.querySelectorAll('.fc-faq-q').forEach(function (b) {
+        b.setAttribute('aria-expanded', 'false');
+        var a = b.parentElement.querySelector('.fc-faq-a');
+        if (a) a.setAttribute('aria-hidden', 'true');
+        b.closest('.fc-faq-item').classList.remove('open');
+      });
+      if (!open) {
+        q.setAttribute('aria-expanded', 'true');
+        var a = item.querySelector('.fc-faq-a');
+        if (a) a.setAttribute('aria-hidden', 'false');
+        item.classList.add('open');
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>
