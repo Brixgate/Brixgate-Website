@@ -53,8 +53,16 @@
 .se-fork-for b{ color:var(--fc-ink); font-weight:700; }
 
 /* ---------- a track block ---------- */
-.se-track{ border-top:1px solid var(--fc-line); padding-top:54px; margin-top:54px; }
-.se-track:first-of-type{ border-top:0; padding-top:0; margin-top:0; }
+/* Tracks need real air between them — they are three separate courses,
+   not three paragraphs. */
+.se-track{ border-top:1px solid var(--fc-line); padding-top:96px; margin-top:96px; }
+.se-track:first-of-type{ border-top:0; padding-top:0; margin-top:14px; }
+@media (max-width:900px){ .se-track{ padding-top:64px; margin-top:64px; } }
+
+/* Every other track puts its image on the left, so the eye zig-zags
+   down the page instead of running down one rail. */
+.se-alt .se-track-art{ order:-1; }
+@media (max-width:900px){ .se-alt .se-track-art{ order:0; } }
 .se-track-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:28px; flex-wrap:wrap; }
 .se-track-n{
   font-size:.68rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
@@ -84,6 +92,24 @@
 
 .se-out-4{ grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
 @media (max-width:760px){ .se-out-4{ grid-template-columns:1fr !important; } }
+
+/* ---------- the stack ----------
+   Real marks where we have them, wordmarks where we do not. A clean
+   wordmark reads as deliberate; a redrawn approximation of someone
+   else's logo reads as careless and is a trademark problem besides. */
+.se-stack{ margin-top:26px; padding-top:22px; border-top:1px solid var(--fc-line); }
+.se-stack-k{ font-size:.68rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--fc-muted); }
+.se-chips{ display:flex; flex-wrap:wrap; gap:9px; margin-top:13px; }
+.se-chip{
+  display:inline-flex; align-items:center; gap:7px;
+  background:#fff; border:1px solid var(--fc-line); border-radius:9px;
+  padding:7px 12px; font-size:.82rem; font-weight:650; color:var(--fc-ink);
+  transition:border-color .22s, transform .22s var(--fc-ease);
+}
+.se-chip:hover{ border-color:var(--fc-accent); transform:translateY(-2px); }
+.se-chip img{ width:16px; height:16px; object-fit:contain; display:block; }
+.se-chip i{ width:7px; height:7px; border-radius:2px; background:var(--fc-accent); display:block; transform:rotate(45deg); flex-shrink:0; }
+.se-chips-ai .se-chip{ background:var(--fc-surface); }
 
 .se-learn{ margin-top:22px; }
 .se-learn-k{ font-size:.68rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--fc-muted); }
@@ -252,13 +278,26 @@
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Ship it somewhere real, with a link you can send to anyone</span></li>
             </ul>
           </div>
+          <div class="se-stack">
+            <div class="se-stack-k">What you build with</div>
+            <div class="se-chips"><span class="se-chip"><i></i>HTML</span>
+              <span class="se-chip"><i></i>CSS</span>
+              <span class="se-chip"><i></i>JavaScript</span>
+              <span class="se-chip"><i></i>React</span>
+              <span class="se-chip"><i></i>Tailwind</span>
+              <span class="se-chip"><i></i>Git</span></div>
+            <div class="se-stack-k" style="margin-top:18px">AI in the loop</div>
+            <div class="se-chips se-chips-ai"><span class="se-chip"><img src="assets/logos/cursor.svg" alt="" loading="lazy" />Cursor</span>
+              <span class="se-chip"><img src="assets/logos/claude.svg" alt="" loading="lazy" />Claude</span>
+              <span class="se-chip"><img src="assets/logos/copilot.svg" alt="" loading="lazy" />GitHub Copilot</span></div>
+          </div>
         </div>
 
         <div class="se-track-art"><img src="assets/course/desk.jpg" alt="A developer building an interface on screen" loading="lazy" /></div>
       </div>
     </div>
 
-    <div class="se-track fc-rise" id="backend" data-track="backend">
+    <div class="se-track se-alt fc-rise" id="backend" data-track="backend">
       <div class="se-track-grid">
         <div>
           <div class="se-track-n"><i></i>Track two</div>
@@ -286,6 +325,19 @@
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Use AI for the repetitive work, and your own judgement for the decisions that matter</span></li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Make something that holds up under load, not only on your laptop</span></li>
             </ul>
+          </div>
+          <div class="se-stack">
+            <div class="se-stack-k">What you build with</div>
+            <div class="se-chips"><span class="se-chip"><img src="assets/logos/icons/python.svg" alt="" loading="lazy" />Python</span>
+              <span class="se-chip"><i></i>Node.js</span>
+              <span class="se-chip"><i></i>SQL</span>
+              <span class="se-chip"><i></i>PostgreSQL</span>
+              <span class="se-chip"><i></i>REST APIs</span>
+              <span class="se-chip"><i></i>Git</span></div>
+            <div class="se-stack-k" style="margin-top:18px">AI in the loop</div>
+            <div class="se-chips se-chips-ai"><span class="se-chip"><img src="assets/logos/cursor.svg" alt="" loading="lazy" />Cursor</span>
+              <span class="se-chip"><img src="assets/logos/claude.svg" alt="" loading="lazy" />Claude</span>
+              <span class="se-chip"><img src="assets/logos/openai.svg" alt="" loading="lazy" />ChatGPT</span></div>
           </div>
         </div>
 
@@ -321,6 +373,22 @@
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Decide what to build yourself and what to let AI draft</span></li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Finish with a complete product you can demonstrate end to end</span></li>
             </ul>
+          </div>
+          <div class="se-stack">
+            <div class="se-stack-k">What you build with</div>
+            <div class="se-chips"><span class="se-chip"><i></i>HTML</span>
+              <span class="se-chip"><i></i>CSS</span>
+              <span class="se-chip"><i></i>JavaScript</span>
+              <span class="se-chip"><i></i>React</span>
+              <span class="se-chip"><img src="assets/logos/icons/python.svg" alt="" loading="lazy" />Python</span>
+              <span class="se-chip"><i></i>Node.js</span>
+              <span class="se-chip"><i></i>SQL</span>
+              <span class="se-chip"><i></i>Git</span></div>
+            <div class="se-stack-k" style="margin-top:18px">AI in the loop</div>
+            <div class="se-chips se-chips-ai"><span class="se-chip"><img src="assets/logos/cursor.svg" alt="" loading="lazy" />Cursor</span>
+              <span class="se-chip"><img src="assets/logos/claude.svg" alt="" loading="lazy" />Claude</span>
+              <span class="se-chip"><img src="assets/logos/copilot.svg" alt="" loading="lazy" />GitHub Copilot</span>
+              <span class="se-chip"><img src="assets/logos/openai.svg" alt="" loading="lazy" />ChatGPT</span></div>
           </div>
         </div>
 
