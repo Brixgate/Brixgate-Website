@@ -35,8 +35,16 @@
       title: 'AI in Software Engineering',
       weeks: 0,
       art: 'assets/course/pair.jpg',
-      accent: '#2F6BFF',
-      match: ['frontend', 'front end', 'backend', 'back end', 'fullstack', 'full stack'],
+      accent: '#FF294E',
+      /* The three track keywords map the API's three programmes onto
+         this page. 'software engineering' is here for the entry
+         itself: the nav resolves a row's page by running the row's own
+         title and slug through these keys, and without it this entry
+         could not find its own page — the menu showed "Page coming"
+         next to a page that exists, and the link fell through to the
+         tier default. Safe at this tier: fromRegister is only consulted
+         for Foundations, so the INTERMEDIATE sprint cannot reach it. */
+      match: ['frontend', 'front end', 'backend', 'back end', 'fullstack', 'full stack', 'software engineering', 'software-engineering'],
       tagline: 'Build software, with AI in the loop.',
       blurb: 'Three ways in \u2014 frontend, backend, or both. Start from nothing and finish having shipped something real.',
       outcome: 'You leave having built and shipped working software you can demonstrate.'

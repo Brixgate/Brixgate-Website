@@ -27,7 +27,11 @@
    Each track graduates to a dedicated page once its curriculum is
    written. Nothing here changes when that happens.
    ============================================================ */
-:root{ --fc-accent:#2F6BFF; --fc-accent-2:#5AA9FF; }
+/* The other Foundations courses run on the warm end of the brand —
+   #FF5748, #FF294E, #C4173A, #9A2335. A blue accent here made every
+   button, hover and outline on this page disagree with the rest of
+   the site. */
+:root{ --fc-accent:#FF294E; --fc-accent-2:#FF5748; }
 
 /* ---------- the fork: which of the three ---------- */
 .se-fork{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:46px; }
@@ -37,6 +41,11 @@
   display:flex; flex-direction:column; transition:border-color .3s, transform .3s var(--fc-ease), box-shadow .3s;
 }
 .se-fork-c:hover{ border-color:var(--fc-accent); transform:translateY(-4px); box-shadow:0 20px 44px -26px rgba(47,107,255,.5); }
+.se-fork-ic{
+  width:44px; height:44px; border-radius:13px; display:grid; place-items:center;
+  background:rgba(255,41,78,.09); color:var(--fc-accent); margin-bottom:16px;
+}
+.se-fork-ic svg{ width:21px; height:21px; }
 .se-fork-k{ font-size:.66rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--fc-accent); }
 .se-fork-t{ font-size:1.18rem; font-weight:800; letter-spacing:-.02em; color:var(--fc-ink); margin-top:10px; }
 .se-fork-d{ font-size:.9rem; color:var(--fc-body); line-height:1.6; margin-top:8px; flex:1; }
@@ -175,20 +184,23 @@
 
     <div class="se-fork fc-rise">
       <a class="se-fork-c" href="#frontend">
+        <span class="se-fork-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
         <span class="se-fork-k">Track one</span>
         <span class="se-fork-t">Frontend</span>
         <span class="se-fork-d">The part people actually touch. Screens, buttons, the thing that has to work on a phone on a bad connection.</span>
         <span class="se-fork-for">Pick this if you are <b>visual</b>, and you want to see what you built the moment you build it.</span>
       </a>
       <a class="se-fork-c" href="#backend">
+        <span class="se-fork-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg></span>
         <span class="se-fork-k">Track two</span>
         <span class="se-fork-t">Backend</span>
         <span class="se-fork-d">Everything behind the screen. Where the data lives, how it moves, and what happens when ten thousand people arrive at once.</span>
         <span class="se-fork-for">Pick this if you like <b>systems and logic</b>, and the problems nobody sees.</span>
       </a>
       <a class="se-fork-c" href="#fullstack">
-        <span class="se-fork-t">Fullstack</span>
+        <span class="se-fork-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="8" rx="2"/><rect x="2" y="13" width="20" height="8" rx="2"/><path d="M6 7h.01M6 17h.01"/></svg></span>
         <span class="se-fork-k">Track three</span>
+        <span class="se-fork-t">Fullstack</span>
         <span class="se-fork-d">Both ends, and the seam between them — which is where most of the interesting problems live. The longest of the three, on purpose.</span>
         <span class="se-fork-for">Pick this if you want to carry a product <b>from idea to shipped</b> on your own.</span>
       </a>
@@ -331,29 +343,52 @@
   </div>
 </section>
 
-<!-- ===== FAQ ===== -->
+<!-- ===== FAQ =====
+     Same two-column structure the other Foundations pages use: sticky
+     head on the left, list on the right. The first version of this
+     block dropped .fc-faq-wrap and the .fc-faq-chev class, so the
+     layout collapsed to one column and the chevron, having no class
+     and no width, rendered the size of the section. -->
 <section class="fc-sec">
   <div class="fc-wrap">
-    <div class="fc-head fc-rise">
-      <span class="fc-kicker">Before you ask</span>
-      <h2 class="fc-h2">The questions people actually send us.</h2>
-    </div>
-    <div class="fc-faq fc-rise" id="se-faq">
-      <div class="fc-faq-item">
-        <button class="fc-faq-q" aria-expanded="false">I still do not know which track to pick.<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="fc-faq-a" aria-hidden="true"><div><p>Pick frontend if you want to see what you built straight away, backend if you prefer systems and logic, fullstack if you cannot choose or want to build whole products alone. If you are still unsure, start with frontend — it gives you something visible fastest, and nothing you learn there is wasted if you move across later.</p></div></div>
+    <div class="fc-faq-wrap">
+      <div class="fc-faq-head fc-rise">
+        <div class="fc-label"><span class="n">05</span><span class="t">FAQ</span></div>
+        <h2 class="fc-h2">Questions people<br/>actually ask</h2>
+        <p class="fc-lead" style="margin-top:18px">Still unsure which track? <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%20have%20a%20question%20about%20AI%20in%20Software%20Engineering." target="_blank" rel="noopener" style="color:var(--fc-accent);font-weight:600">Message us on WhatsApp</a> and a human will answer.</p>
       </div>
-      <div class="fc-faq-item">
-        <button class="fc-faq-q" aria-expanded="false">Do I need to know how to code already?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="fc-faq-a" aria-hidden="true"><div><p>No. All three start from nothing. No degree, no prior code, no computer science background. If you can use a laptop and turn up each week, you can do this.</p></div></div>
-      </div>
-      <div class="fc-faq-item">
-        <button class="fc-faq-q" aria-expanded="false">If AI writes the code, what am I learning?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="fc-faq-a" aria-hidden="true"><div><p>Judgement. AI will write code that looks right and is wrong, and the difference between someone who ships and someone who does not is whether they can tell. You learn to read it, test it, and know when to throw it away — which is what the job is now.</p></div></div>
-      </div>
-      <div class="fc-faq-item">
-        <button class="fc-faq-q" aria-expanded="false">Can I take more than one?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="fc-faq-a" aria-hidden="true"><div><p>Yes, though fullstack already covers both ends in one course and is the cheaper route to the same place. Taking frontend and backend separately makes sense if you want to space them out.</p></div></div>
+
+      <div class="fc-faq" id="se-faq">
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>I still do not know which track to pick.</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>Pick frontend if you want to see what you built straight away, backend if you prefer systems and logic, fullstack if you cannot choose or want to build whole products alone. If you are still unsure, start with frontend — it gives you something visible fastest, and nothing you learn there is wasted if you move across later.</p></div></div>
+        </div>
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>Do I need to know how to code already?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>No. All three start from nothing. No degree, no prior code, no computer science background. If you can use a laptop and turn up each week, you can do this.</p></div></div>
+        </div>
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>If AI writes the code, what am I learning?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>Judgement. AI will write code that looks right and is wrong, and the difference between someone who ships and someone who does not is whether they can tell. You learn to read it, test it, and know when to throw it away — which is what the job is now.</p></div></div>
+        </div>
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>Can I take more than one?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>Yes, though fullstack already covers both ends in one course and is the cheaper route to the same place. Taking frontend and backend separately makes sense if you want to space them out.</p></div></div>
+        </div>
+        <div class="fc-faq-item">
+          <button class="fc-faq-q" type="button" aria-expanded="false"><span>What do I actually need to start?</span>
+            <svg class="fc-faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="fc-faq-a" aria-hidden="true"><div><p>A laptop and a reliable internet connection. Everything else is taught, and the tools we use are free or covered by the course.</p></div></div>
+        </div>
       </div>
     </div>
   </div>
