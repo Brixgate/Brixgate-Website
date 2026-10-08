@@ -82,6 +82,9 @@
 .se-track-art{ border-radius:18px; overflow:hidden; aspect-ratio:4/3; background:var(--fc-surface); }
 .se-track-art img{ width:100%; height:100%; object-fit:cover; display:block; }
 
+.se-out-4{ grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+@media (max-width:760px){ .se-out-4{ grid-template-columns:1fr !important; } }
+
 .se-learn{ margin-top:22px; }
 .se-learn-k{ font-size:.68rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--fc-muted); }
 .se-learn ul{ list-style:none; margin:12px 0 0; padding:0; display:grid; gap:9px; }
@@ -334,11 +337,32 @@
       <span class="fc-kicker">Whichever you pick</span>
       <h2 class="fc-h2">This part does not change.</h2>
     </div>
-    <div class="fc-out-grid fc-rise">
-      <div class="fc-out"><div class="fc-out-n">01</div><h3>Taught live, never recorded</h3><p>Small cohorts in real time. You can ask the question the moment you are stuck, which is the only moment it helps.</p></div>
-      <div class="fc-out"><div class="fc-out-n">02</div><h3>Nothing assumed</h3><p>No degree, no prior code, no computer science. The ground floor is taught properly rather than skipped.</p></div>
-      <div class="fc-out"><div class="fc-out-n">03</div><h3>You finish with something built</h3><p>Working software you can open, demonstrate and talk through — not a folder of exercises.</p></div>
-      <div class="fc-out"><div class="fc-out-n">04</div><h3>A certificate anyone can verify</h3><p>Issued when the work is defended, and checkable by anyone you send it to.</p></div>
+    <!-- .fc-out is the grid; .fc-out-c is the card. These were the
+         wrong way round — .fc-out sat on each item, so every item
+         became a three-column grid and pushed its number, heading and
+         text to opposite ends of the row, with the card styling never
+         applied at all. -->
+    <div class="fc-out se-out-4">
+      <div class="fc-out-c fc-rise">
+        <div class="fc-out-n">01</div>
+        <h3>Taught live, never recorded</h3>
+        <p>Small cohorts in real time. You can ask the question the moment you are stuck, which is the only moment it helps.</p>
+      </div>
+      <div class="fc-out-c fc-rise">
+        <div class="fc-out-n">02</div>
+        <h3>Nothing assumed</h3>
+        <p>No degree, no prior code, no computer science. The ground floor is taught properly rather than skipped.</p>
+      </div>
+      <div class="fc-out-c fc-rise">
+        <div class="fc-out-n">03</div>
+        <h3>You finish with something built</h3>
+        <p>Working software you can open, demonstrate and talk through — not a folder of exercises.</p>
+      </div>
+      <div class="fc-out-c fc-rise">
+        <div class="fc-out-n">04</div>
+        <h3>A certificate anyone can verify</h3>
+        <p>Issued when the work is defended, and checkable by anyone you send it to.</p>
+      </div>
     </div>
   </div>
 </section>
