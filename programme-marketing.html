@@ -871,6 +871,12 @@ html.cp-anim .cp-fade { opacity:0; }
   padding: 6px 13px; border-radius: 999px;
 }
 
+/* The card with no practitioner yet: one column, no photo frame. */
+.cp-prac-tba{ grid-template-columns:1fr; }
+.cp-prac-tba .cp-prac-name{ font-size:1.1rem; }
+.cp-prac-tba .cp-prac-bio{ margin-top:12px; }
+.cp-prac-tba a{ color:var(--red); font-weight:650; }
+
 /* ============================================================
    TESTIMONIALS — quote-forward
    ============================================================ */
@@ -1733,19 +1739,15 @@ body.f-market .cp-glass-3 { top:212px; right:0; left:auto; bottom:auto; width:24
     <div style="margin-top:88px" class="cp-rise">
       <div class="cp-label" style="margin-bottom:36px"><span class="n">·</span><span class="t">Who's teaching it</span></div>
 
-      <div class="cp-prac">
-        <div class="cp-prac-photo">
-          <img src="assets/Francis Adedeji.jpeg" alt="Francis Ayomide Adedeji" loading="lazy" />
-        </div>
+      <!-- No practitioner is confirmed for this field yet. Saying so is
+           the point: this card previously carried the AI engineering bio
+           from the Software Engineering page, which told a prospective
+           marketer their course was taught by someone who does not teach
+           it. An empty promise is worse than an honest gap. -->
+      <div class="cp-prac cp-prac-tba">
         <div class="cp-prac-body">
-          <div class="cp-prac-name">Francis Ayomide Adedeji</div>
-          <div class="cp-prac-role">AI Engineer &amp; Educator · AI-Native Software Engineer</div>
-          <span class="cp-prac-stat"><span style="width:6px;height:6px;border-radius:50%;background:currentColor"></span>20+ live sessions delivered</span>
-          <p class="cp-prac-bio">Francis has spent years designing, deploying and teaching AI systems across education, fintech and enterprise environments. He works on agentic AI workflows, RAG architectures and developer enablement, building the tools that close the gap between AI research and production engineering.</p>
-          <div class="cp-prac-k">Core expertise</div>
-          <div class="cp-prac-tags">
-            <span>Agentic AI</span><span>RAG Systems</span><span>Python</span><span>n8n</span><span>LangChain</span>
-          </div>
+          <div class="cp-prac-name">Practitioner announced before cohort start</div>
+          <p class="cp-prac-bio">Every sprint is taught by someone who does the work in that field — not a generalist trainer. We name the practitioner for a cohort once their dates are confirmed, and never before. If you want to know who it is before you apply, <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20who%20is%20teaching%20the%20AI%20in%20Product%20Marketing%20sprint%3F" target="_blank" rel="noopener">ask us and we will tell you</a>.</p>
         </div>
       </div>
     </div>
