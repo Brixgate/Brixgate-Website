@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About | Brixgate</title>
+  <meta name="description" content="We produce the professionals the AI era runs on, and rebuild the institutions they work in. Headquartered in Lagos, with learners in six countries." />
+  <link rel="icon" type="image/png" href="assets/faviii.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="foundations-course.css" />
+<script src="tracking.js"></script>
+  <link rel="canonical" href="https://brixgate.com/about.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Brixgate" />
+  <meta property="og:url" content="https://brixgate.com/about.html" />
+  <meta property="og:title" content="About | Brixgate" />
+  <meta property="og:description" content="We produce the professionals the AI era runs on, and rebuild the institutions they work in." />
+  <meta property="og:image" content="https://brixgate.com/assets/og-brixgate.jpg" />
+
+<style>
+/* ============================================================
+   ABOUT
+
+   Built on the .fc- system the Foundations pages use, so this page
+   inherits the type scale, section rhythm and card styling rather
+   than inventing a seventh set of conventions.
+
+   The team section carries names and roles only. Bios and headshots
+   are not written yet, and a placeholder face is worse than an
+   honest list — so the grid is names, roles and nothing invented.
+   ============================================================ */
+:root{ --fc-accent:#FF294E; --fc-accent-2:#FF5748; }
+
+.ab-two{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; margin-top:44px; }
+@media (max-width:860px){ .ab-two{ grid-template-columns:1fr; } }
+.ab-card{
+  background:#fff; border:1px solid var(--fc-line); border-radius:18px; padding:30px 28px;
+  transition:border-color .3s, transform .3s var(--fc-ease), box-shadow .3s;
+}
+.ab-card:hover{ border-color:var(--fc-accent); transform:translateY(-4px); box-shadow:0 20px 44px -26px rgba(255,41,78,.42); }
+.ab-card-k{ font-size:.68rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--fc-accent); }
+.ab-card-t{ font-size:1.22rem; font-weight:800; letter-spacing:-.02em; color:var(--fc-ink); margin-top:11px; }
+.ab-card-d{ font-size:.94rem; color:var(--fc-body); line-height:1.68; margin-top:10px; }
+
+.ab-pillars{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; margin-top:44px; }
+@media (max-width:860px){ .ab-pillars{ grid-template-columns:1fr; } }
+
+.ab-team{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:40px; }
+@media (max-width:860px){ .ab-team{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:560px){ .ab-team{ grid-template-columns:1fr; } }
+.ab-person{
+  background:var(--fc-surface); border:1px solid var(--fc-line);
+  border-radius:16px; padding:24px 22px;
+}
+.ab-person-n{ font-size:1.02rem; font-weight:800; letter-spacing:-.02em; color:var(--fc-ink); }
+.ab-person-r{ font-size:.85rem; color:var(--fc-muted); margin-top:5px; }
+.ab-team-note{ font-size:.88rem; color:var(--fc-muted); margin-top:22px; }
+
+.ab-facts{ display:flex; flex-wrap:wrap; gap:10px; margin-top:30px; }
+.ab-fact{
+  background:var(--fc-surface); border:1px solid var(--fc-line); border-radius:11px;
+  padding:10px 16px; font-size:.86rem; color:var(--fc-body);
+}
+.ab-fact b{ color:var(--fc-ink); font-weight:800; }
+</style>
+</head>
+<body class="fc">
+
+<!-- Region Banner -->
+<div class="region-banner" id="region-banner">
+  <span class="region-label" style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Learners from</span>
+  <div class="regions">
+    <span class="region-item">🇳🇬 Nigeria</span>
+    <span class="region-item">🇬🇧 United Kingdom</span>
+    <span class="region-item">🇺🇸 United States</span>
+    <span class="region-item">🇰🇪 Kenya</span>
+    <span class="region-item">🇿🇦 South Africa</span>
+    <span class="region-more">Headquartered in Lagos</span>
+    <span class="region-cohort" data-cohort-countdown hidden></span>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <div class="nav-mega" data-nav-mega></div>
+      <a href="experts.html">Experts</a>
+      <a href="organisations.html">For Organisations</a>
+      <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20Automation%20course." target="_blank" rel="noopener">Chat with us</a>
+    </div>
+    <div class="nav-cta">
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
+      <a href="apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="programme.html">Programmes</a>
+  <a href="foundations.html" class="nav-mobile-sub">AI Foundations</a>
+  <a href="professionals.html" class="nav-mobile-sub">AI for Professionals</a>
+  <a href="experts.html">Experts</a>
+  <a href="organisations.html">For Organisations</a>
+  <a href="apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<header class="fc-hero">
+  <div class="fc-wrap">
+    <div class="fc-hero-grid">
+      <div>
+        <div class="fc-crumb fc-rise"><span>About Brixgate</span></div>
+        <span class="fc-pill fc-rise"><i></i>Headquartered in Lagos</span>
+        <h1 class="fc-h1 fc-rise">We produce the professionals the AI era runs on, and rebuild the institutions they work in.</h1>
+        <p class="fc-lead fc-rise">Two things, and they feed each other. We train people in their own field until they can use AI with judgement rather than enthusiasm. Then we work inside organisations to change how the work actually runs — using the practitioners we trained.</p>
+        <div class="ab-facts fc-rise">
+          <span class="ab-fact">Founded in <b>Lagos</b></span>
+          <span class="ab-fact">Learners in <b>six countries</b></span>
+          <span class="ab-fact"><b>Kenya</b> next</span>
+        </div>
+      </div>
+      <div class="fc-hero-art fc-rise">
+        <img src="assets/course/present.jpg" alt="A Brixgate cohort session in progress" />
+        <span class="fc-hero-badge"><i></i>Live, never pre-recorded</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== WHAT WE DO ===== -->
+<section class="fc-sec fc-sec-cream">
+  <div class="fc-wrap">
+    <div class="fc-head fc-rise">
+      <span class="fc-kicker">What we do</span>
+      <h2 class="fc-h2">Two engines, one practitioner network.</h2>
+      <p class="fc-lead">The people we train are the people who do the transformation work. That is the whole design: the second engine runs on the first.</p>
+    </div>
+    <div class="ab-two">
+      <div class="ab-card fc-rise">
+        <div class="ab-card-k">Engine one</div>
+        <div class="ab-card-t">We train the practitioners</div>
+        <p class="ab-card-d"><b>AI in my Field</b> is a four week sprint for people already doing the work, taught by a practitioner from that exact field. <b>AI Foundations</b> runs six to sixteen weeks for people starting from nothing. Both end in work you defend and a certificate anyone can verify.</p>
+        <p class="ab-card-d"><a href="programme.html" style="color:var(--fc-accent);font-weight:650">See the programmes</a></p>
+      </div>
+      <div class="ab-card fc-rise">
+        <div class="ab-card-k">Engine two</div>
+        <div class="ab-card-t">We rebuild how institutions run</div>
+        <p class="ab-card-d"><b>Brixgate Transform</b> is a four phase engagement — diagnose, design, deploy, institutionalize — that changes the operating model rather than the tool list. Governance is written in: a named person owns every decision AI touches, and client data stays in the client's environment.</p>
+        <p class="ab-card-d"><a href="organisations.html#transform" style="color:var(--fc-accent);font-weight:650">See Brixgate Transform</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CAPACITY, CHARACTER, CADENCE ===== -->
+<section class="fc-sec">
+  <div class="fc-wrap">
+    <div class="fc-head fc-rise">
+      <span class="fc-kicker">How we judge it</span>
+      <h2 class="fc-h2">Capacity. Character. Cadence.</h2>
+      <p class="fc-lead">Three pillars, and all three have to be there. Develop one and you have a person who knows the tools. Develop all three and you have a practitioner others in the field follow.</p>
+    </div>
+    <div class="ab-pillars">
+      <div class="ab-card fc-rise">
+        <div class="ab-card-k">01</div>
+        <div class="ab-card-t">Capacity</div>
+        <p class="ab-card-d">Fluency in your own field, not general AI literacy. Which tools to reach for, when, and how to read their output in your professional context.</p>
+      </div>
+      <div class="ab-card fc-rise">
+        <div class="ab-card-k">02</div>
+        <div class="ab-card-t">Character</div>
+        <p class="ab-card-d">The judgement to deploy AI accountably. Every field creates decisions a model should not make alone, and knowing where that line sits is the skill.</p>
+      </div>
+      <div class="ab-card fc-rise">
+        <div class="ab-card-k">03</div>
+        <div class="ab-card-t">Cadence</div>
+        <p class="ab-card-d">The habit of applying it week after week, not once in a workshop. Built through a cohort on the same problems and a practitioner holding the pace.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TEAM =====
+     Names and roles only. Bios and headshots are not written yet, and
+     a stock face under a real name is the kind of thing the
+     corrections brief exists to stop. -->
+<section class="fc-sec fc-sec-cream">
+  <div class="fc-wrap">
+    <div class="fc-head fc-rise">
+      <span class="fc-kicker">Who we are</span>
+      <h2 class="fc-h2">Four co-founders and a COO.</h2>
+    </div>
+    <div class="ab-team">
+      <div class="ab-person fc-rise"><div class="ab-person-n">Tayo Ogunlade</div><div class="ab-person-r">Co-founder</div></div>
+      <div class="ab-person fc-rise"><div class="ab-person-n">Deborah Akanno</div><div class="ab-person-r">Co-founder</div></div>
+      <div class="ab-person fc-rise"><div class="ab-person-n">Nduka Ohadoma</div><div class="ab-person-r">Co-founder</div></div>
+      <div class="ab-person fc-rise"><div class="ab-person-n">Omotayo Iginla</div><div class="ab-person-r">Co-founder</div></div>
+      <div class="ab-person fc-rise"><div class="ab-person-n">Ronke Adebayo</div><div class="ab-person-r">Chief Operating Officer</div></div>
+    </div>
+    <p class="ab-team-note fc-rise">Full profiles are being written and will appear here rather than anywhere else.</p>
+  </div>
+</section>
+
+<!-- ===== WHERE WE ARE ===== -->
+<section class="fc-sec fc-sec-ink">
+  <div class="fc-wrap">
+    <div class="fc-head fc-rise">
+      <span class="fc-kicker">Where we are</span>
+      <h2 class="fc-h2">Lagos, and six countries so far.</h2>
+      <p class="fc-lead">Headquartered in Lagos. Learners in Nigeria, Kenya, Ghana, South Africa, the United Kingdom and the United States. Kenya is the next market we open properly, rather than the next flag we add to a banner.</p>
+    </div>
+    <div class="fc-out se-out-4" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      <div class="fc-out-c fc-rise">
+        <div class="fc-out-n">01</div>
+        <h3>Built here on purpose</h3>
+        <p>African institutions are adopting AI at the same moment everyone else is, with none of the legacy that slows it down elsewhere. That is an advantage, not a gap to close.</p>
+      </div>
+      <div class="fc-out-c fc-rise">
+        <div class="fc-out-n">02</div>
+        <h3>We say what we can prove</h3>
+        <p>No borrowed credibility, no numbers we cannot source, no practitioner named before they have agreed to teach. It costs us some polish and it is worth it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="fc-sec">
+  <div class="fc-wrap">
+    <div class="fc-head center fc-rise" style="text-align:center;margin:0 auto">
+      <h2 class="fc-h2">Start where you actually are.</h2>
+      <p class="fc-lead" style="margin-left:auto;margin-right:auto">Already doing the work, or starting from nothing — there is a door for both.</p>
+      <div style="margin-top:28px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a href="programme.html" class="fc-btn fc-btn-accent"><span data-chars>See the programmes</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="organisations.html" class="fc-btn fc-btn-outline-light"><span data-chars>For organisations</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo footer-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+        <p>We produce the professionals the AI era runs on, and rebuild the institutions they work in. Live sprints built for each field, led by practitioners who do the work.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook"><img src="assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block"></a>
+          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram"><img src="assets/social.png" alt="Instagram" width="22" height="22" style="display:block"></a>
+          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X"><img src="assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block"></a>
+          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn" title="LinkedIn"><img src="assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block"></a>
+          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us"><img src="assets/gmail.png" alt="Email" width="22" height="22" style="display:block"></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Programmes</h5><ul><li><a href="foundations.html">AI Foundations</a></li><li><a href="professionals.html">AI for Professionals</a></li><li><a href="professionals.html#pricing">Pricing</a></li><li><a href="apply.html">Apply Now</a></li><li><a href="verify.html">Verify a Certificate</a></li></ul></div>
+      <div class="footer-col"><h5>Experts</h5><ul><li><a href="experts.html">Meet Our Experts</a></li><li><a href="experts.html#qualify">Become an Expert</a></li></ul></div>
+      <div class="footer-col"><h5>Organisation</h5><ul><li><a href="about.html">About Brixgate</a></li><li><a href="organisations.html">For Organisations</a></li><li><a href="organisations.html#transform">Brixgate Transform</a></li><li><a href="organisations.html#contact">Get a Quote</a></li><li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li></ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="footer-year">2025</span> Brixgate Ltd, RC 9082968. All rights reserved. | Lagos, Nigeria · <a href="tel:+447450337132">+44 74 5033 7132</a></p>
+    <div class="footer-bottom-links"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script src="foundations-courses.js"></script>
+<script src="nav-programmes.js"></script>
+<script src="cohort-countdown.js"></script>
+<script src="currency.js"></script>
+</body>
+</html>

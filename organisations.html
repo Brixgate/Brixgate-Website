@@ -821,7 +821,63 @@ html.og-anim .og-fade{ opacity:0; }
   .og-band-cap b{ font-size:1rem; }
   .og-candid-photo{ opacity:.10; }
 }
-  </style>
+  
+/* ============================================================
+   TRANSFORM  ·  FOUNDING PLACES  ·  PLATFORM
+
+   The second engine. The page sold training seats only, which is half
+   of what the deck describes, so an investor clicking through from the
+   Transform slide landed on a page that did not mention it.
+
+   This page is dark: --og-ink is white and --og-body is white at 66%.
+   Cards therefore use --og-card, the same surface the packages above
+   use. A first pass set them to #fff and produced white text on white.
+   ============================================================ */
+.og-phases{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; margin-top:44px; }
+@media (max-width:1040px){ .og-phases{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:620px){ .og-phases{ grid-template-columns:1fr; } }
+.og-phase{
+  background:var(--og-card); border:1px solid var(--og-line); border-radius:var(--og-r);
+  padding:26px 24px; display:flex; flex-direction:column;
+  transition:transform .4s var(--og-ease), border-color .3s, box-shadow .4s var(--og-ease);
+}
+.og-phase:hover{ transform:translateY(-6px); border-color:var(--og-line-2); box-shadow:var(--og-shadow); }
+.og-phase-n{
+  width:34px; height:34px; border-radius:10px; display:grid; place-items:center;
+  background:rgba(255,41,78,.14); color:#FF6B85;
+  font-size:.78rem; font-weight:800; margin-bottom:16px;
+}
+.og-phase-t{ font-size:1.08rem; font-weight:800; letter-spacing:-.02em; color:var(--og-ink); }
+.og-phase-d{ font-size:.89rem; color:var(--og-body); line-height:1.62; margin-top:9px; flex:1; }
+
+.og-govern{
+  margin-top:40px; background:var(--og-surface); border:1px solid var(--og-line);
+  border-radius:var(--og-r-lg); padding:30px 32px;
+}
+.og-govern-k{ font-size:.68rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:#FF6B85; }
+.og-govern ul{ list-style:none; margin:16px 0 0; padding:0; display:grid; gap:12px; }
+.og-govern li{ display:flex; gap:12px; font-size:.95rem; color:var(--og-body); line-height:1.6; }
+.og-govern li svg{ width:18px; height:18px; flex-shrink:0; margin-top:3px; color:#FF6B85; }
+.og-govern li b{ color:var(--og-ink); font-weight:700; }
+
+/* The founding block is the one place on this page that inverts, so
+   the invitation reads as an invitation rather than another section. */
+.og-founding{
+  background:linear-gradient(135deg, rgba(154,35,53,.42), rgba(12,23,40,.9) 58%);
+  border:1px solid rgba(255,41,78,.26);
+  border-radius:var(--og-r-lg); padding:clamp(32px,4vw,52px); margin-top:52px;
+}
+.og-founding .og-h2{ color:var(--og-ink); }
+.og-founding-k{ font-size:.68rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:#FF8095; }
+.og-founding p{ color:var(--og-body); font-size:1rem; line-height:1.72; margin-top:14px; max-width:62ch; }
+.og-sectors{ display:flex; flex-wrap:wrap; gap:9px; margin-top:26px; }
+.og-sector{
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.15);
+  border-radius:999px; padding:7px 15px; font-size:.84rem; color:var(--og-body);
+}
+.og-founding-cta{ margin-top:30px; display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+.og-founding-note{ font-size:.84rem; color:var(--og-muted); }
+</style>
 <script src="tracking.js"></script>
   <link rel="canonical" href="https://brixgate.com/organisations.html" />
   <meta property="og:type" content="website" />
@@ -1291,6 +1347,90 @@ html.og-anim .og-fade{ opacity:0; }
 </section>
 
 
+
+<!-- ============================================================
+     BRIXGATE TRANSFORM
+     The deck's second engine. Nothing here quotes a price: Transform
+     and corporate work are quoted per proposal, which is also what
+     the packages section above says.
+     ============================================================ -->
+<section class="og-sec" id="transform">
+  <div class="og-wrap">
+    <div class="og-label og-rise"><span class="n">07</span><span class="t">Brixgate Transform</span></div>
+    <div class="og-head og-mb og-rise">
+      <h2 class="og-h2">Training changes people. Transform changes how the organisation runs.</h2>
+      <p class="og-lead">Sprints build capability in the people who attend them. That is worth doing, and it is not the same as changing how decisions get made. Transform is a four phase engagement that rebuilds the operating model itself, with governance written in rather than bolted on afterwards.</p>
+    </div>
+
+    <div class="og-phases" data-stagger>
+      <div class="og-phase og-rise">
+        <div class="og-phase-n">01</div>
+        <div class="og-phase-t">Diagnose</div>
+        <p class="og-phase-d">We map how the work actually runs today — not the process diagram, the real one. Where decisions are made, where they stall, and which of them AI should be nowhere near.</p>
+      </div>
+      <div class="og-phase og-rise">
+        <div class="og-phase-n">02</div>
+        <div class="og-phase-t">Design</div>
+        <p class="og-phase-d">A target operating model with the governance written into it: who owns which decision, what AI is allowed to touch, and what a human signs before it leaves the building.</p>
+      </div>
+      <div class="og-phase og-rise">
+        <div class="og-phase-n">03</div>
+        <div class="og-phase-t">Deploy</div>
+        <p class="og-phase-d">Built in your environment, against your data, with your people in the room. They learn it while it is being built, which is why it survives after we leave.</p>
+      </div>
+      <div class="og-phase og-rise">
+        <div class="og-phase-n">04</div>
+        <div class="og-phase-t">Institutionalize</div>
+        <p class="og-phase-d">The part most programmes skip. Standards, review cadence and ownership handed over, so the new way of working is how the organisation runs rather than a project that happened.</p>
+      </div>
+    </div>
+
+    <div class="og-govern og-rise">
+      <div class="og-govern-k">The governance promise</div>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span><b>A named person owns every decision AI touches.</b> Not a committee, not a policy document. A person, by name, who answers for it.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span><b>Your data stays in your environment.</b> We work inside your systems. Nothing is exported to train anything of ours.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span><b>Model agnostic.</b> We are not reselling anyone's licence, so the recommendation is whatever actually fits — including not using AI for that step.</span></li>
+      </ul>
+    </div>
+
+    <div style="margin-top:32px" class="og-rise">
+      <a href="#contact" class="og-btn og-btn-red">Book a diagnostic
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+    <!-- ===== BRIXGATE FOR CORPORATES ===== -->
+    <div class="og-founding og-rise" id="founding">
+      <div class="og-founding-k">Brixgate for Corporates</div>
+      <h2 class="og-h2" style="margin-top:12px">We are opening ten founding places.</h2>
+      <p>Ten organisations get a full diagnostic for a commitment fee, and we document what happens as a case study — openly, including the parts that do not work. We get evidence from real institutions instead of claims. You get the diagnostic, the operating model and first call on the practitioners we train.</p>
+      <p style="margin-top:12px">We are looking for organisations willing to be written about honestly. That is the whole trade.</p>
+      <div class="og-sectors">
+        <span class="og-sector">Financial services</span>
+        <span class="og-sector">Telecommunications</span>
+        <span class="og-sector">Energy</span>
+        <span class="og-sector">Public sector</span>
+        <span class="og-sector">Healthcare</span>
+        <span class="og-sector">Professional services</span>
+        <span class="og-sector">Manufacturing</span>
+      </div>
+      <div class="og-founding-cta">
+        <a href="#contact" class="og-btn og-btn-white">Apply for a founding place
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <span class="og-founding-note">Quoted per proposal. No prices on this page, and none in the first call.</span>
+      </div>
+    </div>
+
+    <!-- ===== THE PLATFORM ===== -->
+    <div style="margin-top:48px;max-width:70ch" class="og-rise">
+      <div class="og-govern-k">The platform</div>
+      <p class="og-lead" style="margin-top:12px">Most institutions end up with AI scattered across a dozen tools nobody governs. Our platform consolidates them onto one layer with the governance attached, sold as an annual licence. Fewer tools, better process, a visible lift on the bottom line. <a href="#contact" style="color:var(--og-red);font-weight:650">Request a demo</a>.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ============================================================
      10 · ENQUIRY
      ============================================================ -->
@@ -1455,7 +1595,9 @@ html.og-anim .og-fade{ opacity:0; }
         </div>
       <div class="footer-col"><h5>Programmes</h5><ul><li><a href="foundations.html">AI Foundations</a></li><li><a href="professionals.html">AI for Professionals</a></li><li><a href="professionals.html#pricing">Pricing</a></li><li><a href="apply.html">Apply Now</a></li><li><a href="verify.html">Verify a Certificate</a></li></ul></div>
       <div class="footer-col"><h5>Experts</h5><ul><li><a href="experts.html">Meet Our Experts</a></li><li><a href="experts.html#qualify">Become an Expert</a></li></ul></div>
-      <div class="footer-col"><h5>Organisation</h5><ul><li><a href="#packages">Packages</a></li><li><a href="#contact">Get a Demo</a></li><li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li></ul></div>
+      <div class="footer-col"><h5>Organisation</h5><ul>
+          <li><a href="about.html">About Brixgate</a></li>
+          <li><a href="organisations.html#transform">Brixgate Transform</a></li><li><a href="#packages">Packages</a></li><li><a href="#contact">Get a Demo</a></li><li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li></ul></div>
     </div>
   </div>
   <div class="footer-bottom">
