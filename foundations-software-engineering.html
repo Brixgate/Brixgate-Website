@@ -97,9 +97,28 @@
    Real marks where we have them, wordmarks where we do not. A clean
    wordmark reads as deliberate; a redrawn approximation of someone
    else's logo reads as careless and is a trademark problem besides. */
-.se-stack{ margin-top:26px; padding-top:22px; border-top:1px solid var(--fc-line); }
-.se-stack-k{ font-size:.68rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--fc-muted); }
-.se-chips{ display:flex; flex-wrap:wrap; gap:9px; margin-top:13px; }
+/* Full width under the track, not inside the text column. Stacked in
+   the column it made that side far taller than the image beside it —
+   a long empty gutter on the right — and pushed the Enrol button into
+   the middle of a wall of content. Out here each group is one line
+   with its label inline, and the button gets its own room again. */
+.se-stack{ margin-top:30px; padding-top:24px; border-top:1px solid var(--fc-line); }
+.se-stack-row{ display:flex; align-items:center; gap:18px; }
+.se-stack-row + .se-stack-row{ margin-top:12px; }
+.se-stack-k{
+  font-size:.68rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--fc-muted); flex:0 0 148px;
+}
+/* One line. On a narrow screen it scrolls rather than wrapping into the
+   four-row block this was meant to replace. */
+.se-chips{ display:flex; gap:9px; flex:1; min-width:0; overflow-x:auto; padding-bottom:2px; scrollbar-width:none; }
+.se-chips::-webkit-scrollbar{ display:none; }
+.se-chip{ flex:0 0 auto; }
+@media (max-width:760px){
+  .se-stack-row{ display:block; }
+  .se-stack-k{ margin-bottom:9px; }
+  .se-stack-row + .se-stack-row{ margin-top:18px; }
+}
 .se-chip{
   display:inline-flex; align-items:center; gap:7px;
   background:#fff; border:1px solid var(--fc-line); border-radius:9px;
@@ -279,22 +298,27 @@
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Ship it somewhere real, with a link you can send to anyone</span></li>
             </ul>
           </div>
-          <div class="se-stack">
-            <div class="se-stack-k">What you build with</div>
-            <div class="se-chips"><span class="se-chip"><img src="assets/logos/icons/html5.svg" alt="" loading="lazy" />HTML</span>
-              <span class="se-chip"><img src="assets/logos/icons/css.svg" alt="" loading="lazy" />CSS</span>
-              <span class="se-chip"><img src="assets/logos/icons/javascript.svg" alt="" loading="lazy" />JavaScript</span>
-              <span class="se-chip"><img src="assets/logos/icons/react.svg" alt="" loading="lazy" />React</span>
-              <span class="se-chip"><img src="assets/logos/icons/tailwindcss.svg" alt="" loading="lazy" />Tailwind</span>
-              <span class="se-chip"><img src="assets/logos/icons/git.svg" alt="" loading="lazy" />Git</span></div>
-            <div class="se-stack-k" style="margin-top:18px">AI in the loop</div>
-            <div class="se-chips se-chips-ai"><span class="se-chip"><img src="assets/logos/cursor.svg" alt="" loading="lazy" />Cursor</span>
-              <span class="se-chip"><img src="assets/logos/claude.svg" alt="" loading="lazy" />Claude</span>
-              <span class="se-chip"><img src="assets/logos/copilot.svg" alt="" loading="lazy" />GitHub Copilot</span></div>
-          </div>
+          
         </div>
 
         <div class="se-track-art"><img src="assets/course/desk.jpg" alt="A developer building an interface on screen" loading="lazy" /></div>
+      </div>
+<div class="se-stack">
+      <div class="se-stack-row">
+        <div class="se-stack-k">What you build with</div>
+        <div class="se-chips"><span class="se-chip"><img src="assets/logos/icons/html5.svg" alt="" loading="lazy" />HTML</span>
+      <span class="se-chip"><img src="assets/logos/icons/css.svg" alt="" loading="lazy" />CSS</span>
+      <span class="se-chip"><img src="assets/logos/icons/javascript.svg" alt="" loading="lazy" />JavaScript</span>
+      <span class="se-chip"><img src="assets/logos/icons/react.svg" alt="" loading="lazy" />React</span>
+      <span class="se-chip"><img src="assets/logos/icons/tailwindcss.svg" alt="" loading="lazy" />Tailwind</span>
+      <span class="se-chip"><img src="assets/logos/icons/git.svg" alt="" loading="lazy" />Git</span></div>
+      </div>
+      <div class="se-stack-row">
+        <div class="se-stack-k">AI in the loop</div>
+        <div class="se-chips se-chips-ai"><span class="se-chip"><img src="assets/logos/cursor.svg" alt="" loading="lazy" />Cursor</span>
+      <span class="se-chip"><img src="assets/logos/claude.svg" alt="" loading="lazy" />Claude</span>
+      <span class="se-chip"><img src="assets/logos/copilot.svg" alt="" loading="lazy" />GitHub Copilot</span></div>
+      </div>
       </div>
     </div>
 
@@ -327,22 +351,27 @@
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Make something that holds up under load, not only on your laptop</span></li>
             </ul>
           </div>
-          <div class="se-stack">
-            <div class="se-stack-k">What you build with</div>
-            <div class="se-chips"><span class="se-chip"><img src="assets/logos/icons/python.svg" alt="" loading="lazy" />Python</span>
-              <span class="se-chip"><img src="assets/logos/icons/nodedotjs.svg" alt="" loading="lazy" />Node.js</span>
-              <span class="se-chip"><i></i>SQL</span>
-              <span class="se-chip"><img src="assets/logos/icons/postgresql.svg" alt="" loading="lazy" />PostgreSQL</span>
-              <span class="se-chip"><i></i>REST APIs</span>
-              <span class="se-chip"><img src="assets/logos/icons/git.svg" alt="" loading="lazy" />Git</span></div>
-            <div class="se-stack-k" style="margin-top:18px">AI in the loop</div>
-            <div class="se-chips se-chips-ai"><span class="se-chip"><img src="assets/logos/cursor.svg" alt="" loading="lazy" />Cursor</span>
-              <span class="se-chip"><img src="assets/logos/claude.svg" alt="" loading="lazy" />Claude</span>
-              <span class="se-chip"><img src="assets/logos/openai.svg" alt="" loading="lazy" />ChatGPT</span></div>
-          </div>
+          
         </div>
 
         <div class="se-track-art"><img src="assets/course/review.jpg" alt="Engineers reviewing system behaviour together" loading="lazy" /></div>
+      </div>
+<div class="se-stack">
+      <div class="se-stack-row">
+        <div class="se-stack-k">What you build with</div>
+        <div class="se-chips"><span class="se-chip"><img src="assets/logos/icons/python.svg" alt="" loading="lazy" />Python</span>
+      <span class="se-chip"><img src="assets/logos/icons/nodedotjs.svg" alt="" loading="lazy" />Node.js</span>
+      <span class="se-chip"><i></i>SQL</span>
+      <span class="se-chip"><img src="assets/logos/icons/postgresql.svg" alt="" loading="lazy" />PostgreSQL</span>
+      <span class="se-chip"><i></i>REST APIs</span>
+      <span class="se-chip"><img src="assets/logos/icons/git.svg" alt="" loading="lazy" />Git</span></div>
+      </div>
+      <div class="se-stack-row">
+        <div class="se-stack-k">AI in the loop</div>
+        <div class="se-chips se-chips-ai"><span class="se-chip"><img src="assets/logos/cursor.svg" alt="" loading="lazy" />Cursor</span>
+      <span class="se-chip"><img src="assets/logos/claude.svg" alt="" loading="lazy" />Claude</span>
+      <span class="se-chip"><img src="assets/logos/openai.svg" alt="" loading="lazy" />ChatGPT</span></div>
+      </div>
       </div>
     </div>
 
@@ -375,25 +404,30 @@
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Finish with a complete product you can demonstrate end to end</span></li>
             </ul>
           </div>
-          <div class="se-stack">
-            <div class="se-stack-k">What you build with</div>
-            <div class="se-chips"><span class="se-chip"><img src="assets/logos/icons/html5.svg" alt="" loading="lazy" />HTML</span>
-              <span class="se-chip"><img src="assets/logos/icons/css.svg" alt="" loading="lazy" />CSS</span>
-              <span class="se-chip"><img src="assets/logos/icons/javascript.svg" alt="" loading="lazy" />JavaScript</span>
-              <span class="se-chip"><img src="assets/logos/icons/react.svg" alt="" loading="lazy" />React</span>
-              <span class="se-chip"><img src="assets/logos/icons/python.svg" alt="" loading="lazy" />Python</span>
-              <span class="se-chip"><img src="assets/logos/icons/nodedotjs.svg" alt="" loading="lazy" />Node.js</span>
-              <span class="se-chip"><i></i>SQL</span>
-              <span class="se-chip"><img src="assets/logos/icons/git.svg" alt="" loading="lazy" />Git</span></div>
-            <div class="se-stack-k" style="margin-top:18px">AI in the loop</div>
-            <div class="se-chips se-chips-ai"><span class="se-chip"><img src="assets/logos/cursor.svg" alt="" loading="lazy" />Cursor</span>
-              <span class="se-chip"><img src="assets/logos/claude.svg" alt="" loading="lazy" />Claude</span>
-              <span class="se-chip"><img src="assets/logos/copilot.svg" alt="" loading="lazy" />GitHub Copilot</span>
-              <span class="se-chip"><img src="assets/logos/openai.svg" alt="" loading="lazy" />ChatGPT</span></div>
-          </div>
+          
         </div>
 
         <div class="se-track-art"><img src="assets/course/present.jpg" alt="A team presenting a working product" loading="lazy" /></div>
+      </div>
+<div class="se-stack">
+      <div class="se-stack-row">
+        <div class="se-stack-k">What you build with</div>
+        <div class="se-chips"><span class="se-chip"><img src="assets/logos/icons/html5.svg" alt="" loading="lazy" />HTML</span>
+      <span class="se-chip"><img src="assets/logos/icons/css.svg" alt="" loading="lazy" />CSS</span>
+      <span class="se-chip"><img src="assets/logos/icons/javascript.svg" alt="" loading="lazy" />JavaScript</span>
+      <span class="se-chip"><img src="assets/logos/icons/react.svg" alt="" loading="lazy" />React</span>
+      <span class="se-chip"><img src="assets/logos/icons/python.svg" alt="" loading="lazy" />Python</span>
+      <span class="se-chip"><img src="assets/logos/icons/nodedotjs.svg" alt="" loading="lazy" />Node.js</span>
+      <span class="se-chip"><i></i>SQL</span>
+      <span class="se-chip"><img src="assets/logos/icons/git.svg" alt="" loading="lazy" />Git</span></div>
+      </div>
+      <div class="se-stack-row">
+        <div class="se-stack-k">AI in the loop</div>
+        <div class="se-chips se-chips-ai"><span class="se-chip"><img src="assets/logos/cursor.svg" alt="" loading="lazy" />Cursor</span>
+      <span class="se-chip"><img src="assets/logos/claude.svg" alt="" loading="lazy" />Claude</span>
+      <span class="se-chip"><img src="assets/logos/copilot.svg" alt="" loading="lazy" />GitHub Copilot</span>
+      <span class="se-chip"><img src="assets/logos/openai.svg" alt="" loading="lazy" />ChatGPT</span></div>
+      </div>
       </div>
     </div>
   </div>
