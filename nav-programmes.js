@@ -137,7 +137,12 @@
     { any: ['financial', 'finance'],                text: 'Faster models that still survive an audit' },
     { any: ['marketing', 'product-technology'],     text: 'Move faster without flattening the brand' },
     { any: ['automation'],                          text: 'Build the automations that do the repetitive work' },
-    { any: ['data', 'analytics'],                   text: 'Turn messy data into answers people act on' }
+    /* Data Science before the analytics rule, and no bare 'data' key:
+       one rule matching both ['data','analytics'] gave Data Science and
+       Data Analytics the same line in the menu, which read as a bug
+       because it was one. More specific first. */
+    { any: ['data-science', 'data science'],        text: 'Statistics and modelling you understand, not copy' },
+    { any: ['analytic'],                            text: 'Turn messy data into answers people act on' }
   ];
 
   /* Foundations is seeded from the register rather than hardcoded here.
@@ -169,7 +174,21 @@
     });
   }
 
-  function blurb(p) {
+  function blurb(p, tierKey) {
+    /* A Foundations row written in the register already has a line
+       chosen for that course, so it wins. Without this the rules below
+       answered for it by keyword, and "AI in Software Engineering" at
+       beginner level was handed the professional sprint's line — the
+       two tiers share a name, which is exactly why PAGE_RULES is tier
+       scoped and why this has to be too. */
+    if (tierKey === 'foundations' && p.subtitle) {
+      var reg = (p.subtitle || '').trim();
+      if (reg) {
+        var one = reg.split(/(?<=\.)\s/)[0] || reg;
+        if (one.length > 74) one = one.slice(0, 71).replace(/\s+\S*$/, '') + '\u2026';
+        return one;
+      }
+    }
     var hay = ((p.slug || '') + ' ' + (p.title || '')).toLowerCase().replace(/[\s_]+/g, '-');
     for (var i = 0; i < BLURB_RULES.length; i++) {
       for (var j = 0; j < BLURB_RULES[i].any.length; j++) {
@@ -187,7 +206,7 @@
   function courseHTML(p, tier) {
     var page = pageFor(p, tier.key);
     var href = page || tier.href;
-    var b = blurb(p);
+    var b = blurb(p, tier.key);
     var soon = page ? '' : '<span class="nav-mega-soon">Page coming</span>';
     return '<a class="nav-mega-course" href="' + href + '">' +
              '<span class="nav-mega-course-t">' + esc(p.title) + soon + '</span>' +

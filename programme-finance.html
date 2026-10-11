@@ -871,6 +871,14 @@ html.cp-anim .cp-fade { opacity:0; }
   padding: 6px 13px; border-radius: 999px;
 }
 
+/* A named practitioner carries a verifiable link. */
+.cp-prac-link{
+  display:inline-flex; align-items:center; gap:8px; margin-top:20px;
+  font-size:.86rem; font-weight:650; color:var(--red); text-decoration:none;
+  transition:gap .22s ease, opacity .2s;
+}
+.cp-prac-link:hover{ gap:12px; opacity:.85; }
+
 /* ============================================================
    TESTIMONIALS — quote-forward
    ============================================================ */
@@ -1735,17 +1743,21 @@ body.f-market .cp-glass-3 { top:212px; right:0; left:auto; bottom:auto; width:24
 
       <div class="cp-prac">
         <div class="cp-prac-photo">
-          <img src="assets/Francis Adedeji.jpeg" alt="Francis Ayomide Adedeji" loading="lazy" />
+          <img src="assets/people/damilola-quadri.jpg" alt="Damilola Quadri" loading="lazy" />
         </div>
         <div class="cp-prac-body">
-          <div class="cp-prac-name">Francis Ayomide Adedeji</div>
-          <div class="cp-prac-role">AI Engineer &amp; Educator · AI-Native Software Engineer</div>
-          <span class="cp-prac-stat"><span style="width:6px;height:6px;border-radius:50%;background:currentColor"></span>20+ live sessions delivered</span>
-          <p class="cp-prac-bio">Francis has spent years designing, deploying and teaching AI systems across education, fintech and enterprise environments. He works on agentic AI workflows, RAG architectures and developer enablement, building the tools that close the gap between AI research and production engineering.</p>
+          <div class="cp-prac-name">Damilola Quadri, ACA, FMVA</div>
+          <div class="cp-prac-role">Senior Accountant, Financial Planning &amp; Analysis · Lagos, Nigeria</div>
+          <span class="cp-prac-stat"><span style="width:6px;height:6px;border-radius:50%;background:currentColor"></span>7+ years in FP&amp;A and corporate finance</span>
+          <p class="cp-prac-bio">Damilola works in business planning, forecasting, financial modelling, reporting and model review. He applies AI to finance through model audit, budget automation, prompt-to-model testing and spreadsheet-grounded evaluation of frontier models, including trainer and peer reviewer work on the Realm Financial Reasoning benchmark. His work has delivered planning 50% faster, a 15% improvement in profitability, and stronger EBITDA-focused decision support.</p>
           <div class="cp-prac-k">Core expertise</div>
           <div class="cp-prac-tags">
-            <span>Agentic AI</span><span>RAG Systems</span><span>Python</span><span>n8n</span><span>LangChain</span>
+            <span>FP&amp;A</span><span>Financial Modelling</span><span>Business Planning</span><span>AI in Finance</span><span>Finance AI Evaluation</span><span>Budget Automation</span><span>Spreadsheet Grounded Analysis</span>
           </div>
+          <a class="cp-prac-link" href="https://linkedin.com/in/damilolaquadri" target="_blank" rel="noopener">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            View LinkedIn profile
+          </a>
         </div>
       </div>
     </div>
@@ -2745,6 +2757,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 
 <!-- Chat assistant -->
 <script src="assets/chat.js?v=34b15c74" defer></script>
+<script src="foundations-courses.js"></script>
 <script src="nav-programmes.js"></script>
 <script src="cohort-countdown.js"></script>
 </body>
