@@ -150,17 +150,11 @@
           AI in<br /><span style="color:var(--red)">Operations & Supply Chain</span>
         </h1>
         <p style="font-size:1.15rem;color:var(--muted);line-height:1.7;margin-bottom:32px;max-width:480px">Run Leaner Operations. Predict Before You React.</p>
-        <!-- Price pill — visible in hero so cost is clear before scrolling -->
-        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:24px">
-          <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,41,78,0.08);border:1px solid rgba(255,41,78,0.22);border-radius:50px;padding:8px 18px">
-            <span style="font-size:0.7rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.09em">Self-Enrolment</span>
-            <span style="width:1px;height:14px;background:rgba(255,255,255,0.12);display:inline-block"></span>
-            <span style="font-size:1.05rem;font-weight:900;color:var(--white);line-height:1">
-              <span class="currency-ngn">₦250,000</span><span class="currency-usd">$156</span><!--<span class="currency-gbp">£122</span>--><span class="currency-ngn" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~$156</span><span class="currency-usd" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span><!--<span class="currency-gbp" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span>-->
-            </span>
-          </div>
-          <a href="#pricing" style="font-size:0.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--muted)'">All pricing tiers →</a>
-        </div>
+        <!-- The hero price pill is gone. It advertised a tier that no longer
+     exists (a flat self-enrolment fee) on a programme with no
+     backend record at all, so nothing could ever correct it. Price
+     comes from the API on the pages that are actually open. -->
+        
         <div class="hero-cta-row" style="display:flex;gap:12px;flex-wrap:wrap">
           <a href="#quiz-field" class="btn btn-primary btn-lg">Validate Your Skill Level</a>
           <span class="btn btn-outline btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none">Coming Soon</span>
@@ -168,7 +162,7 @@
       </div>
       <div class="fade-in" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:20px;padding:36px 32px">
         <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:16px">What AI Looks Like in Operations & Supply Chain</div>
-        <p style="font-size:1rem;color:var(--muted);line-height:1.7">When an operations director uses AI to predict a supply disruption four weeks out, auto-reroute logistics in real time, and reduce inventory carrying costs by 20% through dynamic forecasting — that is AI-native operations.</p>
+        <p style="font-size:1rem;color:var(--muted);line-height:1.7">When an operations director uses AI to predict a supply disruption four weeks out, auto-reroute logistics in real time, and reduce inventory carrying costs by 20% through dynamic forecasting — that is AI native operations.</p>
         <div style="margin-top:28px;padding-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center">
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">4</div><div style="font-size:0.72rem;color:var(--muted)">Week Sprint</div></div>
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Live</div><div style="font-size:0.72rem;color:var(--muted)">Cohort Sessions</div></div>
@@ -230,7 +224,7 @@
             <div class="qf-options">
               <div class="qf-opt" data-q="0" data-score="1" onclick="qfSelect(this)">Manually — based on historical averages and team intuition</div>
               <div class="qf-opt" data-q="0" data-score="2" onclick="qfSelect(this)">I use spreadsheet models with standard statistical methods</div>
-              <div class="qf-opt" data-q="0" data-score="3" onclick="qfSelect(this)">I use AI-assisted forecasting tools that surface signals beyond simple trend analysis</div>
+              <div class="qf-opt" data-q="0" data-score="3" onclick="qfSelect(this)">I use AI assisted forecasting tools that surface signals beyond simple trend analysis</div>
               <div class="qf-opt" data-q="0" data-score="4" onclick="qfSelect(this)">I have deployed ML-based demand sensing that dynamically adjusts to real-time signals</div>
             </div>
           </div>
@@ -243,7 +237,7 @@
             <div class="qf-options">
               <div class="qf-opt" data-q="1" data-score="1" onclick="qfSelect(this)">Reactively — I respond after disruptions occur</div>
               <div class="qf-opt" data-q="1" data-score="2" onclick="qfSelect(this)">I monitor key supplier metrics and flag issues manually</div>
-              <div class="qf-opt" data-q="1" data-score="3" onclick="qfSelect(this)">I use AI-assisted tools to surface early warning signals across my supplier base</div>
+              <div class="qf-opt" data-q="1" data-score="3" onclick="qfSelect(this)">I use AI assisted tools to surface early warning signals across my supplier base</div>
               <div class="qf-opt" data-q="1" data-score="4" onclick="qfSelect(this)">I have built predictive risk models that flag disruption risk weeks in advance</div>
             </div>
           </div>
@@ -282,7 +276,7 @@
             <div class="qf-options">
               <div class="qf-opt" data-q="4" data-score="1" onclick="qfSelect(this)">We haven't yet measured the impact of AI on operational performance</div>
               <div class="qf-opt" data-q="4" data-score="2" onclick="qfSelect(this)">We've piloted AI but haven't attributed clear performance improvements yet</div>
-              <div class="qf-opt" data-q="4" data-score="3" onclick="qfSelect(this)">AI-assisted processes I've contributed to have delivered measurable efficiency gains</div>
+              <div class="qf-opt" data-q="4" data-score="3" onclick="qfSelect(this)">AI assisted processes I've contributed to have delivered measurable efficiency gains</div>
               <div class="qf-opt" data-q="4" data-score="4" onclick="qfSelect(this)">I've led AI operations initiatives with documented ROI presented to leadership</div>
             </div>
           </div>
@@ -322,7 +316,7 @@
       <div class="eyebrow-tag" style="color:var(--red)">Programme Curriculum</div>
       <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:12px">What You Will Cover</h2>
       <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:32px">Every week builds on the last — from foundations through to a deployed, practitioner-assessed capstone project.</p>
-      <details open style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 1</span>AI in Operations & Supply Chain</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>How AI is transforming procurement, logistics, and demand planning</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>LLMs for supplier communication, SOW drafting, and RFQ analysis</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Evaluating AI tools against operational risk and compliance frameworks</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>The AI-native operations architecture — visibility, prediction, automation</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 2</span>Demand Forecasting & Procurement AI</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>AI-powered demand planning and inventory optimisation workflows</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Automated supplier evaluation and risk scoring</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>AI-assisted procurement analytics and spend analysis</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Building predictive reorder point models using historical data</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 3</span>Logistics, Fulfilment & Process AI</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Route optimisation and last-mile logistics using AI tools</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Warehouse management automation and pick-and-pack AI</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Process mining to identify operational bottlenecks</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Building an AI-powered operations dashboard with live alerts</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 4</span>Capstone & Certification</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Capstone: deploy an AI-augmented operations or supply chain workflow</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Expert practitioner review and operational risk audit</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>ROI documentation — commercially rigorous portfolio artefact</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Brixgate Expert Practitioner Certificate — Operations & Supply Chain</li></ul></div></details>
+      <details open style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 1</span>AI in Operations & Supply Chain</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>How AI is transforming procurement, logistics, and demand planning</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>LLMs for supplier communication, SOW drafting, and RFQ analysis</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Evaluating AI tools against operational risk and compliance frameworks</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>The AI native operations architecture — visibility, prediction, automation</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 2</span>Demand Forecasting & Procurement AI</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>AI-powered demand planning and inventory optimisation workflows</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Automated supplier evaluation and risk scoring</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>AI assisted procurement analytics and spend analysis</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Building predictive reorder point models using historical data</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 3</span>Logistics, Fulfilment & Process AI</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Route optimisation and last-mile logistics using AI tools</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Warehouse management automation and pick-and-pack AI</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Process mining to identify operational bottlenecks</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Building an AI-powered operations dashboard with live alerts</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 4</span>Capstone & Certification</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Capstone: deploy an AI-augmented operations or supply chain workflow</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Expert practitioner review and operational risk audit</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>ROI documentation — commercially rigorous portfolio artefact</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Brixgate Expert Practitioner Certificate — Operations & Supply Chain</li></ul></div></details>
     </div>
   </div>
 </section>
@@ -395,7 +389,7 @@
           <div class="card fade-up" style="padding:32px 28px">
             <div style="font-size:2.4rem;margin-bottom:16px">🌐</div>
             <h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">Supply Chain Risk Intelligence</h3>
-            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Build AI-assisted monitoring that surfaces supplier risks, geopolitical disruptions, and inventory vulnerabilities early.</p>
+            <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Build AI assisted monitoring that surfaces supplier risks, geopolitical disruptions, and inventory vulnerabilities early.</p>
           </div>
     </div>
   </div>
@@ -451,7 +445,7 @@
         
             <div style="display:flex;align-items:flex-start;gap:14px">
               <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0">✓</span>
-              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5">An AI-assisted demand forecasting model using your existing sales or inventory data</span>
+              <span style="font-size:0.92rem;color:var(--muted);line-height:1.5">An AI assisted demand forecasting model using your existing sales or inventory data</span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:14px">
               <span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0">✓</span>
@@ -503,7 +497,7 @@
       <div class="eyebrow-tag" style="color:var(--red)">Alumni Reviews</div>
       <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:900;color:var(--bg-dark)">What Practitioners Say</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px"><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px">"Our demand forecast accuracy improved from 72% to 91% after deploying the AI model we built in Week 2. Inventory write-offs in Q1 were the lowest in five years."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8">Supply Chain Manager · BrixGate Alumni</div></div><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px">"Supplier evaluation used to take my team two weeks per cycle. We built an AI scoring workflow that does the initial pass in hours. We now spend our time on negotiation, not admin."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8">Procurement Director · BrixGate Alumni</div></div><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px">"The process mining exercise in Week 3 found three bottlenecks I had not identified in two years of running the warehouse. That alone justified the programme fee."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8">Operations Manager · BrixGate Alumni</div></div></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px"><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px">"Our demand forecast accuracy improved from 72% to 91% after deploying the AI model we built in Week 2. Inventory write-offs in Q1 were the lowest in five years."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8">Supply Chain Manager · Brixgate Alumni</div></div><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px">"Supplier evaluation used to take my team two weeks per cycle. We built an AI scoring workflow that does the initial pass in hours. We now spend our time on negotiation, not admin."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8">Procurement Director · Brixgate Alumni</div></div><div style="background:#F9F8F7;border:1px solid #E8E3DE;border-radius:14px;padding:28px 24px" class="fade-up"><div style="color:#F59E0B;font-size:0.95rem;margin-bottom:16px">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p style="font-size:0.88rem;color:#2E3A4A;line-height:1.75;margin-bottom:20px">"The process mining exercise in Week 3 found three bottlenecks I had not identified in two years of running the warehouse. That alone justified the programme fee."</p><div style="font-size:0.75rem;font-weight:700;color:#7A94A8">Operations Manager · Brixgate Alumni</div></div></div>
   </div>
 </section>
 
@@ -525,7 +519,7 @@
   <div class="container">
     <div style="text-align:center;margin-bottom:48px" class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">Why This Investment Pays Off</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:#021024;line-height:1.25">What ₦250,000 Actually Buys You</h2>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:#021024;line-height:1.25">What This Sprint Actually Buys You</h2>
       <p style="font-size:0.95rem;color:#4A5568;max-width:600px;margin:16px auto 0;line-height:1.7">Operations professionals who integrate AI into supply chain, logistics, and process management are the ones solving tomorrow's disruptions today.</p>
     </div>
 
@@ -614,8 +608,8 @@
               <div style="font-size:0.78rem;font-weight:800;color:#7A94A8;white-space:nowrap;margin-left:16px">₦500K–₦2M · No outcomes</div>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0">
-              <div><div style="font-size:0.82rem;font-weight:800;color:#FF294E">Brixgate Expert Practitioner Sprint</div><div style="font-size:0.75rem;color:#4A5568;margin-top:2px">Live. Field-specific. Practitioner-led. Real deliverable. Certified.</div></div>
-              <div style="font-size:0.78rem;font-weight:800;color:#021024;white-space:nowrap;margin-left:16px">₦250,000 · Everything included</div>
+              <div><div style="font-size:0.82rem;font-weight:800;color:#FF294E">Brixgate Expert Practitioner Sprint</div><div style="font-size:0.75rem;color:#4A5568;margin-top:2px">Live. Built for your field. Led by practitioners. Real deliverable. Certified.</div></div>
+              <div style="font-size:0.78rem;font-weight:800;color:#021024;white-space:nowrap;margin-left:16px">Everything included</div>
             </div>
           </div>
         </div>
@@ -637,62 +631,19 @@
         <label class="label-ngn active">₦ NGN</label>
       </div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto" class="stagger">
-      <div class="card fade-up" style="padding:32px 28px">
-        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Self-Enrolment</div>
-        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px">
-          <span class="currency-usd">$156</span>
-          <span class="currency-ngn">₦250,000</span>
-        </div>
-        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">
-          <span class="currency-usd">~₦250,000 NGN</span>
-          <span class="currency-ngn">~$156 USD</span>
-        </div>
-        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Full 4-week sprint</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Field assessment</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Expert-led cohort sessions</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Expert Practitioner Certificate</li>
-        </ul>
-        <span class="btn btn-outline" style="opacity:0.5;cursor:not-allowed;pointer-events:none;width:100%;justify-content:center;display:flex">Coming Soon</span>
-      </div>
-      <div class="card fade-up" style="padding:32px 28px;border-color:var(--red);position:relative">
-        <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;white-space:nowrap">Most Popular</div>
-        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Corporate Seat</div>
-        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px">
-          <span class="currency-usd">$125</span>
-          <span class="currency-ngn">₦200,000</span>
-        </div>
-        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">
-          <span class="currency-usd">~₦200,000 NGN · per seat</span>
-          <span class="currency-ngn">~$125 USD · per seat</span>
-        </div>
-        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Self-Enrolment</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Manager progress reports</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Invoiced to your company</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Priority cohort placement</li>
-        </ul>
-        <span class="btn btn-primary" style="opacity:0.5;cursor:not-allowed;pointer-events:none;width:100%;justify-content:center;display:flex">Coming Soon</span>
-      </div>
-      <div class="card fade-up" style="padding:32px 28px">
-        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Team (20+ seats)</div>
-        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px">
-          <span class="currency-usd">$106</span>
-          <span class="currency-ngn">₦170,000</span>
-        </div>
-        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">
-          <span class="currency-usd">~₦170,000 NGN · per seat</span>
-          <span class="currency-ngn">~$106 USD · per seat</span>
-        </div>
-        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Corporate</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Dedicated cohort manager</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Team project tracks</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Full cohort reporting</li>
-        </ul>
-        <a href="organisations.html#packages" class="btn btn-outline" style="width:100%;justify-content:center;display:flex">View Team Packages</a>
-      </div>
+    <!-- The three-tier table that stood here quoted separate self-enrolment,
+         corporate and team fees for a programme that has no backend
+         record and no cohort. Those numbers matched nothing the
+         API has ever served, and they were the "three prices for the same
+         product" the corrections brief opens with. Removed rather than
+         updated: this field is not open, so there is no price to state. -->
+    <div style="max-width:620px;margin:0 auto;text-align:center" class="fade-up">
+      <p style="font-size:0.95rem;color:var(--muted);line-height:1.75">
+        This field is not open yet. When it is scheduled, the fee is shown on the
+        application form before you pay anything, and it comes from the same place
+        the invoice does. Corporate and team programmes are quoted per proposal —
+        <a href="organisations.html" style="color:var(--red);font-weight:650">talk to us about an organisation</a>.
+      </p>
     </div>
     <div id="pricing-cards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto" class="stagger">
       <div style="text-align:center;color:var(--muted);padding:40px;grid-column:1/-1;font-size:0.9rem">Loading pricing…</div>
@@ -704,7 +655,7 @@
 <section class="section-pad" style="background:var(--red);text-align:center">
   <div class="container">
     <div class="fade-up">
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;color:#fff;margin-bottom:16px">Ready to Become an AI-Native<br />Operations & Supply Chain Professional?</h2>
+      <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;color:#fff;margin-bottom:16px">Ready to Become an AI Native<br />Operations & Supply Chain Professional?</h2>
       <p style="font-size:1rem;color:rgba(255,255,255,0.82);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto">Seats are limited per cohort. Apply in under 2 minutes — no essays, no references required.</p>
       <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
         <span class="btn btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none;background:#fff;color:var(--red);font-weight:900">Coming Soon</span>
@@ -722,7 +673,7 @@
         <a href="index.html" class="nav-logo footer-logo">
           <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
         </a>
-        <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
+        <p>We produce the professionals the AI era runs on, and rebuild the institutions they work in. Live sprints built for each field, led by practitioners who do the work.</p>
         <div class="footer-social">
           <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook">
             <img src="assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block">
@@ -771,7 +722,7 @@
   </div>
 
   <div class="footer-bottom">
-    <p>© <span id="footer-year">2026</span> Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
+    <p>© <span id="footer-year">2025</span> Brixgate Ltd, RC 9082968. All rights reserved. | Lagos, Nigeria · <a href="tel:+447450337132">+44 74 5033 7132</a></p>
     <div class="footer-bottom-links">
       <a href="privacy-policy.html">Privacy Policy</a>
       <a href="terms.html">Terms of Service</a>
@@ -923,11 +874,11 @@ var PROGRAM_ID = 0;
 
 </script>
 <script>
-// ====== Field-Specific Quiz (operations) ======
+// ====== Field Readiness Quiz (operations) ======
 (function() {
   const ID = 'qf_operations';
   const TIERS = [
-      { min: 5, max: 9, label: 'Foundation Level', color: '#FF5748', headline: 'You\'re at the starting line. That\'s exactly where this programme begins.', body: 'Most professionals in your field are in the same position. The Expert Practitioner Programme is built for exactly this moment — structured, practitioner-led, and designed to move you from curiosity to capability in four weeks.', cta: 'Reserve your seat before this cohort fills →' },
+      { min: 5, max: 9, label: 'Foundation Level', color: '#FF5748', headline: 'You\'re at the starting line. That\'s exactly where this programme begins.', body: 'Most professionals in your field are in the same position. The Expert Practitioner Programme is built for exactly this moment — structured, led by practitioners, and designed to move you from curiosity to capability in four weeks.', cta: 'Reserve your seat before this cohort fills →' },
       { min: 10, max: 14, label: 'Emerging Practitioner', color: '#FF8C00', headline: 'You have awareness. The programme turns awareness into applied advantage.', body: 'You\'re ahead of most professionals who haven\'t started yet. But awareness without application doesn\'t move the needle. The sprint will give you the structured framework, practitioner guidance, and peer accountability to make your AI knowledge operational.', cta: 'Apply now and close the gap →' },
       { min: 15, max: 18, label: 'Practitioner Level', color: '#22c55e', headline: 'You\'re ahead of most. The sprint sharpens your edge.', body: 'You\'re applying AI in your field, but there\'s a gap between occasional use and systematic advantage. The Expert Practitioner Programme will give you the framework, the network, and the field-verified certification to formalise what you\'ve built — and take it further.', cta: 'Join the next cohort and formalise your advantage →' },
       { min: 19, max: 20, label: 'Expert Practitioner', color: '#3b82f6', headline: 'You\'re already operating at a high level. Consider becoming an Expert.', body: 'Your score suggests you\'re already applying AI at a level that most professionals in your field haven\'t reached. You\'d be a strong candidate for our Expert Practitioner pathway — sharing what you know while continuing to grow.', cta: 'Explore joining as an Expert Practitioner →' }

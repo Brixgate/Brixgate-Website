@@ -88,17 +88,11 @@
         </div>
         <h1 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:20px">AI in<br /><span style="color:var(--red)">Project Management</span></h1>
         <p style="font-size:1.15rem;color:var(--muted);line-height:1.7;margin-bottom:32px;max-width:480px">Deliver More. Predict Problems. Lead with Intelligence.</p>
-        <!-- Price pill — visible in hero so cost is clear before scrolling -->
-        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:24px">
-          <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,41,78,0.08);border:1px solid rgba(255,41,78,0.22);border-radius:50px;padding:8px 18px">
-            <span style="font-size:0.7rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.09em">Self-Enrolment</span>
-            <span style="width:1px;height:14px;background:rgba(255,255,255,0.12);display:inline-block"></span>
-            <span style="font-size:1.05rem;font-weight:900;color:var(--white);line-height:1">
-              <span class="currency-ngn">₦250,000</span><span class="currency-usd">$156</span><!--<span class="currency-gbp">£122</span>--><span class="currency-ngn" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~$156</span><span class="currency-usd" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span><!--<span class="currency-gbp" style="font-size:0.7rem;font-weight:600;color:var(--muted);margin-left:5px">~₦250,000</span>-->
-            </span>
-          </div>
-          <a href="#pricing" style="font-size:0.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--muted)'">All pricing tiers →</a>
-        </div>
+        <!-- The hero price pill is gone. It advertised a tier that no longer
+     exists (a flat self-enrolment fee) on a programme with no
+     backend record at all, so nothing could ever correct it. Price
+     comes from the API on the pages that are actually open. -->
+        
         <div class="hero-cta-row" style="display:flex;gap:12px;flex-wrap:wrap">
           <a href="#quiz-field" class="btn btn-primary btn-lg">Validate Your Skill Level</a>
           <span class="btn btn-outline btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none">Coming Soon</span>
@@ -106,7 +100,7 @@
       </div>
       <div class="fade-in" style="background:var(--bg-card);border:1px solid var(--border-card);border-radius:20px;padding:36px 32px">
         <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:16px">What AI Looks Like in Project Management</div>
-        <p style="font-size:1rem;color:var(--muted);line-height:1.7">When a project manager uses AI to generate a risk register from a brief, draft stakeholder updates in minutes, and flag timeline slippage three weeks before it happens — that is AI-native project delivery.</p>
+        <p style="font-size:1rem;color:var(--muted);line-height:1.7">When a project manager uses AI to generate a risk register from a brief, draft stakeholder updates in minutes, and flag timeline slippage three weeks before it happens — that is AI native project delivery.</p>
         <div style="margin-top:28px;padding-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center">
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">4</div><div style="font-size:0.72rem;color:var(--muted)">Week Sprint</div></div>
           <div><div style="font-size:1.6rem;font-weight:900;color:var(--white)">Live</div><div style="font-size:0.72rem;color:var(--muted)">Cohort Sessions</div></div>
@@ -171,7 +165,7 @@
             <div class="qf-options">
               <div class="qf-opt" data-q="1" data-score="1" onclick="qfSelect(this)">Reactively — I respond to issues as they surface during delivery</div>
               <div class="qf-opt" data-q="1" data-score="2" onclick="qfSelect(this)">I maintain a risk register that I update manually at key milestones</div>
-              <div class="qf-opt" data-q="1" data-score="3" onclick="qfSelect(this)">I use AI-assisted tools to proactively surface risks from project signals</div>
+              <div class="qf-opt" data-q="1" data-score="3" onclick="qfSelect(this)">I use AI assisted tools to proactively surface risks from project signals</div>
               <div class="qf-opt" data-q="1" data-score="4" onclick="qfSelect(this)">I have built AI-powered risk monitoring that alerts my team in real time</div>
             </div>
           </div>
@@ -198,7 +192,7 @@
               <div class="qf-opt" data-q="3" data-score="1" onclick="qfSelect(this)">Manually — I write all reports from scratch each reporting cycle</div>
               <div class="qf-opt" data-q="3" data-score="2" onclick="qfSelect(this)">I use templates but spend significant time gathering and formatting data</div>
               <div class="qf-opt" data-q="3" data-score="3" onclick="qfSelect(this)">I use AI to generate draft reports that I validate and refine before sending</div>
-              <div class="qf-opt" data-q="3" data-score="4" onclick="qfSelect(this)">I have a structured AI-assisted reporting workflow that delivers consistent, timely updates</div>
+              <div class="qf-opt" data-q="3" data-score="4" onclick="qfSelect(this)">I have a structured AI assisted reporting workflow that delivers consistent, timely updates</div>
             </div>
           </div>
           <div class="qf-question" id="qf_pm_q4">
@@ -240,7 +234,7 @@
       <div class="eyebrow-tag" style="color:var(--red)">What You Will Master</div>
       <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:var(--bg-dark)">The Three AI Skills That Will Define<br />Your Edge in Project Management</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px"><div class="card fade-up" style="padding:32px 28px"><div style="font-size:2.4rem;margin-bottom:16px">📅</div><h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">AI-Assisted Project Planning</h3><p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Use AI to generate project plans, identify dependencies, and build realistic schedules from scope descriptions in minutes.</p></div><div class="card fade-up" style="padding:32px 28px"><div style="font-size:2.4rem;margin-bottom:16px">⚠️</div><h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">Proactive Risk Intelligence</h3><p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Apply AI to surface project risks early — from stakeholder signals, scope changes, and delivery patterns — before they escalate.</p></div><div class="card fade-up" style="padding:32px 28px"><div style="font-size:2.4rem;margin-bottom:16px">📢</div><h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">Intelligent Stakeholder Communication</h3><p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Generate, tailor, and optimise stakeholder updates and escalation reports using AI — saving hours on every project cycle.</p></div></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px"><div class="card fade-up" style="padding:32px 28px"><div style="font-size:2.4rem;margin-bottom:16px">📅</div><h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">AI Assisted Project Planning</h3><p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Use AI to generate project plans, identify dependencies, and build realistic schedules from scope descriptions in minutes.</p></div><div class="card fade-up" style="padding:32px 28px"><div style="font-size:2.4rem;margin-bottom:16px">⚠️</div><h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">Proactive Risk Intelligence</h3><p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Apply AI to surface project risks early — from stakeholder signals, scope changes, and delivery patterns — before they escalate.</p></div><div class="card fade-up" style="padding:32px 28px"><div style="font-size:2.4rem;margin-bottom:16px">📢</div><h3 style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:10px">Intelligent Stakeholder Communication</h3><p style="font-size:0.88rem;color:var(--muted);line-height:1.6">Generate, tailor, and optimise stakeholder updates and escalation reports using AI — saving hours on every project cycle.</p></div></div>
   </div>
 </section>
 
@@ -271,7 +265,7 @@
         <span class="btn btn-primary btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none">Coming Soon</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:20px">
-        <div style="display:flex;align-items:flex-start;gap:14px"><span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0">✓</span><span style="font-size:0.92rem;color:var(--muted);line-height:1.5">An AI-generated project plan and risk register for a real or defined scope scenario</span></div><div style="display:flex;align-items:flex-start;gap:14px"><span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0">✓</span><span style="font-size:0.92rem;color:var(--muted);line-height:1.5">A stakeholder communication template set generated and refined with AI assistance</span></div><div style="display:flex;align-items:flex-start;gap:14px"><span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0">✓</span><span style="font-size:0.92rem;color:var(--muted);line-height:1.5">A delivery risk monitoring framework using AI-assisted signal detection</span></div>
+        <div style="display:flex;align-items:flex-start;gap:14px"><span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0">✓</span><span style="font-size:0.92rem;color:var(--muted);line-height:1.5">An AI-generated project plan and risk register for a real or defined scope scenario</span></div><div style="display:flex;align-items:flex-start;gap:14px"><span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0">✓</span><span style="font-size:0.92rem;color:var(--muted);line-height:1.5">A stakeholder communication template set generated and refined with AI assistance</span></div><div style="display:flex;align-items:flex-start;gap:14px"><span style="color:var(--red);font-size:1.1rem;line-height:1.4;flex-shrink:0">✓</span><span style="font-size:0.92rem;color:var(--muted);line-height:1.5">A delivery risk monitoring framework using AI assisted signal detection</span></div>
         <div style="margin-top:8px;padding:20px;background:rgba(255,41,78,0.06);border:1.5px solid rgba(255,41,78,0.2);border-radius:12px">
           <div style="font-size:0.78rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Plus</div>
           <p style="font-size:0.88rem;color:#2E3A4A;line-height:1.5;margin:0">Brixgate Expert Practitioner Certificate — field-verified in Project Management, practitioner-assessed, and recognised by employers across Africa and internationally.</p>
@@ -288,7 +282,7 @@
       <div class="eyebrow-tag" style="color:var(--red)">Programme Curriculum</div>
       <h2 style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:900;color:var(--bg-dark);line-height:1.25;margin-bottom:12px">What You Will Cover</h2>
       <p style="font-size:0.92rem;color:#4A5568;line-height:1.7;margin-bottom:32px">Every week builds on the last — from foundations through to a deployed, practitioner-assessed capstone project.</p>
-      <details open style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 1</span>AI Across the Project Lifecycle</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>How AI is transforming project planning, tracking, and stakeholder communication</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>LLMs for project documentation — charters, plans, status reports, and RAID logs</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Evaluating AI tools against PMI and PRINCE2 governance standards</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>The AI-native PMO — what changes and what must stay human</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 2</span>Planning, Scheduling & Risk AI</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>AI-assisted project scheduling and critical path optimisation</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Automated risk register generation and probability scoring</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Resource allocation modelling using AI demand forecasting</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Building AI-generated project status reports and executive dashboards</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 3</span>Delivery Intelligence & Stakeholder AI</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>AI-powered issue triage and resolution prioritisation</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Meeting intelligence — AI transcription, action item extraction, and follow-up automation</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Stakeholder sentiment analysis from project communications</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Building an AI project assistant for your current portfolio</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 4</span>Capstone & Certification</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Capstone: deploy an AI-augmented project management workflow</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Expert practitioner review and PMO governance audit</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Portfolio documentation — PMI/PRINCE2 aligned and employer-ready</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Brixgate Expert Practitioner Certificate — Project Management</li></ul></div></details>
+      <details open style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 1</span>AI Across the Project Lifecycle</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>How AI is transforming project planning, tracking, and stakeholder communication</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>LLMs for project documentation — charters, plans, status reports, and RAID logs</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Evaluating AI tools against PMI and PRINCE2 governance standards</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>The AI native PMO — what changes and what must stay human</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 2</span>Planning, Scheduling & Risk AI</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>AI assisted project scheduling and critical path optimisation</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Automated risk register generation and probability scoring</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Resource allocation modelling using AI demand forecasting</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Building AI-generated project status reports and executive dashboards</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 3</span>Delivery Intelligence & Stakeholder AI</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>AI-powered issue triage and resolution prioritisation</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Meeting intelligence — AI transcription, action item extraction, and follow-up automation</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Stakeholder sentiment analysis from project communications</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Building an AI project assistant for your current portfolio</li></ul></div></details><details  style="border:1px solid #E8E3DE;border-radius:12px;overflow:hidden;margin-bottom:12px"><summary style="padding:20px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;list-style:none;background:#fff;font-weight:800;font-size:0.95rem;color:#021024"><span><span style="font-size:0.72rem;font-weight:700;color:#FF294E;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px">Week 4</span>Capstone & Certification</span><span style="font-size:1.1rem;color:#7A94A8">+</span></summary><div style="padding:0 24px 20px;background:#fff"><ul style="list-style:none;padding:0;margin:8px 0 0"><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Capstone: deploy an AI-augmented project management workflow</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Expert practitioner review and PMO governance audit</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Portfolio documentation — PMI/PRINCE2 aligned and employer-ready</li><li style="font-size:0.88rem;color:#4A5568;padding:8px 0;border-bottom:1px solid #F0EDE9;display:flex;gap:10px;align-items:flex-start"><span style="color:#FF294E;flex-shrink:0">&#10003;</span>Brixgate Expert Practitioner Certificate — Project Management</li></ul></div></details>
     </div>
   </div>
 </section>
@@ -357,7 +351,7 @@
         <div>
           <p style="font-size:0.9rem;color:var(--muted);line-height:1.7;margin-bottom:20px">Sola is a programme delivery leader with 12 years managing complex, multi-stakeholder projects across financial services, telecoms, and infrastructure in Nigeria and the UK. She has implemented AI-augmented PMO functions at scale and now helps project managers build workflows that reduce administrative burden and improve forecast accuracy. Over 660 live sessions delivered.</p>
           <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px">Core Expertise</div>
-          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px"><li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start"><span style="color:var(--red)">▸</span>Programme Delivery & AI</li><li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start"><span style="color:var(--red)">▸</span>Risk & Issue Management</li><li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start"><span style="color:var(--red)">▸</span>PMO Design & Governance</li><li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start"><span style="color:var(--red)">▸</span>AI-Assisted Reporting</li><li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start"><span style="color:var(--red)">▸</span>Stakeholder Communication Strategy</li></ul>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px"><li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start"><span style="color:var(--red)">▸</span>Programme Delivery & AI</li><li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start"><span style="color:var(--red)">▸</span>Risk & Issue Management</li><li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start"><span style="color:var(--red)">▸</span>PMO Design & Governance</li><li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start"><span style="color:var(--red)">▸</span>AI Assisted Reporting</li><li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start"><span style="color:var(--red)">▸</span>Stakeholder Communication Strategy</li></ul>
         </div>
       </div>
     </div>
@@ -375,17 +369,17 @@
       <div class="card fade-up" style="padding:32px 28px">
         <div style="font-size:1.6rem;color:var(--red);line-height:1;margin-bottom:12px">&ldquo;</div>
         <p style="font-size:0.9rem;color:var(--muted);line-height:1.7;margin:0 0 20px">My status reporting used to take me 4 hours a week. The AI workflow I built in Week 3 does it in 25 minutes. The quality is better because I am reviewing rather than drafting.</p>
-        <div style="font-size:0.78rem;font-weight:700;color:var(--white)">Programme Manager · BrixGate Alumni</div>
+        <div style="font-size:0.78rem;font-weight:700;color:var(--white)">Programme Manager · Brixgate Alumni</div>
       </div>
       <div class="card fade-up" style="padding:32px 28px">
         <div style="font-size:1.6rem;color:var(--red);line-height:1;margin-bottom:12px">&ldquo;</div>
         <p style="font-size:0.9rem;color:var(--muted);line-height:1.7;margin:0 0 20px">The AI risk register generation caught three risks my team had not surfaced in the manual process. One of them materialised in Week 4 of our project — and we were already ahead of it.</p>
-        <div style="font-size:0.78rem;font-weight:700;color:var(--white)">Project Manager · BrixGate Alumni</div>
+        <div style="font-size:0.78rem;font-weight:700;color:var(--white)">Project Manager · Brixgate Alumni</div>
       </div>
       <div class="card fade-up" style="padding:32px 28px">
         <div style="font-size:1.6rem;color:var(--red);line-height:1;margin-bottom:12px">&ldquo;</div>
         <p style="font-size:0.9rem;color:var(--muted);line-height:1.7;margin:0 0 20px">The meeting intelligence workflow is now non-negotiable for our team. Every session is transcribed, action items extracted, and follow-ups drafted automatically. No more lost commitments.</p>
-        <div style="font-size:0.78rem;font-weight:700;color:var(--white)">PMO Lead · BrixGate Alumni</div>
+        <div style="font-size:0.78rem;font-weight:700;color:var(--white)">PMO Lead · Brixgate Alumni</div>
       </div>
     </div>
   </div>
@@ -436,7 +430,7 @@
   <div class="container">
     <div style="text-align:center;margin-bottom:48px" class="fade-up">
       <div class="eyebrow-tag" style="color:var(--red)">Why This Investment Pays Off</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:#021024;line-height:1.25">What ₦250,000 Actually Buys You</h2>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;color:#021024;line-height:1.25">What This Sprint Actually Buys You</h2>
       <p style="font-size:0.95rem;color:#4A5568;max-width:600px;margin:16px auto 0;line-height:1.7">Project managers who embed AI into planning, reporting, and risk management consistently deliver more — and get promoted faster.</p>
     </div>
 
@@ -504,7 +498,7 @@
           <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7A94A8;margin-bottom:16px">By the End of Week 4, You Will Have</div>
           <div style="display:flex;flex-direction:column;gap:14px">
             <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Cut status reporting from 4 hours to 25 minutes with AI-generated executive summaries</span></div>
-            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Build AI-assisted risk scoring that catches what manual reviews miss</span></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Build AI assisted risk scoring that catches what manual reviews miss</span></div>
             <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#FF294E;font-size:1.1rem;line-height:1.3;flex-shrink:0">→</span><span style="font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.6">Deploy meeting intelligence workflows that never let a commitment fall through the cracks</span></div>
           </div>
         </div>
@@ -525,8 +519,8 @@
               <div style="font-size:0.78rem;font-weight:800;color:#7A94A8;white-space:nowrap;margin-left:16px">₦500K–₦2M · No outcomes</div>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0">
-              <div><div style="font-size:0.82rem;font-weight:800;color:#FF294E">Brixgate Expert Practitioner Sprint</div><div style="font-size:0.75rem;color:#4A5568;margin-top:2px">Live. Field-specific. Practitioner-led. Real deliverable. Certified.</div></div>
-              <div style="font-size:0.78rem;font-weight:800;color:#021024;white-space:nowrap;margin-left:16px">₦250,000 · Everything included</div>
+              <div><div style="font-size:0.82rem;font-weight:800;color:#FF294E">Brixgate Expert Practitioner Sprint</div><div style="font-size:0.75rem;color:#4A5568;margin-top:2px">Live. Built for your field. Led by practitioners. Real deliverable. Certified.</div></div>
+              <div style="font-size:0.78rem;font-weight:800;color:#021024;white-space:nowrap;margin-left:16px">Everything included</div>
             </div>
           </div>
         </div>
@@ -548,44 +542,19 @@
         <label class="label-ngn active">₦ NGN</label>
       </div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto" class="stagger">
-      <div class="card fade-up" style="padding:32px 28px">
-        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Self-Enrolment</div>
-        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px"><span class="currency-usd">$156</span><span class="currency-ngn">₦250,000</span></div>
-        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px"><span class="currency-usd">~₦250,000 NGN</span><span class="currency-ngn">~$156 USD</span></div>
-        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Full 4-week sprint</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Field assessment</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Expert-led cohort sessions</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Expert Practitioner Certificate</li>
-        </ul>
-        <span class="btn btn-outline" style="opacity:0.5;cursor:not-allowed;pointer-events:none;width:100%;justify-content:center;display:flex">Coming Soon</span>
-      </div>
-      <div class="card fade-up" style="padding:32px 28px;border-color:var(--red);position:relative">
-        <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;white-space:nowrap">Most Popular</div>
-        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Corporate Seat</div>
-        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px"><span class="currency-usd">$125</span><span class="currency-ngn">₦200,000</span></div>
-        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px"><span class="currency-usd">~₦200,000 NGN · per seat</span><span class="currency-ngn">~$125 USD · per seat</span></div>
-        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Self-Enrolment</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Manager progress reports</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Invoiced to your company</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Priority cohort placement</li>
-        </ul>
-        <span class="btn btn-primary" style="opacity:0.5;cursor:not-allowed;pointer-events:none;width:100%;justify-content:center;display:flex">Coming Soon</span>
-      </div>
-      <div class="card fade-up" style="padding:32px 28px">
-        <div style="font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px">Team (20+ seats)</div>
-        <div style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:4px"><span class="currency-usd">$106</span><span class="currency-ngn">₦170,000</span></div>
-        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px"><span class="currency-usd">~₦170,000 NGN · per seat</span><span class="currency-ngn">~$106 USD · per seat</span></div>
-        <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px">
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Everything in Corporate</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Dedicated cohort manager</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Team project tracks</li>
-          <li style="font-size:0.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start"><span style="color:var(--red)">✓</span>Full cohort reporting</li>
-        </ul>
-        <a href="organisations.html#packages" class="btn btn-outline" style="width:100%;justify-content:center;display:flex">View Team Packages</a>
-      </div>
+    <!-- The three-tier table that stood here quoted separate self-enrolment,
+         corporate and team fees for a programme that has no backend
+         record and no cohort. Those numbers matched nothing the
+         API has ever served, and they were the "three prices for the same
+         product" the corrections brief opens with. Removed rather than
+         updated: this field is not open, so there is no price to state. -->
+    <div style="max-width:620px;margin:0 auto;text-align:center" class="fade-up">
+      <p style="font-size:0.95rem;color:var(--muted);line-height:1.75">
+        This field is not open yet. When it is scheduled, the fee is shown on the
+        application form before you pay anything, and it comes from the same place
+        the invoice does. Corporate and team programmes are quoted per proposal —
+        <a href="organisations.html" style="color:var(--red);font-weight:650">talk to us about an organisation</a>.
+      </p>
     </div>
     <div id="pricing-cards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto" class="stagger">
       <div style="text-align:center;color:var(--muted);padding:40px;grid-column:1/-1;font-size:0.9rem">Loading pricing…</div>
@@ -597,7 +566,7 @@
 <section class="section-pad" style="background:var(--red);text-align:center">
   <div class="container">
     <div class="fade-up">
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;color:#fff;margin-bottom:16px">Ready to Become an AI-Native<br />Project Management Professional?</h2>
+      <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;color:#fff;margin-bottom:16px">Ready to Become an AI Native<br />Project Management Professional?</h2>
       <p style="font-size:1rem;color:rgba(255,255,255,0.82);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto">Seats are limited per cohort. Apply in under 2 minutes — no essays, no references required.</p>
       <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
         <span class="btn btn-lg" style="opacity:0.5;cursor:not-allowed;pointer-events:none;background:#fff;color:var(--red);font-weight:900">Coming Soon</span>
@@ -615,7 +584,7 @@
         <a href="index.html" class="nav-logo footer-logo">
           <img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
         </a>
-        <p>The global AI expertise marketplace. Transforming professionals into AI-native practitioners through field-specific, practitioner-led intensive sprints.</p>
+        <p>We produce the professionals the AI era runs on, and rebuild the institutions they work in. Live sprints built for each field, led by practitioners who do the work.</p>
         <div class="footer-social">
           <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook">
             <img src="assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block">
@@ -664,7 +633,7 @@
   </div>
 
   <div class="footer-bottom">
-    <p>© <span id="footer-year">2026</span> Brixgate Ltd. All rights reserved. | Headquarters: Lagos, Nigeria</p>
+    <p>© <span id="footer-year">2025</span> Brixgate Ltd, RC 9082968. All rights reserved. | Lagos, Nigeria · <a href="tel:+447450337132">+44 74 5033 7132</a></p>
     <div class="footer-bottom-links">
       <a href="privacy-policy.html">Privacy Policy</a>
       <a href="terms.html">Terms of Service</a>
@@ -818,7 +787,7 @@ var PROGRAM_ID = 0;
 (function() {
   const ID = 'qf_pm';
   const TIERS = [
-      { min: 5, max: 9, label: 'Foundation Level', color: '#FF5748', headline: 'You\'re at the starting line. That\'s exactly where this programme begins.', body: 'Most professionals in your field are in the same position. The Expert Practitioner Programme is built for exactly this moment — structured, practitioner-led, and designed to move you from curiosity to capability in four weeks.', cta: 'Reserve your seat before this cohort fills →' },
+      { min: 5, max: 9, label: 'Foundation Level', color: '#FF5748', headline: 'You\'re at the starting line. That\'s exactly where this programme begins.', body: 'Most professionals in your field are in the same position. The Expert Practitioner Programme is built for exactly this moment — structured, led by practitioners, and designed to move you from curiosity to capability in four weeks.', cta: 'Reserve your seat before this cohort fills →' },
       { min: 10, max: 14, label: 'Emerging Practitioner', color: '#FF8C00', headline: 'You have awareness. The programme turns awareness into applied advantage.', body: 'You\'re ahead of most professionals who haven\'t started yet. But awareness without application doesn\'t move the needle. The sprint will give you the structured framework, practitioner guidance, and peer accountability to make your AI knowledge operational.', cta: 'Apply now and close the gap →' },
       { min: 15, max: 18, label: 'Practitioner Level', color: '#22c55e', headline: 'You\'re ahead of most. The sprint sharpens your edge.', body: 'You\'re applying AI in your field, but there\'s a gap between occasional use and systematic advantage. The Expert Practitioner Programme will give you the framework, the network, and the field-verified certification to formalise what you\'ve built.', cta: 'Join the next cohort and formalise your advantage →' },
       { min: 19, max: 20, label: 'Expert Practitioner', color: '#3b82f6', headline: 'You\'re already operating at a high level. Consider becoming an Expert.', body: 'Your score suggests you\'re already applying AI at a level that most professionals in your field haven\'t reached. You\'d be a strong candidate for our Expert Practitioner pathway.', cta: 'Explore joining as an Expert Practitioner →' }
