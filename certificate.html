@@ -79,6 +79,14 @@
       overflow: hidden;
       margin-bottom: 48px;
     }
+    /* The template is 1188x840. Scaling by aspect ratio rather than a
+       fixed height keeps it sharp at any width and stops the signature
+       line drifting off the card on a phone. */
+    #cert-svg-host { padding:0; overflow:hidden; background:transparent; border:0; }
+    #cert-svg-host::before { display:none; }
+    #cert-svg-host svg { width:100%; height:auto; display:block; border-radius:12px; }
+    .cert-svg-loading { padding:64px 24px; text-align:center; color:var(--muted); font-size:0.9rem; }
+    .cert-svg-failed { padding:48px 24px; text-align:center; color:var(--muted); font-size:0.9rem; }
     .cert-visual::before {
       content: 'BRIXGATE';
       position: absolute;
@@ -439,47 +447,18 @@
 <div id="view-cert" style="display:none">
 <div class="cert-page">
 
-  <!-- Certificate visual -->
-  <div class="cert-visual">
-    <div class="cert-corner tl"></div>
-    <div class="cert-corner tr"></div>
-    <div class="cert-corner bl"></div>
-    <div class="cert-corner br"></div>
+  <!-- Certificate visual — the official template.
 
-    <div class="cert-logo-row">
-      <img src="assets/logo-color-nobg.svg" alt="Brixgate" style="height:32px" />
-    </div>
-    <div style="text-align:center;font-size:0.62rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:10px">Brixer Certificate</div>
-    <div class="cert-divider"></div>
+       The page used to draw its own certificate in HTML, which meant the
+       artefact a graduate downloaded from the portal and the one a
+       verifier saw here were two different designs. Same template now,
+       filled from the verify response.
 
-    <div class="cert-certifies">This certifies that</div>
-    <div class="cert-holder-name" id="cert-name">—</div>
-    <div class="cert-completed-text">has successfully completed the</div>
-    <div class="cert-field-name" id="cert-field">—</div>
-    <div class="cert-programme-label">AI in my Field · Expert Practitioner Programme</div>
-
-    <div class="cert-footer-row">
-      <div class="cert-sig-block">
-        <div class="cert-sig-line"></div>
-        <div class="cert-sig-name" id="cert-director-sig">Programme Director</div>
-        <div class="cert-sig-role" id="cert-director-role">Brixgate</div>
-      </div>
-
-      <div class="cert-qr-block">
-        <div class="cert-qr-img">
-          <img id="cert-qr" src="" alt="Verification QR" />
-        </div>
-        <div class="cert-id-mono" id="cert-id-mono">—</div>
-      </div>
-
-      <div class="cert-sig-block-right">
-        <div class="cert-sig-line-right"></div>
-        <div class="cert-sig-name" id="cert-expert-sig">Expert Practitioner</div>
-        <div class="cert-sig-role" id="cert-expert-role">Brixgate Certified Expert</div>
-      </div>
-    </div>
-
-    <div class="cert-watermark-footer" id="cert-watermark">— · brixgate.com</div>
+       It is fetched rather than inlined: the file is 244KB, most of it a
+       base64 background, and inlining it would put that on every visit
+       to this page whether or not a certificate resolves. -->
+  <div class="cert-visual" id="cert-svg-host" aria-label="Brixgate certificate">
+    <div class="cert-svg-loading">Preparing certificate…</div>
   </div>
 
   <!-- Details grid -->
@@ -684,6 +663,49 @@
     if (r && id) r.value = id;
   }
 
+  /* Fills the official template and injects it.
+
+     Placeholders are replaced on the SVG text rather than by id, because
+     the template is a Figma export: its nodes carry generated ids that
+     change every time the design is re-exported. Matching on the
+     {{tokens}} the designer put there is the only stable contract.
+
+     The credential id in the file is a sample, not a placeholder, so it
+     is swapped by its literal value — if a future export changes that
+     sample, the certificate still renders and only the id stays as
+     shipped, which is visible rather than silent. */
+  var CERT_TEMPLATE_URL = 'assets/certificate-template.svg';
+  var CERT_SAMPLE_ID    = 'BXG-CYB-2609-0147';
+  /* x/y/size of the QR already drawn into the template, measured from
+     its path. The baked one is static and cannot point at a specific
+     certificate, so a real one is laid over it. */
+  var CERT_QR_BOX = { x: 1020, y: 704, size: 88 };
+
+  function esc(v) {
+    return String(v == null ? '' : v)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function fillTemplate(svg, d) {
+    svg = svg.split('{{fullname}}').join(esc(d.name || '\u2014'))
+             .split('{{programme}}').join(esc(d.field || '\u2014'))
+             .split('{{completion-date}}').join(esc(d.issued || '\u2014'))
+             .split('{{instructor-name}}').join(esc(d.expertName || 'Brixgate'));
+    if (d.certId) svg = svg.split(CERT_SAMPLE_ID).join(esc(d.certId));
+
+    /* a QR for this certificate, over the static one */
+    if (d.certId) {
+      var url = 'https://brixgate.com/verify.html?id=' + encodeURIComponent(d.certId);
+      var qr  = 'https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=0&data=' + encodeURIComponent(url);
+      var b = CERT_QR_BOX;
+      var overlay = '<rect x="' + b.x + '" y="' + b.y + '" width="' + b.size + '" height="' + b.size + '" fill="#fff"/>' +
+                    '<image x="' + b.x + '" y="' + b.y + '" width="' + b.size + '" height="' + b.size + '" href="' + esc(qr) + '" />';
+      svg = svg.replace(/<\/svg>\s*$/, overlay + '</svg>');
+    }
+    return svg;
+  }
+
   function populateCert(raw, rawId) {
     var cert    = flattenCert(raw);
     var certId  = cert.certificate_number || rawId;
@@ -702,39 +724,30 @@
     document.getElementById('cert-verified-bar').style.display = 'flex';
     setText('banner-cert-id', certId);
 
-    /* Certificate visual */
-    setText('cert-name', name || '—');
-    setText('cert-field', field || '—');
-    setText('cert-id-mono', certId);
-    /* Left signature — tutor from metadata.signatories[0], right from signatories[1] */
-    var meta        = cert.metadata || {};
-    var signatories = Array.isArray(meta.signatories) ? meta.signatories : [];
-    var directorName = signatories[0]
-                    || cert.tutorName || cert.tutor_name
-                    || cert.instructorName || cert.instructor_name
-                    || cert.directorName || cert.director_name || '';
-    var directorRole = cert.tutorRole || cert.tutor_role
-                    || cert.instructorRole || cert.instructor_role
-                    || cert.directorRole || cert.director_role || 'Brixgate';
-    if (directorName) setText('cert-director-sig', directorName);
-    if (directorRole) setText('cert-director-role', directorRole);
-
-    if (expertName) setText('cert-expert-sig', expertName);
-    if (expertRole) setText('cert-expert-role', expertRole);
-    var wmText = (issued ? issued : '') + (cohort ? ' · ' + cohort : '') + ' · brixgate.com';
-    setText('cert-watermark', wmText);
-
-    /* QR code */
-    var certUrl = 'https://brixgate.com/certificate.html?id=' + encodeURIComponent(certId);
-    var qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=' + encodeURIComponent(certUrl) + '&margin=2';
-    var qrEl = document.getElementById('cert-qr');
-    if (qrEl) qrEl.src = qrSrc;
+    /* The certificate itself */
+    var host = document.getElementById('cert-svg-host');
+    if (host) {
+      fetch(CERT_TEMPLATE_URL)
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+        .then(function (svg) {
+          host.innerHTML = fillTemplate(svg, {
+            name: name, field: field, issued: issued,
+            expertName: expertName, certId: certId
+          });
+        })
+        .catch(function (e) {
+          /* The record is real either way — say the artwork failed, not
+             that the certificate does not exist. */
+          console.error('[Brixgate] certificate template failed:', e);
+          host.innerHTML = '<div class="cert-svg-failed">This certificate is verified. The printable version could not be loaded \u2014 the details are below.</div>';
+        });
+    }
 
     /* Details grid */
-    setText('detail-name', name || '—');
-    setText('detail-field', field || '—');
+    setText('detail-name', name || '\u2014');
+    setText('detail-field', field || '\u2014');
     setText('detail-cert-id', certId);
-    setText('detail-issued', issued || '—');
+    setText('detail-issued', issued || '\u2014');
 
     /* Programme blurb */
     var blurb = getBlurb(field);
@@ -744,6 +757,7 @@
     }
 
     /* LinkedIn share */
+    var certUrl = 'https://brixgate.com/certificate.html?id=' + encodeURIComponent(certId);
     var linkedInUrl = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(certUrl);
     var liLink = document.getElementById('share-linkedin');
     if (liLink) liLink.href = linkedInUrl;
