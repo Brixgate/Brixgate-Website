@@ -220,6 +220,9 @@
 
   function animateCounter(el) {
     const target = parseInt(el.dataset.count, 10);
+    if (!isFinite(target)) return;
+    /* The figure is written into the HTML; the count-up is decoration only. */
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const suffix = el.dataset.suffix || '';
     const prefix = el.dataset.prefix || '';
     const duration = 1600;
