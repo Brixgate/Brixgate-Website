@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompt Store | Brixgate</title>
+  <meta name="description" content="Ready to use prompt packs for Claude and ChatGPT, built around how Nigeria actually works. Pay with Paystack and get your pack by email in minutes." />
+  <link rel="icon" type="image/png" href="assets/faviii.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="prompt-store.css" />
+  <script src="tracking.js"></script>
+  <link rel="canonical" href="https://brixgate.com/prompt-store.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Brixgate" />
+  <meta property="og:url" content="https://brixgate.com/prompt-store.html" />
+  <meta property="og:title" content="Prompt Store | Brixgate" />
+  <meta property="og:description" content="Ready to use prompt packs for Claude and ChatGPT. See the result first, then get the prompts that make it." />
+  <meta property="og:image" content="https://brixgate.com/assets/og-brixgate.jpg" />
+</head>
+<body class="ps">
+
+<div class="region-banner" id="region-banner">
+  <span class="region-label" style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Learners from</span>
+  <div class="regions">
+    <span class="region-item">🇳🇬 Nigeria</span>
+    <span class="region-item">🇬🇧 United Kingdom</span>
+    <span class="region-item">🇺🇸 United States</span>
+    <span class="region-item">🇰🇪 Kenya</span>
+    <span class="region-item">🇿🇦 South Africa</span>
+    <span class="region-more">Headquartered in Lagos</span>
+    <span class="region-cohort" data-cohort-countdown hidden></span>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <div class="nav-mega" data-nav-mega></div>
+      <a href="prompt-store.html" class="active">Prompt Store</a>
+      <a href="experts.html">Experts</a>
+      <a href="organisations.html">For Organisations</a>
+      <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20Prompt%20Store." target="_blank" rel="noopener">Chat with us</a>
+    </div>
+    <div class="nav-cta">
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
+      <a href="apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="programme.html">Programmes</a>
+  <a href="foundations.html" class="nav-mobile-sub">AI Foundations</a>
+  <a href="professionals.html" class="nav-mobile-sub">AI for Professionals</a>
+  <a href="prompt-store.html">Prompt Store</a>
+  <a href="experts.html">Experts</a>
+  <a href="organisations.html">For Organisations</a>
+  <a href="apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="ps-hero">
+  <div class="ps-wrap">
+    <div>
+      <span class="ps-pill" id="ps-founding">New from Brixgate</span>
+      <h1>See the result first. <em>Then get the prompts</em> that make it.</h1>
+      <p class="ps-lead">Ready to use prompt packs for Claude and ChatGPT. Built around how Nigeria actually works: CVs, WhatsApp sales, owambe shoots, payment testing, final year projects and more.</p>
+      <div class="ps-cta">
+        <a class="ps-btn ps-btn-red" href="#ps-packs">Pick your pack</a>
+        <a class="ps-btn ps-btn-ghost" href="#ps-how">How it works</a>
+      </div>
+      <div class="ps-proof" id="ps-proof">
+        <div><b data-stat="packs">—</b>prompt packs</div>
+        <div><b data-stat="prompts">—</b>prompts</div>
+        <div><b data-stat="cats">—</b>audiences</div>
+        <div><b>1 free</b>prompt in every pack</div>
+      </div>
+    </div>
+    <div class="ps-reel" id="ps-reel" hidden>
+      <span class="ps-live">EXAMPLE RESULTS</span>
+      <div class="ps-dots" id="ps-dots"></div>
+    </div>
+  </div>
+</section>
+
+<div class="ps-strip" id="ps-strip" hidden><div class="ps-track" id="ps-track"></div></div>
+
+<!-- ===== CATEGORIES ===== -->
+<section class="ps-blk" id="ps-cats-sec" hidden>
+  <div class="ps-wrap">
+    <div class="ps-eyebrow">Start with you</div>
+    <h2 class="ps-t">Who are you shopping for?</h2>
+    <p class="ps-sub">Every pack is written for one kind of person doing one kind of job. Pick yours.</p>
+    <div class="ps-paths" id="ps-paths"></div>
+  </div>
+</section>
+
+<!-- ===== PACKS ===== -->
+<section class="ps-blk" id="ps-packs" style="padding-top:10px">
+  <div class="ps-wrap">
+    <div class="ps-eyebrow">The packs</div>
+    <h2 class="ps-t">Choose the result you want</h2>
+    <p class="ps-sub">Each picture shows the kind of finished work the pack helps you produce. Click one to see what is inside.</p>
+
+    <div class="ps-tabs" id="ps-tabs"></div>
+
+    <div class="ps-tools">
+      <input id="ps-q" type="search" placeholder="Search: CV, WhatsApp, wedding, testing…" aria-label="Search packs">
+      <select id="ps-sort" aria-label="Sort packs">
+        <option value="pop">Most popular</option>
+        <option value="low">Price: low to high</option>
+        <option value="high">Price: high to low</option>
+      </select>
+      <span class="ps-cnt" id="ps-cnt"></span>
+    </div>
+
+    <div class="ps-grid" id="ps-grid"></div>
+
+    <!-- nothing matched a search -->
+    <div class="ps-none" id="ps-none">
+      <b>No pack matches that yet.</b>
+      New packs are added every week. Try a different word, or clear the search.
+    </div>
+
+    <!-- the catalogue itself is empty -->
+    <div class="ps-empty" id="ps-empty">
+      <b>The store opens shortly.</b>
+      The first packs are being finished now. Check back in a few days, or
+      <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20tell%20me%20when%20the%20Prompt%20Store%20opens." target="_blank" rel="noopener" style="color:var(--ps-r);font-weight:700">tell us to let you know</a>.
+    </div>
+
+    <div class="ps-msg" id="ps-load-err"></div>
+  </div>
+</section>
+
+<!-- ===== HOW ===== -->
+<section class="ps-blk ps-dark" id="ps-how">
+  <div class="ps-wrap">
+    <div class="ps-eyebrow">Simple</div>
+    <h2 class="ps-t">From click to result in three steps</h2>
+    <div class="ps-steps">
+      <div class="ps-step"><i>1</i><b>Pick and pay</b><span>Choose a pack and pay securely with Paystack: card, bank transfer or USSD.</span></div>
+      <div class="ps-step"><i>2</i><b>Get it by email</b><span>Your prompts arrive in your inbox within minutes, ready to copy.</span></div>
+      <div class="ps-step"><i>3</i><b>Paste into Claude or ChatGPT</b><span>Follow the short guide in the pack. Fill in the [BRACKETS] with your own details and go.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="ps-blk ps-faq">
+  <div class="ps-wrap">
+    <div class="ps-eyebrow">Questions</div>
+    <h2 class="ps-t">Before you buy</h2>
+    <details><summary>Do I need a paid Claude or ChatGPT account?</summary><p>No. The prompts work on the free versions of both. A paid plan only makes it faster and lets you do more in one sitting.</p></details>
+    <details><summary>Will I get the same results as the pictures?</summary><p>The pictures are illustrations of the kind of output a pack is built to help you produce. Your result depends on the details you give and the choices you make, so treat every output as a strong first draft and check it.</p></details>
+    <details><summary>Can I try before I buy?</summary><p>Yes. The first prompt in every pack is free to read and copy on its page.</p></details>
+    <details><summary>How do I receive my pack?</summary><p>By email, to the address you enter at checkout. Check your spam folder if it does not arrive in a few minutes.</p></details>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo footer-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+        <p>We produce the professionals the AI era runs on, and rebuild the institutions they work in. Live sprints built for each field, led by practitioners who do the work.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook"><img src="assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block"></a>
+          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram"><img src="assets/social.png" alt="Instagram" width="22" height="22" style="display:block"></a>
+          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X"><img src="assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block"></a>
+          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn" title="LinkedIn"><img src="assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block"></a>
+          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us"><img src="assets/gmail.png" alt="Email" width="22" height="22" style="display:block"></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Programmes</h5><ul><li><a href="foundations.html">AI Foundations</a></li><li><a href="professionals.html">AI for Professionals</a></li><li><a href="professionals.html#pricing">Pricing</a></li><li><a href="apply.html">Apply Now</a></li><li><a href="verify.html">Verify a Certificate</a></li></ul></div>
+      <div class="footer-col"><h5>Prompt Store</h5><ul><li><a href="prompt-store.html">All packs</a></li><li><a href="prompt-store.html#ps-how">How it works</a></li><li><a href="prompt-store/access.html">Open my pack</a></li><li><a href="mailto:we@brixgate.com">Didn't get your pack?</a></li></ul></div>
+      <div class="footer-col"><h5>Organisation</h5><ul><li><a href="about.html">About Brixgate</a></li><li><a href="organisations.html">For Organisations</a></li><li><a href="organisations.html#transform">Brixgate Transform</a></li><li><a href="experts.html">Meet Our Experts</a></li><li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li></ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="footer-year">2025</span> Brixgate Ltd, RC 9082968. All rights reserved. | Lagos, Nigeria · <a href="tel:+447450337132">+44 74 5033 7132</a></p>
+    <div class="footer-bottom-links"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script src="foundations-courses.js"></script>
+<script src="nav-programmes.js"></script>
+<script src="cohort-countdown.js"></script>
+<script src="currency.js"></script>
+<script src="prompt-store.js"></script>
+<script>
+/* ============================================================
+   The store page.
+
+   One call to /storefront carries the settings, the categories,
+   the featured slider and every pack, so the page fills from a
+   single response. Filtering and sorting then run in the browser
+   over that same list: the catalogue is small, and a local filter
+   answers instantly where a request per keystroke would not.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var PS = window.PromptStore;
+  var $  = function (id) { return document.getElementById(id); };
+
+  var packs = [], cats = [], featured = [], config = {};
+  var state = { cat: 'all', q: '', sort: 'pop' };
+
+  PS.setYear();
+  PS.bindCopy(document);
+
+  skeleton();
+  load();
+
+  /* ---------- loading ---------- */
+
+  function skeleton() {
+    var cells = '';
+    for (var i = 0; i < 6; i++) cells += '<div class="ps-sk ps-sk-card"></div>';
+    $('ps-grid').innerHTML = cells;
+  }
+
+  function load() {
+    PS.call('/storefront').then(function (r) {
+      if (!r.ok) return fail(PS.errorText(r));
+      var d = r.data || {};
+      config   = d.config || {};
+      cats     = d.categories || [];
+      featured = d.featured || [];
+      packs    = d.packs || [];
+      if (config.support_email) PS.SUPPORT = config.support_email;
+      render();
+    }).catch(function () {
+      fail('We could not load the store. Please check your connection and try again.');
+    });
+  }
+
+  function fail(text) {
+    $('ps-grid').innerHTML = '';
+    var box = $('ps-load-err');
+    box.className = 'ps-msg ps-err';
+    box.textContent = text;
+  }
+
+  /* ---------- rendering ---------- */
+
+  function render() {
+    founding();
+    stats();
+    reel();
+    paths();
+    tabs();
+    grid();
+    wire();
+  }
+
+  /* The banner only claims a founding offer while one is actually
+     open, and only counts slots when the API sends a count. */
+  function founding() {
+    var el = $('ps-founding');
+    if (!config.founding_open) { el.textContent = 'New from Brixgate'; return; }
+    var left = config.founding_slots_left;
+    var limit = config.founding_limit;
+    if (left != null && limit != null) {
+      el.textContent = 'Founding price · ' + left + ' of ' + limit + ' places left';
+    } else if (limit != null) {
+      el.textContent = 'Founding prices for the first ' + limit + ' buyers';
+    } else {
+      el.textContent = 'Founding prices while the offer lasts';
+    }
+  }
+
+  function stats() {
+    var s = config.stats || {};
+    var map = { packs: s.pack_count, prompts: s.prompt_count, cats: s.category_count };
+    Object.keys(map).forEach(function (k) {
+      var el = document.querySelector('[data-stat="' + k + '"]');
+      if (el) el.textContent = map[k] == null ? '—' : map[k];
+    });
+  }
+
+  /* The slider and the marquee both read `featured`, so both stay
+     hidden when nothing is featured rather than showing an empty
+     frame. */
+  function reel() {
+    if (!featured.length) return;
+
+    var box = $('ps-reel'), dots = $('ps-dots');
+    var slides = featured.map(function (f, i) {
+      var p = f.pack || {};
+      var cat = p.category || {};
+      return '<div class="ps-slide' + (i ? '' : ' ps-on') + '">' +
+               (p.scene_svg || '') +
+               '<div class="ps-cap"><small>' + PS.esc(cat.short_name || '') + '</small>' +
+               '<b>' + PS.esc(f.headline || p.title || '') + '</b></div>' +
+             '</div>';
+    }).join('');
+
+    dots.innerHTML = featured.map(function (_, i) {
+      return '<i' + (i ? '' : ' class="ps-on"') + '></i>';
+    }).join('');
+    box.insertAdjacentHTML('beforeend', slides);
+    box.hidden = false;
+
+    var strip = $('ps-strip');
+    var items = featured.concat(featured).map(function (f) {
+      return '<span>' + PS.esc(f.headline || (f.pack || {}).title || '') + '</span>';
+    }).join('');
+    $('ps-track').innerHTML = items;
+    strip.hidden = false;
+
+    if (featured.length < 2) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var sl = box.querySelectorAll('.ps-slide');
+    var dt = dots.querySelectorAll('i');
+    var k = 0;
+    setInterval(function () {
+      sl[k].classList.remove('ps-on'); dt[k].classList.remove('ps-on');
+      k = (k + 1) % sl.length;
+      sl[k].classList.add('ps-on'); dt[k].classList.add('ps-on');
+    }, 4200);
+  }
+
+  /* Every category is shown, including ones with no packs yet, so
+     the shape of the store is visible from the first visit. */
+  function paths() {
+    /* No categories means no tiles worth a heading, so the whole
+       section stays out of the page rather than standing empty. */
+    if (!cats.length) return;
+    $('ps-cats-sec').hidden = false;
+    $('ps-paths').innerHTML = cats.map(function (c) {
+      return '<button class="ps-path" type="button" data-go="' + PS.esc(c.slug) + '">' +
+               PS.icon(c.icon_svg) +
+               '<b>' + PS.esc(c.name) + '</b>' +
+               '<span>' + PS.esc(c.blurb || '') + '</span>' +
+             '</button>';
+    }).join('');
+  }
+
+  function tabs() {
+    $('ps-tabs').innerHTML =
+      '<button class="ps-tab ps-on" type="button" data-f="all">All</button>' +
+      cats.map(function (c) {
+        return '<button class="ps-tab" type="button" data-f="' + PS.esc(c.slug) + '">' +
+                 PS.icon(c.icon_svg) + PS.esc(c.short_name || c.name) +
+               '</button>';
+      }).join('');
+  }
+
+  function grid() {
+    if (!packs.length) {
+      $('ps-grid').innerHTML = '';
+      $('ps-empty').style.display = 'block';
+      $('ps-cnt').textContent = '';
+      document.querySelector('.ps-tools').style.display = 'none';
+      $('ps-tabs').style.display = 'none';
+      return;
+    }
+    $('ps-grid').innerHTML = packs.map(PS.card).join('');
+    PS.refreshPrices($('ps-grid'));
+    apply();
+  }
+
+  /* ---------- filter, search, sort ---------- */
+
+  function apply() {
+    var cards = [].slice.call($('ps-grid').querySelectorAll('.ps-card'));
+    var words = state.q ? state.q.split(/\s+/).filter(Boolean) : [];
+    var shown = 0;
+
+    cards.forEach(function (c) {
+      var text = c.dataset.text || '';
+      /* every word has to match, which is how the API's own `q`
+         behaves, so local and server search agree */
+      var hit = words.every(function (w) { return text.indexOf(w) > -1; });
+      var ok = (state.cat === 'all' || c.dataset.cat === state.cat) && hit;
+      c.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+    });
+
+    var grid = $('ps-grid');
+    cards.slice().sort(function (a, b) {
+      if (state.sort === 'low')  return a.dataset.price - b.dataset.price;
+      if (state.sort === 'high') return b.dataset.price - a.dataset.price;
+      return b.dataset.pop - a.dataset.pop;
+    }).forEach(function (c) { grid.appendChild(c); });
+
+    $('ps-none').style.display = shown ? 'none' : 'block';
+    $('ps-cnt').textContent = shown + ' pack' + (shown === 1 ? '' : 's');
+    [].forEach.call($('ps-tabs').querySelectorAll('.ps-tab'), function (t) {
+      t.classList.toggle('ps-on', t.dataset.f === state.cat);
+    });
+  }
+
+  function wire() {
+    $('ps-tabs').addEventListener('click', function (e) {
+      var t = e.target.closest('.ps-tab');
+      if (!t) return;
+      state.cat = t.dataset.f;
+      apply();
+    });
+
+    $('ps-paths').addEventListener('click', function (e) {
+      var t = e.target.closest('.ps-path');
+      if (!t) return;
+      state.cat = t.dataset.go;
+      apply();
+      $('ps-packs').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    /* Debounced even though the filter is local: it keeps the
+       sort-and-reflow off every keystroke on a slow phone. */
+    var timer;
+    $('ps-q').addEventListener('input', function (e) {
+      clearTimeout(timer);
+      var v = e.target.value.trim().toLowerCase();
+      timer = setTimeout(function () { state.q = v; apply(); }, 300);
+    });
+
+    $('ps-sort').addEventListener('change', function (e) {
+      state.sort = e.target.value;
+      apply();
+    });
+  }
+})();
+</script>
+</body>
+</html>
