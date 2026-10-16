@@ -32,7 +32,7 @@
       slug: 'software-engineering',
       page: 'foundations-software-engineering.html',
       ready: true,
-      title: 'AI in Software Engineering',
+      title: 'Software Engineering and AI',
       /* The full pathway. The three tracks inside it are shorter —
          Frontend 6, Backend 8 — and each states its own length on its
          own page; the card for the pathway quotes the whole thing. */
