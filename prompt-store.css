@@ -441,3 +441,26 @@ body.ps {
   .ps .draw { stroke-dashoffset: 0; }
   .ps .ps-reel .ps-slide { transition: none; }
 }
+
+/* ============================================================
+   Demo banner.
+
+   Only ever rendered when ?demo=1 is on. It is deliberately loud:
+   a sample price mistaken for a real one is how somebody ends up
+   quoting the wrong figure to a customer.
+   ============================================================ */
+#ps-demo-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+  background: #FFB300; color: #1A1200;
+  font-family: var(--font-main); font-size: .78rem; font-weight: 700;
+  letter-spacing: .02em; text-align: center; padding: 9px 16px;
+  box-shadow: 0 -4px 18px rgba(0,0,0,.18);
+}
+#ps-demo-bar a { color: #1A1200; text-decoration: underline; margin-left: 6px; }
+body.ps:has(#ps-demo-bar) { padding-bottom: var(--ps-demo-h, 38px); }
+@media (max-width: 900px) {
+  /* the sticky buy bar stacks on top of the demo bar, so the page
+     has to clear both */
+  body.ps.ps-pdp:has(#ps-demo-bar) { padding-bottom: calc(var(--ps-demo-h, 38px) + 76px); }
+  body.ps:has(#ps-demo-bar) .ps-mobbar { bottom: var(--ps-demo-h, 38px); }
+}

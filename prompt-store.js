@@ -46,8 +46,135 @@
      message: 404, 422, 429 and 502 all mean different things to the
      buyer. Only a genuine network failure rejects. */
 
+  /* ---------- demo mode ----------
+
+     Scaffolding, so the store can be clicked through before the
+     backend has a catalogue. It is off unless ?demo=1 appears in
+     the URL, and it announces itself with a banner, because a demo
+     price that is mistaken for a real one is how someone ends up
+     quoting 4,500 naira to a customer.
+
+     The whole of it hangs off one hook inside PS.call below, so no
+     page knows it exists. Delete this block and
+     prompt-store-demo.js together once there are real packs. */
+
+  PS.demo = (function () {
+    var q = window.location.search;
+    try {
+      if (/[?&]demo=1\b/.test(q)) sessionStorage.setItem('ps_demo', '1');
+      if (/[?&]demo=0\b/.test(q)) sessionStorage.removeItem('ps_demo');
+      return sessionStorage.getItem('ps_demo') === '1';
+    } catch (e) {
+      /* private mode: honour the URL for this page only */
+      return /[?&]demo=1\b/.test(q);
+    }
+  })();
+
+  /* Fetched on demand so a real visitor never downloads it. */
+  var demoLoading = null;
+  function demoData() {
+    if (window.PromptStoreDemo) return Promise.resolve(window.PromptStoreDemo);
+    if (demoLoading) return demoLoading;
+    demoLoading = new Promise(function (resolve, reject) {
+      var el = document.createElement('script');
+      el.src = '/prompt-store-demo.js';
+      el.onload = function () { resolve(hydrate(window.PromptStoreDemo)); };
+      el.onerror = reject;
+      document.head.appendChild(el);
+    });
+    return demoLoading;
+  }
+
+  /* The file stores each scene once and each `related` entry as a
+     bare slug; both are expanded here so the rest of the code sees
+     exactly the shape the real API returns. */
+  function hydrate(d) {
+    if (!d || d._ready) return d;
+    Object.keys(d.cards).forEach(function (slug) {
+      d.cards[slug].scene_svg = d.scenes[slug] || '';
+    });
+    Object.keys(d.details).forEach(function (slug) {
+      var det = d.details[slug];
+      det.scene_svg = d.scenes[slug] || '';
+      det.related = (det.related || []).map(function (r) { return d.cards[r.slug]; }).filter(Boolean);
+    });
+    d.featured = (d.featured || []).map(function (f) {
+      return { headline: f.headline, pack: d.cards[f.slug] };
+    }).filter(function (f) { return f.pack; });
+    d.packs = d.order.map(function (slug) { return d.cards[slug]; });
+    d._ready = true;
+    return d;
+  }
+
+  function ok(data, message) {
+    return { ok: true, status: 200, body: { success: true, message: message, data: data }, data: data, message: message };
+  }
+
+  function demoAnswer(path, opts) {
+    return demoData().then(function (d) {
+      var method = (opts.method || 'GET').toUpperCase();
+
+      if (path === '/storefront') {
+        return ok({ config: d.config, categories: d.categories, featured: d.featured, packs: d.packs }, 'Storefront retrieved');
+      }
+      if (path === '/config') return ok(d.config, 'Config retrieved');
+      if (path === '/categories') return ok(d.categories, 'Categories retrieved');
+      if (path === '/packs/featured') return ok(d.featured, 'Featured packs retrieved');
+
+      var m = /^\/packs\/([^/?]+)$/.exec(path);
+      if (m && method === 'GET') {
+        var det = d.details[decodeURIComponent(m[1])];
+        return det ? ok(det, 'Pack retrieved')
+                   : { ok: false, status: 404, body: { message: 'Prompt pack not found' }, message: 'Prompt pack not found' };
+      }
+
+      /* Checkout is the one thing a demo cannot fake. These packs do
+         not exist on the backend, so there is nothing to pay for and
+         pretending otherwise would be the most misleading possible
+         thing to do here. */
+      if (/\/checkout$/.test(path)) {
+        return {
+          ok: false, status: 409,
+          body: { message: 'This is a demo pack, so there is nothing to pay for. Checkout needs a real pack on the backend.' },
+          message: 'This is a demo pack, so there is nothing to pay for. Checkout needs a real pack on the backend.'
+        };
+      }
+
+      return null;   /* anything else falls through to the real API */
+    });
+  }
+
+  /* A standing reminder that none of this is real. */
+  PS.demoBanner = function () {
+    if (!PS.demo || document.getElementById('ps-demo-bar')) return;
+    var bar = document.createElement('div');
+    bar.id = 'ps-demo-bar';
+    bar.innerHTML = 'DEMO DATA \u00b7 these three packs are samples, not the real catalogue, and cannot be bought. ' +
+                    '<a href="?demo=0">Switch off</a>';
+    document.body.appendChild(bar);
+
+    /* The bar wraps to two lines on a narrow screen, so its height
+       is measured rather than guessed: the sticky buy bar sits on
+       top of it and a guess puts one over the other. */
+    var measure = function () {
+      document.documentElement.style.setProperty('--ps-demo-h', bar.offsetHeight + 'px');
+    };
+    measure();
+    if (window.ResizeObserver) new ResizeObserver(measure).observe(bar);
+    else window.addEventListener('resize', measure);
+  };
+
   PS.call = function (path, opts) {
     opts = opts || {};
+    if (PS.demo) {
+      return demoAnswer(path, opts).then(function (answer) {
+        return answer || realCall(path, opts);
+      });
+    }
+    return realCall(path, opts);
+  };
+
+  function realCall(path, opts) {
     var init = { method: opts.method || 'GET' };
     if (opts.body) {
       init.headers = { 'Content-Type': 'application/json' };
@@ -58,7 +185,7 @@
         return { ok: res.ok, status: res.status, body: body, data: body.data, message: body.message };
       });
     });
-  };
+  }
 
   /* Buyer-facing wording for the failures the API documents. */
   PS.errorText = function (r) {
