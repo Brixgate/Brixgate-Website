@@ -617,7 +617,47 @@
       transition: background .2s, color .2s;
     }
     .lp .lp-seg .cur-btn.active { background: var(--lp-ink); color: #fff; }
-    .lp .lp-prog-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        /* ------------------------------------------------------------
+       PROFESSIONAL RAIL
+
+       Was a four-column grid, which was fine while there were exactly
+       four fields. A fifth dropped onto a row of its own and read as an
+       afterthought, so the row is now a rail: cards keep the width they
+       had, and anything past the fourth scrolls rather than wraps.
+
+       User-driven on purpose. The Foundations row below this one already
+       drifts on its own, and two perpetual animations on one screen is
+       one too many.
+       ------------------------------------------------------------ */
+    .lp .lp-prog-rail{ position: relative; }
+    .lp .lp-surface .lp-prog-rail{ --lp-rail-fade: var(--lp-surface); }
+    .lp .lp-prog-grid{
+      display: flex; gap: 20px; overflow-x: auto; scroll-behavior: smooth;
+      scroll-snap-type: x proximity; scrollbar-width: none; padding-bottom: 4px;
+    }
+    .lp .lp-prog-grid::-webkit-scrollbar{ display: none; }
+    .lp .lp-prog-grid > .lp-prog{
+      flex: 0 0 calc((100% - 60px) / 4); scroll-snap-align: start; min-width: 0;
+    }
+    /* the rail only fades and offers arrows when it actually overflows */
+    .lp .lp-prog-rail::after{
+      content: ''; position: absolute; top: 0; right: -1px; bottom: 4px; width: 56px;
+      background: linear-gradient(90deg, transparent, var(--lp-rail-fade, #fff));
+      pointer-events: none; opacity: 0; transition: opacity .25s;
+    }
+    .lp .lp-prog-rail.has-more::after{ opacity: 1; }
+    .lp .lp-rail-btn{
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+      width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--lp-line);
+      background: #fff; color: var(--lp-ink); display: none; place-items: center;
+      box-shadow: 0 6px 20px rgba(2,16,36,.14); cursor: pointer; transition: .2s;
+    }
+    .lp .lp-prog-rail.has-rail .lp-rail-btn{ display: grid; }
+    .lp .lp-rail-btn:hover{ border-color: var(--lp-red); color: var(--lp-red); }
+    .lp .lp-rail-btn[disabled]{ opacity: .35; pointer-events: none; }
+    .lp .lp-rail-prev{ left: -22px; }
+    .lp .lp-rail-next{ right: -22px; }
+    @media (max-width: 820px){ .lp .lp-rail-btn{ display: none !important; } }
     /* ============================================================
        STARTING FROM NOTHING  +  BEGINNER PROGRAMMES
 
@@ -1458,7 +1498,7 @@
     }
 
     @media (max-width: 1100px) {
-      .lp .lp-prog-grid { grid-template-columns: repeat(2, 1fr); }
+      .lp .lp-prog-grid > .lp-prog { flex-basis: calc((100% - 40px) / 3); }
       .lp .lp-stats { grid-template-columns: repeat(2, 1fr); }
       .lp .lp-stat:nth-child(2) { border-right: 0; }
       .lp .lp-stat:nth-child(1), .lp .lp-stat:nth-child(2) { border-bottom: 1px solid var(--lp-line); }
@@ -1530,6 +1570,7 @@
       .lp .lp-prog-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px; padding: 4px 20px 20px; margin: 0 -20px; scrollbar-width: none; }
       .lp .lp-prog-grid::-webkit-scrollbar { display: none; }
       .lp .lp-prog { min-width: 82vw; scroll-snap-align: start; min-height: 0; }
+      .lp .lp-prog-grid > .lp-prog { flex: 0 0 82vw; min-width: 82vw; }
       .lp .lp-steps { grid-template-columns: 1fr; gap: 32px; }
       .lp .lp-videos { grid-template-columns: 1fr; }
       .lp .lp-video { aspect-ratio: 4 / 5; }
@@ -1902,7 +1943,11 @@
       </div>
     </div>
 
-    <div class="lp-prog-grid stagger">
+    <div class="lp-prog-rail">
+
+      <button class="lp-rail-btn lp-rail-prev" type="button" aria-label="Previous programmes"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+
+      <div class="lp-prog-grid stagger">
 
       <a href="programme-engineering.html" class="lp-prog fade-up" data-prog-match="engineering" data-prog-tier="pro">
         <div class="lp-prog-art">
@@ -1983,7 +2028,7 @@
       <a href="programme-data.html" class="lp-prog fade-up" data-prog-match="data" data-prog-tier="pro">
         <div class="lp-prog-art">
           <div class="lp-prog-top">
-          <span class="lp-prog-status"><span class="lp-dot"></span>Registering interest</span>
+          <span class="lp-prog-status"><span class="lp-dot"></span>Open</span>
           <span class="lp-prog-dur">4-week sprint</span>
         </div>
           <img src="assets/ai-in-data-card.jpg" alt="" loading="lazy" />
@@ -1998,6 +2043,10 @@
         </div>
         </div>
       </a>
+
+      </div>
+
+      <button class="lp-rail-btn lp-rail-next" type="button" aria-label="More programmes"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
 
     </div>
 
@@ -3400,5 +3449,39 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 </script>
 <script src="nav-programmes.js"></script>
 <script src="cohort-countdown.js"></script>
+<script>
+/* ---------- professional rail ----------
+   The row scrolls instead of wrapping, so it needs to say so. Arrows
+   and the edge fade appear only when there is actually something past
+   the right edge, which means they vanish on their own if the number
+   of fields ever drops back to four. */
+(function () {
+  var rail = document.querySelector('.lp-prog-rail');
+  if (!rail) return;
+  var grid = rail.querySelector('.lp-prog-grid');
+  var prev = rail.querySelector('.lp-rail-prev');
+  var next = rail.querySelector('.lp-rail-next');
+  if (!grid) return;
+
+  function step() {
+    var card = grid.querySelector('.lp-prog');
+    return card ? card.getBoundingClientRect().width + 20 : 320;
+  }
+  function sync() {
+    var over = grid.scrollWidth - grid.clientWidth;
+    rail.classList.toggle('has-rail', over > 8);
+    rail.classList.toggle('has-more', over > 8 && grid.scrollLeft < over - 8);
+    if (prev) prev.disabled = grid.scrollLeft <= 4;
+    if (next) next.disabled = grid.scrollLeft >= over - 4;
+  }
+  if (prev) prev.addEventListener('click', function () { grid.scrollLeft -= step(); });
+  if (next) next.addEventListener('click', function () { grid.scrollLeft += step(); });
+  grid.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('resize', sync);
+  sync();
+  /* images load late and change scrollWidth */
+  setTimeout(sync, 600); setTimeout(sync, 2000);
+})();
+</script>
 </body>
 </html>

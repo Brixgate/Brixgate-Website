@@ -997,6 +997,28 @@ body.f-data .cp-chapter {
 }
 body.f-data .cp-hero h1 .accent { color:#FFD9A8; }
 
+/* ---------- the hero cluster ----------
+
+   The three cards inherited positions tuned for a 492px stage, which
+   f-data was never added to, so they ran in 440px: card three sat
+   almost entirely on top of card two, 196px of overlap, and card two
+   spilled past the bottom of the stage.
+
+   Re-laid so the two lower cards sit side by side with a gap between
+   them rather than stacked, and card one clears card two vertically.
+   They still overlap on the diagonal — that is the look — but nothing
+   now covers anything else's content. */
+body.f-data .cp-glass-stage { height:520px; }
+body.f-data .cp-glass-1 { top:0; right:0; width:288px; }
+body.f-data .cp-glass-2 { top:206px; left:0; width:268px; }
+body.f-data .cp-glass-3 { bottom:0; right:0; left:auto; width:242px; }
+
+@media (max-width:1180px){
+  body.f-data .cp-glass-stage { height:470px; }
+  body.f-data .cp-glass-2 { top:188px; width:252px; }
+  body.f-data .cp-glass-3 { width:228px; }
+}
+
 /* ---------- FINANCIAL MODELLING : deep ---------- */
 body.f-finance .cp-hero {
   background:
@@ -1214,21 +1236,15 @@ body.f-market .cp-glass-3 { top:212px; right:0; left:auto; bottom:auto; width:24
     <div class="cp-hero-grid">
 
       <div>
-        <!-- Until the backend has an AI in Data programme there is no cohort to
-     apply to, and the apply form cannot even name this programme. So the
-     page captures interest instead of claiming applications are open.
-     When the programme exists: set PROGRAM_ID, restore the pill to
-     "Cohort 01 · Applications open" and point the primary CTA at
-     applyHref(). -->
-        <div class="cp-pill cp-rise"><span class="cp-dot"></span>New programme · Registering interest</div>
+        <div class="cp-pill cp-rise"><span class="cp-dot"></span>Cohort 01 &middot; Applications open</div>
 
         <h1 class="cp-rise">AI in <span class="accent">Data</span></h1>
 
         <p class="cp-lead cp-rise">Four weeks, live, to turn a question into an answer a business will act on. Pipelines, analysis and dashboards built with AI assist, and the judgement to know when a number is lying to you.</p>
 
         <div class="cp-hero-actions cp-rise">
-          <a href="#waitlist" class="cp-btn cp-btn-white">
-            Register your interest
+          <a href="apply.html?program_id=35" class="cp-btn cp-btn-white">
+            Apply now
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
           <a href="#curriculum" class="cp-btn cp-btn-glass">See the curriculum</a>
@@ -2127,14 +2143,10 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 })();
 // ====== Pricing — fetch from API ======
-/* AI in Data has no backend programme record yet. PROGRAM_ID stays 0
-   until the backend creates one; set it to that id and everything below
-   — cohorts, prices and the apply links — starts working on its own.
-
-   While it is 0 the page must not emit program_id=0, which would send
-   an applicant to a programme that does not exist, so applyHref() falls
-   back to the level filter instead. */
-var PROGRAM_ID = 0;
+/* AI in Data is programme 35. applyHref() keeps the level fallback for
+   the window where an id is missing, but with one set every apply link
+   carries it and the cohort and price calls resolve normally. */
+var PROGRAM_ID = 35;
 
 function applyHref(extra) {
   var base = PROGRAM_ID
@@ -2194,7 +2206,7 @@ function applyHref(extra) {
   if (!PROGRAM_ID) {
     var noProg = document.getElementById('cohort-cards-container');
     if (noProg) {
-      noProg.innerHTML = '<p style="color:#7A94A8;font-size:0.9rem">Dates for the first cohort are being set. <a href="#waitlist" style="color:var(--red);font-weight:700">Register your interest</a> and we\'ll tell you the moment it opens.</p>';
+      noProg.innerHTML = '<p style="color:#7A94A8;font-size:0.9rem">No upcoming cohorts right now. <a href="#waitlist" style="color:var(--red);font-weight:700">Register your interest</a> and we\'ll tell you the moment it opens.</p>';
     }
     return;
   }
