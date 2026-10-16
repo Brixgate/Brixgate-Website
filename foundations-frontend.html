@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontend Development + AI | Brixgate AI Foundations</title>
+  <meta name="description" content="Six weeks building responsive interfaces and interactive web experiences, using AI responsibly across the frontend workflow." />
+  <link rel="icon" type="image/png" href="assets/faviii.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="foundations-course.css" />
+
+
+<style>
+/* ============================================================
+   FRONTEND DEVELOPMENT + AI  ·  6 weeks
+
+   One of three tracks in the 14-week Full-Stack pathway, each with
+   its own page because each has its own length, its own capstone
+   and its own set of jobs at the end.
+
+   The page asserts no price and no dates: both come from the API
+   through foundations-course.js. The week count is the one figure
+   written here, because it is what the programme IS rather than
+   what a particular cohort happens to be scheduled for.
+   ============================================================ */
+:root{ --fc-accent:#FF294E; --fc-accent-2:#FF7A3D; }
+
+/* ---------- at a glance ---------- */
+.tk-glance{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1px;
+  background:var(--fc-line); border:1px solid var(--fc-line); border-radius:var(--fc-r); overflow:hidden; margin-top:40px; }
+.tk-g{ background:#fff; padding:24px 26px; }
+.tk-g dt{ font-size:.7rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--fc-muted); }
+.tk-g dd{ margin:7px 0 0; font-size:1.06rem; font-weight:700; color:var(--fc-ink); line-height:1.35; }
+
+/* ---------- learn / AI, two columns of plain rows ---------- */
+.tk-two{ display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:34px; margin-top:44px; }
+.tk-list{ list-style:none; padding:0; margin:18px 0 0; display:grid; gap:0; }
+.tk-list li{ display:flex; gap:14px; padding:15px 0; border-top:1px solid var(--fc-line); font-size:.96rem; color:var(--fc-body); line-height:1.55; }
+.tk-list li:last-child{ border-bottom:1px solid var(--fc-line); }
+.tk-list i{ flex:none; width:7px; height:7px; border-radius:50%; background:var(--fc-accent); margin-top:9px; font-style:normal; }
+.tk-list b{ color:var(--fc-ink); font-weight:700; display:block; }
+.tk-list span{ display:block; color:var(--fc-muted); font-size:.89rem; margin-top:3px; }
+
+/* ---------- the copilot rule ---------- */
+.tk-rule{ margin-top:44px; border:1px solid var(--fc-line); border-left:4px solid var(--fc-accent);
+  border-radius:var(--fc-r); background:#fff; padding:30px 34px; }
+.tk-rule h3{ font-size:1.04rem; color:var(--fc-ink); letter-spacing:-.01em; margin-bottom:10px; }
+.tk-rule p{ color:var(--fc-body); font-size:.96rem; line-height:1.72; }
+
+/* ---------- tools & careers ---------- */
+.tk-chips{ display:flex; flex-wrap:wrap; gap:9px; margin-top:26px; }
+.tk-chip{ border:1px solid var(--fc-line); background:#fff; border-radius:999px; padding:9px 17px;
+  font-size:.86rem; font-weight:600; color:var(--fc-ink); }
+.tk-chip.is-ai{ border-style:dashed; color:var(--fc-muted); }
+.tk-careers{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:26px; }
+.tk-career{ border:1px solid var(--fc-line); border-radius:var(--fc-r); background:#fff; padding:20px 22px;
+  font-weight:700; color:var(--fc-ink); font-size:.98rem; }
+
+/* ---------- capstone ---------- */
+.tk-cap{ margin-top:40px; border-radius:var(--fc-r); overflow:hidden; border:1px solid var(--fc-line); background:#fff;
+  display:grid; grid-template-columns:1.1fr .9fr; }
+.tk-cap-b{ padding:36px 38px; }
+.tk-cap-k{ font-size:.7rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--fc-accent); }
+.tk-cap-t{ font-size:1.34rem; font-weight:700; color:var(--fc-ink); letter-spacing:-.02em; margin:10px 0 12px; line-height:1.3; }
+.tk-cap-d{ color:var(--fc-body); font-size:.97rem; line-height:1.72; }
+.tk-cap-img{ position:relative; min-height:260px; }
+.tk-cap-img img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+@media(max-width:860px){ .tk-cap{ grid-template-columns:1fr; } .tk-cap-img{ min-height:200px; order:-1; } }
+</style>
+  <link rel="canonical" href="https://brixgate.com/foundations-frontend.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Brixgate" />
+  <meta property="og:url" content="https://brixgate.com/foundations-frontend.html" />
+  <meta property="og:title" content="Frontend Development + AI | Brixgate AI Foundations" />
+  <meta property="og:description" content="Six weeks building responsive interfaces and interactive web experiences, using AI responsibly across the frontend workflow." />
+  <meta property="og:image" content="https://brixgate.com/assets/og-brixgate.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Data Analytics | Brixgate AI Foundations" />
+  <meta name="twitter:description" content="Eight weeks from spreadsheets to answering real questions with data. No statistics background assumed. Live teaching, small cohort, and a dashboard you built yourself." />
+  <meta name="twitter:image" content="https://brixgate.com/assets/og-brixgate.jpg" />
+<script src="tracking.js"></script>
+</head>
+<body class="fc" data-course="frontend">
+<!-- Region Banner -->
+<div class="region-banner" id="region-banner">
+  <span class="region-label" style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Learners from</span>
+  <div class="regions">
+    <span class="region-item">🇳🇬 Nigeria</span>
+    <span class="region-item">🇬🇧 United Kingdom</span>
+    <span class="region-item">🇺🇸 United States</span>
+    <span class="region-item">🇰🇪 Kenya</span>
+    <span class="region-item">🇿🇦 South Africa</span>
+    <span class="region-more">Headquartered in Lagos</span>
+    <span class="region-cohort" data-cohort-countdown hidden></span>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <div class="nav-mega" data-nav-mega></div>
+      <a href="/prompt-store">Prompt Store</a>
+      <a href="experts.html">Experts</a>
+      <a href="organisations.html">For Organisations</a>
+      <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20Data%20Analytics%20course." target="_blank" rel="noopener">Chat with us</a>
+    </div>
+    <div class="nav-cta">
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
+      <a href="apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="programme.html">Programmes</a>
+  <a href="foundations.html" class="nav-mobile-sub">AI Foundations</a>
+  <a href="professionals.html" class="nav-mobile-sub">AI for Professionals</a>
+  <a href="/prompt-store">Prompt Store</a>
+  <a href="experts.html">Experts</a>
+  <a href="organisations.html">For Organisations</a>
+  <a href="apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
+</div>
+
+
+
+<!-- ===== HERO ===== -->
+<header class="fc-hero">
+  <div class="fc-wrap">
+    <div class="fc-hero-grid">
+      <div>
+        <div class="fc-crumb fc-rise">
+          <a href="foundations.html">AI Foundations</a>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <a href="foundations-software-engineering.html">AI in Software Engineering</a>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>Frontend</span>
+        </div>
+        <span class="fc-pill fc-rise"><i></i>6 weeks &middot; no prior code needed</span>
+        <h1 class="fc-h1 fc-rise">Build the part people actually touch.</h1>
+        <p class="fc-lead fc-rise">Six weeks from a blank file to a responsive React application, connected to a real API and deployed where anyone can open it.</p>
+
+        <div class="fc-hero-cta fc-rise">
+          <a href="#waitlist" class="fc-btn fc-btn-accent"><span data-chars>Join the waitlist</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="#curriculum" class="fc-btn fc-btn-outline-light"><span data-chars>What you'll learn</span></a>
+        </div>
+
+        <div class="fc-stats fc-rise">
+          <div class="fc-stat"><b>6 weeks</b><span>Two live classes a week</span></div>
+          <div class="fc-stat"><b>12</b><span>Live classes, 2&ndash;3 hours each</span></div>
+          <div class="fc-stat"><b>1</b><span>Capstone you present and explain</span></div>
+        </div>
+      </div>
+
+      <div class="fc-hero-art fc-rise">
+        <img src="assets/course/pair.jpg" alt="" />
+        <div class="fc-art-card fc-art-tl"><div class="fc-art-k">Part of</div><div class="fc-art-v">14 weeks</div><div class="fc-art-s">Full-Stack pathway</div></div>
+        <div class="fc-art-card fc-art-br"><div class="fc-art-k">You finish with</div><div class="fc-art-v">1 build</div><div class="fc-art-s">deployed and defended</div></div>
+        <span class="fc-hero-badge"><i></i>Live, instructor-led, never pre-recorded</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== AT A GLANCE ===== -->
+<section class="fc-sec fc-sec-cream" id="curriculum">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">01</span><span class="t">Programme at a glance</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">6 weeks, 12 classes, one thing to show for it.</h2>
+      <p class="fc-lead">This track is part of Brixgate's 14-week Full-Stack Development + AI pathway. It builds the skills that specialisation needs, with responsible AI use running through planning, coding, debugging, testing and documentation.</p>
+    </div>
+
+    <dl class="tk-glance fc-rise">
+      <div class="tk-g"><dt>Duration</dt><dd>6 weeks</dd></div>
+      <div class="tk-g"><dt>Frequency</dt><dd>2 live classes per week</dd></div>
+      <div class="tk-g"><dt>Total classes</dt><dd>12</dd></div>
+      <div class="tk-g"><dt>Class length</dt><dd>2&ndash;3 hours</dd></div>
+      <div class="tk-g"><dt>Delivery</dt><dd>Live, instructor-led and online</dd></div>
+      <div class="tk-g"><dt>Final output</dt><dd>A responsive, API-connected React application deployed live</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ===== WHAT YOU LEARN / HOW AI IS INFUSED ===== -->
+<section class="fc-sec">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">02</span><span class="t">What you learn</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">Foundations first.<br/>Then AI on top of them.</h2>
+      <p class="fc-lead">We teach the engineering before the shortcuts, because a shortcut you cannot check is a liability. AI comes in once you can tell whether what it handed you is right.</p>
+    </div>
+
+    <div class="tk-two">
+      <div class="fc-rise">
+        <div class="fc-label" style="margin-bottom:0"><span class="t">The engineering</span></div>
+        <ul class="tk-list">
+          <li><i></i><b>HTML, CSS and responsive web design</b></li>
+          <li><i></i><b>JavaScript and the modern frontend</b></li>
+          <li><i></i><b>React and component-based interfaces</b></li>
+          <li><i></i><b>Consuming and debugging REST APIs</b></li>
+          <li><i></i><b>Git and GitHub in a team workflow</b></li>
+          <li><i></i><b>Deployment, and what breaks after it</b></li>
+        </ul>
+      </div>
+      <div class="fc-rise">
+        <div class="fc-label" style="margin-bottom:0"><span class="t">How AI is infused</span></div>
+        <ul class="tk-list">
+          <li><i></i><div><b>Responsible prompting and code verification</b><span>You ask for code in a way that makes it checkable, then you check it.</span></div></li>
+          <li><i></i><div><b>AI-assisted planning and pseudocode</b><span>Working out the shape of a thing before writing it, with AI as a thinking partner.</span></div></li>
+          <li><i></i><div><b>AI-supported debugging and error explanation</b><span>Getting an error explained without handing over your judgement about the fix.</span></div></li>
+          <li><i></i><div><b>AI-assisted test generation and documentation</b><span>The work most people skip, made cheap enough that you stop skipping it.</span></div></li>
+          <li><i></i><div><b>Secure code review and vulnerability awareness</b><span>Reading generated code for the things it will not tell you are wrong.</span></div></li>
+          <li><i></i><div><b>Prompt injection, hallucination and data privacy</b><span>What can go wrong, how it looks when it does, and what never goes into a prompt.</span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tk-rule fc-rise">
+      <h3>AI is a copilot, not a substitute for engineering judgement.</h3>
+      <p>You treat AI-generated code as untrusted until you have reviewed and tested it. You protect credentials and anything sensitive. And you stay accountable for whether the thing works, whether it is secure and whether it is correct &mdash; none of which transfers to the model that helped you write it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CAPSTONE ===== -->
+<section class="fc-sec fc-sec-cream">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">03</span><span class="t">Learn by building</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">You leave with evidence,<br/>not a certificate alone.</h2>
+      <p class="fc-lead">Guided coding labs and practical builds throughout, then a capstone you present and defend. The point is to graduate able to show what you built and explain why you built it that way.</p>
+    </div>
+
+    <div class="tk-cap fc-rise">
+      <div class="tk-cap-b">
+        <div class="tk-cap-k">Capstone</div>
+        <div class="tk-cap-t">A responsive, API-connected React application deployed live and presented as a portfolio project.</div>
+        <p class="tk-cap-d">You present the project, explain the technical decisions behind it, and keep an AI-use log: what AI helped with, and what you verified, corrected or rejected. The log is part of the work, not paperwork about it.</p>
+      </div>
+      <div class="tk-cap-img"><img src="assets/course/pair.jpg" alt="" loading="lazy" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TOOLS &amp; CAREERS ===== -->
+<section class="fc-sec">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">04</span><span class="t">Tools &amp; where it leads</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">What you'll work in.</h2>
+    </div>
+    <div class="tk-chips fc-rise">
+      <span class="tk-chip">VS Code</span>
+      <span class="tk-chip">Git</span>
+      <span class="tk-chip">GitHub</span>
+      <span class="tk-chip">HTML5</span>
+      <span class="tk-chip">CSS3</span>
+      <span class="tk-chip">JavaScript</span>
+      <span class="tk-chip">React</span>
+      <span class="tk-chip">Browser developer tools</span>
+      <span class="tk-chip">API tools</span>
+      <span class="tk-chip">Deployment platforms</span>
+      <span class="tk-chip is-ai">Approved generative AI coding assistants</span>
+    </div>
+
+    <div class="fc-head fc-rise" style="margin-top:56px">
+      <h2 class="fc-h2">Where it leads.</h2>
+      <p class="fc-lead">The roles this track is built to make you a credible candidate for. Brixgate does not guarantee employment.</p>
+    </div>
+    <div class="tk-careers fc-rise">
+      <div class="tk-career">Frontend Developer</div>
+      <div class="tk-career">React Developer</div>
+      <div class="tk-career">Junior Web Developer</div>
+      <div class="tk-career">Junior Software Engineer</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COHORTS ===== -->
+<section class="fc-sec fc-sec-surface">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">05</span><span class="t">Cohorts</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">When the next one runs.</h2>
+      <p class="fc-lead">Cohorts are kept small on purpose. Dates below come straight from our scheduling system, so what you see here is what is actually open.</p>
+    </div>
+    <div class="fc-cohorts" id="fc-cohorts">
+      <div class="fc-cohort-skel"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="fc-sec">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">06</span><span class="t">Questions</span></div>
+    <div class="fc-head fc-rise"><h2 class="fc-h2">Before you apply.</h2></div>
+    <div class="fc-faq-wrap fc-rise" id="fc-faq">
+      <div class="fc-faq-item">
+        <button class="fc-faq-q" type="button">Do I need to know how to code already?<svg class="fc-faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="fc-faq-a"><div><p>No. This starts from nothing: no degree, no prior code, no computer science background. If you can use a laptop and turn up to two classes a week, you can do this.</p></div></div>
+      </div>
+      <div class="fc-faq-item">
+        <button class="fc-faq-q" type="button">How is this different from the other two tracks?<svg class="fc-faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="fc-faq-a"><div><p>Frontend is the shortest at six weeks and covers what the user sees and touches. Backend is eight weeks on APIs, databases and authentication. Full-Stack is fourteen weeks and covers both, in order. <a href="foundations-software-engineering.html">Compare all three</a> if you are not sure which fits.</p></div></div>
+      </div>
+      <div class="fc-faq-item">
+        <button class="fc-faq-q" type="button">Will I just be taught to prompt an AI?<svg class="fc-faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="fc-faq-a"><div><p>No, and that is the point. You learn the engineering first so you can tell when AI is wrong. Anyone can generate code; the employable skill is reviewing it, testing it and being accountable for it.</p></div></div>
+      </div>
+      <div class="fc-faq-item">
+        <button class="fc-faq-q" type="button">How much time does it take each week?<svg class="fc-faq-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="fc-faq-a"><div><p>Two live classes of two to three hours, plus build time between them. It is designed to run alongside work or study, but it is project-based, so the building is not optional.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ===== WAITLIST ===== -->
+<section class="fc-wait" id="waitlist">
+  <div class="fc-wrap">
+    <div class="fc-wait-grid">
+      <div>
+        <span class="fc-kicker fc-rise">Waitlist</span>
+        <h2 class="fc-h2 fc-rise" style="margin-top:18px">Places go to the list first.</h2>
+        <p class="fc-lead fc-rise">Cohorts are small on purpose. When the next Data Analytics intake opens, the waitlist hears before the site does.</p>
+        <div class="fc-wait-pts fc-rise">
+          <div class="fc-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Dates, timetable and pricing sent before they go public.</span></div>
+          <div class="fc-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>First refusal on seats in the next cohort.</span></div>
+          <div class="fc-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>No commitment, and nothing to pay to hold your place.</span></div>
+        </div>
+      </div>
+
+      <div class="fc-form fc-rise">
+        <form id="fc-waitlist-form" novalidate>
+          <div class="fc-field">
+            <label for="fc-name">Full name</label>
+            <input type="text" id="fc-name" placeholder="Your name" autocomplete="name" required />
+          </div>
+          <div class="fc-field">
+            <label for="fc-email">Email</label>
+            <input type="email" id="fc-email" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+          <div class="fc-field">
+            <label for="fc-phone">Phone <span style="text-transform:none;letter-spacing:0;font-weight:600">(optional)</span></label>
+            <input type="tel" id="fc-phone" placeholder="+234…" autocomplete="tel" />
+          </div>
+          <button type="submit" class="fc-btn fc-btn-accent" id="fc-wl-btn"><span data-chars>Join the waitlist</span></button>
+          <div class="fc-form-err" id="fc-wl-err"></div>
+          <p class="fc-form-note">We only use this to tell you when Data Analytics opens. No newsletter, and you can ask us to remove you at any time.</p>
+        </form>
+
+        <div class="fc-form-ok" id="fc-wl-ok">
+          <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>You are on the list.</h3>
+          <p>We will email you the dates, the timetable and the pricing for the next Data Analytics cohort before any of it goes on the site.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MORE COURSES ===== -->
+<section class="fc-sec">
+  <div class="fc-wrap">
+    <div class="fc-label fc-rise"><span class="n">07</span><span class="t">The rest of Foundations</span></div>
+    <div class="fc-head fc-rise">
+      <h2 class="fc-h2">Eight weeks sits in the middle.</h2>
+      <p class="fc-lead">Shorter if you want something running quickly, longer if you want to go past explaining into predicting.</p>
+    </div>
+    <div class="fc-more" id="fc-more"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo footer-logo"><img src="assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+        <p>We produce the professionals the AI era runs on, and rebuild the institutions they work in. Live sprints built for each field, led by practitioners who do the work.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook"><img src="assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block"></a>
+          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram"><img src="assets/social.png" alt="Instagram" width="22" height="22" style="display:block"></a>
+          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X"><img src="assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block"></a>
+          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn" title="LinkedIn"><img src="assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block"></a>
+          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us"><img src="assets/gmail.png" alt="Email" width="22" height="22" style="display:block"></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Programmes</h5><ul><li><a href="foundations.html">AI Foundations</a></li><li><a href="professionals.html">AI for Professionals</a></li><li><a href="professionals.html#pricing">Pricing</a></li><li><a href="apply.html">Apply Now</a></li><li><a href="verify.html">Verify a Certificate</a></li></ul></div>
+      <div class="footer-col"><h5>Experts</h5><ul><li><a href="experts.html">Meet Our Experts</a></li><li><a href="experts.html#qualify">Become an Expert</a></li></ul></div>
+      <div class="footer-col"><h5>Organisation</h5><ul><li><a href="about.html">About Brixgate</a></li><li><a href="organisations.html">For Organisations</a></li><li><a href="organisations.html#transform">Brixgate Transform</a></li><li><a href="organisations.html#contact">Get a Quote</a></li><li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li></ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="footer-year">2025</span> Brixgate Ltd, RC 9082968. All rights reserved. | Lagos, Nigeria · <a href="tel:+447450337132">+44 74 5033 7132</a></p>
+    <div class="footer-bottom-links"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+  </div>
+</footer>
+
+<button class="back-to-top">↑</button>
+
+<script src="script.js"></script>
+<script src="foundations-courses.js"></script>
+<script src="foundations-course.js"></script>
+<script src="nav-programmes.js"></script>
+<script src="cohort-countdown.js"></script>
+
+<!-- LinkedIn Insight Tag -->
+<script type="text/javascript">
+_linkedin_partner_id = "9372724";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script><script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9372724&fmt=gif" />
+</noscript>
+</body>
+</html>
