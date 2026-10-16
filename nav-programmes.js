@@ -75,6 +75,9 @@
     { tier: 'professionals', any: ['cyber'],                               page: 'programme-cybersecurity.html' },
     { tier: 'professionals', any: ['financial', 'finance'],                page: 'programme-finance.html' },
     { tier: 'professionals', any: ['marketing', 'product-technology'],     page: 'programme-marketing.html' },
+    /* Listed after the others so 'data-science' and 'data-analytic'
+       cannot be swallowed by the bare 'data' keyword. */
+    { tier: 'professionals', any: ['data'],                                page: 'programme-data.html' },
 
     /* Three BEGINNER programmes, one page. Listed first so a title
        containing both a track word and another course's keyword still
