@@ -83,76 +83,116 @@
 
   /* ---------- money ----------
 
-     The store charges in naira through Paystack; `usd_estimate` is
-     an estimate the API supplies for display. currency.js decides
-     which one leads, exactly as it does everywhere else on the
-     site, and the naira figure is always stated where money
-     actually changes hands so nobody meets a surprise at Paystack. */
+     The API prices every pack in both currencies: `price.ngn` and
+     `price.usd`, each a {currency, current, list, founding}. These
+     are real prices, not a converted estimate, and the currency the
+     buyer sees is the currency they are charged in.
 
-  PS.naira = function (n) {
-    return '₦' + Number(n || 0).toLocaleString('en-US');
+     That matters because the currency also picks the gateway, which
+     is the same rule currency.js already applies to the rest of the
+     site: NGN goes to Paystack, USD goes to Stripe. So the figure on
+     the card is the figure on the checkout page, and there is no
+     "charged as" footnote to write.
+
+     NGN is the fallback whenever a pack has no USD price, because
+     being shown naira is recoverable and being shown nothing is
+     not. */
+
+  PS.money = function (m) {
+    if (!m) return '';
+    var n = Number(m.current || 0);
+    return m.currency === 'USD'
+      ? '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+      : '\u20a6' + n.toLocaleString('en-US');
   };
-  PS.usd = function (n) {
-    return '$' + Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  PS.moneyOf = function (m, value) {
+    if (!m) return '';
+    return m.currency === 'USD'
+      ? '$' + Number(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+      : '\u20a6' + Number(value).toLocaleString('en-US');
   };
 
   PS.isUSD = function () {
     return String(window.bxActiveCurrency || 'ngn').toLowerCase() === 'usd';
   };
 
-  /* A price renders as markup carrying both figures, so a currency
-     decision that lands after paint (the geo lookup is a network
-     call) only has to rewrite text, not re-fetch anything. */
-  PS.priceHTML = function (price, opts) {
-    opts = opts || {};
-    if (!price) return '';
-    var cur = Number(price.current || 0);
-    var usd = price.usd_estimate != null ? Number(price.usd_estimate) : null;
-    var strike = price.founding_applied && price.list != null && Number(price.list) > cur;
+  /* The store's own settings, shared by every page that loads them.
+     Kept here so the currency gate below has one source. */
+  PS.config = null;
+  PS.applyConfig = function (c) {
+    PS.config = c || null;
+    if (c && c.support_email) PS.SUPPORT = c.support_email;
+    PS.refreshPrices();
+  };
 
-    return '<span class="ps-amt" data-ngn="' + cur + '"' +
-             (usd != null ? ' data-usd="' + usd + '"' : '') +
-             (strike ? ' data-list="' + Number(price.list) + '"' : '') + '>' +
-             PS.amtText(cur, usd, strike ? Number(price.list) : null) +
+  /* Dollars are only offered when the store says it can take them.
+     A price object may carry a USD figure the backend would refuse
+     at checkout, and showing a price nobody can pay is worse than
+     showing naira to someone abroad. */
+  PS.usdAllowed = function () {
+    var cc = PS.config && PS.config.checkout_currencies;
+    return !cc || cc.indexOf('USD') > -1;
+  };
+
+  /* Which of the two the visitor should see. USD only when
+     currency.js says so, the store accepts it, and the pack
+     actually carries a USD price. */
+  PS.side = function (price) {
+    if (!price) return null;
+    return (PS.isUSD() && PS.usdAllowed() && price.usd)
+      ? price.usd
+      : (price.ngn || price.usd || null);
+  };
+
+  /* The markup carries both sides, so a currency decision that
+     lands after paint — the geo lookup is a network call — only has
+     to rewrite text rather than re-fetch anything. */
+  PS.priceHTML = function (price) {
+    if (!price) return '';
+    return '<span class="ps-amt" data-money="' + PS.esc(JSON.stringify(price)) + '">' +
+             PS.amtText(price) +
            '</span>';
   };
 
-  PS.amtText = function (ngn, usd, list) {
-    var usdOn = PS.isUSD() && usd != null;
+  PS.amtText = function (price) {
+    var m = PS.side(price);
+    if (!m) return '';
 
-    /* The old price is shown struck through only when the founding
-       price is actually applied, which the caller has checked. It
-       stays in naira, because that is the real previous price
-       rather than an estimate of one — which is also why it moves
-       out of the headline when the headline is in dollars. Setting
-       "$5.63" beside a struck-through "₦10,000" reads as though the
-       two could be compared, and they cannot. */
-    var out = PS.esc(usdOn ? PS.usd(usd) : PS.naira(ngn));
-    if (!usdOn && list != null) out += '<s>' + PS.esc(PS.naira(list)) + '</s>';
+    var out = PS.esc(PS.money(m));
 
-    if (usdOn) {
-      out += '<span class="ps-usd">charged as ' + PS.esc(PS.naira(ngn)) +
-             (list != null ? ', was ' + PS.esc(PS.naira(list)) : '') + '</span>';
-    } else if (usd != null) {
-      out += '<span class="ps-usd">About ' + PS.esc(PS.usd(usd)) + '</span>';
+    /* The previous price is struck through only when the founding
+       price is actually applied, and it is shown in the same
+       currency as the headline — a dollar figure beside a struck
+       naira one reads as a comparison that cannot be made. */
+    if (price.founding_applied && m.list != null && Number(m.list) > Number(m.current)) {
+      out += '<s>' + PS.esc(PS.moneyOf(m, m.list)) + '</s>';
     }
     return out;
+  };
+
+  /* The currency a checkout should be started in, which is also what
+     decides the gateway on the backend. */
+  PS.checkoutCurrency = function (price) {
+    var m = PS.side(price);
+    return (m && m.currency) || 'NGN';
   };
 
   /* Re-render every price in place when currency.js reports in. */
   PS.refreshPrices = function (root) {
     var nodes = (root || document).querySelectorAll('.ps-amt');
     for (var i = 0; i < nodes.length; i++) {
-      var el = nodes[i];
-      var usd = el.getAttribute('data-usd');
-      var list = el.getAttribute('data-list');
-      el.innerHTML = PS.amtText(
-        Number(el.getAttribute('data-ngn')),
-        usd == null ? null : Number(usd),
-        list == null ? null : Number(list)
-      );
+      try {
+        var price = JSON.parse(nodes[i].getAttribute('data-money'));
+        nodes[i].innerHTML = PS.amtText(price);
+        /* the sort key follows the displayed currency, so that
+           "price: low to high" still sorts what the eye can see */
+        var card = nodes[i].closest ? nodes[i].closest('.ps-card') : null;
+        if (card) card.dataset.price = Number((PS.side(price) || {}).current || 0);
+      } catch (e) {}
     }
   };
+
   document.addEventListener('bx:currency', function () { PS.refreshPrices(); });
 
   /* ---------- pack card ----------
@@ -164,9 +204,9 @@
       return '<li>' + PS.esc(h) + '</li>';
     }).join('');
 
-    return '<a class="ps-card" href="prompt-pack.html?pack=' + encodeURIComponent(p.slug) + '"' +
+    return '<a class="ps-card" href="/prompt-store/pack?pack=' + encodeURIComponent(p.slug) + '"' +
              ' data-cat="' + PS.esc(cat.slug || '') + '"' +
-             ' data-price="' + Number((p.price && p.price.current) || 0) + '"' +
+             ' data-price="' + Number(((PS.side(p.price) || {}).current) || 0) + '"' +
              ' data-pop="' + (p.popular ? 1 : 0) + '"' +
              ' data-text="' + PS.esc(((p.title || '') + ' ' + (p.tagline || '') + ' ' +
                  (cat.name || '') + ' ' + (p.hooks || []).join(' ')).toLowerCase()) + '">' +

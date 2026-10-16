@@ -5,34 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Confirming your payment | Brixgate Prompt Store</title>
   <meta name="robots" content="noindex" />
-  <link rel="icon" type="image/png" href="../../assets/faviii.png" />
-  <link rel="stylesheet" href="../../styles.css" />
-  <link rel="stylesheet" href="../../prompt-store.css" />
-  <script src="../../tracking.js"></script>
+  <link rel="icon" type="image/png" href="/assets/faviii.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/prompt-store.css" />
+  <script src="/tracking.js"></script>
 </head>
 <body class="ps">
 
 <nav class="nav">
   <div class="nav-inner">
-    <a href="../../index.html" class="nav-logo"><img src="../../assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+    <a href="/index.html" class="nav-logo"><img src="/assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
     <div class="nav-links">
-      <a href="../../index.html">Home</a>
-      <a href="../../prompt-store.html" class="active">Prompt Store</a>
-      <a href="../../experts.html">Experts</a>
-      <a href="../../organisations.html">For Organisations</a>
+      <a href="/index.html">Home</a>
+      <a href="/prompt-store" class="active">Prompt Store</a>
+      <a href="/experts.html">Experts</a>
+      <a href="/organisations.html">For Organisations</a>
     </div>
     <div class="nav-cta">
-      <a href="../../prompt-store.html" class="btn btn-primary btn-sm">Browse packs</a>
+      <a href="/prompt-store" class="btn btn-primary btn-sm">Browse packs</a>
     </div>
     <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
 <div class="nav-mobile">
-  <a href="../../index.html">Home</a>
-  <a href="../../prompt-store.html">Prompt Store</a>
-  <a href="../../experts.html">Experts</a>
-  <a href="../../organisations.html">For Organisations</a>
+  <a href="/index.html">Home</a>
+  <a href="/prompt-store">Prompt Store</a>
+  <a href="/experts.html">Experts</a>
+  <a href="/organisations.html">For Organisations</a>
 </div>
 
 <main class="ps-wrap">
@@ -48,12 +48,12 @@
 <footer class="footer">
   <div class="footer-bottom">
     <p>© <span id="footer-year">2025</span> Brixgate Ltd, RC 9082968. All rights reserved. | Lagos, Nigeria · <a href="tel:+447450337132">+44 74 5033 7132</a></p>
-    <div class="footer-bottom-links"><a href="../../privacy-policy.html">Privacy Policy</a><a href="../../terms.html">Terms of Service</a></div>
+    <div class="footer-bottom-links"><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div>
   </div>
 </footer>
 
-<script src="../../script.js"></script>
-<script src="../../prompt-store.js"></script>
+<script src="/script.js"></script>
+<script src="/prompt-store.js"></script>
 <script>
 /* ============================================================
    Paystack sends the buyer here after checkout.
@@ -85,7 +85,7 @@
   /* Support address drives the copy on the flagged and failed
      states, so it is fetched alongside rather than hard-coded. */
   PS.call('/config').then(function (r) {
-    if (r.ok && r.data && r.data.support_email) PS.SUPPORT = r.data.support_email;
+    if (r.ok) PS.applyConfig(r.data);
   }).catch(function () {});
 
   if (!reference) {
@@ -94,7 +94,7 @@
       title: 'We could not find your payment reference',
       body: 'If you have just paid, check your email — your pack may already be on its way. ' +
             'If nothing arrives, contact us and we will sort it out.',
-      cta: { href: '../prompt-store.html', label: 'Back to the store' },
+      cta: { href: '/prompt-store', label: 'Back to the store' },
       support: true
     });
   }
@@ -111,7 +111,7 @@
             icon: 'err', glyph: '!',
             title: 'We could not find this order',
             body: 'The reference may be wrong, or the order may have expired. If you were charged, contact us with the reference below and we will put it right.',
-            cta: { href: '../prompt-store.html', label: 'Back to the store' },
+            cta: { href: '/prompt-store', label: 'Back to the store' },
             ref: reference, support: true
           });
         }
@@ -144,7 +144,7 @@
         icon: 'ok', glyph: '✓',
         title: 'Done — your pack is on its way',
         body: message || ('Your pack is on its way' + where + '. Check your inbox, and your spam folder if it is not there in a few minutes.'),
-        cta: { href: '../prompt-store.html', label: 'Browse more packs' },
+        cta: { href: '/prompt-store', label: 'Browse more packs' },
         ref: d.reference || reference
       });
     }
@@ -211,8 +211,8 @@
 
   function backTo(d) {
     return d && d.pack_slug
-      ? { href: '../prompt-pack.html?pack=' + encodeURIComponent(d.pack_slug), label: 'Try again' }
-      : { href: '../prompt-store.html', label: 'Back to the store' };
+      ? { href: '/prompt-store/pack?pack=' + encodeURIComponent(d.pack_slug), label: 'Try again' }
+      : { href: '/prompt-store', label: 'Back to the store' };
   }
 
   /* ---------- rendering ---------- */
