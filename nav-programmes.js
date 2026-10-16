@@ -75,6 +75,9 @@
     { tier: 'professionals', any: ['cyber'],                               page: 'programme-cybersecurity.html' },
     { tier: 'professionals', any: ['financial', 'finance'],                page: 'programme-finance.html' },
     { tier: 'professionals', any: ['marketing', 'product-technology'],     page: 'programme-marketing.html' },
+    /* Listed after the others so 'data-science' and 'data-analytic'
+       cannot be swallowed by the bare 'data' keyword. */
+    { tier: 'professionals', any: ['data'],                                page: 'programme-data.html' },
 
     /* Three BEGINNER programmes, one page. Listed first so a title
        containing both a track word and another course's keyword still
@@ -102,6 +105,11 @@
     var hay = ((p.slug || '') + ' ' + (p.title || '')).toLowerCase();
     for (var i = 0; i < window.FND.COURSES.length; i++) {
       var c = window.FND.COURSES[i];
+      /* A track has its own page but no nav row of its own: the menu
+         shows one Software Engineering row, which is what that page is
+         for. Skipping them here also keeps 'frontend' from resolving
+         to the track page instead of the pathway. */
+      if (c.track) continue;
       var keys = c.match || [c.slug];
       for (var j = 0; j < keys.length; j++) {
         if (hay.indexOf(String(keys[j]).toLowerCase()) !== -1) {
@@ -152,7 +160,7 @@
      overrides this when it returns BEGINNER programmes of its own. */
   function foundationsSeed() {
     if (!window.FND || !window.FND.COURSES) return [];
-    return window.FND.COURSES.filter(function (c) { return c.ready; })
+    return window.FND.COURSES.filter(function (c) { return c.ready && !c.track; })
       .map(function (c) { return { title: c.title, slug: c.slug, subtitle: c.blurb || '' }; });
   }
 
