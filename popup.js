@@ -7,6 +7,58 @@
 
   if (document.getElementById('bxSpotPopup')) return;
 
+  /* ── Which programme is this page about? ─────────────────
+
+     The popup used to name AI in Software Engineering on every page
+     of the site, so someone reading about Financial Modelling was
+     offered a seat on a different programme — and told that
+     "engineers" were already on the list.
+
+     Matched on the page's own filename rather than a loose keyword,
+     because 'engineering' appears in both the professional sprint
+     and the beginner pathway, and those are two different courses.
+     A page with no programme of its own gets wording that does not
+     name one at all, which is the honest thing to show on the
+     landing page or the about page. */
+  var FIELD = (function () {
+    var file = (location.pathname.split('/').pop() || 'index.html').toLowerCase()
+                 .replace(/\.html$/, '');
+
+    var MAP = {
+      /* Professional sprints */
+      'programme-engineering':    { name: 'AI in Software Engineering', who: 'Engineers' },
+      'programme-cybersecurity':  { name: 'AI in Cybersecurity',        who: 'Security professionals' },
+      'programme-finance':        { name: 'AI in Financial Modelling',  who: 'Finance professionals' },
+      'programme-marketing':      { name: 'AI in Product Marketing',    who: 'Marketers' },
+      'programme-data':           { name: 'AI in Data',                 who: 'Analysts' },
+
+      /* Foundations */
+      'foundations-software-engineering': { name: 'Software Engineering and AI', who: 'Learners' },
+      'foundations-frontend':             { name: 'Frontend Development + AI',   who: 'Learners' },
+      'foundations-backend':              { name: 'Backend Development + AI',    who: 'Learners' },
+      'foundations-fullstack':            { name: 'Full-Stack Development + AI', who: 'Learners' },
+      'foundations-ai-automation':        { name: 'AI Automation',               who: 'Learners' },
+      'foundations-data-analytics':       { name: 'Data Analytics',              who: 'Learners' },
+      'foundations-data-science':         { name: 'Data Science',                who: 'Learners' },
+      'foundations-cyber-security':       { name: 'Cyber Security',              who: 'Learners' },
+      'foundations-bapm':                 { name: 'Business Analysis & Project Management', who: 'Learners' },
+      'foundations-product-management':   { name: 'Product Management',          who: 'Learners' }
+    };
+
+    return MAP[file] || null;
+  })();
+
+  var FIELD_NAME  = FIELD ? FIELD.name : '';
+  var LABEL       = FIELD ? FIELD.name : 'Brixgate cohorts';
+  var HEADING     = FIELD ? ('Limited spots in ' + FIELD.name) : 'Limited spots in the next cohort';
+  var WHO         = FIELD ? FIELD.who : 'Professionals';
+
+  function esc(v) {
+    return String(v == null ? '' : v).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
   /* ── Styles ─────────────────────────────────────────────── */
   var css = document.createElement('style');
   css.textContent = [
@@ -83,13 +135,13 @@
       '<span style="width:7px;height:7px;background:#FF294E;border-radius:50%;',
         'flex-shrink:0;display:inline-block;animation:bxPulse 2s infinite"></span>',
       '<span style="font-size:.7rem;font-weight:800;text-transform:uppercase;',
-        'letter-spacing:.1em;color:#FF294E">AI in Software Engineering</span>',
+        'letter-spacing:.1em;color:#FF294E">' + esc(LABEL) + '</span>',
     '</div>',
 
     /* Heading — keep original */
     '<h3 style="font-size:1.15rem;font-weight:900;color:#021024;margin:0 0 10px;',
       'line-height:1.25;padding-right:24px">',
-      'Limited Spots in AI in Software Engineering',
+      esc(HEADING),
     '</h3>',
 
     /* Subtext — keep original */
@@ -103,7 +155,7 @@
       'padding:12px 14px;margin-bottom:18px">',
       '<p style="font-size:.78rem;font-weight:700;color:#374151;',
         'margin:0 0 10px;line-height:1.4">',
-        'Engineers across 6 cities are already on this list.',
+        esc(WHO) + ' across 6 cities are already on this list.',
       '</p>',
       '<div style="display:flex;flex-wrap:wrap;gap:6px">',
         '<span class="bx-city-pill">Lagos</span>',
@@ -182,12 +234,10 @@
       ? BX_API_BASE
       : 'https://dev.api.brixgate.com';
 
-    var path = window.location.pathname;
-    var primaryField = path.indexOf('cybersecurity') > -1  ? 'Cybersecurity'
-                     : path.indexOf('finance')       > -1  ? 'Financial Modelling'
-                     : path.indexOf('marketing')     > -1  ? 'Product Marketing'
-                     : path.indexOf('engineering')   > -1  ? 'Software Engineering'
-                     : 'General';
+    /* The same answer the popup showed, so the record and the promise
+       cannot disagree. The old version keyed off 'engineering', which
+       filed a beginner pathway lead under the professional sprint. */
+    var primaryField = FIELD_NAME || 'General';
 
     fetch(base + '/api/v1/waitlist', {
       method:  'POST',
