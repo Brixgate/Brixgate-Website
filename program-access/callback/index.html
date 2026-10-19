@@ -195,10 +195,20 @@ main { flex:1; }
         var p  = d.payment || {};
         var st = String(p.payment_status || '').toUpperCase();
 
-        /* The two must agree. access_granted alone is not enough, and
-           neither is a SUCCESS status without it. */
-        if (st === 'SUCCESS' && d.access_granted === true) { forget(); return paid(p); }
-        if (st === 'FAILED' || st === 'CANCELLED')          { forget(); return failed(st, p); }
+        /* Only two states can be asserted.
+
+           SUCCESS with access_granted is a confirmed payment. CANCELLED
+           is a confirmed non-payment, so it is safe to say nobody was
+           charged.
+
+           FAILED is neither. The backend uses it for "not yet
+           successful" — an untouched checkout returns FAILED the moment
+           it is created — so it covers both a payment that never
+           happened and one that has not settled. Telling the second
+           person they were not charged is the one mistake this page
+           must not make. */
+        if (st === 'SUCCESS' && d.access_granted === true) { forget(); return received(p); }
+        if (st === 'CANCELLED')                            { forget(); return cancelled(p); }
 
         return again(attempt, p);
       })
@@ -212,28 +222,28 @@ main { flex:1; }
 
   /* ---------- outcomes ---------- */
 
-  function paid(p) {
+  function received(p) {
     show({
-      icon: 'ok', glyph: '✓',
-      title: 'You’re registered',
-      body: '<p>Your registration fee has been received. We’ve emailed your confirmation.</p>' +
+      icon: 'ok', glyph: '\u2713',
+      title: 'Payment received',
+      body: '<p>Your registration fee has gone through. Our team is confirming it now, and you\u2019ll ' +
+            'get an email with your next steps shortly.</p>' +
             '<p style="font-size:.88rem"><b>To be clear about what this is:</b> you have registered your ' +
-            'interest. This is not enrolment, and the fee is not credited toward tuition. Our team will be ' +
-            'in touch about dates, the full fee and the next steps.</p>',
-      next: '<li>Check your email — if you’re new to Brixgate, there’s a link to set your password.</li>' +
-            '<li>Set it, then sign in to see your registration.</li>' +
-            '<li>We’ll contact you about the cohort and the next steps.</li>',
+            'interest. This is not enrolment, and the fee is not credited toward tuition.</p>',
+      next: '<li>Paystack has emailed you a receipt for the payment itself.</li>' +
+            '<li>Once our team confirms it, we\u2019ll email you \u2014 if you\u2019re new to Brixgate ' +
+              'that email carries a link to set your password.</li>' +
+            '<li>We\u2019ll then be in touch about the cohort and the next steps.</li>',
       ref: p.brixgate_reference || reference,
-      cta: '<a class="pa-btn" href="https://portal.brixgate.com/login" target="_blank" rel="noopener">Go to the portal</a>' +
-           '<a class="pa-btn ghost" href="/">Back to site</a>'
+      cta: '<a class="pa-btn ghost" href="/">Back to site</a>'
     });
   }
 
-  function failed(st, p) {
+  function cancelled(p) {
     show({
-      icon: 'err', glyph: '✕',
-      title: st === 'CANCELLED' ? 'Payment cancelled' : 'Payment failed',
-      body: '<p>You have not been charged. You can try again from the link we sent you — ' +
+      icon: 'err', glyph: '\u2715',
+      title: 'Payment cancelled',
+      body: '<p>You have not been charged. You can try again from the link we sent you \u2014 ' +
             'it stays valid.</p>',
       ref: p.brixgate_reference || reference,
       cta: '<a class="pa-btn" href="javascript:history.back()">Try again</a>' +
@@ -242,13 +252,18 @@ main { flex:1; }
   }
 
   function pending(p) {
+    /* Reached when the requery has not come back successful. That may
+       mean the payment never happened, or that it has not settled yet —
+       the backend cannot tell us which, so neither can we. The wording
+       has to be true in both cases. */
     show({
-      icon: 'wait', glyph: '⋯',
-      title: 'We haven’t confirmed your payment yet',
-      body: '<p>Bank transfers and USSD can take a few minutes to clear. If you were charged, your ' +
-            'registration will complete on its own and you’ll get an email — there is nothing else ' +
-            'for you to do.</p>' +
-            '<p>If you were not charged, you can try again from the link we sent you.</p>',
+      icon: 'wait', glyph: '\u22ef',
+      title: 'We\u2019re still confirming your payment',
+      body: '<p><b>If you were charged</b>, there is nothing else for you to do. Our team confirms ' +
+            'each payment and will email you once yours is through \u2014 Paystack will also have ' +
+            'sent you a receipt.</p>' +
+            '<p><b>If the payment did not go through</b>, you have not been charged, and you can ' +
+            'try again from the link we sent you.</p>',
       ref: (p && p.brixgate_reference) || reference,
       cta: '<a class="pa-btn" href="">Check again</a>' +
            '<a class="pa-btn ghost" href="mailto:we@brixgate.com">Email us</a>'
