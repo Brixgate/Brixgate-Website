@@ -360,6 +360,18 @@
     var urlReference = params.get('reference') || params.get('trxref');
     var storedRef    = null;
 
+    /* Access-fee payments are configured to return here too, but they are
+       a different thing: a logged-out prospect, verified through
+       /waitlist/access-fee-payments rather than /payments/requery. They
+       carry a BGA_ reference, which the enrolment flow never produces.
+
+       Without this they would fail the token check below and be told
+       their payment session could not be found — after paying. */
+    if (urlReference && urlReference.indexOf('BGA_') === 0) {
+      window.location.replace('/program-access/callback?reference=' + encodeURIComponent(urlReference));
+      return;
+    }
+
     /* Read token — sessionStorage first, cookie as fallback (survives www↔non-www redirects) */
     var token = null;
     try { token = sessionStorage.getItem('bxAccessToken'); } catch(e) {}

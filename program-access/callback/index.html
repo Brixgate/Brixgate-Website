@@ -23,8 +23,16 @@ body.pa {
   --pa-ink:#F2F5F9; --pa-ink2:#DCE3EC; --pa-body:#9FB0C4; --pa-muted:#7E8FA3;
   --pa-faint:#5C6B7E; --pa-line:#1E2F45; --pa-line2:#182437; --pa-surface:#0E1928;
   --pa-red:#FF294E;
-  background:#070E18; color:var(--pa-ink);
-  min-height:100vh; display:flex; flex-direction:column;
+  color:var(--pa-ink); min-height:100vh; display:flex; flex-direction:column;
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(255,41,78,.20) 0%, rgba(255,41,78,.05) 32%, transparent 58%),
+    radial-gradient(100% 80% at 0% 100%, rgba(27,58,92,.55) 0%, transparent 56%),
+    #070E18;
+  background-attachment:fixed;
+}
+body.pa::before {
+  content:''; position:fixed; top:0; left:0; right:0; height:3px; z-index:5;
+  background:linear-gradient(90deg, var(--pa-red), #FF5748 42%, #1B3A5C);
 }
 .pa a { color:inherit; }
 .pa-wrap { max-width:640px; margin:0 auto; padding:0 20px; width:100%; }
@@ -36,9 +44,18 @@ main { flex:1; }
 
 .pa-state { padding:80px 0 100px; text-align:center; }
 .pa-state-card {
-  background:var(--pa-surface); border:1px solid var(--pa-line);
+  position:relative; overflow:hidden; border:1px solid var(--pa-line);
   border-radius:20px; padding:40px 32px; box-shadow:0 24px 60px -20px rgba(0,0,0,.6);
+  background:var(--pa-surface);
 }
+/* the glow follows the outcome, so the result reads before the words do */
+.pa-state-card::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(120% 90% at 50% -20%, var(--pa-glow, rgba(255,41,78,.14)), transparent 62%);
+}
+.pa-state-card > * { position:relative; }
+.pa-state-card:has(.pa-ico.ok)   { --pa-glow:rgba(22,163,74,.20); }
+.pa-state-card:has(.pa-ico.wait) { --pa-glow:rgba(120,160,220,.18); }
 .pa-ico { width:60px; height:60px; border-radius:50%; display:grid; place-items:center; margin:0 auto 20px; font-size:1.6rem; font-weight:700; }
 .pa-ico.ok   { background:rgba(22,163,74,.16);  color:#7CEFA6; }
 .pa-ico.err  { background:rgba(255,41,78,.14);  color:#FF8FA3; }

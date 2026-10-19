@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout cancelled | Brixgate</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="/assets/faviii.png" />
+  <link rel="stylesheet" href="/styles.css" />
+
+<style>
+/* ============================================================
+   CHECKOUT CANCELLED
+
+   Where Stripe sends someone who backs out. It may arrive with no
+   reference at all, so this page asserts only the one thing that is
+   always true: nothing was charged.
+   ============================================================ */
+body.pa {
+  --pa-ink:#F2F5F9; --pa-body:#9FB0C4; --pa-muted:#7E8FA3;
+  --pa-line:#1E2F45; --pa-surface:#0E1928; --pa-red:#FF294E;
+  background:#070E18; color:var(--pa-ink); min-height:100vh;
+  display:flex; flex-direction:column;
+}
+.pa a { color:inherit; }
+.pa-wrap { max-width:640px; margin:0 auto; padding:0 20px; width:100%; }
+main { flex:1; }
+
+.pa-top { background:#070E18; border-bottom:1px solid var(--pa-line); }
+.pa-top-in { max-width:1080px; margin:0 auto; padding:16px 20px; }
+.pa-top img { height:30px; display:block; }
+
+.pa-state { padding:90px 0 110px; text-align:center; }
+.pa-state-card {
+  position:relative; overflow:hidden;
+  background:var(--pa-surface); border:1px solid var(--pa-line);
+  border-radius:20px; padding:42px 32px; box-shadow:0 24px 60px -20px rgba(0,0,0,.6);
+}
+.pa-state-card::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(120% 90% at 50% -20%, rgba(255,41,78,.16), transparent 62%);
+}
+.pa-state-card > * { position:relative; }
+.pa-ico {
+  width:60px; height:60px; border-radius:50%; display:grid; place-items:center;
+  margin:0 auto 20px; font-size:1.5rem; background:rgba(120,160,220,.14); color:#AFC6E4;
+}
+.pa-state h1 { font-size:1.45rem; letter-spacing:-.025em; margin-bottom:12px; }
+.pa-state p { color:var(--pa-body); font-size:.96rem; line-height:1.75; }
+.pa-state p + p { margin-top:12px; }
+.pa-state b { color:var(--pa-ink); }
+
+.pa-btn {
+  display:inline-block; margin-top:26px; padding:13px 26px; border:0; border-radius:999px;
+  background:var(--pa-red); color:#fff; font:inherit; font-size:.95rem; font-weight:700;
+  cursor:pointer; transition:.2s; box-shadow:0 10px 26px -10px rgba(255,41,78,.7);
+}
+.pa-btn:hover { background:#E01F42; transform:translateY(-1px); }
+.pa-btn.ghost { background:transparent; color:var(--pa-ink); border:1.5px solid var(--pa-line); margin-left:8px; box-shadow:none; }
+.pa-btn.ghost:hover { border-color:var(--pa-red); }
+
+.pa-foot { border-top:1px solid var(--pa-line); background:#070E18; padding:22px 0; }
+.pa-foot p { font-size:.8rem; color:var(--pa-muted); text-align:center; }
+.pa-foot a { color:var(--pa-body); font-weight:600; }
+.pa-foot a:hover { color:var(--pa-red); }
+</style>
+</head>
+<body class="pa">
+
+<header class="pa-top">
+  <div class="pa-top-in"><a href="/"><img src="/assets/logo-color-nobg.svg" alt="Brixgate" /></a></div>
+</header>
+
+<main class="pa-wrap">
+  <div class="pa-state">
+    <div class="pa-state-card">
+      <div class="pa-ico">&#8592;</div>
+      <h1>Checkout cancelled</h1>
+      <p><b>You have not been charged.</b> Nothing was taken from your card or account.</p>
+      <p>If you meant to complete it, open the link we sent you again &mdash; it stays valid, and
+         you can pick up where you left off.</p>
+      <div>
+        <a class="pa-btn" href="javascript:history.back()">Go back</a>
+        <a class="pa-btn ghost" href="mailto:we@brixgate.com">Email us</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="pa-foot">
+  <div class="pa-wrap">
+    <p>© <span id="pa-year">2026</span> Brixgate Ltd, RC 9082968 ·
+       <a href="mailto:we@brixgate.com">we@brixgate.com</a></p>
+  </div>
+</footer>
+
+<script>document.getElementById('pa-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

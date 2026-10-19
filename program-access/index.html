@@ -34,8 +34,23 @@ body.pa {
   --pa-ink:#F2F5F9; --pa-ink2:#DCE3EC; --pa-body:#9FB0C4; --pa-muted:#7E8FA3;
   --pa-faint:#5C6B7E; --pa-line:#1E2F45; --pa-line2:#182437; --pa-surface:#0E1928;
   --pa-red:#FF294E; --pa-r:16px;
-  background:#070E18; color:var(--pa-ink);
-  min-height:100vh; display:flex; flex-direction:column;
+  color:var(--pa-ink); min-height:100vh; display:flex; flex-direction:column;
+
+  /* The brand's two lights, thrown from opposite corners and kept well
+     away from the middle — the form and the amount sit there, and a
+     payment page is the last place to trade legibility for mood. */
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(255,41,78,.20) 0%, rgba(255,41,78,.05) 32%, transparent 58%),
+    radial-gradient(100% 80% at 0% 100%, rgba(27,58,92,.55) 0%, transparent 56%),
+    #070E18;
+  background-attachment:fixed;
+}
+
+/* A hairline of brand colour along the very top, so the page reads as
+   ours before anything has loaded. */
+body.pa::before {
+  content:''; position:fixed; top:0; left:0; right:0; height:3px; z-index:5;
+  background:linear-gradient(90deg, var(--pa-red), #FF5748 42%, #1B3A5C);
 }
 .pa a { color:inherit; }
 .pa-wrap { max-width:1080px; margin:0 auto; padding:0 20px; width:100%; }
@@ -76,16 +91,23 @@ main { flex:1; }
 
 /* ---------- the form card ---------- */
 .pa-card {
-  background:var(--pa-surface); border:1px solid var(--pa-line); border-radius:20px;
+  position:sticky; top:24px; overflow:hidden; border-radius:20px;
+  border:1px solid var(--pa-line);
+  background:
+    radial-gradient(130% 70% at 50% -10%, rgba(255,41,78,.13), transparent 60%),
+    var(--pa-surface);
   padding:30px 30px 26px; box-shadow:0 24px 60px -20px rgba(0,0,0,.6);
-  position:sticky; top:24px;
 }
 @media (max-width:920px) { .pa-card { position:static; } }
 
 .pa-for { font-size:.72rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--pa-muted); }
 .pa-prog { font-size:1.22rem; font-weight:700; color:var(--pa-ink); letter-spacing:-.02em; margin:6px 0 20px; line-height:1.3; }
 
-.pa-amount { font-size:2.4rem; font-weight:800; color:var(--pa-ink); letter-spacing:-.035em; line-height:1; }
+.pa-amount {
+  font-size:2.4rem; font-weight:800; letter-spacing:-.035em; line-height:1;
+  background:linear-gradient(90deg,#FFFFFF,#FFD9DF);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
 .pa-amount-sub { font-size:.8rem; color:var(--pa-muted); margin-top:9px; line-height:1.6; }
 
 .pa-cur { display:flex; gap:8px; margin:18px 0 22px; flex-wrap:wrap; }
@@ -130,7 +152,11 @@ main { flex:1; }
 
 /* ---------- whole-page states ---------- */
 .pa-state { max-width:600px; margin:0 auto; padding:90px 0 110px; text-align:center; }
-.pa-state-card { background:var(--pa-surface); border:1px solid var(--pa-line); border-radius:20px; padding:38px 30px; }
+.pa-state-card {
+  position:relative; overflow:hidden; border:1px solid var(--pa-line); border-radius:20px;
+  background:radial-gradient(120% 90% at 50% -20%, rgba(255,41,78,.14), transparent 62%), var(--pa-surface);
+  padding:38px 30px; box-shadow:0 24px 60px -20px rgba(0,0,0,.6);
+}
 .pa-state h1 { font-size:1.4rem; color:var(--pa-ink); margin-bottom:10px; letter-spacing:-.025em; }
 .pa-state p { color:var(--pa-body); font-size:.95rem; line-height:1.75; }
 .pa-state b { color:var(--pa-ink); }
