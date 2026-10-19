@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirming your registration | Brixgate</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="/assets/faviii.png" />
+  <link rel="stylesheet" href="/styles.css" />
+
+<style>
+/* ============================================================
+   ACCESS FEE CALLBACK
+
+   Paystack and Stripe both return here. Landing here does not mean
+   the payment worked — both providers also return after a failure
+   or a cancellation — so the only thing that decides is the
+   backend's own verify call.
+   ============================================================ */
+.pa { background: var(--bg-light); color: var(--body-dark); }
+.pa-wrap { max-width: 640px; margin: 0 auto; padding: 0 20px; }
+
+.pa-top { background: #fff; border-bottom: 1px solid var(--nav-border); }
+.pa-top-in { max-width: 1080px; margin: 0 auto; padding: 16px 20px; }
+.pa-top img { height: 30px; display: block; }
+
+.pa-state { padding: 80px 0 100px; text-align: center; }
+.pa-state-card {
+  background: #fff; border: 1px solid var(--nav-border);
+  border-radius: var(--radius-lg); padding: 40px 32px;
+  box-shadow: 0 14px 40px rgba(2,16,36,.07);
+}
+.pa-ico {
+  width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center;
+  margin: 0 auto 20px; font-size: 1.6rem; font-weight: 700;
+}
+.pa-ico.ok   { background: #E6F7EE; color: #0B6B41; }
+.pa-ico.err  { background: #FFF0F2; color: #B0102E; }
+.pa-ico.wait { background: #EEF3FB; color: #27415F; }
+.pa-state h1 { font-size: 1.45rem; color: var(--bg-dark); letter-spacing: -.025em; margin-bottom: 12px; }
+.pa-state p { color: var(--muted); font-size: .96rem; line-height: 1.75; }
+.pa-state p + p { margin-top: 12px; }
+
+.pa-next {
+  margin-top: 24px; text-align: left; border: 1px solid var(--nav-border);
+  border-radius: var(--radius-md); background: var(--bg-light); padding: 20px 22px;
+}
+.pa-next h2 { font-size: .86rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.pa-next ol { margin: 0; padding-left: 20px; }
+.pa-next li { font-size: .92rem; line-height: 1.7; color: var(--body-dark); }
+.pa-next li + li { margin-top: 8px; }
+
+.pa-ref {
+  margin-top: 22px; padding: 12px 14px; border-radius: var(--radius-md);
+  background: var(--bg-light); border: 1px dashed var(--nav-border);
+  font-size: .8rem; color: var(--muted);
+}
+.pa-ref b {
+  display: block; margin-top: 4px; color: var(--bg-dark); font-size: .92rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: .04em;
+}
+
+.pa-btn {
+  display: inline-block; margin-top: 24px; padding: 13px 26px; border: 0; border-radius: 999px;
+  background: var(--red); color: #fff; font: inherit; font-size: .95rem; font-weight: 700;
+  cursor: pointer; transition: var(--transition);
+}
+.pa-btn:hover { background: #E01F42; }
+.pa-btn.ghost { background: transparent; color: var(--bg-dark); border: 1.5px solid var(--nav-border); margin-left: 8px; }
+
+.pa-spin {
+  width: 34px; height: 34px; border-radius: 50%; margin: 0 auto 20px;
+  border: 3px solid var(--nav-border); border-top-color: var(--red);
+  animation: paSpin .8s linear infinite;
+}
+@keyframes paSpin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .pa-spin { animation: none; } }
+
+.pa-foot { border-top: 1px solid var(--nav-border); background: #fff; padding: 22px 0; }
+.pa-foot p { font-size: .8rem; color: var(--muted); text-align: center; }
+.pa-foot a { color: var(--red); font-weight: 600; }
+</style>
+</head>
+<body class="pa">
+
+<header class="pa-top">
+  <div class="pa-top-in"><a href="/"><img src="/assets/logo-color-nobg.svg" alt="Brixgate" /></a></div>
+</header>
+
+<main class="pa-wrap">
+  <div class="pa-state" id="pa-state">
+    <div class="pa-state-card">
+      <div class="pa-spin"></div>
+      <h1>Confirming your payment…</h1>
+      <p>This takes a few seconds. Please don't close this page.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="pa-foot">
+  <div class="pa-wrap">
+    <p>© <span id="pa-year">2026</span> Brixgate Ltd, RC 9082968 ·
+       <a href="mailto:we@brixgate.com">we@brixgate.com</a></p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   Verify, then say only what is true.
+
+   A paid access fee is a registration of interest. It is not
+   enrolment and it is not course access — the success screen has
+   to leave the person knowing that, or the refund conversation
+   happens later instead.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var API = 'https://dev.api.brixgate.com/api/v1';   /* rewritten to api.brixgate.com at deploy */
+
+  var box = document.getElementById('pa-state');
+  var q   = new URLSearchParams(location.search);
+
+  var POLL_EVERY = 5000;
+  var POLL_TIMES = 6;          /* ~30s, then stop and let the backend job finish it */
+
+  document.getElementById('pa-year').textContent = new Date().getFullYear();
+
+  function esc(v) {
+    return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+
+  function stored() { try { return sessionStorage.getItem('bx_access_fee_reference'); } catch (e) { return null; } }
+  function forget() { try { sessionStorage.removeItem('bx_access_fee_reference'); } catch (e) {} }
+
+  var reference = q.get('reference') || q.get('trxref') || stored();
+
+  function show(o) {
+    box.innerHTML =
+      '<div class="pa-state-card">' +
+        '<div class="pa-ico ' + o.icon + '">' + o.glyph + '</div>' +
+        '<h1>' + esc(o.title) + '</h1>' +
+        o.body +
+        (o.next ? '<div class="pa-next"><h2>What happens next</h2><ol>' + o.next + '</ol></div>' : '') +
+        (o.ref ? '<div class="pa-ref">Payment reference<b>' + esc(o.ref) + '</b></div>' : '') +
+        (o.cta || '') +
+      '</div>';
+  }
+
+  if (!reference) {
+    return show({
+      icon: 'err', glyph: '?',
+      title: 'We could not find your payment reference',
+      body: '<p>If you have just paid, check your email — a confirmation may already be on its way. ' +
+            'If nothing arrives, contact <a href="mailto:we@brixgate.com" style="color:var(--red);font-weight:600">we@brixgate.com</a> ' +
+            'and we will find it.</p>'
+    });
+  }
+
+  run(0);
+
+  function run(attempt) {
+    fetch(API + '/waitlist/access-fee-payments/' + encodeURIComponent(reference))
+      .then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (b) { return { ok: r.ok, status: r.status, b: b }; });
+      })
+      .then(function (r) {
+        if (r.status === 404) {
+          return show({
+            icon: 'err', glyph: '!',
+            title: 'We could not find this payment',
+            body: '<p>The reference may be wrong, or the payment may not have started. If you were charged, ' +
+                  'send us this reference and we will sort it out.</p>',
+            ref: reference,
+            cta: '<a class="pa-btn" href="mailto:we@brixgate.com">Email us</a>'
+          });
+        }
+        if (!r.ok) return again(attempt);
+
+        var d  = r.b.data || {};
+        var p  = d.payment || {};
+        var st = String(p.payment_status || '').toUpperCase();
+
+        /* The two must agree. access_granted alone is not enough, and
+           neither is a SUCCESS status without it. */
+        if (st === 'SUCCESS' && d.access_granted === true) { forget(); return paid(p); }
+        if (st === 'FAILED' || st === 'CANCELLED')          { forget(); return failed(st, p); }
+
+        return again(attempt, p);
+      })
+      .catch(function () { again(attempt); });
+  }
+
+  function again(attempt, p) {
+    if (attempt + 1 >= POLL_TIMES) return pending(p);
+    setTimeout(function () { run(attempt + 1); }, POLL_EVERY);
+  }
+
+  /* ---------- outcomes ---------- */
+
+  function paid(p) {
+    show({
+      icon: 'ok', glyph: '✓',
+      title: 'You’re registered',
+      body: '<p>Your registration fee has been received. We’ve emailed your confirmation.</p>' +
+            '<p style="font-size:.88rem"><b>To be clear about what this is:</b> you have registered your ' +
+            'interest. This is not enrolment, and the fee is not credited toward tuition. Our team will be ' +
+            'in touch about dates, the full fee and the next steps.</p>',
+      next: '<li>Check your email — if you’re new to Brixgate, there’s a link to set your password.</li>' +
+            '<li>Set it, then sign in to see your registration.</li>' +
+            '<li>We’ll contact you about the cohort and the next steps.</li>',
+      ref: p.brixgate_reference || reference,
+      cta: '<a class="pa-btn" href="https://portal.brixgate.com/login" target="_blank" rel="noopener">Go to the portal</a>' +
+           '<a class="pa-btn ghost" href="/">Back to site</a>'
+    });
+  }
+
+  function failed(st, p) {
+    show({
+      icon: 'err', glyph: '✕',
+      title: st === 'CANCELLED' ? 'Payment cancelled' : 'Payment failed',
+      body: '<p>You have not been charged. You can try again from the link we sent you — ' +
+            'it stays valid.</p>',
+      ref: p.brixgate_reference || reference,
+      cta: '<a class="pa-btn" href="javascript:history.back()">Try again</a>' +
+           '<a class="pa-btn ghost" href="mailto:we@brixgate.com">Email us</a>'
+    });
+  }
+
+  function pending(p) {
+    show({
+      icon: 'wait', glyph: '⋯',
+      title: 'We haven’t confirmed your payment yet',
+      body: '<p>Bank transfers and USSD can take a few minutes to clear. If you were charged, your ' +
+            'registration will complete on its own and you’ll get an email — there is nothing else ' +
+            'for you to do.</p>' +
+            '<p>If you were not charged, you can try again from the link we sent you.</p>',
+      ref: (p && p.brixgate_reference) || reference,
+      cta: '<a class="pa-btn" href="">Check again</a>' +
+           '<a class="pa-btn ghost" href="mailto:we@brixgate.com">Email us</a>'
+    });
+  }
+})();
+</script>
+</body>
+</html>
