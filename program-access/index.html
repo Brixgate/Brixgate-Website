@@ -290,7 +290,15 @@ main { flex:1; }
       if (!r.ok) return state('Something went wrong', 'We could not load this page. Please refresh and try again.');
 
       PAGE = r.b.data || {};
-      CURS = Object.keys(PAGE.amounts || {});
+      /* JSON key order is whatever the backend happened to serialise,
+         which put USD before NGN. Home currency leads, the rest follow
+         alphabetically, so the row is stable and does not reshuffle
+         under the cursor when someone switches. */
+      CURS = Object.keys(PAGE.amounts || {}).sort(function (a, b) {
+        if (a === 'NGN') return -1;
+        if (b === 'NGN') return 1;
+        return a < b ? -1 : 1;
+      });
       if (!CURS.length) {
         return state('Registration is not open yet',
           'This programme has no fee configured. ' +
