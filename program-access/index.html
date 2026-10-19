@@ -172,19 +172,70 @@ main { flex:1; }
 .pa-foot p { font-size:.8rem; color:var(--pa-muted); text-align:center; }
 .pa-foot a { color:var(--pa-body); font-weight:600; }
 .pa-foot a:hover { color:var(--pa-red); }
+
+/* ---------- site chrome ----------
+   Same treatment apply.html gives it: the region banner off, the nav
+   pinned to the top and translucent. A payment page is not the place
+   for a scrolling ticker of countries. */
+body.pa { padding-top:var(--nav-height); }
+body.pa .region-banner { display:none !important; }
+body.pa .nav { top:0 !important;
+  background:rgba(255,255,255,.85);
+  -webkit-backdrop-filter:blur(16px) saturate(1.7); backdrop-filter:blur(16px) saturate(1.7);
+  border-bottom:1px solid rgba(2,16,36,.07); box-shadow:none;
+}
+body.pa .nav.scrolled { background:rgba(255,255,255,.62); box-shadow:0 10px 34px -18px rgba(2,16,36,.3); }
+body.pa .nav-mobile { top:var(--nav-height) !important; }
+/* the shared footer brings its own ground; let it */
+body.pa .footer { margin-top:auto; }
 </style>
 </head>
 <body class="pa">
 
-<header class="pa-top">
-  <div class="pa-top-in">
-    <a href="/"><img src="/assets/logo-color-nobg.svg" alt="Brixgate" /></a>
-    <span class="pa-secure">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      Secure payment
-    </span>
+<div class="region-banner" id="region-banner">
+  <span class="region-label" style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Learners from</span>
+  <div class="regions">
+    <span class="region-item">&#127475;&#127468; Nigeria</span>
+    <span class="region-item">&#127468;&#127463; United Kingdom</span>
+    <span class="region-item">&#127482;&#127480; United States</span>
+    <span class="region-item">&#127472;&#127466; Kenya</span>
+    <span class="region-item">&#127468;&#127469; Ghana</span>
+    <span class="region-item">&#127487;&#127462; South Africa</span>
+    <span class="region-more">Headquartered in Lagos</span>
+    <span class="region-cohort" data-cohort-countdown hidden></span>
   </div>
-</header>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-logo">
+      <img src="/assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+    </a>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <div class="nav-mega" data-nav-mega></div>
+      <a href="/experts.html">Experts</a>
+      <a href="/organisations.html">For Organisations</a>
+      <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%20have%20a%20question%20about%20registering." target="_blank" rel="noopener">Chat with us</a>
+    </div>
+    <div class="nav-cta">
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
+      <a href="/apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="/index.html">Home</a>
+  <a href="/programme.html">Programmes</a>
+  <a href="/foundations.html" class="nav-mobile-sub">AI Foundations</a>
+  <a href="/professionals.html" class="nav-mobile-sub">AI for Professionals</a>
+  <a href="/experts.html">Experts</a>
+  <a href="/organisations.html">For Organisations</a>
+  <a href="/apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
+</div>
 
 <main id="pa-main">
   <div class="pa-wrap">
@@ -197,15 +248,36 @@ main { flex:1; }
   </div>
 </main>
 
-<footer class="pa-foot">
-  <div class="pa-wrap">
-    <p>© <span id="pa-year">2026</span> Brixgate Ltd, RC 9082968 ·
-       <a href="/terms.html">Terms</a> · <a href="/privacy-policy.html">Privacy</a> ·
-       <a href="mailto:we@brixgate.com">we@brixgate.com</a></p>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/index.html" class="nav-logo" style="display:inline-flex;margin-bottom:4px"><img src="/assets/logo-color-nobg.svg" alt="Brixgate" style="height:36px" /></a>
+        <p>We produce the professionals the AI era runs on, and rebuild the institutions they work in. Live sprints built for each field, led by practitioners who do the work.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook"><img src="/assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block"></a>
+          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram"><img src="/assets/social.png" alt="Instagram" width="22" height="22" style="display:block"></a>
+          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X"><img src="/assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block"></a>
+          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn" title="LinkedIn"><img src="/assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block"></a>
+          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us"><img src="/assets/gmail.png" alt="Email" width="22" height="22" style="display:block"></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Programmes</h5><ul><li><a href="/foundations.html">AI Foundations</a></li><li><a href="/professionals.html">AI for Professionals</a></li><li><a href="/professionals.html#pricing">Pricing</a></li><li><a href="/apply.html">Apply Now</a></li><li><a href="/verify.html">Verify a Certificate</a></li></ul></div>
+      <div class="footer-col"><h5>Experts</h5><ul><li><a href="/experts.html">Meet Our Experts</a></li><li><a href="/join-as-expert.html">Join as an Expert</a></li></ul></div>
+      <div class="footer-col"><h5>Organisation</h5><ul><li><a href="/about.html">About Brixgate</a></li><li><a href="/organisations.html#transform">Brixgate Transform</a></li><li><a href="/organisations.html">Corporate Programmes</a></li><li><a href="/organisations.html#contact">Get a Demo</a></li></ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; <span id="footer-year">2026</span> Brixgate Ltd, RC 9082968. All rights reserved. | Lagos, Nigeria &middot; <a href="tel:+447450337132">+44 74 5033 7132</a></p>
+    <div class="footer-bottom-links"><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div>
   </div>
 </footer>
 
 <script src="/currency.js"></script>
+<script src="/script.js"></script>
+<script src="/foundations-courses.js"></script>
+<script src="/nav-programmes.js"></script>
+<script src="/cohort-countdown.js"></script>
 <script>
 /* ============================================================
    The access fee is a paid registration of interest. It is not
@@ -230,7 +302,6 @@ main { flex:1; }
   var CURS = [];        /* configured currency codes, in display order  */
   var cur  = null;      /* the one selected                             */
 
-  document.getElementById('pa-year').textContent = new Date().getFullYear();
 
   function esc(v) {
     return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) {
