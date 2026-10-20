@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your pack | Brixgate Prompt Store</title>
+
+  <!-- The access token sits in this page's query string and works
+       like a password. So: no indexing, and no referrer, which stops
+       the full URL reaching anything this page loads. tracking.js is
+       deliberately NOT included here — it would send the token to
+       Google Analytics with the page view. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="referrer" content="no-referrer" />
+
+  <link rel="icon" type="image/png" href="/assets/faviii.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/prompt-store.css" />
+</head>
+<body class="ps">
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-logo"><img src="/assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/prompt-store" class="active">Prompt Store</a>
+      <a href="/experts.html">Experts</a>
+      <a href="/organisations.html">For Organisations</a>
+    </div>
+    <div class="nav-cta">
+      <a href="/prompt-store" class="btn btn-primary btn-sm">Browse packs</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="/index.html">Home</a>
+  <a href="/prompt-store">Prompt Store</a>
+  <a href="/experts.html">Experts</a>
+  <a href="/organisations.html">For Organisations</a>
+</div>
+
+<main id="ps-main">
+  <div class="ps-wrap">
+    <div class="ps-state">
+      <div class="ps-state-card">
+        <div class="ps-spin"></div>
+        <h1>Opening your pack…</h1>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-bottom">
+    <p>© <span id="footer-year">2025</span> Brixgate Ltd, RC 9082968. All rights reserved. | Lagos, Nigeria · <a href="tel:+447450337132">+44 74 5033 7132</a></p>
+    <div class="footer-bottom-links"><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div>
+  </div>
+</footer>
+
+<script src="/script.js"></script>
+<script src="/prompt-store.js"></script>
+<script>
+/* ============================================================
+   Open My Pack.
+
+   The buyer arrives from the link in their delivery email, which
+   carries the order reference and a 64-character token. The token
+   is the only thing standing between a URL and somebody's paid
+   prompts, so it is read once and never written anywhere: not to
+   analytics, not to storage, not into any link this page renders.
+
+   A wrong token, an unknown reference and an unpaid order all come
+   back as 404, and all get the same answer. Telling them apart
+   would turn this page into a way of finding out which references
+   are real.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var PS = window.PromptStore;
+  var main = document.getElementById('ps-main');
+
+  PS.setYear();
+  PS.bindCopy(document);
+  PS.bindResend(document);
+  PS.demoBanner();
+
+  var reference = PS.param('reference');
+  var token = PS.param('token');
+
+  PS.call('/config').then(function (r) {
+    if (r.ok) PS.applyConfig(r.data);
+  }).catch(function () {});
+
+  if (!reference || !token) return invalid();
+
+  PS.call('/orders/' + encodeURIComponent(reference) + '/access?token=' + encodeURIComponent(token))
+    .then(function (r) {
+      if (r.status === 404) return invalid();
+      if (!r.ok) return problem(PS.errorText(r));
+      render(r.data || {});
+    })
+    .catch(function () {
+      problem('We could not reach our server. Please check your connection and try again.');
+    });
+
+  /* ---------- states ---------- */
+
+  function invalid() {
+    main.innerHTML =
+      '<div class="ps-wrap"><div class="ps-state"><div class="ps-state-card">' +
+        '<div class="ps-state-ico ps-err">!</div>' +
+        '<h1>This link is invalid</h1>' +
+        '<p>Use the link from your email, or send the pack to yourself again below. ' +
+           'If it still does not work, contact <a href="mailto:' + PS.esc(PS.SUPPORT) +
+           '" style="color:var(--ps-r);font-weight:700">' + PS.esc(PS.SUPPORT) + '</a>.</p>' +
+        (reference ? PS.resendHTML(reference) : '') +
+      '</div></div></div>';
+  }
+
+  function problem(text) {
+    main.innerHTML =
+      '<div class="ps-wrap"><div class="ps-state"><div class="ps-state-card">' +
+        '<div class="ps-state-ico ps-err">!</div>' +
+        '<h1>Something went wrong</h1>' +
+        '<p>' + PS.esc(text) + '</p>' +
+        '<a class="ps-btn ps-btn-red" href="">Try again</a>' +
+      '</div></div></div>';
+  }
+
+  /* ---------- the pack ---------- */
+
+  function render(d) {
+    document.title = (d.pack_title || 'Your pack') + ' | Brixgate Prompt Store';
+
+    var hello = d.buyer_name ? 'Here it is, ' + d.buyer_name + '.' : 'Here it is.';
+
+    main.innerHTML =
+      '<header class="ps-access-head"><div class="ps-wrap">' +
+        '<div class="ps-eyebrow">Your pack</div>' +
+        '<h1>' + PS.esc(d.pack_title || 'Your pack') + '</h1>' +
+        '<p>' + PS.esc(hello) + ' Every prompt below is yours to copy and reuse.</p>' +
+      '</div></header>' +
+
+      '<div class="ps-access-body"><div class="ps-wrap">' +
+
+        (d.outcomes && d.outcomes.length
+          ? '<div class="ps-sec"><h3>What you will be able to produce</h3><ul class="ps-out">' +
+            d.outcomes.map(function (o) { return '<li>' + PS.esc(o) + '</li>'; }).join('') +
+            '</ul></div>'
+          : '') +
+
+        (d.usage
+          ? '<div class="ps-sec ps-two">' +
+              '<div><h3>Use it in Claude</h3><p>' + PS.esc(d.usage.claude || '') + '</p></div>' +
+              '<div><h3>Use it in ChatGPT</h3><p>' + PS.esc(d.usage.chatgpt || '') + '</p></div>' +
+            '</div>'
+          : '') +
+
+        '<div class="ps-sec"><h3>Your prompts</h3>' + prompts(d.prompts || []) + '</div>' +
+
+        ((d.character_note || d.cadence)
+          ? '<div class="ps-sec">' +
+              (d.character_note ? '<h3>Use it with good judgement</h3><p>' + PS.esc(d.character_note) + '</p>' : '') +
+              (d.cadence ? '<h3 style="margin-top:16px">Make it a habit</h3><p>' + PS.esc(d.cadence) + '</p>' : '') +
+            '</div>'
+          : '') +
+
+        '<div class="ps-sec">' +
+          '<h3>Keep this safe</h3>' +
+          '<p style="color:var(--ps-mut);font-size:.92rem">Bookmark the link from your email to come back to this page. ' +
+             'Lost it? Send it to yourself again below.</p>' +
+          PS.resendHTML(d.reference || reference) +
+        '</div>' +
+
+      '</div></div>';
+  }
+
+  /* Every prompt here is paid for, so every one has a body and a
+     copy button. The body keeps its line breaks: a prompt pasted
+     with its structure flattened is a different prompt. */
+  function prompts(list) {
+    if (!list.length) return '<p style="color:var(--ps-mut)">This pack has no prompts yet.</p>';
+
+    return list.map(function (x, i) {
+      var id = 'ps-pre-' + i;
+      return '<div class="ps-pr">' +
+               '<div class="ps-h">' +
+                 '<div class="ps-n">' + (x.position || i + 1) + '</div>' +
+                 '<div><b>' + PS.esc(x.title) + '</b><span>' + PS.esc(x.description || '') + '</span></div>' +
+               '</div>' +
+               '<pre id="' + id + '">' + PS.esc(x.body || '') + '</pre>' +
+               '<button type="button" class="ps-cp" data-for="' + id + '">Copy prompt</button>' +
+             '</div>';
+    }).join('');
+  }
+})();
+</script>
+</body>
+</html>

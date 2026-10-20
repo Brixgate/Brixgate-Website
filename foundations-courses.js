@@ -32,8 +32,11 @@
       slug: 'software-engineering',
       page: 'foundations-software-engineering.html',
       ready: true,
-      title: 'AI in Software Engineering',
-      weeks: 0,
+      title: 'Software Engineering and AI',
+      /* The full pathway. The three tracks inside it are shorter —
+         Frontend 6, Backend 8 — and each states its own length on its
+         own page; the card for the pathway quotes the whole thing. */
+      weeks: 14,
       art: 'assets/course/pair.jpg',
       accent: '#FF294E',
       /* The three track keywords map the API's three programmes onto
@@ -48,6 +51,52 @@
       tagline: 'Build software, with AI in the loop.',
       blurb: 'Three ways in \u2014 frontend, backend, or both. Start from nothing and finish having shipped something real.',
       outcome: 'You leave having built and shipped working software you can demonstrate.'
+    },
+    /* ---- the three tracks inside the Software Engineering pathway ----
+
+       `track: true` keeps them out of the Foundations grid and out of
+       the nav, both of which show one row for the pathway. They are
+       here so each page can read its own title, length and accent from
+       the same register as everything else, and so the pathway page can
+       link to them without hardcoding three URLs. */
+    {
+      slug: 'frontend',
+      page: 'foundations-frontend.html',
+      ready: true, track: true, parent: 'software-engineering',
+      title: 'Frontend Development + AI',
+      weeks: 6,
+      art: 'assets/course/pair.jpg',
+      accent: '#FF294E',
+      match: ['frontend', 'front end'],
+      tagline: 'Build the part people actually touch.',
+      blurb: 'Six weeks from a blank file to a responsive React application, connected to a real API and deployed.',
+      outcome: 'You leave with a deployed, API-connected React application you can show.'
+    },
+    {
+      slug: 'backend',
+      page: 'foundations-backend.html',
+      ready: true, track: true, parent: 'software-engineering',
+      title: 'Backend Development + AI',
+      weeks: 8,
+      art: 'assets/course/desk.jpg',
+      accent: '#FF5748',
+      match: ['backend', 'back end'],
+      tagline: 'Build the part everything else depends on.',
+      blurb: 'Eight weeks to a deployed REST API with a database behind it and authentication in front of it.',
+      outcome: 'You leave with a deployed, database-backed API you built and documented.'
+    },
+    {
+      slug: 'fullstack',
+      page: 'foundations-fullstack.html',
+      ready: true, track: true, parent: 'software-engineering',
+      title: 'Full-Stack Development + AI',
+      weeks: 14,
+      art: 'assets/course/present.jpg',
+      accent: '#C4173A',
+      match: ['fullstack', 'full stack'],
+      tagline: 'Learn. Build. Debug. Deploy. Explain.',
+      blurb: 'Fourteen weeks from code fundamentals to a deployed full-stack product, frontend and backend in order.',
+      outcome: 'You leave with a deployed full-stack capstone and a portfolio.'
     },
     {
       slug: 'ai-automation',

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirming your registration | Brixgate</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="/assets/faviii.png" />
+  <link rel="stylesheet" href="/styles.css" />
+
+<style>
+/* ============================================================
+   ACCESS FEE CALLBACK
+
+   Paystack and Stripe both return here. Landing here does not mean
+   the payment worked — both providers also return after a failure
+   or a cancellation — so the only thing that decides is the
+   backend's own verify call.
+
+   Dark, matching the registration page and the apply flow.
+   ============================================================ */
+body.pa {
+  --pa-ink:#F2F5F9; --pa-ink2:#DCE3EC; --pa-body:#9FB0C4; --pa-muted:#7E8FA3;
+  --pa-faint:#5C6B7E; --pa-line:#1E2F45; --pa-line2:#182437; --pa-surface:#0E1928;
+  --pa-red:#FF294E;
+  color:var(--pa-ink); min-height:100vh; display:flex; flex-direction:column;
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(255,41,78,.20) 0%, rgba(255,41,78,.05) 32%, transparent 58%),
+    radial-gradient(100% 80% at 0% 100%, rgba(27,58,92,.55) 0%, transparent 56%),
+    #070E18;
+  background-attachment:fixed;
+}
+body.pa::before {
+  content:''; position:fixed; top:0; left:0; right:0; height:3px; z-index:5;
+  background:linear-gradient(90deg, var(--pa-red), #FF5748 42%, #1B3A5C);
+}
+.pa a { color:inherit; }
+.pa-wrap { max-width:640px; margin:0 auto; padding:0 20px; width:100%; }
+main { flex:1; }
+
+.pa-top { background:#070E18; border-bottom:1px solid var(--pa-line); }
+.pa-top-in { max-width:1080px; margin:0 auto; padding:16px 20px; }
+.pa-top img { height:30px; display:block; }
+
+.pa-state { padding:80px 0 100px; text-align:center; }
+.pa-state-card {
+  position:relative; overflow:hidden; border:1px solid var(--pa-line);
+  border-radius:20px; padding:40px 32px; box-shadow:0 24px 60px -20px rgba(0,0,0,.6);
+  background:var(--pa-surface);
+}
+/* the glow follows the outcome, so the result reads before the words do */
+.pa-state-card::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(120% 90% at 50% -20%, var(--pa-glow, rgba(255,41,78,.14)), transparent 62%);
+}
+.pa-state-card > * { position:relative; }
+.pa-state-card:has(.pa-ico.ok)   { --pa-glow:rgba(22,163,74,.20); }
+.pa-state-card:has(.pa-ico.wait) { --pa-glow:rgba(120,160,220,.18); }
+.pa-ico { width:60px; height:60px; border-radius:50%; display:grid; place-items:center; margin:0 auto 20px; font-size:1.6rem; font-weight:700; }
+.pa-ico.ok   { background:rgba(22,163,74,.16);  color:#7CEFA6; }
+.pa-ico.err  { background:rgba(255,41,78,.14);  color:#FF8FA3; }
+.pa-ico.wait { background:rgba(120,160,220,.14); color:#AFC6E4; }
+.pa-state h1 { font-size:1.45rem; color:var(--pa-ink); letter-spacing:-.025em; margin-bottom:12px; }
+.pa-state p { color:var(--pa-body); font-size:.96rem; line-height:1.75; }
+.pa-state p b { color:var(--pa-ink); }
+.pa-state p + p { margin-top:12px; }
+
+.pa-next { margin-top:24px; text-align:left; border:1px solid var(--pa-line); border-radius:14px; background:#0A1320; padding:20px 22px; }
+.pa-next h2 { font-size:.72rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--pa-muted); margin-bottom:12px; }
+.pa-next ol { margin:0; padding-left:20px; }
+.pa-next li { font-size:.92rem; line-height:1.7; color:var(--pa-body); }
+.pa-next li + li { margin-top:8px; }
+
+.pa-ref { margin-top:22px; padding:12px 14px; border-radius:12px; background:#0A1320; border:1px dashed var(--pa-line); font-size:.78rem; color:var(--pa-muted); }
+.pa-ref b { display:block; margin-top:4px; color:var(--pa-ink); font-size:.9rem; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:.04em; }
+
+.pa-btn {
+  display:inline-block; margin-top:24px; padding:13px 26px; border:0; border-radius:999px;
+  background:var(--pa-red); color:#fff; font:inherit; font-size:.95rem; font-weight:700;
+  cursor:pointer; transition:.2s; box-shadow:0 10px 26px -10px rgba(255,41,78,.7);
+}
+.pa-btn:hover { background:#E01F42; transform:translateY(-1px); }
+.pa-btn.ghost { background:transparent; color:var(--pa-ink); border:1.5px solid var(--pa-line); margin-left:8px; box-shadow:none; }
+.pa-btn.ghost:hover { border-color:var(--pa-red); background:transparent; }
+
+.pa-spin { width:34px; height:34px; border-radius:50%; margin:0 auto 20px; border:3px solid var(--pa-line); border-top-color:var(--pa-red); animation:paSpin .8s linear infinite; }
+@keyframes paSpin { to { transform:rotate(360deg); } }
+@media (prefers-reduced-motion:reduce) { .pa-spin { animation:none; } }
+
+.pa-foot { border-top:1px solid var(--pa-line); background:#070E18; padding:22px 0; }
+.pa-foot p { font-size:.8rem; color:var(--pa-muted); text-align:center; }
+.pa-foot a { color:var(--pa-body); font-weight:600; }
+.pa-foot a:hover { color:var(--pa-red); }
+
+/* ---------- site chrome ----------
+   Same treatment apply.html gives it: the region banner off, the nav
+   pinned to the top and translucent. A payment page is not the place
+   for a scrolling ticker of countries. */
+body.pa { padding-top:var(--nav-height); }
+body.pa .region-banner { display:none !important; }
+body.pa .nav { top:0 !important;
+  background:rgba(255,255,255,.85);
+  -webkit-backdrop-filter:blur(16px) saturate(1.7); backdrop-filter:blur(16px) saturate(1.7);
+  border-bottom:1px solid rgba(2,16,36,.07); box-shadow:none;
+}
+body.pa .nav.scrolled { background:rgba(255,255,255,.62); box-shadow:0 10px 34px -18px rgba(2,16,36,.3); }
+body.pa .nav-mobile { top:var(--nav-height) !important; }
+/* the shared footer brings its own ground; let it */
+body.pa .footer { margin-top:auto; }
+</style>
+</head>
+<body class="pa">
+
+<div class="region-banner" id="region-banner">
+  <span class="region-label" style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Learners from</span>
+  <div class="regions">
+    <span class="region-item">&#127475;&#127468; Nigeria</span>
+    <span class="region-item">&#127468;&#127463; United Kingdom</span>
+    <span class="region-item">&#127482;&#127480; United States</span>
+    <span class="region-item">&#127472;&#127466; Kenya</span>
+    <span class="region-item">&#127468;&#127469; Ghana</span>
+    <span class="region-item">&#127487;&#127462; South Africa</span>
+    <span class="region-more">Headquartered in Lagos</span>
+    <span class="region-cohort" data-cohort-countdown hidden></span>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-logo">
+      <img src="/assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+    </a>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <div class="nav-mega" data-nav-mega></div>
+      <a href="/experts.html">Experts</a>
+      <a href="/organisations.html">For Organisations</a>
+      <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%20have%20a%20question%20about%20registering." target="_blank" rel="noopener">Chat with us</a>
+    </div>
+    <div class="nav-cta">
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
+      <a href="/apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="/index.html">Home</a>
+  <a href="/programme.html">Programmes</a>
+  <a href="/foundations.html" class="nav-mobile-sub">AI Foundations</a>
+  <a href="/professionals.html" class="nav-mobile-sub">AI for Professionals</a>
+  <a href="/experts.html">Experts</a>
+  <a href="/organisations.html">For Organisations</a>
+  <a href="/apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
+</div>
+
+<main class="pa-wrap">
+  <div class="pa-state" id="pa-state">
+    <div class="pa-state-card">
+      <div class="pa-spin"></div>
+      <h1>Confirming your payment…</h1>
+      <p>This takes a few seconds. Please don't close this page.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/index.html" class="nav-logo" style="display:inline-flex;margin-bottom:4px"><img src="/assets/logo-color-nobg.svg" alt="Brixgate" style="height:36px" /></a>
+        <p>We produce the professionals the AI era runs on, and rebuild the institutions they work in. Live sprints built for each field, led by practitioners who do the work.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook"><img src="/assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block"></a>
+          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram"><img src="/assets/social.png" alt="Instagram" width="22" height="22" style="display:block"></a>
+          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X"><img src="/assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block"></a>
+          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn" title="LinkedIn"><img src="/assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block"></a>
+          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us"><img src="/assets/gmail.png" alt="Email" width="22" height="22" style="display:block"></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Programmes</h5><ul><li><a href="/foundations.html">AI Foundations</a></li><li><a href="/professionals.html">AI for Professionals</a></li><li><a href="/professionals.html#pricing">Pricing</a></li><li><a href="/apply.html">Apply Now</a></li><li><a href="/verify.html">Verify a Certificate</a></li></ul></div>
+      <div class="footer-col"><h5>Experts</h5><ul><li><a href="/experts.html">Meet Our Experts</a></li><li><a href="/join-as-expert.html">Join as an Expert</a></li></ul></div>
+      <div class="footer-col"><h5>Organisation</h5><ul><li><a href="/about.html">About Brixgate</a></li><li><a href="/organisations.html#transform">Brixgate Transform</a></li><li><a href="/organisations.html">Corporate Programmes</a></li><li><a href="/organisations.html#contact">Get a Demo</a></li></ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; <span id="footer-year">2026</span> Brixgate Ltd, RC 9082968. All rights reserved. | Lagos, Nigeria &middot; <a href="tel:+447450337132">+44 74 5033 7132</a></p>
+    <div class="footer-bottom-links"><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div>
+  </div>
+</footer>
+
+<script src="/currency.js"></script>
+<script src="/script.js"></script>
+<script src="/foundations-courses.js"></script>
+<script src="/nav-programmes.js"></script>
+<script src="/cohort-countdown.js"></script>
+<script>
+/* ============================================================
+   Verify, then say only what is true.
+
+   A paid access fee is a registration of interest. It is not
+   enrolment and it is not course access — the success screen has
+   to leave the person knowing that, or the refund conversation
+   happens later instead.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var API = 'https://dev.api.brixgate.com/api/v1';   /* rewritten to api.brixgate.com at deploy */
+
+  var box = document.getElementById('pa-state');
+  var q   = new URLSearchParams(location.search);
+
+  var POLL_EVERY = 5000;
+  var POLL_TIMES = 6;          /* ~30s, then stop and let the backend job finish it */
+
+
+  function esc(v) {
+    return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+
+  function stored() { try { return sessionStorage.getItem('bx_access_fee_reference'); } catch (e) { return null; } }
+  function forget() { try { sessionStorage.removeItem('bx_access_fee_reference'); } catch (e) {} }
+
+  var reference = q.get('reference') || q.get('trxref') || stored();
+
+  function show(o) {
+    box.innerHTML =
+      '<div class="pa-state-card">' +
+        '<div class="pa-ico ' + o.icon + '">' + o.glyph + '</div>' +
+        '<h1>' + esc(o.title) + '</h1>' +
+        o.body +
+        (o.next ? '<div class="pa-next"><h2>What happens next</h2><ol>' + o.next + '</ol></div>' : '') +
+        (o.ref ? '<div class="pa-ref">Payment reference<b>' + esc(o.ref) + '</b></div>' : '') +
+        (o.cta || '') +
+      '</div>';
+  }
+
+  if (!reference) {
+    return show({
+      icon: 'err', glyph: '?',
+      title: 'We could not find your payment reference',
+      body: '<p>If you have just paid, check your email — a confirmation may already be on its way. ' +
+            'If nothing arrives, contact <a href="mailto:we@brixgate.com" style="color:#FF8FA3;font-weight:600">we@brixgate.com</a> ' +
+            'and we will find it.</p>'
+    });
+  }
+
+  run(0);
+
+  function run(attempt) {
+    fetch(API + '/waitlist/access-fee-payments/' + encodeURIComponent(reference))
+      .then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (b) { return { ok: r.ok, status: r.status, b: b }; });
+      })
+      .then(function (r) {
+        if (r.status === 404) {
+          return show({
+            icon: 'err', glyph: '!',
+            title: 'We could not find this payment',
+            body: '<p>The reference may be wrong, or the payment may not have started. If you were charged, ' +
+                  'send us this reference and we will sort it out.</p>',
+            ref: reference,
+            cta: '<a class="pa-btn" href="mailto:we@brixgate.com">Email us</a>'
+          });
+        }
+        if (!r.ok) return again(attempt);
+
+        var d  = r.b.data || {};
+        var p  = d.payment || {};
+        var st = String(p.payment_status || '').toUpperCase();
+
+        /* Only two states can be asserted.
+
+           SUCCESS with access_granted is a confirmed payment. CANCELLED
+           is a confirmed non-payment, so it is safe to say nobody was
+           charged.
+
+           FAILED is neither. The backend uses it for "not yet
+           successful" — an untouched checkout returns FAILED the moment
+           it is created — so it covers both a payment that never
+           happened and one that has not settled. Telling the second
+           person they were not charged is the one mistake this page
+           must not make. */
+        if (st === 'SUCCESS' && d.access_granted === true) { forget(); return received(p); }
+        if (st === 'CANCELLED')                            { forget(); return cancelled(p); }
+
+        return again(attempt, p);
+      })
+      .catch(function () { again(attempt); });
+  }
+
+  function again(attempt, p) {
+    if (attempt + 1 >= POLL_TIMES) return pending(p);
+    setTimeout(function () { run(attempt + 1); }, POLL_EVERY);
+  }
+
+  /* ---------- outcomes ---------- */
+
+  function received(p) {
+    show({
+      icon: 'ok', glyph: '\u2713',
+      title: 'Payment received',
+      body: '<p>Your registration fee has gone through. Our team is confirming it now, and you\u2019ll ' +
+            'get an email with your next steps shortly.</p>' +
+            '<p style="font-size:.88rem"><b>To be clear about what this is:</b> you have registered your ' +
+            'interest. This is not enrolment, and the fee is not credited toward tuition.</p>',
+      next: '<li>Paystack has emailed you a receipt for the payment itself.</li>' +
+            '<li>Once our team confirms it, we\u2019ll email you \u2014 if you\u2019re new to Brixgate ' +
+              'that email carries a link to set your password.</li>' +
+            '<li>We\u2019ll then be in touch about the cohort and the next steps.</li>',
+      ref: p.brixgate_reference || reference,
+      cta: '<a class="pa-btn ghost" href="/">Back to site</a>'
+    });
+  }
+
+  function cancelled(p) {
+    show({
+      icon: 'err', glyph: '\u2715',
+      title: 'Payment cancelled',
+      body: '<p>You have not been charged. You can try again from the link we sent you \u2014 ' +
+            'it stays valid.</p>',
+      ref: p.brixgate_reference || reference,
+      cta: '<a class="pa-btn" href="javascript:history.back()">Try again</a>' +
+           '<a class="pa-btn ghost" href="mailto:we@brixgate.com">Email us</a>'
+    });
+  }
+
+  function pending(p) {
+    /* Reached when the requery has not come back successful. That may
+       mean the payment never happened, or that it has not settled yet —
+       the backend cannot tell us which, so neither can we. The wording
+       has to be true in both cases. */
+    show({
+      icon: 'wait', glyph: '\u22ef',
+      title: 'We\u2019re still confirming your payment',
+      body: '<p><b>If you were charged</b>, there is nothing else for you to do. Our team confirms ' +
+            'each payment and will email you once yours is through \u2014 Paystack will also have ' +
+            'sent you a receipt.</p>' +
+            '<p><b>If the payment did not go through</b>, you have not been charged, and you can ' +
+            'try again from the link we sent you.</p>',
+      ref: (p && p.brixgate_reference) || reference,
+      cta: '<a class="pa-btn" href="">Check again</a>' +
+           '<a class="pa-btn ghost" href="mailto:we@brixgate.com">Email us</a>'
+    });
+  }
+})();
+</script>
+</body>
+</html>

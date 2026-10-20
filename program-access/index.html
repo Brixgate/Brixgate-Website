@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register your place | Brixgate</title>
+
+  <!-- A private link sent to one person. It should not be indexed, and it
+       should not leak its key to anything it loads. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="referrer" content="no-referrer" />
+
+  <link rel="icon" type="image/png" href="/assets/faviii.png" />
+  <link rel="stylesheet" href="/styles.css" />
+
+<style>
+/* ============================================================
+   PROGRAM ACCESS  ·  the paid registration page
+
+   Reached only by a link an admin sends, carrying ?key=. That key
+   resolves to exactly one programme, so the programme is shown as
+   settled fact and cannot be changed here — there is nothing for
+   the person to pick wrong.
+
+   Dark, on the apply page's palette, because this is the other
+   place on the site where somebody hands over money and the two
+   should feel like one product.
+
+   Every figure comes from the backend. The page never computes or
+   stores an amount: it displays what the fee endpoint returned and
+   the backend resolves it again at checkout.
+   ============================================================ */
+body.pa {
+  --pa-ink:#F2F5F9; --pa-ink2:#DCE3EC; --pa-body:#9FB0C4; --pa-muted:#7E8FA3;
+  --pa-faint:#5C6B7E; --pa-line:#1E2F45; --pa-line2:#182437; --pa-surface:#0E1928;
+  --pa-red:#FF294E; --pa-r:16px;
+  color:var(--pa-ink); min-height:100vh; display:flex; flex-direction:column;
+
+  /* The brand's two lights, thrown from opposite corners and kept well
+     away from the middle — the form and the amount sit there, and a
+     payment page is the last place to trade legibility for mood. */
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(255,41,78,.20) 0%, rgba(255,41,78,.05) 32%, transparent 58%),
+    radial-gradient(100% 80% at 0% 100%, rgba(27,58,92,.55) 0%, transparent 56%),
+    #070E18;
+  background-attachment:fixed;
+}
+
+/* A hairline of brand colour along the very top, so the page reads as
+   ours before anything has loaded. */
+body.pa::before {
+  content:''; position:fixed; top:0; left:0; right:0; height:3px; z-index:5;
+  background:linear-gradient(90deg, var(--pa-red), #FF5748 42%, #1B3A5C);
+}
+.pa a { color:inherit; }
+.pa-wrap { max-width:1080px; margin:0 auto; padding:0 20px; width:100%; }
+
+/* ---------- slim header ---------- */
+.pa-top { background:#070E18; border-bottom:1px solid var(--pa-line); }
+.pa-top-in {
+  max-width:1080px; margin:0 auto; padding:16px 20px;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+.pa-top img { height:30px; display:block; }
+.pa-secure { display:flex; align-items:center; gap:7px; font-size:.78rem; font-weight:600; color:var(--pa-muted); }
+
+/* ---------- layout ---------- */
+main { flex:1; }
+.pa-grid { display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:start; padding:56px 0 80px; }
+@media (max-width:920px) { .pa-grid { grid-template-columns:1fr; gap:30px; padding:34px 0 56px; } }
+
+.pa-eyebrow { font-size:.72rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--pa-red); margin-bottom:12px; }
+.pa-h1 { font-size:clamp(1.7rem,3.4vw,2.5rem); font-weight:800; letter-spacing:-.03em; line-height:1.12; color:var(--pa-ink); }
+.pa-h1 em {
+  font-style:normal;
+  background:linear-gradient(90deg,var(--pa-red),#FF5748);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.pa-lead { margin-top:16px; font-size:1.02rem; line-height:1.7; color:var(--pa-body); max-width:46ch; }
+
+/* ---------- what this is, and is not ---------- */
+.pa-note {
+  margin-top:28px; border:1px solid var(--pa-line); border-left:3px solid var(--pa-red);
+  border-radius:var(--pa-r); background:var(--pa-surface); padding:22px 24px;
+}
+.pa-note h2 { font-size:.98rem; font-weight:700; color:var(--pa-ink); margin-bottom:10px; }
+.pa-note p { font-size:.92rem; line-height:1.72; color:var(--pa-body); }
+.pa-note p b { color:var(--pa-ink); }
+.pa-note p + p { margin-top:10px; }
+.pa-terms-text { font-size:.86rem; line-height:1.7; color:var(--pa-muted); padding-top:10px; border-top:1px solid var(--pa-line2); }
+
+/* ---------- the form card ---------- */
+.pa-card {
+  position:sticky; top:24px; overflow:hidden; border-radius:20px;
+  border:1px solid var(--pa-line);
+  background:
+    radial-gradient(130% 70% at 50% -10%, rgba(255,41,78,.13), transparent 60%),
+    var(--pa-surface);
+  padding:30px 30px 26px; box-shadow:0 24px 60px -20px rgba(0,0,0,.6);
+}
+@media (max-width:920px) { .pa-card { position:static; } }
+
+.pa-for { font-size:.72rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--pa-muted); }
+.pa-prog { font-size:1.22rem; font-weight:700; color:var(--pa-ink); letter-spacing:-.02em; margin:6px 0 20px; line-height:1.3; }
+
+.pa-amount {
+  font-size:2.4rem; font-weight:800; letter-spacing:-.035em; line-height:1;
+  background:linear-gradient(90deg,#FFFFFF,#FFD9DF);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.pa-amount-sub { font-size:.8rem; color:var(--pa-muted); margin-top:9px; line-height:1.6; }
+
+.pa-cur { display:flex; gap:8px; margin:18px 0 22px; flex-wrap:wrap; }
+.pa-cur button {
+  border:1.5px solid var(--pa-line); background:transparent; border-radius:999px;
+  padding:8px 16px; font:inherit; font-size:.85rem; font-weight:700;
+  color:var(--pa-body); cursor:pointer; transition:.2s;
+}
+.pa-cur button:hover { border-color:var(--pa-red); color:var(--pa-ink); }
+.pa-cur button[aria-pressed="true"] { background:var(--pa-red); border-color:var(--pa-red); color:#fff; }
+
+.pa-card label { display:block; font-size:.78rem; font-weight:700; color:var(--pa-ink2); margin:14px 0 6px; }
+.pa-card input[type=text],
+.pa-card input[type=email],
+.pa-card input[type=tel] {
+  width:100%; padding:12px 14px; border-radius:12px;
+  border:1.5px solid var(--pa-line); background:#0A1320; font:inherit; color:var(--pa-ink);
+}
+.pa-card input::placeholder { color:var(--pa-faint); }
+.pa-card input:focus { outline:0; border-color:var(--pa-red); background:#0B1624; }
+.pa-card input.pa-bad { border-color:var(--pa-red); background:rgba(255,41,78,.08); }
+.pa-err { display:none; color:#FF8FA3; font-size:.76rem; font-weight:600; margin-top:5px; }
+.pa-err.on { display:block; }
+
+.pa-agree { display:flex; gap:10px; align-items:flex-start; margin:20px 0 6px; font-size:.84rem; color:var(--pa-body); line-height:1.6; }
+.pa-agree input { margin-top:3px; flex:none; accent-color:var(--pa-red); }
+
+.pa-btn {
+  width:100%; margin-top:18px; padding:15px 20px; border:0; border-radius:999px;
+  background:var(--pa-red); color:#fff; font:inherit; font-size:.98rem; font-weight:700;
+  cursor:pointer; transition:.2s; box-shadow:0 10px 26px -10px rgba(255,41,78,.7);
+}
+.pa-btn:hover { background:#E01F42; transform:translateY(-1px); }
+.pa-btn[disabled] { opacity:.5; pointer-events:none; box-shadow:none; }
+
+.pa-msg { display:none; margin-top:14px; padding:11px 13px; border-radius:12px; font-size:.86rem; line-height:1.6; }
+.pa-msg.ok   { display:block; background:rgba(22,163,74,.14); color:#7CEFA6; }
+.pa-msg.err  { display:block; background:rgba(255,41,78,.12); color:#FF8FA3; }
+.pa-msg.info { display:block; background:rgba(120,160,220,.12); color:#AFC6E4; }
+
+.pa-trust { display:flex; gap:14px; flex-wrap:wrap; margin-top:16px; font-size:.76rem; color:var(--pa-muted); }
+
+/* ---------- whole-page states ---------- */
+.pa-state { max-width:600px; margin:0 auto; padding:90px 0 110px; text-align:center; }
+.pa-state-card {
+  position:relative; overflow:hidden; border:1px solid var(--pa-line); border-radius:20px;
+  background:radial-gradient(120% 90% at 50% -20%, rgba(255,41,78,.14), transparent 62%), var(--pa-surface);
+  padding:38px 30px; box-shadow:0 24px 60px -20px rgba(0,0,0,.6);
+}
+.pa-state h1 { font-size:1.4rem; color:var(--pa-ink); margin-bottom:10px; letter-spacing:-.025em; }
+.pa-state p { color:var(--pa-body); font-size:.95rem; line-height:1.75; }
+.pa-state b { color:var(--pa-ink); }
+.pa-state .pa-btn { width:auto; padding:13px 26px; margin-top:22px; display:inline-block; }
+.pa-spin {
+  width:34px; height:34px; border-radius:50%; margin:0 auto 18px;
+  border:3px solid var(--pa-line); border-top-color:var(--pa-red); animation:paSpin .8s linear infinite;
+}
+@keyframes paSpin { to { transform:rotate(360deg); } }
+@media (prefers-reduced-motion:reduce) { .pa-spin { animation:none; } }
+
+.pa-foot { border-top:1px solid var(--pa-line); background:#070E18; padding:22px 0; }
+.pa-foot p { font-size:.8rem; color:var(--pa-muted); text-align:center; }
+.pa-foot a { color:var(--pa-body); font-weight:600; }
+.pa-foot a:hover { color:var(--pa-red); }
+
+/* ---------- site chrome ----------
+   Same treatment apply.html gives it: the region banner off, the nav
+   pinned to the top and translucent. A payment page is not the place
+   for a scrolling ticker of countries. */
+body.pa { padding-top:var(--nav-height); }
+body.pa .region-banner { display:none !important; }
+body.pa .nav { top:0 !important;
+  background:rgba(255,255,255,.85);
+  -webkit-backdrop-filter:blur(16px) saturate(1.7); backdrop-filter:blur(16px) saturate(1.7);
+  border-bottom:1px solid rgba(2,16,36,.07); box-shadow:none;
+}
+body.pa .nav.scrolled { background:rgba(255,255,255,.62); box-shadow:0 10px 34px -18px rgba(2,16,36,.3); }
+body.pa .nav-mobile { top:var(--nav-height) !important; }
+/* the shared footer brings its own ground; let it */
+body.pa .footer { margin-top:auto; }
+</style>
+</head>
+<body class="pa">
+
+<div class="region-banner" id="region-banner">
+  <span class="region-label" style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Learners from</span>
+  <div class="regions">
+    <span class="region-item">&#127475;&#127468; Nigeria</span>
+    <span class="region-item">&#127468;&#127463; United Kingdom</span>
+    <span class="region-item">&#127482;&#127480; United States</span>
+    <span class="region-item">&#127472;&#127466; Kenya</span>
+    <span class="region-item">&#127468;&#127469; Ghana</span>
+    <span class="region-item">&#127487;&#127462; South Africa</span>
+    <span class="region-more">Headquartered in Lagos</span>
+    <span class="region-cohort" data-cohort-countdown hidden></span>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-logo">
+      <img src="/assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+    </a>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <div class="nav-mega" data-nav-mega></div>
+      <a href="/experts.html">Experts</a>
+      <a href="/organisations.html">For Organisations</a>
+      <a href="https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%20have%20a%20question%20about%20registering." target="_blank" rel="noopener">Chat with us</a>
+    </div>
+    <div class="nav-cta">
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
+      <a href="/apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="/index.html">Home</a>
+  <a href="/programme.html">Programmes</a>
+  <a href="/foundations.html" class="nav-mobile-sub">AI Foundations</a>
+  <a href="/professionals.html" class="nav-mobile-sub">AI for Professionals</a>
+  <a href="/experts.html">Experts</a>
+  <a href="/organisations.html">For Organisations</a>
+  <a href="/apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
+</div>
+
+<main id="pa-main">
+  <div class="pa-wrap">
+    <div class="pa-state">
+      <div class="pa-state-card">
+        <div class="pa-spin"></div>
+        <h1>Loading your registration…</h1>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/index.html" class="nav-logo" style="display:inline-flex;margin-bottom:4px"><img src="/assets/logo-color-nobg.svg" alt="Brixgate" style="height:36px" /></a>
+        <p>We produce the professionals the AI era runs on, and rebuild the institutions they work in. Live sprints built for each field, led by practitioners who do the work.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook"><img src="/assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block"></a>
+          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram"><img src="/assets/social.png" alt="Instagram" width="22" height="22" style="display:block"></a>
+          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X"><img src="/assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block"></a>
+          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn" title="LinkedIn"><img src="/assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block"></a>
+          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us"><img src="/assets/gmail.png" alt="Email" width="22" height="22" style="display:block"></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Programmes</h5><ul><li><a href="/foundations.html">AI Foundations</a></li><li><a href="/professionals.html">AI for Professionals</a></li><li><a href="/professionals.html#pricing">Pricing</a></li><li><a href="/apply.html">Apply Now</a></li><li><a href="/verify.html">Verify a Certificate</a></li></ul></div>
+      <div class="footer-col"><h5>Experts</h5><ul><li><a href="/experts.html">Meet Our Experts</a></li><li><a href="/join-as-expert.html">Join as an Expert</a></li></ul></div>
+      <div class="footer-col"><h5>Organisation</h5><ul><li><a href="/about.html">About Brixgate</a></li><li><a href="/organisations.html#transform">Brixgate Transform</a></li><li><a href="/organisations.html">Corporate Programmes</a></li><li><a href="/organisations.html#contact">Get a Demo</a></li></ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; <span id="footer-year">2026</span> Brixgate Ltd, RC 9082968. All rights reserved. | Lagos, Nigeria &middot; <a href="tel:+447450337132">+44 74 5033 7132</a></p>
+    <div class="footer-bottom-links"><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div>
+  </div>
+</footer>
+
+<script src="/currency.js"></script>
+<script src="/script.js"></script>
+<script src="/foundations-courses.js"></script>
+<script src="/nav-programmes.js"></script>
+<script src="/cohort-countdown.js"></script>
+<script>
+/* ============================================================
+   The access fee is a paid registration of interest. It is not
+   enrolment, it is not course access, and it is not credited
+   toward tuition — the backend says so in three places and the
+   page has to say it too, next to the amount rather than buried
+   in a checkbox nobody reads.
+
+   The programme comes from the key in the link and is never
+   editable here. The amount comes from the backend and is never
+   sent back to it: checkout resolves the figure again server side.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var API = 'https://dev.api.brixgate.com/api/v1';   /* rewritten to api.brixgate.com at deploy */
+
+  var main = document.getElementById('pa-main');
+  var KEY  = new URLSearchParams(location.search).get('key');
+
+  var PAGE = null;      /* { program_id, program_name, terms, amounts } */
+  var CURS = [];        /* configured currency codes, in display order  */
+  var cur  = null;      /* the one selected                             */
+
+
+  function esc(v) {
+    return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+
+  /* Money is formatted, never computed. The string the backend sends is
+     the source of truth; we only decide how it reads. */
+  function money(code, raw) {
+    var n = Number(raw);
+    if (!isFinite(n)) return esc(String(raw));
+    var sym = { NGN: '₦', USD: '$', GBP: '£', EUR: '€' }[code];
+    /* Naira is quoted without kobo; everything else keeps its two
+       decimals, so $20.00 does not render as $20. */
+    var dp = (code === 'NGN' && n % 1 === 0) ? 0 : 2;
+    var body = n.toLocaleString('en-US', { minimumFractionDigits: dp, maximumFractionDigits: dp });
+    return sym ? sym + body : body + ' ' + esc(code);
+  }
+
+  function state(title, body, cta) {
+    main.innerHTML =
+      '<div class="pa-wrap"><div class="pa-state"><div class="pa-state-card">' +
+        '<h1>' + esc(title) + '</h1><p>' + body + '</p>' +
+        (cta ? '<a class="pa-btn" href="' + esc(cta.href) + '">' + esc(cta.label) + '</a>' : '') +
+      '</div></div></div>';
+  }
+
+  /* ---------- load ---------- */
+
+  if (!KEY) {
+    /* No key means this was not opened from the link we sent. There is no
+       public listing of access-fee programmes yet, so there is nothing
+       honest to show — a picker here could not display a price. */
+    return state(
+      'This page needs your invitation link',
+      'Registration opens through a link our team sends you directly. If you have one, open it again — ' +
+      'it will look like <b>brixgate.com/program-access?key=…</b>. ' +
+      'If you have not been sent one, <a href="mailto:we@brixgate.com" style="color:#FF8FA3;font-weight:600">email us</a> and we will set it up.',
+      { href: '/programme.html', label: 'See our programmes' }
+    );
+  }
+
+  fetch(API + '/waitlist/access-fee-pages/' + encodeURIComponent(KEY))
+    .then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (b) { return { ok: r.ok, status: r.status, b: b }; });
+    })
+    .then(function (r) {
+      if (r.status === 404) {
+        return state(
+          'This link is no longer active',
+          'It may have expired, or registration for this programme may have closed. ' +
+          '<a href="mailto:we@brixgate.com" style="color:#FF8FA3;font-weight:600">Email us</a> and we will send you a current one.',
+          { href: '/programme.html', label: 'See our programmes' }
+        );
+      }
+      if (!r.ok) return state('Something went wrong', 'We could not load this page. Please refresh and try again.');
+
+      PAGE = r.b.data || {};
+      /* JSON key order is whatever the backend happened to serialise,
+         which put USD before NGN. Home currency leads, the rest follow
+         alphabetically, so the row is stable and does not reshuffle
+         under the cursor when someone switches. */
+      CURS = Object.keys(PAGE.amounts || {}).sort(function (a, b) {
+        if (a === 'NGN') return -1;
+        if (b === 'NGN') return 1;
+        return a < b ? -1 : 1;
+      });
+      if (!CURS.length) {
+        return state('Registration is not open yet',
+          'This programme has no fee configured. ' +
+          '<a href="mailto:we@brixgate.com" style="color:#FF8FA3;font-weight:600">Email us</a> and we will help.');
+      }
+      render();
+    })
+    .catch(function () {
+      state('We could not reach our server', 'Please check your connection and refresh the page.');
+    });
+
+  /* ---------- the page ---------- */
+
+  function render() {
+    /* currency.js decides where the visitor is; we honour it only when
+       the programme is actually configured in that currency */
+    var want = String(window.bxActiveCurrency || 'ngn').toUpperCase();
+    cur = CURS.indexOf(want) > -1 ? want : (CURS.indexOf('NGN') > -1 ? 'NGN' : CURS[0]);
+
+    var name = PAGE.program_name || 'this programme';
+
+    main.innerHTML =
+      '<div class="pa-wrap"><div class="pa-grid">' +
+
+        '<div>' +
+          '<div class="pa-eyebrow">Registration</div>' +
+          '<h1 class="pa-h1">Register your place on <em>' + esc(name) + '</em></h1>' +
+          '<p class="pa-lead">Pay the registration fee to put your name down for this programme. ' +
+            'Our team will then be in touch about dates, the full tuition and the next steps.</p>' +
+
+          '<div class="pa-note">' +
+            '<h2>Read this before you pay</h2>' +
+            '<p><b>This is a registration fee, not course payment.</b> It does not enrol you, ' +
+              'it does not give you access to the course, and it is <b>not deducted from your tuition</b>.</p>' +
+            '<p>It is non-refundable.</p>' +
+            (PAGE.terms ? '<p class="pa-terms-text">' + esc(PAGE.terms) + '</p>' : '') +
+          '</div>' +
+        '</div>' +
+
+        '<aside>' + card(name) + '</aside>' +
+      '</div></div>';
+
+    wire();
+  }
+
+  function card(name) {
+    return '<form class="pa-card" id="pa-form" novalidate>' +
+             '<div class="pa-for">You are registering for</div>' +
+             '<div class="pa-prog">' + esc(name) + '</div>' +
+
+             '<div class="pa-amount" id="pa-amount"></div>' +
+             '<div class="pa-amount-sub">Registration fee &middot; non-refundable &middot; not part of tuition</div>' +
+
+             (CURS.length > 1
+               ? '<div class="pa-cur" id="pa-cur" role="group" aria-label="Currency">' +
+                   CURS.map(function (c) {
+                     return '<button type="button" data-cur="' + esc(c) + '" aria-pressed="false">' + esc(c) + '</button>';
+                   }).join('') +
+                 '</div>'
+               : '<div style="height:18px"></div>') +
+
+             '<label for="pa-name">Full name</label>' +
+             '<input id="pa-name" name="name" type="text" autocomplete="name" placeholder="Ada Okafor" required>' +
+             '<div class="pa-err" data-for="name"></div>' +
+
+             '<label for="pa-email">Email address</label>' +
+             '<input id="pa-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>' +
+             '<div class="pa-err" data-for="email"></div>' +
+
+             '<label for="pa-phone">Phone number <span style="font-weight:500;color:var(--pa-muted)">(optional)</span></label>' +
+             '<input id="pa-phone" name="full_phone_number" type="tel" autocomplete="tel" placeholder="+234 801 234 5678">' +
+             '<div class="pa-err" data-for="full_phone_number"></div>' +
+
+             '<label class="pa-agree"><input type="checkbox" id="pa-agree">' +
+               '<span>I understand this fee is non-refundable, does not enrol me on the course, ' +
+               'and is not credited toward tuition.</span></label>' +
+             '<div class="pa-err" data-for="agreed"></div>' +
+
+             '<button class="pa-btn" id="pa-pay" type="submit">Pay and register</button>' +
+             '<div class="pa-msg" id="pa-msg"></div>' +
+
+             '<div class="pa-trust">' +
+               '<span>🔒 Paystack &amp; Stripe</span>' +
+               '<span>✉ Confirmation by email</span>' +
+             '</div>' +
+           '</form>';
+  }
+
+  /* ---------- behaviour ---------- */
+
+  function paintAmount() {
+    document.getElementById('pa-amount').innerHTML = money(cur, (PAGE.amounts || {})[cur]);
+    var pay = document.getElementById('pa-pay');
+    if (pay) pay.textContent = 'Pay ' + document.getElementById('pa-amount').textContent + ' and register';
+    var box = document.getElementById('pa-cur');
+    if (!box) return;
+    [].forEach.call(box.querySelectorAll('button'), function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-cur') === cur));
+    });
+  }
+
+  function wire() {
+    paintAmount();
+
+    var box = document.getElementById('pa-cur');
+    if (box) box.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-cur]');
+      if (!b) return;
+      cur = b.getAttribute('data-cur');
+      paintAmount();
+    });
+
+    /* the geo lookup can land after paint; follow it only if the
+       programme is configured in that currency and nobody has chosen */
+    var touched = false;
+    if (box) box.addEventListener('click', function () { touched = true; });
+    document.addEventListener('bx:currency', function (e) {
+      if (touched) return;
+      var c = String((e.detail || {}).currency || '').toUpperCase();
+      if (CURS.indexOf(c) > -1) { cur = c; paintAmount(); }
+    });
+
+    document.getElementById('pa-form').addEventListener('submit', submit);
+  }
+
+  function clearErrors(form) {
+    [].forEach.call(form.querySelectorAll('.pa-err'), function (e) { e.classList.remove('on'); e.textContent = ''; });
+    [].forEach.call(form.querySelectorAll('input'), function (i) { i.classList.remove('pa-bad'); });
+  }
+
+  /* Request fields are snake_case but validation errors come back
+     camelCase, so both spellings have to find their input. */
+  var FIELD = {
+    name: 'name', email: 'email',
+    fullPhoneNumber: 'full_phone_number', full_phone_number: 'full_phone_number',
+    programLevel: 'agreed', program_level: 'agreed',
+    programId: 'agreed', program_id: 'agreed', currency: 'agreed'
+  };
+
+  function showErrors(form, errors) {
+    Object.keys(errors || {}).forEach(function (k) {
+      var field = FIELD[k] || k;
+      var box = form.querySelector('.pa-err[data-for="' + field + '"]');
+      var v = errors[k];
+      var text = Array.isArray(v) ? v.join(' ') : String(v);
+      if (box) { box.textContent = text; box.classList.add('on'); }
+      var input = form.querySelector('[name="' + field + '"]');
+      if (input) input.classList.add('pa-bad');
+    });
+  }
+
+  function submit(e) {
+    e.preventDefault();
+    var form = e.target;
+    var msg  = document.getElementById('pa-msg');
+    var btn  = document.getElementById('pa-pay');
+    clearErrors(form);
+
+    function say(t, kind) { msg.className = 'pa-msg ' + kind; msg.innerHTML = t; }
+
+    var name  = document.getElementById('pa-name').value.trim();
+    var email = document.getElementById('pa-email').value.trim();
+    var phone = document.getElementById('pa-phone').value.trim();
+
+    if (!name)  { showErrors(form, { name: ['Please enter your full name.'] }); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      showErrors(form, { email: ['Please enter a valid email address.'] }); return;
+    }
+    if (!document.getElementById('pa-agree').checked) {
+      showErrors(form, { agreed: ['Please confirm you have read the terms above.'] }); return;
+    }
+
+    btn.disabled = true;
+    say('Taking you to secure checkout…', 'info');
+
+    var body = {
+      name: name,
+      email: email,
+      program_id: PAGE.program_id,
+      /* A literal, never read from form state: without it the same
+         endpoint quietly files a free waitlist signup instead. */
+      access_fee: true,
+      currency: cur
+    };
+    if (phone) body.full_phone_number = phone;
+
+    fetch(API + '/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    })
+      .then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (b) { return { ok: r.ok, status: r.status, b: b }; });
+      })
+      .then(function (r) {
+        if (r.status === 422) {
+          btn.disabled = false;
+          showErrors(form, r.b.errors);
+          say(r.b.message || 'Please check the details above.', 'err');
+          return;
+        }
+        if (!r.ok) {
+          btn.disabled = false;
+          say(esc(r.b.message || 'Something went wrong. Please try again.'), 'err');
+          return;
+        }
+
+        var co = ((r.b.data || {}).access_fee_checkout) || {};
+
+        /* Already paid: the backend refuses a second checkout for the
+           same interest, which is the right answer, not an error. */
+        if (co.payment_status === 'SUCCESS') {
+          say('You have already registered for this programme. Check your email for the confirmation.', 'ok');
+          btn.style.display = 'none';
+          return;
+        }
+
+        if (!co.authorization_url) {
+          btn.disabled = false;
+          say('We could not start the payment. Please try again in a moment.', 'err');
+          return;
+        }
+
+        /* kept so the callback can still find the order if the
+           provider returns without a reference in the URL */
+        try { sessionStorage.setItem('bx_access_fee_reference', co.reference); } catch (err) {}
+        window.location.assign(co.authorization_url);
+      })
+      .catch(function () {
+        btn.disabled = false;
+        say('We could not reach our server. Please check your connection and try again.', 'err');
+      });
+  }
+})();
+</script>
+</body>
+</html>

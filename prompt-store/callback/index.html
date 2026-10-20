@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirming your payment | Brixgate Prompt Store</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/png" href="/assets/faviii.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/prompt-store.css" />
+  <script src="/tracking.js"></script>
+</head>
+<body class="ps">
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-logo"><img src="/assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" /></a>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/prompt-store" class="active">Prompt Store</a>
+      <a href="/experts.html">Experts</a>
+      <a href="/organisations.html">For Organisations</a>
+    </div>
+    <div class="nav-cta">
+      <a href="/prompt-store" class="btn btn-primary btn-sm">Browse packs</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="/index.html">Home</a>
+  <a href="/prompt-store">Prompt Store</a>
+  <a href="/experts.html">Experts</a>
+  <a href="/organisations.html">For Organisations</a>
+</div>
+
+<main class="ps-wrap">
+  <div class="ps-state" id="ps-state">
+    <div class="ps-state-card">
+      <div class="ps-spin"></div>
+      <h1>Confirming your payment…</h1>
+      <p>This takes a few seconds. Please don't close this page.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-bottom">
+    <p>© <span id="footer-year">2025</span> Brixgate Ltd, RC 9082968. All rights reserved. | Lagos, Nigeria · <a href="tel:+447450337132">+44 74 5033 7132</a></p>
+    <div class="footer-bottom-links"><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div>
+  </div>
+</footer>
+
+<script src="/script.js"></script>
+<script src="/prompt-store.js"></script>
+<script>
+/* ============================================================
+   Paystack sends the buyer here after checkout.
+
+   Landing on this page does not mean the payment succeeded:
+   Paystack redirects after failures and abandonments too. The only
+   thing that decides is the backend's verify call, which checks
+   with Paystack directly, marks the order paid and sends the pack.
+   It is safe to call more than once, so a refresh costs nothing.
+
+   If this page never loads at all, the buyer still gets their pack:
+   a backend job re-checks unconfirmed payments every five minutes.
+   That is what lets the pending message promise delivery.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var PS = window.PromptStore;
+  var box = document.getElementById('ps-state');
+
+  var POLL_EVERY = 5000;
+  var POLL_TIMES = 6;          /* about 30s, inside the endpoint's 30/min limit */
+
+  PS.setYear();
+  PS.bindResend(document);
+  PS.demoBanner();
+
+  var reference = PS.param('reference') || PS.param('trxref') || stored();
+
+  /* Support address drives the copy on the flagged and failed
+     states, so it is fetched alongside rather than hard-coded. */
+  PS.call('/config').then(function (r) {
+    if (r.ok) PS.applyConfig(r.data);
+  }).catch(function () {});
+
+  if (!reference) {
+    return show({
+      icon: 'err', glyph: '?',
+      title: 'We could not find your payment reference',
+      body: 'If you have just paid, check your email — your pack may already be on its way. ' +
+            'If nothing arrives, contact us and we will sort it out.',
+      cta: { href: '/prompt-store', label: 'Back to the store' },
+      support: true
+    });
+  }
+
+  run(0);
+
+  /* ---------- the verify loop ---------- */
+
+  function run(attempt) {
+    PS.call('/orders/' + encodeURIComponent(reference) + '/verify', { method: 'POST' })
+      .then(function (r) {
+        if (r.status === 404) {
+          return show({
+            icon: 'err', glyph: '!',
+            title: 'We could not find this order',
+            body: 'The reference may be wrong, or the order may have expired. If you were charged, contact us with the reference below and we will put it right.',
+            cta: { href: '/prompt-store', label: 'Back to the store' },
+            ref: reference, support: true
+          });
+        }
+
+        /* 429 and 502 are both temporary: keep waiting rather than
+           telling the buyer something is wrong. */
+        if (!r.ok) return again(attempt, r);
+
+        var d = r.data || {};
+        if (d.status === 'PENDING') return again(attempt, r);
+
+        forget();
+        return settle(d, r.message);
+      })
+      .catch(function () { again(attempt, null); });
+  }
+
+  function again(attempt, r) {
+    if (attempt + 1 >= POLL_TIMES) return pending(r);
+    setTimeout(function () { run(attempt + 1); }, POLL_EVERY);
+  }
+
+  /* ---------- the six outcomes ---------- */
+
+  function settle(d, message) {
+    var where = d.buyer_email ? ' to ' + d.buyer_email : '';
+
+    if (d.status === 'PAID' && d.delivered) {
+      return show({
+        icon: 'ok', glyph: '✓',
+        title: 'Done — your pack is on its way',
+        body: message || ('Your pack is on its way' + where + '. Check your inbox, and your spam folder if it is not there in a few minutes.'),
+        cta: { href: '/prompt-store', label: 'Browse more packs' },
+        ref: d.reference || reference
+      });
+    }
+
+    if (d.status === 'PAID') {
+      /* Paid but not yet emailed. Never ask them to pay again — the
+         resend form is the whole answer here. */
+      return show({
+        icon: 'ok', glyph: '✓',
+        title: 'Payment confirmed',
+        body: message || 'Your payment went through. Your pack is being sent now — if it has not arrived in a few minutes, send it again below.',
+        ref: d.reference || reference,
+        resend: d.reference || reference
+      });
+    }
+
+    if (d.status === 'FAILED') {
+      return show({
+        icon: 'err', glyph: '✕',
+        title: 'Payment failed',
+        body: message || 'You have not been charged. You can try again from the pack page.',
+        cta: backTo(d),
+        ref: d.reference || reference
+      });
+    }
+
+    if (d.status === 'FLAGGED') {
+      return show({
+        icon: 'wait', glyph: '!',
+        title: 'Payment received',
+        body: message || 'It needs a quick review before we can send your pack. Our team will send it shortly — no action needed from you.',
+        ref: d.reference || reference,
+        support: true
+      });
+    }
+
+    if (d.status === 'ABANDONED') {
+      return show({
+        icon: 'err', glyph: '○',
+        title: 'This order expired',
+        body: 'It was started more than 24 hours ago and never completed, so it has been closed. You have not been charged. Start again from the pack page.',
+        cta: backTo(d)
+      });
+    }
+
+    return pending(null, d);
+  }
+
+  function pending(r, d) {
+    d = d || {};
+    var note = r && r.status === 429
+      ? 'We are checking a little slower than usual. '
+      : '';
+    show({
+      icon: 'wait', glyph: '⋯',
+      title: 'We have not received confirmation yet',
+      body: note + 'If you were charged, your pack will arrive by email within a few minutes — ' +
+            'we keep checking in the background, so there is nothing else for you to do. ' +
+            'If you were not charged, you can try again from the pack page.',
+      cta: backTo(d),
+      ref: reference
+    });
+  }
+
+  function backTo(d) {
+    return d && d.pack_slug
+      ? { href: '/prompt-store/pack?pack=' + encodeURIComponent(d.pack_slug), label: 'Try again' }
+      : { href: '/prompt-store', label: 'Back to the store' };
+  }
+
+  /* ---------- rendering ---------- */
+
+  function show(o) {
+    box.innerHTML =
+      '<div class="ps-state-card">' +
+        '<div class="ps-state-ico ps-' + o.icon + '">' + o.glyph + '</div>' +
+        '<h1>' + PS.esc(o.title) + '</h1>' +
+        '<p>' + PS.esc(o.body) + '</p>' +
+        (o.support
+          ? '<p style="margin-top:10px">Contact <a href="mailto:' + PS.esc(PS.SUPPORT) +
+            '" style="color:var(--ps-r);font-weight:700">' + PS.esc(PS.SUPPORT) + '</a>.</p>'
+          : '') +
+        (o.cta ? '<a class="ps-btn ps-btn-red" href="' + PS.esc(o.cta.href) + '">' + PS.esc(o.cta.label) + '</a>' : '') +
+        (o.ref ? '<div class="ps-ref">Payment reference<b>' + PS.esc(o.ref) + '</b></div>' : '') +
+        (o.resend ? PS.resendHTML(o.resend) : '') +
+      '</div>';
+  }
+
+  /* ---------- the stored reference ---------- */
+
+  function stored() {
+    try { return sessionStorage.getItem('ps_last_reference'); } catch (e) { return null; }
+  }
+  function forget() {
+    try { sessionStorage.removeItem('ps_last_reference'); } catch (e) {}
+  }
+})();
+</script>
+</body>
+</html>

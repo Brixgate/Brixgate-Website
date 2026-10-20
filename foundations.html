@@ -1223,7 +1223,11 @@ body.fd{ background:#fff; }
     });
   }
 
-  grid.innerHTML = FND.COURSES.map(function (c) {
+  /* Tracks are the three specialisations inside the Software
+     Engineering pathway. The grid shows the pathway, and that page
+     offers the three; listing all four here would read as four
+     separate courses. */
+  grid.innerHTML = FND.COURSES.filter(function (c) { return !c.track; }).map(function (c) {
     /* a course whose page is not built yet points at the waitlist, so
        the grid can list the full set without any card 404ing */
     var href = c.ready ? c.page : '#waitlist';
