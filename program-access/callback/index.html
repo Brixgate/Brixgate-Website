@@ -34,7 +34,11 @@ body.pa::before {
   content:''; position:fixed; top:0; left:0; right:0; height:3px; z-index:5;
   background:linear-gradient(90deg, var(--pa-red), #FF5748 42%, #1B3A5C);
 }
-.pa a { color:inherit; }
+/* Scoped to the page's own content. Unscoped, this matched every
+   anchor including the shared nav and footer — same specificity as
+   styles.css's own rules but loaded later, so it won, and the nav
+   links inherited the body's near-white onto a near-white bar. */
+.pa main a, .pa .pa-state a { color:inherit; }
 .pa-wrap { max-width:640px; margin:0 auto; padding:0 20px; width:100%; }
 main { flex:1; }
 
