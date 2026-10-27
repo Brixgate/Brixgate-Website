@@ -2125,6 +2125,12 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
   ];
   var CURRENCY_SYMS = { ngn: '₦', usd: '$', gbp: '£', eur: '€', cad: 'C$' };
 
+  /* The form asks who you are; the API wants a level from its own closed
+     set (beginner | intermediate | advanced). "Professional" is not one
+     of its values and is rejected, so the two vocabularies are mapped
+     here rather than at the point of submission. */
+  var API_LEVEL = { Beginner: 'beginner', Professional: 'intermediate' };
+
   var _programId              = null;
   var _cohortId               = null;  /* active cohort ID — required as entity_id by the backend */
   var _selectedCohort         = null;  /* full cohort object from API — used for review display */
@@ -3605,7 +3611,12 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
     var ccEl       = document.getElementById('apply-phone-cc');
     var phoneNumEl = document.getElementById('apply-phone-num');
     var cc         = ccEl ? ccEl.value.replace(/-[A-Z]+$/, '') : '+234';
-    var phoneRaw   = phoneNumEl ? phoneNumEl.value.replace(/\D/g, '') : '';
+    /* People type their number the way they dial it at home ("0902…"),
+       but E.164 drops that trunk zero once the country code is in front:
+       +23409022247010 is not a reachable number, +2349022247010 is. Every
+       country in the picker drops it — Italy is the usual exception and
+       is not one of them. */
+    var phoneRaw   = phoneNumEl ? phoneNumEl.value.replace(/\D/g, '').replace(/^0+/, '') : '';
     var phone      = phoneRaw ? (cc + phoneRaw) : '';
 
     if (!phone) {
@@ -3625,20 +3636,29 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
 
     var applicantLevel = (document.getElementById('applicant-level') || {}).value || 'Professional';
 
-    apiPost('/auth/applicants', {
-      name:            fullName,
-      email:           email,
-      /* snake_case: the API ignores camelCase keys here silently —
-         only name and email are required, so an unrecognised key
-         produces no error, just a null column. The four below are
-         deliberately left in camelCase for now so this change can
-         be tested on its own. */
-      full_phone_number: phone      || undefined,
-      primaryField:    field          || undefined,
-      currentRole:     role           || undefined,
-      programLevel:    applicantLevel || undefined,
-      programId:       _programId     || undefined
-    })
+    /* The API reads snake_case throughout. A camelCase key parses fine
+       and is then discarded without comment — only name and email are
+       required here, so nothing ever errors, you just get a null column.
+       That is how applicants shipped for months with no phone, field or
+       role. Swagger documents camelCase for this endpoint; swagger is
+       wrong, and every other endpoint on the API proves it. */
+    var applicantBody = {
+      name:              fullName,
+      email:             email,
+      full_phone_number: phone || undefined,
+      primary_field:     field || undefined,
+      current_role:      role  || undefined
+    };
+
+    /* program_level is a closed enum the API validates, and it refuses
+       the request outright if it arrives without a program_id. So the
+       pair goes in together or not at all. */
+    if (_programId) {
+      applicantBody.program_id    = _programId;
+      applicantBody.program_level = API_LEVEL[applicantLevel] || 'intermediate';
+    }
+
+    apiPost('/auth/applicants', applicantBody)
       .then(function(data) {
         console.log('[Brixgate] /auth/applicants response:', JSON.stringify(data));
         if (!data.success) {
