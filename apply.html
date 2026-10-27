@@ -3598,7 +3598,12 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
     apiPost('/auth/applicants', {
       name:            fullName,
       email:           email,
-      fullPhoneNumber: phone          || undefined,
+      /* snake_case: the API ignores camelCase keys here silently —
+         only name and email are required, so an unrecognised key
+         produces no error, just a null column. The four below are
+         deliberately left in camelCase for now so this change can
+         be tested on its own. */
+      full_phone_number: phone      || undefined,
       primaryField:    field          || undefined,
       currentRole:     role           || undefined,
       programLevel:    applicantLevel || undefined,
