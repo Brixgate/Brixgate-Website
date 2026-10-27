@@ -1473,7 +1473,7 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
           </div>
 
           <ul class="ap-incl">
-            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>8 live classes, never pre-recorded</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span id="ap-incl-classes">Two live classes every week, never pre-recorded</span></li>
             <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>A capstone you build and defend</li>
             <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Field-verified certificate</li>
             <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Scholarship applied automatically</li>
@@ -2835,6 +2835,36 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
         var el = document.getElementById(id);
         if (el) el.textContent = text || '\u2014';
       });
+      setClassCount(text);
+    }
+
+    /* Every cohort runs two live classes a week, so the class count is
+       the one thing we can derive rather than hardcode. The sidebar used
+       to claim "8 live classes" for everything, which is only true of the
+       four-week professional programmes — the beginner tracks run six,
+       eight and fourteen weeks and were being undersold by half.
+
+       Durations arrive as prose ("11 Weeks 5 Days"), so this sums whatever
+       units it recognises into days and rounds to the nearest whole week.
+       For a tidy duration that is exact; for an untidy one it is off by at
+       most one class either way. If nothing parses we fall back to the
+       weekly rate, which is true of every cohort and names no total. */
+    function weeksIn(duration) {
+      if (!duration) return 0;
+      var s = String(duration).toLowerCase(), days = 0, m;
+      if ((m = /(\d+)\s*month/.exec(s)))  days += parseInt(m[1], 10) * 30;
+      if ((m = /(\d+)\s*week/.exec(s)))   days += parseInt(m[1], 10) * 7;
+      if ((m = /(\d+)\s*day/.exec(s)))    days += parseInt(m[1], 10);
+      return days ? Math.round(days / 7) : 0;
+    }
+
+    function setClassCount(duration) {
+      var el = document.getElementById('ap-incl-classes');
+      if (!el) return;
+      var weeks = weeksIn(duration);
+      el.textContent = weeks
+        ? (weeks * 2) + ' live classes, never pre-recorded'
+        : 'Two live classes every week, never pre-recorded';
     }
 
     function updateCohortUI() {
