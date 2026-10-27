@@ -1614,6 +1614,11 @@ html.og-anim .og-fade{ opacity:0; }
 <script>
   var API_BASE = 'https://dev.api.brixgate.com';
 
+  function splitList(v) {
+    var parts = (v || '').split(',').map(function (x) { return x.trim(); }).filter(Boolean);
+    return parts.length ? parts : undefined;
+  }
+
   function handleDemoSubmit(e) {
     e.preventDefault();
 
@@ -1624,15 +1629,21 @@ html.og-anim .og-fade{ opacity:0; }
     btn.textContent = 'Submitting…';
     if (errorEl) errorEl.style.display = 'none';
 
+    /* The API reads snake_case. Here that was not a silent loss but a
+       fatal one: every required field arrived under a name the server
+       does not recognise, so the request 422'd and no demo request was
+       ever captured from this page. */
     var payload = {
-      firstName:        document.getElementById('first-name').value.trim(),
-      lastName:         document.getElementById('last-name').value.trim(),
-      workEmail:        document.getElementById('work-email').value.trim(),
-      organizationName: document.getElementById('org-name').value.trim(),
-      teamSize:         document.getElementById('team-size').value,
-      packageInterest:  document.getElementById('package-interest').value || undefined,
-      departments:      document.getElementById('fields-interest').value.trim() || undefined,
-      moreInformation:  document.getElementById('org-message').value.trim() || undefined
+      first_name:        document.getElementById('first-name').value.trim(),
+      last_name:         document.getElementById('last-name').value.trim(),
+      work_email:        document.getElementById('work-email').value.trim(),
+      organization_name: document.getElementById('org-name').value.trim(),
+      team_size:         document.getElementById('team-size').value,
+      package_interest:  document.getElementById('package-interest').value || undefined,
+      /* departments is a list on the API, but the field is a free-text
+         "Finance, Legal, Engineering" box, so it is split on commas. */
+      departments:       splitList(document.getElementById('fields-interest').value),
+      more_information:  document.getElementById('org-message').value.trim() || undefined
     };
 
     fetch(API_BASE + '/api/v1/demo-requests', {

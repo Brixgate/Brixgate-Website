@@ -609,15 +609,22 @@ html.je-anim .je-rise{ opacity:0; }
 
     var yearsRaw = document.getElementById('e-years').value;
 
+    /* The API reads snake_case, and here the camelCase keys were fatal
+       rather than merely lossy: the required fields arrived under names
+       the server does not recognise, so every application 422'd and
+       none was ever captured. */
     var payload = {
-      firstName:              document.getElementById('e-first').value.trim(),
-      lastName:               document.getElementById('e-last').value.trim(),
-      email:                  document.getElementById('e-email').value.trim(),
-      primaryField:           document.getElementById('e-field').value || undefined,
-      recentRole:             document.getElementById('e-role').value.trim() || undefined,
-      yearsInField:           yearsRaw ? parseInt(yearsRaw, 10) : undefined,
-      aiExperienceDescription: document.getElementById('e-ai').value.trim() || undefined,
-      linkedinUrl:            document.getElementById('e-linkedin').value.trim() || undefined
+      first_name:                document.getElementById('e-first').value.trim(),
+      last_name:                 document.getElementById('e-last').value.trim(),
+      email:                     document.getElementById('e-email').value.trim(),
+      /* Required by the API and collected by the form all along, but
+         never sent — the request failed before it could matter. */
+      country:                   document.getElementById('e-country').value || undefined,
+      primary_field:             document.getElementById('e-field').value || undefined,
+      recent_role:               document.getElementById('e-role').value.trim() || undefined,
+      years_in_field:            yearsRaw ? parseInt(yearsRaw, 10) : undefined,
+      ai_experience_description: document.getElementById('e-ai').value.trim() || undefined,
+      linkedin_url:              document.getElementById('e-linkedin').value.trim() || undefined
     };
 
     fetch(API_BASE + '/api/v1/expert-applications', {
