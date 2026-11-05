@@ -392,6 +392,27 @@
       margin-bottom: 12px;
     }
 
+    /* The payment plan is the one choice on this step that changes what
+       is charged today, so it is not dressed as another quiet section
+       label like "Your Details". It gets a real heading and a line
+       saying what the choice does. */
+    .ap-payplan-head {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.015em;
+      margin-top: 20px;
+      margin-bottom: 5px;
+    }
+    .ap-payplan-sub {
+      font-size: 0.83rem;
+      line-height: 1.6;
+      color: var(--muted);
+      margin-bottom: 14px;
+      max-width: 50ch;
+    }
+    .ap-payplan-sub b { color: var(--white); font-weight: 700; }
+
     .review-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1392,7 +1413,6 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
     <span class="region-item">🇰🇪 Kenya</span>
     <span class="region-item">🇬🇭 Ghana</span>
     <span class="region-item">🇿🇦 South Africa</span>
-    <span class="region-more">Headquartered in Lagos</span>
     <span class="region-cohort" data-cohort-countdown hidden></span>
   </div>
 
@@ -1887,7 +1907,7 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
               </div>
             </div>
 
-            <button type="submit" class="btn btn-primary form-submit-btn">Continue to Review</button>
+            <button type="submit" class="btn btn-primary form-submit-btn">Continue to Enroll</button>
 
             <!-- Inline error banner — shown on API errors instead of browser alert -->
             <div id="form-error-banner" style="display:none;margin-top:16px;padding:14px 18px;background:rgba(255,41,78,0.08);border:1.5px solid rgba(255,41,78,0.35);border-radius:10px;display:none;align-items:flex-start;gap:12px">
@@ -2129,6 +2149,12 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
      here rather than at the point of submission. */
   var API_LEVEL = { Beginner: 'beginner', Professional: 'intermediate' };
 
+  /* True while GET /programs/{id}/cohorts is in flight. The select says
+     "Loading cohorts…" during that window, but the summary rows used to
+     say "—", which reads as "this programme has no duration" rather than
+     "we do not know yet". They now say the same thing. */
+  var _cohortsLoading = false;
+
   var _programId              = null;
   var _cohortId               = null;  /* active cohort ID — required as entity_id by the backend */
   var _selectedCohort         = null;  /* full cohort object from API — used for review display */
@@ -2325,7 +2351,12 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
     var sym            = CURRENCY_SYMS[cur] || '';
     var hasInstallments = _paymentOptions && _paymentOptions.length > 0;
 
-    var html = '<div class="review-section-label" style="margin-top:4px">Payment Plan</div>';
+    var html = '<div class="ap-payplan-head">Payment Plan</div>' +
+      '<div class="ap-payplan-sub">Choose how you want to pay. <b>Pay in Full</b> settles the whole fee today' +
+      (hasInstallments
+        ? ', or split it into instalments \u2014 the first payment is due now and the rest on the dates shown below.'
+        : '.') +
+      '</div>';
     html += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">';
 
     /* Full payment pill — always shown */
@@ -2835,11 +2866,28 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
        fourteen, and a cohort's own duration is the only figure that is
        true for the thing being paid for. */
     function setDuration(text) {
+      var shown = text || (_cohortsLoading ? 'Loading\u2026' : '\u2014');
       ['ap-side-duration', 'review-duration', 'ap-sum-duration'].forEach(function (id) {
         var el = document.getElementById(id);
-        if (el) el.textContent = text || '\u2014';
+        if (el) el.textContent = shown;
       });
       setClassCount(text);
+    }
+
+    /* A cohort always carries its dates; the duration string is optional
+       and some ship without one. Deriving it from the dates keeps the row
+       from falling back to a dash on a cohort that plainly has a length. */
+    function durationFromDates(start, end) {
+      if (!start || !end) return '';
+      var a = new Date(start), b = new Date(end);
+      if (isNaN(a) || isNaN(b)) return '';
+      var days = Math.round((b - a) / 86400000);
+      if (days <= 0) return '';
+      var w = Math.floor(days / 7), d = days % 7;
+      return [
+        w ? w + ' Week' + (w > 1 ? 's' : '') : '',
+        d ? d + ' Day'  + (d > 1 ? 's' : '') : ''
+      ].filter(Boolean).join(' ');
     }
 
     /* Every cohort runs two live classes a week, so the class count is
@@ -2880,7 +2928,7 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
 
       if (!c) {
         setDuration(null);
-        if (cohortNameEl)  cohortNameEl.textContent  = '—';
+        if (cohortNameEl)  cohortNameEl.textContent  = _cohortsLoading ? 'Loading\u2026' : '\u2014';
         if (cohortStartEl) cohortStartEl.textContent = '';
         if (infoPanel)     infoPanel.style.display   = 'none';
         if (f2info)        f2info.style.display      = 'none';
@@ -2892,7 +2940,7 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
       var fmt         = (c.learning_format || '').replace(/_/g, ' ').replace(/\b\w/g, function(ch) { return ch.toUpperCase(); });
       var statusColor = c.status === 'OPEN' ? '#22c55e' : '#F59E0B';
 
-      setDuration(c.duration);
+      setDuration(c.duration || durationFromDates(c.start_date, c.end_date));
       if (cohortNameEl)  cohortNameEl.textContent  = c.title || '—';
       if (cohortStartEl) cohortStartEl.textContent = startFmt ? 'Starts ' + startFmt : '';
 
@@ -2927,12 +2975,14 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
       if (grp) grp.style.display = 'none';
       _cohortId       = null;
       _selectedCohort = null;
+      _cohortsLoading = !!programId;
       updateCohortUI();
       if (!programId) return;
 
       fetch(API_BASE + '/programs/' + programId + '/cohorts')
         .then(function(r) { return r.json(); })
         .then(function(data) {
+          _cohortsLoading = false;
           var raw     = (data && data.data) || {};
           var cohorts = Array.isArray(raw) ? raw : (raw.cohorts || raw.items || []);
           var visible = cohorts
@@ -2971,6 +3021,8 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
           updateCohortUI();
         })
         .catch(function() {
+          _cohortsLoading = false;
+          updateCohortUI();
           sel.innerHTML = '<option value="" disabled selected>Could not load cohorts</option>';
           if (grp) grp.style.display = 'block';
         });
@@ -3739,7 +3791,7 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
               banner.style.display = 'none';
             }
           }
-          setSubmitState(submitBtn, false, 'Continue to Review');
+          setSubmitState(submitBtn, false, 'Continue to Enroll');
           renderPaymentOptions();
           showPanel('review');
         }
@@ -3766,7 +3818,7 @@ body.ap.ap-dark #back-to-form:hover { background:#132133 !important; border-colo
         }
       })
       .catch(function(err) {
-        setSubmitState(submitBtn, false, 'Continue to Review');
+        setSubmitState(submitBtn, false, 'Continue to Enroll');
         var msg   = err.message || 'Unknown error. Please try again.';
         var title = 'Could not set up your account';
         /* Sentinel set above when email duplicate is detected */
