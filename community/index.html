@@ -25,13 +25,22 @@
    which month the heading names, so the page cannot go stale on
    the first of a month the way a hand-written list would.
    ============================================================ */
-body.cm { background:var(--bg-dark); color:var(--white); }
+/* The shared nav is fixed at top:var(--banner-height), and body reserves
+   banner + nav above the first section. This page has no learners ticker,
+   so that 44px was a dead strip above the bar and an equal gap under it.
+   Collapsing the variable puts the nav against the top of the window and
+   corrects the body padding in the same stroke. */
+body.cm { --banner-height:0px; padding-top:0; background:var(--bg-dark); color:var(--white); }
 .cm-wrap { max-width:1140px; margin:0 auto; padding:0 24px; }
 
 /* ---- hero ---- */
 .cm-hero {
   position:relative; overflow:hidden;
-  padding:112px 0 96px;
+  /* body's own top padding is dropped above, because --nav-height (104)
+     is larger than this bar actually renders and the difference showed
+     as a strip of body background under it. The hero carries the offset
+     instead, so its gradient runs right up to the nav with no seam. */
+  padding:calc(var(--nav-height) + 26px) 0 96px;
   background:
     radial-gradient(900px 520px at 12% -10%, rgba(255,41,78,.20), transparent 60%),
     radial-gradient(760px 460px at 92% 8%, rgba(255,87,72,.14), transparent 62%),
@@ -283,7 +292,7 @@ body.cm { background:var(--bg-dark); color:var(--white); }
 }
 
 @media (max-width: 640px) {
-  .cm-hero { padding:84px 0 72px; }
+  .cm-hero { padding:calc(var(--nav-height) + 18px) 0 72px; }
   .cm-faces { left:12px; right:12px; padding:10px 13px 10px 10px; }
   .cm-faces p { font-size:.74rem; }
   .cm-avatars img { width:30px; height:30px; }

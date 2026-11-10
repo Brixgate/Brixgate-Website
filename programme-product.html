@@ -951,7 +951,7 @@ function applyHref(extra) {
       if (!el) return;
       if (!visible.length) {
         var applyLink = applyHref();
-        el.innerHTML = '<p style="color:#7A94A8;font-size:0.9rem">No upcoming cohorts right now. <a href="' + applyLink + '" style="color:var(--red);font-weight:700">Apply to join the waitlist</a> and we\'ll notify you when the next cohort opens.</p>';
+        el.innerHTML = '<p style="color:#7A94A8;font-size:0.9rem">No upcoming cohorts right now. <a href="' + applyLink + '" style="color:var(--red);font-weight:700">Register your interest</a> and we\'ll tell you the moment the next cohort opens.</p>';
         return;
       }
       el.innerHTML = visible.map(renderCard).join('');

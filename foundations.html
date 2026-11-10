@@ -638,7 +638,7 @@ body.fd{ background:#fff; }
         <p class="fd-lead fd-rise">Every course here assumes nothing. No degree, no coding background, no prior exposure to AI. We teach the ground floor properly instead of skipping it, and you leave with work you can show.</p>
 
         <div class="fd-hero-cta fd-rise">
-          <a href="#waitlist" class="fd-btn fd-btn-red"><span data-chars>Join the waitlist</span>
+          <a href="#waitlist" class="fd-btn fd-btn-red"><span data-chars>Register your interest</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
           <a href="#courses" class="fd-btn fd-btn-outline-light"><span data-chars>See the courses</span></a>
@@ -731,7 +731,7 @@ body.fd{ background:#fff; }
     </div>
 
     <div class="fd-courses-note fd-rise" id="fd-courses-note">
-      <b>More Foundations courses are being added.</b> Data, automation and security are first; the rest follow through 2026. Join the <a href="#waitlist">waitlist</a> and you will hear before places go public.
+      <b>More Foundations courses are being added.</b> Data, automation and security are first; the rest follow through 2026. <a href="#waitlist">Register your interest</a> and you will hear before places go public.
     </div>
   </div>
 </section>
@@ -882,9 +882,9 @@ body.fd{ background:#fff; }
   <div class="fd-wrap">
     <div class="fd-wait-grid">
       <div>
-        <span class="fd-kicker fd-rise">Waitlist</span>
+        <span class="fd-kicker fd-rise">Register your interest</span>
         <h2 class="fd-h2 fd-rise">Places go to the list first.</h2>
-        <p class="fd-lead fd-rise">The first Foundations cohort is deliberately small so everyone gets real attention. When dates are set, the waitlist hears before the site does.</p>
+        <p class="fd-lead fd-rise">The first Foundations cohort is deliberately small so everyone gets real attention. When dates are set, members who register hear before the site does.</p>
         <div class="fd-wait-pts fd-rise">
           <div class="fd-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Dates, pricing and the full curriculum, sent before they go public.</span></div>
           <div class="fd-wait-pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>First refusal on seats in the opening cohort.</span></div>
@@ -913,7 +913,7 @@ body.fd{ background:#fff; }
               <option value="Not sure yet">Not sure yet</option>
             </select>
           </div>
-          <button type="submit" class="fd-btn fd-btn-red" id="fd-wl-btn"><span data-chars>Join the waitlist</span></button>
+          <button type="submit" class="fd-btn fd-btn-red" id="fd-wl-btn"><span data-chars>Register your interest</span></button>
           <div class="fd-form-err" id="fd-wl-err"></div>
           <p class="fd-form-note">We only use this to tell you when Foundations opens. No newsletter, and you can ask us to remove you at any time.</p>
         </form>
@@ -1242,7 +1242,7 @@ body.fd{ background:#fff; }
                '<span class="fd-card-tag">' + esc(c.tagline) + '</span>' +
                '<p>' + esc(c.blurb) + '</p>' +
                '<span class="fd-card-when" data-when>Checking dates…</span>' +
-               '<span class="fd-card-go"><span>' + (c.ready ? 'Read the full course' : 'Join the waitlist') + '</span>' + ARROW + '</span>' +
+               '<span class="fd-card-go"><span>' + (c.ready ? 'Read the full course' : 'Register your interest') + '</span>' + ARROW + '</span>' +
              '</div>' +
            '</a>';
   }).join('');
@@ -1282,7 +1282,7 @@ body.fd{ background:#fff; }
       } else if (res.programme) {
         el.innerHTML = '<i></i>Dates being scheduled';
       } else {
-        el.innerHTML = '<i></i>' + (c.ready ? 'Waitlist open' : 'Course page coming');
+        el.innerHTML = '<i></i>' + (c.ready ? 'Registration open' : 'Course page coming');
       }
     });
   });
@@ -1325,7 +1325,7 @@ body.fd{ background:#fff; }
   function fail(msg) {
     errEl.textContent = msg;
     errEl.style.display = 'block';
-    setLabel('Join the waitlist');
+    setLabel('Register your interest');
     btn.disabled = false;
   }
 
@@ -1405,10 +1405,10 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 
 <script>
 /* ── Hero CTA: apply when there is something to apply to ──
-   The button is written into the page as "Join the waitlist" because
+   The button is written into the page as "Register your interest" because
    the page cannot know, before the API answers, whether any course is
    open. Once it does, a hub advertising six open cohorts should not be
-   offering a waitlist as its primary action.
+   offering a holding form as its primary action.
 
    No ?program_id= here — the hub knows the tier but not which of the
    six the visitor wants, so it hands over ?level=BEGINNER and lets

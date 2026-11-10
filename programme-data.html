@@ -1833,119 +1833,37 @@ body.f-market .cp-glass-3 { top:212px; right:0; left:auto; bottom:auto; width:24
 </section>
 
 
-<!-- ====== WAITLIST ====== -->
-<section id="waitlist" class="cp-chapter cp-grain">
+<!-- ====== REGISTER ====== -->
+<section id="register" class="cp-chapter cp-grain">
+  <!-- Legacy anchor: links across the site still point at #waitlist. -->
+  <span id="waitlist" aria-hidden="true"></span>
   <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center" class="waitlist-grid">
-      <div class="fade-up">
-        <span class="eyebrow" style="color:var(--red)">Be First In Line</span>
-        <h2 style="color:var(--white);margin-bottom:16px;line-height:1.2">Ready to Start?<br/>Join the Waitlist.</h2>
-        <div class="divider-red"></div>
-        <p style="color:rgba(255,255,255,0.65);font-size:0.97rem;line-height:1.7;margin-bottom:20px">Drop your details below and we'll notify you the moment enrolment opens, plus you'll get early access before we announce publicly.</p>
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <div style="display:flex;align-items:flex-start;gap:12px">
-            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:2px">✓</span>
-            <span style="font-size:0.87rem;color:rgba(255,255,255,0.6)">First access before public launch</span>
-          </div>
-          <div style="display:flex;align-items:flex-start;gap:12px">
-            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:2px">✓</span>
-            <span style="font-size:0.87rem;color:rgba(255,255,255,0.6)">Exclusive early-bird pricing</span>
-          </div>
-          <div style="display:flex;align-items:flex-start;gap:12px">
-            <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:2px">✓</span>
-            <span style="font-size:0.87rem;color:rgba(255,255,255,0.6)">No commitment, just your spot in the queue</span>
-          </div>
+    <div style="max-width:640px;margin:0 auto;text-align:center" class="fade-up">
+      <span class="eyebrow" style="color:var(--red)">Enrolment is open</span>
+      <h2 style="color:var(--white);margin-bottom:16px;line-height:1.2">Ready to start?<br/>Register for the next cohort.</h2>
+      <div class="divider-red" style="margin-inline:auto"></div>
+      <p style="color:rgba(255,255,255,0.65);font-size:0.97rem;line-height:1.7;margin-bottom:26px">
+        Registration takes under two minutes and no CV is needed. You pick your cohort,
+        confirm the fee and secure your seat in one pass.
+      </p>
+      <div style="display:flex;flex-direction:column;gap:12px;max-width:380px;margin:0 auto 30px;text-align:left">
+        <div style="display:flex;align-items:flex-start;gap:12px">
+          <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:2px">&#10003;</span>
+          <span style="font-size:0.87rem;color:rgba(255,255,255,0.6)">Live classes, never pre-recorded</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px">
+          <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:2px">&#10003;</span>
+          <span style="font-size:0.87rem;color:rgba(255,255,255,0.6)">Scholarship applied automatically at checkout</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px">
+          <span style="color:var(--red);font-size:1rem;flex-shrink:0;margin-top:2px">&#10003;</span>
+          <span style="font-size:0.87rem;color:rgba(255,255,255,0.6)">Pay in full, or split it into instalments</span>
         </div>
       </div>
-      <div class="fade-up" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:36px 32px">
-        <div id="waitlist-success" style="display:none;text-align:center;padding:24px 0">
-          <div style="font-size:2rem;margin-bottom:12px">🎉</div>
-          <div style="font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:8px">You're on the list!</div>
-          <div style="font-size:0.88rem;color:rgba(255,255,255,0.6)">We'll reach out the moment enrolment opens. Keep an eye on your inbox.</div>
-        </div>
-        <form id="waitlist-form">
-          <div style="margin-bottom:18px">
-            <label style="display:block;font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Full Name</label>
-            <input id="wl-name" type="text" placeholder="Your full name" required style="width:100%;padding:13px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:var(--white);font-size:0.93rem;outline:none;box-sizing:border-box;transition:border 0.2s" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
-          </div>
-          <div style="margin-bottom:18px">
-            <label style="display:block;font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Email Address</label>
-            <input id="wl-email" type="email" placeholder="you@example.com" required style="width:100%;padding:13px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:var(--white);font-size:0.93rem;outline:none;box-sizing:border-box;transition:border 0.2s" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
-          </div>
-          <div style="margin-bottom:18px">
-            <label style="display:block;font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Phone Number</label>
-            <input id="wl-phone" type="tel" placeholder="+234 800 000 0000" style="width:100%;padding:13px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:var(--white);font-size:0.93rem;outline:none;box-sizing:border-box;transition:border 0.2s" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
-          </div>
-          <div style="margin-bottom:24px">
-            <label style="display:block;font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:7px">Interested Programme</label>
-            <select id="wl-course" required style="width:100%;padding:13px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:var(--white);font-size:0.93rem;outline:none;box-sizing:border-box;appearance:none;-webkit-appearance:none;cursor:pointer;transition:border 0.2s" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
-              <option value="" disabled style="background:#021024">Select a programme</option>
-              <option value="Software Engineering" style="background:#021024">Software Engineering</option>
-              <option value="Cybersecurity" style="background:#021024">Cybersecurity</option>
-              <option value="Financial Modelling" style="background:#021024">Financial Modelling</option>
-              <option value="Product Marketing" style="background:#021024">Product Marketing</option>
-              <option value="Data" selected style="background:#021024">Data</option>
-            </select>
-          </div>
-          <div id="wl-error" style="display:none;font-size:0.83rem;color:var(--red);margin-bottom:14px;text-align:center"></div>
-          <button type="submit" id="wl-btn" style="width:100%;padding:15px;background:var(--red);border:none;border-radius:10px;color:var(--white);font-size:0.95rem;font-weight:700;cursor:pointer;transition:opacity 0.2s;letter-spacing:0.01em">Join the Waitlist</button>
-        </form>
-      </div>
+      <a href="apply.html?program_id=35" class="cp-btn cp-btn-red" style="padding:15px 34px;font-size:0.97rem">Register for this programme</a>
     </div>
   </div>
 </section>
-<style>
-@media (max-width: 768px) {
-  .waitlist-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-}
-</style>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  var wlForm = document.getElementById('waitlist-form');
-  if (!wlForm) return;
-  wlForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    var name   = (document.getElementById('wl-name').value || '').trim();
-    var email  = (document.getElementById('wl-email').value || '').trim();
-    var phone  = (document.getElementById('wl-phone').value || '').trim();
-    var course = (document.getElementById('wl-course').value || '').trim();
-    var errEl  = document.getElementById('wl-error');
-    var btn    = document.getElementById('wl-btn');
-    errEl.style.display = 'none';
-    if (!name || !email || !course) {
-      errEl.textContent = 'Please fill in your name, email, and programme.';
-      errEl.style.display = 'block';
-      return;
-    }
-    btn.textContent = 'Joining…';
-    btn.disabled = true;
-    fetch((window.BX_API_BASE || 'https://dev.api.brixgate.com') + '/api/v1/waitlist', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ name: name, email: email, phone: phone, primary_field: course })
-    })
-    .then(function(r) { return r.json().catch(function() { return {}; }); })
-    .then(function(data) {
-      if (data.success) {
-        document.getElementById('waitlist-form').style.display = 'none';
-        document.getElementById('waitlist-success').style.display = 'block';
-      } else {
-        var msg = (data.errors && Object.values(data.errors)[0]) || data.message || 'Something went wrong. Please try again.';
-        errEl.textContent = Array.isArray(msg) ? msg[0] : msg;
-        errEl.style.display = 'block';
-        btn.textContent = 'Join the Waitlist';
-        btn.disabled = false;
-      }
-    })
-    .catch(function() {
-      errEl.textContent = 'Network error. Please check your connection and try again.';
-      errEl.style.display = 'block';
-      btn.textContent = 'Join the Waitlist';
-      btn.disabled = false;
-    });
-  });
-});
-</script>
 
 <!-- ====== CTA ====== -->
 <section class="cp-chapter cp-grain" style="text-align:center">
@@ -2207,7 +2125,7 @@ function applyHref(extra) {
   if (!PROGRAM_ID) {
     var noProg = document.getElementById('cohort-cards-container');
     if (noProg) {
-      noProg.innerHTML = '<p style="color:#7A94A8;font-size:0.9rem">No upcoming cohorts right now. <a href="#waitlist" style="color:var(--red);font-weight:700">Register your interest</a> and we\'ll tell you the moment it opens.</p>';
+      noProg.innerHTML = '<p style="color:#7A94A8;font-size:0.9rem">No upcoming cohorts right now. <a href="#waitlist" style="color:var(--red);font-weight:700">Register your interest</a> and we\'ll tell you the moment the next cohort opens.</p>';
     }
     return;
   }
@@ -2220,7 +2138,7 @@ function applyHref(extra) {
       var el = document.getElementById('cohort-cards-container');
       if (!el) return;
       if (!visible.length) {
-        el.innerHTML = '<p style="color:#7A94A8;font-size:0.9rem">No upcoming cohorts right now. <a href="' + applyHref() + '" style="color:var(--red);font-weight:700">Apply to join the waitlist</a> and we\'ll notify you when the next cohort opens.</p>';
+        el.innerHTML = '<p style="color:#7A94A8;font-size:0.9rem">No upcoming cohorts right now. <a href="' + applyHref() + '" style="color:var(--red);font-weight:700">Register your interest</a> and we\'ll tell you the moment the next cohort opens.</p>';
         return;
       }
       el.innerHTML = visible.map(renderCard).join('');

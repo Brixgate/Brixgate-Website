@@ -168,8 +168,11 @@
           return '<a class="fc-btn fc-btn-accent" href="' + href + '">' +
                    '<span data-chars-late>Apply now</span></a>';
         }
-        return '<a class="fc-btn fc-btn-accent" href="#waitlist">' +
-                 '<span data-chars-late>Join the waitlist</span></a>';
+        /* Full, closed, or no programme id behind it. There is no
+           waitlist any more, so the honest offer is the apply form for
+           the next intake rather than a queue nobody is working. */
+        return '<a class="fc-btn fc-btn-accent" href="apply.html">' +
+                 '<span data-chars-late>Register your interest</span></a>';
       }
 
       var live = res.cohorts.filter(function (c) {
@@ -180,7 +183,7 @@
         host.innerHTML =
           '<div class="fc-cohort-empty">' +
             '<b>' + (res.programme ? 'Dates for the next cohort are being scheduled.' : 'This course opens with the next intake.') + '</b> ' +
-            'Join the waitlist below and you will get the start date, the timetable and the pricing before any of it goes public.' +
+            'Register your interest and you will get the start date, the timetable and the pricing before any of it goes public.' +
           '</div>';
         return;
       }
@@ -214,11 +217,11 @@
       /* buttons drawn after the stagger pass ran need their own */
       [].slice.call(host.querySelectorAll('[data-chars-late]')).forEach(function (el) { charify(el); });
 
-      /* The hero button is written into the page as "Join the waitlist"
-         because the page cannot know, before this call returns, whether
-         there is anything to apply to. Now that we do know, it is
-         corrected — a course with an open cohort should not be sending
-         people to a waitlist from the top of its own page. */
+      /* The hero button is written into the page as "Register your
+         interest" because the page cannot know, before this call
+         returns, whether there is anything to apply to. Now that we do
+         know, it is corrected to "Apply now" — a course with an open
+         cohort should not be hedging from the top of its own page. */
       if (applyHref) {
         var hero = document.querySelector('.fc-hero-cta a.fc-btn-accent');
         if (hero) {
@@ -249,7 +252,7 @@
     }
     function fail(msg) {
       errEl.textContent = msg; errEl.style.display = 'block';
-      setLabel('Join the waitlist'); btn.disabled = false;
+      setLabel('Register your interest'); btn.disabled = false;
     }
 
     form.addEventListener('submit', function (e) {

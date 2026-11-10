@@ -8,12 +8,16 @@
 
    Because this touches money, three rules shape the whole file:
 
-   1. A failure never silently prices a foreign student in Naira. The
-      lookup can be blocked by an ad blocker or a corporate network, and
-      when it was the only signal, a blocked request put every student
-      abroad on Lagos pricing. The device timezone is read first: it is
-      local, cannot be blocked, and answers the only question being
-      asked. Naira remains the answer when even that is unavailable.
+   1. Naira is for Nigeria only, and every signal has to agree on it.
+      Two are read: the IP country, and the device timezone. Either one
+      saying "not Nigeria" means USD — a student outside the country is
+      never shown Naira, whichever signal spotted it. Naira remains the
+      answer only when nothing can be determined at all.
+
+      This matters because the lookup is a third-party request that an
+      ad blocker or a corporate network can block, and when it was the
+      only signal a blocked request priced every student abroad in
+      Lagos. The timezone is local and cannot be blocked.
 
    2. The gateway is never derived from the country. It is derived from
       the currency that is actually active at the moment of payment, so
@@ -104,11 +108,15 @@
           try { sessionStorage.setItem(CC_KEY, code); } catch (e) {}
           document.dispatchEvent(new CustomEvent('bx:country', { detail: { country: code } }));
         }
-        /* An unrecognised or empty code is treated as home, not as
-           abroad: guessing USD for someone we cannot place is the more
-           expensive mistake. */
-        if (!code) return 'ngn';
-        return code === HOME ? 'ngn' : 'usd';
+        /* Naira requires every signal we have to agree on Nigeria.
+           The IP can say NG while the device is plainly somewhere else
+           — a VPN, a proxied corporate network — and the rule is about
+           where the student is, not which country their traffic exits.
+           Either signal saying "not Nigeria" is enough for USD. */
+        if (!code) return tzGuess() || 'ngn';
+        if (code !== HOME) return 'usd';
+        var tz = tzGuess();
+        return tz === 'usd' ? 'usd' : 'ngn';
       })
       .catch(function () {
         if (timer) clearTimeout(timer);

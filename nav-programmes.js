@@ -45,7 +45,7 @@
       href: 'foundations.html',
       kicker: 'Live courses for people starting out',
       all: 'See all Foundations courses',
-      empty: 'The first Foundations courses are being scheduled. Join the waitlist to hear first.'
+      empty: 'The first Foundations courses are being scheduled. Register your interest to hear first.'
     },
     {
       key: 'professionals',
@@ -55,7 +55,7 @@
       href: 'professionals.html',
       kicker: 'Live courses taught by working practitioners',
       all: 'See all professional programmes',
-      empty: 'Cohort dates are being scheduled. Join the waitlist to hear first.'
+      empty: 'Cohort dates are being scheduled. Register your interest to hear first.'
     }
   ];
 
@@ -150,7 +150,11 @@
        Data Analytics the same line in the menu, which read as a bug
        because it was one. More specific first. */
     { any: ['data-science', 'data science'],        text: 'Statistics and modelling you understand, not copy' },
-    { any: ['analytic'],                            text: 'Turn messy data into answers people act on' }
+    { any: ['analytic'],                            text: 'Turn messy data into answers people act on' },
+    /* AI in Data had no rule and no subtitle from the API, so it was the
+       one row in the menu with a blank line under it. Last, so the two
+       beginner data courses above still answer for themselves. */
+    { any: ['ai-in-data', 'in-data'],               text: 'Pipelines, analysis and dashboards you can defend' }
   ];
 
   /* Foundations is seeded from the register rather than hardcoded here.
@@ -225,7 +229,7 @@
   function listHTML(tier, items) {
     if (!items.length) {
       return '<p class="nav-mega-empty">' + esc(tier.empty) + '</p>' +
-             '<a class="nav-mega-all" href="' + tier.href + '#waitlist">Join the waitlist ' + ARROW + '</a>';
+             '<a class="nav-mega-all" href="' + tier.href + '#register">Register your interest ' + ARROW + '</a>';
     }
     return '<div class="nav-mega-grid">' + items.map(function (p) { return courseHTML(p, tier); }).join('') + '</div>' +
            '<a class="nav-mega-all" href="' + tier.href + '">' + esc(tier.all) + ' ' + ARROW + '</a>';
