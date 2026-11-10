@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free AI Training Community | Brixgate</title>
+  <meta name="description" content="Join the Brixgate WhatsApp community and get free live AI trainings every month — practical sessions on using AI at work, in your career and in your business." />
+  <link rel="icon" type="image/png" href="/assets/faviii.png" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Free AI Training Community | Brixgate" />
+  <meta property="og:description" content="Free live AI trainings every month. Join the Brixgate WhatsApp community." />
+  <meta property="og:url" content="https://brixgate.com/community" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free AI Training Community | Brixgate" />
+  <meta name="twitter:description" content="Free live AI trainings every month. Join the Brixgate WhatsApp community." />
+
+<style>
+/* ============================================================
+   COMMUNITY  (.cm-)
+
+   The page carries no session content of its own. Everything in
+   the schedule comes from /community-sessions.json, including
+   which month the heading names, so the page cannot go stale on
+   the first of a month the way a hand-written list would.
+   ============================================================ */
+body.cm { background:var(--bg-dark); color:var(--white); }
+.cm-wrap { max-width:1140px; margin:0 auto; padding:0 24px; }
+
+/* ---- hero ---- */
+.cm-hero {
+  position:relative; overflow:hidden;
+  padding:112px 0 96px;
+  background:
+    radial-gradient(900px 520px at 12% -10%, rgba(255,41,78,.20), transparent 60%),
+    radial-gradient(760px 460px at 92% 8%, rgba(255,87,72,.14), transparent 62%),
+    var(--bg-dark);
+}
+/* A soft grid that fades out, so the hero has texture without
+   competing with the headline. */
+.cm-hero::before {
+  content:''; position:absolute; inset:0; pointer-events:none; opacity:.5;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(700px 400px at 30% 0%, #000, transparent 75%);
+          mask-image:radial-gradient(700px 400px at 30% 0%, #000, transparent 75%);
+}
+.cm-hero-in { position:relative; max-width:780px; }
+
+.cm-eyebrow {
+  display:inline-flex; align-items:center; gap:9px;
+  font-size:.74rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+  color:#FF7A92; margin-bottom:22px;
+}
+.cm-dot {
+  width:7px; height:7px; border-radius:50%; background:var(--red); flex:none;
+  box-shadow:0 0 0 0 rgba(255,41,78,.65); animation:cm-pulse 2.4s infinite;
+}
+@keyframes cm-pulse {
+  0%   { box-shadow:0 0 0 0 rgba(255,41,78,.6); }
+  70%  { box-shadow:0 0 0 11px rgba(255,41,78,0); }
+  100% { box-shadow:0 0 0 0 rgba(255,41,78,0); }
+}
+@media (prefers-reduced-motion: reduce) { .cm-dot { animation:none; } }
+
+.cm-h1 {
+  font-size:clamp(2.3rem, 5.6vw, 4rem); line-height:1.04; letter-spacing:-.035em;
+  font-weight:800; margin-bottom:22px;
+}
+.cm-h1 em { font-style:normal; color:var(--red); }
+.cm-lead {
+  font-size:clamp(1rem, 1.6vw, 1.16rem); line-height:1.7;
+  color:rgba(255,255,255,.76); max-width:600px; margin-bottom:34px;
+}
+
+.cm-cta-row { display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+.cm-btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  padding:16px 30px; border-radius:999px; border:0;
+  background:linear-gradient(100deg, var(--red), var(--orange));
+  color:#fff; font:inherit; font-size:.98rem; font-weight:700; line-height:1.2;
+  cursor:pointer; text-align:center; transition:transform .18s, box-shadow .18s;
+  box-shadow:0 16px 36px -14px rgba(255,41,78,.8);
+}
+.cm-btn:hover { transform:translateY(-2px); box-shadow:0 20px 44px -14px rgba(255,41,78,.9); }
+.cm-btn svg { flex:none; }
+.cm-btn-note { font-size:.86rem; color:rgba(255,255,255,.55); line-height:1.5; }
+
+/* The next session, surfaced in the hero so the page shows a pulse
+   before anyone scrolls. Hidden entirely when nothing is scheduled.
+
+   The [hidden] rule is not redundant: an author `display` beats the
+   UA stylesheet's display:none, so without it the chip stays on
+   screen with nothing in it the moment a month runs out. */
+.cm-next[hidden], .cm-past[hidden] { display:none; }
+.cm-next {
+  display:inline-flex; align-items:center; gap:12px; flex-wrap:wrap;
+  margin-top:34px; padding:12px 18px;
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+  border-radius:999px; font-size:.87rem; color:rgba(255,255,255,.80);
+}
+.cm-next b { color:var(--white); font-weight:700; }
+.cm-next-when {
+  padding:4px 11px; border-radius:999px; background:rgba(255,41,78,.18);
+  color:#FF93A8; font-weight:700; font-size:.78rem; white-space:nowrap;
+}
+
+/* ---- sessions ---- */
+.cm-sessions { background:var(--bg-light); color:var(--body-dark); padding:92px 0; }
+.cm-sec-head { margin-bottom:38px; }
+.cm-h2 {
+  font-size:clamp(1.7rem, 3.4vw, 2.5rem); line-height:1.12; letter-spacing:-.03em;
+  font-weight:800; color:#0B1A2E;
+}
+.cm-sec-sub { margin-top:12px; font-size:.98rem; line-height:1.65; color:#5A6B7D; max-width:620px; }
+
+.cm-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:20px; }
+.cm-card {
+  position:relative; background:#fff; border:1px solid #E6E3E3; border-radius:16px;
+  padding:26px 24px 28px; transition:transform .2s, box-shadow .2s, border-color .2s;
+}
+.cm-card:hover { transform:translateY(-3px); box-shadow:0 18px 40px -22px rgba(2,16,36,.35); border-color:#D6D2D2; }
+.cm-card.is-next { border-color:rgba(255,41,78,.45); box-shadow:0 18px 44px -24px rgba(255,41,78,.5); }
+.cm-card-meta {
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  font-size:.72rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--wine); margin-bottom:14px;
+}
+.cm-card-sep { color:#C9C5C5; }
+.cm-card h3 { font-size:1.14rem; line-height:1.32; letter-spacing:-.02em; color:#0B1A2E; margin-bottom:11px; font-weight:800; }
+.cm-card p { font-size:.92rem; line-height:1.65; color:#5A6B7D; }
+.cm-chip {
+  display:inline-block; margin-bottom:14px; padding:4px 11px; border-radius:999px;
+  background:rgba(255,41,78,.10); color:var(--red);
+  font-size:.72rem; font-weight:800; letter-spacing:.04em; text-transform:none;
+}
+.cm-note { margin-top:26px; font-size:.84rem; color:#7A8794; }
+
+/* Nothing scheduled yet: the band says so plainly rather than
+   rendering an empty row of cards. */
+.cm-empty {
+  background:#fff; border:1px dashed #D9D5D5; border-radius:16px;
+  padding:40px 28px; text-align:center;
+}
+.cm-empty h3 { font-size:1.12rem; color:#0B1A2E; margin-bottom:10px; font-weight:800; }
+.cm-empty p { font-size:.93rem; color:#5A6B7D; line-height:1.65; max-width:440px; margin:0 auto; }
+
+/* ---- what happens in here ---- */
+.cm-value { padding:92px 0; background:var(--white); color:var(--body-dark); }
+.cm-vgrid { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:34px 30px; margin-top:38px; }
+.cm-v-ico {
+  width:40px; height:40px; border-radius:11px; display:grid; place-items:center;
+  background:rgba(255,41,78,.10); color:var(--red); margin-bottom:15px;
+}
+.cm-vgrid h3 { font-size:1.02rem; color:#0B1A2E; margin-bottom:9px; font-weight:800; letter-spacing:-.01em; }
+.cm-vgrid p { font-size:.92rem; line-height:1.68; color:#5A6B7D; }
+
+/* ---- how it works ---- */
+.cm-how { padding:92px 0; background:var(--bg-dark); }
+.cm-how .cm-h2 { color:var(--white); }
+.cm-how .cm-sec-sub { color:rgba(255,255,255,.62); }
+.cm-steps { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:30px; margin-top:40px; }
+.cm-step { position:relative; padding-top:22px; border-top:2px solid rgba(255,255,255,.12); }
+.cm-step::before {
+  content:''; position:absolute; top:-2px; left:0; width:46px; height:2px; background:var(--red);
+}
+.cm-step-n { font-size:.76rem; font-weight:800; color:var(--red); letter-spacing:.1em; margin-bottom:10px; }
+.cm-step h3 { font-size:1.06rem; color:var(--white); margin-bottom:9px; font-weight:800; letter-spacing:-.01em; }
+.cm-step p { font-size:.92rem; line-height:1.68; color:rgba(255,255,255,.66); }
+
+/* ---- past sessions ---- */
+.cm-past { padding:84px 0; background:var(--bg-light); color:var(--body-dark); }
+.cm-past-list { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:14px; margin-top:32px; }
+.cm-past-item {
+  background:#fff; border:1px solid #E6E3E3; border-radius:12px; padding:18px 20px;
+}
+.cm-past-date { font-size:.72rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:#8A96A3; margin-bottom:7px; }
+.cm-past-item h3 { font-size:.97rem; line-height:1.4; color:#0B1A2E; font-weight:700; }
+
+/* ---- closing ---- */
+.cm-end { padding:96px 0; background:
+  radial-gradient(760px 420px at 50% 0%, rgba(255,41,78,.22), transparent 64%), var(--bg-dark); text-align:center; }
+.cm-end .cm-h2 { color:var(--white); max-width:680px; margin:0 auto 16px; }
+.cm-end p { color:rgba(255,255,255,.68); font-size:1rem; line-height:1.7; max-width:520px; margin:0 auto 32px; }
+
+@media (max-width: 640px) {
+  .cm-hero { padding:84px 0 72px; }
+  .cm-sessions, .cm-value, .cm-how, .cm-past { padding:68px 0; }
+  .cm-end { padding:76px 0; }
+  .cm-btn { width:100%; }
+  .cm-cta-row { gap:12px; }
+  .cm-btn-note { width:100%; }
+  /* The chip wraps to two lines at this width, and a pill radius on a
+     tall box reads as a lozenge rather than a tag. */
+  .cm-next { border-radius:16px; padding:14px 16px; align-items:flex-start; }
+}
+</style>
+</head>
+<body class="cm">
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-logo">
+      <img src="/assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+    </a>
+
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <div class="nav-mega" data-nav-mega></div>
+      <a href="/community/">Community</a>
+      <a href="/experts.html">Experts</a>
+      <a href="/organisations.html">For Organisations</a>
+    </div>
+    <div class="nav-cta">
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
+      <a href="/apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+    </div>
+
+    <button class="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="nav-mobile">
+  <a href="/index.html">Home</a>
+  <a href="/programme.html">Programmes</a>
+  <a href="/foundations.html" class="nav-mobile-sub">Start your tech career</a>
+  <a href="/professionals.html" class="nav-mobile-sub">AI for Professionals</a>
+  <a href="/community/">Community</a>
+  <a href="/experts.html">Experts</a>
+  <a href="/organisations.html">For Organisations</a>
+  <a href="/apply.html" class="btn btn-primary">Apply Now</a>
+  <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
+</div>
+
+
+<!-- ====== HERO ====== -->
+<header class="cm-hero">
+  <div class="cm-wrap cm-hero-in">
+    <span class="cm-eyebrow"><span class="cm-dot"></span>Free AI training community</span>
+    <h1 class="cm-h1">Get better at your work with AI. <em>Free, every month.</em></h1>
+    <p class="cm-lead">
+      Join the Brixgate WhatsApp community and get free live trainings on using AI at work,
+      in your career and in your business. No fee, no application, no catch &mdash; just show up.
+    </p>
+
+    <div class="cm-cta-row">
+      <a class="cm-btn" data-join href="#" target="_blank" rel="noopener">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Join the WhatsApp Community
+      </a>
+      <span class="cm-btn-note">Free for everyone.<br />Takes 10 seconds.</span>
+    </div>
+
+    <div class="cm-next" id="cm-next" hidden>
+      <span class="cm-next-when" id="cm-next-when"></span>
+      <span>Next up: <b id="cm-next-title"></b></span>
+    </div>
+  </div>
+</header>
+
+
+<!-- ====== COMING UP ====== -->
+<section class="cm-sessions">
+  <div class="cm-wrap">
+    <div class="cm-sec-head">
+      <h2 class="cm-h2" id="cm-month-head">Coming up</h2>
+      <p class="cm-sec-sub">Live, free and open to everyone in the community. Register inside the group to save your place.</p>
+    </div>
+    <div id="cm-sessions-out"></div>
+    <p class="cm-note">Dates may shift slightly. Final dates and times are confirmed inside the community.</p>
+  </div>
+</section>
+
+
+<!-- ====== WHAT HAPPENS IN HERE ====== -->
+<section class="cm-value">
+  <div class="cm-wrap">
+    <div class="cm-sec-head">
+      <h2 class="cm-h2">What happens in here</h2>
+      <p class="cm-sec-sub">A working group, not a broadcast channel. Come for the trainings, stay for the people figuring the same things out.</p>
+    </div>
+
+    <div class="cm-vgrid">
+      <div>
+        <div class="cm-v-ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+        <h3>Free trainings, monthly</h3>
+        <p>New live sessions every month, open to everyone. Nothing is paywalled and nothing is pre-recorded.</p>
+      </div>
+      <div>
+        <div class="cm-v-ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+        <h3>Skills you can use</h3>
+        <p>Practical ways to use AI in your work, career and business &mdash; the kind you can apply the same week.</p>
+      </div>
+      <div>
+        <div class="cm-v-ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></div>
+        <h3>First to know</h3>
+        <p>Dates, links and reminders land in the group before each session, so you never find out afterwards.</p>
+      </div>
+      <div>
+        <div class="cm-v-ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg></div>
+        <h3>Resources and giveaways</h3>
+        <p>Templates, prompt packs and giveaways for members who register for sessions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ====== HOW IT WORKS ====== -->
+<section class="cm-how">
+  <div class="cm-wrap">
+    <div class="cm-sec-head">
+      <h2 class="cm-h2">How it works</h2>
+      <p class="cm-sec-sub">Three steps, and the first one is the only one that needs doing today.</p>
+    </div>
+    <div class="cm-steps">
+      <div class="cm-step">
+        <div class="cm-step-n">01</div>
+        <h3>Join the community</h3>
+        <p>Tap the button and you land in the WhatsApp group. No form, no waiting to be approved.</p>
+      </div>
+      <div class="cm-step">
+        <div class="cm-step-n">02</div>
+        <h3>Register for a session</h3>
+        <p>Registration links are shared in the group. Registering is how you secure your place.</p>
+      </div>
+      <div class="cm-step">
+        <div class="cm-step-n">03</div>
+        <h3>Attend live and learn</h3>
+        <p>Show up, ask questions, and take the skills back to your work the same week.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ====== PAST SESSIONS (auto-populates as dates pass) ====== -->
+<section class="cm-past" id="cm-past" hidden>
+  <div class="cm-wrap">
+    <div class="cm-sec-head">
+      <h2 class="cm-h2">What we&rsquo;ve covered</h2>
+      <p class="cm-sec-sub">Sessions the community has already run. This is what a month in here looks like.</p>
+    </div>
+    <div class="cm-past-list" id="cm-past-list"></div>
+  </div>
+</section>
+
+
+<!-- ====== CLOSING CTA ====== -->
+<section class="cm-end">
+  <div class="cm-wrap">
+    <h2 class="cm-h2">Join the free AI training community today.</h2>
+    <p>One tap, and you are in before the next session goes out.</p>
+    <a class="cm-btn" data-join href="#" target="_blank" rel="noopener">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Join the WhatsApp Community
+    </a>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/index.html" class="nav-logo footer-logo">
+          <img src="/assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+        </a>
+        <p>We produce the professionals the AI era runs on, and rebuild the institutions they work in. Live sprints built for each field, led by practitioners who do the work.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook">
+            <img src="/assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block">
+          </a>
+          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram">
+            <img src="/assets/social.png" alt="Instagram" width="22" height="22" style="display:block">
+          </a>
+          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X">
+            <img src="/assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block">
+          </a>
+          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn" title="LinkedIn">
+            <img src="/assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block">
+          </a>
+          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us">
+            <img src="/assets/gmail.png" alt="Email" width="22" height="22" style="display:block">
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Programmes</h5>
+        <ul><li><a href="/foundations.html">AI Foundations</a></li><li><a href="/professionals.html">AI for Professionals</a></li><li><a href="/professionals.html#pricing">Pricing</a></li><li><a href="/apply.html">Apply Now</a></li><li><a href="/verify.html">Verify a Certificate</a></li></ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Community</h5>
+        <ul>
+          <li><a href="/community/">Free AI Trainings</a></li>
+          <li><a href="/experts.html">Meet Our Experts</a></li>
+          <li><a href="/experts.html#qualify">Become an Expert</a></li>
+          <li><a href="/experts.html#apply">Expert Application</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Organisation</h5>
+        <ul>
+          <li><a href="/about.html">About Brixgate</a></li>
+          <li><a href="/organisations.html">Corporate Programmes</a></li>
+          <li><a href="/organisations.html#packages">Packages &amp; Pricing</a></li>
+          <li><a href="/organisations.html#contact">Request a Demo</a></li>
+          <li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li>
+          <li><a href="/verify.html">Verify a Certificate</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© <span id="footer-year">2025</span> Brixgate Ltd, RC 9082968. All rights reserved. | 128 City Road, London, UK · <a href="tel:+2347083031095">+234 708 303 1095</a></p>
+    <div class="footer-bottom-links">
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+      <a href="#">Cookie Policy</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/script.js"></script>
+<script>
+/* ============================================================
+   The schedule.
+
+   Read from /community-sessions.json so a month's sessions can be
+   changed by editing one data file. The page works out the month
+   heading, which sessions are still ahead, and which have passed,
+   from today's date — so on the first of a month it corrects
+   itself instead of advertising last month's list.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var MONTHS = ['January','February','March','April','May','June',
+                'July','August','September','October','November','December'];
+  var DAYS   = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+
+  function esc(v) {
+    return String(v == null ? '' : v).replace(/[&<>"]/g, function (c) {
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c];
+    });
+  }
+
+  /* Parsed as local time, not UTC. new Date('2026-11-21') is
+     midnight UTC, which is the 20th in the Americas — the label
+     would name the wrong day for part of the audience. */
+  function parseDay(iso) {
+    var p = String(iso || '').split('-');
+    if (p.length !== 3) return null;
+    var d = new Date(+p[0], +p[1] - 1, +p[2]);
+    return isNaN(d) ? null : d;
+  }
+
+  function startOfToday() {
+    var n = new Date();
+    return new Date(n.getFullYear(), n.getMonth(), n.getDate());
+  }
+
+  /* "in 11 days" / "Tomorrow" / "Today". The hero chip is the only
+     place that counts down, so the page has a pulse without a
+     ticking timer anywhere. */
+  function relative(date, today) {
+    var days = Math.round((date - today) / 86400000);
+    if (days <= 0) return 'Today';
+    if (days === 1) return 'Tomorrow';
+    if (days < 7)   return 'In ' + days + ' days';
+    var wk = Math.round(days / 7);
+    return 'In ' + wk + ' week' + (wk > 1 ? 's' : '');
+  }
+
+  function dayLabel(d) {
+    return DAYS[d.getDay()] + ' ' + d.getDate() + ' ' + MONTHS[d.getMonth()].slice(0, 3).toUpperCase();
+  }
+
+  function timeLabel(t) {
+    if (!t) return '';
+    var p = String(t).split(':');
+    if (p.length < 2) return '';
+    var h = +p[0], suffix = h >= 12 ? 'pm' : 'am', h12 = h % 12 || 12;
+    return h12 + (p[1] === '00' ? '' : ':' + p[1]) + suffix + ' WAT';
+  }
+
+  function joinUrl(cfg) {
+    var u = (cfg.join_url || '').trim();
+    /* Until the group invite exists, every button falls back to a
+       direct WhatsApp chat so none of them is ever a dead link. */
+    return u || (cfg.fallback_chat || '').trim() || '#';
+  }
+
+  function renderSessions(upcoming, today) {
+    var out = document.getElementById('cm-sessions-out');
+    var head = document.getElementById('cm-month-head');
+    if (!out) return;
+
+    if (!upcoming.length) {
+      head.textContent = 'Coming up next';
+      out.innerHTML =
+        '<div class="cm-empty">' +
+          '<h3>Next month&rsquo;s sessions are being scheduled</h3>' +
+          '<p>They are announced in the community first, with the dates and registration ' +
+             'links. Join now and you will have them before they are anywhere else.</p>' +
+        '</div>';
+      return;
+    }
+
+    /* The heading names the month the next session falls in, so it
+       can never say November while listing December. */
+    head.textContent = 'Coming up in ' + MONTHS[upcoming[0]._d.getMonth()];
+
+    /* Only the sessions in that same month — a stray date far ahead
+       does not belong under this month's heading. */
+    var m = upcoming[0]._d.getMonth(), y = upcoming[0]._d.getFullYear();
+    var thisMonth = upcoming.filter(function (s) {
+      return s._d.getMonth() === m && s._d.getFullYear() === y;
+    });
+
+    out.innerHTML = '<div class="cm-grid">' + thisMonth.map(function (s, i) {
+      var t = timeLabel(s.time);
+      return '<article class="cm-card' + (i === 0 ? ' is-next' : '') + '">' +
+        (i === 0 ? '<span class="cm-chip">' + esc(relative(s._d, today)) + '</span>' : '') +
+        '<div class="cm-card-meta">' +
+          '<span>' + esc(dayLabel(s._d)) + '</span>' +
+          (s.kind ? '<span class="cm-card-sep">&middot;</span><span>' + esc(s.kind) + '</span>' : '') +
+          (t ? '<span class="cm-card-sep">&middot;</span><span>' + esc(t) + '</span>' : '') +
+        '</div>' +
+        '<h3>' + esc(s.title) + '</h3>' +
+        (s.blurb ? '<p>' + esc(s.blurb) + '</p>' : '') +
+      '</article>';
+    }).join('') + '</div>';
+  }
+
+  function renderNext(upcoming, today) {
+    var box = document.getElementById('cm-next');
+    if (!box || !upcoming.length) return;
+    document.getElementById('cm-next-when').textContent  = relative(upcoming[0]._d, today);
+    document.getElementById('cm-next-title').textContent = upcoming[0].title;
+    box.hidden = false;
+  }
+
+  /* Hidden until there is something to show. A section headed
+     "What we've covered" above an empty row would say the opposite
+     of what it means. */
+  function renderPast(past) {
+    var sec = document.getElementById('cm-past');
+    var list = document.getElementById('cm-past-list');
+    if (!sec || !list || !past.length) return;
+    list.innerHTML = past.slice(0, 6).map(function (s) {
+      return '<div class="cm-past-item">' +
+        '<div class="cm-past-date">' + esc(dayLabel(s._d)) + '</div>' +
+        '<h3>' + esc(s.title) + '</h3>' +
+      '</div>';
+    }).join('');
+    sec.hidden = false;
+  }
+
+  fetch('/community-sessions.json', { cache: 'no-cache' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (cfg) {
+      if (!cfg) throw new Error('no config');
+
+      var url = joinUrl(cfg);
+      [].forEach.call(document.querySelectorAll('[data-join]'), function (a) { a.href = url; });
+
+      var today = startOfToday();
+      var all = (cfg.sessions || [])
+        .map(function (s) { s._d = parseDay(s.date); return s; })
+        .filter(function (s) { return s._d && s.title; })
+        .sort(function (a, b) { return a._d - b._d; });
+
+      var upcoming = all.filter(function (s) { return s._d >= today; });
+      var past     = all.filter(function (s) { return s._d <  today; }).reverse();
+
+      renderSessions(upcoming, today);
+      renderNext(upcoming, today);
+      renderPast(past);
+    })
+    .catch(function () {
+      /* The page still converts without the schedule: the join
+         buttons fall back to the direct chat and the band says what
+         is true rather than showing a broken grid. */
+      [].forEach.call(document.querySelectorAll('[data-join]'), function (a) {
+        a.href = 'https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20join%20the%20free%20AI%20training%20community.';
+      });
+      renderSessions([], startOfToday());
+    });
+})();
+</script>
+
+<script>
+  var fy = document.getElementById('footer-year');
+  if (fy) fy.textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

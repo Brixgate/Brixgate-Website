@@ -1,0 +1,46 @@
+{
+  "_README": [
+    "This file is the whole community page. Nothing on /community is written into the HTML.",
+    "",
+    "join_url  — the WhatsApp community invite (https://chat.whatsapp.com/...). While it is",
+    "            empty the page falls back to a direct WhatsApp chat, so every button still",
+    "            works; paste the group link here and it upgrades everywhere at once.",
+    "sessions  — add one object per session. The page sorts them, works out which month to",
+    "            show, drops the ones that have passed into 'What we've covered', and derives",
+    "            the weekday label from the date so the two can never disagree.",
+    "",
+    "date      — YYYY-MM-DD (required)",
+    "time      — 24h 'HH:MM' WAT, optional",
+    "kind      — the small label above the title, e.g. 'Live Session'",
+    "title     — required",
+    "blurb     — one or two sentences"
+  ],
+
+  "join_url": "",
+
+  "fallback_chat": "https://wa.me/2348079160291?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20join%20the%20free%20AI%20training%20community.",
+
+  "sessions": [
+    {
+      "date": "2026-11-21",
+      "time": "16:00",
+      "kind": "Live Session",
+      "title": "Your Degree vs AI: Who Has the Advantage?",
+      "blurb": "See how degrees, practical skills and AI literacy compare in today's job market, and what to build next."
+    },
+    {
+      "date": "2026-11-25",
+      "time": "18:00",
+      "kind": "Practical Training",
+      "title": "AI for Work: Now and in 2027",
+      "blurb": "A hands-on masterclass on using AI tools to get everyday work done faster and be more ready for the workplace."
+    },
+    {
+      "date": "2026-11-28",
+      "time": "16:00",
+      "kind": "Live Session",
+      "title": "Can You Really Make Money With AI?",
+      "blurb": "A realistic look at AI income options, skills, freelancing and business use, so you can tell what works from hype."
+    }
+  ]
+}
