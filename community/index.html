@@ -48,7 +48,61 @@ body.cm { background:var(--bg-dark); color:var(--white); }
   -webkit-mask-image:radial-gradient(700px 400px at 30% 0%, #000, transparent 75%);
           mask-image:radial-gradient(700px 400px at 30% 0%, #000, transparent 75%);
 }
-.cm-hero-in { position:relative; max-width:780px; }
+/* Two columns from tablet up: the words carry the offer, the photo
+   carries the fact that this is a room full of people. Below that the
+   photo moves under the copy rather than shrinking to a stamp. */
+.cm-hero-in {
+  position:relative;
+  display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center;
+}
+.cm-hero-copy { max-width:620px; }
+
+.cm-shot { position:relative; }
+.cm-shot-main {
+  position:relative; border-radius:20px; overflow:hidden;
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 40px 90px -40px rgba(0,0,0,.9);
+  aspect-ratio:4/3;
+}
+.cm-shot-main img { width:100%; height:100%; object-fit:cover; display:block; }
+/* Warms the photo into the page instead of letting it sit on the dark
+   background as a bright rectangle. */
+.cm-shot-main::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(2,16,36,0) 42%, rgba(2,16,36,.72) 100%);
+}
+
+/* The live marker. It says the sessions are real and happening, which
+   is the one thing a schedule of future dates cannot say by itself. */
+.cm-live {
+  position:absolute; top:14px; left:14px; z-index:2;
+  display:inline-flex; align-items:center; gap:7px;
+  padding:7px 13px; border-radius:999px;
+  background:rgba(2,16,36,.72); backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.18);
+  font-size:.7rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#fff;
+}
+.cm-live i { width:6px; height:6px; border-radius:50%; background:var(--red); animation:cm-pulse 2.4s infinite; }
+@media (prefers-reduced-motion: reduce) { .cm-live i { animation:none; } }
+
+/* Faces, overlapping the photo's lower edge. No number is claimed —
+   they say "people", which is the honest part. */
+.cm-faces {
+  position:absolute; left:20px; right:20px; bottom:-26px; z-index:2;
+  display:flex; align-items:center; gap:13px;
+  padding:11px 16px 11px 12px; border-radius:999px;
+  background:rgba(13,28,52,.92); backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 18px 40px -18px rgba(0,0,0,.85);
+}
+.cm-avatars { display:flex; flex:none; }
+.cm-avatars img {
+  width:34px; height:34px; border-radius:50%; object-fit:cover;
+  border:2px solid #0D1C34; margin-left:-10px;
+}
+.cm-avatars img:first-child { margin-left:0; }
+.cm-faces p { font-size:.78rem; line-height:1.4; color:rgba(255,255,255,.80); }
+.cm-faces b { color:#fff; font-weight:700; }
 
 .cm-eyebrow {
   display:inline-flex; align-items:center; gap:9px;
@@ -109,7 +163,18 @@ body.cm { background:var(--bg-dark); color:var(--white); }
 }
 
 /* ---- sessions ---- */
-.cm-sessions { background:var(--bg-light); color:var(--body-dark); padding:92px 0; }
+.cm-sessions {
+  position:relative; overflow:hidden;
+  background:var(--bg-light); color:var(--body-dark); padding:92px 0;
+}
+/* The house wave, barely there. Enough that the band is not a flat grey
+   rectangle, faint enough that it never competes with a card. */
+.cm-sessions::before {
+  content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:url('/assets/pattern/waves.svg') no-repeat center top;
+  background-size:cover; opacity:.10;
+}
+.cm-sessions > .cm-wrap { position:relative; z-index:1; }
 .cm-sec-head { margin-bottom:38px; }
 .cm-h2 {
   font-size:clamp(1.7rem, 3.4vw, 2.5rem); line-height:1.12; letter-spacing:-.03em;
@@ -124,6 +189,10 @@ body.cm { background:var(--bg-dark); color:var(--white); }
 }
 .cm-card:hover { transform:translateY(-3px); box-shadow:0 18px 40px -22px rgba(2,16,36,.35); border-color:#D6D2D2; }
 .cm-card.is-next { border-color:rgba(255,41,78,.45); box-shadow:0 18px 44px -24px rgba(255,41,78,.5); }
+.cm-card.is-next::before {
+  content:''; position:absolute; top:0; left:22px; right:22px; height:3px; border-radius:0 0 3px 3px;
+  background:linear-gradient(90deg, var(--red), var(--orange));
+}
 .cm-card-meta {
   display:flex; align-items:center; gap:10px; flex-wrap:wrap;
   font-size:.72rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
@@ -150,7 +219,17 @@ body.cm { background:var(--bg-dark); color:var(--white); }
 
 /* ---- what happens in here ---- */
 .cm-value { padding:92px 0; background:var(--white); color:var(--body-dark); }
-.cm-vgrid { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:34px 30px; margin-top:38px; }
+/* The photo sits beside the list rather than above it, so the section
+   reads as a room with four things happening in it. */
+.cm-value-in { display:grid; grid-template-columns:.85fr 1.15fr; gap:56px; align-items:center; }
+.cm-value-shot { position:relative; border-radius:18px; overflow:hidden; aspect-ratio:4/5; }
+.cm-value-shot img { width:100%; height:100%; object-fit:cover; display:block; }
+.cm-value-shot figcaption {
+  position:absolute; left:0; right:0; bottom:0; padding:44px 20px 18px;
+  background:linear-gradient(180deg, transparent, rgba(2,16,36,.88));
+  color:#fff; font-size:.83rem; line-height:1.5;
+}
+.cm-vgrid { display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:34px 30px; margin-top:34px; }
 .cm-v-ico {
   width:40px; height:40px; border-radius:11px; display:grid; place-items:center;
   background:rgba(255,41,78,.10); color:var(--red); margin-bottom:15px;
@@ -181,13 +260,33 @@ body.cm { background:var(--bg-dark); color:var(--white); }
 .cm-past-item h3 { font-size:.97rem; line-height:1.4; color:#0B1A2E; font-weight:700; }
 
 /* ---- closing ---- */
-.cm-end { padding:96px 0; background:
-  radial-gradient(760px 420px at 50% 0%, rgba(255,41,78,.22), transparent 64%), var(--bg-dark); text-align:center; }
+.cm-end { position:relative; overflow:hidden; padding:112px 0; text-align:center; background:var(--bg-dark); }
+.cm-end-bg { position:absolute; inset:0; z-index:0; }
+.cm-end-bg img { width:100%; height:100%; object-fit:cover; display:block; opacity:.5; }
+/* The photo is atmosphere, not content, so it is pushed well behind the
+   text — the heading has to stay readable, not merely visible. */
+.cm-end-bg::after {
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(700px 400px at 50% 0%, rgba(255,41,78,.30), transparent 66%),
+    linear-gradient(180deg, rgba(2,16,36,.74), rgba(2,16,36,.90));
+}
+.cm-end .cm-wrap { position:relative; z-index:1; }
 .cm-end .cm-h2 { color:var(--white); max-width:680px; margin:0 auto 16px; }
 .cm-end p { color:rgba(255,255,255,.68); font-size:1rem; line-height:1.7; max-width:520px; margin:0 auto 32px; }
 
+@media (max-width: 920px) {
+  .cm-hero-in, .cm-value-in { grid-template-columns:1fr; gap:44px; }
+  .cm-hero-copy { max-width:none; }
+  .cm-shot { margin-bottom:34px; }
+  .cm-value-shot { aspect-ratio:16/10; }
+}
+
 @media (max-width: 640px) {
   .cm-hero { padding:84px 0 72px; }
+  .cm-faces { left:12px; right:12px; padding:10px 13px 10px 10px; }
+  .cm-faces p { font-size:.74rem; }
+  .cm-avatars img { width:30px; height:30px; }
   .cm-sessions, .cm-value, .cm-how, .cm-past { padding:68px 0; }
   .cm-end { padding:76px 0; }
   .cm-btn { width:100%; }
@@ -242,6 +341,7 @@ body.cm { background:var(--bg-dark); color:var(--white); }
 <!-- ====== HERO ====== -->
 <header class="cm-hero">
   <div class="cm-wrap cm-hero-in">
+   <div class="cm-hero-copy">
     <span class="cm-eyebrow"><span class="cm-dot"></span>Free AI training community</span>
     <h1 class="cm-h1">Get better at your work with AI. <em>Free, every month.</em></h1>
     <p class="cm-lead">
@@ -261,6 +361,23 @@ body.cm { background:var(--bg-dark); color:var(--white); }
       <span class="cm-next-when" id="cm-next-when"></span>
       <span>Next up: <b id="cm-next-title"></b></span>
     </div>
+   </div>
+
+   <div class="cm-shot">
+     <div class="cm-shot-main">
+       <span class="cm-live"><i></i>Live sessions</span>
+       <img src="/assets/people/cohort-table.jpg" alt="Members working together during a Brixgate session" loading="eager" />
+     </div>
+     <div class="cm-faces">
+       <span class="cm-avatars">
+         <img src="/assets/people/avatar-1.jpg" alt="" loading="lazy" />
+         <img src="/assets/people/avatar-2.jpg" alt="" loading="lazy" />
+         <img src="/assets/people/avatar-3.jpg" alt="" loading="lazy" />
+         <img src="/assets/people/avatar-4.jpg" alt="" loading="lazy" />
+       </span>
+       <p><b>Everyone is welcome.</b> Students, career changers, people running their own thing.</p>
+     </div>
+   </div>
   </div>
 </header>
 
@@ -280,7 +397,13 @@ body.cm { background:var(--bg-dark); color:var(--white); }
 
 <!-- ====== WHAT HAPPENS IN HERE ====== -->
 <section class="cm-value">
-  <div class="cm-wrap">
+  <div class="cm-wrap cm-value-in">
+   <figure class="cm-value-shot">
+     <img src="/assets/people/live-session.jpg" alt="A live Brixgate training session in progress" loading="lazy" />
+     <figcaption>Every session is taught live by someone who does the work, and the questions get answered in the room.</figcaption>
+   </figure>
+
+   <div>
     <div class="cm-sec-head">
       <h2 class="cm-h2">What happens in here</h2>
       <p class="cm-sec-sub">A working group, not a broadcast channel. Come for the trainings, stay for the people figuring the same things out.</p>
@@ -308,6 +431,7 @@ body.cm { background:var(--bg-dark); color:var(--white); }
         <p>Templates, prompt packs and giveaways for members who register for sessions.</p>
       </div>
     </div>
+   </div>
   </div>
 </section>
 
@@ -354,6 +478,9 @@ body.cm { background:var(--bg-dark); color:var(--white); }
 
 <!-- ====== CLOSING CTA ====== -->
 <section class="cm-end">
+  <div class="cm-end-bg" aria-hidden="true">
+    <img src="/assets/people/peer-review.jpg" alt="" loading="lazy" />
+  </div>
   <div class="cm-wrap">
     <h2 class="cm-h2">Join the free AI training community today.</h2>
     <p>One tap, and you are in before the next session goes out.</p>
