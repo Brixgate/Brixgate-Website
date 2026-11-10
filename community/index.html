@@ -7,6 +7,7 @@
   <meta name="description" content="Join the Brixgate WhatsApp community and get free live AI trainings every month — practical sessions on using AI at work, in your career and in your business." />
   <link rel="icon" type="image/png" href="/assets/faviii.png" />
   <link rel="stylesheet" href="/styles.css" />
+  <script src="/tracking.js"></script>
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Free AI Training Community | Brixgate" />
@@ -319,9 +320,16 @@ body.cm { --banner-height:0px; padding-top:0; background:var(--bg-dark); color:v
     <div class="nav-links">
       <a href="/index.html">Home</a>
       <div class="nav-mega" data-nav-mega></div>
-      <a href="/community/">Community</a>
-      <a href="/experts.html">Experts</a>
-      <a href="/organisations.html">For Organisations</a>
+      <a class="nav-community" href="/community/">Community</a>
+      <a class="nav-wide-only" href="/experts.html">Experts</a>
+      <a class="nav-wide-only" href="/organisations.html">For Organisations</a>
+      <div class="nav-more">
+        <button type="button" class="nav-more-btn" aria-haspopup="true">More <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-more-menu">
+          <a href="/experts.html">Experts</a>
+          <a href="/organisations.html">For Organisations</a>
+        </div>
+      </div>
     </div>
     <div class="nav-cta">
       <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
@@ -339,9 +347,9 @@ body.cm { --banner-height:0px; padding-top:0; background:var(--bg-dark); color:v
   <a href="/programme.html">Programmes</a>
   <a href="/foundations.html" class="nav-mobile-sub">Start your tech career</a>
   <a href="/professionals.html" class="nav-mobile-sub">AI for Professionals</a>
-  <a href="/community/">Community</a>
   <a href="/experts.html">Experts</a>
   <a href="/organisations.html">For Organisations</a>
+  <a href="/community/">Community</a>
   <a href="/apply.html" class="btn btn-primary">Apply Now</a>
   <a href="https://portal.brixgate.com/login" class="btn btn-outline" style="margin-top:8px" target="_blank" rel="noopener">Login</a>
 </div>
@@ -568,6 +576,11 @@ body.cm { --banner-height:0px; padding-top:0; background:var(--bg-dark); color:v
 </footer>
 
 <script src="/script.js"></script>
+<!-- The Programmes mega menu is rendered by nav-programmes.js, which
+     reads the Foundations register from foundations-courses.js. Without
+     both, this page showed a nav with no Programmes dropdown at all. -->
+<script src="/foundations-courses.js"></script>
+<script src="/nav-programmes.js"></script>
 <script>
 /* ============================================================
    The schedule.
