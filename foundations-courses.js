@@ -211,6 +211,24 @@
   /* Cohorts hang off the programme id, so this is a two step lookup:
      name to id, then id to cohorts. Resolves to [] rather than
      rejecting, because an empty cohort list is a normal state here. */
+  /* The duration a cohort actually runs for, as the admin set it.
+     Some cohorts ship without a duration string, so it falls back to
+     the dates they always carry. Returns '' when neither is usable,
+     and the caller keeps whatever it was showing. */
+  function durationOf(cohort) {
+    if (!cohort) return '';
+    if (cohort.duration) return String(cohort.duration);
+    var a = new Date(cohort.start_date), b = new Date(cohort.end_date);
+    if (isNaN(a) || isNaN(b)) return '';
+    var days = Math.round((b - a) / 86400000);
+    if (days <= 0) return '';
+    var w = Math.floor(days / 7), d = days % 7;
+    return [
+      w ? w + ' Week' + (w > 1 ? 's' : '') : '',
+      d ? d + ' Day'  + (d > 1 ? 's' : '') : ''
+    ].filter(Boolean).join(' ');
+  }
+
   function fetchCohorts(course) {
     return programmes().then(function (list) {
       var p = findProgramme(course, list);
@@ -237,6 +255,7 @@
     programmes: programmes,
     findProgramme: findProgramme,
     fetchCohorts: fetchCohorts,
-    fmtDate: fmtDate
+    fmtDate: fmtDate,
+    durationOf: durationOf
   };
 })();

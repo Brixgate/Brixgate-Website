@@ -959,7 +959,7 @@ body.fd{ background:#fff; }
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© <span id="footer-year">2025</span> Brixgate Ltd, RC 9082968. All rights reserved. | Lagos, Nigeria · <a href="tel:+447450337132">+44 74 5033 7132</a></p>
+    <p>© <span id="footer-year">2025</span> Brixgate Ltd, RC 9082968. All rights reserved. | 128 City Road, London, UK · <a href="tel:+2347083031095">+234 708 303 1095</a></p>
     <div class="footer-bottom-links"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
   </div>
 </footer>
@@ -1233,7 +1233,7 @@ body.fd{ background:#fff; }
     return '<a class="fd-card' + (c.ready ? '' : ' is-soon') + '" href="' + href + '" data-slug="' + c.slug + '" style="--accent:' + c.accent + '">' +
              '<div class="fd-card-art">' +
                '<img src="' + c.art + '" alt="" loading="lazy" />' +
-               '<span class="fd-card-weeks">' + c.weeks + ' weeks</span>' +
+               '<span class="fd-card-weeks" data-weeks>' + c.weeks + ' weeks</span>' +
              '</div>' +
              '<div class="fd-card-b">' +
                '<h3>' + esc(c.title) + '</h3>' +
@@ -1258,10 +1258,23 @@ body.fd{ background:#fff; }
   FND.COURSES.forEach(function (c) {
     var el = grid.querySelector('[data-slug="' + c.slug + '"] [data-when]');
     if (!el) return;
+    var wkEl = grid.querySelector('[data-slug="' + c.slug + '"] [data-weeks]');
     FND.fetchCohorts(c).then(function (res) {
       var next = res.cohorts
         .filter(function (x) { return x.start_date; })
         .sort(function (a, b) { return new Date(a.start_date) - new Date(b.start_date); })[0];
+
+      /* The badge shows the cohort's own length rather than our figure.
+         That is what the admin set and what the apply page will quote,
+         so the card cannot drift from the thing being bought. The
+         pathway is skipped: it is not one programme, so no single
+         cohort's length describes it. Until the call lands, and if it
+         returns nothing usable, the card keeps the published figure. */
+      if (wkEl && c.slug !== 'software-engineering') {
+        var dur = FND.durationOf(next);
+        if (dur) wkEl.textContent = dur;
+      }
+
       if (next) {
         el.innerHTML = '<i class="on"></i>Next cohort ' + esc(FND.fmtDate(next.start_date));
       } else if (res.programme) {
