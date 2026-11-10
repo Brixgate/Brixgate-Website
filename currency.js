@@ -8,10 +8,12 @@
 
    Because this touches money, three rules shape the whole file:
 
-   1. NGN is the fallback, always. Any failure at all - request blocked
-      by an ad blocker, network down, malformed reply, no Intl support -
-      lands on Naira. Nigeria is the largest market and it must never
-      depend on a third-party request succeeding.
+   1. A failure never silently prices a foreign student in Naira. The
+      lookup can be blocked by an ad blocker or a corporate network, and
+      when it was the only signal, a blocked request put every student
+      abroad on Lagos pricing. The device timezone is read first: it is
+      local, cannot be blocked, and answers the only question being
+      asked. Naira remains the answer when even that is unavailable.
 
    2. The gateway is never derived from the country. It is derived from
       the currency that is actually active at the moment of payment, so
@@ -70,6 +72,18 @@
     try { sessionStorage.setItem(CACHE_KEY, cur); } catch (e) {}
   }
 
+  /* The device's own answer, available before any request and immune to
+     anything blocking one. Africa/Lagos is Nigeria's zone — it is shared
+     with a few neighbours, which lands them on Naira, and that is the
+     safe direction for an ambiguous case. Anything else is abroad. */
+  function tzGuess() {
+    try {
+      var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      if (!tz) return null;
+      return tz === 'Africa/Lagos' ? 'ngn' : 'usd';
+    } catch (e) { return null; }
+  }
+
   function detect() {
     /* AbortController keeps a hanging request from leaving the page on
        the fallback for its whole life. */
@@ -98,7 +112,9 @@
       })
       .catch(function () {
         if (timer) clearTimeout(timer);
-        return 'ngn';
+        /* Blocked or offline. The timezone is the only signal left, and
+           it is a far better one than assuming everybody is in Lagos. */
+        return tzGuess() || 'ngn';
       });
   }
 
@@ -120,9 +136,11 @@
     var hit = cached();
     if (hit) { apply(hit); return; }
 
-    /* Show Naira while the lookup is in flight rather than an empty
-       price. If the answer is USD the swap happens once, early. */
-    apply('ngn');
+    /* Paint the timezone's answer immediately rather than always
+       starting on Naira: it is right for most visitors, so the price
+       usually never changes under them, and when the lookup disagrees
+       the swap still happens once and early. */
+    apply(tzGuess() || 'ngn');
 
     detect().then(function (cur) {
       remember(cur);
