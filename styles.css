@@ -20,8 +20,8 @@
   --cta-secondary:  #1B3A5C;
   --white:          #FFFFFF;
 
-  --font-main:    'DM Sans', 'Trebuchet MS', Arial, sans-serif;
-  --font-heading: 'DM Sans', 'Trebuchet MS', Arial, sans-serif;
+  --font-main:    'DM Sans', 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
+  --font-heading: 'DM Sans', 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 20px;
