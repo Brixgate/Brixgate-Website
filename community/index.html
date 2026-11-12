@@ -157,25 +157,55 @@ body.cm { --cm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--cm-nav-
 /* The next session, surfaced in the hero so the page shows a pulse
    before anyone scrolls. Hidden entirely when nothing is scheduled.
 
+   It is a listing, not a notification: a hairline, the date and time as
+   they would appear on a schedule, then the title as the thing you click.
+   No panel, no badge - the hero already has one filled shape in the CTA
+   and a second one beside it splits the eye.
+
    The [hidden] rule is not redundant: an author `display` beats the
-   UA stylesheet's display:none, so without it the chip stays on
-   screen with nothing in it the moment a month runs out. */
+   UA stylesheet's display:none, so without it the strip stays on
+   screen while JS still believes it is hidden. */
 .cm-next[hidden], .cm-past[hidden] { display:none; }
 .cm-next {
-  display:inline-flex; align-items:center; gap:12px; flex-wrap:wrap;
-  margin-top:34px; padding:12px 18px;
-  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
-  border-radius:999px; font-size:.87rem; color:rgba(255,255,255,.80);
+  display:block; width:100%; max-width:480px; margin-top:34px;
+  padding-top:16px; border-top:1px solid rgba(255,255,255,.16);
+  color:inherit; text-decoration:none;
+  transition:border-color .22s cubic-bezier(.2,.7,.3,1);
 }
-.cm-next b { color:var(--white); font-weight:700; }
-.cm-next-when {
-  padding:4px 11px; border-radius:999px; background:rgba(255,41,78,.18);
-  color:#FF93A8; font-weight:700; font-size:.78rem; white-space:nowrap;
+.cm-next:hover, .cm-next:focus-visible { border-top-color:rgba(255,255,255,.4); }
+.cm-next:focus-visible { outline:2px solid var(--red); outline-offset:6px; border-radius:2px; }
+
+/* Date, time, and how far off - the row a programme listing opens with.
+   Tabular figures so day numbers do not shift between sessions. */
+.cm-next-meta {
+  display:flex; align-items:baseline; gap:10px;
+  font-size:.7rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+  font-variant-numeric:tabular-nums; color:rgba(255,255,255,.52);
+}
+.cm-next-away { margin-left:auto; color:#FF93A8; letter-spacing:.07em; }
+
+.cm-next-line { display:flex; align-items:flex-start; gap:14px; margin-top:9px; }
+.cm-next-title {
+  flex:1; font-size:1.02rem; font-weight:650; line-height:1.38; color:var(--white);
+  text-underline-offset:4px; text-decoration-thickness:1px;
+}
+.cm-next:hover .cm-next-title { text-decoration:underline; }
+.cm-next-arrow {
+  flex:none; margin-top:5px; color:rgba(255,255,255,.5);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1), color .22s;
+}
+.cm-next:hover .cm-next-arrow { transform:translateX(4px); color:var(--white); }
+@media (prefers-reduced-motion: reduce) {
+  .cm-next, .cm-next-arrow { transition:none; }
+  .cm-next:hover .cm-next-arrow { transform:none; }
 }
 
 /* ---- sessions ---- */
 .cm-sessions {
   position:relative; overflow:hidden;
+  /* The hero's listing links here, and the nav is fixed, so the band has
+     to stop clear of it rather than under it. */
+  scroll-margin-top:calc(var(--banner-height) + var(--cm-nav-h));
   background:var(--bg-light); color:var(--body-dark); padding:92px 0;
 }
 /* The house wave, barely there. Enough that the band is not a flat grey
@@ -305,9 +335,10 @@ body.cm { --cm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--cm-nav-
   .cm-btn { width:100%; }
   .cm-cta-row { gap:12px; }
   .cm-btn-note { width:100%; }
-  /* The chip wraps to two lines at this width, and a pill radius on a
-     tall box reads as a lozenge rather than a tag. */
-  .cm-next { border-radius:16px; padding:14px 16px; align-items:flex-start; }
+  /* The countdown stops sharing a line with the date here and sits
+     under it, so neither is squeezed to two words a line. */
+  .cm-next-meta { flex-wrap:wrap; gap:4px 10px; }
+  .cm-next-away { margin-left:0; flex-basis:100%; }
 }
 </style>
 </head>
@@ -391,10 +422,16 @@ body.cm { --cm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--cm-nav-
       <span class="cm-btn-note">Free for everyone.<br />Takes 10 seconds.</span>
     </div>
 
-    <div class="cm-next" id="cm-next" hidden>
-      <span class="cm-next-when" id="cm-next-when"></span>
-      <span>Next up: <b id="cm-next-title"></b></span>
-    </div>
+    <a class="cm-next" id="cm-next" href="#sessions" hidden>
+      <span class="cm-next-meta">
+        <span id="cm-next-when"></span>
+        <span class="cm-next-away" id="cm-next-away"></span>
+      </span>
+      <span class="cm-next-line">
+        <span class="cm-next-title" id="cm-next-title"></span>
+        <svg class="cm-next-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="18" y2="12"/><polyline points="12 6 18 12 12 18"/></svg>
+      </span>
+    </a>
    </div>
 
    <div class="cm-shot">
@@ -417,7 +454,7 @@ body.cm { --cm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--cm-nav-
 
 
 <!-- ====== COMING UP ====== -->
-<section class="cm-sessions">
+<section class="cm-sessions" id="sessions">
   <div class="cm-wrap">
     <div class="cm-sec-head">
       <h2 class="cm-h2" id="cm-month-head">Coming up</h2>
@@ -644,9 +681,12 @@ body.cm { --cm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--cm-nav-
     var days = Math.round((date - today) / 86400000);
     if (days <= 0) return 'Today';
     if (days === 1) return 'Tomorrow';
-    if (days < 7)   return 'In ' + days + ' days';
-    var wk = Math.round(days / 7);
-    return 'In ' + wk + ' week' + (wk > 1 ? 's' : '');
+    /* Days stay days up to a fortnight. Rounding nine days to "1 week"
+       reads as sooner than it is, and the date sits right beside it to
+       give the lie away. */
+    if (days <= 13) return 'In ' + days + ' days';
+    var wk = Math.floor(days / 7);
+    return 'In ' + wk + ' weeks';
   }
 
   function dayLabel(d) {
@@ -713,8 +753,12 @@ body.cm { --cm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--cm-nav-
   function renderNext(upcoming, today) {
     var box = document.getElementById('cm-next');
     if (!box || !upcoming.length) return;
-    document.getElementById('cm-next-when').textContent  = relative(upcoming[0]._d, today);
-    document.getElementById('cm-next-title').textContent = upcoming[0].title;
+    var s0 = upcoming[0], t = timeLabel(s0.time);
+    /* The same date string the cards below carry, so the hero and the
+       schedule can never disagree about when a session runs. */
+    document.getElementById('cm-next-when').textContent  = dayLabel(s0._d) + (t ? ' \u00B7 ' + t : '');
+    document.getElementById('cm-next-away').textContent  = relative(s0._d, today);
+    document.getElementById('cm-next-title').textContent = s0.title;
     box.hidden = false;
   }
 

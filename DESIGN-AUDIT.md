@@ -234,7 +234,7 @@ The chip is the page's one urgency signal and it's the weakest text on it. Darke
 - **[P2] Join buttons depend on JS.** `community/index.html:370` and `:504` ship as `href="#"` and are rewritten to the WhatsApp URL by script. If that script fails the two primary CTAs do nothing. Ship the real URL in the HTML and let the script only *override* it.
 - **[P2] Footer legal links are 20 px tall** at 375 px (24 px minimum, WCAG 2.5.8). Sitewide.
 - **[P3] `peer-review.jpg` is upscaled.** 800×600 source stretched to 1024–1440 px wide in `.cm-end-bg`. It's heavily dimmed behind the closing CTA so it reads acceptably, but a 1600 px source would be cleaner.
-- **[P3] "In 1 week" for a 9-day gap.** `Math.round(days / 7)` at `community/index.html:630`. Defensible, slightly flattering. "In 9 days" would be truer.
+- ~~**[P3] "In 1 week" for a 9-day gap.**~~ **Fixed 12 Nov.** `relative()` now keeps days as days up to a fortnight, so it reads "In 9 days". The hero strip was rebuilt as a schedule listing at the same time and carries the real date and time (`SAT 21 NOV · 4PM WAT`) beside the countdown, from the same `dayLabel`/`timeLabel` the cards use — the hero and the schedule cannot disagree.
 - **[P3] `assets/twitter (1).png`** has a space and a `(1)` in the filename. Works, but worth renaming.
 
 ## Verified good
