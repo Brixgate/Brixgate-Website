@@ -142,15 +142,37 @@ body.cm { --cm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--cm-nav-
 }
 
 .cm-cta-row { display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+/* The one button on the page that leaves it carries WhatsApp's green,
+   not Brixgate red, for two reasons. It says where it goes before it is
+   read. And the fixed nav already shows a red Apply Now pill — two red
+   buttons on one screen, one meaning "pay us" and one meaning "join
+   free", were competing for the same decision.
+
+   Dark label, not white. White on #25D366 is 1.98:1, which is why so
+   many "Chat on WhatsApp" buttons are illegible in daylight; the dark
+   label is 9.38:1 and is what WhatsApp's own glyph does on green.
+   Flat, not gradient: the red gradient was half of why this button
+   read as generic, and the green is recognisable on its own. */
 .cm-btn {
   display:inline-flex; align-items:center; justify-content:center; gap:10px;
   padding:16px 30px; border-radius:999px; border:0;
-  background:linear-gradient(100deg, var(--red), var(--orange));
-  color:#fff; font:inherit; font-size:.98rem; font-weight:700; line-height:1.2;
-  cursor:pointer; text-align:center; transition:transform .18s, box-shadow .18s;
-  box-shadow:0 16px 36px -14px rgba(255,41,78,.8);
+  background:#25D366;
+  color:#0B141A; font:inherit; font-size:.98rem; font-weight:700; line-height:1.2;
+  cursor:pointer; text-align:center;
+  transition:transform .18s cubic-bezier(.2,.7,.3,1), background-color .18s, box-shadow .18s;
+  /* Offset and blur, so it reads as the button sitting above the page
+     rather than as a halo printed around it. */
+  box-shadow:0 10px 24px -10px rgba(0,0,0,.55);
 }
-.cm-btn:hover { transform:translateY(-2px); box-shadow:0 20px 44px -14px rgba(255,41,78,.9); }
+.cm-btn:hover {
+  transform:translateY(-2px); background:#2EE676;
+  box-shadow:0 16px 32px -12px rgba(0,0,0,.6);
+}
+.cm-btn:focus-visible { outline:3px solid #fff; outline-offset:3px; }
+@media (prefers-reduced-motion: reduce) {
+  .cm-btn { transition:background-color .18s; }
+  .cm-btn:hover { transform:none; }
+}
 .cm-btn svg { flex:none; }
 .cm-btn-note { font-size:.86rem; color:rgba(255,255,255,.55); line-height:1.5; }
 
