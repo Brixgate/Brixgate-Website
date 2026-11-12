@@ -120,6 +120,17 @@
     return null;
   }
 
+  /* Every href below is written relative ('foundations.html') because the
+     menu was first built for pages that sit at the site root. On a page
+     served from a subdirectory — /community/, /prompt-store/, /aiquiz/ —
+     a relative href resolves against that directory and 404s. Root them
+     here, once, so the data files stay as they are. */
+  function root(h) {
+    if (!h) return h;
+    if (/^([a-z]+:|\/|#|\?)/i.test(h)) return h;   /* absolute, anchor or query — leave it */
+    return '/' + h;
+  }
+
   function pageFor(p, tierKey) {
     if (tierKey === 'foundations') {
       var reg = fromRegister(p);
@@ -217,7 +228,7 @@
 
   function courseHTML(p, tier) {
     var page = pageFor(p, tier.key);
-    var href = page || tier.href;
+    var href = root(page || tier.href);
     var b = blurb(p, tier.key);
     var soon = page ? '' : '<span class="nav-mega-soon">Page coming</span>';
     return '<a class="nav-mega-course" href="' + href + '">' +
@@ -229,21 +240,21 @@
   function listHTML(tier, items) {
     if (!items.length) {
       return '<p class="nav-mega-empty">' + esc(tier.empty) + '</p>' +
-             '<a class="nav-mega-all" href="' + tier.href + '#register">Register your interest ' + ARROW + '</a>';
+             '<a class="nav-mega-all" href="' + root(tier.href) + '#register">Register your interest ' + ARROW + '</a>';
     }
     return '<div class="nav-mega-grid">' + items.map(function (p) { return courseHTML(p, tier); }).join('') + '</div>' +
-           '<a class="nav-mega-all" href="' + tier.href + '">' + esc(tier.all) + ' ' + ARROW + '</a>';
+           '<a class="nav-mega-all" href="' + root(tier.href) + '">' + esc(tier.all) + ' ' + ARROW + '</a>';
   }
 
   function build(host, byTier) {
     host.innerHTML =
-      '<a href="programme.html" class="nav-mega-trigger">Programmes</a>' +
+      '<a href="/programme.html" class="nav-mega-trigger">Programmes</a>' +
       '<button class="nav-mega-chevron" type="button" aria-label="Toggle programmes menu" aria-expanded="false">' + CHEV + '</button>' +
       '<div class="nav-mega-panel">' +
         '<div class="nav-mega-inner">' +
           '<div class="nav-mega-tiers">' +
             TIERS.map(function (t, i) {
-              return '<a class="nav-mega-tier' + (i === 0 ? ' is-on' : '') + '" data-tier="' + t.key + '" href="' + t.href + '">' +
+              return '<a class="nav-mega-tier' + (i === 0 ? ' is-on' : '') + '" data-tier="' + t.key + '" href="' + root(t.href) + '">' +
                        '<span class="nav-mega-tier-ic">' + (ICON[t.key] || '') + '</span>' +
                        '<span class="nav-mega-tier-t">' + esc(t.name) + '</span>' +
                        '<span class="nav-mega-tier-d">' + esc(t.desc) + '</span>' +
