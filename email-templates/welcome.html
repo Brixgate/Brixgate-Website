@@ -18,7 +18,18 @@
 </o:OfficeDocumentSettings></xml></noscript>
 <![endif]-->
 
+<!--[if !mso]><!-->
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" type="text/css" />
+<!--<![endif]-->
+
 <style type="text/css">
+  /* Webfonts reach Apple Mail, iOS Mail, Samsung Mail and Thunderbird.
+     Gmail (every version) and Outlook strip them, so roughly half of
+     opens will render the fallback no matter what we do here. That is
+     why the fallback is Arial: it shares DM Sans's upright, neutral
+     proportions, so the two versions look like the same email. */
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap');
+
   /* Outlook desktop ignores this block entirely, which is fine: it only
      ever renders at full width. Everything that must survive Outlook is
      inlined on the element itself. */
@@ -96,7 +107,7 @@
     <!-- ── GREETING ───────────────────────────────────────────── -->
     <tr>
       <td class="bx-pad" style="padding:38px 48px 0 48px; background-color:#FFFFFF;" bgcolor="#FFFFFF">
-        <h1 class="bx-h1" style="margin:0 0 20px 0; font-family:'DM Sans','Trebuchet MS',Arial,sans-serif; font-size:25px; line-height:33px; font-weight:700; color:#0D1B2A; letter-spacing:-0.3px;">
+        <h1 class="bx-h1" style="margin:0 0 20px 0; font-family:'DM Sans',Arial,Helvetica,sans-serif; font-size:25px; line-height:33px; font-weight:700; color:#0D1B2A; letter-spacing:-0.3px;">
           Hi {{first_name}},
         </h1>
       </td>
@@ -109,7 +120,7 @@
          Centring is kept for the one thing that benefits: the button.
          ────────────────────────────────────────────────────────── -->
     <tr>
-      <td class="bx-pad bx-body" style="padding:0 48px; background-color:#FFFFFF; font-family:'DM Sans','Trebuchet MS',Arial,sans-serif; font-size:16px; line-height:28px; color:#3A4452;" bgcolor="#FFFFFF">
+      <td class="bx-pad bx-body" style="padding:0 48px; background-color:#FFFFFF; font-family:'DM Sans',Arial,Helvetica,sans-serif; font-size:16px; line-height:28px; color:#3A4452;" bgcolor="#FFFFFF">
 
         <p style="margin:0 0 18px 0;">I'm genuinely glad you've taken a step towards learning with us at Brixgate.</p>
 
@@ -140,7 +151,7 @@
             <td align="center" bgcolor="#D6002C" style="background-color:#D6002C; border-radius:999px; mso-padding-alt:17px 38px;">
               <!--[if mso]>&nbsp;<![endif]-->
               <a href="https://portal.brixgate.com/login" target="_blank"
-                 style="display:inline-block; padding:17px 38px; font-family:'DM Sans','Trebuchet MS',Arial,sans-serif; font-size:16px; line-height:20px; font-weight:700; color:#FFFFFF; text-decoration:none; border-radius:999px; mso-line-height-rule:exactly;">
+                 style="display:inline-block; padding:17px 38px; font-family:'DM Sans',Arial,Helvetica,sans-serif; font-size:16px; line-height:20px; font-weight:700; color:#FFFFFF; text-decoration:none; border-radius:999px; mso-line-height-rule:exactly;">
                 Log in to your learner portal
               </a>
               <!--[if mso]>&nbsp;<![endif]-->
@@ -152,7 +163,7 @@
 
     <!-- ── THE OTHER TWO ROUTES ──────────────────────────────────── -->
     <tr>
-      <td class="bx-pad bx-body" style="padding:22px 48px 0 48px; background-color:#FFFFFF; font-family:'DM Sans','Trebuchet MS',Arial,sans-serif; font-size:16px; line-height:28px; color:#3A4452;" bgcolor="#FFFFFF">
+      <td class="bx-pad bx-body" style="padding:22px 48px 0 48px; background-color:#FFFFFF; font-family:'DM Sans',Arial,Helvetica,sans-serif; font-size:16px; line-height:28px; color:#3A4452;" bgcolor="#FFFFFF">
 
         <p style="margin:0 0 18px 0;">If you're still completing your registration, we'd love to help you get started &mdash; <a href="https://brixgate.com/apply.html" target="_blank" style="color:#D6002C; font-weight:600; text-decoration:underline;">pick up where you left off</a>.</p>
 
@@ -169,9 +180,9 @@
          ────────────────────────────────────────────────────────── -->
     <tr>
       <td class="bx-pad" style="padding:20px 48px 0 48px; background-color:#FFFFFF;" bgcolor="#FFFFFF">
-        <p style="margin:0 0 4px 0; font-family:'DM Sans','Trebuchet MS',Arial,sans-serif; font-size:16px; line-height:26px; color:#3A4452;">Best regards,</p>
-        <p style="margin:0; font-family:'DM Sans','Trebuchet MS',Arial,sans-serif; font-size:16px; line-height:24px; font-weight:700; color:#0D1B2A;">{{sender_name}}</p>
-        <p style="margin:2px 0 0 0; font-family:'DM Sans','Trebuchet MS',Arial,sans-serif; font-size:14px; line-height:22px; color:#5E6B7A;">{{sender_role}} &middot; Brixgate</p>
+        <p style="margin:0 0 4px 0; font-family:'DM Sans',Arial,Helvetica,sans-serif; font-size:16px; line-height:26px; color:#3A4452;">Best regards,</p>
+        <p style="margin:0; font-family:'DM Sans',Arial,Helvetica,sans-serif; font-size:16px; line-height:24px; font-weight:700; color:#0D1B2A;">{{sender_name}}</p>
+        <p style="margin:2px 0 0 0; font-family:'DM Sans',Arial,Helvetica,sans-serif; font-size:14px; line-height:22px; color:#5E6B7A;">{{sender_role}} &middot; Brixgate</p>
       </td>
     </tr>
 
@@ -208,7 +219,7 @@
 
     <!-- ── LEGAL ──────────────────────────────────────────────────── -->
     <tr>
-      <td class="bx-pad" align="center" style="padding:22px 48px 40px 48px; background-color:#FFFFFF; font-family:'DM Sans','Trebuchet MS',Arial,sans-serif; font-size:13px; line-height:22px; color:#5E6B7A;" bgcolor="#FFFFFF">
+      <td class="bx-pad" align="center" style="padding:22px 48px 40px 48px; background-color:#FFFFFF; font-family:'DM Sans',Arial,Helvetica,sans-serif; font-size:13px; line-height:22px; color:#5E6B7A;" bgcolor="#FFFFFF">
         <p style="margin:0 0 6px 0;">
           <a href="https://brixgate.com/" target="_blank" style="color:#5E6B7A; text-decoration:underline;">brixgate.com</a>
           &nbsp;&middot;&nbsp;
