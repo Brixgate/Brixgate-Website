@@ -2626,23 +2626,34 @@ body.show-cad .currency-cad { display: inline !important; }
 
 /* ─── Discounted prices ──────────────────────────────────────────
    Shown only when an admin has set base_price above final_price.
-   price-display.js decides that; these two rules only dress it.
+   price-display.js decides that; these rules only dress it.
 
-   The struck price is red, as asked, but #D6002C rather than brand
-   #FF294E: a strike-through already costs legibility and brand red
-   on white is 3.7:1, which is under AA before the line crosses it.
-   This is 5.39:1 and reads as the same red.
+   The old price sits ABOVE the real one and smaller, so the eye lands
+   on what you actually pay first and reads the saving second. Inline
+   and same-size, the two numbers competed and the struck one won by
+   being first.
+
+   Red, as asked, but #D6002C rather than brand #FF294E: a strike
+   already costs legibility and brand red on white is 3.7:1, under AA
+   before the line crosses it. This is 5.39:1 and reads as the same red.
    ───────────────────────────────────────────────────────────────── */
 .bx-was {
+  display: block;
+  /* em, not px: this sits inside price text that ranges from 0.78rem
+     on a card to 2rem on a pricing table, and it should stay in
+     proportion to whichever it lands in. */
+  font-size: .78em;
+  line-height: 1.25;
+  font-weight: 600;
   color: #D6002C;
   text-decoration: line-through;
   text-decoration-thickness: 1.5px;
-  /* The strike sits high on tabular figures and clips the digits
-     otherwise. */
-  text-underline-offset: 0;
-  font-weight: 600;
-  opacity: .9;
-  margin-right: .42em;
   white-space: nowrap;
 }
-.bx-now { white-space: nowrap; }
+.bx-now { display: block; white-space: nowrap; }
+
+/* Inside a run of prose — "From <s>x</s> y" — stacking would break the
+   line box, so those keep the two on one line with the old price still
+   smaller and red. */
+.bx-inline .bx-was { display: inline; margin-right: .4em; }
+.bx-inline .bx-now { display: inline; }
