@@ -590,6 +590,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <script src="foundations-courses.js"></script>
 <script src="nav-programmes.js"></script>
 <script src="cohort-countdown.js"></script>
+<script src="price-display.js"></script>
 <script src="currency.js"></script>
 <script>
 /* ============================================================
@@ -645,10 +646,10 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       if (pid == null) return;
       (p.breakdowns || []).forEach(function (b) {
         var c = String(b.currency || '').toLowerCase();
-        var v = Number(b.final_price);
-        if (!c || !isFinite(v) || v <= 0) return;
+        var info = window.BXPrice.read(b);
+        if (!c || !info) return;
         var slot = price[pid] || (price[pid] = {});
-        if (slot[c] == null || v < slot[c]) slot[c] = v;
+        if (slot[c] == null || info.final < slot[c].final) slot[c] = info;
       });
     });
 
@@ -674,7 +675,10 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       if (cta) cta.href = 'apply.html?program_id=' + encodeURIComponent(prog.id) + '&level=BEGINNER';
 
       var pr = price[prog.id];
-      if (pr && pr[cur()] != null) set(block, '[data-price]', money(cur(), pr[cur()]));
+      if (pr && pr[cur()] != null) {
+        var slot = block.querySelector('[data-price]');
+        if (slot) slot.innerHTML = window.BXPrice.inner(String(cur()).toUpperCase(), pr[cur()]);
+      }
 
       fetch(API + '/programs/' + prog.id + '/cohorts')
         .then(function (r) { return r.ok ? r.json() : null; })

@@ -1887,6 +1887,7 @@ html.cp-anim .cp-fade { opacity:0; }
 
 <a href="#" class="back-to-top" aria-label="Back to top">↑</a>
 
+<script src="price-display.js"></script>
 <script src="currency.js"></script>
 <script src="script.js"></script>
 <script>
@@ -2145,13 +2146,11 @@ var PROGRAM_ID = 1;
   var SYMS = { NGN: '₦', USD: '$', GBP: '£', EUR: '€', CAD: 'C$' };
   var CURRENCIES = ['ngn','usd','gbp','eur','cad'];
 
+  /* Struck base price when the admin has set one above the final
+     price, a single price when they match. price-display.js owns
+     that decision so all eighteen price surfaces agree. */
   function priceSpans(breakdowns) {
-    return CURRENCIES.map(function(c) {
-      var cur = c.toUpperCase();
-      var b = (breakdowns || []).find(function(x) { return x.currency === cur; });
-      var val = b ? (SYMS[cur] || '') + Number(b.final_price||b.finalPrice||0).toLocaleString() : '—';
-      return '<span class="currency-' + c + '">' + val + '</span>';
-    }).join('');
+    return window.BXPrice.spans(breakdowns, CURRENCIES);
   }
 
   function renderPricingCards(plans) {

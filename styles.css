@@ -2623,3 +2623,26 @@ body.show-cad .currency-cad { display: inline !important; }
   .nav-links a.nav-wide-only { display: none; }
   .nav-links a.nav-community { order: 5; }
 }
+
+/* ─── Discounted prices ──────────────────────────────────────────
+   Shown only when an admin has set base_price above final_price.
+   price-display.js decides that; these two rules only dress it.
+
+   The struck price is red, as asked, but #D6002C rather than brand
+   #FF294E: a strike-through already costs legibility and brand red
+   on white is 3.7:1, which is under AA before the line crosses it.
+   This is 5.39:1 and reads as the same red.
+   ───────────────────────────────────────────────────────────────── */
+.bx-was {
+  color: #D6002C;
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  /* The strike sits high on tabular figures and clips the digits
+     otherwise. */
+  text-underline-offset: 0;
+  font-weight: 600;
+  opacity: .9;
+  margin-right: .42em;
+  white-space: nowrap;
+}
+.bx-now { white-space: nowrap; }

@@ -2875,6 +2875,7 @@
 
 <button class="back-to-top" aria-label="Back to top">↑</button>
 
+<script src="price-display.js"></script>
 <script src="currency.js"></script>
 <script src="script.js"></script>
 
@@ -3189,10 +3190,13 @@
       if (pid == null) return;
       (p.breakdowns || []).forEach(function (b) {
         var cur = String(b.currency || '').toUpperCase();
-        var v = Number(b.final_price != null ? b.final_price : b.finalPrice);
-        if (!cur || !isFinite(v) || v <= 0) return;
+        /* Keeps base alongside final, so a card that is discounted can
+           show what the price was. BXPrice.read discards a base that is
+           missing, zero, or below the final price. */
+        var info = window.BXPrice.read(b);
+        if (!cur || !info) return;
         var slot = byProgramme[pid] || (byProgramme[pid] = {});
-        if (slot[cur] == null || v < slot[cur]) slot[cur] = v;
+        if (slot[cur] == null || info.final < slot[cur].final) slot[cur] = info;
       });
     });
 
@@ -3224,8 +3228,11 @@
       var el = card.querySelector('[data-price]');
       if (!el) return;
       var n = el.querySelector('[data-ngn]'), u = el.querySelector('[data-usd]');
-      if (n) n.textContent = fmt('NGN', price.NGN);
-      if (u) u.textContent = fmt('USD', price.USD);
+      /* innerHTML, not textContent: a discounted price is a struck
+         <s> plus the real figure. Everything interpolated is a number
+         run through toLocaleString, never a string from the API. */
+      if (n) n.innerHTML = window.BXPrice.inner('NGN', price.NGN);
+      if (u) u.innerHTML = window.BXPrice.inner('USD', price.USD);
       el.hidden = false;
     });
   }).catch(function () { /* keep prices hidden rather than show a wrong one */ });

@@ -898,6 +898,7 @@ html.pg-anim .pg-rise{ opacity:0; }
 
 <button class="back-to-top">↑</button>
 
+<script src="price-display.js"></script>
 <script src="currency.js"></script>
 <script src="script.js"></script>
 
@@ -980,12 +981,13 @@ html.pg-anim .pg-rise{ opacity:0; }
   (function() {
     var SYMS = { NGN: '₦', USD: '$', GBP: '£', EUR: '€', CAD: 'C$' };
     var CURRENCIES = ['ngn','usd','gbp','eur','cad'];
+    /* Struck base price when the admin has set one above the final
+       price, a single price when they match. price-display.js owns
+       that decision so all eighteen price surfaces agree. */
     function priceSpans(bds) {
-      return CURRENCIES.map(function(c) {
-        var cur = c.toUpperCase();
-        var b = (bds || []).find(function(x) { return x.currency === cur; });
-        return '<span class="currency-' + c + '">' + (b ? (SYMS[cur]||'') + Number(b.final_price||b.finalPrice||0).toLocaleString() : '') + '</span>';
-      }).join('');
+      /* '' not the default em-dash: this page has always left a
+         currency it has no price for blank. */
+      return window.BXPrice.spans(bds, CURRENCIES, '');
     }
     function render(plans) {
       var el = document.getElementById('pricing-cards');
