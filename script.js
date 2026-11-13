@@ -500,8 +500,8 @@ window.tierLabelToRatingLevel = function(label) {
 (function () {
   'use strict';
 
-  var REG    = '';   /* e.g. 'ACTD/2026/01234' */
-  var VERIFY = '';   /* e.g. 'https://actd.org.uk/verify/01234' */
+  var REG    = '';   /* ACTD lists us by name, not by number — the page below is the record */
+  var VERIFY = 'https://www.actd.us/brixgate/';
 
   function esc(s) {
     return String(s).replace(/[&<>"]/g, function (c) {
@@ -513,10 +513,13 @@ window.tierLabelToRatingLevel = function(label) {
     var host = document.querySelector('.footer-brand');
     if (!host || host.querySelector('.bx-actd')) return;
 
-    var detail = '';
-    if (REG && VERIFY) {
+    var detail;
+    if (VERIFY) {
+      /* A badge nobody can check is decoration. This links to our entry
+         on ACTD's own site, which is the only thing that turns the mark
+         into evidence. */
       detail = '<a href="' + esc(VERIFY) + '" target="_blank" rel="noopener">' +
-                 'Reg. ' + esc(REG) + ' &mdash; verify' +
+                 (REG ? 'Reg. ' + esc(REG) + ' &mdash; verify' : 'Verify accreditation') +
                '</a>';
     } else if (REG) {
       detail = '<span>Reg. ' + esc(REG) + '</span>';
@@ -531,7 +534,7 @@ window.tierLabelToRatingLevel = function(label) {
         '<picture>' +
           '<source srcset="/assets/badges/actd.webp" type="image/webp">' +
           '<img src="/assets/badges/actd.png" width="42" height="42" ' +
-               'alt="ACTD" loading="lazy" decoding="async">' +
+               'alt="American Council of Training and Development" loading="lazy" decoding="async">' +
         '</picture>' +
       '</span>' +
       '<span class="bx-actd-txt"><b>ACTD Accredited</b>' + detail + '</span>';
