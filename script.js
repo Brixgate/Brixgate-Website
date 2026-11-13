@@ -480,3 +480,67 @@ window.tierLabelToRatingLevel = function(label) {
     if (e.key === 'Escape') closeModal();
   });
 }());
+
+/* ─── ACTD accreditation badge ──────────────────────────────────────
+   Every page carrying the site footer already loads this file, so the
+   badge is injected here rather than pasted into forty-two documents
+   that would then need editing again the day the registration number
+   arrives.
+
+   ── TO FINISH THIS: fill the two values below. ──
+   REG     the registration or accreditation number ACTD issued us.
+   VERIFY  the public page on ACTD's own site that confirms it.
+
+   Left empty, the badge still renders and still says we are accredited.
+   Filled, it carries the number and links out to the register — which
+   is the difference between a claim a visitor has to take on faith and
+   one a sceptical employer can check in a single click. The badge is
+   worth far more in the second state; this is worth finishing.
+   ─────────────────────────────────────────────────────────────────── */
+(function () {
+  'use strict';
+
+  var REG    = '';   /* e.g. 'ACTD/2026/01234' */
+  var VERIFY = '';   /* e.g. 'https://actd.org.uk/verify/01234' */
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  function build() {
+    var host = document.querySelector('.footer-brand');
+    if (!host || host.querySelector('.bx-actd')) return;
+
+    var detail = '';
+    if (REG && VERIFY) {
+      detail = '<a href="' + esc(VERIFY) + '" target="_blank" rel="noopener">' +
+                 'Reg. ' + esc(REG) + ' &mdash; verify' +
+               '</a>';
+    } else if (REG) {
+      detail = '<span>Reg. ' + esc(REG) + '</span>';
+    } else {
+      detail = '<span>Accredited training provider</span>';
+    }
+
+    var el = document.createElement('div');
+    el.className = 'bx-actd';
+    el.innerHTML =
+      '<span class="bx-actd-mark">' +
+        '<picture>' +
+          '<source srcset="/assets/badges/actd.webp" type="image/webp">' +
+          '<img src="/assets/badges/actd.png" width="42" height="42" ' +
+               'alt="ACTD" loading="lazy" decoding="async">' +
+        '</picture>' +
+      '</span>' +
+      '<span class="bx-actd-txt"><b>ACTD Accredited</b>' + detail + '</span>';
+    host.appendChild(el);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', build);
+  } else {
+    build();
+  }
+})();
