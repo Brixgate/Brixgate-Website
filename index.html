@@ -582,6 +582,29 @@
     .lp .lp-model h3 { font-size: 1.06rem; font-weight: 700; letter-spacing: -0.015em; }
     .lp .lp-model p { font-size: .9rem; color: var(--lp-body); line-height: 1.6; margin-top: 8px; }
 
+    /* ---- student testimonial (video) ----
+       Prefixed lp-tm-, not lp-vid-: the hero's video card already
+       owns lp-vid-name and positions it absolutely, so these rules
+       inherited that and the name landed on top of the button. */
+    .lp .lp-tm-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; }
+    .lp .lp-tm-frame {
+      position: relative; aspect-ratio: 16 / 9; border-radius: var(--lp-r-lg); overflow: hidden;
+      background: var(--lp-ink); box-shadow: var(--lp-shadow-lg);
+    }
+    .lp .lp-tm-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+    .lp .lp-tm-copy .lp-h2 { margin-bottom: 14px; }
+    .lp .lp-tm-who { margin: 26px 0 28px; padding-left: 14px; border-left: 2px solid var(--lp-red); }
+    .lp .lp-tm-name { font-weight: 700; font-size: 1.02rem; color: var(--lp-ink); }
+    .lp .lp-tm-role { font-size: .84rem; color: var(--lp-muted); margin-top: 2px; }
+    @media (max-width: 900px) {
+      /* Video first on a phone: it is the reason the section exists,
+         and a wall of copy above it would bury the thing being shown. */
+      .lp .lp-tm-grid { grid-template-columns: 1fr; gap: 30px; }
+      .lp .lp-tm-copy { order: 2; }
+      .lp .lp-tm-player { order: 1; }
+      .lp .lp-tm-who { margin: 20px 0 24px; }
+    }
+
     .lp .lp-quote-feature {
       margin-top: 64px; position: relative; overflow: hidden;
       border-radius: 28px; padding: 56px 60px; color: #fff;
@@ -2424,6 +2447,54 @@
 </section>
 
 <!-- ============================================================
+     STUDENT TESTIMONIAL  (video)
+
+     One student, on camera, straight after the journey section that
+     describes what he went through. Set the Vimeo id in VIMEO_ID at
+     the bottom of this file; until it is set the whole section stays
+     hidden, so the page never ships a grey rectangle where a face
+     should be.
+     ============================================================ -->
+<section class="lp-section lp-tm" id="lp-testimonial" hidden>
+  <div class="lp-container">
+    <div class="lp-tm-grid">
+
+      <div class="lp-tm-player fade-up">
+        <!-- 16:9 held by aspect-ratio, so the frame never jumps while
+             the player loads and nothing below it shifts. -->
+        <div class="lp-tm-frame">
+          <iframe id="lp-tm-iframe"
+                  src=""
+                  title="Horochieoma Chimezie on the AI for Professionals cybersecurity sprint"
+                  frameborder="0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowfullscreen
+                  loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <div class="lp-tm-copy fade-up">
+        <!-- A heading, not a quotation. Nothing here puts words in his
+             mouth: the only person who gets to say what he thought of
+             the sprint is him, on the video. If you want a pull-quote,
+             send a line he actually said and it goes here. -->
+        <span class="lp-eyebrow">From someone who did it</span>
+        <h2 class="lp-h2">Four weeks, while working full time.</h2>
+        <p class="lp-lead">Horochieoma took the cybersecurity sprint alongside his job. We asked him how it went, and left the camera running.</p>
+
+        <div class="lp-tm-who">
+          <div class="lp-tm-name">Horochieoma Chimezie</div>
+          <div class="lp-tm-role">AI for Professionals &middot; Cybersecurity</div>
+        </div>
+
+        <a href="professionals.html" class="lp-btn lp-btn-red">See the professional programmes</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
      INSIDE THE COHORT
      ============================================================ -->
 <section class="lp-section lp-cohort cursor-zone" data-cursor="Inside the cohort">
@@ -3492,6 +3563,47 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   sync();
   /* images load late and change scrollWidth */
   setTimeout(sync, 600); setTimeout(sync, 2000);
+})();
+</script>
+<script>
+/* ============================================================
+   STUDENT TESTIMONIAL — Horochieoma Chimezie
+
+   >>> PASTE THE VIMEO ID HERE <<<
+   From https://vimeo.com/1234567890 the id is 1234567890.
+   If the video is unlisted, Vimeo gives a link with a hash like
+   vimeo.com/1234567890/abcdef123 — put that second part in HASH.
+
+   While VIMEO_ID is empty the section stays hidden, so the page never
+   shows an empty player. Fill it and the section appears.
+   ============================================================ */
+(function () {
+  var VIMEO_ID = '';     /* e.g. '1234567890' */
+  var HASH     = '';     /* unlisted-link hash, if there is one */
+
+  if (!VIMEO_ID) return;
+
+  var sec = document.getElementById('lp-testimonial');
+  var frame = document.getElementById('lp-tm-iframe');
+  if (!sec || !frame) return;
+
+  /* dnt=1 keeps Vimeo from tracking viewers who never asked to be;
+     it costs nothing and it is the right default for an embed on a
+     page people land on without choosing to watch anything. */
+  var src = 'https://player.vimeo.com/video/' + encodeURIComponent(VIMEO_ID) +
+            '?dnt=1&title=0&byline=0&portrait=0';
+  if (HASH) src += '&h=' + encodeURIComponent(HASH);
+
+  frame.src = src;
+  sec.hidden = false;
+
+  /* The reveal happens after the scroll observer has already swept the
+     page, so this section's .fade-up children would never be told to
+     appear and would sit at opacity 0 forever. Mark them visible as we
+     unhide; they are on screen by the time anyone scrolls here anyway. */
+  sec.querySelectorAll('.fade-up').forEach(function (el) {
+    el.classList.add('visible');
+  });
 })();
 </script>
 </body>
