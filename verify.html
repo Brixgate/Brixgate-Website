@@ -276,6 +276,12 @@ body.vf ::selection{ background:rgba(255,41,78,.28); color:#fff; }
       <h1 class="vf-h1">Is this certificate real?</h1>
       <p class="vf-sub">Enter the number printed on a Brixgate Expert Practitioner Certificate. You will see who issued it, who assessed the work, and when, straight from our records.</p>
 
+      <!-- The one page a visitor reaches while actively doubting a
+           credential is the one place accreditation earns its keep. -->
+      <!-- No --on-light here: this page is dark (#040b16), so the badge
+           keeps its default white ink. -->
+      <div data-actd="full" class="vf-actd"></div>
+
       <div class="vf-lookup">
         <label for="vf-id">Certificate number</label>
         <form class="vf-field" id="vf-form" novalidate>

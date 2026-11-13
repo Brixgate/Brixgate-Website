@@ -482,26 +482,25 @@ window.tierLabelToRatingLevel = function(label) {
 }());
 
 /* ─── ACTD accreditation badge ──────────────────────────────────────
-   Every page carrying the site footer already loads this file, so the
-   badge is injected here rather than pasted into forty-two documents
-   that would then need editing again the day the registration number
-   arrives.
+   One definition, four surfaces. Every page carrying the site footer
+   already loads this file, so the mark lives here rather than being
+   pasted into forty-two documents that would each need editing again
+   the day the registration details change.
 
-   ── TO FINISH THIS: fill the two values below. ──
-   REG     the registration or accreditation number ACTD issued us.
-   VERIFY  the public page on ACTD's own site that confirms it.
+   Surfaces:
+     • the footer of every page          (added automatically below)
+     • anything marked data-actd="..."   (hero chip, verify, about)
 
-   Left empty, the badge still renders and still says we are accredited.
-   Filled, it carries the number and links out to the register — which
-   is the difference between a claim a visitor has to take on faith and
-   one a sceptical employer can check in a single click. The badge is
-   worth far more in the second state; this is worth finishing.
+   REG is empty because ACTD lists us by name rather than by number;
+   www.actd.us/brixgate is itself the record, which is why the badge
+   links straight to it. A badge nobody can check is decoration.
    ─────────────────────────────────────────────────────────────────── */
-(function () {
+(function (w) {
   'use strict';
 
-  var REG    = '';   /* ACTD lists us by name, not by number — the page below is the record */
+  var REG    = '';
   var VERIFY = 'https://www.actd.us/brixgate/';
+  var NAME   = 'American Council of Training and Development';
 
   function esc(s) {
     return String(s).replace(/[&<>"]/g, function (c) {
@@ -509,41 +508,66 @@ window.tierLabelToRatingLevel = function(label) {
     });
   }
 
-  function build() {
-    var host = document.querySelector('.footer-brand');
-    if (!host || host.querySelector('.bx-actd')) return;
-
-    var detail;
-    if (VERIFY) {
-      /* A badge nobody can check is decoration. This links to our entry
-         on ACTD's own site, which is the only thing that turns the mark
-         into evidence. */
-      detail = '<a href="' + esc(VERIFY) + '" target="_blank" rel="noopener">' +
-                 (REG ? 'Reg. ' + esc(REG) + ' &mdash; verify' : 'Verify accreditation') +
-               '</a>';
-    } else if (REG) {
-      detail = '<span>Reg. ' + esc(REG) + '</span>';
-    } else {
-      detail = '<span>Accredited training provider</span>';
-    }
-
-    var el = document.createElement('div');
-    el.className = 'bx-actd';
-    el.innerHTML =
-      '<span class="bx-actd-mark">' +
-        '<picture>' +
-          '<source srcset="/assets/badges/actd.webp" type="image/webp">' +
-          '<img src="/assets/badges/actd.png" width="42" height="42" ' +
-               'alt="American Council of Training and Development" loading="lazy" decoding="async">' +
-        '</picture>' +
-      '</span>' +
-      '<span class="bx-actd-txt"><b>ACTD Accredited</b>' + detail + '</span>';
-    host.appendChild(el);
+  function mark(px) {
+    return '<span class="bx-actd-mark">' +
+             '<picture>' +
+               '<source srcset="/assets/badges/actd.webp" type="image/webp">' +
+               '<img src="/assets/badges/actd.png" width="' + px + '" height="' + px + '" ' +
+                    'alt="' + NAME + '" loading="lazy" decoding="async">' +
+             '</picture>' +
+           '</span>';
   }
+
+  function detail() {
+    if (VERIFY) {
+      return '<a href="' + esc(VERIFY) + '" target="_blank" rel="noopener">' +
+               (REG ? 'Reg. ' + esc(REG) + ' &mdash; verify' : 'Verify accreditation') +
+             '</a>';
+    }
+    return REG ? '<span>Reg. ' + esc(REG) + '</span>'
+               : '<span>Accredited training provider</span>';
+  }
+
+  /* chip  — one line, for a dense trust row
+     full  — mark plus label and verify link
+     block — the same, larger, for a page that explains it */
+  function html(variant) {
+    if (variant === 'chip') {
+      return '<span class="bx-actd bx-actd--chip">' + mark(22) +
+               '<span class="bx-actd-txt"><b>ACTD Accredited</b></span>' +
+             '</span>';
+    }
+    var big = variant === 'block';
+    return '<div class="bx-actd' + (big ? ' bx-actd--block' : '') + '">' +
+             mark(big ? 64 : 42) +
+             '<span class="bx-actd-txt">' +
+               '<b>ACTD Accredited</b>' +
+               (big ? '<span>' + NAME + '</span>' : '') +
+               detail() +
+             '</span>' +
+           '</div>';
+  }
+
+  function build() {
+    /* the footer of every page */
+    var foot = document.querySelector('.footer-brand');
+    if (foot && !foot.querySelector('.bx-actd')) {
+      var d = document.createElement('div');
+      d.innerHTML = html('full');
+      foot.appendChild(d.firstChild);
+    }
+    /* anywhere a page asked for one */
+    document.querySelectorAll('[data-actd]').forEach(function (host) {
+      if (host.querySelector('.bx-actd')) return;
+      host.innerHTML = html(host.getAttribute('data-actd') || 'full');
+    });
+  }
+
+  w.BXActd = { html: html, build: build };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', build);
   } else {
     build();
   }
-})();
+})(window);
