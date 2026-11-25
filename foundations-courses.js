@@ -196,13 +196,31 @@
     return programmesPromise;
   }
 
-  /* Name match, not slug: the backend slugs drift between
-     environments and new courses arrive named by a human. */
+  /* Title first, slug only as a fallback.
+ 
+     The comment here used to say "name match, not slug" while the code
+     searched title and slug in one string, so a wrong slug could still
+     decide which programme a page applied to. It did: programme 29 is
+     titled "Data Analytics" but carries the slug "data-science", and 26
+     is "Data Science" carrying "data-analytics". The Data Science page
+     looked for "data science", hit 29's slug first because 29 comes
+     earlier in the API's list, and sent every applicant for the
+     sixteen-week Data Science course into the eight-week Data Analytics
+     one. Both Foundations pages resolved to the same programme id.
+ 
+     A title is what an admin typed and can see. A slug is derived, is
+     rarely looked at, and has been wrong in production. Reading the
+     title across the whole list before touching a slug means one bad
+     slug can no longer misroute an application. */
   function findProgramme(course, list) {
-    for (var i = 0; i < list.length; i++) {
-      var hay = ((list[i].title || '') + ' ' + (list[i].slug || '')).toLowerCase().replace(/[-_]+/g, ' ');
-      for (var j = 0; j < course.match.length; j++) {
-        if (hay.indexOf(course.match[j].replace(/-/g, ' ')) !== -1) return list[i];
+    var keys = course.match.map(function (m) { return m.replace(/-/g, ' '); });
+    var fields = ['title', 'slug'];
+    for (var pass = 0; pass < fields.length; pass++) {
+      for (var i = 0; i < list.length; i++) {
+        var hay = String(list[i][fields[pass]] || '').toLowerCase().replace(/[-_]+/g, ' ');
+        for (var j = 0; j < keys.length; j++) {
+          if (hay.indexOf(keys[j]) !== -1) return list[i];
+        }
       }
     }
     return null;

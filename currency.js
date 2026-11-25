@@ -77,15 +77,50 @@
   }
 
   /* The device's own answer, available before any request and immune to
-     anything blocking one. Africa/Lagos is Nigeria's zone — it is shared
-     with a few neighbours, which lands them on Naira, and that is the
-     safe direction for an ambiguous case. Anything else is abroad. */
+     anything blocking one.
+
+     This used to demand the string 'Africa/Lagos' exactly and call
+     everything else abroad, which priced real Nigerians in dollars.
+     Two groups it got wrong, both large:
+
+       • Privacy browsers. Firefox with resistFingerprinting, Brave with
+         shields up and Tor all report 'UTC' rather than a real zone.
+         That is not evidence of being abroad; it is evidence of a
+         browser refusing to say.
+       • Devices on UTC+1 that resolve to a neighbouring zone name —
+         Africa/Porto-Novo, Africa/Niamey, Africa/Ndjamena and others
+         share Nigeria's offset, and OS and browser combinations pick
+         between them.
+
+     So the question is no longer "is this one string" but "is this
+     offset consistent with Nigeria", with the zone name used only to
+     catch a case the offset cannot: a device plainly on another
+     continent, which is what a VPN actually looks like.
+
+     Returning null means "cannot tell" and is NOT the same as 'usd' —
+     the caller treats null as no objection, so an unreadable clock
+     never overrides a correct IP. */
+  var ABROAD = /^(America|Europe|Asia|Australia|Pacific|Antarctica|Atlantic|Indian)\//;
+
   function tzGuess() {
-    try {
-      var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-      if (!tz) return null;
-      return tz === 'Africa/Lagos' ? 'ngn' : 'usd';
-    } catch (e) { return null; }
+    var tz = '';
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+
+    if (tz === 'Africa/Lagos') return 'ngn';
+    /* Another continent in the zone name is the one unambiguous signal
+       that the device is not in Nigeria, whatever the IP claims. */
+    if (tz && ABROAD.test(tz)) return 'usd';
+
+    var off;
+    try { off = -new Date().getTimezoneOffset(); } catch (e) { return null; }
+    if (typeof off !== 'number' || isNaN(off)) return null;
+
+    /* Nigeria is UTC+1 the whole year and keeps no daylight saving. */
+    if (off === 60) return 'ngn';
+    /* UTC exactly. Privacy browsers report this from anywhere, so it
+       settles nothing and must not veto the IP. */
+    if (off === 0) return null;
+    return 'usd';
   }
 
   function detect() {
