@@ -31,6 +31,10 @@
    cost — is the one that decides, so it gets the best position on the
    page and real numbers from the pricing API rather than a promise.
    ============================================================ */
+/* Muted text is #5E6B7A, not the #6B7A8A the rest of the site uses.
+   This page has three surfaces — white cards, a #FBFAF8 body and a
+   #F3EFE9 tint — and the site's grey falls to 3.84:1 on the tint.
+   #5E6B7A clears 4.5:1 on all three, so one value serves the page. */
 body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-h)); background:#FBFAF8; color:#13202E; }
 .fm-wrap { max-width:1140px; margin:0 auto; padding:0 24px; }
 .fm-narrow { max-width:720px; }
@@ -38,7 +42,7 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
 .fm h1,.fm h2,.fm h3 { letter-spacing:-0.025em; }
 .fm-h1 { font-size:clamp(2.5rem,5.4vw,4.1rem); line-height:1.03; font-weight:800; margin:0 0 20px; }
 .fm-h2 { font-size:clamp(1.85rem,3.3vw,2.7rem); line-height:1.1; font-weight:800; margin:0 0 16px; }
-.fm-h3 { font-size:1.12rem; line-height:1.35; font-weight:700; margin:0 0 8px; }
+.fm-h3 { font-size:1.2rem; line-height:1.35; font-weight:700; margin:0 0 8px; }
 /* 65ch keeps a paragraph to the measure a person can track without
    losing the line they are on. */
 .fm-lead { font-size:1.06rem; line-height:1.65; color:#4A5A6B; max-width:65ch; margin:0; }
@@ -81,7 +85,11 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
 .fm-hero-cta .fm-btn-ghost { color:#fff; box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.32); }
 .fm-hero-cta .fm-btn-ghost:hover { box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.72); }
 .fm-hero-note { margin-top:26px; font-size:.88rem; color:rgba(255,255,255,.6); }
-.fm-hero-note a { color:rgba(255,255,255,.86); text-decoration:underline; text-underline-offset:3px; }
+/* inline-block with vertical padding: as a bare inline link this was
+   18px tall, under the 24px WCAG 2.5.8 floor, and it is the only route
+   on this page for somebody who wants a scholarship rather than to
+   fund one. */
+.fm-hero-note a { display:inline-block; padding:4px 0; color:rgba(255,255,255,.86); text-decoration:underline; text-underline-offset:3px; }
 .fm-hero-note a:hover { color:#fff; }
 
 /* ---- the two doors ---- */
@@ -91,7 +99,7 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
   border:1px solid #E6E0D8;
   box-shadow:0 1px 2px rgba(19,32,46,.04), 0 18px 44px -28px rgba(19,32,46,.3);
 }
-.fm-door-cost { font-size:.82rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#8A6A2F; margin-bottom:14px; }
+.fm-door-cost { font-size:.82rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#7A5A20; margin-bottom:14px; }
 .fm-door p { margin:0 0 20px; font-size:.98rem; line-height:1.6; color:#4A5A6B; }
 .fm-door ul { list-style:none; margin:0 0 24px; padding:0; }
 .fm-door li { position:relative; padding-left:24px; margin-bottom:9px; font-size:.93rem; line-height:1.5; color:#4A5A6B; }
@@ -101,7 +109,7 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
 .fm-calc { display:grid; grid-template-columns:1fr .92fr; gap:44px; align-items:start; margin-top:40px; }
 .fm-calc-panel { background:#fff; border:1px solid #E6E0D8; border-radius:20px; padding:30px; box-shadow:0 1px 2px rgba(19,32,46,.04), 0 18px 44px -28px rgba(19,32,46,.3); }
 .fm-field { margin-bottom:22px; }
-.fm-field label { display:block; font-size:.78rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#6B7A8A; margin-bottom:8px; }
+.fm-field label { display:block; font-size:.78rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#5E6B7A; margin-bottom:8px; }
 .fm-field select, .fm-field input {
   width:100%; padding:14px 15px; border-radius:11px; border:1.5px solid #DAD3C9;
   background:#fff; color:#13202E; font:inherit; font-size:1rem;
@@ -120,9 +128,9 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
 
 .fm-total { margin-top:28px; padding-top:24px; border-top:1px solid #EDE7DF; }
 .fm-total-row { display:flex; align-items:baseline; justify-content:space-between; gap:16px; }
-.fm-total-label { font-size:.82rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#6B7A8A; }
+.fm-total-label { font-size:.82rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#5E6B7A; }
 .fm-total-amount { font-size:clamp(1.9rem,3.6vw,2.5rem); font-weight:800; letter-spacing:-0.03em; font-variant-numeric:tabular-nums; }
-.fm-total-each { margin-top:6px; font-size:.86rem; color:#6B7A8A; font-variant-numeric:tabular-nums; }
+.fm-total-each { margin-top:6px; font-size:.86rem; color:#5E6B7A; font-variant-numeric:tabular-nums; }
 
 /* The line that answers the only question a would-be named sponsor
    has. Green when cleared, neutral when not — never red: not yet
@@ -158,7 +166,7 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
 .fm-rung-name { font-size:1.08rem; font-weight:800; letter-spacing:-0.02em; }
 .fm-rung:nth-child(3) .fm-rung-name { font-size:1.18rem; }
 .fm-rung:nth-child(4) .fm-rung-name { font-size:1.3rem; }
-.fm-rung-amt { font-size:.95rem; font-weight:700; color:#8A6A2F; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.fm-rung-amt { font-size:.95rem; font-weight:700; color:#7A5A20; font-variant-numeric:tabular-nums; white-space:nowrap; }
 .fm-rung:nth-child(4) .fm-rung-amt { color:#F0C078; }
 .fm-rung-get { font-size:.93rem; line-height:1.55; color:#4A5A6B; }
 .fm-rung:nth-child(4) .fm-rung-get { color:rgba(255,255,255,.76); }
@@ -167,7 +175,7 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
    rungs at once while JS believes three are hidden. */
 .fm-rung-you[hidden] { display:none; }
 .fm-rung-you { display:inline-block; margin-left:10px; padding:3px 9px; border-radius:999px; background:#B8123A; color:#fff; font-size:.68rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; vertical-align:middle; }
-.fm-ladder-note { margin-top:18px; font-size:.9rem; color:#6B7A8A; line-height:1.6; }
+.fm-ladder-note { margin-top:18px; font-size:.9rem; color:#5E6B7A; line-height:1.6; }
 
 /* ---- what a scholarship looks like ---- */
 .fm-example { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; margin-top:40px; }
@@ -178,17 +186,17 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
 .fm-card-top { padding:26px 28px 22px; border-bottom:1px solid #EDE7DF; display:flex; gap:16px; align-items:center; }
 .fm-card-ava { width:56px; height:56px; flex:none; border-radius:50%; background:#0E1A26; color:#fff; display:grid; place-items:center; font-weight:800; font-size:1.05rem; letter-spacing:.02em; }
 .fm-card-name { font-size:1.06rem; font-weight:800; letter-spacing:-0.02em; line-height:1.3; }
-.fm-card-by { font-size:.84rem; color:#6B7A8A; margin-top:3px; }
+.fm-card-by { font-size:.84rem; color:#5E6B7A; margin-top:3px; }
 .fm-card-body { padding:24px 28px 26px; }
 .fm-card-quote { font-size:.97rem; line-height:1.65; color:#4A5A6B; margin:0 0 22px; }
 .fm-card-meta { display:grid; grid-template-columns:1fr 1fr; gap:16px 20px; }
-.fm-card-k { font-size:.72rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#8A95A3; }
+.fm-card-k { font-size:.72rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#5E6B7A; }
 .fm-card-v { font-size:.95rem; font-weight:700; margin-top:3px; }
 .fm-card-foot { padding:18px 28px; background:#FBFAF8; border-top:1px solid #EDE7DF; display:flex; align-items:center; justify-content:space-between; gap:14px; }
-.fm-slots { font-size:.86rem; color:#6B7A8A; font-variant-numeric:tabular-nums; }
+.fm-slots { font-size:.86rem; color:#5E6B7A; font-variant-numeric:tabular-nums; }
 .fm-slots b { color:#13202E; }
 .fm-fake-btn { padding:10px 20px; border-radius:999px; background:#B8123A; color:#fff; font-size:.86rem; font-weight:700; }
-.fm-example-url { margin-top:18px; font-size:.84rem; color:#6B7A8A; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; word-break:break-all; }
+.fm-example-url { margin-top:18px; font-size:.84rem; color:#5E6B7A; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; word-break:break-all; }
 
 /* ---- how it works: the sequence is the information ---- */
 .fm-steps { counter-reset:fm; display:grid; grid-template-columns:repeat(4,1fr); gap:30px; margin-top:44px; }
@@ -205,13 +213,13 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
 /* ---- who it reaches ---- */
 .fm-who { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:40px; }
 .fm-whoitem { padding:28px 26px; border-radius:18px; background:#fff; border:1px solid #E6E0D8; }
-.fm-whoitem .fm-card-k { color:#8A6A2F; }
+.fm-whoitem .fm-card-k { color:#7A5A20; }
 .fm-whoitem p { font-size:.94rem; line-height:1.6; color:#4A5A6B; margin:10px 0 0; }
 
 /* ---- faq ---- */
 .fm-faq { margin-top:40px; border-top:1px solid #E2DCD3; }
 .fm-q { width:100%; text-align:left; background:none; border:0; border-bottom:1px solid #E2DCD3; padding:22px 44px 22px 0; position:relative; cursor:pointer; font:inherit; font-size:1.02rem; font-weight:700; color:#13202E; letter-spacing:-0.01em; }
-.fm-q::after { content:''; position:absolute; right:10px; top:50%; width:10px; height:10px; margin-top:-6px; border-right:2.2px solid #8A95A3; border-bottom:2.2px solid #8A95A3; transform:rotate(45deg); transition:transform .22s cubic-bezier(.2,.7,.3,1); }
+.fm-q::after { content:''; position:absolute; right:10px; top:50%; width:10px; height:10px; margin-top:-6px; border-right:2.2px solid #5E6B7A; border-bottom:2.2px solid #5E6B7A; transform:rotate(45deg); transition:transform .22s cubic-bezier(.2,.7,.3,1); }
 .fm-q[aria-expanded="true"]::after { transform:rotate(-135deg); margin-top:-2px; }
 .fm-q:hover { color:#B8123A; }
 .fm-q:focus-visible { outline:3px solid #B8123A; outline-offset:-3px; }
@@ -230,7 +238,7 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
   .fm-steps { grid-template-columns:1fr 1fr; gap:26px 24px; }
   .fm-who { grid-template-columns:1fr; }
   .fm-rung { grid-template-columns:1fr; gap:8px; padding:24px 24px !important; }
-  .fm-rung-amt { color:#6B5020; }
+  .fm-rung-amt { color:#6E5423; }
   .fm-rung:nth-child(4) .fm-rung-amt { color:#F0C078; }
 }
 @media (max-width:640px) {
@@ -397,7 +405,7 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
           <div class="fm-tier-now-name" id="fm-tier-name">&mdash;</div>
           <div class="fm-tier-now-next" id="fm-tier-next">Choose a programme above.</div>
         </div>
-        <p style="margin-top:22px;font-size:.88rem;color:#6B7A8A">Paying in Naira goes through Paystack, other currencies through Stripe. Nothing is charged on this page &mdash; the form opens when you choose a door.</p>
+        <p style="margin-top:22px;font-size:.88rem;color:#5E6B7A">Paying in Naira goes through Paystack, other currencies through Stripe. Nothing is charged on this page &mdash; the form opens when you choose a door.</p>
       </div>
     </div>
   </div>
