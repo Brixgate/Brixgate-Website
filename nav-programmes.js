@@ -131,20 +131,39 @@
     return '/' + h;
   }
 
+  /* Title first, slug second — and never the two concatenated.
+
+     Production ships programme 29 titled "Data Analytics" with the
+     slug "data-science", and 26 titled "Data Science" with the slug
+     "data-analytics". Searching both at once let 26's slug satisfy the
+     data-analytic rule, so BOTH beginner data rows in this menu linked
+     to the Data Analytics page and the Data Science page could not be
+     reached from the nav at all.
+
+     A title is what an admin typed and can see. A slug is derived and
+     has been wrong in production. */
+  function ruleMatch(p, rules, tierKey, pick) {
+    var fields = [p.title, p.slug];
+    for (var f = 0; f < fields.length; f++) {
+      var hay = String(fields[f] || '').toLowerCase().replace(/[\s_]+/g, '-');
+      if (!hay) continue;
+      for (var i = 0; i < rules.length; i++) {
+        var r = rules[i];
+        if (r.tier && tierKey && r.tier !== tierKey) continue;
+        for (var j = 0; j < r.any.length; j++) {
+          if (hay.indexOf(r.any[j]) !== -1) return pick(r);
+        }
+      }
+    }
+    return null;
+  }
+
   function pageFor(p, tierKey) {
     if (tierKey === 'foundations') {
       var reg = fromRegister(p);
       if (reg) return reg;
     }
-    var hay = ((p.slug || '') + ' ' + (p.title || '')).toLowerCase().replace(/[\s_]+/g, '-');
-    for (var i = 0; i < PAGE_RULES.length; i++) {
-      var r = PAGE_RULES[i];
-      if (r.tier && tierKey && r.tier !== tierKey) continue;
-      for (var j = 0; j < r.any.length; j++) {
-        if (hay.indexOf(r.any[j]) !== -1) return r.page;
-      }
-    }
-    return null;
+    return ruleMatch(p, PAGE_RULES, tierKey, function (r) { return r.page; });
   }
 
   /* Short lines for the menu. API subtitles run to whole paragraphs,
@@ -212,12 +231,8 @@
         return one;
       }
     }
-    var hay = ((p.slug || '') + ' ' + (p.title || '')).toLowerCase().replace(/[\s_]+/g, '-');
-    for (var i = 0; i < BLURB_RULES.length; i++) {
-      for (var j = 0; j < BLURB_RULES[i].any.length; j++) {
-        if (hay.indexOf(BLURB_RULES[i].any[j]) !== -1) return BLURB_RULES[i].text;
-      }
-    }
+    var line = ruleMatch(p, BLURB_RULES, null, function (r) { return r.text; });
+    if (line) return line;
     var s = (p.subtitle || '').trim();
     if (!s) return '';
     /* first sentence, and only if it is short enough to sit on one line */

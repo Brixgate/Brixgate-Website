@@ -3336,7 +3336,11 @@
          back first. */
       var prog = programs.filter(function (p) {
         if (want.indexOf(String(p.level || '').toUpperCase()) === -1) return false;
-        var hay = ((p.title || '') + ' ' + (p.slug || '')).toLowerCase().replace(/[-_]+/g, ' ');
+        /* Title only. The slug used to be searched alongside it, and
+           production has 29 "Data Analytics" carrying the slug
+           "data-science", so the Data Science card showed Data
+           Analytics' price. A slug is derived; a title is typed. */
+        var hay = String(p.title || '').toLowerCase().replace(/[-_]+/g, ' ');
         return keys.some(function (k) { return k && hay.indexOf(k) !== -1; });
       })[0];
       if (!prog) return;
