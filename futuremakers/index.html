@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brixgate FutureMakers | Sponsor a Skill. Build a Legacy.</title>
+  <meta name="description" content="Sponsor someone through a Brixgate technology programme, or create a scholarship in your name. Brixgate handles selection, training and learner development, and reports back on what your money did." />
+  <link rel="canonical" href="https://brixgate.com/futuremakers/" />
+  <link rel="icon" type="image/png" href="/assets/faviii.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="/tracking.js"></script>
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Brixgate FutureMakers | Sponsor a Skill. Build a Legacy." />
+  <meta property="og:description" content="Sponsor someone through a technology programme, or create a scholarship in your name." />
+  <meta property="og:url" content="https://brixgate.com/futuremakers/" />
+  <meta property="og:image" content="https://brixgate.com/assets/og-brixgate.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Brixgate FutureMakers | Sponsor a Skill. Build a Legacy." />
+  <meta name="twitter:description" content="Sponsor someone through a technology programme, or create a scholarship in your name." />
+  <meta name="twitter:image" content="https://brixgate.com/assets/og-brixgate.jpg" />
+<style>
+/* ============================================================
+   FUTUREMAKERS  (.fm-)
+
+   A sponsor is not a student. The landing page they already know is
+   loud, red and built to make someone act on their own behalf; this
+   one is being asked to act on somebody else's, so it is quieter,
+   warmer and slower, and it leads with the arithmetic rather than the
+   adjectives. The money question — what does three learners actually
+   cost — is the one that decides, so it gets the best position on the
+   page and real numbers from the pricing API rather than a promise.
+   ============================================================ */
+body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-h)); background:#FBFAF8; color:#13202E; }
+.fm-wrap { max-width:1140px; margin:0 auto; padding:0 24px; }
+.fm-narrow { max-width:720px; }
+
+.fm h1,.fm h2,.fm h3 { letter-spacing:-0.025em; }
+.fm-h1 { font-size:clamp(2.5rem,5.4vw,4.1rem); line-height:1.03; font-weight:800; margin:0 0 20px; }
+.fm-h2 { font-size:clamp(1.85rem,3.3vw,2.7rem); line-height:1.1; font-weight:800; margin:0 0 16px; }
+.fm-h3 { font-size:1.12rem; line-height:1.35; font-weight:700; margin:0 0 8px; }
+/* 65ch keeps a paragraph to the measure a person can track without
+   losing the line they are on. */
+.fm-lead { font-size:1.06rem; line-height:1.65; color:#4A5A6B; max-width:65ch; margin:0; }
+.fm-sec { padding:96px 0; }
+.fm-sec-tint { background:#F3EFE9; }
+.fm-sec-ink  { background:#0E1A26; color:#fff; }
+.fm-sec-ink .fm-lead { color:rgba(255,255,255,.72); }
+
+/* ---- buttons ---- */
+.fm-btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  padding:16px 30px; border-radius:999px; border:0; cursor:pointer;
+  font:inherit; font-size:.98rem; font-weight:700; line-height:1.2; text-decoration:none;
+  transition:transform .2s cubic-bezier(.2,.7,.3,1), background-color .2s, box-shadow .2s;
+}
+/* #B8123A, not brand #FF294E: white on brand red is 3.7:1, under AA
+   before it carries 16px of button label. This is 6.4:1. */
+.fm-btn-primary { background:#B8123A; color:#fff; box-shadow:0 10px 24px -12px rgba(0,0,0,.55); }
+.fm-btn-primary:hover { background:#9E0F31; transform:translateY(-2px); }
+.fm-btn-ghost { background:transparent; color:#13202E; box-shadow:inset 0 0 0 1.5px rgba(19,32,46,.22); }
+.fm-btn-ghost:hover { box-shadow:inset 0 0 0 1.5px rgba(19,32,46,.5); transform:translateY(-2px); }
+.fm-sec-ink .fm-btn-ghost { color:#fff; box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.3); }
+.fm-sec-ink .fm-btn-ghost:hover { box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7); }
+.fm-btn:focus-visible { outline:3px solid #B8123A; outline-offset:3px; }
+.fm-link { color:#B8123A; font-weight:600; text-decoration:underline; text-underline-offset:3px; }
+.fm-link:hover { color:#13202E; }
+
+/* ---- hero ---- */
+.fm-hero { position:relative; overflow:hidden; padding:86px 0 90px; background:#0E1A26; color:#fff; }
+.fm-hero::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(900px 520px at 8% -15%, rgba(184,18,58,.34), transparent 62%),
+    radial-gradient(760px 520px at 96% 10%, rgba(214,138,58,.20), transparent 64%);
+}
+.fm-hero > * { position:relative; }
+.fm-hero .fm-h1 { max-width:14ch; }
+.fm-hero .fm-lead { color:rgba(255,255,255,.76); max-width:52ch; margin-bottom:34px; }
+.fm-hero-cta { display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+.fm-hero-cta .fm-btn-ghost { color:#fff; box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.32); }
+.fm-hero-cta .fm-btn-ghost:hover { box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.72); }
+.fm-hero-note { margin-top:26px; font-size:.88rem; color:rgba(255,255,255,.6); }
+.fm-hero-note a { color:rgba(255,255,255,.86); text-decoration:underline; text-underline-offset:3px; }
+.fm-hero-note a:hover { color:#fff; }
+
+/* ---- the two doors ---- */
+.fm-doors { display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:44px; }
+.fm-door {
+  padding:34px 32px 30px; border-radius:20px; background:#fff;
+  border:1px solid #E6E0D8;
+  box-shadow:0 1px 2px rgba(19,32,46,.04), 0 18px 44px -28px rgba(19,32,46,.3);
+}
+.fm-door-cost { font-size:.82rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#8A6A2F; margin-bottom:14px; }
+.fm-door p { margin:0 0 20px; font-size:.98rem; line-height:1.6; color:#4A5A6B; }
+.fm-door ul { list-style:none; margin:0 0 24px; padding:0; }
+.fm-door li { position:relative; padding-left:24px; margin-bottom:9px; font-size:.93rem; line-height:1.5; color:#4A5A6B; }
+.fm-door li::before { content:''; position:absolute; left:4px; top:.55em; width:7px; height:7px; border-radius:50%; background:#B8123A; }
+
+/* ---- calculator ---- */
+.fm-calc { display:grid; grid-template-columns:1fr .92fr; gap:44px; align-items:start; margin-top:40px; }
+.fm-calc-panel { background:#fff; border:1px solid #E6E0D8; border-radius:20px; padding:30px; box-shadow:0 1px 2px rgba(19,32,46,.04), 0 18px 44px -28px rgba(19,32,46,.3); }
+.fm-field { margin-bottom:22px; }
+.fm-field label { display:block; font-size:.78rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#6B7A8A; margin-bottom:8px; }
+.fm-field select, .fm-field input {
+  width:100%; padding:14px 15px; border-radius:11px; border:1.5px solid #DAD3C9;
+  background:#fff; color:#13202E; font:inherit; font-size:1rem;
+}
+.fm-field select:focus, .fm-field input:focus { outline:none; border-color:#B8123A; box-shadow:0 0 0 3px rgba(184,18,58,.14); }
+.fm-steppers { display:flex; align-items:center; gap:12px; }
+.fm-step {
+  width:46px; height:46px; flex:none; border-radius:11px; border:1.5px solid #DAD3C9;
+  background:#fff; color:#13202E; font-size:1.3rem; line-height:1; cursor:pointer;
+  display:grid; place-items:center; transition:border-color .18s, background .18s;
+}
+.fm-step:hover:not(:disabled) { border-color:#B8123A; background:#FFF5F7; }
+.fm-step:disabled { opacity:.38; cursor:not-allowed; }
+.fm-step:focus-visible { outline:3px solid #B8123A; outline-offset:2px; }
+.fm-steppers input { text-align:center; font-variant-numeric:tabular-nums; font-weight:700; }
+
+.fm-total { margin-top:28px; padding-top:24px; border-top:1px solid #EDE7DF; }
+.fm-total-row { display:flex; align-items:baseline; justify-content:space-between; gap:16px; }
+.fm-total-label { font-size:.82rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#6B7A8A; }
+.fm-total-amount { font-size:clamp(1.9rem,3.6vw,2.5rem); font-weight:800; letter-spacing:-0.03em; font-variant-numeric:tabular-nums; }
+.fm-total-each { margin-top:6px; font-size:.86rem; color:#6B7A8A; font-variant-numeric:tabular-nums; }
+
+/* The line that answers the only question a would-be named sponsor
+   has. Green when cleared, neutral when not — never red: not yet
+   qualifying is not an error, and colouring it like one punishes
+   somebody in the middle of deciding to give money away. */
+.fm-verdict { margin-top:20px; padding:14px 16px; border-radius:12px; font-size:.92rem; line-height:1.5; display:flex; gap:11px; align-items:flex-start; }
+.fm-verdict-yes { background:#EAF7EF; color:#14532D; }
+.fm-verdict-no  { background:#F3EFE9; color:#53453A; }
+.fm-verdict svg { flex:none; margin-top:2px; }
+
+.fm-calc-side h3 { margin-top:0; }
+.fm-calc-side p { font-size:.98rem; line-height:1.65; color:#4A5A6B; }
+.fm-tier-now { margin-top:22px; padding:18px 20px; border-radius:14px; background:#0E1A26; color:#fff; }
+.fm-tier-now-label { font-size:.74rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.56); }
+.fm-tier-now-name { font-size:1.3rem; font-weight:800; margin-top:4px; letter-spacing:-0.02em; }
+.fm-tier-now-next { margin-top:8px; font-size:.86rem; color:rgba(255,255,255,.66); line-height:1.5; }
+</style>
+<style>
+/* ---- tiers: a climb, not four identical boxes ---------------------
+   Four same-size cards would say the tiers are alternatives. They are
+   not — they are one ladder, and a sponsor is deciding how far up it
+   to go. Each rung is a little taller and a little darker than the one
+   before, so the shape of the section carries the meaning before any
+   of it is read. */
+.fm-ladder { margin-top:40px; border:1px solid #E6E0D8; border-radius:20px; overflow:hidden; background:#fff; }
+.fm-rung { display:grid; grid-template-columns:230px 190px 1fr; gap:24px; align-items:center; padding:26px 30px; border-top:1px solid #EDE7DF; transition:background .2s; }
+.fm-rung:first-child { border-top:0; }
+.fm-rung:nth-child(1) { background:#fff; }
+.fm-rung:nth-child(2) { background:#FDFAF6; padding-top:30px; padding-bottom:30px; }
+.fm-rung:nth-child(3) { background:#F8F2EA; padding-top:34px; padding-bottom:34px; }
+.fm-rung:nth-child(4) { background:#0E1A26; color:#fff; padding-top:40px; padding-bottom:40px; }
+.fm-rung.is-live { box-shadow:inset 4px 0 0 #B8123A; }
+.fm-rung-name { font-size:1.08rem; font-weight:800; letter-spacing:-0.02em; }
+.fm-rung:nth-child(3) .fm-rung-name { font-size:1.18rem; }
+.fm-rung:nth-child(4) .fm-rung-name { font-size:1.3rem; }
+.fm-rung-amt { font-size:.95rem; font-weight:700; color:#8A6A2F; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.fm-rung:nth-child(4) .fm-rung-amt { color:#F0C078; }
+.fm-rung-get { font-size:.93rem; line-height:1.55; color:#4A5A6B; }
+.fm-rung:nth-child(4) .fm-rung-get { color:rgba(255,255,255,.76); }
+/* [hidden] alone does not hide this: an author display beats the UA
+   stylesheet's, so without the second rule the badge sits on all four
+   rungs at once while JS believes three are hidden. */
+.fm-rung-you[hidden] { display:none; }
+.fm-rung-you { display:inline-block; margin-left:10px; padding:3px 9px; border-radius:999px; background:#B8123A; color:#fff; font-size:.68rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; vertical-align:middle; }
+.fm-ladder-note { margin-top:18px; font-size:.9rem; color:#6B7A8A; line-height:1.6; }
+
+/* ---- what a scholarship looks like ---- */
+.fm-example { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; margin-top:40px; }
+.fm-card {
+  border-radius:20px; overflow:hidden; background:#fff; border:1px solid #E6E0D8;
+  box-shadow:0 2px 4px rgba(19,32,46,.04), 0 26px 60px -32px rgba(19,32,46,.38);
+}
+.fm-card-top { padding:26px 28px 22px; border-bottom:1px solid #EDE7DF; display:flex; gap:16px; align-items:center; }
+.fm-card-ava { width:56px; height:56px; flex:none; border-radius:50%; background:#0E1A26; color:#fff; display:grid; place-items:center; font-weight:800; font-size:1.05rem; letter-spacing:.02em; }
+.fm-card-name { font-size:1.06rem; font-weight:800; letter-spacing:-0.02em; line-height:1.3; }
+.fm-card-by { font-size:.84rem; color:#6B7A8A; margin-top:3px; }
+.fm-card-body { padding:24px 28px 26px; }
+.fm-card-quote { font-size:.97rem; line-height:1.65; color:#4A5A6B; margin:0 0 22px; }
+.fm-card-meta { display:grid; grid-template-columns:1fr 1fr; gap:16px 20px; }
+.fm-card-k { font-size:.72rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#8A95A3; }
+.fm-card-v { font-size:.95rem; font-weight:700; margin-top:3px; }
+.fm-card-foot { padding:18px 28px; background:#FBFAF8; border-top:1px solid #EDE7DF; display:flex; align-items:center; justify-content:space-between; gap:14px; }
+.fm-slots { font-size:.86rem; color:#6B7A8A; font-variant-numeric:tabular-nums; }
+.fm-slots b { color:#13202E; }
+.fm-fake-btn { padding:10px 20px; border-radius:999px; background:#B8123A; color:#fff; font-size:.86rem; font-weight:700; }
+.fm-example-url { margin-top:18px; font-size:.84rem; color:#6B7A8A; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; word-break:break-all; }
+
+/* ---- how it works: the sequence is the information ---- */
+.fm-steps { counter-reset:fm; display:grid; grid-template-columns:repeat(4,1fr); gap:30px; margin-top:44px; }
+.fm-stepitem { position:relative; padding-top:26px; border-top:2px solid rgba(255,255,255,.18); }
+.fm-stepitem::before {
+  counter-increment:fm; content:counter(fm);
+  position:absolute; top:-15px; left:0; width:28px; height:28px; border-radius:50%;
+  background:#B8123A; color:#fff; display:grid; place-items:center;
+  font-size:.8rem; font-weight:800; font-variant-numeric:tabular-nums;
+}
+.fm-stepitem h3 { color:#fff; }
+.fm-stepitem p { font-size:.93rem; line-height:1.6; color:rgba(255,255,255,.68); margin:0; }
+
+/* ---- who it reaches ---- */
+.fm-who { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:40px; }
+.fm-whoitem { padding:28px 26px; border-radius:18px; background:#fff; border:1px solid #E6E0D8; }
+.fm-whoitem .fm-card-k { color:#8A6A2F; }
+.fm-whoitem p { font-size:.94rem; line-height:1.6; color:#4A5A6B; margin:10px 0 0; }
+
+/* ---- faq ---- */
+.fm-faq { margin-top:40px; border-top:1px solid #E2DCD3; }
+.fm-q { width:100%; text-align:left; background:none; border:0; border-bottom:1px solid #E2DCD3; padding:22px 44px 22px 0; position:relative; cursor:pointer; font:inherit; font-size:1.02rem; font-weight:700; color:#13202E; letter-spacing:-0.01em; }
+.fm-q::after { content:''; position:absolute; right:10px; top:50%; width:10px; height:10px; margin-top:-6px; border-right:2.2px solid #8A95A3; border-bottom:2.2px solid #8A95A3; transform:rotate(45deg); transition:transform .22s cubic-bezier(.2,.7,.3,1); }
+.fm-q[aria-expanded="true"]::after { transform:rotate(-135deg); margin-top:-2px; }
+.fm-q:hover { color:#B8123A; }
+.fm-q:focus-visible { outline:3px solid #B8123A; outline-offset:-3px; }
+.fm-a { display:none; padding:0 56px 24px 0; border-bottom:1px solid #E2DCD3; font-size:.98rem; line-height:1.7; color:#4A5A6B; max-width:70ch; }
+.fm-a.is-open { display:block; }
+
+/* ---- closing ---- */
+.fm-end { text-align:center; }
+.fm-end .fm-h2 { max-width:18ch; margin-left:auto; margin-right:auto; }
+.fm-end .fm-lead { margin:0 auto 32px; text-align:center; }
+.fm-end-cta { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+/* ---- responsive ---- */
+@media (max-width:980px) {
+  .fm-doors, .fm-calc, .fm-example { grid-template-columns:1fr; gap:26px; }
+  .fm-steps { grid-template-columns:1fr 1fr; gap:26px 24px; }
+  .fm-who { grid-template-columns:1fr; }
+  .fm-rung { grid-template-columns:1fr; gap:8px; padding:24px 24px !important; }
+  .fm-rung-amt { color:#6B5020; }
+  .fm-rung:nth-child(4) .fm-rung-amt { color:#F0C078; }
+}
+@media (max-width:640px) {
+  .fm-sec { padding:68px 0; }
+  .fm-hero { padding:56px 0 64px; }
+  .fm-steps { grid-template-columns:1fr; }
+  .fm-calc-panel { padding:24px 20px; }
+  .fm-card-meta { grid-template-columns:1fr; }
+  .fm-hero-cta .fm-btn, .fm-end-cta .fm-btn { width:100%; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .fm-btn, .fm-q::after, .fm-rung { transition:none; }
+  .fm-btn:hover { transform:none; }
+}
+</style>
+</head>
+<body class="fm">
+
+<!-- Region Banner -->
+<div class="region-banner" id="region-banner">
+  <span class="region-label" style="font-weight:700;color:rgba(255,255,255,0.55);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Learners from</span>
+  <div class="regions">
+    <span class="region-item">&#127475;&#127468; Nigeria</span>
+    <span class="region-item">&#127468;&#127463; United Kingdom</span>
+    <span class="region-item">&#127482;&#127480; United States</span>
+    <span class="region-item">&#127472;&#127466; Kenya</span>
+    <span class="region-item">&#127468;&#127469; Ghana</span>
+    <span class="region-item">&#127487;&#127462; South Africa</span>
+    <span class="region-cohort" data-cohort-countdown hidden></span>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-logo">
+      <img src="/assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+    </a>
+
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <div class="nav-mega" data-nav-mega></div>
+      <a class="nav-community" href="/community/">Community</a>
+      <a class="nav-wide-only" href="/experts.html">Experts</a>
+      <a class="nav-wide-only" href="/organisations.html">For Organisations</a>
+      <div class="nav-more" style="display:none">
+        <button type="button" class="nav-more-btn" aria-haspopup="true">More <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-more-menu">
+          <a href="/experts.html">Experts</a>
+          <a href="/organisations.html">For Organisations</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-cta">
+      <a href="https://portal.brixgate.com/login" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">Login</a>
+      <a href="/apply.html" class="btn btn-primary btn-sm">Apply Now</a>
+    </div>
+
+    <button class="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ════════ 1 · HERO ════════ -->
+<header class="fm-hero">
+  <div class="fm-wrap">
+    <h1 class="fm-h1">Sponsor a skill. Build a legacy.</h1>
+    <p class="fm-lead">Put someone through a Brixgate technology programme, or create a scholarship in your own name. We handle selection, training and learner development &mdash; and tell you what your money did.</p>
+    <div class="fm-hero-cta">
+      <a href="#cost" class="fm-btn fm-btn-primary">Sponsor a learner</a>
+      <a href="#cost" class="fm-btn fm-btn-ghost">Create a scholarship</a>
+    </div>
+    <p class="fm-hero-note">Looking for a scholarship rather than funding one? <a href="/scholarships/">See what is open</a>.</p>
+  </div>
+</header>
+
+<!-- ════════ 2 · THE TWO DOORS ════════ -->
+<section class="fm-sec">
+  <div class="fm-wrap">
+    <div class="fm-narrow">
+      <h2 class="fm-h2">Two ways in. The difference is whose name is on it.</h2>
+      <p class="fm-lead">Both put a real person through a real programme. One of them also puts a plaque on the wall.</p>
+    </div>
+
+    <div class="fm-doors">
+      <div class="fm-door">
+        <div class="fm-door-cost">From one learner up</div>
+        <h3 class="fm-h3">Sponsor a learner</h3>
+        <p>Choose a programme, choose how many people, pay. We select the beneficiaries against published criteria and get them through the course.</p>
+        <ul>
+          <li>Any amount, from a single seat</li>
+          <li>Nominate someone, or let us select</li>
+          <li>Progress updates while they study</li>
+        </ul>
+        <a href="#cost" class="fm-btn fm-btn-ghost">See what a seat costs</a>
+      </div>
+
+      <div class="fm-door">
+        <div class="fm-door-cost">3+ learners &middot; &#8358;500,000 minimum</div>
+        <h3 class="fm-h3">Create a named scholarship</h3>
+        <p>Everything above, plus the scholarship carries a name you choose &mdash; your own, a family member's, a mentor's, or your organisation's &mdash; on its own page people can apply to and share.</p>
+        <ul>
+          <li>A public page at its own address</li>
+          <li>Your photograph or logo, and your words</li>
+          <li>Named beneficiaries, with their consent</li>
+        </ul>
+        <a href="#cost" class="fm-btn fm-btn-ghost">Check if you qualify</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 3 · WHAT IT COSTS ════════
+     The decisive section, so it gets the best position on the page.
+     Prices come from the pricing API, not from this file: a sponsorship
+     page quoting a number the apply page disagrees with would be worse
+     than quoting none. -->
+<section class="fm-sec fm-sec-tint" id="cost">
+  <div class="fm-wrap">
+    <div class="fm-narrow">
+      <h2 class="fm-h2">What does it actually cost?</h2>
+      <p class="fm-lead">Real prices, the same ones a student pays. Change the programme or the number of people and the total moves with it.</p>
+    </div>
+
+    <div class="fm-calc">
+      <div class="fm-calc-panel">
+        <div class="fm-field">
+          <label for="fm-prog">Programme</label>
+          <select id="fm-prog" aria-describedby="fm-total-amount">
+            <option value="">Loading programmes&hellip;</option>
+          </select>
+        </div>
+
+        <div class="fm-field">
+          <label for="fm-count">How many learners</label>
+          <div class="fm-steppers">
+            <button type="button" class="fm-step" id="fm-minus" aria-label="One fewer learner">&minus;</button>
+            <input type="number" id="fm-count" value="3" min="1" max="500" inputmode="numeric" aria-label="Number of learners" />
+            <button type="button" class="fm-step" id="fm-plus" aria-label="One more learner">+</button>
+          </div>
+        </div>
+
+        <div class="fm-total">
+          <div class="fm-total-row">
+            <span class="fm-total-label">Total sponsorship</span>
+            <span class="fm-total-amount" id="fm-total-amount">&mdash;</span>
+          </div>
+          <div class="fm-total-each" id="fm-total-each"></div>
+          <!-- aria-live, because this is the number the whole page is
+               about and it changes without the page moving. -->
+          <div class="fm-verdict fm-verdict-no" id="fm-verdict" role="status" aria-live="polite">
+            <span id="fm-verdict-icon"></span>
+            <span id="fm-verdict-text">Pick a programme to see where you land.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fm-calc-side">
+        <h3 class="fm-h3">Where that puts you</h3>
+        <p>Sponsorship is counted in whole funded seats, not pledges. A named scholarship needs three funded learners <em>and</em> &#8358;500,000 &mdash; both, whichever tier the total reaches.</p>
+        <div class="fm-tier-now">
+          <div class="fm-tier-now-label">Your tier</div>
+          <div class="fm-tier-now-name" id="fm-tier-name">&mdash;</div>
+          <div class="fm-tier-now-next" id="fm-tier-next">Choose a programme above.</div>
+        </div>
+        <p style="margin-top:22px;font-size:.88rem;color:#6B7A8A">Paying in Naira goes through Paystack, other currencies through Stripe. Nothing is charged on this page &mdash; the form opens when you choose a door.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 4 · TIERS ════════ -->
+<section class="fm-sec">
+  <div class="fm-wrap">
+    <div class="fm-narrow">
+      <h2 class="fm-h2">Four rungs, one ladder.</h2>
+      <p class="fm-lead">What a sponsor gets back scales with what they put in. Everything below Legacy still funds a real seat &mdash; it just does not carry a name.</p>
+    </div>
+
+    <div class="fm-ladder" id="fm-ladder">
+      <div class="fm-rung" data-tier="FUTURE">
+        <div class="fm-rung-name">Future Sponsor<span class="fm-rung-you" hidden>You</span></div>
+        <div class="fm-rung-amt">Below &#8358;500,000</div>
+        <div class="fm-rung-get">Funds seats outright. Acknowledgement and progress updates as your learners move through the course.</div>
+      </div>
+      <div class="fm-rung" data-tier="LEGACY">
+        <div class="fm-rung-name">Legacy Sponsor<span class="fm-rung-you" hidden>You</span></div>
+        <div class="fm-rung-amt">&#8358;500,000 &ndash; &#8358;999,999</div>
+        <div class="fm-rung-get">A named scholarship with its own page, carrying your photograph or logo and the words you choose.</div>
+      </div>
+      <div class="fm-rung" data-tier="IMPACT">
+        <div class="fm-rung-name">Impact Partner<span class="fm-rung-you" hidden>You</span></div>
+        <div class="fm-rung-amt">&#8358;1m &ndash; &#8358;1,999,999</div>
+        <div class="fm-rung-get">Everything in Legacy, featured placement across the site, and a written impact report on what your scholarship produced.</div>
+      </div>
+      <div class="fm-rung" data-tier="TRANSFORMATION">
+        <div class="fm-rung-name">Transformation Partner<span class="fm-rung-you" hidden>You</span></div>
+        <div class="fm-rung-amt">&#8358;2m and above</div>
+        <div class="fm-rung-get">Premium recognition, your organisation's branding on the scholarship, and detailed reporting through to completion.</div>
+      </div>
+    </div>
+    <p class="fm-ladder-note">A named scholarship requires three fully funded learners <strong>and</strong> &#8358;500,000 in total. Both conditions, regardless of tier.</p>
+  </div>
+</section>
+
+<!-- ════════ 5 · WHAT A SCHOLARSHIP LOOKS LIKE ════════
+     A sponsor is buying a thing they cannot see, so the page shows it.
+     Labelled as an example in the copy and in the sr-only text below,
+     because a fabricated scholarship presented as a real one would be
+     the single worst thing on this page. -->
+<section class="fm-sec fm-sec-tint">
+  <div class="fm-wrap">
+    <div class="fm-narrow">
+      <h2 class="fm-h2">This is the thing you are buying.</h2>
+      <p class="fm-lead">Every named scholarship gets its own page at its own address, which the sponsor can share and applicants can apply through.</p>
+    </div>
+
+    <div class="fm-example">
+      <div>
+        <div class="fm-card" aria-label="Example scholarship page, for illustration">
+          <div class="fm-card-top">
+            <div class="fm-card-ava" aria-hidden="true">EA</div>
+            <div>
+              <div class="fm-card-name">The Elizabeth Adeboye Technology Scholarship</div>
+              <div class="fm-card-by">Legacy Sponsor &middot; funded by the Adeboye family</div>
+            </div>
+          </div>
+          <div class="fm-card-body">
+            <p class="fm-card-quote">&ldquo;My mother taught secondary school mathematics for thirty-one years. This is for people who are good at something and have never been given the room to prove it.&rdquo;</p>
+            <div class="fm-card-meta">
+              <div><div class="fm-card-k">Programme</div><div class="fm-card-v">Data Analytics</div></div>
+              <div><div class="fm-card-k">Beneficiaries</div><div class="fm-card-v">Youth, 18&ndash;30</div></div>
+              <div><div class="fm-card-k">Applications close</div><div class="fm-card-v">30 January 2027</div></div>
+              <div><div class="fm-card-k">Status</div><div class="fm-card-v">Open</div></div>
+            </div>
+          </div>
+          <div class="fm-card-foot">
+            <span class="fm-slots"><b>2</b> of 4 places left</span>
+            <span class="fm-fake-btn" aria-hidden="true">Apply</span>
+          </div>
+        </div>
+        <p class="fm-example-url">brixgate.com/scholarships/elizabeth-adeboye-technology-scholarship</p>
+      </div>
+
+      <div>
+        <h3 class="fm-h3">An example, not a real scholarship</h3>
+        <p class="fm-lead" style="font-size:1rem">The page above shows the layout every named scholarship gets. The name, the message and the family are invented to demonstrate it &mdash; the first real ones go up when the first sponsors create them.</p>
+        <p class="fm-lead" style="font-size:1rem;margin-top:16px">You write the name and the message. You choose the programme and how many places. We publish it once Operations has reviewed it, and it stays up with its own link for as long as it runs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 6 · HOW IT WORKS ════════
+     Numbered, because here the order genuinely is the information:
+     a sponsor wants to know what happens after they pay. -->
+<section class="fm-sec fm-sec-ink">
+  <div class="fm-wrap">
+    <div class="fm-narrow">
+      <h2 class="fm-h2">What happens after you pay.</h2>
+      <p class="fm-lead">The part most giving goes quiet on.</p>
+    </div>
+    <div class="fm-steps">
+      <div class="fm-stepitem">
+        <h3 class="fm-h3">You choose and pay</h3>
+        <p>Programme, number of learners, and whether the scholarship carries a name. Payment through Paystack or Stripe.</p>
+      </div>
+      <div class="fm-stepitem">
+        <h3 class="fm-h3">We find the people</h3>
+        <p>Applications open against published criteria. We shortlist and select, or enrol the person you nominated.</p>
+      </div>
+      <div class="fm-stepitem">
+        <h3 class="fm-h3">They do the work</h3>
+        <p>Live cohorts taught by practitioners, with attendance and progress tracked the same way every Brixgate learner's is.</p>
+      </div>
+      <div class="fm-stepitem">
+        <h3 class="fm-h3">You find out what happened</h3>
+        <p>Who was selected, how they did, and what they finished with. Not a thank-you note &mdash; the actual outcome.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 7 · WHO IT REACHES ════════ -->
+<section class="fm-sec">
+  <div class="fm-wrap">
+    <div class="fm-narrow">
+      <h2 class="fm-h2">Who the money reaches.</h2>
+      <p class="fm-lead">You pick the group. We publish the criteria we select against, so nobody has to take the selection on trust.</p>
+    </div>
+    <div class="fm-who">
+      <div class="fm-whoitem">
+        <div class="fm-card-k">Students</div>
+        <p>In school or just out, with no route into technical work and no money for one.</p>
+      </div>
+      <div class="fm-whoitem">
+        <div class="fm-card-k">Youth</div>
+        <p>Working or looking, old enough to need the income and young enough to change direction.</p>
+      </div>
+      <div class="fm-whoitem">
+        <div class="fm-card-k">Adults</div>
+        <p>Mid-career, changing field, or returning to work after time away.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 8 · FAQ ════════ -->
+<section class="fm-sec fm-sec-tint">
+  <div class="fm-wrap fm-narrow">
+    <h2 class="fm-h2">Before you decide.</h2>
+    <div class="fm-faq" id="fm-faq">
+      <button class="fm-q" type="button" aria-expanded="false" aria-controls="fa1">Can I choose who gets it?</button>
+      <div class="fm-a" id="fa1">Yes. You can nominate someone directly, and we enrol them provided they meet the programme's entry requirements. If you would rather not choose, we select against published criteria and tell you who we picked.</div>
+
+      <button class="fm-q" type="button" aria-expanded="false" aria-controls="fa2">What if nobody applies, or the places go unused?</button>
+      <div class="fm-a" id="fa2">Unused places roll into the next cohort of the same programme rather than being absorbed. If a scholarship cannot be filled at all, Operations will contact you about moving it to another programme or refunding the unused portion.</div>
+
+      <button class="fm-q" type="button" aria-expanded="false" aria-controls="fa3">Can I sponsor without my name appearing anywhere?</button>
+      <div class="fm-a" id="fa3">Yes. Naming is a choice, not a requirement. You can fund any number of learners anonymously, and nothing is published without your explicit consent.</div>
+
+      <button class="fm-q" type="button" aria-expanded="false" aria-controls="fa4">I am outside Nigeria. Can I still sponsor?</button>
+      <div class="fm-a" id="fa4">Yes. Prices are shown in your local currency and international payments go through Stripe. The learners are mostly in Nigeria and across West Africa; the money is not required to be.</div>
+
+      <button class="fm-q" type="button" aria-expanded="false" aria-controls="fa5">What do I actually get back?</button>
+      <div class="fm-a" id="fa5">At every tier: confirmation of who was selected and how they progressed. From Legacy upward: a public scholarship page with your name on it. From Impact upward: a written report on outcomes you can share or file.</div>
+
+      <button class="fm-q" type="button" aria-expanded="false" aria-controls="fa6">Is this tax deductible?</button>
+      <div class="fm-a" id="fa6">That depends on where you pay tax and we are not in a position to advise on it. We issue a receipt showing what was paid and what it funded; take that to your accountant.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 9 · CLOSING ════════ -->
+<section class="fm-sec fm-sec-ink fm-end">
+  <div class="fm-wrap">
+    <h2 class="fm-h2">Somebody is good at this and cannot afford to find out.</h2>
+    <p class="fm-lead">Three learners is where a scholarship starts carrying a name. One is where it starts mattering to somebody.</p>
+    <div class="fm-end-cta">
+      <a href="#cost" class="fm-btn fm-btn-primary">Sponsor a learner</a>
+      <a href="https://wa.me/2347083031095?text=Hi%20Brixgate%2C%20I%27d%20like%20to%20talk%20about%20sponsoring%20through%20FutureMakers." target="_blank" rel="noopener" class="fm-btn fm-btn-ghost">Talk to us first</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/index.html" class="nav-logo footer-logo">
+          <img src="/assets/logo-color-nobg.svg" alt="Brixgate" class="nav-logo-img" />
+        </a>
+        <p>We produce the professionals the AI era runs on, and rebuild the institutions they work in. Live sprints built for each field, led by practitioners who do the work.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/share/1Hzr1L25Vo/?mibextid=wwXIfr" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook" title="Facebook">
+            <img src="/assets/Facebook.png" alt="Facebook" width="22" height="22" style="display:block">
+          </a>
+          <a href="https://www.instagram.com/brixgate?igsh=bWFtdnE3NnpyZXAw&utm_source=qr" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram" title="Instagram">
+            <img src="/assets/social.png" alt="Instagram" width="22" height="22" style="display:block">
+          </a>
+          <a href="https://x.com/brixgate?s=21" target="_blank" rel="noopener" class="social-icon" aria-label="X / Twitter" title="X">
+            <img src="/assets/twitter (1).png" alt="Twitter" width="22" height="22" style="display:block">
+          </a>
+          <a href="https://www.linkedin.com/company/brixgate" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn" title="LinkedIn">
+            <img src="/assets/linkedin.png" alt="LinkedIn" width="22" height="22" style="display:block">
+          </a>
+          <a href="mailto:we@brixgate.com" class="social-icon" aria-label="Email" title="Email us">
+            <img src="/assets/gmail.png" alt="Email" width="22" height="22" style="display:block">
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Programmes</h5>
+        <ul><li><a href="/foundations.html">AI Foundations</a></li><li><a href="/professionals.html">AI for Professionals</a></li><li><a href="/professionals.html#pricing">Pricing</a></li><li><a href="/apply.html">Apply Now</a></li><li><a href="/verify.html">Verify a Certificate</a></li></ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Community</h5>
+        <ul>
+          <li><a href="/community/">Free AI Trainings</a></li>
+          <li><a href="/experts.html">Meet Our Experts</a></li>
+          <li><a href="/experts.html#qualify">Become an Expert</a></li>
+          <li><a href="/experts.html#apply">Expert Application</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Organisation</h5>
+        <ul>
+          <li><a href="/about.html">About Brixgate</a></li>
+          <li><a href="/organisations.html">Corporate Programmes</a></li>
+          <li><a href="/organisations.html#packages">Packages &amp; Pricing</a></li>
+          <li><a href="/organisations.html#contact">Request a Demo</a></li>
+          <li><a href="mailto:we@brixgate.com">we@brixgate.com</a></li>
+          <li><a href="/verify.html">Verify a Certificate</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© <span id="footer-year">2025</span> Brixgate Ltd, RC 9082968. All rights reserved. | 128 City Road, London, UK · <a href="tel:+2347083031095">+234 708 303 1095</a></p>
+    <div class="footer-bottom-links">
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+      <a href="/privacy-policy.html#cookies">Cookie Policy</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/price-display.js"></script>
+<script src="/currency.js"></script>
+<script src="/script.js"></script>
+<script src="/cohort-countdown.js"></script>
+<script src="/foundations-courses.js"></script>
+<script src="/nav-programmes.js"></script>
+
+<script>
+/* ============================================================
+   FUTUREMAKERS — the calculator
+
+   Prices come from /pricing-plans, the same source the apply page and
+   every programme card reads. A sponsorship page quoting a number the
+   checkout disagrees with would be worse than quoting none, so there
+   are no prices written into this file.
+
+   Two things this does NOT do, on purpose:
+     • It does not decide whether a named scholarship is allowed. It
+       shows the sponsor where they stand; the API decides, because
+       anything decided here can be edited by the person paying.
+     • It does not take money. The buttons go to the form when the
+       form exists. See docs/SCHOLARSHIP-API.md.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var API = 'https://dev.api.brixgate.com/api/v1';
+  var NAMED_MIN_NGN   = 500000;
+  var NAMED_MIN_SEATS = 3;
+
+  var TIERS = [
+    { key:'TRANSFORMATION', from:2000000, name:'Transformation Partner' },
+    { key:'IMPACT',         from:1000000, name:'Impact Partner' },
+    { key:'LEGACY',         from:500000,  name:'Legacy Sponsor' },
+    { key:'FUTURE',         from:0,       name:'Future Sponsor' }
+  ];
+
+  var sel   = document.getElementById('fm-prog');
+  var count = document.getElementById('fm-count');
+  if (!sel || !count) return;
+
+  var plans = [];
+
+  function cur() {
+    return (window.bxCurrency && window.bxCurrency() === 'usd') ? 'USD' : 'NGN';
+  }
+  function sym(c) { return c === 'USD' ? '$' : '₦'; }
+
+  function money(c, n) { return sym(c) + Math.round(n).toLocaleString('en-US'); }
+
+  /* The NGN threshold is the policy. For a sponsor paying in dollars we
+     compare against the NGN price of the same seats, so the bar is the
+     same bar for everyone rather than drifting with the exchange rate. */
+  function seatPrice(plan, currency) {
+    var b = (plan.breakdowns || []).filter(function (x) {
+      return String(x.currency || '').toUpperCase() === currency;
+    })[0];
+    if (!b) return null;
+    var v = Number(b.final_price != null ? b.final_price : b.finalPrice);
+    return isFinite(v) && v > 0 ? v : null;
+  }
+
+  function tierFor(ngnTotal) {
+    for (var i = 0; i < TIERS.length; i++) if (ngnTotal >= TIERS[i].from) return TIERS[i];
+    return TIERS[TIERS.length - 1];
+  }
+
+  var ICON_YES = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+  var ICON_NO  = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>';
+
+  function render() {
+    var plan = plans.filter(function (p) { return String(p.program_id) === sel.value; })[0];
+    var n = Math.max(1, Math.min(500, parseInt(count.value, 10) || 1));
+    var c = cur();
+
+    var amountEl = document.getElementById('fm-total-amount');
+    var eachEl   = document.getElementById('fm-total-each');
+    var vIcon    = document.getElementById('fm-verdict-icon');
+    var vText    = document.getElementById('fm-verdict-text');
+    var verdict  = document.getElementById('fm-verdict');
+    var tName    = document.getElementById('fm-tier-name');
+    var tNext    = document.getElementById('fm-tier-next');
+
+    document.getElementById('fm-minus').disabled = n <= 1;
+
+    if (!plan) {
+      amountEl.textContent = '—';
+      eachEl.textContent = '';
+      tName.textContent = '—';
+      tNext.textContent = 'Choose a programme above.';
+      return;
+    }
+
+    var each = seatPrice(plan, c);
+    var ngnEach = seatPrice(plan, 'NGN');
+    if (each == null) {
+      amountEl.textContent = '—';
+      eachEl.textContent = 'This programme has no price set in ' + c + ' yet.';
+      return;
+    }
+
+    var total = each * n;
+    var ngnTotal = ngnEach != null ? ngnEach * n : total;
+
+    amountEl.textContent = money(c, total);
+    eachEl.textContent = n + (n === 1 ? ' learner' : ' learners') + ' × ' + money(c, each) + ' each';
+
+    var tier = tierFor(ngnTotal);
+    tName.textContent = tier.name;
+
+    var next = null;
+    for (var i = TIERS.length - 1; i >= 0; i--) if (TIERS[i].from > ngnTotal) { next = TIERS[i]; break; }
+    tNext.textContent = next
+      ? money('NGN', next.from - ngnTotal) + ' more reaches ' + next.name + '.'
+      : 'The highest tier.';
+
+    var seatsOk = n >= NAMED_MIN_SEATS;
+    var moneyOk = ngnTotal >= NAMED_MIN_NGN;
+
+    if (seatsOk && moneyOk) {
+      verdict.className = 'fm-verdict fm-verdict-yes';
+      vIcon.innerHTML = ICON_YES;
+      vText.textContent = 'This qualifies for a named scholarship.';
+    } else {
+      verdict.className = 'fm-verdict fm-verdict-no';
+      vIcon.innerHTML = ICON_NO;
+      var missing = [];
+      if (!seatsOk) missing.push((NAMED_MIN_SEATS - n) + ' more ' + (NAMED_MIN_SEATS - n === 1 ? 'learner' : 'learners'));
+      if (!moneyOk) missing.push(money('NGN', NAMED_MIN_NGN - ngnTotal) + ' more');
+      vText.textContent = 'Funds ' + n + (n === 1 ? ' place' : ' places') + '. A named scholarship needs ' + missing.join(' and ') + '.';
+    }
+
+    /* Mark the rung the sponsor is standing on. */
+    var rungs = document.querySelectorAll('#fm-ladder .fm-rung');
+    for (var r = 0; r < rungs.length; r++) {
+      var on = rungs[r].getAttribute('data-tier') === tier.key;
+      rungs[r].classList.toggle('is-live', on);
+      rungs[r].querySelector('.fm-rung-you').hidden = !on;
+    }
+  }
+
+  fetch(API + '/pricing-plans')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (j) {
+      var d = (j && j.data) || {};
+      var list = d.pricing_plans || d.plans || [];
+      /* INDIVIDUAL only: a sponsorship buys seats one at a time, and a
+         team plan prices a block differently. */
+      plans = list.filter(function (p) {
+        return String(p.plan_type || '').toUpperCase() === 'INDIVIDUAL' &&
+               String(p.status || 'ACTIVE').toUpperCase() === 'ACTIVE' &&
+               seatPrice(p, 'NGN') != null;
+      });
+
+      /* One row per programme, cheapest plan wins if a programme has
+         more than one. */
+      var seen = {};
+      plans = plans.filter(function (p) {
+        if (seen[p.program_id]) return false;
+        seen[p.program_id] = true; return true;
+      });
+
+      if (!plans.length) {
+        sel.innerHTML = '<option value="">Prices unavailable &mdash; please contact us</option>';
+        return;
+      }
+
+      plans.sort(function (a, b) { return seatPrice(a, 'NGN') - seatPrice(b, 'NGN'); });
+      sel.innerHTML = '<option value="">Choose a programme&hellip;</option>' +
+        plans.map(function (p) {
+          var t = String(p.title || '').replace(/\s*[-–]\s*(Individual|Teams?)\s*$/i, '');
+          return '<option value="' + p.program_id + '">' + t.replace(/[&<>"]/g, '') + '</option>';
+        }).join('');
+
+      /* Default to the first programme so the section is never a row of
+         dashes: the number is the argument, and an empty one argues
+         nothing. */
+      sel.value = String(plans[0].program_id);
+      render();
+    })
+    .catch(function () {
+      sel.innerHTML = '<option value="">Prices unavailable &mdash; please contact us</option>';
+    });
+
+  sel.addEventListener('change', render);
+  count.addEventListener('input', render);
+  document.getElementById('fm-plus').addEventListener('click', function () {
+    count.value = Math.min(500, (parseInt(count.value, 10) || 1) + 1); render();
+  });
+  document.getElementById('fm-minus').addEventListener('click', function () {
+    count.value = Math.max(1, (parseInt(count.value, 10) || 1) - 1); render();
+  });
+  /* Prices are shown in the visitor's currency, so a late geo answer
+     has to repaint them. */
+  document.addEventListener('bx:currency', render);
+})();
+
+/* ---- FAQ ---- */
+(function () {
+  var faq = document.getElementById('fm-faq');
+  if (!faq) return;
+  faq.addEventListener('click', function (e) {
+    var q = e.target.closest('.fm-q');
+    if (!q) return;
+    var open = q.getAttribute('aria-expanded') === 'true';
+    var a = document.getElementById(q.getAttribute('aria-controls'));
+    q.setAttribute('aria-expanded', String(!open));
+    if (a) a.classList.toggle('is-open', !open);
+  });
+})();
+</script>
+
+</body>
+</html>
