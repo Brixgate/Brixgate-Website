@@ -23,19 +23,24 @@
 /* ============================================================
    FUTUREMAKERS  (.fm-)
 
-   A sponsor is not a student. The landing page they already know is
-   loud, red and built to make someone act on their own behalf; this
-   one is being asked to act on somebody else's, so it is quieter,
-   warmer and slower, and it leads with the arithmetic rather than the
-   adjectives. The money question — what does three learners actually
-   cost — is the one that decides, so it gets the best position on the
-   page and real numbers from the pricing API rather than a promise.
+   Same world as the rest of the site, not a cousin of it. The first
+   build ran a warm cream-and-gold palette on the argument that a
+   sponsor is not a student; it read as a different company, which is
+   the opposite of what a page asking for money needs. It now uses the
+   site's own values — #021024 ink, #F6F5F5 surface, white body, brand
+   red — and earns its difference through pace and photography instead
+   of a separate colour story.
+
+   The red is #D6002C rather than brand #FF294E wherever it carries
+   white text: brand red is 3.7:1 against white, under AA before it
+   holds a 16px button label. #D6002C is 5.39:1 and reads as the same
+   red. Brand red stays for rules, dots and tints that carry no text.
    ============================================================ */
 /* Muted text is #5E6B7A, not the #6B7A8A the rest of the site uses.
-   This page has three surfaces — white cards, a #FBFAF8 body and a
-   #F3EFE9 tint — and the site's grey falls to 3.84:1 on the tint.
+   This page has three surfaces — white cards, a #FFFFFF body and a
+   #F6F5F5 tint — and the site's grey falls to 3.84:1 on the tint.
    #5E6B7A clears 4.5:1 on all three, so one value serves the page. */
-body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-h)); background:#FBFAF8; color:#13202E; }
+body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-h)); background:#FFFFFF; color:#021024; }
 .fm-wrap { max-width:1140px; margin:0 auto; padding:0 24px; }
 .fm-narrow { max-width:720px; }
 
@@ -45,10 +50,10 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
 .fm-h3 { font-size:1.2rem; line-height:1.35; font-weight:700; margin:0 0 8px; }
 /* 65ch keeps a paragraph to the measure a person can track without
    losing the line they are on. */
-.fm-lead { font-size:1.06rem; line-height:1.65; color:#4A5A6B; max-width:65ch; margin:0; }
+.fm-lead { font-size:1.06rem; line-height:1.65; color:#4A5568; max-width:65ch; margin:0; }
 .fm-sec { padding:96px 0; }
-.fm-sec-tint { background:#F3EFE9; }
-.fm-sec-ink  { background:#0E1A26; color:#fff; }
+.fm-sec-tint { background:#F6F5F5; }
+.fm-sec-ink  { background:#021024; color:#fff; }
 .fm-sec-ink .fm-lead { color:rgba(255,255,255,.72); }
 
 /* ---- buttons ---- */
@@ -58,75 +63,90 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
   font:inherit; font-size:.98rem; font-weight:700; line-height:1.2; text-decoration:none;
   transition:transform .2s cubic-bezier(.2,.7,.3,1), background-color .2s, box-shadow .2s;
 }
-/* #B8123A, not brand #FF294E: white on brand red is 3.7:1, under AA
+/* #D6002C, not brand #FF294E: white on brand red is 3.7:1, under AA
    before it carries 16px of button label. This is 6.4:1. */
-.fm-btn-primary { background:#B8123A; color:#fff; box-shadow:0 10px 24px -12px rgba(0,0,0,.55); }
-.fm-btn-primary:hover { background:#9E0F31; transform:translateY(-2px); }
-.fm-btn-ghost { background:transparent; color:#13202E; box-shadow:inset 0 0 0 1.5px rgba(19,32,46,.22); }
-.fm-btn-ghost:hover { box-shadow:inset 0 0 0 1.5px rgba(19,32,46,.5); transform:translateY(-2px); }
+.fm-btn-primary { background:#D6002C; color:#fff; box-shadow:0 10px 24px -12px rgba(0,0,0,.55); }
+.fm-btn-primary:hover { background:#B3002A; transform:translateY(-2px); }
+.fm-btn-ghost { background:transparent; color:#021024; box-shadow:inset 0 0 0 1.5px rgba(2,16,36,.22); }
+.fm-btn-ghost:hover { box-shadow:inset 0 0 0 1.5px rgba(2,16,36,.5); transform:translateY(-2px); }
 .fm-sec-ink .fm-btn-ghost { color:#fff; box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.3); }
 .fm-sec-ink .fm-btn-ghost:hover { box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7); }
-.fm-btn:focus-visible { outline:3px solid #B8123A; outline-offset:3px; }
-.fm-link { color:#B8123A; font-weight:600; text-decoration:underline; text-underline-offset:3px; }
-.fm-link:hover { color:#13202E; }
+.fm-btn:focus-visible { outline:3px solid #D6002C; outline-offset:3px; }
+.fm-link { color:#D6002C; font-weight:600; text-decoration:underline; text-underline-offset:3px; }
+.fm-link:hover { color:#021024; }
 
 /* ---- hero ---- */
-.fm-hero { position:relative; overflow:hidden; padding:86px 0 90px; background:#0E1A26; color:#fff; }
+.fm-hero { position:relative; overflow:hidden; padding:84px 0 92px; background:#021024; color:#fff; }
+/* A wash for depth only. The artwork itself is framed on the right,
+   because a thin-filament render full-bleed at 1280px puts its detail
+   below a pixel and simply disappears — which is exactly what the
+   first attempt did. */
 .fm-hero::before {
   content:''; position:absolute; inset:0; pointer-events:none;
   background:
-    radial-gradient(900px 520px at 8% -15%, rgba(184,18,58,.34), transparent 62%),
-    radial-gradient(760px 520px at 96% 10%, rgba(214,138,58,.20), transparent 64%);
+    radial-gradient(900px 540px at 6% -10%, rgba(214,0,44,.30), transparent 62%),
+    radial-gradient(720px 520px at 98% 18%, rgba(255,87,72,.18), transparent 66%);
 }
 .fm-hero > * { position:relative; }
-.fm-hero .fm-h1 { max-width:14ch; }
-.fm-hero .fm-lead { color:rgba(255,255,255,.76); max-width:52ch; margin-bottom:34px; }
+.fm-hero-grid { display:grid; grid-template-columns:1.02fr .98fr; gap:56px; align-items:center; }
+.fm-hero .fm-h1 { max-width:13ch; }
+.fm-hero .fm-lead { color:rgba(255,255,255,.76); max-width:46ch; margin-bottom:34px; }
 .fm-hero-cta { display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
 .fm-hero-cta .fm-btn-ghost { color:#fff; box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.32); }
 .fm-hero-cta .fm-btn-ghost:hover { box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.72); }
-.fm-hero-note { margin-top:26px; font-size:.88rem; color:rgba(255,255,255,.6); }
-/* inline-block with vertical padding: as a bare inline link this was
-   18px tall, under the 24px WCAG 2.5.8 floor, and it is the only route
-   on this page for somebody who wants a scholarship rather than to
-   fund one. */
-.fm-hero-note a { display:inline-block; padding:4px 0; color:rgba(255,255,255,.86); text-decoration:underline; text-underline-offset:3px; }
+.fm-hero-note { margin-top:26px; font-size:.88rem; color:rgba(255,255,255,.62); }
+.fm-hero-note a { display:inline-block; padding:4px 0; color:rgba(255,255,255,.88); text-decoration:underline; text-underline-offset:3px; }
 .fm-hero-note a:hover { color:#fff; }
+
+.fm-hero-art { position:relative; border-radius:22px; overflow:hidden; background:#010a16; box-shadow:0 2px 6px rgba(0,0,0,.3), 0 40px 80px -36px rgba(0,0,0,.9); }
+.fm-hero-art img { display:block; width:100%; height:auto; filter:brightness(1.45) saturate(1.1); }
+/* The caption says what the picture is doing there. Without it an
+   abstract render on a page about funding people is just decoration. */
+.fm-hero-cap {
+  position:absolute; left:0; right:0; bottom:0; padding:38px 24px 20px;
+  background:linear-gradient(180deg, transparent, rgba(1,10,22,.92) 62%);
+  font-size:.86rem; line-height:1.5; color:rgba(255,255,255,.84);
+}
+@media (max-width:900px) {
+  .fm-hero-grid { grid-template-columns:1fr; gap:36px; }
+  .fm-hero .fm-h1, .fm-hero .fm-lead { max-width:none; }
+}
 
 /* ---- the two doors ---- */
 .fm-doors { display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:44px; }
 .fm-door {
   padding:34px 32px 30px; border-radius:20px; background:#fff;
-  border:1px solid #E6E0D8;
-  box-shadow:0 1px 2px rgba(19,32,46,.04), 0 18px 44px -28px rgba(19,32,46,.3);
+  border:1px solid #E6E8EC;
+  box-shadow:0 1px 2px rgba(2,16,36,.04), 0 18px 44px -28px rgba(2,16,36,.3);
 }
-.fm-door-cost { font-size:.82rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#7A5A20; margin-bottom:14px; }
-.fm-door p { margin:0 0 20px; font-size:.98rem; line-height:1.6; color:#4A5A6B; }
+.fm-door-cost { font-size:.82rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#D6002C; margin-bottom:14px; }
+.fm-door p { margin:0 0 20px; font-size:.98rem; line-height:1.6; color:#4A5568; }
 .fm-door ul { list-style:none; margin:0 0 24px; padding:0; }
-.fm-door li { position:relative; padding-left:24px; margin-bottom:9px; font-size:.93rem; line-height:1.5; color:#4A5A6B; }
-.fm-door li::before { content:''; position:absolute; left:4px; top:.55em; width:7px; height:7px; border-radius:50%; background:#B8123A; }
+.fm-door li { position:relative; padding-left:24px; margin-bottom:9px; font-size:.93rem; line-height:1.5; color:#4A5568; }
+.fm-door li::before { content:''; position:absolute; left:4px; top:.55em; width:7px; height:7px; border-radius:50%; background:#D6002C; }
 
 /* ---- calculator ---- */
 .fm-calc { display:grid; grid-template-columns:1fr .92fr; gap:44px; align-items:start; margin-top:40px; }
-.fm-calc-panel { background:#fff; border:1px solid #E6E0D8; border-radius:20px; padding:30px; box-shadow:0 1px 2px rgba(19,32,46,.04), 0 18px 44px -28px rgba(19,32,46,.3); }
+.fm-calc-panel { background:#fff; border:1px solid #E6E8EC; border-radius:20px; padding:30px; box-shadow:0 1px 2px rgba(2,16,36,.04), 0 18px 44px -28px rgba(2,16,36,.3); }
 .fm-field { margin-bottom:22px; }
 .fm-field label { display:block; font-size:.78rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#5E6B7A; margin-bottom:8px; }
 .fm-field select, .fm-field input {
-  width:100%; padding:14px 15px; border-radius:11px; border:1.5px solid #DAD3C9;
-  background:#fff; color:#13202E; font:inherit; font-size:1rem;
+  width:100%; padding:14px 15px; border-radius:11px; border:1.5px solid #D4D8DE;
+  background:#fff; color:#021024; font:inherit; font-size:1rem;
 }
-.fm-field select:focus, .fm-field input:focus { outline:none; border-color:#B8123A; box-shadow:0 0 0 3px rgba(184,18,58,.14); }
+.fm-field select:focus, .fm-field input:focus { outline:none; border-color:#D6002C; box-shadow:0 0 0 3px rgba(214,0,44,.14); }
 .fm-steppers { display:flex; align-items:center; gap:12px; }
 .fm-step {
-  width:46px; height:46px; flex:none; border-radius:11px; border:1.5px solid #DAD3C9;
-  background:#fff; color:#13202E; font-size:1.3rem; line-height:1; cursor:pointer;
+  width:46px; height:46px; flex:none; border-radius:11px; border:1.5px solid #D4D8DE;
+  background:#fff; color:#021024; font-size:1.3rem; line-height:1; cursor:pointer;
   display:grid; place-items:center; transition:border-color .18s, background .18s;
 }
-.fm-step:hover:not(:disabled) { border-color:#B8123A; background:#FFF5F7; }
+.fm-step:hover:not(:disabled) { border-color:#D6002C; background:#FFF1F3; }
 .fm-step:disabled { opacity:.38; cursor:not-allowed; }
-.fm-step:focus-visible { outline:3px solid #B8123A; outline-offset:2px; }
+.fm-step:focus-visible { outline:3px solid #D6002C; outline-offset:2px; }
 .fm-steppers input { text-align:center; font-variant-numeric:tabular-nums; font-weight:700; }
 
-.fm-total { margin-top:28px; padding-top:24px; border-top:1px solid #EDE7DF; }
+.fm-total { margin-top:28px; padding-top:24px; border-top:1px solid #EEF0F3; }
 .fm-total-row { display:flex; align-items:baseline; justify-content:space-between; gap:16px; }
 .fm-total-label { font-size:.82rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#5E6B7A; }
 .fm-total-amount { font-size:clamp(1.9rem,3.6vw,2.5rem); font-weight:800; letter-spacing:-0.03em; font-variant-numeric:tabular-nums; }
@@ -137,13 +157,13 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
    qualifying is not an error, and colouring it like one punishes
    somebody in the middle of deciding to give money away. */
 .fm-verdict { margin-top:20px; padding:14px 16px; border-radius:12px; font-size:.92rem; line-height:1.5; display:flex; gap:11px; align-items:flex-start; }
-.fm-verdict-yes { background:#EAF7EF; color:#14532D; }
-.fm-verdict-no  { background:#F3EFE9; color:#53453A; }
+.fm-verdict-yes { background:#E9F6EE; color:#14532D; }
+.fm-verdict-no  { background:#F6F5F5; color:#4A5568; }
 .fm-verdict svg { flex:none; margin-top:2px; }
 
 .fm-calc-side h3 { margin-top:0; }
-.fm-calc-side p { font-size:.98rem; line-height:1.65; color:#4A5A6B; }
-.fm-tier-now { margin-top:22px; padding:18px 20px; border-radius:14px; background:#0E1A26; color:#fff; }
+.fm-calc-side p { font-size:.98rem; line-height:1.65; color:#4A5568; }
+.fm-tier-now { margin-top:22px; padding:18px 20px; border-radius:14px; background:#021024; color:#fff; }
 .fm-tier-now-label { font-size:.74rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.56); }
 .fm-tier-now-name { font-size:1.3rem; font-weight:800; margin-top:4px; letter-spacing:-0.02em; }
 .fm-tier-now-next { margin-top:8px; font-size:.86rem; color:rgba(255,255,255,.66); line-height:1.5; }
@@ -155,47 +175,47 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
    to go. Each rung is a little taller and a little darker than the one
    before, so the shape of the section carries the meaning before any
    of it is read. */
-.fm-ladder { margin-top:40px; border:1px solid #E6E0D8; border-radius:20px; overflow:hidden; background:#fff; }
-.fm-rung { display:grid; grid-template-columns:230px 190px 1fr; gap:24px; align-items:center; padding:26px 30px; border-top:1px solid #EDE7DF; transition:background .2s; }
+.fm-ladder { margin-top:40px; border:1px solid #E6E8EC; border-radius:20px; overflow:hidden; background:#fff; }
+.fm-rung { display:grid; grid-template-columns:230px 190px 1fr; gap:24px; align-items:center; padding:26px 30px; border-top:1px solid #EEF0F3; transition:background .2s; }
 .fm-rung:first-child { border-top:0; }
 .fm-rung:nth-child(1) { background:#fff; }
-.fm-rung:nth-child(2) { background:#FDFAF6; padding-top:30px; padding-bottom:30px; }
-.fm-rung:nth-child(3) { background:#F8F2EA; padding-top:34px; padding-bottom:34px; }
-.fm-rung:nth-child(4) { background:#0E1A26; color:#fff; padding-top:40px; padding-bottom:40px; }
-.fm-rung.is-live { box-shadow:inset 4px 0 0 #B8123A; }
+.fm-rung:nth-child(2) { background:#FBFBFC; padding-top:30px; padding-bottom:30px; }
+.fm-rung:nth-child(3) { background:#F4F4F5; padding-top:34px; padding-bottom:34px; }
+.fm-rung:nth-child(4) { background:#021024; color:#fff; padding-top:40px; padding-bottom:40px; }
+.fm-rung.is-live { box-shadow:inset 4px 0 0 #D6002C; }
 .fm-rung-name { font-size:1.08rem; font-weight:800; letter-spacing:-0.02em; }
 .fm-rung:nth-child(3) .fm-rung-name { font-size:1.18rem; }
 .fm-rung:nth-child(4) .fm-rung-name { font-size:1.3rem; }
-.fm-rung-amt { font-size:.95rem; font-weight:700; color:#7A5A20; font-variant-numeric:tabular-nums; white-space:nowrap; }
-.fm-rung:nth-child(4) .fm-rung-amt { color:#F0C078; }
-.fm-rung-get { font-size:.93rem; line-height:1.55; color:#4A5A6B; }
+.fm-rung-amt { font-size:.95rem; font-weight:700; color:#D6002C; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.fm-rung:nth-child(4) .fm-rung-amt { color:#FF9FB2; }
+.fm-rung-get { font-size:.93rem; line-height:1.55; color:#4A5568; }
 .fm-rung:nth-child(4) .fm-rung-get { color:rgba(255,255,255,.76); }
 /* [hidden] alone does not hide this: an author display beats the UA
    stylesheet's, so without the second rule the badge sits on all four
    rungs at once while JS believes three are hidden. */
 .fm-rung-you[hidden] { display:none; }
-.fm-rung-you { display:inline-block; margin-left:10px; padding:3px 9px; border-radius:999px; background:#B8123A; color:#fff; font-size:.68rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; vertical-align:middle; }
+.fm-rung-you { display:inline-block; margin-left:10px; padding:3px 9px; border-radius:999px; background:#D6002C; color:#fff; font-size:.68rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; vertical-align:middle; }
 .fm-ladder-note { margin-top:18px; font-size:.9rem; color:#5E6B7A; line-height:1.6; }
 
 /* ---- what a scholarship looks like ---- */
 .fm-example { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; margin-top:40px; }
 .fm-card {
-  border-radius:20px; overflow:hidden; background:#fff; border:1px solid #E6E0D8;
-  box-shadow:0 2px 4px rgba(19,32,46,.04), 0 26px 60px -32px rgba(19,32,46,.38);
+  border-radius:20px; overflow:hidden; background:#fff; border:1px solid #E6E8EC;
+  box-shadow:0 2px 4px rgba(2,16,36,.04), 0 26px 60px -32px rgba(2,16,36,.38);
 }
-.fm-card-top { padding:26px 28px 22px; border-bottom:1px solid #EDE7DF; display:flex; gap:16px; align-items:center; }
-.fm-card-ava { width:56px; height:56px; flex:none; border-radius:50%; background:#0E1A26; color:#fff; display:grid; place-items:center; font-weight:800; font-size:1.05rem; letter-spacing:.02em; }
+.fm-card-top { padding:26px 28px 22px; border-bottom:1px solid #EEF0F3; display:flex; gap:16px; align-items:center; }
+.fm-card-ava { width:56px; height:56px; flex:none; border-radius:50%; background:#021024; color:#fff; display:grid; place-items:center; font-weight:800; font-size:1.05rem; letter-spacing:.02em; }
 .fm-card-name { font-size:1.06rem; font-weight:800; letter-spacing:-0.02em; line-height:1.3; }
 .fm-card-by { font-size:.84rem; color:#5E6B7A; margin-top:3px; }
 .fm-card-body { padding:24px 28px 26px; }
-.fm-card-quote { font-size:.97rem; line-height:1.65; color:#4A5A6B; margin:0 0 22px; }
+.fm-card-quote { font-size:.97rem; line-height:1.65; color:#4A5568; margin:0 0 22px; }
 .fm-card-meta { display:grid; grid-template-columns:1fr 1fr; gap:16px 20px; }
 .fm-card-k { font-size:.72rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#5E6B7A; }
 .fm-card-v { font-size:.95rem; font-weight:700; margin-top:3px; }
-.fm-card-foot { padding:18px 28px; background:#FBFAF8; border-top:1px solid #EDE7DF; display:flex; align-items:center; justify-content:space-between; gap:14px; }
+.fm-card-foot { padding:18px 28px; background:#FFFFFF; border-top:1px solid #EEF0F3; display:flex; align-items:center; justify-content:space-between; gap:14px; }
 .fm-slots { font-size:.86rem; color:#5E6B7A; font-variant-numeric:tabular-nums; }
-.fm-slots b { color:#13202E; }
-.fm-fake-btn { padding:10px 20px; border-radius:999px; background:#B8123A; color:#fff; font-size:.86rem; font-weight:700; }
+.fm-slots b { color:#021024; }
+.fm-fake-btn { padding:10px 20px; border-radius:999px; background:#D6002C; color:#fff; font-size:.86rem; font-weight:700; }
 .fm-example-url { margin-top:18px; font-size:.84rem; color:#5E6B7A; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; word-break:break-all; }
 
 /* ---- how it works: the sequence is the information ---- */
@@ -204,7 +224,7 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
 .fm-stepitem::before {
   counter-increment:fm; content:counter(fm);
   position:absolute; top:-15px; left:0; width:28px; height:28px; border-radius:50%;
-  background:#B8123A; color:#fff; display:grid; place-items:center;
+  background:#D6002C; color:#fff; display:grid; place-items:center;
   font-size:.8rem; font-weight:800; font-variant-numeric:tabular-nums;
 }
 .fm-stepitem h3 { color:#fff; }
@@ -212,18 +232,24 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
 
 /* ---- who it reaches ---- */
 .fm-who { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:40px; }
-.fm-whoitem { padding:28px 26px; border-radius:18px; background:#fff; border:1px solid #E6E0D8; }
-.fm-whoitem .fm-card-k { color:#7A5A20; }
-.fm-whoitem p { font-size:.94rem; line-height:1.6; color:#4A5A6B; margin:10px 0 0; }
+/* Real photographs, from the library the rest of the site uses. The
+   page spends its length asking somebody to care about people they
+   will never meet; three paragraphs of type was not going to do it. */
+.fm-whoitem { border-radius:18px; background:#fff; border:1px solid #E6E8EC; overflow:hidden; }
+.fm-whoshot { height:190px; overflow:hidden; background:#021024; }
+.fm-whoshot img { width:100%; height:100%; object-fit:cover; display:block; }
+.fm-whobody { padding:22px 24px 26px; }
+.fm-whoitem .fm-card-k { color:#D6002C; }
+.fm-whoitem p { font-size:.94rem; line-height:1.6; color:#4A5568; margin:10px 0 0; }
 
 /* ---- faq ---- */
-.fm-faq { margin-top:40px; border-top:1px solid #E2DCD3; }
-.fm-q { width:100%; text-align:left; background:none; border:0; border-bottom:1px solid #E2DCD3; padding:22px 44px 22px 0; position:relative; cursor:pointer; font:inherit; font-size:1.02rem; font-weight:700; color:#13202E; letter-spacing:-0.01em; }
+.fm-faq { margin-top:40px; border-top:1px solid #E6E8EC; }
+.fm-q { width:100%; text-align:left; background:none; border:0; border-bottom:1px solid #E6E8EC; padding:22px 44px 22px 0; position:relative; cursor:pointer; font:inherit; font-size:1.02rem; font-weight:700; color:#021024; letter-spacing:-0.01em; }
 .fm-q::after { content:''; position:absolute; right:10px; top:50%; width:10px; height:10px; margin-top:-6px; border-right:2.2px solid #5E6B7A; border-bottom:2.2px solid #5E6B7A; transform:rotate(45deg); transition:transform .22s cubic-bezier(.2,.7,.3,1); }
 .fm-q[aria-expanded="true"]::after { transform:rotate(-135deg); margin-top:-2px; }
-.fm-q:hover { color:#B8123A; }
-.fm-q:focus-visible { outline:3px solid #B8123A; outline-offset:-3px; }
-.fm-a { display:none; padding:0 56px 24px 0; border-bottom:1px solid #E2DCD3; font-size:.98rem; line-height:1.7; color:#4A5A6B; max-width:70ch; }
+.fm-q:hover { color:#D6002C; }
+.fm-q:focus-visible { outline:3px solid #D6002C; outline-offset:-3px; }
+.fm-a { display:none; padding:0 56px 24px 0; border-bottom:1px solid #E6E8EC; font-size:.98rem; line-height:1.7; color:#4A5568; max-width:70ch; }
 .fm-a.is-open { display:block; }
 
 /* ---- closing ---- */
@@ -238,12 +264,12 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
   .fm-steps { grid-template-columns:1fr 1fr; gap:26px 24px; }
   .fm-who { grid-template-columns:1fr; }
   .fm-rung { grid-template-columns:1fr; gap:8px; padding:24px 24px !important; }
-  .fm-rung-amt { color:#6E5423; }
-  .fm-rung:nth-child(4) .fm-rung-amt { color:#F0C078; }
+  .fm-rung-amt { color:#D6002C; }
+  .fm-rung:nth-child(4) .fm-rung-amt { color:#FF9FB2; }
 }
 @media (max-width:640px) {
   .fm-sec { padding:68px 0; }
-  .fm-hero { padding:56px 0 64px; }
+  .fm-hero { padding:56px 0 64px; min-height:0; }
   .fm-steps { grid-template-columns:1fr; }
   .fm-calc-panel { padding:24px 20px; }
   .fm-card-meta { grid-template-columns:1fr; }
@@ -306,13 +332,26 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
 <!-- ════════ 1 · HERO ════════ -->
 <header class="fm-hero">
   <div class="fm-wrap">
-    <h1 class="fm-h1">Sponsor a skill. Build a legacy.</h1>
-    <p class="fm-lead">Put someone through a Brixgate technology programme, or create a scholarship in your own name. We handle selection, training and learner development &mdash; and tell you what your money did.</p>
-    <div class="fm-hero-cta">
-      <a href="#cost" class="fm-btn fm-btn-primary">Sponsor a learner</a>
-      <a href="#cost" class="fm-btn fm-btn-ghost">Create a scholarship</a>
+    <div class="fm-hero-grid">
+      <div>
+        <h1 class="fm-h1">Sponsor a skill. Build a legacy.</h1>
+        <p class="fm-lead">Put someone through a Brixgate technology programme, or create a scholarship in your own name. We handle selection, training and learner development &mdash; and tell you what your money did.</p>
+        <div class="fm-hero-cta">
+          <a href="#cost" class="fm-btn fm-btn-primary">Sponsor a learner</a>
+          <a href="#cost" class="fm-btn fm-btn-ghost">Create a scholarship</a>
+        </div>
+        <p class="fm-hero-note">Looking for a scholarship rather than funding one? <a href="/scholarships/">See what is open</a>.</p>
+      </div>
+
+      <figure class="fm-hero-art" style="margin:0">
+        <picture>
+          <source srcset="/assets/futuremakers/hero.webp" type="image/webp">
+          <img src="/assets/futuremakers/hero.jpg" alt="A single point of light branching outward into many smaller ones"
+               width="1800" height="1013" fetchpriority="high" decoding="async">
+        </picture>
+        <figcaption class="fm-hero-cap">One person pays for one seat. Four years later there is a team that traces back to it.</figcaption>
+      </figure>
     </div>
-    <p class="fm-hero-note">Looking for a scholarship rather than funding one? <a href="/scholarships/">See what is open</a>.</p>
   </div>
 </header>
 
@@ -532,16 +571,25 @@ body.fm { --fm-nav-h:63px; padding-top:calc(var(--banner-height) + var(--fm-nav-
     </div>
     <div class="fm-who">
       <div class="fm-whoitem">
-        <div class="fm-card-k">Students</div>
-        <p>In school or just out, with no route into technical work and no money for one.</p>
+        <div class="fm-whoshot"><img src="/assets/people/cohort-table.jpg" alt="Brixgate learners working together around a table" width="1000" height="750" loading="lazy" decoding="async"></div>
+        <div class="fm-whobody">
+          <div class="fm-card-k">Students</div>
+          <p>In school or just out, with no route into technical work and no money for one.</p>
+        </div>
       </div>
       <div class="fm-whoitem">
-        <div class="fm-card-k">Youth</div>
-        <p>Working or looking, old enough to need the income and young enough to change direction.</p>
+        <div class="fm-whoshot"><img src="/assets/people/live-session.jpg" alt="A live Brixgate training session in progress" width="800" height="600" loading="lazy" decoding="async"></div>
+        <div class="fm-whobody">
+          <div class="fm-card-k">Youth</div>
+          <p>Working or looking, old enough to need the income and young enough to change direction.</p>
+        </div>
       </div>
       <div class="fm-whoitem">
-        <div class="fm-card-k">Adults</div>
-        <p>Mid-career, changing field, or returning to work after time away.</p>
+        <div class="fm-whoshot"><img src="/assets/people/peer-review.jpg" alt="Two Brixgate learners reviewing work on a laptop" width="800" height="600" loading="lazy" decoding="async"></div>
+        <div class="fm-whobody">
+          <div class="fm-card-k">Adults</div>
+          <p>Mid-career, changing field, or returning to work after time away.</p>
+        </div>
       </div>
     </div>
   </div>
